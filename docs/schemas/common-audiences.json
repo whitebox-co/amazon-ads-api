@@ -1,0 +1,560 @@
+{
+  "info": {
+    "description": "Audience Discovery API",
+    "title": "Audiences",
+    "version": "3.0"
+  },
+  "paths": {
+    "/audiences/list": {
+      "post": {
+        "summary": "Gets audience segments based on filters",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ListAudiencesRequestBodyV1"
+              }
+            }
+          },
+          "required": false
+        },
+        "description": "Returns a list of audience segments for an advertiser. The result set can be filtered by providing an array of Filter objects. Each item in the resulting set will match all specified filters.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "operationId": "listAudiences",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListAudiencesResponseV1"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request. The request could not be processed or handled. Please correct the issues specified and try again.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AudienceErrorV1"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because the user is unauthenticated or does not have access to the specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AudienceErrorV1"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AudienceErrorV1"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AudienceErrorV1"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "advertiserId",
+            "description": "The advertiser to retrieve segments for. This parameter is required for the DSP adType, but optional for the SD adType."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "nextToken",
+            "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array."
+          },
+          {
+            "schema": {
+              "default": 10,
+              "maximum": 250,
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "maxResults",
+            "description": "Sets the maximum number of audiences in the returned array. Use in conjunction with the `nextToken` parameter to control pagination. For example, supplying maxResults=20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned."
+          }
+        ],
+        "tags": [
+          "Discovery"
+        ]
+      }
+    },
+    "/audiences/taxonomy/list": {
+      "post": {
+        "summary": "Browse the taxonomy of audience categories",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FetchTaxonomyRequestBodyV1"
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "Returns a list of audience categories for a given category path\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "operationId": "fetchTaxonomy",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FetchTaxonomyResponseV1"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request. The request could not be processed or handled. Please correct the issues specified and try again.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AudienceErrorV1"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because the user is unauthenticated or does not have access to the specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AudienceErrorV1"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AudienceErrorV1"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AudienceErrorV1"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "advertiserId",
+            "description": "The advertiser associated with the advertising account. This parameter is required for the DSP adType, but optional for the SD adType."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "nextToken",
+            "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array."
+          },
+          {
+            "schema": {
+              "default": 250,
+              "maximum": 250,
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "maxResults",
+            "description": "Sets the maximum number of categories in the returned array. Use in conjunction with the `nextToken` parameter to control pagination. For example, supplying maxResults=20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned."
+          }
+        ],
+        "tags": [
+          "Discovery"
+        ]
+      }
+    }
+  },
+  "components": {
+    "headers": {},
+    "examples": {},
+    "schemas": {
+      "ListAudiencesResponseV1": {
+        "type": "object",
+        "properties": {
+          "nextToken": {
+            "type": "string"
+          },
+          "audiences": {
+            "description": "Array of segments matching given filters sorted by create time, earliest first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AudienceV1"
+            }
+          },
+          "matchCount": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "DSPInventoryForecastV1": {
+        "type": "object",
+        "required": [
+          "dailyImpressions",
+          "dailyReach"
+        ],
+        "properties": {
+          "dailyReach": {
+            "$ref": "#/components/schemas/ForecastBucketV1"
+          },
+          "dailyImpressions": {
+            "$ref": "#/components/schemas/ForecastBucketV1"
+          }
+        }
+      },
+      "AudienceFilterV1": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "description": "Field to filter by. Supported enums are 'audienceName', 'category', 'categoryPath' and 'audienceId'. The 'category' enum returns all audiences under a high-level category, whereas the 'categoryPath' enum expects a path of nodes in the taxonomy tree and returns audiences attached directly to the node at the specified path.",
+            "type": "string"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "FetchTaxonomyRequestBodyV1": {
+        "description": "The response data will have the categories that are under the given path, and main categories will be returned if no path is specified. The response data also depends on the adType specified here since ad programs may support targeting audiences in certain categories.",
+        "type": "object",
+        "properties": {
+          "adType": {
+            "type": "string",
+            "enum": [
+              "DSP",
+              "SD"
+            ]
+          },
+          "categoryPath": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "DSPAudienceFieldsV1": {
+        "type": "object",
+        "properties": {
+          "fees": {
+            "description": "Fees that will apply to this segment. Not all segments have fees. Fees may differ depending on the supply type the segment is attached to. In this case, multiple fee objects will be present.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "amount": {
+                  "description": "Fee amount in base currency units, multiplied by scaling factor ('scale').",
+                  "type": "integer"
+                },
+                "scale": {
+                  "description": "Scale of the amount relative to the base currency unit. For instance, if the scale is 1000, the currency is USD, and the amount is 500, the human-readable fee is $0.50.",
+                  "type": "integer"
+                },
+                "currency": {
+                  "description": "Base currency, such as US Dollar.",
+                  "type": "string",
+                  "enum": [
+                    "USD"
+                  ]
+                },
+                "feeCalculationType": {
+                  "description": "How the fee is applied.",
+                  "type": "string"
+                },
+                "impressionSupplyType": {
+                  "description": "To which supply types this fee applies to. The fee may be different for different supply types.",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ListAudiencesRequestBodyV1": {
+        "description": "Resulting segments will match all specified filters",
+        "type": "object",
+        "properties": {
+          "adType": {
+            "type": "string",
+            "enum": [
+              "DSP",
+              "SD"
+            ]
+          },
+          "filters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AudienceFilterV1"
+            }
+          }
+        }
+      },
+      "SDAudienceFieldsV1": {
+        "type": "object"
+      },
+      "InventoryForecastV1": {
+        "type": "object"
+      },
+      "AudienceCommonFieldsV1": {
+        "type": "object",
+        "required": [
+          "audienceId",
+          "audienceName",
+          "category",
+          "description",
+          "forecasts",
+          "status"
+        ],
+        "properties": {
+          "audienceName": {
+            "description": "Audience name",
+            "type": "string"
+          },
+          "updateDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "description": {
+            "description": "Audience description",
+            "type": "string"
+          },
+          "audienceId": {
+            "description": "Audience segment identifier",
+            "type": "string"
+          },
+          "category": {
+            "description": "Audience segment category",
+            "type": "string"
+          },
+          "createDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Processing",
+              "Active",
+              "Failed",
+              "Deprecated",
+              "Deactivated"
+            ]
+          },
+          "forecasts": {
+            "type": "object",
+            "required": [
+              "inventoryForecasts"
+            ],
+            "properties": {
+              "inventoryForecasts": {
+                "type": "object",
+                "properties": {
+                  "all": {
+                    "$ref": "#/components/schemas/InventoryForecastV1"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "SDInventoryForecastV1": {
+        "type": "object",
+        "required": [
+          "dailyReach"
+        ],
+        "properties": {
+          "dailyReach": {
+            "$ref": "#/components/schemas/ForecastBucketV1"
+          }
+        }
+      },
+      "AudienceErrorV1": {
+        "description": "The error response object.",
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "description": "A value created by Amazon API Gateway that uniquely identifies your request.",
+            "type": "string"
+          },
+          "message": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AudienceSubErrorV1"
+            }
+          }
+        }
+      },
+      "AudienceV1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AudienceCommonFieldsV1"
+          },
+          {
+            "type": "object"
+          }
+        ]
+      },
+      "AudienceSubErrorV1": {
+        "description": "The sub error object.",
+        "type": "object",
+        "required": [
+          "errorType",
+          "message"
+        ],
+        "properties": {
+          "fieldName": {
+            "type": "string"
+          },
+          "errorType": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "FetchTaxonomyResponseV1": {
+        "type": "object",
+        "properties": {
+          "categoryPath": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "nextToken": {
+            "type": "string"
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FetchTaxonomyNodeV1"
+            }
+          }
+        }
+      },
+      "FetchTaxonomyNodeV1": {
+        "type": "object",
+        "properties": {
+          "audienceCount": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "category": {
+            "type": "string"
+          }
+        }
+      },
+      "ForecastBucketV1": {
+        "type": "object",
+        "properties": {
+          "lowerBoundInclusive": {
+            "format": "int64",
+            "description": "The inclusive lower bound for the bucket.  If not specified, the bucket captures all values below the upper bound.",
+            "type": "integer"
+          },
+          "upperBoundExclusive": {
+            "format": "int64",
+            "description": "The exclusive upper bound for the bucket.  If not specified, the bucket captures all values above the lower bound.",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "requestBodies": {},
+    "responses": {},
+    "callbacks": {},
+    "links": {},
+    "securitySchemes": {},
+    "parameters": {}
+  },
+  "openapi": "3.0.1"
+}

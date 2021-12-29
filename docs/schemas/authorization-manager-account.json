@@ -1,0 +1,551 @@
+{
+  "info": {
+    "description": "A [Manager Account](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8) lets you manage a group of Amazon Advertising accounts.",
+    "title": "Manager Account",
+    "version": "3.0"
+  },
+  "paths": {
+    "/managerAccounts/{managerAccountId}/disassociate": {
+      "post": {
+        "summary": "Unlink Amazon Advertising accounts or advertisers with a Manager Account.",
+        "requestBody": {
+          "content": {
+            "application/vnd.updateadvertisingaccountsinmanageraccountrequest.v1+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAdvertisingAccountsInManagerAccountRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "Unlink Amazon Advertising accounts or advertisers with a [Manager Account](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8).",
+        "operationId": "UnlinkAdvertisingAccountsToManagerAccountPublicAPI",
+        "responses": {
+          "207": {
+            "description": "**Multi-Status** - Some Advertising accounts or advertisers may not have been linked successfully.",
+            "content": {
+              "application/vnd.updateadvertisingaccountsinmanageraccountresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAdvertisingAccountsInManagerAccountResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**Bad Request** - request failed because invalid parameters were provided. Ensure that all required parameters were provided.",
+            "content": {
+              "application/vnd.updateadvertisingaccountsinmanageraccountresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "**Unauthorized** - request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/vnd.updateadvertisingaccountsinmanageraccountresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "**Forbidden** - request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/vnd.updateadvertisingaccountsinmanageraccountresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "**Too Many Requests** - request was rate-limited. Retry later.",
+            "content": {
+              "application/vnd.updateadvertisingaccountsinmanageraccountresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "**Internal Service Error** - something failed in the server. Please try again later. If the issue persists, report an error.",
+            "content": {
+              "application/vnd.updateadvertisingaccountsinmanageraccountresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "managerAccountId",
+            "description": "Id of the Manager Account.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Manager Accounts"
+        ]
+      }
+    },
+    "/managerAccounts": {
+      "post": {
+        "summary": "Creates a new Amazon Advertising Manager account.",
+        "requestBody": {
+          "description": "Request object required to create a new Manager account.",
+          "content": {
+            "application/vnd.createmanageraccountrequest.v1+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateManagerAccountRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "Creates a new Amazon Advertising [Manager account](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8).",
+        "operationId": "createManagerAccount",
+        "responses": {
+          "200": {
+            "description": "**Success** - operation succeeded.",
+            "content": {
+              "application/vnd.manageraccount.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ManagerAccount"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**Bad Request** - request failed because invalid parameters were provided. Ensure that all required parameters were provided.",
+            "content": {
+              "application/vnd.manageraccount.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "**Forbidden** - request failed because the caller was not authorized to create a Manager account.",
+            "content": {
+              "application/vnd.manageraccount.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "**Too Many Requests** - request was rate-limited. Retry later.",
+            "content": {
+              "application/vnd.manageraccount.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "**Internal Service Error** - something failed in the server. Please try again later. If the issue persists, report an error.",
+            "content": {
+              "application/vnd.manageraccount.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Manager Accounts"
+        ]
+      },
+      "get": {
+        "summary": "Returns all Manager accounts that a given Amazon Advertising user has access to.",
+        "description": "Returns all [Manager accounts](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8) that a user has access to, along with metadata for all of the Amazon Advertising accounts that are linked to the Manager account.",
+        "operationId": "getManagerAccountsForUser",
+        "responses": {
+          "200": {
+            "description": "**Success** - operation succeeded.",
+            "content": {
+              "application/vnd.getmanageraccountsresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetManagerAccountsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**Bad Request** - request failed because invalid parameters were provided. Ensure that all required parameters were provided.",
+            "content": {}
+          },
+          "401": {
+            "description": "**Unauthorized** - request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {}
+          },
+          "403": {
+            "description": "**Forbidden** - request failed because user does not have access to a specified resource",
+            "content": {}
+          },
+          "429": {
+            "description": "**Too Many Requests** - request was rate-limited. Retry later.",
+            "content": {}
+          },
+          "500": {
+            "description": "**Internal Service Error** - something failed in the server. Please try again later. If the issue persists, report an error.",
+            "content": {}
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Manager Accounts"
+        ]
+      }
+    },
+    "/managerAccounts/{managerAccountId}/associate": {
+      "post": {
+        "summary": "Link Amazon Advertising accounts or advertisers with a Manager Account.",
+        "requestBody": {
+          "content": {
+            "application/vnd.updateadvertisingaccountsinmanageraccountrequest.v1+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAdvertisingAccountsInManagerAccountRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "Link Amazon Advertising accounts or advertisers with a [Manager Account](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8).",
+        "operationId": "LinkAdvertisingAccountsToManagerAccountPublicAPI",
+        "responses": {
+          "207": {
+            "description": "**Multi-Status** - Some Advertising accounts or advertisers may not have been linked successfully.",
+            "content": {
+              "application/vnd.updateadvertisingaccountsinmanageraccountresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAdvertisingAccountsInManagerAccountResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "**Bad Request** - request failed because invalid parameters were provided. Ensure that all required parameters were provided.",
+            "content": {
+              "application/vnd.updateadvertisingaccountsinmanageraccountresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "**Unauthorized** - request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/vnd.updateadvertisingaccountsinmanageraccountresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "**Forbidden** - request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/vnd.updateadvertisingaccountsinmanageraccountresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "**Too Many Requests** - request was rate-limited. Retry later.",
+            "content": {
+              "application/vnd.updateadvertisingaccountsinmanageraccountresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "**Internal Service Error** - something failed in the server. Please try again later. If the issue persists, report an error.",
+            "content": {
+              "application/vnd.updateadvertisingaccountsinmanageraccountresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "managerAccountId",
+            "description": "Id of the Manager Account.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Manager Accounts"
+        ]
+      }
+    }
+  },
+  "components": {
+    "headers": {},
+    "examples": {},
+    "schemas": {
+      "ErrorDetail": {
+        "description": "The error response object.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "BAD_REQUEST",
+              "UNAUTHORIZED",
+              "FORBIDDEN",
+              "TOO_MANY_REQUESTS",
+              "INTERNAL_SERVICE_ERROR"
+            ]
+          },
+          "message": {
+            "description": "A human-readable description of the error.",
+            "type": "string"
+          }
+        }
+      },
+      "Account": {
+        "description": "Object representation of an Amazon Advertising account.",
+        "type": "object",
+        "properties": {
+          "marketplaceId": {
+            "description": "The identifier of the marketplace to which the account is associated. See [this table](https://docs.developer.amazonservices.com/en_US/dev_guide/DG_Endpoints.html) for `marketplaceId` mappings.",
+            "type": "string"
+          },
+          "accountId": {
+            "description": "Id of the Amazon Advertising account.",
+            "type": "string"
+          },
+          "accountName": {
+            "description": "The name given to the Amazon Advertising account.",
+            "type": "string"
+          },
+          "profileId": {
+            "description": "The identifier of a profile associated with the advertiser account. Note that this value is only populated for a subset of account types: `[ SELLER, VENDOR, MARKETING_CLOUD ]`. It will be `null` for accounts of other types.",
+            "type": "string"
+          },
+          "accountType": {
+            "$ref": "#/components/schemas/AccountType"
+          },
+          "dspAdvertiserId": {
+            "description": "The identifier of a DSP advertiser. Note that this value is only populated for accounts with type `DSP_ADVERTISING_ACCOUNT`. It will be `null` for accounts of other types.",
+            "type": "string"
+          }
+        }
+      },
+      "ManagerAccount": {
+        "description": "Object representation of an Amazon Advertising Manager Account.",
+        "type": "object",
+        "properties": {
+          "managerAccountName": {
+            "description": "The name given to a Manager Account.",
+            "type": "string"
+          },
+          "linkedAccounts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Account"
+            }
+          },
+          "managerAccountId": {
+            "description": "Id of the Manager Account.",
+            "type": "string"
+          }
+        }
+      },
+      "AccountToUpdateFailure": {
+        "description": "Object representation of an Amazon Advertising account or [DSP advertiser](https://advertising.amazon.com/API/docs/en-us/dsp-advertiser/#/) that failed to update.",
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorDetail"
+          },
+          "account": {
+            "$ref": "#/components/schemas/AccountToUpdate"
+          }
+        }
+      },
+      "CreateManagerAccountRequest": {
+        "description": "Request object that defines the fields required to create a Manager account.",
+        "type": "object",
+        "properties": {
+          "managerAccountName": {
+            "description": "Name of the Manager account.",
+            "type": "string"
+          },
+          "managerAccountType": {
+            "description": "Type of the Manager account, which indicates how the Manager account will be used. Use `Advertiser` if the Manager account will be used for **your own** products and services, or `Agency` if you are managing accounts **on behalf of your clients**.",
+            "type": "string",
+            "enum": [
+              "Advertiser",
+              "Agency"
+            ]
+          }
+        }
+      },
+      "UpdateAdvertisingAccountsInManagerAccountRequest": {
+        "description": "A list of Advertising accounts or advertisers to link/unlink with [Manager Account](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8). User can pass a list with a maximum of 20 accounts/advertisers using any mix of identifiers.",
+        "type": "object",
+        "properties": {
+          "accounts": {
+            "description": "List of Advertising accounts or advertisers to link/unlink with [Manager Account](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8). User can pass a list with a maximum of 20 accounts/advertisers using any mix of identifiers.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountToUpdate"
+            }
+          }
+        }
+      },
+      "AccountRelationshipRole": {
+        "description": "The type of a role used in account relationships.",
+        "type": "string",
+        "enum": [
+          "ENTITY_OWNER",
+          "ENTITY_USER",
+          "ENTITY_VIEWER",
+          "SELLER_USER"
+        ]
+      },
+      "AccountType": {
+        "description": "Type of the Amazon Advertising account.",
+        "type": "string",
+        "enum": [
+          "VENDOR",
+          "SELLER",
+          "DSP_ADVERTISING_ACCOUNT",
+          "MARKETING_CLOUD"
+        ]
+      },
+      "AccountToUpdate": {
+        "description": "String identifier for an Amazon Advertising account or advertiser. `ACCOUNT_ID` is an identifier that is returned by the [Profiles resource](https://advertising.amazon.com/API/docs/en-us/reference/2/profiles#/Profiles/listProfiles), within the `AccountInfo.id` data member. `ACCOUNT_ID` may begin with the string `\"ENTITY\"`.\n`DSP_ADVERTISER_ID` is an identifier for a DSP advertiser, which is returned by the [DSP resource](https://advertising.amazon.com/API/docs/en-us/dsp-advertiser/#/Advertiser/get_dsp_advertisers).",
+        "type": "object",
+        "properties": {
+          "roles": {
+            "description": "The types of role that will exist with the Amazon Advertising account. Depending on account type, the default role will be ENTITY_USER or SELLER_USER. Only one role at a time is currently supported",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountRelationshipRole"
+            }
+          },
+          "id": {
+            "description": "Id of the Amazon Advertising account.",
+            "type": "string"
+          },
+          "type": {
+            "description": "The type of the Id",
+            "type": "string",
+            "enum": [
+              "ACCOUNT_ID",
+              "DSP_ADVERTISER_ID"
+            ]
+          }
+        }
+      },
+      "GetManagerAccountsResponse": {
+        "description": "Response containing a list of Manager Accounts that a given user has access to.",
+        "type": "object",
+        "properties": {
+          "managerAccounts": {
+            "description": "List of Manager Accounts that the user has access to",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ManagerAccount"
+            }
+          }
+        }
+      },
+      "UpdateAdvertisingAccountsInManagerAccountResponse": {
+        "description": "Link/Unlink Advertising account or advertiser Response",
+        "type": "object",
+        "properties": {
+          "failedAccounts": {
+            "description": "List of Advertising accounts or advertisers failed to Link/Unlink with [Manager Account](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8).",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountToUpdateFailure"
+            }
+          },
+          "succeedAccounts": {
+            "description": "List of Advertising accounts or advertisers successfully Link/Unlink with [Manager Account](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8).",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AccountToUpdate"
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {},
+    "responses": {},
+    "callbacks": {},
+    "links": {},
+    "securitySchemes": {},
+    "parameters": {}
+  },
+  "openapi": "3.0.1"
+}

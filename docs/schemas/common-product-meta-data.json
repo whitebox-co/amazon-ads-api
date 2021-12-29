@@ -1,0 +1,668 @@
+{
+  "info": {
+    "description": "The Amazon Product Selector API allows integrators to receive product metadata such as inventory status, price, eligibility status and product details for SKUS or ASINs in their Product Catalog in order to launch, manage or optimize Sponsored Product, Sponsored Brands or Sponsored Display advertising campaigns. The Product Selector API is available to Sellers, Vendors, and Authors.",
+    "title": "Product Selector",
+    "version": "3.0"
+  },
+  "paths": {
+    "/product/metadata": {
+      "post": {
+        "summary": "Returns product metadata for the advertiser",
+        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "tags": [
+          "Product Selector"
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.productmetadatarequest.v1+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductMetadataRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "operationId": "ProductMetadata",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/vnd.productmetadataresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductMetadataResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user is not authorized to access a resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Requested resource does not exist or is not visible for the authenticated user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The client identifier of the customer making the request.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The profile or entity identifier associated with the advertiser account.",
+            "required": true
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "headers": {},
+    "examples": {},
+    "schemas": {
+      "deal": {
+        "description": "Product deal",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ProductInfoModel": {
+        "type": "object",
+        "properties": {
+          "deal": {
+            "$ref": "#/components/schemas/deal"
+          },
+          "eligibilityReasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tvIconURL": {
+            "type": "string"
+          },
+          "tvPreviewMetadata": {
+            "$ref": "#/components/schemas/tvPreviewMetadata"
+          },
+          "ineligibilityCodes": {
+            "description": "List of ineligibile status identifier",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "MISSING_TITLE",
+              "INELIGIBLE_CONDITION"
+            ]
+          },
+          "availability": {
+            "description": "Stock availability: \n * IN_STOCK - The item is in stock. \n * IN_STOCK_SCARCE - The item is in stock, but stock levels are limited. \n * OUT_OF_STOCK - The item is currently out of stock. \n * PREORDER - The item is not yet available, but can be pre-ordered. \n * LEADTIME - The item is only available after some amount of lead time. \n * AVAILABLE_DATE - The item is not available, but will be available on a future date.",
+            "type": "string",
+            "example": "IN_STOCK"
+          },
+          "title": {
+            "description": "Product title of the item",
+            "type": "string",
+            "example": "Wrangler Men's Classic 5-Pocket Regular Fit Flex Jean"
+          },
+          "eligibilityStatus": {
+            "description": "Eligibility status for advertising: \n * ELIGIBLE - Eligible for advertising \n * INELIGIBLE - Ineligible for advertising",
+            "type": "string",
+            "example": "ELIGIBLE"
+          },
+          "adEligibility": {
+            "$ref": "#/components/schemas/legacyEligibility"
+          },
+          "titleAuthorityParentAsin": {
+            "description": "Parent ASIN of the book ASIN",
+            "type": "string"
+          },
+          "asinEligibility": {
+            "$ref": "#/components/schemas/legacyEligibility"
+          },
+          "variations": {
+            "description": "List of ASIN variations of the current item",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "ASIN_blue_color",
+              "ASIN_XL_size"
+            ]
+          },
+          "price": {
+            "$ref": "#/components/schemas/listPrice"
+          },
+          "tvPreviewURL": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "description": "Url to the product image",
+            "type": "string",
+            "example": "https://m.media-amazon.com/images/I/51s3ut4zPxL._SS60_.jpg"
+          },
+          "customerReview": {
+            "$ref": "#/components/schemas/customerReview"
+          },
+          "eligibilityCodes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "asin": {
+            "description": "ASIN of the item",
+            "type": "string",
+            "example": "B0018OFKJS"
+          },
+          "href": {
+            "description": "Url to the product detail page in retail",
+            "type": "string",
+            "example": "https:/amazon.com/dp/B0018OFKJS"
+          },
+          "sku": {
+            "description": "sku of the item",
+            "type": "string",
+            "example": "SKU1"
+          },
+          "titleAuthority": {
+            "description": "List of ASIN variations of the book item",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "ASIN_e_book",
+              "ASIN_hard_cover"
+            ]
+          },
+          "listPrice": {
+            "$ref": "#/components/schemas/listPrice"
+          },
+          "ineligibilityReasons": {
+            "description": "List of reasons that made this item ineligible to be advertised",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "This product is missing basic information to be advertised",
+              "This product is unsafe to be advertised"
+            ]
+          }
+        }
+      },
+      "rating": {
+        "type": "object",
+        "properties": {
+          "fullStarCount": {
+            "type": "integer"
+          },
+          "hasHalfStar": {
+            "type": "boolean"
+          },
+          "displayString": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
+          }
+        }
+      },
+      "priceToPay": {
+        "description": "The price customer would pay for the buying option",
+        "type": "object",
+        "properties": {
+          "amount": {
+            "description": "Price amount",
+            "type": "number",
+            "example": "3.99"
+          },
+          "currency": {
+            "description": "Currency of the price",
+            "type": "string",
+            "example": "USD"
+          }
+        }
+      },
+      "tvPreviewMetadata": {
+        "type": "object",
+        "properties": {
+          "shortSynopsis": {
+            "type": "string"
+          },
+          "tvBackgroundURL": {
+            "type": "string"
+          },
+          "tvIconURL": {
+            "type": "string"
+          },
+          "linkIn": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "error": {
+        "description": "Error response object.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Enumerated error type.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "ProductInfoResponse": {
+        "type": "object",
+        "properties": {
+          "ProductInfoList": {
+            "maxItems": 300,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductInfoModel"
+            }
+          },
+          "cursorToken": {
+            "description": "Pagination token for later requests with specific sort type to use as the page index instead. Empty cursorToken means no further data is present at Server side.",
+            "type": "string"
+          },
+          "totalCount": {
+            "type": "integer"
+          }
+        }
+      },
+      "basisPrice": {
+        "description": "The basis price before the savings are calculated",
+        "type": "object",
+        "properties": {
+          "amount": {
+            "description": "Price amount",
+            "type": "number",
+            "example": "6.99"
+          },
+          "currency": {
+            "description": "Currency of the price",
+            "type": "string",
+            "example": "USD"
+          }
+        }
+      },
+      "reviewCount": {
+        "type": "object",
+        "properties": {
+          "displayString": {
+            "type": "string"
+          },
+          "value": {
+            "type": "integer"
+          }
+        }
+      },
+      "ProductMetadataModel": {
+        "type": "object",
+        "properties": {
+          "priceToPay": {
+            "$ref": "#/components/schemas/priceToPay"
+          },
+          "ineligibilityCodes": {
+            "description": "List of ineligibile status identifier",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "MISSING_TITLE",
+              "INELIGIBLE_CONDITION"
+            ]
+          },
+          "availability": {
+            "description": "Stock availability: \n * IN_STOCK - The item is in stock. \n * IN_STOCK_SCARCE - The item is in stock, but stock levels are limited. \n * OUT_OF_STOCK - The item is currently out of stock. \n * PREORDER - The item is not yet available, but can be pre-ordered. \n * LEADTIME - The item is only available after some amount of lead time. \n * AVAILABLE_DATE - The item is not available, but will be available on a future date.",
+            "type": "string",
+            "example": "IN_STOCK"
+          },
+          "title": {
+            "description": "Product title of the item",
+            "type": "string",
+            "example": "Wrangler Men's Classic 5-Pocket Regular Fit Flex Jean"
+          },
+          "eligibilityStatus": {
+            "description": "Eligibility status for advertising: \n * ELIGIBLE - Eligible for advertising \n * INELIGIBLE - Ineligible for advertising",
+            "type": "string",
+            "example": "ELIGIBLE"
+          },
+          "basisPrice": {
+            "$ref": "#/components/schemas/basisPrice"
+          },
+          "bestSellerRank": {
+            "description": "Best seller rank position in the category",
+            "type": "string",
+            "example": "36"
+          },
+          "createdDate": {
+            "description": "Date the item was first available on Amazon",
+            "type": "string",
+            "example": "Jul 1, 2021"
+          },
+          "imageUrl": {
+            "description": "Url to the product image",
+            "type": "string",
+            "example": "https://m.media-amazon.com/images/I/51s3ut4zPxL._SS60_.jpg"
+          },
+          "asin": {
+            "description": "ASIN of the item",
+            "type": "string",
+            "example": "B0018OFKJS"
+          },
+          "sku": {
+            "description": "sku of the item",
+            "type": "string",
+            "example": "SKU1"
+          },
+          "category": {
+            "description": "Category (browse node) name of the ASIN",
+            "type": "string",
+            "example": "Men's Jeans"
+          },
+          "brand": {
+            "description": "Brand name of the item",
+            "type": "string",
+            "example": "Levi's"
+          },
+          "variationList": {
+            "description": "List of ASIN variations of the current item",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "ASIN_blue_color",
+              "ASIN_XL_size"
+            ]
+          },
+          "ineligibilityReasons": {
+            "description": "List of reasons that made this item ineligible to be advertised",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "This product is missing basic information to be advertised",
+              "This product is unsafe to be advertised"
+            ]
+          }
+        }
+      },
+      "customerReview": {
+        "type": "object",
+        "properties": {
+          "reviewCount": {
+            "$ref": "#/components/schemas/reviewCount"
+          },
+          "reviewUrl": {
+            "type": "string"
+          },
+          "rating": {
+            "$ref": "#/components/schemas/rating"
+          }
+        }
+      },
+      "ProductMetadataRequest": {
+        "type": "object",
+        "required": [
+          "pageSize",
+          "pageIndex"
+        ],
+        "properties": {
+          "asins": {
+            "maxItems": 300,
+            "description": "Specific asins to search for in the advertiser's inventory. Cannot use together with skus or searchStr input types.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "B0018OFKJS",
+              "B01IR7S432"
+            ]
+          },
+          "checkItemDetails": {
+            "default": "false",
+            "description": "Whether item details such as name, image, and price is required",
+            "type": "boolean"
+          },
+          "cursorToken": {
+            "description": "Pagination token used for the suggested sort type",
+            "type": "string"
+          },
+          "adType": {
+            "description": "Program type. Required if checks advertising eligibility: \n * SP - Sponsored Product \n * SB - Sponsored Brand \n * SD - Sponsored Display",
+            "type": "string",
+            "enum": [
+              "SP",
+              "SB",
+              "SD"
+            ]
+          },
+          "skus": {
+            "maxItems": 300,
+            "description": "Specific skus to search for in the advertiser's inventory. Currently only support SP program type for sellers. Cannot use together with asins or searchStr input types",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "sku1",
+              "sku2"
+            ]
+          },
+          "checkEligibility": {
+            "default": "false",
+            "description": "Whether advertising eligibility info is required",
+            "type": "boolean"
+          },
+          "searchStr": {
+            "description": "Specific string in the item title to search for in the advertiser's inventory. Case insensitive. Cannot use together with asins or skus input types",
+            "type": "string",
+            "example": "jean"
+          },
+          "pageIndex": {
+            "format": "int32",
+            "description": "Index of the page to be returned",
+            "type": "integer",
+            "minimum": 0,
+            "example": "0"
+          },
+          "sortOrder": {
+            "default": "DESC",
+            "description": "Sort order (has to be DESC for the suggested sort type): \n * ASC - Ascending, from A to Z \n * DESC - Descending, from Z to A",
+            "type": "string",
+            "enum": [
+              "ASC",
+              "DESC"
+            ]
+          },
+          "pageSize": {
+            "format": "int32",
+            "description": "Number of items to be returned on this page index (max 100 for author)",
+            "maximum": 300,
+            "type": "integer",
+            "minimum": 1,
+            "example": "5"
+          },
+          "sortBy": {
+            "description": "Sort option for the result. Currently only support SP program type for sellers: \n * SUGGESTED - Suggested products are those most likely to engage customers, and have a higher chance of generating clicks if advertised. \n * CREATED_DATE - Date the item listing was created ",
+            "type": "string",
+            "enum": [
+              "SUGGESTED",
+              "CREATED_DATE"
+            ]
+          },
+          "locale": {
+            "description": "Optional locale for detail and eligibility response strings. Default to the marketplace locale.",
+            "type": "string",
+            "example": "zh_CN"
+          }
+        }
+      },
+      "legacyEligibility": {
+        "type": "object",
+        "properties": {
+          "ineligibilityCodes": {
+            "description": "List of ineligibile status identifier",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "MISSING_TITLE",
+              "INELIGIBLE_CONDITION"
+            ]
+          },
+          "ineligibilityReasons": {
+            "description": "List of reasons that made this item ineligible to be advertised",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "This product is missing basic information to be advertised",
+              "This product is unsafe to be advertised"
+            ]
+          }
+        }
+      },
+      "ProductMetadataResponse": {
+        "type": "object",
+        "properties": {
+          "cursorToken": {
+            "description": "Pagination token for later requests with specific sort type to use as the page index instead. Empty cursorToken means no further data is present at Server side.",
+            "type": "string"
+          },
+          "ProductMetadataList": {
+            "maxItems": 300,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductMetadataModel"
+            }
+          }
+        }
+      },
+      "listPrice": {
+        "type": "object",
+        "properties": {
+          "min": {
+            "type": "number",
+            "example": "150.99"
+          },
+          "displayString": {
+            "type": "string",
+            "example": "$150.99"
+          },
+          "max": {
+            "type": "number",
+            "example": "150.99"
+          },
+          "valueType": {
+            "type": "string",
+            "example": "SINGLE"
+          },
+          "currency": {
+            "description": "Currency of the price",
+            "type": "string",
+            "example": "USD"
+          },
+          "type": {
+            "type": "string",
+            "example": "LIST"
+          }
+        }
+      }
+    },
+    "requestBodies": {},
+    "responses": {},
+    "callbacks": {},
+    "links": {},
+    "securitySchemes": {},
+    "parameters": {}
+  },
+  "openapi": "3.0.1"
+}

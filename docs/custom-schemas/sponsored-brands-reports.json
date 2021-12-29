@@ -1,0 +1,478 @@
+{
+	"openapi": "3.0.2",
+	"info": {
+		"title": "Amazon Ads API for Sponsored Brands - Reports",
+		"description": "Use this interface to request and retrieve performance reports. Use the POST method to request the report to be generated from the appropriate interface, the GET method to retrieve the report ID that was generated, and then download the actual report.\n\nIf you are trying to download a record of your campaign structure and all of its entities (like AdGroups, keywords), we recommended that you run a snapshot of your entities instead of requesting a list of all elements in the campaign. For more information, see snapshots.",
+		"contact": {
+			"name": "Amazon Ads API Support",
+			"url": "https://amzn-clicks.atlassian.net/servicedesk/customer/portals"
+		},
+		"license": {
+			"name": "Amazon Ads API License Agreement",
+			"url": "https://advertising.amazon.com/API/docs/license_agreement"
+		},
+		"version": "3.0"
+	},
+	"servers": [
+		{
+			"url": "https://advertising-api-test.amazon.com",
+			"description": "Sandbox endpoint. Use for testing in all Amazon marketplaces."
+		},
+		{
+			"url": "https://advertising-api.amazon.com",
+			"description": "Production endpoint for North America, which includes US and CA Amazon marketplaces."
+		},
+		{
+			"url": "https://advertising-api-eu.amazon.com",
+			"description": "Production endpoint for Europe, which includes UK, FR, IT, ES, DE, plus IN Amazon marketplaces."
+		},
+		{
+			"url": "https://advertising-api-fe.amazon.com",
+			"description": "Production endpoint for Far East, which includes JP Amazon marketplaces."
+		}
+	],
+	"tags": [],
+	"paths": {
+		"/v2/reports/{reportId}": {
+			"get": {
+				"tags": ["Reports"],
+				"summary": "Gets the status of a report previously requested.",
+				"description": "Uses the `reportId` value from the response of a report previously requested via `POST` method of the `/v2/hsa/{recordType}/report` operation. Gets a ReportResponse object that includes a field named `status`. While the report is pending, `status` is set to `IN_PROGRESS`. Continue polling until a ReportStatus object is received with `status` set to `SUCCESS`. Then, use the `GET` method of the `/v2/reports/{reportId}/download` operation to get the download URI for the report.",
+				"operationId": "getReportStatus",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/clientHeader"
+					},
+					{
+						"$ref": "#/components/parameters/profileHeader"
+					},
+					{
+						"name": "reportId",
+						"in": "path",
+						"description": "The identier of the requested report.",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful operation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ReportResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden - Request failed because user does not have access to a specified resource",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found - Requested resource does not exist or is not visible for the authenticated user.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"429": {
+						"description": "Too Many Requests - Request was rate-limited. Retry later.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/reports/{reportId}/download": {
+			"get": {
+				"tags": ["Reports"],
+				"summary": "Downloads a previously requested report identified by reportId.",
+				"description": "Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.",
+				"operationId": "downloadReport",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/clientHeader"
+					},
+					{
+						"$ref": "#/components/parameters/profileHeader"
+					},
+					{
+						"name": "reportId",
+						"in": "path",
+						"description": "The identifier of the requested report.",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"307": {
+						"description": "Successful operation.",
+						"headers": {
+							"Location": {
+								"schema": {
+									"type": "string"
+								},
+								"description": "Redirect URI with S3 file location containing report data"
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden - Request failed because user does not have access to a specified resource",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found - Requested resource does not exist or is not visible for the authenticated user.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"429": {
+						"description": "Too Many Requests - Request was rate-limited. Retry later.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/v2/hsa/{recordType}/report": {
+			"post": {
+				"tags": ["Reports"],
+				"summary": "Creates a report request.",
+				"description": "Request the creation of a performance report for all entities of a single type which have performance data to report. Record types can be: campaigns, adGroups, targets, and keywords.",
+				"operationId": "requestReport",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/clientHeader"
+					},
+					{
+						"$ref": "#/components/parameters/profileHeader"
+					},
+					{
+						"name": "recordType",
+						"in": "path",
+						"description": "The type of report to generate, either `campaigns`, `adGroups`, `targets`, or `keywords`.",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"enum": ["campaigns", "adGroups", "targets", "keywords"]
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReportRequest"
+							}
+						}
+					},
+					"required": false
+				},
+				"responses": {
+					"202": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ReportResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden - Request failed because user does not have access to a specified resource",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"406": {
+						"description": "Not acceptable - Failed due to report date being too far in the past.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Unprocessable entity - Failed due to invalid parameters.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"429": {
+						"description": "Too Many Requests - Request was rate-limited. Retry later.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"TacticReport": {
+				"type": "string",
+				"description": "The advertising tactic associated with the campaign. The following table lists available tactic names:\n|Tactic Name|Type|Description|\n|-----------|-----|-----------|\n|T00001     | |Reach shoppers who showed interest in categories related to your promoted products, or target specific products or product categories on Amazon. This tactic is for use by only vendors. This tactic is used to retrieve metrics for Sponsored Display campaigns that use interest, product or category audiences, including Sponsored Display campaigns that were previously Product Display Ads campaigns. This tactic name is only applicable for the `requestReport` operation and does not apply to any other campaign management operations.|\n|T00020     |Product| Choose individual products to show your ads in placements related to those products.<br>[Categories] Categories: Choose individual categories to show your ads in placements related to those categories.|\n|T00030     |Audiences| Select individual audiences to show your ads.|\n|remarketing|Views| This is a legacy tactic so use T00030 for campaign creation and management going forward. Shoppers who viewed the detail pages of your advertised products or similar products.|",
+				"example": "T00020",
+				"enum": ["T00001", "T00020", "T00030", "remarketing"]
+			},
+			"ReportRequest": {
+				"type": "object",
+				"properties": {
+					"reportDate": {
+						"type": "string",
+						"description": "Date in YYYYMMDD format. The report contains only metrics generated on the specified date. Note that the time zone used for date calculation is the one associated with the profile used to make the request.",
+						"example": "20190401"
+					},
+					"creativeType": {
+						"type": "string",
+						"description": "Set to video to request a Sponsored Brands video report.",
+						"example": "video"
+					},
+					"segment": {
+						"type": "string",
+						"description": "Optional. Dimension on which to segment the report. See segmentation details in the following table. \n\n -`placement` - The optional dimension on which to segment a campaigns report. Placement refers to the location on a page where your ad appears. \n\n -`query` - The optional dimension on which to segment a keyword report. This is also referred to as the search terms report.",
+						"enum": ["placement", "query"]
+					},
+					"metrics": {
+						"type": "string",
+						"description": "A comma-separated list of the metrics to be included in the report. See https://advertising.amazon.com/API/docs/en-us/reference/sponsored-brands/2/reports for a list of metrics",
+						"example": "campaignName,campaignId"
+					}
+				}
+			},
+			"ReportResponse": {
+				"type": "object",
+				"properties": {
+					"reportId": {
+						"type": "string",
+						"description": "The identifier of the report."
+					},
+					"recordType": {
+						"type": "string",
+						"description": "The type of report requested.",
+						"enum": ["CAMPAIGN", "AD_GROUP", "KEYWORD"]
+					},
+					"status": {
+						"type": "string",
+						"description": "The build status of the report.",
+						"enum": ["IN_PROGRESS", "SUCCESS", "FAILURE"]
+					},
+					"statusDetails": {
+						"description": "A human-readable description of the current status.",
+						"type": "string"
+					},
+					"location": {
+						"type": "string",
+						"description": "The URI location of the report."
+					},
+					"fileSize": {
+						"type": "integer",
+						"description": "The size of the report file, in bytes.",
+						"format": "int64"
+					}
+				}
+			},
+			"Error": {
+				"type": "object",
+				"description": "The error response object.",
+				"properties": {
+					"code": {
+						"type": "string",
+						"description": "The HTTP status code of the response."
+					},
+					"details": {
+						"type": "string",
+						"description": "A human-readable description of the response."
+					}
+				}
+			}
+		},
+		"parameters": {
+			"clientHeader": {
+				"name": "Amazon-Advertising-API-ClientId",
+				"in": "header",
+				"description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+				"required": true,
+				"schema": {
+					"type": "string"
+				}
+			},
+			"profileHeader": {
+				"name": "Amazon-Advertising-API-Scope",
+				"in": "header",
+				"description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+				"required": true,
+				"schema": {
+					"type": "string"
+				}
+			}
+		},
+		"securitySchemes": {
+			"oauth2AuthorizationCode": {
+				"type": "oauth2",
+				"description": "Login with Amazon. For more information see [Login with Amazon authorization code grant](https://developer.amazon.com/docs/login-with-amazon/authorization-code-grant.html).",
+				"flows": {
+					"authorizationCode": {
+						"authorizationUrl": "https://www.amazon.com/ap/oa",
+						"tokenUrl": "https://api.amazon.com/auth/o2/token",
+						"scopes": {
+							"cpc_advertising:campaign_management": "Modify your advertising campaigns and access performance data"
+						}
+					}
+				}
+			},
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer"
+			}
+		}
+	},
+	"security": [
+		{
+			"oauth2AuthorizationCode": ["cpc_advertising:campaign_management"]
+		},
+		{
+			"bearerAuth": []
+		}
+	]
+}

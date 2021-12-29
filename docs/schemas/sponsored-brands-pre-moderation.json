@@ -1,0 +1,958 @@
+{
+  "info": {
+    "description": "",
+    "title": "PreModeration",
+    "version": "3.0"
+  },
+  "paths": {
+    "/preModeration": {
+      "post": {
+        "summary": "Pre moderate the components",
+        "requestBody": {
+          "description": "Request body for preModeration API.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreModerationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "This API will be accepting different components of the ad/page and will be automatically validating the components and send back the policy violations if any. We recommend to send all components of the same entity to be sent together. It will make us better detect any policy violation if present. This will increase the Time to go live for the entity. In one request please don't send the components of more than one entity.",
+        "operationId": "preModeration",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreModerationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModerationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModerationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. Request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModerationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request was understood, but contained invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModerationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModerationError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. Retry later. Contact support if this response persists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModerationError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Pre Moderation"
+        ]
+      }
+    }
+  },
+  "components": {
+    "headers": {},
+    "examples": {},
+    "schemas": {
+      "TextComponent": {
+        "description": "Text component which needs to be pre moderated",
+        "type": "object",
+        "required": [
+          "componentType",
+          "id",
+          "text"
+        ],
+        "properties": {
+          "componentType": {
+            "description": "Type of text component.",
+            "type": "string",
+            "enum": [
+              "HEADLINE",
+              "BRAND_NAME",
+              "OTHER_TEXT"
+            ]
+          },
+          "id": {
+            "description": "Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.",
+            "type": "string"
+          },
+          "text": {
+            "description": "Text which needs to be moderated.",
+            "type": "string"
+          }
+        }
+      },
+      "AsinComponentResponse": {
+        "description": "Pre-moderation result for an Asin component",
+        "type": "object",
+        "properties": {
+          "preModerationStatus": {
+            "description": "The pre-moderation status of the component.",
+            "type": "string",
+            "enum": [
+              "REJECTED",
+              "APPROVED",
+              "FAILED",
+              "RETRYABLE_FAILURE"
+            ]
+          },
+          "componentType": {
+            "description": "Type of Asin component.",
+            "type": "string",
+            "enum": [
+              "LANDING_ASIN",
+              "PRODUCT_ASIN"
+            ]
+          },
+          "policyViolations": {
+            "description": "A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AsinPolicyViolation"
+            }
+          },
+          "asin": {
+            "description": "Pre-moderated Asin Id.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.",
+            "type": "string"
+          }
+        }
+      },
+      "ModerationError": {
+        "description": "The Error Response Object.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "The HTTP status code of the response.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "TextEvidence": {
+        "description": "Structure of a text evidence",
+        "type": "object",
+        "properties": {
+          "violatingText": {
+            "description": "The specific text determined to violate the specified policy in reviewedText.",
+            "type": "string",
+            "example": "alcohol"
+          },
+          "position": {
+            "description": "Position in the textComponent where the policy violation is detected.",
+            "type": "object",
+            "properties": {
+              "start": {
+                "description": "Zero-based index into the text in textComponent where the text specified in violatingText starts.",
+                "type": "integer"
+              },
+              "end": {
+                "description": "Zero-based index into the text in textComponent where the text specified in violatingText ends.",
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "VideoComponentResponse": {
+        "description": "Pre moderation result for a video component",
+        "type": "object",
+        "properties": {
+          "preModerationStatus": {
+            "description": "The pre moderation status of the component.",
+            "type": "string",
+            "enum": [
+              "REJECTED",
+              "APPROVED",
+              "FAILED",
+              "RETRYABLE_FAILURE"
+            ]
+          },
+          "componentType": {
+            "description": "Type of the video component.",
+            "type": "string",
+            "enum": [
+              "SPONSORED_BRANDS_VIDEO",
+              "OTHER_VIDEO"
+            ]
+          },
+          "policyViolations": {
+            "description": "A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoPolicyViolation"
+            }
+          },
+          "id": {
+            "description": "Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.",
+            "type": "string"
+          },
+          "url": {
+            "description": "Publicly accessible url of the video that got pre moderated.",
+            "type": "string"
+          }
+        }
+      },
+      "AsinComponent": {
+        "description": "Asin component which needs to be pre moderated.",
+        "type": "object",
+        "required": [
+          "asin",
+          "componentType",
+          "id"
+        ],
+        "properties": {
+          "componentType": {
+            "description": "Type of the asin component.",
+            "type": "string",
+            "enum": [
+              "LANDING_ASIN",
+              "PRODUCT_ASIN"
+            ]
+          },
+          "asin": {
+            "description": "Asin id to be pre moderated.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.",
+            "type": "string"
+          }
+        }
+      },
+      "HeadlineSuggestionRequest": {
+        "description": "Request structure of headline suggestion API.",
+        "type": "object",
+        "properties": {
+          "asins": {
+            "minItems": 1,
+            "maxItems": 3,
+            "description": "An array of ASINs associated with the creative. Note do not pass an empty array, this results in an error.\n",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "maxNumSuggestions": {
+            "description": "Maximum number of suggestions that API should return. Response will [0, maxNumSuggestions] suggestions (suggestions are not guaranteed).",
+            "maximum": 10,
+            "type": "number",
+            "minimum": 1
+          },
+          "adFormat": {
+            "type": "string",
+            "enum": [
+              "SPONSORED_BRANDS",
+              "SPONSORED_BRANDS_SPOTLIGHT"
+            ]
+          }
+        }
+      },
+      "AsinPolicyViolation": {
+        "type": "object",
+        "properties": {
+          "policyDescription": {
+            "description": "A human-readable description of the policy.",
+            "type": "string",
+            "example": "example: Advertising alcohol is not allowed"
+          },
+          "name": {
+            "description": "A policy violation code.",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type of policy violation.",
+            "type": "string",
+            "enum": [
+              "WARNING",
+              "REJECTED"
+            ]
+          },
+          "policyLinkUrl": {
+            "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+            "type": "string",
+            "example": "https://advertising.amazon.com/resources/ad-policy/en/creative-acceptance#alcohol"
+          }
+        }
+      },
+      "PreModerationRequest": {
+        "description": "Components details that needs to be sent for pre moderation.",
+        "type": "object",
+        "required": [
+          "adProgram",
+          "locale"
+        ],
+        "properties": {
+          "recordId": {
+            "description": "Id of the brand/advertiser.",
+            "type": "string"
+          },
+          "asinComponents": {
+            "maxItems": 10,
+            "description": "Asin components which needs to be pre moderated.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AsinComponent"
+            }
+          },
+          "adProgram": {
+            "description": "Type of Ad program to which this pre moderation components belong to.",
+            "type": "string",
+            "enum": [
+              "SPONSORED_BRANDS",
+              "SPONSORED_BRANDS_SPOTLIGHT",
+              "SPONSORED_BRANDS_VIDEO",
+              "STORES",
+              "SPONSORED_DISPLAY",
+              "DSP"
+            ]
+          },
+          "locale": {
+            "description": "Specifying locale will translate the premoderation message into that locale's associated language. \n \n | Locale | Language (ISO 639) | Country (ISO 3166) | \n |-----|-----|-------| \n | ar-AE | Arabic (ar) | United Arab Emirates (AE) | \n | zh-CN | Chinese (zh) | China (CN) | \n | nl-NL | Dutch (nl) | Netherlands (NL) | \n | en-AU | English (en) | Australia (AU) | \n | en-CA | English (en) | Canada (CA) | \n | en-IN | English (en) | India (IN) | \n | en-GB | English (en) | United Kingdom (GB) | \n | en-US | English (en) | United States (US) | \n | fr-CA | French (fr) | Canada (CA) | \n | fr-FR | French (fr) | France (FR) | \n | de-DE | German (de) | Germany (DE) | \n | it-IT | Italian (it) | Italy (IT) | \n | ja-JP | Japanese (ja) | Japan (JP) | \n | ko-KR | Korean (ko) | South Korea (KR) | \n | pt-BR | Portuguese (pt) | Brazil (BR) | \n | es-ES | Spanish (es) | Spain (ES) | \n | es-US | Spanish (es) | United States (US) | \n | es-MX | Spanish (es) | Mexico (MX) | \n | tr-TR | Turkish (tr) | Turkey (TR) | \n ",
+            "type": "string",
+            "enum": [
+              "ar-AE",
+              "zh-CN",
+              "nl-NL",
+              "en-AU",
+              "en-CA",
+              "en-IN",
+              "en-GB",
+              "en-US",
+              "fr-CA",
+              "fr-FR",
+              "de-DE",
+              "it-IT",
+              "ja-JP",
+              "ko-KR",
+              "pt-BR",
+              "es-ES",
+              "es-US",
+              "es-MX",
+              "tr-TR"
+            ]
+          },
+          "imageComponents": {
+            "maxItems": 10,
+            "description": "Image components which needs to be pre moderated.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageComponent"
+            }
+          },
+          "dateComponents": {
+            "maxItems": 10,
+            "description": "Date components which needs to be pre moderated.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DateComponent"
+            }
+          },
+          "textComponents": {
+            "maxItems": 10,
+            "description": "Text components which needs to be pre moderated.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TextComponent"
+            }
+          },
+          "videoComponents": {
+            "maxItems": 1,
+            "description": "Video components which needs to be pre moderated.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoComponent"
+            }
+          }
+        }
+      },
+      "SuggestedHeadline": {
+        "description": "Suggested Headline in response object.",
+        "type": "object",
+        "properties": {
+          "headlineId": {
+            "description": "Unique Id of suggested headline.",
+            "type": "string",
+            "example": "e991e32c-0136-427a-843b-ff04162f2f91"
+          },
+          "headline": {
+            "description": "String that contains suggested headline.",
+            "type": "string",
+            "example": "This is a suggested headline."
+          }
+        }
+      },
+      "ImageEvidence": {
+        "description": "Structure of a image evidence",
+        "type": "object",
+        "properties": {
+          "topLeftY": {
+            "description": "The top left Y-coordinate of the content that violates the specfied policy within the image.",
+            "type": "integer"
+          },
+          "topLeftX": {
+            "description": "The top left X-coordinate of the content that violates the specfied policy within the image.",
+            "type": "integer"
+          },
+          "width": {
+            "description": "The width of the content that violates the specfied policy within the image.",
+            "type": "integer"
+          },
+          "height": {
+            "description": "The height of the content that violates the specfied policy within the image.",
+            "type": "integer"
+          }
+        }
+      },
+      "DateComponentResponse": {
+        "description": "Pre-moderation result for a date component",
+        "type": "object",
+        "properties": {
+          "preModerationStatus": {
+            "description": "The pre-moderation status of the component.",
+            "type": "string",
+            "enum": [
+              "REJECTED",
+              "APPROVED",
+              "FAILED",
+              "RETRYABLE_FAILURE"
+            ]
+          },
+          "componentType": {
+            "description": "Type of the date component.",
+            "type": "string",
+            "enum": [
+              "CAMPAIGN_DATES"
+            ]
+          },
+          "endDate": {
+            "description": "End date of the component.",
+            "type": "string"
+          },
+          "policyViolations": {
+            "description": "A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DatePolicyViolation"
+            }
+          },
+          "id": {
+            "description": "Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.",
+            "type": "string"
+          },
+          "startDate": {
+            "description": "Start date of the component.",
+            "type": "string"
+          }
+        }
+      },
+      "ImagePolicyViolation": {
+        "description": "Structure of policy violation for a image component",
+        "type": "object",
+        "properties": {
+          "policyDescription": {
+            "description": "A human-readable description of the policy.",
+            "type": "string"
+          },
+          "imageEvidences": {
+            "description": "List of evidences for the policy violations detected on the image component.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageEvidence"
+            }
+          },
+          "name": {
+            "description": "A policy violation code.",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type of policy violation.",
+            "type": "string",
+            "enum": [
+              "WARNING",
+              "REJECTED"
+            ]
+          },
+          "policyLinkUrl": {
+            "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+            "type": "string",
+            "example": "https://advertising.amazon.com/resources/ad-policy/en/creative-acceptance#alcohol"
+          },
+          "textEvidences": {
+            "description": "Policy violation on an image can be detected on the ocr detected text on the image as well. This list of text evidences will have the policy violations detected on the text on top of the image.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TextEvidence"
+            }
+          }
+        }
+      },
+      "ImageComponent": {
+        "description": "Image component which needs to be pre moderated. A publicly accessible imageUrl must be sent.",
+        "type": "object",
+        "required": [
+          "componentType",
+          "id",
+          "url"
+        ],
+        "properties": {
+          "componentType": {
+            "description": "Type of the image component.",
+            "type": "string",
+            "enum": [
+              "BRAND_LOGO",
+              "CUSTOM_IMAGE",
+              "OTHER_IMAGE"
+            ]
+          },
+          "id": {
+            "description": "Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.",
+            "type": "string"
+          },
+          "url": {
+            "description": "Url of the image to be pre moderated. The url must be publicly accessible.",
+            "type": "string"
+          }
+        }
+      },
+      "VideoPolicyViolation": {
+        "description": "Structure of policy violation for a video component",
+        "type": "object",
+        "properties": {
+          "policyDescription": {
+            "description": "A human-readable description of the policy.",
+            "type": "string"
+          },
+          "videoEvidences": {
+            "description": "List of evidences for the policy violations detected on the video component.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoEvidence"
+            }
+          },
+          "name": {
+            "description": "A policy violation code.",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type of policy violation.",
+            "type": "string",
+            "enum": [
+              "WARNING",
+              "REJECTED"
+            ]
+          },
+          "policyLinkUrl": {
+            "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+            "type": "string",
+            "example": "https://advertising.amazon.com/resources/ad-policy/en/creative-acceptance#alcohol"
+          }
+        }
+      },
+      "VideoComponent": {
+        "description": "Video component which needs to be pre moderated. A publicly accessible videoUrl must be sent.",
+        "type": "object",
+        "required": [
+          "componentType",
+          "id",
+          "url"
+        ],
+        "properties": {
+          "componentType": {
+            "description": "Type of the video component.",
+            "type": "string",
+            "enum": [
+              "SPONSORED_BRANDS_VIDEO",
+              "OTHER_VIDEO"
+            ]
+          },
+          "id": {
+            "description": "Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.",
+            "type": "string"
+          },
+          "url": {
+            "description": "Url of the video to be pre moderated. The url must be publicly accessible.",
+            "type": "string"
+          }
+        }
+      },
+      "HeadlineSuggestionResponse": {
+        "description": "Response structure of headline suggestion API.",
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "description": "An identifier for request made which is generated by server.",
+            "type": "string"
+          },
+          "suggestions": {
+            "description": "Suggestions are sorted, i.e., more suitable headline has lesser array index value",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SuggestedHeadline"
+            }
+          }
+        }
+      },
+      "DateComponent": {
+        "description": "Date component which needs to be pre moderated. Either startDate or endDate must be populated, or both can be populated.",
+        "type": "object",
+        "required": [
+          "componentType",
+          "id"
+        ],
+        "properties": {
+          "componentType": {
+            "description": "Type of the date component.",
+            "type": "string",
+            "enum": [
+              "CAMPAIGN_DATE"
+            ]
+          },
+          "endDate": {
+            "description": "End date of the component in yyyy-MM-dd HH:mm:ss format",
+            "type": "string"
+          },
+          "id": {
+            "description": "Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.",
+            "type": "string"
+          },
+          "startDate": {
+            "description": "Start date of the component in yyyy-MM-dd HH:mm:ss format",
+            "type": "string"
+          }
+        }
+      },
+      "ImageComponentResponse": {
+        "description": "Pre moderation result for a image component",
+        "type": "object",
+        "properties": {
+          "preModerationStatus": {
+            "description": "The pre moderation status of the component.",
+            "type": "string",
+            "enum": [
+              "REJECTED",
+              "APPROVED",
+              "FAILED",
+              "RETRYABLE_FAILURE"
+            ]
+          },
+          "componentType": {
+            "description": "Type of the image component.",
+            "type": "string",
+            "enum": [
+              "BRAND_LOGO",
+              "CUSTOM_IMAGE",
+              "OTHER_IMAGE"
+            ]
+          },
+          "policyViolations": {
+            "description": "A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImagePolicyViolation"
+            }
+          },
+          "id": {
+            "description": "Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.",
+            "type": "string"
+          },
+          "url": {
+            "description": "Publicly accessible url of the image that got pre moderated.",
+            "type": "string"
+          }
+        }
+      },
+      "VideoEvidence": {
+        "description": "Structure of a video evidence",
+        "type": "object",
+        "properties": {
+          "start": {
+            "description": "The start position (in seconds) of the content that violates the specified policy within the video.",
+            "type": "integer"
+          },
+          "end": {
+            "description": "The end position (in seconds) of the content that violates the specified policy within the video.",
+            "type": "integer"
+          }
+        }
+      },
+      "PreModerationResponse": {
+        "description": "Information regarding the policy violations if present for the components, sent for pre moderation.",
+        "type": "object",
+        "properties": {
+          "recordId": {
+            "description": "Id of the brand/advertiser.",
+            "type": "string"
+          },
+          "asinComponents": {
+            "description": "Pre moderation result of the asin components. It will have information regarding the policy violations present if any.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AsinComponentResponse"
+            }
+          },
+          "preModerationId": {
+            "description": "Unique Id for the moderation Request.",
+            "type": "string"
+          },
+          "adProgram": {
+            "description": "Type of Ad program to which the pre moderation components belong to.",
+            "type": "string",
+            "enum": [
+              "SPONSORED_BRANDS",
+              "SPONSORED_BRANDS_SPOTLIGHT",
+              "SPONSORED_BRANDS_VIDEO",
+              "STORES",
+              "SPONSORED_DISPLAY",
+              "DSP"
+            ]
+          },
+          "locale": {
+            "description": "Locale value that was passed in request.",
+            "type": "string",
+            "enum": [
+              "ar-AE",
+              "zh-CN",
+              "nl-NL",
+              "en-AU",
+              "en-CA",
+              "en-IN",
+              "en-GB",
+              "en-US",
+              "fr-CA",
+              "fr-FR",
+              "de-DE",
+              "it-IT",
+              "ja-JP",
+              "ko-KR",
+              "pt-BR",
+              "es-ES",
+              "es-US",
+              "es-MX",
+              "tr-TR"
+            ]
+          },
+          "imageComponents": {
+            "description": "Pre moderation result of the image components. It will have information regarding the policy violations present if any.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageComponentResponse"
+            }
+          },
+          "dateComponents": {
+            "description": "Pre moderation result of the date components. It will have information regarding the policy violations present if any.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DateComponentResponse"
+            }
+          },
+          "textComponents": {
+            "description": "Pre moderation result of the text components. It will have information regarding the policy violations present if any.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TextComponentResponse"
+            }
+          },
+          "videoComponents": {
+            "description": "Pre moderation result of the video components. It will have information regarding the policy violations present if any.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoComponentResponse"
+            }
+          }
+        }
+      },
+      "TextPolicyViolation": {
+        "description": "Structure of policy violation for a text component",
+        "type": "object",
+        "properties": {
+          "policyDescription": {
+            "description": "A human-readable description of the policy.",
+            "type": "string"
+          },
+          "name": {
+            "description": "A policy violation code.",
+            "type": "string",
+            "example": "GRAMMATICAL_ERROR"
+          },
+          "type": {
+            "description": "Type of policy violation.",
+            "type": "string",
+            "enum": [
+              "WARNING",
+              "REJECTED"
+            ]
+          },
+          "policyLinkUrl": {
+            "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+            "type": "string",
+            "example": "https://advertising.amazon.com/resources/ad-policy/en/creative-acceptance#alcohol"
+          },
+          "textEvidences": {
+            "description": "List of text evidences",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TextEvidence"
+            }
+          }
+        }
+      },
+      "DatePolicyViolation": {
+        "type": "object",
+        "properties": {
+          "policyDescription": {
+            "description": "A human-readable description of the policy.",
+            "type": "string",
+            "example": "example: Advertising alcohol is not allowed"
+          },
+          "name": {
+            "description": "A policy violation code.",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type of policy violation.",
+            "type": "string",
+            "enum": [
+              "WARNING",
+              "REJECTED"
+            ]
+          },
+          "policyLinkUrl": {
+            "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+            "type": "string",
+            "example": "https://advertising.amazon.com/resources/ad-policy/en/creative-acceptance#alcohol"
+          }
+        }
+      },
+      "TextComponentResponse": {
+        "description": "Pre moderation result for a text component",
+        "type": "object",
+        "properties": {
+          "preModerationStatus": {
+            "description": "The pre moderation status of the component.",
+            "type": "string",
+            "enum": [
+              "REJECTED",
+              "APPROVED",
+              "FAILED",
+              "RETRYABLE_FAILURE"
+            ]
+          },
+          "componentType": {
+            "description": "Type of the text component.",
+            "type": "string",
+            "enum": [
+              "HEADLINE",
+              "BRAND_NAME",
+              "OTHER_TEXT"
+            ]
+          },
+          "corrections": {
+            "description": "A list of corrected text without any policy violation. You could consider replacing the component with one of the corrected texts",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "policyViolations": {
+            "description": "A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TextPolicyViolation"
+            }
+          },
+          "id": {
+            "description": "Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.",
+            "type": "string"
+          },
+          "text": {
+            "description": "Text which got pre moderated.",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "requestBodies": {},
+    "responses": {},
+    "callbacks": {},
+    "links": {},
+    "securitySchemes": {},
+    "parameters": {}
+  },
+  "openapi": "3.0.1"
+}

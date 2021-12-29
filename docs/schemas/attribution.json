@@ -1,0 +1,693 @@
+{
+  "info": {
+    "description": "**Amazon Attribution**<br/>    Amazon Attribution is an advertising measurement product that enables advertisers to understand the impact that their non-Amazon ads (i.e. Google Ads, Facebook, Microsoft Ads) have in driving shopping activity on Amazon. Measuring ads using Amazon Attribution is done through implementing Attribution tags on non-Amazon ads. Amazon Attribution is currently available in beta for US, CA, UK, DE, FR, IT, and ES vendors and professional sellers enrolled in Brand Registry.<br/><br/>    **Amazon Attribution API**<br/>    The Amazon Attribution API enables agencies and integrators to easily retrieve their advertiser client's non-Amazon publisher attribution tags to automate tag implementation on their non-Amazon ads that link to an Amazon product or Stores page. The API also enables agencies and integrators to create and retrieve reporting on behalf of their advertiser clients to better understand Amazon conversion performance on their campaigns.<br/><br/>    Note that you must pass a header named **Amazon-Advertising-Api-Scope** with each call to an  Amazon Attribution API URI, including GET /advertisers. The value for this header is the **profileId** available from the **Profiles resource (/v2/profiles)**. Note that for Amazon vendors, there may be multiple Amazon Attribution \"Advertisers\", while Amazon Sellers will only have one Amazon Attribution \"Advertiser\" per Profile/AA entity.<br/><br/>    Also note that Amazon Attribution accounts are a separate type of \"profile\". Only Amazon Attribution profiles can be called within the Amazon Attribution API. When getting the **Profiles resource**, identify the correct Amazon Attribution profile by inspecting the \"subType\" property to ensure it's set to  \"AMAZON_ATTRIBUTION\".<br/><br/>    For more information on the functionality, see the [Amazon Attribution API help topic](amazon-attribution/overview). For API onboarding information, see the [account setup](setting-up/account-setup) topic.<br/><br/>**</br></br>[Amazon Advertising API Support JIRA Service Desk - Website](https://amzn-clicks.atlassian.net/servicedesk/customer/user/login?destination=portals)</br>[Amazon Advertising API License Agreement](https://advertising.amazon.com/API/docs/license-agreement)",
+    "title": "Amazon Attribution",
+    "version": "3.0"
+  },
+  "paths": {
+    "/attribution/publishers": {
+      "get": {
+        "summary": "Gets a list of all available publishers.",
+        "description": "Note that the 'macroEnabled' field is set to 'true' for Publishers that support macro tags.",
+        "operationId": "getPublishers",
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublishersResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Publishers"
+        ]
+      }
+    },
+    "/attribution/report": {
+      "post": {
+        "summary": "Gets an attribution report for a specified list of advertisers.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "operationId": "getAttributionTagsByCampaign",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request. Campaign does not exist, ad group does not exist, or creative does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaaSError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. Request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaaSError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaaSError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Reports"
+        ]
+      }
+    },
+    "/attribution/tags/nonMacroTemplateTag": {
+      "get": {
+        "summary": "Gets a list of attribution tags for third-party publisher campaigns that do not support macros.",
+        "description": "Some third-party publishers do not support tags that include macro parameters. In this case, the attribution tag includes a set of '**insertValue**' placeholder values. Replace these placeholder values with your campaign, ad group, and ad identifiers to create unique ad-level tags.<br/><br/> For example: \"?maas=maas_adg_api_123456789_static_9_99&ref_=aa_maas&tag=maas&aa_campaignid={**insertCampaignId**}&aa_adgroupid={**insertAdGroupId**}&aa_creativeid={**insertAdiD**}\"<br/><br/> An example of an integrator nonMacro tag with filled campaign, ad group, and ad ID values is \"?maas=maas_adg_api_123456789_static_9_99&ref_=aa_maas&tag=maas&aa_campaignid=**12345**&aa_adgroupid=**5678**&aa_creativeid=**1357**\"",
+        "operationId": "getPublisherMacroAttributionTag",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttributionTagResponse"
+                },
+                "example": {
+                  "advertiserB": {
+                    "5": "tag2B",
+                    "6": "tag2B",
+                    "7": "tag3B"
+                  },
+                  "advertiserA": {
+                    "5": "tag1A",
+                    "6": "tag2A",
+                    "7": "tag3A"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, publisher not supported, or invalid advertiser identifier.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaaSError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaaSError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. Request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaaSError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. Request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaaSError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaaSError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "explode": true,
+            "name": "publisherIds",
+            "description": "A list of publisher identifiers for which to request tags.",
+            "style": "form",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "explode": true,
+            "name": "advertiserIds",
+            "description": "List of advertiser identifiers for which to request tags.\nIf no values are passed, all advertisers are returned.",
+            "style": "form"
+          }
+        ],
+        "tags": [
+          "Attribution Tags"
+        ]
+      }
+    },
+    "/attribution/advertisers": {
+      "get": {
+        "summary": "Gets a list of advertisers associated with an Amazon Attribution account.",
+        "description": "For sellers, an attribution profile has one associated advertiser. For vendors, an attribution profile may have more than one associated advertiser.",
+        "operationId": "getAdvertisersByProfile",
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdvertiserResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Advertisers"
+        ]
+      }
+    },
+    "/attribution/tags/macroTag": {
+      "get": {
+        "summary": "Gets a list of attribution tags for third-party publisher campaigns that support macros.",
+        "description": "Third-party publishers, such as Google Ads, Facebook, Microsoft Ads, and Pinterest support tags that include macro parameters. Using macro parameters, campaign tracking information is dynamically inserted into the click-through URL when an ad is clicked. This resource is a tag pre-populated with campaign, ad group, and ad level publisher macros with the values associated with your campaign. <br/><br/> For example, a Google Ads macro tag is \"?maas=maas_adg_api_123456789_1_99&ref_=aa_maas&tag=maas&aa_campaignid={campaignid}&aa_adgroupid={adgroupid}&aa_creativeid=ad-{creative}_{targetid}_dev-{device}_ext-{feeditemid}\"",
+        "operationId": "getPublisherAttributionTagTemplate",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttributionTagResponse"
+                },
+                "example": {
+                  "advertiserB": {
+                    "1": "tag2B",
+                    "2": "tag2B",
+                    "3": "tag3B"
+                  },
+                  "advertiserA": {
+                    "1": "tag1A",
+                    "2": "tag2A",
+                    "3": "tag3A"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request, publisher not supported, or invalid advertiser identifier.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaaSError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaaSError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. Request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaaSError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. Request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaaSError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaaSError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "explode": true,
+            "name": "publisherIds",
+            "description": "A list of publisher identifiers for which to request tags.",
+            "style": "form",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "format": "int64",
+                "type": "integer"
+              }
+            },
+            "in": "query",
+            "explode": true,
+            "name": "advertiserIds",
+            "description": "List of advertiser identifiers for which to request tags.\nIf no values are passed, all advertisers are returned.",
+            "style": "form"
+          }
+        ],
+        "tags": [
+          "Attribution Tags"
+        ]
+      }
+    }
+  },
+  "components": {
+    "headers": {},
+    "examples": {},
+    "schemas": {
+      "advertiser": {
+        "type": "object",
+        "properties": {
+          "advertiserName": {
+            "type": "string"
+          },
+          "advertiserId": {
+            "type": "string"
+          }
+        }
+      },
+      "nonMacroPublisher": {
+        "description": "The identifier of a publisher that does not support macros.",
+        "type": "string"
+      },
+      "MaaSError": {
+        "description": "The error response object.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "The HTTP status code of the response. Possible value of code is \"200\", \"207\", \"400\", \"401\", \"429\", \"403\", or \"500\".",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "PublishersResponse": {
+        "type": "object",
+        "properties": {
+          "publisher": {
+            "description": "A list of publishers.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Publisher"
+            }
+          }
+        }
+      },
+      "macroPublishers": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/macroPublisher"
+        }
+      },
+      "Publisher": {
+        "type": "object",
+        "properties": {
+          "macroEnabled": {
+            "description": "Set to 'true' if the publisher supports macros.",
+            "type": "boolean"
+          },
+          "name": {
+            "description": "The name of the publisher.",
+            "type": "string"
+          },
+          "id": {
+            "allOf": [
+              {
+                "x-amazon-advertising-package": "MaaSPublicAPIAPISwagger",
+                "description": "The identifier of a macro publisher.",
+                "type": "string"
+              },
+              {
+                "x-amazon-advertising-package": "MaaSPublicAPIAPISwagger",
+                "description": "The identifier of a publisher that does not support macros.",
+                "type": "string"
+              }
+            ],
+            "description": "The identifier of a publisher.",
+            "type": "object"
+          }
+        }
+      },
+      "nonMacroPublishers": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/nonMacroPublisher"
+        }
+      },
+      "attributionTagMap": {
+        "description": "An object representing the association between a publisher identifier and an attribution tag.",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "type": "object"
+      },
+      "ReportResponse": {
+        "type": "object",
+        "properties": {
+          "reports": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReportEntry"
+            }
+          },
+          "size": {
+            "description": "The size of the report.",
+            "type": "integer"
+          },
+          "cursorId": {
+            "description": "The identifier of the pagination cursor.",
+            "type": "string"
+          }
+        }
+      },
+      "ReportEntry": {
+        "description": "Report entry object in GetReport reports list.",
+        "type": "object",
+        "properties": {
+          "date": {
+            "description": "Date on which the events took place. Applies to `PERFORMANCE` and `PRODUCTS` reportType.",
+            "type": "string"
+          },
+          "brandName": {
+            "description": "Name of the advertiser's brand. Applies only to `PRODUCTS` reportType.",
+            "type": "string"
+          },
+          "marketplace": {
+            "description": "The Amazon-owned site the product is sold on. Applies only to `PRODUCTS` reportType.",
+            "type": "string"
+          },
+          "campaignId": {
+            "description": "A campaign external identifier. Applies to `PERFORMANCE` and `PRODUCTS` reportType.",
+            "type": "string"
+          },
+          "productAsin": {
+            "description": "A unique block of letters and/or numbers that identify all products sold on Amazon. Applies only to `PRODUCTS` reportType.",
+            "type": "string"
+          },
+          "productConversionType": {
+            "description": "The conversion type describes whether the conversion happened on a promoted or a brand halo ASIN. Applies only to `PRODUCTS` reportType.",
+            "type": "string"
+          },
+          "advertiserName": {
+            "description": "Name of advertiser. Applies to `PERFORMANCE` and `PRODUCTS` reportType.",
+            "type": "string"
+          },
+          "adGroupId": {
+            "description": "An ad group external identifier. Applies to `PERFORMANCE` and `PRODUCTS` reportType.",
+            "type": "string"
+          },
+          "creativeId": {
+            "description": "A creative external identifier. Applies only to `PERFORMANCE` reportType",
+            "type": "string"
+          },
+          "productName": {
+            "description": "The name of the product. Applies only to `PRODUCTS` reportType.",
+            "type": "string"
+          },
+          "productCategory": {
+            "description": "A classification for the type of product being sold which determines its place in the Amazon retail catalog. Contains categories of products. Applies only to `PRODUCTS` reportType.",
+            "type": "string"
+          },
+          "productSubcategory": {
+            "description": "A classification for the type of product being sold which determines its place in the Amazon retail catalog. Contains subcategories of products. Applies only to `PRODUCTS` reportType",
+            "type": "string"
+          },
+          "productGroup": {
+            "description": "A distinct product grouping distinguishing products like watches from video games from toys. Contains groups of products. Applies only to `PRODUCTS` reportType.",
+            "type": "string"
+          },
+          "publisher": {
+            "description": "The publisher name. Applies to `PERFORMANCE` and `PRODUCTS` reportType",
+            "type": "string"
+          }
+        }
+      },
+      "ReportRequestBody": {
+        "description": "Report request body",
+        "type": "object",
+        "properties": {
+          "reportType": {
+            "description": "The type of report. Either `PERFORMANCE` or `PRODUCTS`. It is an optional parameter. If not used in request body, default reportType is `PERFORMANCE`. Each report type is aggregated at different levels. See below table for list of dimensions available within each report type.\n|reportType  |Dimension|\n|--------|-----------|\n|PERFORMANCE|campaignId, adgroupId, creativeid|\n|PRODUCTS|campaignId, adgroupId|",
+            "type": "string"
+          },
+          "advertiserIds": {
+            "description": "One or more advertiser Ids to filter reporting by. If requesting reporting for multiple advertiser Ids, input via a comma-delimited list.",
+            "type": "string"
+          },
+          "endDate": {
+            "description": "The end date for the report, form as \"YYYYMMDD\"",
+            "type": "string"
+          },
+          "count": {
+            "maximum": 10000,
+            "description": "The number of entries to include in the report.",
+            "type": "integer",
+            "minimum": 1
+          },
+          "metrics": {
+            "description": "A comma-delimited list of metrics to include in the report. Each report type returns a unique set of metrics. View the list of available metrics by report type below.\n|Metrics for reportType`PERFORMANCE`|\n|-------------------|\n|Metric  |Description|\n|--------|-----------|\n|Click-throughs|Total ad clicks.|\n|attributedDetailPageViewsClicks14d|The number of promoted detail page view conversions attributed to ad click-throughs within 14 days.|\n|attributedAddToCartClicks14d|The number of promoted add to cart conversions attributed to ad click-throughs within 14 days.|\n|attributedPurchases14d|The number of promoted purchases attributed to ad click-throughs within 14 days.|\n|unitsSold14d|The number of promoted units sold attributed to ad click-throughs within 14 days.|\n|attributedSales14d|Aggregate value of promoted attributed sales occurring within 14 days of an attribution event in local currency.|\n|attributedTotalDetailPageViewsClicks14d|The number of total detail page view conversions attributed to ad click-throughs within 14 days, including brand halo.|\n|attributedTotalAddToCartClicks14d|The number of total add to cart conversions attributed to ad click-throughs within 14 days, including brand halo.|\n|attributedTotalPurchases14d|The number of total purchases attributed to ad click-throughs within 14 days, including brand halo.|\n|totalUnitsSold14d|The number of total units sold attributed to ad click-throughs within 14 days, including brand halo.|\n|totalAttributedSales14d|Aggregate value of total attributed sales occurring within 14 days of an attribution event in local currency, including brand halo.|\n\n|Metrics for reportType`PRODUCTS`|\n|-------------------|\n|Metric  |Description|\n|--------|-----------|\n|attributedDetailPageViewsClicks14d|The number of promoted detail page view conversions attributed to ad click-throughs within 14 days.|\n|attributedAddToCartClicks14d|The number of promoted add to cart conversions attributed to ad click-throughs within 14 days.|\n|attributedPurchases14d|The number of promoted purchases attributed to ad click-throughs within 14 days.|\n|unitsSold14d|The number of promoted units sold attributed to ad click-throughs within 14 days.|\n|attributedSales14d|Aggregate value of promoted attributed sales occurring within 14 days of an attribution event in local currency.|\n|brandHaloDetailPageViewsClicks14d|The number of Brand halo detail page view conversions attributed to ad click-throughs within 14 days.|\n|brandHaloAttributedAddToCartClicks14d|The number of Brand halo add to cart conversions attributed to ad click-throughs within 14 days.|\n|brandHaloAttributedPurchases14d|The number of Brand halo purchases attributed to ad click-throughs within 14 days.|\n|brandHaloUnitsSold14d|The number of Brand halo units sold attributed to ad click-throughs within 14 days.|\n|brandHaloAttributedSales14d|Aggregate value of Brand halo attributed sales occurring within 14 days of an attribution event in local currency.|\n|attributedNewToBrandPurchases14d|The number of promoted purchases made for the first time over a one-year lookback window by customers on Amazon, attributed to ad click-throughs within 14 days.|\n|attributedNewToBrandUnitsSold14d|The number of promoted units sold made for the first time over a one-year lookback window by customers on Amazon, attributed to ad click-throughs within 14 days.|\n|attributedNewToBrandSales14d|The aggregate value of promoted sales made for the first time over a one-year lookback window by customers on Amazon, attributed to ad click-throughs within 14 days.|\n|brandHaloNewToBrandPurchases14d|The number of Brand halo purchases made for the first time over a one-year lookback window by customers on Amazon, attributed to ad click-throughs within 14 days.|\n|brandHaloNewToBrandUnitsSold14d|The number of Brand halo units sold made for the first time over a one-year lookback window by customers on Amazon, attributed to ad click-throughs within 14 days.|\n|brandHaloNewToBrandSales14d|The aggregate value of Brand halo sales made for the first time over a one-year lookback window by customers on Amazon, attributed to ad click-throughs within 14 days.|",
+            "type": "string"
+          },
+          "startDate": {
+            "description": "The start date for the report, in \"YYYYMMDD\" format. For reportType `PRODUCTS`, startDate can only be within last 90 days from current date.",
+            "type": "string"
+          },
+          "cursorId": {
+            "description": "The value of `cursorId` must be set to `null` without `\"\"`, or set to `\"\"` for the first request. For each following request, the value of `cursorId` from the previous response must be included in the current request. Note that for the cursorId values the `\"` character must be escaped with `\\`.",
+            "type": "string"
+          }
+        }
+      },
+      "AttributionTagResponse": {
+        "type": "object",
+        "properties": {
+          "advertiserAttributionTagMap": {
+            "description": "A list of advertisers and associated attribution tags.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/attributionTagMap"
+            },
+            "type": "object",
+            "example": {
+              "advertiserB": {
+                "1": "tag2B",
+                "2": "tag2B"
+              },
+              "advertiserA": {
+                "1": "tag1A",
+                "2": "tag2A"
+              }
+            }
+          }
+        }
+      },
+      "AdvertiserResponse": {
+        "type": "object",
+        "properties": {
+          "advertisers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/advertiser"
+            }
+          }
+        }
+      },
+      "macroPublisher": {
+        "description": "The identifier of a macro publisher.",
+        "type": "string"
+      }
+    },
+    "requestBodies": {},
+    "responses": {},
+    "callbacks": {},
+    "links": {},
+    "securitySchemes": {},
+    "parameters": {}
+  },
+  "openapi": "3.0.1"
+}

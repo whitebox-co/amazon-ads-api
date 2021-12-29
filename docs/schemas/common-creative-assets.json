@@ -1,0 +1,1477 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "description": "# Overview:\n Advertisers can use creative assets to store, organize and reuse brand content, such as logos, images, etc. Stored content can be used for Amazon Ads and on Amazon shopping pages. Creative assets enables brands to provide a consistent shopping experience by easily applying brand content across Amazon. \n\n\n   # Workflow\n\n\n   **Asset Upload and Registration**\n\n\n   *Step 1* - **Get Upload URL** - This step is creating a temporary upload location to which you will be uploading your asset to in the following step.\n   `Request (POST) - /assets/upload` (ensure to include the file name in the body including the file extension as documented in the assets/upload section below)\n\n\n   **Response** - `uploadURL` - This is the url location to which you will be uploading your asset in Step 2\n\n\n   *Step 2* - **Upload File** -  \n   `Request (PUT) <uploadURL>`\n\n\n   **Response** - `200 Success` Once your asset is successfully uploaded to the uploadURL, you can proceed to register this asset.\n\n\n   *Step 3* - **Register Asset** -\n   `Request (POST) - /assets/register` \n\n  **Example Request Body**\n     \n   ```\n\n   {\n     \n     \"url\": \"uploadUrl\"\n     \"name\": \"assetName\"\n     \"asinList\": [\n       \"BXXXXXXXX\"\n     ],\n     \"assetType\": \"IMAGE\",\n     \"assetSubTypeList\": [\n       \"LOGO\"\n     ],\n     \"versionInfo\": {\n       \"linkedAssetId\": \"xxxx.xxxxxxxxx.xxxxxxx.xxxxxxxxxxxxxxx\",\n       \"versionNotes\": \"This version is for Team A\"\n       },\n     \"tags\": [\n       \"Awareness\",\n       \"Spring\"\n     ]\n     \"associatedSubEntityList\": [ \n         {\n           \"brandEntityId\": \"string\" //required for sellers\n         }\n      ]\n   }\n   \n   ```\n   Response - `assetId + version` These can be used on GET assets and is the identifier of the asset you uploaded to Creative Assets.\n",
+    "title": "Creative Assets",
+    "version": "3.0"
+  },
+  "tags": [
+    {
+      "name": "Creative Assets"
+    }
+  ],
+  "paths": {
+    "/assets/": {
+      "get": {
+        "tags": [
+          "Creative Assets"
+        ],
+        "summary": "Retrieves an asset along with the metadata",
+        "operationId": "getAsset",
+        "responses": {
+          "200": {
+            "description": "Returns asset metadata.",
+            "content": {
+              "application/vnd.creativeassetsgetresponse.v3+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "assetVersionList": {
+                      "$ref": "#/components/schemas/caAssetVersionList"
+                    },
+                    "assetGlobal": {
+                      "$ref": "#/components/schemas/caAssetGlobal"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/vnd.creativeassetsgetresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caBadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UnAuthorized Operation",
+            "content": {
+              "application/vnd.creativeassetsgetresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caUnauthorizedRequest"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Operation",
+            "content": {
+              "application/vnd.creativeassetsgetresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caForbiddenRequest"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/vnd.creativeassetsgetresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caInternalError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "assetId",
+            "description": "The assetId",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "version",
+            "description": "The versionId of the asset, if not included all versions will return.",
+            "required": false
+          }
+        ]
+      }
+    },
+    "/assets/register": {
+      "post": {
+        "tags": [
+          "Creative Assets"
+        ],
+        "summary": "Registers an uploaded asset with the creative assets library with optional contextual and tagging information.",
+        "requestBody": {
+          "description": "Note - **asinList**, **versionInfo**, and **tags** are optional in the request body.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "$ref": "#/components/schemas/caAssetUploadLocation"
+                  },
+                  "name": {
+                    "$ref": "#/components/schemas/caAssetName"
+                  },
+                  "asinList": {
+                    "$ref": "#/components/schemas/caAsins"
+                  },
+                  "assetType": {
+                    "$ref": "#/components/schemas/caAssetType"
+                  },
+                  "assetSubTypeList": {
+                    "$ref": "#/components/schemas/caassetSubTypes"
+                  },
+                  "versionInfo": {
+                    "$ref": "#/components/schemas/caVersionInfo"
+                  },
+                  "tags": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "registrationContext": {
+                    "$ref": "#/components/schemas/caRegistrationContext"
+                  },
+                  "associatedSubEntityList": {
+                    "$ref": "#/components/schemas/caAssociatedSubEntityList"
+                  },
+                  "skipAssetSubTypesDetection": {
+                    "description": "Select true if you want to set an asset to a specific assetSubType, if this is not included the system may reclassify your asset based on specifications.",
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "The API should be called once the asset is uploaded to the location\nprovided by the /asset/upload API endpoint.",
+        "operationId": "registerAsset",
+        "responses": {
+          "200": {
+            "description": "AssetResource",
+            "content": {
+              "application/vnd.creativeassetsregisterresponse.v3+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "assetId": {
+                      "$ref": "#/components/schemas/caAssetId"
+                    },
+                    "versionId": {
+                      "$ref": "#/components/schemas/caVersion"
+                    },
+                    "failedSpecChecks": {
+                      "$ref": "#/components/schemas/caProgramSpecificationsList"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/vnd.creativeassetsregisterresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caBadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UnAuthorized Operation",
+            "content": {
+              "application/vnd.creativeassetsregisterresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caUnauthorizedRequest"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "UnAuthorized Operation",
+            "content": {
+              "application/vnd.creativeassetsregisterresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caForbiddenRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/vnd.creativeassetsregisterresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caResourceNotFound"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/vnd.creativeassetsregisterresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caInternalError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/assets/upload": {
+      "post": {
+        "tags": [
+          "Creative Assets"
+        ],
+        "summary": "Creates an upload location to upload an asset.",
+        "requestBody": {
+          "description": "Make sure to include file extension along with filename . (ie. \"filename.mp4\")",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileName": {
+                    "$ref": "#/components/schemas/caFileName"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "Creates an ephemeral resource (upload location) to upload Assets to Creative Assets tool. The upload location is short lived and expires in 15 minutes.The upload location only supports PUT HTTP Method to upload the asset content. If the upload location expires, API user will get `403` Forbidden response.\n* All ad specs - sizes and policies can be found [here](https://advertising.amazon.com/resources/ad-specs/?ref_=a20m_us_hnav_spcs)\n\n* Program specific links\n1. **Stores** - [here](https://advertising.amazon.com/resources/ad-specs/stores?ref_=a20m_us_spcs_stcrgd)\n2. **SB/SBV/sponsored ads** - [here](https://advertising.amazon.com/resources/ad-policy/sponsored-ads-policies?ref_=a20m_us_spcs_sbv_spcs_spadcap)",
+        "operationId": "getUploadLocation",
+        "responses": {
+          "200": {
+            "description": "Returns an upload location.",
+            "content": {
+              "application/vnd.creativeassetsuploadresponse.v3+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "$ref": "#/components/schemas/caAssetUploadLocation"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/vnd.creativeassetsuploadresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caBadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UnAuthorized Operation",
+            "content": {
+              "application/vnd.creativeassetsuploadresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caUnauthorizedRequest"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Operation",
+            "content": {
+              "application/vnd.creativeassetsuploadresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caForbiddenRequest"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/vnd.creativeassetsuploadresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caInternalError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/assets/search/": {
+      "post": {
+        "tags": [
+          "Creative Assets"
+        ],
+        "summary": "Search the creative asset library.",
+        "requestBody": {
+          "description": "text - optional, this field matches asset name, asset name prefix, tags and ASINs associated with the assets\n\nfilterCriteria - optional, this is used to filter results\n\nsortCriteria - optional, this is used to get sorted results\n\npageCriteria - optional, this is used for pagination\n",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/caSearchRequestCommon"
+              }
+            }
+          },
+          "required": true
+        },
+        "operationId": "searchAssets",
+        "responses": {
+          "200": {
+            "description": "Returns search results",
+            "content": {
+              "application/vnd.creativeassetssearchassetsresponse.v3+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "totalRecords": {
+                      "format": "int64",
+                      "type": "integer"
+                    },
+                    "assetList": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/caAsset"
+                      }
+                    },
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/vnd.creativeassetssearchassetsresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caBadRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UnAuthorized Operation",
+            "content": {
+              "application/vnd.creativeassetssearchassetsresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caUnauthorizedRequest"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden Operation",
+            "content": {
+              "application/vnd.creativeassetssearchassetsresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caForbiddenRequest"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/vnd.creativeassetssearchassetsresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/caInternalError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "headers": {},
+    "examples": {},
+    "schemas": {
+      "caAssociatedProgram": {
+        "type": "object",
+        "properties": {
+          "metadata": {
+            "$ref": "#/components/schemas/caMetadataMap"
+          },
+          "programName": {
+            "$ref": "#/components/schemas/caProgram"
+          }
+        }
+      },
+      "caMetadataMap": {
+        "description": "Include key-value pairs related to the asset. For DSP use \"dspAdvertiserId\" = \"ID\". Include program as AMAZON_DSP.",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "type": "object",
+        "example": {
+          "dspAdvertiserId": "string"
+        }
+      },
+      "caProgram": {
+        "type": "string",
+        "description": "Use this field to specify which program you are uploading an asset for. Currently, the accepted value here on registration is to associate an asset with a DSP advertiser.",
+        "enum": [
+          "AMAZON_DSP"
+        ]
+      },
+      "caFileName": {
+        "pattern": "[\\w]+\\.jpg|png|mp4|mov|wmv|avi",
+        "description": "The fileName of the asset.",
+        "type": "string"
+      },
+      "caAsins": {
+        "minItems": 1,
+        "maxItems": 100,
+        "description": "Tagging assets with ASIN, promotes asset discoverability downstream. If ASIN is provided at the time of upload/during asset registration, it is applied as a tag on that asset. This allows for that asset to be searchable using that ASIN#. For e.g., An advertiser may want to search for assets tagged with ASIN BC10001, so they can create a store spotlight ad with product images for that ASIN.",
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "caAssetVersionList": {
+        "minItems": 1,
+        "maxItems": 100,
+        "description": "The asset version list.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/caAssetVersion"
+        }
+      },
+      "caSpecification": {
+        "description": "Structure containing specification\n stringId: This is the translated string Id, client will be retrieving the translation corresponding to this string.\n failureReason: This specifies the failure reason of specification. \n arguments: Arguments required for translation string.\n isPassed: Whether spec got passed or failed.\n actualValue: If spec got failed then this attribute represent the actual value of the spec parameter in the file.",
+        "type": "object",
+        "properties": {
+          "stringId": {
+            "type": "string"
+          },
+          "isPassed": {
+            "type": "boolean"
+          },
+          "failureReason": {
+            "type": "string"
+          },
+          "actualValue": {
+            "type": "string"
+          },
+          "arguments": {
+            "$ref": "#/components/schemas/caArgumentList"
+          }
+        }
+      },
+      "caArgumentList": {
+        "description": "List of arguments for translation string",
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "caPageCriteria": {
+        "description": "used for pagination\n\nwhen searching for the first page, no need to put anything, otherwise, use the token returned from previous search call\n",
+        "type": "object",
+        "properties": {
+          "identifier": {
+            "$ref": "#/components/schemas/caPageIdentifier"
+          },
+          "size": {
+            "$ref": "#/components/schemas/caPageSize"
+          }
+        }
+      },
+      "caProgramSpecifications": {
+        "description": "Specification Check for program, This contains program name and specifications",
+        "type": "object",
+        "properties": {
+          "specProgramName": {
+            "$ref": "#/components/schemas/caSpecificationProgram"
+          },
+          "specifications": {
+            "$ref": "#/components/schemas/caSpecificationList"
+          }
+        }
+      },
+      "caSpecificationList": {
+        "description": "List of specifications",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/caSpecification"
+        }
+      },
+      "caProgramSpecificationsList": {
+        "description": "Specification Checks for all programs",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/caProgramSpecifications"
+        }
+      },
+      "caAssetVersion": {
+        "type": "object",
+        "properties": {
+          "lastUpdatedBy": {
+            "type": "string"
+          },
+          "creationTime": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "specCheckApprovedPrograms": {
+            "$ref": "#/components/schemas/caSpecCheckApprovedPrograms"
+          },
+          "assetIdentifier": {
+            "$ref": "#/components/schemas/caAssetIdentifier"
+          },
+          "assetFiles": {
+            "$ref": "#/components/schemas/caAssetFiles"
+          },
+          "otherMetadata": {
+            "$ref": "#/components/schemas/caMetadataMap"
+          },
+          "url": {
+            "$ref": "#/components/schemas/caURL"
+          },
+          "assetSubTypes": {
+            "$ref": "#/components/schemas/caassetSubTypes"
+          },
+          "fileMetadata": {
+            "$ref": "#/components/schemas/caFileMetadata"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "name": {
+            "$ref": "#/components/schemas/caFileName"
+          },
+          "lastUpdatedTime": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "versionNotes": {
+            "description": "The URL of the asset",
+            "type": "string"
+          },
+          "assetStatus": {
+            "$ref": "#/components/schemas/caAssetStatus"
+          },
+          "failedSpecChecks": {
+            "$ref": "#/components/schemas/caProgramSpecificationsList"
+          },
+          "storageLocationUrls": {
+            "$ref": "#/components/schemas/caStorageLocationUrls"
+          },
+          "moderationContentList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/caModerationContent"
+            }
+          }
+        }
+      },
+      "caURL": {
+        "description": "The URL of the asset.",
+        "type": "string"
+      },
+      "caModerationPolicyMap": {
+        "description": "A hashmap of key-value pairs, this is the most accurate way of defining a map in swagger 2.0",
+        "type": "object",
+        "example": {
+          "HSA": "REJECTED",
+          "Stores": "PENDING",
+          "Logo": "APPROVED"
+        }
+      },
+      "caUnauthorizedRequest": {
+        "description": "401 unauthorized request",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "caAssetSubType": {
+        "type": "string",
+        "description": "1. For assetType `IMAGE` acceptable assetSubTypes are `LOGO`, `PRODUCT_IMAGE`, `AUTHOR_IMAGE`, `LIFESTYLE_IMAGE`, `OTHER_IMAGE`",
+        "enum": [
+          "LOGO",
+          "PRODUCT_IMAGE",
+          "AUTHOR_IMAGE",
+          "LIFESTYLE_IMAGE",
+          "OTHER_IMAGE"
+        ]
+      },
+      "caAssetGlobal": {
+        "type": "object",
+        "properties": {
+          "assetId": {
+            "$ref": "#/components/schemas/caAssetId"
+          },
+          "assetType": {
+            "$ref": "#/components/schemas/caAssetType"
+          },
+          "accountIds": {
+            "$ref": "#/components/schemas/caAccounts"
+          },
+          "marketplaceId": {
+            "$ref": "#/components/schemas/caMarketplaceIds"
+          }
+        }
+      },
+      "caValueFilter": {
+        "description": "Filter for certain values of asset attributes",
+        "type": "object",
+        "properties": {
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "valueField": {
+            "type": "string",
+            "enum": [
+              "TAG",
+              "ASIN",
+              "CAMPAIGN_NAME",
+              "CAMPAIGN_ID",
+              "PROGRAM",
+              "ASSET_TYPE",
+              "ASSET_SUB_TYPE",
+              "APPROVED_AD_POLICY",
+              "ASSET_EXTENSION"
+            ]
+          }
+        }
+      },
+      "caSpecCheckApprovedPrograms": {
+        "description": "List of spec programs for which asset spec check is approved",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/caSpecificationProgram"
+        }
+      },
+      "caSpecificationProgram": {
+        "type": "string",
+        "enum": [
+          "SPONSORED_BRANDS_VIDEO",
+          "STORES_VIDEO_TILE_FULL_WIDTH",
+          "STORES_VIDEO_TILE_LARGE",
+          "STORES_VIDEO_TILE_MEDIUM",
+          "STORES_BACKGROUND_VIDEO_TILE_FULL_WIDTH",
+          "STORES_BACKGROUND_VIDEO_TILE_LARGE",
+          "STORES_BACKGROUND_VIDEO_TILE_MEDIUM",
+          "STORES_INTRO_SPLASH",
+          "DEMAND_SIDE_PLATFORM_OTT",
+          "DEMAND_SIDE_PLATFORM_OLV"
+        ]
+      },
+      "caAsset": {
+        "type": "object",
+        "properties": {
+          "moderationPolicyMap": {
+            "$ref": "#/components/schemas/caModerationPolicyMap"
+          },
+          "lastUpdatedBy": {
+            "type": "string"
+          },
+          "creationTime": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "specCheckApprovedPrograms": {
+            "$ref": "#/components/schemas/caSpecCheckApprovedPrograms"
+          },
+          "associatedAccountIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "marketplaces": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "version": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "assetType": {
+            "$ref": "#/components/schemas/caAssetType"
+          },
+          "fileMetadata": {
+            "$ref": "#/components/schemas/caFileMetadata"
+          },
+          "collections": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "assetId": {
+            "type": "string"
+          },
+          "storageLocationUrls": {
+            "$ref": "#/components/schemas/caStorageLocationUrls"
+          },
+          "name": {
+            "type": "string"
+          },
+          "lastUpdatedTime": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "associatedContexts": {
+            "$ref": "#/components/schemas/caAssociatedContextTypeMapping"
+          },
+          "assetSubTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/caAssetSubType"
+            }
+          },
+          "status": {
+            "$ref": "#/components/schemas/caAssetStatus"
+          }
+        }
+      },
+      "caAssetStatus": {
+        "type": "string",
+        "enum": [
+          "ACTIVE",
+          "ARCHIVED"
+        ]
+      },
+      "caRangeFilter": {
+        "description": "Filter assets which have certain ranges of asset attributes.\n\nFor example, filter assets which have file size in the range of [10,20] or [40,50].\n",
+        "type": "object",
+        "properties": {
+          "rangeField": {
+            "$ref": "#/components/schemas/caValueRangeFilterOptions"
+          },
+          "range": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/caRange"
+            }
+          }
+        }
+      },
+      "caAssetSortCriteria": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "type": "string",
+            "enum": [
+              "CREATED_TIME",
+              "SIZE",
+              "NAME",
+              "IMAGE_HEIGHT",
+              "IMAGE_WIDTH",
+              "EXTENSION"
+            ]
+          },
+          "order": {
+            "type": "string",
+            "enum": [
+              "ASC",
+              "DESC"
+            ]
+          }
+        }
+      },
+      "caSearchAssetText": {
+        "description": "The text used for searching assets, it matches asset name, asset name prefix, tags and ASINs associated with the assets",
+        "type": "string"
+      },
+      "caAssetUploadLocation": {
+        "description": "The url to upload the asset. The url expires in 15 minutes.",
+        "type": "string"
+      },
+      "caAssetName": {
+        "description": "The name to be given to the asset being registered.",
+        "type": "string"
+      },
+      "caResourceNotFound": {
+        "description": "404 requested resource not found",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "caFileMetadata": {
+        "type": "object",
+        "properties": {
+          "duration": {
+            "format": "double",
+            "type": "number"
+          },
+          "extension": {
+            "description": "The extension of the file name.",
+            "type": "string"
+          },
+          "fileSize": {
+            "description": "The asset size in bytes.",
+            "type": "number"
+          },
+          "resolutionHeight": {
+            "type": "integer"
+          },
+          "width": {
+            "description": "The width of the asset in pixels.",
+            "type": "number"
+          },
+          "aspectRatio": {
+            "pattern": "[0-9]+:[0-9]+",
+            "description": "The aspect ration of the asset.",
+            "type": "string"
+          },
+          "resolutionWidth": {
+            "type": "integer"
+          },
+          "contentType": {
+            "description": "The content type of the asset.",
+            "type": "string",
+            "enum": [
+              "jpeg",
+              "jpg",
+              "png",
+              "mp4",
+              "image/jpg",
+              "image/jpeg",
+              "image/png"
+            ]
+          },
+          "audioSampleRate": {
+            "format": "double",
+            "type": "number"
+          },
+          "height": {
+            "description": "The height of the asset in pixels.",
+            "type": "number"
+          }
+        }
+      },
+      "caAssetId": {
+        "description": "The asset identifier.",
+        "type": "string"
+      },
+      "caAssetType": {
+        "description": "The asset type you are registering [`IMAGE`]",
+        "type": "string",
+        "enum": [
+          "IMAGE"
+        ]
+      },
+      "caInternalError": {
+        "description": "500 internal server error",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "caAccounts": {
+        "description": "The list of advertiser accounts the asset can be shared with. All the accounts within this list will be able to search this asset. Additional validation of checking that the accounts are associated will be done as part of this call.",
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 100,
+        "items": {
+          "type": "string"
+        }
+      },
+      "caMarketplaceIds": {
+        "description": "The list of marketplace Ids.",
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 100,
+        "items": {
+          "type": "string"
+        }
+      },
+      "caAssetIdentifier": {
+        "type": "object",
+        "properties": {
+          "assetId": {
+            "$ref": "#/components/schemas/caAssetId"
+          },
+          "version": {
+            "$ref": "#/components/schemas/caVersion"
+          }
+        }
+      },
+      "caModerationContent": {
+        "type": "object",
+        "properties": {
+          "assetSubType": {
+            "$ref": "#/components/schemas/caAssetSubType"
+          },
+          "adPolicyModerationResultList": {
+            "minItems": 1,
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/caAdPolicyModerationResult"
+            }
+          },
+          "moderationContentStatus": {
+            "$ref": "#/components/schemas/caModerationContentStatus"
+          }
+        }
+      },
+      "caModerationStatus": {
+        "type": "string",
+        "enum": [
+          "REJECTED",
+          "APPROVED",
+          "PENDING"
+        ]
+      },
+      "caModerationContentStatus": {
+        "type": "string",
+        "enum": [
+          "IN_PROGRESS",
+          "COMPLETED",
+          "FAILED"
+        ]
+      },
+      "caRange": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          }
+        }
+      },
+      "caForbiddenRequest": {
+        "description": "403 forbidden request",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "caAdPolicyModerationResult": {
+        "type": "object",
+        "properties": {
+          "marketplaceId": {
+            "type": "string"
+          },
+          "policyName": {
+            "type": "string"
+          },
+          "moderationStatus": {
+            "$ref": "#/components/schemas/caModerationStatus"
+          },
+          "locale": {
+            "type": "string"
+          }
+        }
+      },
+      "caBadRequest": {
+        "description": "400 bad request",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "caFilterCriteria": {
+        "description": "**Optional** this is used to filter results, we support two types of filters, valueFilter and rangeFilter",
+        "type": "object",
+        "properties": {
+          "valueFilters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/caValueFilter"
+            }
+          },
+          "rangeFilters": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/caRangeFilter"
+            }
+          }
+        }
+      },
+      "caassetSubTypes": {
+        "minItems": 1,
+        "maxItems": 10,
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/caAssetSubType"
+        }
+      },
+      "caVersionInfo": {
+        "type": "object",
+        "properties": {
+          "linkedAssetId": {
+            "description": "The registering asset will be created as a new version of this linkedAssetId.",
+            "type": "string"
+          },
+          "versionNotes": {
+            "description": "The version notes that client can associate to the asset.Versioning enables users to update an old asset, so that you can ensure the latest asset is being used. You can upload a new version of an existing asset along with version notes. Any tags/ASINs from previous version, will be retained on the new version too.",
+            "type": "string",
+            "maxLength": 1000
+          }
+        }
+      },
+      "caRegistrationContext": {
+        "type": "object",
+        "description": "This is used on registration of an asset, to associate DSP assets to a specific advertiser. This is **required** for assets being uploaded for use in DSP.",
+        "properties": {
+          "associatedPrograms": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/caAssociatedProgram"
+            }
+          }
+        }
+      },
+      "caVersion": {
+        "description": "The version of the asset.",
+        "type": "string"
+      },
+      "caStorageLocationUrls": {
+        "type": "object",
+        "properties": {
+          "processedUrls": {
+            "$ref": "#/components/schemas/caProcessedUrlsMap"
+          },
+          "defaultUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "caProcessedUrlsMap": {
+        "description": "Map containing processed urls of the asset. Key is the processed type and value is the url",
+        "additionalProperties": {
+          "type": "object"
+        },
+        "type": "object",
+        "example": {
+          "MODERATION": "http://abc.xyz"
+        }
+      },
+      "caPageIdentifier": {
+        "type": "object",
+        "properties": {
+          "pageNumber": {
+            "type": "integer"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "caPageSize": {
+        "type": "integer",
+        "default": 25,
+        "minimum": 1,
+        "maximum": 500
+      },
+      "caAssociatedContextTypeMapping": {
+        "description": "A hashmap of key-value pairs, this is the most accurate way of defining a map in swagger 2.0",
+        "type": "object",
+        "example": {
+          "ASIN": "ContextDetailsList"
+        }
+      },
+      "caAssociatedSubEntityList": {
+        "minItems": 1,
+        "maxItems": 100,
+        "description": "This field is required for sellers, but not required for vendors. The brandEntityId is required for sellers uploading assets for use in Sponsored Brands. As a best practice, ensure to include brandEntityId when uploading assets for sellers.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/caAssociatedSubEntity"
+        }
+      },
+      "caAssociatedSubEntity": {
+        "type": "object",
+        "properties": {
+          "brandEntityId": {
+            "description": "The entity id of brand, which can be retrieved using GET /brands.",
+            "type": "string"
+          }
+        }
+      },
+      "caAssetFiles": {
+        "description": "Structure containing processed transcode files for an asset\n defaultUrl: This is the location of the original source.\n processedFiles: List of processed files with metadata.",
+        "type": "object",
+        "properties": {
+          "processedFiles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/caProcessedFile"
+            }
+          },
+          "defaultUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "caProcessedFile": {
+        "description": "Structure containing url, program, profile and metadata of processed output\n program: This is the program for which this transcoding is done.\n profile: This is the profile/outformat of the processed file.\n url: This is the location of the processed file.\n fileMetadata: This contains the metadata of file.",
+        "type": "object",
+        "properties": {
+          "fileMetadata": {
+            "$ref": "#/components/schemas/caProcessedFileMetadata"
+          },
+          "profile": {
+            "$ref": "#/components/schemas/caProcessedUrlType"
+          },
+          "programs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/caProgram"
+            }
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "caProcessedUrlType": {
+        "description": "Enum containing different type of processed urls\n 1. `MODERATION`: This is an internal url that will be used to moderate the asset.\n 2. `VIDEO_DEFAULT_OPTIMIZED`: This is the default processed url for video asset type for optimized rendering.\n3. This is the url for image asset type to support thumbnail rendering of max side 500px. \n4. `PRODUCT_VIDEO_OPTIMIZED`: This is the processed url for video that can be used for product.\n5. `VIDEO_TILE_FULL_WIDTH`: This is the processed url for video that can be used for video tile full width.\n6. `VIDEO_TILE_LARGE`: This is the processed url for video that can be used for video tile large.\n7. `VIDEO_TILE_MEDIUM`: This is the processed url for video that can be used for video tile medium.\n8. `BACKGROUND_VIDEO_TILE_FULL_WIDTH`: This is the processed url for video that can be used for background video tile full width.\n9. `BACKGROUND_VIDEO_TILE_LARGE`: This is the processed url for video that can be used for background video tile large.\n10. `BACKGROUND_VIDEO_TILE_MEDIUM`: This is the processed url for video that can be used for background video tile medium.\n11. `INTRO_SPLASH`: This is the processed url for video that can be used for intro splash.",
+        "type": "string",
+        "enum": [
+          "MODERATION",
+          "VIDEO_DEFAULT_OPTIMIZED",
+          "IMAGE_THUMBNAIL_500",
+          "PRODUCT_VIDEO_OPTIMIZED",
+          "VIDEO_TILE_FULL_WIDTH",
+          "VIDEO_TILE_LARGE",
+          "VIDEO_TILE_MEDIUM",
+          "BACKGROUND_VIDEO_TILE_FULL_WIDTH",
+          "BACKGROUND_VIDEO_TILE_LARGE",
+          "BACKGROUND_VIDEO_TILE_MEDIUM",
+          "INTRO_SPLASH"
+        ]
+      },
+      "caProcessedFileMetadata": {
+        "description": "Structure containing metadata of processed file.\n contentHash: This is the location of the original source.\n contentType: This is the location of the original source.\n videoStreams: This contains the metadata of Video streams.\n audioStreams: This contains the metadata of Audio streams.",
+        "type": "object",
+        "properties": {
+          "videoStreams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/caVideoStreamMetadata"
+            }
+          },
+          "audioStreams": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/caAudioStreamMetadata"
+            }
+          },
+          "contentType": {
+            "type": "string"
+          },
+          "contentHash": {
+            "type": "string"
+          }
+        }
+      },
+      "caAudioStreamMetadata": {
+        "description": "Structure containing metadata of Video Stream.\n profile: This is the profile of the stream.\n duration: This is the duration of the stream in secs.\n codecName: This tells the codec of the media stream.\n codecType: This is the codec type of stream.\n bitRate: This tells the bit rate of the stream.\n channelLayout: This tells the channel of the stream\n sampleRate: This is the sample rate of the stream",
+        "type": "object",
+        "properties": {
+          "duration": {
+            "format": "double",
+            "type": "number"
+          },
+          "channelLayout": {
+            "type": "string"
+          },
+          "bitRate": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "profile": {
+            "type": "string"
+          },
+          "codecName": {
+            "type": "string"
+          },
+          "codecType": {
+            "type": "string"
+          },
+          "sampleRate": {
+            "format": "int64",
+            "type": "integer"
+          }
+        }
+      },
+      "caSearchRequestCommon": {
+        "properties": {
+          "text": {
+            "$ref": "#/components/schemas/caSearchAssetText"
+          },
+          "filterCriteria": {
+            "$ref": "#/components/schemas/caFilterCriteria"
+          },
+          "sortCriteria": {
+            "$ref": "#/components/schemas/caAssetSortCriteria"
+          },
+          "pageCriteria": {
+            "$ref": "#/components/schemas/caPageCriteria"
+          }
+        }
+      },
+      "caVideoStreamMetadata": {
+        "description": "Structure containing metadata of Video Stream.\n profile: This is the profile of the stream.\n width: This is the resolution width of stream.\n height: This is the resolution height of stream.\n duration: This is the duration of the stream in secs.\n codecName: This tells the codec of the media stream.\n codecType: This is the codec type of stream.\n displayAspectRatio: This tells the aspect ratio of the stream.\n bitRate: This tells the bit rate of the stream.\n frameRate: This is the frame rate of video stream per sec.",
+        "type": "object",
+        "properties": {
+          "duration": {
+            "format": "double",
+            "type": "number"
+          },
+          "frameRate": {
+            "format": "double",
+            "type": "number"
+          },
+          "bitRate": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "profile": {
+            "type": "string"
+          },
+          "width": {
+            "type": "integer"
+          },
+          "codecName": {
+            "type": "string"
+          },
+          "codecType": {
+            "type": "string"
+          },
+          "height": {
+            "type": "integer"
+          },
+          "displayAspectRatio": {
+            "type": "string"
+          }
+        }
+      },
+      "caValueFilterOptions": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/ASSET_TYPE"
+          },
+          {
+            "$ref": "#/components/schemas/TAG"
+          },
+          {
+            "$ref": "#/components/schemas/ASSET_SUB_TYPE"
+          },
+          {
+            "$ref": "#/components/schemas/APPROVED_AD_POLICY"
+          },
+          {
+            "$ref": "#/components/schemas/ASSET_EXTENSION"
+          },
+          {
+            "$ref": "#/components/schemas/PROGRAM"
+          },
+          {
+            "$ref": "#/components/schemas/ASIN"
+          },
+          {
+            "$ref": "#/components/schemas/CAMPAIGN_NAME"
+          },
+          {
+            "$ref": "#/components/schemas/CAMPAIGN_ID"
+          }
+        ]
+      },
+      "caValueRangeFilterOptions": {
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/SIZE"
+          },
+          {
+            "$ref": "#/components/schemas/DATE_UPLOADED"
+          }
+        ]
+      },
+      "DATE_UPLOADED": {
+        "type": "string",
+        "description": "The value for this should be timestamp in milliseconds. It is the same as creation date."
+      },
+      "SIZE": {
+        "type": "string",
+        "description": "File size in bytes."
+      },
+      "TAG": {
+        "type": "string",
+        "description": "A tag is assigned to a creative asset at time of registration. Values can include any tags that you have created."
+      },
+      "ASSET_TYPE": {
+        "type": "string",
+        "description": "Asset types available are only the following:",
+        "enum": [
+          "IMAGE"
+        ]
+      },
+      "ASSET_SUB_TYPE": {
+        "type": "string",
+        "description": "STORE4V_SPOTLIGHT = Store Spotlight STORES_MODERATION = Stores HSA4V_Products = Sponsored Brands AD_POST = Posts\n",
+        "enum": [
+          "AUTHOR_IMAGE",
+          "LIFESTYLE_IMAGE",
+          "PRODUCT_IMAGE",
+          "OTHER_IMAGE",
+          "LOGO"
+        ]
+      },
+      "APPROVED_AD_POLICY": {
+        "type": "string",
+        "enum": [
+          "STORE4V_SPOTLIGHT",
+          "STORES_MODERATION",
+          "HSA4V_PRODUCTS",
+          "AD_POST"
+        ]
+      },
+      "ASSET_EXTENSION": {
+        "type": "string",
+        "enum": [
+          "JPG",
+          "JPEG",
+          "PNG"
+        ]
+      },
+      "PROGRAM": {
+        "type": "string",
+        "enum": [
+          "A_PLUS"
+        ]
+      },
+      "ASIN": {
+        "type": "string",
+        "description": "The ASIN value on which to filter."
+      },
+      "CAMPAIGN_NAME": {
+        "type": "string",
+        "description": "The name of the campaign for which to filter."
+      },
+      "CAMPAIGN_ID": {
+        "type": "string",
+        "description": "The campaignID for which to filter."
+      }
+    }
+  }
+}

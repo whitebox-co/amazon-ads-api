@@ -1,0 +1,1547 @@
+{
+  "info": {
+    "description": "Get invoice data by invoice ID",
+    "title": "Billing",
+    "version": "3.0"
+  },
+  "paths": {
+    "/billing/statuses": {
+      "post": {
+        "summary": "Get the billing status for a list of advertising accounts.",
+        "requestBody": {
+          "content": {
+            "application/vnd.bulkgetbillingstatusrequestbody.v1+json": {
+              "schema": {
+                "$ref": "#/components/schemas/bulkGetBillingStatusesRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "operationId": "bulkGetBillingStatus",
+        "description": "Gets the current billing status associated for each advertising account.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\"]",
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/vnd.bulkgetbillingstatusresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bulkGetBillingStatusResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/vnd.bulkgetbillingstatuserrorresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bulkGetBillingStatusErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/vnd.bulkgetbillingstatuserrorresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bulkGetBillingStatusErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user does not have access to a specified resource,",
+            "content": {
+              "application/vnd.bulkgetbillingstatuserrorresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bulkGetBillingStatusErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Requested account was not found.",
+            "content": {
+              "application/vnd.bulkgetbillingstatuserrorresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bulkGetBillingStatusErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/vnd.bulkgetbillingstatuserrorresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bulkGetBillingStatusErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/vnd.bulkgetbillingstatuserrorresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bulkGetBillingStatusErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Billing Status"
+        ]
+      }
+    },
+    "/invoices": {
+      "get": {
+        "summary": "Get invoices for advertiser",
+        "operationId": "getAdvertiserInvoices",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nextCursor": {
+                      "description": "This will be null when at the end of your result set.  This will be present even if the original query had a startIndex and count",
+                      "type": "string"
+                    },
+                    "previousCursor": {
+                      "description": "Optional parameter that links to the previous data set if relevant",
+                      "type": "string"
+                    },
+                    "invoiceSummaries": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/invoiceSummary"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {}
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user does not have access to a specified resource,",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found - Requested account was not found.",
+            "content": {}
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {}
+          }
+        },
+        "description": "\n\n**Requires one of these permissions**:\n[\"nemo_transactions_view\",\"nemo_transactions_edit\"]",
+        "parameters": [
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ISSUED",
+                  "PAID_IN_PART",
+                  "PAID_IN_FULL",
+                  "WRITTEN_OFF"
+                ]
+              }
+            },
+            "in": "query",
+            "explode": false,
+            "name": "invoiceStatuses",
+            "description": "* `ISSUED`: An invoice is issued when its charges are finalized and tax is computed on the total amount. \n* `PAID_IN_PART`: When a partial payment is received, the invoice status will change to paid in part.\n* `PAID_IN_PART`: One full payment has been received, the invoice will be paid in full.\n* `WRITTEN_OFF`: If an invoice is written off because of an error, the status will be updated to written off.\n",
+            "style": "form"
+          },
+          {
+            "schema": {
+              "maximum": 100,
+              "type": "integer",
+              "minimum": 0
+            },
+            "in": "query",
+            "name": "count",
+            "description": "Number of records to include in the paged response. Defaults to 100. Cannot be combined with the cursor parameter."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "cursor",
+            "description": "A cursor representing how far into a result set this query should begin. In the absence of a cursor the request will default to start index of 0 and page size of 100."
+          }
+        ],
+        "tags": [
+          "invoice"
+        ]
+      }
+    },
+    "/invoices/{invoiceId}": {
+      "get": {
+        "summary": "Get invoice data by invoice ID",
+        "operationId": "getInvoice",
+        "responses": {
+          "200": {
+            "description": "Successful Operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/invoice"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {}
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user does not have access to a specified resource,",
+            "content": {}
+          },
+          "404": {
+            "description": "Not Found - Requested invoice was not found.",
+            "content": {}
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {}
+          }
+        },
+        "description": "\n\n**Requires one of these permissions**:\n[\"nemo_transactions_view\",\"nemo_transactions_edit\"]",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "invoiceId",
+            "description": "ID of invoice to fetch",
+            "required": true
+          }
+        ],
+        "tags": [
+          "invoice"
+        ]
+      }
+    },
+    "/billing/notifications": {
+      "post": {
+        "summary": "Get the billing notifications for a list advertising accounts.",
+        "requestBody": {
+          "content": {
+            "application/vnd.billingnotifications.v1+json": {
+              "schema": {
+                "$ref": "#/components/schemas/bulkGetBillingNotificationsRequestBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "operationId": "bulkGetBillingNotifications",
+        "description": "Gets an array of all currently valid billing notifications associated for each advertising account.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\"]",
+        "responses": {
+          "200": {
+            "description": "Successful Request",
+            "content": {
+              "application/vnd.bulkgetbillingnotificationsresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bulkGetBillingNotificationsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/vnd.bulkgetbillingnotificationserrorresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bulkGetBillingNotificationsErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/vnd.bulkgetbillingnotificationserrorresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bulkGetBillingNotificationsErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user does not have access to a specified resource,",
+            "content": {
+              "application/vnd.bulkgetbillingnotificationserrorresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bulkGetBillingNotificationsErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Requested account was not found.",
+            "content": {
+              "application/vnd.bulkgetbillingnotificationserrorresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bulkGetBillingNotificationsErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/vnd.bulkgetbillingnotificationserrorresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bulkGetBillingNotificationsErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/vnd.bulkgetbillingnotificationserrorresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bulkGetBillingNotificationsErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Billing Notifications"
+        ]
+      }
+    }
+  },
+  "components": {
+    "headers": {},
+    "examples": {},
+    "schemas": {
+      "bulkGetBillingNotificationsSuccess": {
+        "type": "object",
+        "title": "Bulk Get Billing Notifications Map",
+        "required": [
+          "advertiserId",
+          "index",
+          "billingNotifications"
+        ],
+        "properties": {
+          "billingNotifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/billingNotification"
+            }
+          },
+          "index": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "advertiserId": {
+            "type": "string"
+          }
+        }
+      },
+      "date": {
+        "description": "Date in YYYYMMDD format",
+        "type": "string"
+      },
+      "fees": {
+        "title": "Fees",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/fee"
+        }
+      },
+      "adjustments": {
+        "description": "List of adjustments (positive and negative) applied to this invoice.",
+        "title": "Adjustments",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/adjustment"
+        }
+      },
+      "contactInfo": {
+        "title": "Contact Info",
+        "type": "object",
+        "required": [
+          "address",
+          "email"
+        ],
+        "properties": {
+          "address": {
+            "$ref": "#/components/schemas/address"
+          },
+          "email": {
+            "$ref": "#/components/schemas/email"
+          }
+        }
+      },
+      "bulkGetBillingStatusesRequestBody": {
+        "description": "The properties needed to get the billing statuses for a set of advertisers.",
+        "type": "object",
+        "title": "Bulk Get Billing Statuses Request Body",
+        "required": [
+          "advertiserMarketplaces"
+        ],
+        "properties": {
+          "advertiserMarketplaces": {
+            "minItems": 1,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/advertiserMarketplace"
+            }
+          },
+          "locale": {
+            "$ref": "#/components/schemas/locale"
+          }
+        }
+      },
+      "invoiceSummary": {
+        "title": "Invoice Summary",
+        "type": "object",
+        "required": [
+          "amountDue",
+          "dueDate",
+          "fromDate",
+          "id",
+          "invoiceDate",
+          "paymentMethod",
+          "purchaseOrderNumber",
+          "remainingAmountDue",
+          "status",
+          "toDate"
+        ],
+        "properties": {
+          "fees": {
+            "description": "Regulatory Advertising Fees.\n",
+            "title": "Fees",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/fee"
+            }
+          },
+          "paymentTermsDays": {
+            "type": "integer"
+          },
+          "taxAmountDue": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "remainingTaxAmountDue": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "remainingFees": {
+            "description": "Remaining Regulatory Advertising Fees.\n",
+            "title": "Remaining Fees",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/fee"
+            }
+          },
+          "toDate": {
+            "$ref": "#/components/schemas/date"
+          },
+          "dueDate": {
+            "$ref": "#/components/schemas/date"
+          },
+          "invoiceDate": {
+            "$ref": "#/components/schemas/date"
+          },
+          "remainingAmountDue": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "fromDate": {
+            "$ref": "#/components/schemas/date"
+          },
+          "amountDue": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "taxRate": {
+            "type": "number"
+          },
+          "purchaseOrderNumber": {
+            "title": "Sponsored Ads only. Account-level purchase order number.",
+            "type": "string"
+          },
+          "paymentTermsType": {
+            "type": "string",
+            "enum": [
+              "EOM",
+              "NET"
+            ]
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/paymentMethod"
+          },
+          "id": {
+            "title": "Invoice Id",
+            "type": "string"
+          },
+          "downloadableDocuments": {
+            "description": "List of downloadable documents associated with this invoice and accessible from the advertising console.\n",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/documentType"
+            }
+          },
+          "status": {
+            "$ref": "#/components/schemas/invoiceStatus"
+          }
+        }
+      },
+      "fee": {
+        "title": "Fee",
+        "type": "object",
+        "required": [
+          "cost",
+          "feeType"
+        ],
+        "properties": {
+          "cost": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "feeIdentifiers": {
+            "description": "Identifiers describing attributes for different fee types.\n* countryCode: ISO 3611 country code for country specific Regulatory Advertising Fees.\n",
+            "title": "Fee Identifiers",
+            "type": "object",
+            "properties": {
+              "countryCode": {
+                "$ref": "#/components/schemas/countryCode"
+              }
+            }
+          },
+          "feeType": {
+            "description": "* `PLATFORM_FEE`: Billable fee set at the Rodeo Entity level by internal users which reflects the cost of using the Amazon DSP\n  * Supply Cost * Platform Fee %\n* `AGENCY_FEE`: Non-billable fee set at the Rodeo Order level by external users which reflects the fee that the agency is charging the end customer\n  * Total Cost * Agency Fee %\n* `AUDIENCE_FEE`: Billable fee automatically calculated at the Rodeo Line Item level when external users choose Amazon 1P data segments for campaign targeting\n  * Impressions with Audience Fees * Audience Fee (CPM)/1000\n* `3P_[AUTO_]NON_ABSORBED_FEE`: Billable fee automatically calculated at the Rodeo Line Item level when external users choose Automotive data segments and/or DMP data segments for campaign targeting\n  * Impressions * Billable 3p Fee / 1000\n* `REGULATORY_ADVERTISING_FEE`: Fees derive from ads serving in specific countries and/or for ads purchased from advertisers in specific countries during the period in which you are billed.\n",
+            "type": "string",
+            "enum": [
+              "AUDIENCE_FEE",
+              "3P_AUTO_NON_ABSORBED_FEE",
+              "3P_NON_ABSORBED_FEE",
+              "PLATFORM_FEE",
+              "REGULATORY_ADVERTISING_FEE"
+            ]
+          }
+        }
+      },
+      "bulkGetBillingNotificationsRequestBody": {
+        "description": "The properties needed to get the billing notifications for a set of advertisers.",
+        "type": "object",
+        "title": "Bulk Get Billing Notifications Request Body",
+        "required": [
+          "advertiserMarketplaces"
+        ],
+        "properties": {
+          "advertiserMarketplaces": {
+            "minItems": 1,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/advertiserMarketplace"
+            }
+          },
+          "locale": {
+            "$ref": "#/components/schemas/locale"
+          }
+        }
+      },
+      "billingNotification": {
+        "type": "object",
+        "title": "Billing Notification",
+        "required": [
+          "name",
+          "priority",
+          "severity",
+          "title",
+          "description"
+        ],
+        "properties": {
+          "severity": {
+            "$ref": "#/components/schemas/billingNotificationSeverity"
+          },
+          "paymentDueDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "suspensionDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "name": {
+            "$ref": "#/components/schemas/billingNotificationNames"
+          },
+          "description": {
+            "type": "string"
+          },
+          "priority": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "invoiceLines": {
+        "description": "Line items for this invoice. For Sponsored Ads, this will be a per-campaign breakdown of charges. For DSP, this will be the line items for the campaign getting invoiced.",
+        "title": "Invoice Lines",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/invoiceLine"
+        }
+      },
+      "paymentDetail": {
+        "title": "Payment Detail",
+        "type": "object",
+        "required": [
+          "amount",
+          "receivedDate",
+          "status"
+        ],
+        "properties": {
+          "amount": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/paymentMethod"
+          },
+          "receivedDate": {
+            "$ref": "#/components/schemas/date"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "BOUNCED",
+              "VOIDED",
+              "SUCCESSFUL"
+            ]
+          }
+        }
+      },
+      "portfolio": {
+        "title": "Portfolio",
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "totalAmount"
+        ],
+        "properties": {
+          "totalAmount": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "feeAmount": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "name": {
+            "title": "Portfolio Name",
+            "type": "string"
+          },
+          "id": {
+            "title": "Portfolio ID",
+            "type": "integer"
+          }
+        }
+      },
+      "payment": {
+        "title": "Payment",
+        "type": "object",
+        "required": [
+          "amount",
+          "id",
+          "paymentMethod",
+          "status"
+        ],
+        "properties": {
+          "nextPaymentAttemptDate": {
+            "$ref": "#/components/schemas/date"
+          },
+          "reason": {
+            "description": "Provides additional details and reason for the payment status",
+            "type": "string"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "paymentMethod": {
+            "$ref": "#/components/schemas/paymentMethod"
+          },
+          "currentPaymentAttemptDate": {
+            "$ref": "#/components/schemas/date"
+          },
+          "id": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "lastPaymentAttemptDate": {
+            "$ref": "#/components/schemas/date"
+          },
+          "refundedAmount": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PROCESSING",
+              "SUCCEEDED",
+              "FAILED",
+              "VERIFICATION_REQUIRED",
+              "REFUNDED",
+              "VOIDED"
+            ]
+          }
+        }
+      },
+      "billingNotificationNames": {
+        "type": "string",
+        "title": "Billing Notification Names",
+        "enum": [
+          "ACCOUNT_ERROR",
+          "CNPJ_VERIFICATION_IN_PROGRESS",
+          "CREDIT_CARD_CHARGE_DISPUTE_CAUSED_SUSPENSION",
+          "CREDIT_CARD_EXPIRED",
+          "CREDIT_CARD_EXPIRES_SOON",
+          "CREDIT_CARD_PAYMENT_FAILURE_CAUSED_SUSPENSION",
+          "CREDIT_CARD_VERIFICATION_FAILURE_CAUSED_SUSPENSION",
+          "CREDIT_CARD_VERIFICATION_FAILURE",
+          "CREDIT_CARD_VERIFICATION_PENDING",
+          "CREDIT_CARD_WITH_VERIFICATION_PAYMENT_FAILURE_CAUSED_SUSPENSION",
+          "CREDIT_CARD_WITH_VERIFICATION_PAYMENT_FAILURE",
+          "CREDIT_CARD_WITH_VERIFICATION_PENDING_CAUSED_SUSPENSION",
+          "CREDIT_CARD_WITH_VERIFICATION_SUSPENSION_WITH_PAYMENT_IN_PROGRESS",
+          "DEDUCT_FROM_PROCEEDS_PAYMENT_FAILURE_CAUSED_SUSPENSION",
+          "DEDUCT_FROM_PROCEEDS_WITH_CREDIT_CARD_FALLBACK_PAYMENT_FAILURE_CAUSED_SUSPENSION",
+          "DEDUCT_FROM_PROCEEDS_WITH_CREDIT_LIMIT_ELIGIBLE",
+          "DEDUCT_FROM_PROCEEDS_WITH_MONTHLY_INVOICE_ELIGIBLE",
+          "INACTIVE_SELLER_ACCOUNT_CAUSED_SUSPENSION",
+          "INVALID_PAYMENT_REGISTRATION",
+          "PAY_BY_INVOICE_OVERDUE_PAYMENT_CAUSED_SUSPENSION",
+          "PAY_BY_INVOICE_OVERDUE_PAYMENT_PENDING_SUSPENSION",
+          "PAY_BY_INVOICE_OVERDUE_PAYMENT",
+          "PAY_BY_INVOICE_UPCOMING_PAYMENT",
+          "PENDING_PAYMENT_REGISTRATION",
+          "PENDING_VALID_CNPJ_REGISTRATION",
+          "STORED_VALUE_AUTO_RELOAD_PAYMENT_FAILURE",
+          "SELLER_ACCOUNT_INSUFFICIENT_AVAILABLE_BALANCE_CAUSED_SUSPENSION",
+          "SELLER_ACCOUNT_INSUFFICIENT_GROSS_BALANCE_CAUSED_SUSPENSION",
+          "SELLER_ACCOUNT_PAYMENT_FAILURE_CAUSED_SUSPENSION",
+          "SELLER_ACCOUNT_WITH_CREDIT_CARD_FALLBACK_PAYMENT_FAILURE_CAUSED_SUSPENSION"
+        ]
+      },
+      "billingNotificationSeverity": {
+        "type": "string",
+        "title": "Billing Notification Severity",
+        "enum": [
+          "ALERT",
+          "WARNING",
+          "INFO"
+        ]
+      },
+      "paymentMethod": {
+        "type": "string",
+        "enum": [
+          "CREDIT_CARD",
+          "ELECTRONIC_FUNDS_TRANSFER",
+          "DEDUCT_FROM_PAYMENT",
+          "UNIFIED_BILLING",
+          "DIRECT_DEBIT",
+          "PREPAY"
+        ]
+      },
+      "adjustment": {
+        "title": "Adjustment",
+        "type": "object",
+        "required": [
+          "accountingDate",
+          "amount"
+        ],
+        "properties": {
+          "amount": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "accountingDate": {
+            "$ref": "#/components/schemas/date"
+          },
+          "fees": {
+            "description": "Charges can include different fees (see feeType below).\n",
+            "title": "Fees",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/fee"
+            }
+          },
+          "comments": {
+            "title": "Comments",
+            "type": "string"
+          },
+          "portfolioId": {
+            "format": "int64",
+            "description": "Sponsored Ads only. This identifier maps to one of the portfolios listed in the portfolios section.\n",
+            "title": "Portfolio ID",
+            "type": "integer"
+          }
+        }
+      },
+      "bulkGetBillingStatusError": {
+        "type": "object",
+        "title": "Bulk Get Billing Status Error",
+        "required": [
+          "advertiserId",
+          "index"
+        ],
+        "properties": {
+          "index": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "errorCode": {
+            "$ref": "#/components/schemas/bulkGetBillingStatusErrorCodes"
+          },
+          "description": {
+            "type": "string"
+          },
+          "advertiserId": {
+            "type": "string"
+          }
+        }
+      },
+      "documentType": {
+        "title": "Document Type",
+        "type": "string",
+        "enum": [
+          "INVOICE",
+          "CREDIT_NOTE"
+        ]
+      },
+      "payments": {
+        "description": "List of payments made against the invoice.",
+        "title": "Payments",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/payment"
+        }
+      },
+      "currencyAmount": {
+        "title": "Currency Amount",
+        "type": "object",
+        "properties": {
+          "amount": {
+            "title": "Amount",
+            "type": "number"
+          },
+          "currencyCode": {
+            "$ref": "#/components/schemas/currencyCode"
+          }
+        }
+      },
+      "adProgram": {
+        "description": "Sponsored Ads only. This field indicates the ad type (such as Sponsored Products, Sponsored Brands or Sponsored Display).\n",
+        "title": "Program Name",
+        "type": "string",
+        "enum": [
+          "SPONSORED PRODUCT",
+          "SPONSORED BRANDS",
+          "SPONSORED DISPLAY",
+          "SPONSORED DISPLAY FOR FIRE TV",
+          "CREATOR CONNECTIONS",
+          "AMAZON LIVE"
+        ]
+      },
+      "locale": {
+        "type": "string",
+        "title": "Locale",
+        "enum": [
+          "ar_AE",
+          "cs_CZ",
+          "de_DE",
+          "en_AU",
+          "en_CA",
+          "en_GB",
+          "en_IN",
+          "en_SG",
+          "es_ES",
+          "es_MX",
+          "fr_CA",
+          "fr_FR",
+          "he_IL",
+          "hi_IN",
+          "it_IT",
+          "ja_JP",
+          "ko_KR",
+          "nl_NL",
+          "pl_PL",
+          "pt_BR",
+          "sv_SE",
+          "ta_IN",
+          "tr_TR",
+          "zh_CN",
+          "zh_TW"
+        ]
+      },
+      "taxBreakup": {
+        "title": "Tax Breakup",
+        "type": "object",
+        "required": [
+          "issuerJurisdiction",
+          "issuerTaxInformation",
+          "payerTaxInformation",
+          "taxAmount",
+          "taxName",
+          "taxRate",
+          "taxedJurisdictionName"
+        ],
+        "properties": {
+          "payerJurisdiction": {
+            "description": "Tax jurisdiction of payer (billed customer)\n",
+            "title": "Issuer Jurisdiction",
+            "type": "string"
+          },
+          "taxRate": {
+            "title": "Tax Rate",
+            "type": "number"
+          },
+          "issuerTaxInformation": {
+            "title": "Issuer Tax Registration Info",
+            "type": "object",
+            "required": [
+              "taxId"
+            ],
+            "properties": {
+              "taxId": {
+                "description": "Tax registration with government (Ex: VAT ID, GST ID)\n",
+                "title": "Tax ID",
+                "type": "string"
+              }
+            }
+          },
+          "thirdPartyTaxInformation": {
+            "title": "Third Party Tax Registration Info",
+            "type": "object",
+            "required": [
+              "taxId"
+            ],
+            "properties": {
+              "taxId": {
+                "description": "Tax registration with government (Ex: VAT ID, GST ID)\n",
+                "title": "Tax ID",
+                "type": "string"
+              }
+            }
+          },
+          "issuerJurisdiction": {
+            "description": "Tax jurisdiction of issuer (Amazon billing entity)\n",
+            "title": "Issuer Jurisdiction",
+            "type": "string"
+          },
+          "payerTaxInformation": {
+            "title": "Payer Tax Registration Info",
+            "type": "object",
+            "properties": {
+              "taxId": {
+                "description": "Tax registration with government (Ex: VAT ID, GST ID)\n",
+                "title": "Tax ID",
+                "type": "string"
+              }
+            }
+          },
+          "taxAmount": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "taxName": {
+            "title": "Tax Name",
+            "type": "string"
+          },
+          "taxedJurisdictionName": {
+            "description": "Tax jurisdiction for which tax applies, this can be at the country, state or local level.\n",
+            "title": "Taxed Jurisdiction Name",
+            "type": "string"
+          }
+        }
+      },
+      "bulkGetBillingNotificationsError": {
+        "type": "object",
+        "title": "Bulk Get Billing Notifications Error",
+        "required": [
+          "advertiserId",
+          "index",
+          "errorCode",
+          "description"
+        ],
+        "properties": {
+          "index": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "errorCode": {
+            "$ref": "bulkGetBillingNotificationsErrorCodes"
+          },
+          "description": {
+            "type": "string"
+          },
+          "advertiserId": {
+            "type": "string"
+          }
+        }
+      },
+      "bulkGetBillingStatusErrorCodes": {
+        "type": "string",
+        "title": "Bulk Get Billing Status Error Codes",
+        "enum": [
+          "BAD_REQUEST",
+          "NOT_FOUND",
+          "NOT_AUTHORIZED",
+          "INTERNAL_ERROR"
+        ]
+      },
+      "bulkGetBillingNotificationsErrorResponse": {
+        "type": "object",
+        "title": "Bulk Get Billing Notifications Error Response",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "taxDetail": {
+        "title": "Tax Detail",
+        "type": "object",
+        "required": [
+          "taxBreakups",
+          "taxCalculationDate"
+        ],
+        "properties": {
+          "permanentAccountNumber": {
+            "description": "**IN only** field that represents the tax account number of the billed entity entered on AMS portal.\n",
+            "title": "Permanent Account Number",
+            "type": "string"
+          },
+          "taxCalculationDate": {
+            "$ref": "#/components/schemas/date"
+          },
+          "taxBreakups": {
+            "description": "List of taxes applied on the transaction for this invoice.",
+            "title": "TaxBreakups",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/taxBreakup"
+            }
+          }
+        }
+      },
+      "bulkGetBillingStatusResponse": {
+        "type": "object",
+        "title": "Bulk Get Billing Status Response",
+        "required": [
+          "success",
+          "error"
+        ],
+        "properties": {
+          "success": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/bulkGetBillingStatusSuccess"
+            }
+          },
+          "error": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/bulkGetBillingStatusError"
+            }
+          }
+        }
+      },
+      "countryCode": {
+        "description": "ISO 3611 country code",
+        "type": "string"
+      },
+      "bulkGetBillingStatusSuccess": {
+        "type": "object",
+        "title": "Bulk Get Billing Status Success",
+        "required": [
+          "advertiserId",
+          "index",
+          "billingStatus"
+        ],
+        "properties": {
+          "index": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "billingStatus": {
+            "$ref": "#/components/schemas/billingStatus"
+          },
+          "advertiserId": {
+            "type": "string"
+          }
+        }
+      },
+      "invoiceLine": {
+        "title": "Invoice Line",
+        "type": "object",
+        "required": [
+          "cost",
+          "costEventCount",
+          "costEventType",
+          "costPerUnit",
+          "name",
+          "priceType"
+        ],
+        "properties": {
+          "campaignTags": {
+            "description": "Campaign tags in the form of string key-value pairs.",
+            "additionalProperties": {
+              "description": "The key-value pair for the campaign tag.",
+              "type": "string"
+            },
+            "title": "Campaign Tags",
+            "type": "object"
+          },
+          "costEventType": {
+            "description": "Type of event charged (clicks or impressions)",
+            "title": "Cost Event Type",
+            "type": "string",
+            "enum": [
+              "CLICKS",
+              "IMPRESSIONS"
+            ]
+          },
+          "commissionRate": {
+            "title": "Commission Rate",
+            "type": "number"
+          },
+          "fees": {
+            "description": "Charges can include different fees (see feeType below).\n",
+            "title": "Fees",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/fee"
+            }
+          },
+          "cost": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "campaignId": {
+            "format": "int64",
+            "title": "Campaign ID",
+            "type": "integer"
+          },
+          "priceType": {
+            "description": "Metric used for performance measurement.",
+            "title": "Price Type",
+            "type": "string",
+            "enum": [
+              "CPC",
+              "CPM"
+            ]
+          },
+          "supplyCost": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "portfolioId": {
+            "format": "int64",
+            "description": "Sponsored Ads only. This identifier maps to one of the portfolios listed in the portfolios section.\n",
+            "title": "Portfolio ID",
+            "type": "integer"
+          },
+          "costPerEventType": {
+            "description": "Ad spends cost (Cost exclusive of adjustments/promotions/fees/etc) per unit (thousand impressions/clicks).\n",
+            "title": "Cost Per Event Type",
+            "type": "number"
+          },
+          "programName": {
+            "$ref": "#/components/schemas/adProgram"
+          },
+          "costEventCount": {
+            "format": "int64",
+            "description": "Number of clicks/impressions charged",
+            "title": "Event Count",
+            "type": "integer"
+          },
+          "purchaseOrderNumber": {
+            "title": "DSP only. Campaign-level purchase order number.",
+            "type": "string"
+          },
+          "name": {
+            "title": "Invoice Line Name",
+            "type": "string"
+          },
+          "campaignName": {
+            "title": "Campaign Name",
+            "type": "string"
+          },
+          "promotionAmount": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "costPerUnit": {
+            "title": "Cost per Unit",
+            "type": "number"
+          },
+          "commissionAmount": {
+            "$ref": "#/components/schemas/currencyAmount"
+          }
+        }
+      },
+      "email": {
+        "title": "Email",
+        "type": "object",
+        "required": [
+          "displayName",
+          "emailAddress"
+        ],
+        "properties": {
+          "emailAddress": {
+            "title": "Email Address",
+            "type": "string"
+          },
+          "displayName": {
+            "description": "Customer name used in email communication.\n",
+            "title": "Display Name",
+            "type": "string"
+          }
+        }
+      },
+      "bulkGetBillingNotificationsErrorCodes": {
+        "type": "string",
+        "title": "Bulk Get Billing Notifications Error Codes",
+        "enum": [
+          "BAD_REQUEST",
+          "NOT_FOUND",
+          "NOT_AUTHORIZED",
+          "INTERNAL_ERROR"
+        ]
+      },
+      "governmentInvoiceInformation": {
+        "description": "Government invoice data is provided in marketplaces (such as Italy or India) that require a government-assigned invoice ID. This object contains this identifier, along with the type of transaction from a government standpoint (which will always be a debit in the case of an invoice).\n",
+        "title": "Government Invoice Information",
+        "type": "object",
+        "properties": {
+          "transactionType": {
+            "type": "string",
+            "enum": [
+              "DEBIT",
+              "CREDIT"
+            ]
+          },
+          "countryCode": {
+            "$ref": "#/components/schemas/countryCode"
+          },
+          "governmentInvoiceId": {
+            "description": "Government generated ID",
+            "type": "string"
+          }
+        }
+      },
+      "address": {
+        "title": "Address",
+        "type": "object",
+        "required": [
+          "addressLine1",
+          "addressLine2",
+          "addressLine3",
+          "city",
+          "companyName",
+          "countryCode",
+          "postalCode",
+          "stateOrRegion"
+        ],
+        "properties": {
+          "stateOrRegion": {
+            "title": "State Or Region",
+            "type": "string"
+          },
+          "attentionName": {
+            "title": "Company Name",
+            "type": "string"
+          },
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "countryCode": {
+            "$ref": "#/components/schemas/countryCode"
+          },
+          "companyName": {
+            "title": "Company Name",
+            "type": "string"
+          },
+          "postalCode": {
+            "title": "Postal Code",
+            "type": "string"
+          },
+          "addressLine1": {
+            "title": "Address Line 1",
+            "type": "string"
+          },
+          "addressLine2": {
+            "title": "Address Line 2",
+            "type": "string"
+          },
+          "addressLine3": {
+            "title": "Address Line 3",
+            "type": "string"
+          }
+        }
+      },
+      "advertiserMarketplace": {
+        "type": "object",
+        "title": "Advertiser Marketplace",
+        "required": [
+          "advertiserId",
+          "marketplaceId"
+        ],
+        "properties": {
+          "marketplaceId": {
+            "type": "string"
+          },
+          "advertiserId": {
+            "type": "string"
+          }
+        }
+      },
+      "portfolios": {
+        "description": "Sponsored Ads only. This is a list of portfolios with their name, ID and the total cost of the campaign(s) they contain. This totalAmount corresponds to the sum of the invoice lines tagged with the ID of this portfolio.\n",
+        "title": "Portfolios",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/portfolio"
+        }
+      },
+      "billingStatus": {
+        "type": "object",
+        "title": "Billing Status",
+        "required": [
+          "billingStatusCode",
+          "message"
+        ],
+        "properties": {
+          "billingStatusCode": {
+            "$ref": "#/components/schemas/billingStatusCode"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "bulkGetBillingNotificationsResponse": {
+        "type": "object",
+        "title": "Bulk Get Billing Notifications Response",
+        "required": [
+          "success",
+          "error"
+        ],
+        "properties": {
+          "success": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/bulkGetBillingNotificationsSuccess"
+            }
+          },
+          "error": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/bulkGetBillingNotificationsError"
+            }
+          }
+        }
+      },
+      "promotions": {
+        "description": "List of promotions applied to the charges in this invoice.",
+        "title": "Promotions",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/promotion"
+        }
+      },
+      "bulkGetBillingStatusErrorResponse": {
+        "type": "object",
+        "title": "Bulk Get Billing Status Error Response",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "thirdPartyContactInformation": {
+        "description": "Additional contacts. This field is used in cases such as Loi Sapin in France where both advertiser and agency addresses need to be provided.\n",
+        "title": "Third Party Contact Info",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/contactInfo"
+        }
+      },
+      "invoice": {
+        "title": "Invoice",
+        "type": "object",
+        "required": [
+          "adjustments",
+          "invoiceLines",
+          "invoiceSummary",
+          "issuerContactInfo",
+          "payerContactInfo",
+          "payments",
+          "portfolios",
+          "promotions",
+          "taxDetail",
+          "thirdPartyContactInfo"
+        ],
+        "properties": {
+          "promotions": {
+            "$ref": "#/components/schemas/promotions"
+          },
+          "governmentInvoiceInformation": {
+            "$ref": "#/components/schemas/governmentInvoiceInformation"
+          },
+          "payerContactInfo": {
+            "$ref": "#/components/schemas/contactInfo"
+          },
+          "taxDetail": {
+            "$ref": "#/components/schemas/taxDetail"
+          },
+          "adjustments": {
+            "$ref": "#/components/schemas/adjustments"
+          },
+          "invoiceLines": {
+            "$ref": "#/components/schemas/invoiceLines"
+          },
+          "invoiceSummary": {
+            "$ref": "#/components/schemas/invoiceSummary"
+          },
+          "issuerContactInfo": {
+            "$ref": "#/components/schemas/contactInfo"
+          },
+          "thirdPartyContactInfo": {
+            "$ref": "#/components/schemas/thirdPartyContactInformation"
+          },
+          "payments": {
+            "$ref": "#/components/schemas/payments"
+          },
+          "portfolios": {
+            "$ref": "#/components/schemas/portfolios"
+          }
+        }
+      },
+      "billingStatusCode": {
+        "type": "string",
+        "title": "Billing Status Code",
+        "enum": [
+          "ACCOUNT_BILLING_ISSUE",
+          "INVALID_PAYMENT_REGISTRATION",
+          "PAYMENT_METHOD_EXPIRED",
+          "PAYMENT_METHOD_VERIFICATION_FAILED",
+          "PENDING_BILLING_REGISTRATION",
+          "PENDING_PAYMENT_REGISTRATION",
+          "PENDING_TAX_REGISTRATION",
+          "STORED_VALUE_BALANCE_TOO_LOW",
+          "RESERVE_ORDER_BALANCE_TOO_LOW",
+          "VALID_BILLING_STATUS"
+        ]
+      },
+      "invoiceStatus": {
+        "description": "* `ISSUED`: An invoice is issued when its charges are finalized and tax is computed on the total amount. \n* `PAID_IN_PART`: When a partial payment is received, the invoice status will change to paid in part.\n* `PAID_IN_PART`: One full payment has been received, the invoice will be paid in full.\n* `WRITTEN_OFF`: If an invoice is written off because of an error, the status will be updated to written off.\n",
+        "title": "Invoice Status",
+        "type": "string",
+        "enum": [
+          "ACCUMULATING",
+          "PROCESSING",
+          "ISSUED",
+          "PAID_IN_PART",
+          "PAID_IN_FULL",
+          "WRITTEN_OFF"
+        ]
+      },
+      "currencyCode": {
+        "description": "The currency used for all monetary values for entities under this profile\n|Region|`countryCode`|Country Name|`currencyCode`|\n|-|-|-|-|\n|NA|US|United States|USD|\n|NA|CA|Canada|CAD|\n|NA|MX|Mexico|MXN|\n|NA|BR|Brazil|BRL|\n|EU|UK|United Kingdom|GBP|\n|EU|DE|Germany|EUR|\n|EU|FR|France|EUR|\n|EU|ES|Spain|EUR|\n|EU|IT|Italy|EUR|\n|EU|NL|Netherlands|EUR|\n|EU|AE|United Arab Emirates|AED|\n|EU|SA|Saudi Arabia|SAR|\n|EU|TR|Turkey|TRY|\n|EU|SE|Sweden|SEK|\n|EU|EG|Egypt|EGP|\n|EU|PL|Poland|PLN|\n|IN|IN|India|INR|\n|FE|JP|Japan|JPY|\n|FE|SG|Singapore|SGD|\n|FE|AU|Australia|AUD|",
+        "type": "string",
+        "enum": [
+          "USD",
+          "CAD",
+          "MXN",
+          "BRL",
+          "GBP",
+          "EUR",
+          "AED",
+          "SAR",
+          "INR",
+          "JPY",
+          "AUD",
+          "SGD",
+          "TRY",
+          "SEK",
+          "EGP",
+          "PLN"
+        ]
+      },
+      "promotion": {
+        "title": "Promotion",
+        "type": "object",
+        "required": [
+          "amount",
+          "description",
+          "lastConsumedDate"
+        ],
+        "properties": {
+          "lastConsumedDate": {
+            "$ref": "#/components/schemas/date"
+          },
+          "amount": {
+            "$ref": "#/components/schemas/currencyAmount"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "requestBodies": {},
+    "responses": {},
+    "callbacks": {},
+    "links": {},
+    "securitySchemes": {},
+    "parameters": {}
+  },
+  "openapi": "3.0.1"
+}

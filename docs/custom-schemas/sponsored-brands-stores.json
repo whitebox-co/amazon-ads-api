@@ -1,0 +1,456 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"description": "Use this interface to request and retrieve store information. This can be used for Sponsored Brands campaign creation, to pull the store URL information, and for asset registration for Stores.",
+		"title": "Sponsored Brands - Stores",
+		"version": "2.0",
+		"contact": {
+			"name": "Amazon Ads API Support",
+			"url": "https://amzn-clicks.atlassian.net/servicedesk/customer/portals"
+		},
+		"license": {
+			"name": "Amazon Ads API License Agreement",
+			"url": "https://advertising.amazon.com/API/docs/license_agreement"
+		}
+	},
+	"paths": {
+		"/v2/stores": {
+			"get": {
+				"summary": "List store information for all registered stores under an advertiser.",
+				"operationId": "listStores",
+				"responses": {
+					"200": {
+						"description": "Successful operation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/responses/ListStoresResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreError"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden. The request failed because user does not have access to a specified resource.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Campaign Not Found. The request failed because the campaign could not be found.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreError"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreError"
+								}
+							}
+						}
+					},
+					"429": {
+						"description": "Too Many Requests. The request was rate-limited. Retry later.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreError"
+								}
+							}
+						}
+					}
+				},
+				"description": "\n\n**Retrieves a list of stores for a given advertiser.]",
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "header",
+						"name": "Amazon-Advertising-API-ClientId",
+						"description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+						"required": true
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "header",
+						"name": "Amazon-Advertising-API-Scope",
+						"description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+						"required": true
+					}
+				],
+				"tags": ["Stores"]
+			}
+		},
+		"/v2/stores/{brandEntityId}": {
+			"get": {
+				"summary": "Request store information for a given brandEntityId.",
+				"operationId": "getStore",
+				"responses": {
+					"200": {
+						"description": "Successful operation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/responses/GetStoreByBrandIdResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreError"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreError"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden. The request failed because user does not have access to a specified resource.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreError"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Campaign Not Found. The request failed because the campaign could not be found.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreError"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreError"
+								}
+							}
+						}
+					},
+					"429": {
+						"description": "Too Many Requests. The request was rate-limited. Retry later.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreError"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StoreError"
+								}
+							}
+						}
+					}
+				},
+				"description": "\n\n**Retrieves a store by brandEntityId.",
+				"parameters": [
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "header",
+						"name": "Amazon-Advertising-API-ClientId",
+						"description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+						"required": true
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "header",
+						"name": "Amazon-Advertising-API-Scope",
+						"description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+						"required": true
+					},
+					{
+						"schema": {
+							"type": "string"
+						},
+						"in": "path",
+						"name": "brandEntityId",
+						"description": "The ID of the requested store",
+						"required": true
+					}
+				],
+				"tags": ["Stores"]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "https://advertising-api-test.amazon.com",
+			"description": "Sandbox endpoint. Use for testing in all Amazon marketplaces."
+		},
+		{
+			"url": "https://advertising-api.amazon.com",
+			"description": "Production endpoint for North America, which includes US and CA Amazon marketplaces."
+		},
+		{
+			"url": "https://advertising-api-eu.amazon.com",
+			"description": "Production endpoint for Europe, which includes UK, FR, IT, ES, DE, plus IN Amazon marketplaces."
+		},
+		{
+			"url": "https://advertising-api-fe.amazon.com",
+			"description": "Production endpoint for Far East, which includes JP Amazon marketplaces."
+		}
+	],
+	"components": {
+		"headers": {},
+		"examples": {},
+		"schemas": {
+			"StoreInfo": {
+				"description": "Structure of a store",
+				"type": "object",
+				"properties": {
+					"code": {
+						"description": "The response code.",
+						"type": "string"
+					},
+					"entityId": {
+						"description": "The entity ID.",
+						"type": "string"
+					},
+					"storeName": {
+						"description": "The name of the store.",
+						"type": "string"
+					},
+					"brandEntityId": {
+						"description": "ID used in campaign creation and asset registration.",
+						"type": "string"
+					},
+					"storePageInfo": {
+						"description": "The information related to the store.",
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/StorePageInfo"
+						}
+					}
+				}
+			},
+			"StorePageInfo": {
+				"description": "Structure of a store page",
+				"type": "object",
+				"properties": {
+					"storePageId": {
+						"description": "The ID of the store.",
+						"type": "string"
+					},
+					"storePageUrl": {
+						"description": "The store url page. Can be used for SB campaigns as a possible landing page.",
+						"type": "string"
+					},
+					"storePageName": {
+						"description": "The page name. Defaults to Home for the main store page.",
+						"type": "string"
+					}
+				}
+			},
+			"StoreError": {
+				"description": "The Error Response Object.",
+				"type": "object",
+				"properties": {
+					"code": {
+						"description": "An enumerated error code for machine use.",
+						"type": "string"
+					},
+					"details": {
+						"description": "A human-readable description of the response.",
+						"type": "string"
+					}
+				}
+			},
+			"ListStoresResponse": {
+				"description": "Successful listStores response",
+				"type": "array",
+				"items": {
+					"$ref": "#/components/schemas/StoreInfo"
+				}
+			},
+			"GetStoreByBrandIdResponse": {
+				"description": "Successful getStoreByBrandId response",
+				"$ref": "#/components/schemas/StoreInfo"
+			}
+		},
+		"requestBodies": {},
+		"responses": {
+			"ListStoresResponse": {
+				"description": "Successful listStores response",
+				"content": {
+					"application/json": {
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/StoreInfo"
+							}
+						},
+						"example": [
+							{
+								"code": "SUCCESS",
+								"entityId": "ENTITY6SICSOL71XVX",
+								"storeName": "Test 1",
+								"brandEntityId": "ENTITY6SICSOL71XVX",
+								"storePageInfo": [
+									{
+										"storePageId": "75233FD4-DC27-4D39-A3AE-2DDBEE144AD2",
+										"storePageUrl": "https://www.amazon.com/stores/page/75233FD4-DC27-4D39-A3AE-2DDBEE144AD2",
+										"storePageName": "Home"
+									},
+									{
+										"storePageId ": "75233FD4-DC27-4D39-A3AE-2DDBEE144AD3",
+										"storePageUrl ": " https://www.amazon.com/stores/page/75233FD4-DC27-4D39-A3AE-2DDBEE144AD3",
+										"storePageName ": "Subpage title"
+									}
+								]
+							}
+						]
+					}
+				}
+			},
+			"GetStoreByBrandIdResponse": {
+				"description": "Successful getStoreByBrandId response",
+				"content": {
+					"application/json": {
+						"schema": {
+							"$ref": "#/components/schemas/StoreInfo"
+						},
+						"example": {
+							"code": "SUCCESS",
+							"entityId": "ENTITY6SICSOL71XVX",
+							"storeName": "Test 1",
+							"brandEntityId": "ENTITY6SICSOL71XVX",
+							"storePageInfo": [
+								{
+									"storePageId": "75233FD4-DC27-4D39-A3AE-2DDBEE144AD2",
+									"storePageUrl": "https://www.amazon.com/stores/page/75233FD4-DC27-4D39-A3AE-2DDBEE144AD2",
+									"storePageName": "Home"
+								},
+								{
+									"storePageId ": "75233FD4-DC27-4D39-A3AE-2DDBEE144AD3",
+									"storePageUrl ": " https://www.amazon.com/stores/page/75233FD4-DC27-4D39-A3AE-2DDBEE144AD3",
+									"storePageName ": "Subpage title"
+								}
+							]
+						}
+					}
+				}
+			}
+		},
+		"callbacks": {},
+		"links": {},
+		"parameters": {
+			"clientHeader": {
+				"name": "Amazon-Advertising-API-ClientId",
+				"in": "header",
+				"description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+				"required": true,
+				"schema": {
+					"type": "string"
+				}
+			},
+			"profileHeader": {
+				"name": "Amazon-Advertising-API-Scope",
+				"in": "header",
+				"description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+				"required": true,
+				"schema": {
+					"type": "string"
+				}
+			}
+		},
+		"securitySchemes": {
+			"oauth2AuthorizationCode": {
+				"type": "oauth2",
+				"description": "Login with Amazon. For more information see [Login with Amazon authorization code grant](https://developer.amazon.com/docs/login-with-amazon/authorization-code-grant.html).",
+				"flows": {
+					"authorizationCode": {
+						"authorizationUrl": "https://www.amazon.com/ap/oa",
+						"tokenUrl": "https://api.amazon.com/auth/o2/token",
+						"scopes": {
+							"cpc_advertising:campaign_management": "Modify your advertising campaigns and access performance data"
+						}
+					}
+				}
+			},
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer"
+			}
+		}
+	},
+	"security": [
+		{
+			"oauth2AuthorizationCode": ["cpc_advertising:campaign_management"]
+		},
+		{
+			"bearerAuth": []
+		}
+	]
+}

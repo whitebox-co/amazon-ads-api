@@ -1,0 +1,384 @@
+{
+  "info": {
+    "description": "Provides information about changes made to campaigns, adgroups, ads, etc",
+    "title": "Change history",
+    "version": "3.0"
+  },
+  "paths": {
+    "/history": {
+      "post": {
+        "summary": "History of entity changes.",
+        "requestBody": {
+          "description": "HistoryQuery",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "eventTypes",
+                  "fromDate",
+                  "toDate"
+                ],
+                "properties": {
+                  "fromDate": {
+                    "description": "Max 90 days of history.",
+                    "type": "integer"
+                  },
+                  "nextToken": {
+                    "description": "token from previous response to get next set of data.",
+                    "type": "string"
+                  },
+                  "toDate": {
+                    "type": "integer"
+                  },
+                  "pageOffset": {
+                    "description": "Mutually exclusive with 'nextToken'. Max results with pageOffset is 10000. Use nextToken instead for more results.",
+                    "type": "integer"
+                  },
+                  "count": {
+                    "description": "Requested number of results. Default 100. Minimum 50. Maximum 200.",
+                    "type": "integer"
+                  },
+                  "sort": {
+                    "$ref": "#/components/schemas/HistorySortParameter"
+                  },
+                  "eventTypes": {
+                    "$ref": "#/components/schemas/HistoryEventTypes"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "Returns history of changes for provided event sources that match the filters and time ranges specified. Only events that belong to the authenticated Advertiser can be queried. All times will be in UTC Epoch format. This API accepts identifiers in either the alphamumeric format (default), or the numeric format. If numeric IDs are supplied, then numeric IDs will be returned otherwise, alphanumeric IDs are returned.",
+        "operationId": "getHistory",
+        "responses": {
+          "200": {
+            "description": "Successful query. Result contains historical events matching query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "totalResults": {
+                      "description": "total results matching the query. Only provided for pageOffset queries and capped at 10000.",
+                      "type": "integer"
+                    },
+                    "nextToken": {
+                      "description": "returned if not using pageOffset. Can be used in the request to request the next set of results.",
+                      "type": "string"
+                    },
+                    "events": {
+                      "$ref": "#/components/schemas/HistoryResponseEvents"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoryError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoryError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user does not have access to a specified resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoryError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoryError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistoryError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "headers": {},
+    "examples": {},
+    "schemas": {
+      "HistoryEventTypes": {
+        "type": "object",
+        "properties": {
+          "AD": {
+            "$ref": "#/components/schemas/HistoryEventType"
+          },
+          "NEGATIVE_KEYWORD": {
+            "$ref": "#/components/schemas/HistoryEventType"
+          },
+          "PRODUCT_TARGETING": {
+            "$ref": "#/components/schemas/HistoryEventType"
+          },
+          "KEYWORD": {
+            "$ref": "#/components/schemas/HistoryEventType"
+          },
+          "AD_GROUP": {
+            "$ref": "#/components/schemas/HistoryEventType"
+          },
+          "CAMPAIGN": {
+            "$ref": "#/components/schemas/HistoryEventType"
+          }
+        }
+      },
+      "HistoryResponseEvents": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "newValue": {
+              "description": "\n| EntityType | Change Type | Values |\n|------------|-------------|--------|\n| CAMPAIGN | STATUS | CREATED, ENABLED, PAUSED, ARCHIVED|\n| CAMPAIGN | IN_BUDGET | true or false|\n| CAMPAIGN | PORTFOLIO | portfolioId|\n| CAMPAIGN | BUDGET_AMOUNT | amount in marketplace currency |\n| CAMPAIGN | NAME | campaign name string|\n| CAMPAIGN | START_DATE | unix time|\n| CAMPAIGN | END_DATE | unix time|\n| CAMPAIGN | SMART_BIDDING_STRATEGY | OPTIMIZE_FOR_SALES, LEGACY, MANUAL|\n| CAMPAIGN | PLACEMENT_GROUP | number as percent |\n| AD_GROUP | STATUS | CREATED, ENABLED, PAUSED, ARCHIVED |\n| AD_GROUP | NAME | ad group name string |\n| AD_GROUP | DEFAULT_BID_AMOUNT | amount in marketplace currency |\n| AD | STATUS | CREATED, ENABLED, PAUSED, ARCHIVED |\n| KEYWORD | STATUS | CREATED, ENABLED, PAUSED, ARCHIVED |\n| KEYWORD | BID_AMOUNT | amount in marketplace currency |\n| PRODUCT_TARGETING | STATUS | CREATED, ENABLED, PAUSED, ARCHIVED |\n| PRODUCT_TARGETING | BID_AMOUNT | amount in marketplace currency |\n| NEGATIVE_KEYWORD | STATUS | CREATED, ENABLED, PAUSED, ARCHIVED |",
+              "type": "string"
+            },
+            "metadata": {
+              "type": "object",
+              "properties": {
+                "productTargetingType": {
+                  "description": "Field only for Product Targeting",
+                  "type": "string",
+                  "enum": [
+                    "PREDEFINED",
+                    "EXPRESSION"
+                  ]
+                },
+                "programType": {
+                  "type": "string",
+                  "enum": [
+                    "SB",
+                    "SBV",
+                    "SP"
+                  ]
+                },
+                "campaignId": {
+                  "type": "string"
+                },
+                "campaignBudgetType": {
+                  "description": "Field only for campaigns",
+                  "type": "string",
+                  "enum": [
+                    "LIFETIME_BUDGET",
+                    "DAILY"
+                  ]
+                },
+                "keywordType": {
+                  "description": "Field only for keywords",
+                  "type": "string",
+                  "enum": [
+                    "KEYWORD_PHRASE",
+                    "KEYWORD_BROAD",
+                    "KEYWORD_EXACT"
+                  ]
+                },
+                "predefinedTarget": {
+                  "type": "string",
+                  "enum": [
+                    "SUBSTITUTES",
+                    "COMPLEMENTS",
+                    "LOOSE-MATCH",
+                    "CLOSE-MATCH"
+                  ]
+                },
+                "keyword": {
+                  "description": "Field only for keywords or negative keywords. The keyword or phrase this matches.",
+                  "type": "string"
+                },
+                "adAsin": {
+                  "description": "Field only for ads",
+                  "type": "string"
+                },
+                "targetingExpression": {
+                  "description": "Field only for Product Targeting where type = EXPRESSION. Some examples:\ncategory=\"Car Seat Canopies & Covers\" brand=\"Munchkin\" price<14.9 rating>4.6\nasin=\"B000NPPATS\"\ncategory=\"Women's Handbag Accessories\"",
+                  "type": "string"
+                },
+                "placementGroupPosition": {
+                  "description": "Field only for campaign placement group change types",
+                  "type": "string",
+                  "enum": [
+                    "TOP_OF_SEARCH",
+                    "DETAIL_PAGE"
+                  ]
+                },
+                "negativeTargetingType": {
+                  "description": "Field only for negative targeting.",
+                  "type": "string",
+                  "enum": [
+                    "NEGATIVE_KEYWORD_EXACT",
+                    "NEGATIVE_KEYWORD_PHRASE"
+                  ]
+                },
+                "adGroupId": {
+                  "type": "string"
+                }
+              }
+            },
+            "entityType": {
+              "type": "string",
+              "enum": [
+                "CAMPAIGN",
+                "AD_GROUP",
+                "AD",
+                "KEYWORD",
+                "PRODUCT_TARGETING",
+                "NEGATIVE_KEYWORD"
+              ]
+            },
+            "changeType": {
+              "description": "\nChangeTypes for EntityTypes\n| EntityType | Valid Change Types |\n|------|--------|\n|CAMPAIGN | STATUS, IN_BUDGET, PORTFOLIO, BUDGET_AMOUNT, NAME, START_DATE, END_DATE, SMART_BIDDING_STRATEGY, PLACEMENT_GROUP|\n|AD_GROUP | STATUS, NAME, DEFAULT_BID_AMOUNT|\n|AD | STATUS|\n|KEYWORD | STATUS, BID_AMOUNT|\n|PRODUCT_TARGETING | STATUS, BID_AMOUNT|\n|NEGATIVE_KEYWORD | STATUS|",
+              "type": "string",
+              "enum": [
+                "STATUS",
+                "IN_BUDGET",
+                "PORTFOLIO",
+                "BUDGET_AMOUNT",
+                "NAME",
+                "START_DATE",
+                "END_DATE",
+                "SMART_BIDDING_STRATEGY",
+                "PLACEMENT_GROUP",
+                "BID_AMOUNT",
+                "DEFAULT_BID_AMOUNT"
+              ]
+            },
+            "entityId": {
+              "type": "string"
+            },
+            "previousValue": {
+              "description": "\n| EntityType | Change Type | Values |\n|------------|-------------|--------|\n| CAMPAIGN | STATUS | CREATED, ENABLED, PAUSED, ARCHIVED|\n| CAMPAIGN | IN_BUDGET | true or false|\n| CAMPAIGN | PORTFOLIO | portfolioId|\n| CAMPAIGN | BUDGET_AMOUNT | amount in marketplace currency |\n| CAMPAIGN | NAME | campaign name string|\n| CAMPAIGN | START_DATE | unix time|\n| CAMPAIGN | END_DATE | unix time|\n| CAMPAIGN | SMART_BIDDING_STRATEGY | OPTIMIZE_FOR_SALES, LEGACY, MANUAL|\n| CAMPAIGN | PLACEMENT_GROUP | number as percent |\n| AD_GROUP | STATUS | CREATED, ENABLED, PAUSED, ARCHIVED |\n| AD_GROUP | NAME | ad group name string |\n| AD_GROUP | DEFAULT_BID_AMOUNT | amount in marketplace currency |\n| AD | STATUS | CREATED, ENABLED, PAUSED, ARCHIVED |\n| KEYWORD | STATUS | CREATED, ENABLED, PAUSED, ARCHIVED |\n| KEYWORD | BID_AMOUNT | amount in marketplace currency |\n| PRODUCT_TARGETING | STATUS | CREATED, ENABLED, PAUSED, ARCHIVED |\n| PRODUCT_TARGETING | BID_AMOUNT | amount in marketplace currency |\n| NEGATIVE_KEYWORD | STATUS | CREATED, ENABLED, PAUSED, ARCHIVED |",
+              "type": "string"
+            },
+            "timestamp": {
+              "description": "unix time",
+              "type": "integer"
+            }
+          }
+        }
+      },
+      "HistorySortParameter": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": [
+              "DATE"
+            ]
+          },
+          "direction": {
+            "default": "DESC",
+            "type": "string",
+            "enum": [
+              "ASC",
+              "DESC"
+            ]
+          }
+        }
+      },
+      "HistoryEventType": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "description": "| Filter | Entity Types |\n|------------|----------|\n| BUDGET_AMOUNT | CAMPAIGN |\n| IN_BUDGET | CAMPAIGN |\n| STATUS | CAMPAIGN, AD_GROUP, AD, KEYWORD, PRODUCT_TARGET, NEGATIVE_KEYWORD |\n| END_DATE | CAMPAIGN |\n| START_DATE | CAMPAIGN |\n| PLACEMENT_GROUP | CAMPAIGN|\n| SMART_BIDDING_STRATEGY | CAMPAIGN |\n| DEFAULT_BID_AMOUNT | AD_GROUP |\n| NAME | CAMPAIGN, AD_GROUP |",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "BUDGET_AMOUNT",
+                "IN_BUDGET",
+                "STATUS",
+                "END_DATE",
+                "START_DATE",
+                "PLACEMENT_GROUP",
+                "SMART_BIDDING_STRATEGY",
+                "DEFAULT_BID_AMOUNT",
+                "NAME"
+              ]
+            }
+          },
+          "eventTypeIds": {
+            "description": "max of 10 event types. IDs here belong to the EventType. For example, if requesting CAMPAGIN as the eventType, these are campaignIds.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "parents": {
+            "description": "maximum of 10 parents",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "campaignId": {
+                  "type": "string"
+                },
+                "useProfileIdAdvertiser": {
+                  "description": "If true, retrieves events which belong to the associated advertiser",
+                  "type": "boolean"
+                },
+                "adGroupId": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "HistoryError": {
+        "description": "The error response object.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "The HTTP status code of the response.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "requestBodies": {},
+    "responses": {},
+    "callbacks": {},
+    "links": {},
+    "securitySchemes": {},
+    "parameters": {}
+  },
+  "openapi": "3.0.1"
+}

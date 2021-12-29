@@ -1,0 +1,83 @@
+name: Release
+
+env:
+    CI: 'true'
+
+on:
+    push:
+        branches:
+            - main
+            - next
+            - next-major
+            - beta
+            - alpha
+            - '[0-9]+.x' # N.x
+            - '[0-9]+.x.x' # N.x.x
+            - '[0-9]+.[0-9]+.x' # N.N.x
+
+jobs:
+    gh-npm-publish:
+        name: github npm publish
+
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+              with:
+                  token: ${{ secrets.GH_TOKEN }}
+
+            - name: Install
+              uses: bahmutov/npm-install@v1
+
+            - name: Build
+              run: npm run build
+
+            - name: Semantic Release Github
+              if: success()
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: npm run semantic-release
+
+    npm-publish:
+        needs: [gh-npm-publish]
+
+        name: npm publish
+
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Setup Node
+              uses: actions/setup-node@v2
+              with:
+                  registry-url: 'https://registry.npmjs.org'
+
+            - name: Update .npmrc
+              run: echo "//registry.npmjs.org:_authToken=$NPM_TOKEN" > .npmrc
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - name: Check package version
+              id: cpv
+              uses: PostHog/check-package-version@v2
+
+            - name: Install
+              if: steps.cpv.outputs.is-new-version == 'true'
+              uses: bahmutov/npm-install@v1
+
+            - name: Build
+              if: steps.cpv.outputs.is-new-version == 'true'
+              run: npm run build
+
+            - name: Publish
+              if: steps.cpv.outputs.is-new-version == 'true'
+              run: npm publish
+              env:
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

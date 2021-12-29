@@ -1,0 +1,288 @@
+{
+  "info": {
+    "description": "Check advertising eligibility of products.",
+    "title": "Eligibility",
+    "version": "3.0"
+  },
+  "paths": {
+    "/eligibility/product/list": {
+      "post": {
+        "summary": "Gets advertising eligibility status for a list of products.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductEligibilityRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "Gets a list of advertising eligibility objects for a set of products. Requests are permitted only for products sold by the merchant associated with the profile. Note that the request object is a list of ASINs, but multiple SKUs are returned if there is more than one SKU associated with an ASIN. If a product is not eligible for advertising, the response includes an object describing the reasons for ineligibility.",
+        "operationId": "productEligibility",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductEligibilityResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductEligibilityError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductEligibilityError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. Request failed because user does not have access to a specified resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductEligibilityError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cannot find requested entity. Note that this may occur if a product is not associated with the given profile/merchant, or a product is no longer in the catalog.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductEligibilityError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The request was understood, but it contained invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductEligibilityError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductEligibilityError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error. Retry later. Contact support if this response persists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductEligibilityError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Product Eligibility"
+        ]
+      }
+    }
+  },
+  "components": {
+    "headers": {},
+    "examples": {},
+    "schemas": {
+      "ProductEligibilityRequest": {
+        "description": "A product advertising eligibility request object.",
+        "type": "object",
+        "required": [
+          "productDetailsList"
+        ],
+        "properties": {
+          "adType": {
+            "default": "sp",
+            "description": "Set to 'sp' to check product eligibility for Sponsored Products advertisements. Set to 'sb' to check product eligibility for Sponsored Brands advertisements.",
+            "type": "string",
+            "enum": [
+              "sp",
+              "sb"
+            ]
+          },
+          "productDetailsList": {
+            "minItems": 1,
+            "maxItems": 30,
+            "description": "A list of product identifier objects.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductDetails"
+            }
+          },
+          "locale": {
+            "description": "Set to the locale string in the table below to specify the language in which the response is returned.\n|Locale|Language (ISO 639)|Country (ISO 3166)|\n|------|------------------|------------------|\n|ar-AE|Arabic (ar)|United Arab Emirates (AE)|\n|zh-CN|Chinese (zh)|China (CN)|\n|nl-NL|Dutch (nl)|Netherlands (NL)|\n|en-AU|English (en)|Australia (AU)|\n|en-CA|English (en)|Canada (CA)|\n|en-IN|English (en)|India (IN)|\n|en-GB|English (en)|United Kingdom (GB)|\n|en-US|English (en)|United States (US)|\n|fr-CA|French (fr)|Canada (CA)|\n|fr-FR|French (fr)|France (FR)|\n|de-DE|German (de)|Germany (DE)|\n|it-IT|Italian (it)|Italy (IT)|\n|ja-JP|Japanese (ja)|Japan (JP)|\n|ko-KR|Korean (ko)|South Korea (KR)|\n|pt-BR|Portuguese (pt)|Brazil (BR)|\n|es-ES|Spanish (es)|Spain (ES)|\n|es-US|Spanish (es)|United States (US)|\n|es-MX|Spanish (es)|Mexico (MX)|\n|tr-TR|Turkish (tr)|Turkey (TR)|\n",
+            "type": "string"
+          }
+        }
+      },
+      "ProductEligibilityError": {
+        "description": "The error response object.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "The HTTP status code of the response.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "ProductEligibilityResponse": {
+        "description": "A product advertising eligibility response object.",
+        "type": "object",
+        "properties": {
+          "productResponseList": {
+            "description": "A list of product advertising eligibility responses.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductResponse"
+            }
+          }
+        }
+      },
+      "ProductDetails": {
+        "description": "An Amazon product identifier, seller product identifer, or both.",
+        "type": "object",
+        "required": [
+          "asin"
+        ],
+        "properties": {
+          "asin": {
+            "description": "An Amazon product identifier.",
+            "type": "string"
+          },
+          "sku": {
+            "description": "A seller product identifier.",
+            "type": "string"
+          }
+        }
+      },
+      "ProductResponse": {
+        "description": "An product advertising eligibility response.",
+        "type": "object",
+        "required": [
+          "eligibilityStatusList",
+          "overallStatus",
+          "productDetails"
+        ],
+        "properties": {
+          "productDetails": {
+            "$ref": "#/components/schemas/ProductDetails"
+          },
+          "eligibilityStatusList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EligibilityStatus"
+            }
+          },
+          "overallStatus": {
+            "description": "A human-readable description of the product's advertising eligibility status. Inherits highest severity from eligibilityStatusList.",
+            "type": "string",
+            "enum": [
+              "ELIGIBLE",
+              "INELIGIBLE",
+              "ELIGIBLE_WITH_WARNING"
+            ]
+          }
+        }
+      },
+      "EligibilityStatus": {
+        "description": "The advertising eligibility status of a product.",
+        "type": "object",
+        "properties": {
+          "severity": {
+            "description": "An enumerated advertising eligibility severity status. If set to `INELIGIBLE`, the product cannot be included in an advertisement. If set to `ELIGIBLE_WITH_WARNING`, the product may not receive impressions when included in an advertisement.",
+            "type": "string",
+            "enum": [
+              "INELIGIBLE",
+              "ELIGIBLE_WITH_WARNING"
+            ]
+          },
+          "name": {
+            "description": "The status identifier.",
+            "type": "string",
+            "enum": [
+              "ADULT_PRODUCT",
+              "CLOSED_CATEGORY",
+              "INELIGIBLE_CONDITION",
+              "INELIGIBLE_OFFER",
+              "INELIGIBLE_PRODUCT_COST",
+              "LISTING_SUPRESSED",
+              "MISSING_IMAGE",
+              "MISSING_TITLE",
+              "NOT_IN_BUYBOX",
+              "OUT_OF_STOCK",
+              "RESTRICTED_CATEGORY",
+              "VARIATION_PARENT"
+            ]
+          },
+          "helpUrl": {
+            "description": "A URL with additional information about the status identifier. May not be present for all status identifiers.",
+            "type": "string"
+          },
+          "message": {
+            "description": "A human-readable description of the status identifier specified in the `name` field.",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "requestBodies": {},
+    "responses": {},
+    "callbacks": {},
+    "links": {},
+    "securitySchemes": {},
+    "parameters": {}
+  },
+  "openapi": "3.0.1"
+}
