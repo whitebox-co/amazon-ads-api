@@ -27,6 +27,7 @@ export const PATHS = {
 	APIS: './src/apis',
 	MODELS: './src/apis/models',
 	CLIENTS: './src/apis/clients',
+	PRETTIER: './node_modules/.bin/prettier',
 };
 
 export const DEFAULT_API_BASE_PATH = 'https://advertising-api.amazon.com';

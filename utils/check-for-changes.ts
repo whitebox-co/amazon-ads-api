@@ -8,8 +8,13 @@ const checkForChanges = async () => {
 	try {
 		await downloadSchemas();
 
-		const committedGitFiles = await gitChangedFiles({ baseBranch: 'main', formats: ['*.json'] });
-		hasChanges = committedGitFiles.length > 0;
+		const { unCommittedFiles } = await gitChangedFiles({
+			baseBranch: 'develop',
+			formats: false,
+			showCommitted: false,
+			showUnCommitted: true,
+		});
+		hasChanges = unCommittedFiles.length > 0;
 	} catch (err) {
 		hasChanges = false;
 	}
@@ -22,4 +27,4 @@ if (process.env.RUN_CHECK_FOR_CHANGES) {
 	checkForChanges();
 }
 
-export default { checkForChanges };
+export { checkForChanges };

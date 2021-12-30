@@ -32,7 +32,7 @@ const generateAPIClient = (project: Project, executor: TemplateExecutor, schemaN
 		importApiModelClassName: extendedClassNames,
 		importHelpers: helpers.join(','),
 		dirname: kebabSchemaName(schemaName),
-		apiModelClassName: apiClasses[0].getNameOrThrow(),
+		apiModelClassName: apiClasses[0]?.getNameOrThrow(),
 		apiClientClassName,
 		extendable,
 	});

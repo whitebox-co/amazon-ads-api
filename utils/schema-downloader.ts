@@ -63,10 +63,7 @@ const downloadSchemas = async () => {
 	deleteOldSchemas();
 
 	const schemaDownloadRequests = SCHEMAS.map((schema) => {
-		return axios({
-			method: 'GET',
-			url: schema.schemaUrl,
-		});
+		return axios.get(schema.schemaUrl);
 	});
 
 	const schemaDownloadResponses = await Promise.allSettled(schemaDownloadRequests);

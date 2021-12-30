@@ -9,7 +9,16 @@ const execOpenApiGenerator = (schemaFilePath: string, schemaFileName: string) =>
 	const apiOutputFile = `${PATHS.APIS}/${schemaFileName.slice(0, schemaFileName.length - 5)}`;
 
 	const command = `openapi-generator-cli generate -g typescript-axios --enable-post-process-file --additional-properties=supportES6=true,useSingleRequestParameter=true --type-mappings=set=Array --skip-validate-spec -o ${apiOutputFile} -i ${schemaFilePath}`;
-	execSync(command);
+
+	process.env.TS_POST_PROCESS_FILE = `${PATHS.PRETTIER} --write`;
+
+	if (process.env.VERBOSE_GENERATION) {
+		execSync(command, {
+			stdio: 'inherit',
+		});
+	} else {
+		execSync(command);
+	}
 };
 
 const moveApiModelFile = (schemaName: string) => {
