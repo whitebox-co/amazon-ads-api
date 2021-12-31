@@ -33,6 +33,7 @@ describe('helpers', () => {
 				baseOptions: {},
 				credentials: {
 					clientId: '',
+					clientSecret: '',
 					profileId: '',
 				},
 			};
@@ -51,6 +52,7 @@ describe('helpers', () => {
 				baseOptions: {},
 				credentials: {
 					clientId: '',
+					clientSecret: '',
 					profileId: '',
 				},
 			};

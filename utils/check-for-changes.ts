@@ -10,7 +10,7 @@ const checkForChanges = async () => {
 
 		const { unCommittedFiles } = await gitChangedFiles({
 			baseBranch: 'develop',
-			formats: false,
+			formats: ['*.json', '*.yaml'],
 			showCommitted: false,
 			showUnCommitted: true,
 		});

@@ -10,6 +10,10 @@ describe('constants', () => {
 			MODELS: './src/apis/models',
 			PRETTIER: './node_modules/.bin/prettier',
 			CLIENTS: './src/apis/clients',
+			TS_CONFIG: 'tsconfig.json',
+			TS_LIB: 'node_modules/typescript/lib',
+			INTEGRATION_TESTS: './tests/integration/apis',
+			ESLINT: './node_modules/.bin/eslint',
 		};
 
 		expect(PATHS).toEqual(expectedPaths);

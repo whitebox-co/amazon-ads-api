@@ -4,10 +4,33 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Debug Test",
+			"name": "Debug Unit Tests",
 			"type": "node",
 			"request": "launch",
-			"args": ["--runInBand", "--no-cache"],
+			"args": ["tests/unit", "--setupFiles", "dotenv/config", "--runInBand", "--no-cache"],
+			"env": {
+				"CI": "true"
+			},
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"disableOptimisticBPs": true,
+			"program": "${workspaceFolder}/node_modules/.bin/jest",
+			"skipFiles": [
+				// black boxes vendor code from the debugger
+				"${workspaceRoot}/node_modules/**/*.js",
+				"${workspaceRoot}/lib/**/*.js",
+				"async_hooks.js",
+				"inspector_async_hook.js",
+				// https://github.com/nodejs/node/issues/15464#issuecomment-332724821
+				"<node_internals>/**"
+			]
+		},
+		{
+			"name": "Debug Integration Tests",
+			"type": "node",
+			"request": "launch",
+			"args": ["tests/integration", "--setupFiles", "dotenv/config", "--runInBand", "--no-cache"],
 			"env": {
 				"CI": "true"
 			},

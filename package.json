@@ -43,6 +43,7 @@
     "generate-apis": "cross-env RUN_API_GENERATOR=true ts-node utils/api-generator",
     "generate-clients": "cross-env RUN_CLIENT_GENERATOR=true ts-node utils/client-generator",
     "generate-models": "cross-env RUN_MODEL_GENERATOR=true ts-node utils/model-generator",
+    "generate-tests": "cross-env RUN_TEST_GENERATOR=true ts-node utils/test-generator",
     "lint": "npm -s run lint:ts",
     "lint-fix:ts": "eslint . --ext ts --fix",
     "lint:ts": "eslint . --ext ts",

@@ -10,6 +10,10 @@ jest.mock('../../../utils/client-generator', () => ({
 	generateAPIClients: jest.fn(),
 }));
 
+jest.mock('../../../utils/test-generator', () => ({
+	generateTests: jest.fn(),
+}));
+
 describe('api-generator', () => {
 	it('should run through all generator steps on init', () => {
 		jest.resetModules();

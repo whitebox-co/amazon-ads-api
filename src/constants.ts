@@ -1,5 +1,64 @@
 import { AxiosInstance, AxiosRequestConfig } from 'axios';
 
+import {
+	AttributionClient,
+	AuthorizationManagerAccountClient,
+	AuthorizationProfilesClient,
+	BrandMetricsClient,
+	CommonAudiencesClient,
+	CommonBillingClient,
+	CommonChangeHistoryClient,
+	CommonCreativeAssetsClient,
+	CommonEligibilityClient,
+	CommonInsightsClient,
+	CommonLocalizationClient,
+	CommonProductMetaDataClient,
+	DataProviderClient,
+	DspAdvertiserClient,
+	DspClient,
+	DspMeasurementClient,
+	DspReportsClient,
+	SponsoredBrandsCategoryBenchmarkClient,
+	SponsoredBrandsClient,
+	SponsoredBrandsPreModerationClient,
+	SponsoredBrandsReportsClient,
+	SponsoredBrandsSnapshotsClient,
+	SponsoredBrandsStoresClient,
+	SponsoredDisplayClient,
+	SponsoredDisplayExtraClient,
+	SponsoredProductsClient,
+	SponsoredProductsExtraClient,
+} from '.';
+
+export declare type AmazonAdsApi =
+	| AttributionClient
+	| AuthorizationManagerAccountClient
+	| AuthorizationProfilesClient
+	| BrandMetricsClient
+	| CommonAudiencesClient
+	| CommonBillingClient
+	| CommonChangeHistoryClient
+	| CommonCreativeAssetsClient
+	| CommonEligibilityClient
+	| CommonInsightsClient
+	| CommonLocalizationClient
+	| CommonProductMetaDataClient
+	| DataProviderClient
+	| DspAdvertiserClient
+	| DspClient
+	| DspMeasurementClient
+	| DspReportsClient
+	| SponsoredBrandsCategoryBenchmarkClient
+	| SponsoredBrandsClient
+	| SponsoredBrandsPreModerationClient
+	| SponsoredBrandsReportsClient
+	| SponsoredBrandsSnapshotsClient
+	| SponsoredBrandsStoresClient
+	| SponsoredDisplayClient
+	| SponsoredDisplayExtraClient
+	| SponsoredProductsClient
+	| SponsoredProductsExtraClient;
+
 export interface Schema {
 	name: string;
 	schemaUrl: string;
@@ -8,8 +67,13 @@ export interface Schema {
 
 export interface AmazonAdvertisingAPICredentials {
 	clientId: string;
+	clientSecret: string;
 	profileId: string;
+	accessToken?: string;
 	refreshToken?: string;
+
+	/** Determines when the accessToken expires. */
+	expiresOn?: Date;
 }
 
 export interface APIConfigurationParameters {
@@ -28,9 +92,14 @@ export const PATHS = {
 	MODELS: './src/apis/models',
 	CLIENTS: './src/apis/clients',
 	PRETTIER: './node_modules/.bin/prettier',
+	TS_CONFIG: 'tsconfig.json',
+	TS_LIB: 'node_modules/typescript/lib',
+	INTEGRATION_TESTS: './tests/integration/apis',
+	ESLINT: './node_modules/.bin/eslint',
 };
 
 export const DEFAULT_API_BASE_PATH = 'https://advertising-api.amazon.com';
+export const AMAZON_API_PREFIX = 'https://api.amazon.com';
 
 /**
  * The version value is automatically replaced during builds.
