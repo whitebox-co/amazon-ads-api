@@ -63,6 +63,10 @@ const generateIntegrationTest = (schemaName: string) => {
 	}
 };
 
+/**
+ * Loops through all of the schemas defined in the constants and Generates
+ * integration tests for each
+ */
 const generateTests = () => {
 	for (const { name } of SCHEMAS) {
 		const apiClientFileName = generateAPIClientFileName(name);

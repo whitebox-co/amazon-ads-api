@@ -48,7 +48,84 @@ npm install
 
 ## Usage
 
-TODO - To be completed after library is complete.
+There are two distinct parts of the this SDK.
+
+1. **Models** - The Models contain interfaces and classes that define the individual api endpoint definitions and
+   extend a base api class that ultimately implements axios calls to the remote endpoint. These could be used if
+   you wanted to manage the configuration and authorizations yourself.
+2. **Clients** - The Clients are classes that groups multiple Api's into one named group. These map directly to the
+   Amazon OpenAPI Swagger definitions. They extend multiple Api's and group all functions of all api's into a single
+   exported class. These are the main entry points into using the SDK to connect to the remote endpoints.
+
+The Amazon Ads API requires passing both access tokens and refresh tokens in order to properly authorize against
+each endpoint. Our SDK handles this transparently to the end user by exposing a mechanism to manage caching and
+refreshing of the access tokens. In order to take advantage of this the user must use the `getConfiguredApi`
+function to instantiate an individual client.
+
+### Preferred Usage
+
+Use this approach when you only need to use a single client. If multiple clients are necessary
+it is better to use the AmazonAds Class.
+
+```typescript
+import amazonAdsApi, { AttributionClient } from '@whitebox-co/amazon-ads-api';
+
+/**
+ * Init the amazon ads attribution client with client credentials and get back a fully
+ * configured instance of the client with token caching built in.
+ *
+ * Any subsequent call using the same credentials but a different client
+ * will use cached credentials until they expire.
+ */
+const attributionClient = await amazonAdsApi.getConfiguredApi(AttributionClient, {
+    clientId
+    clientSecret,
+    profileId,
+    refreshToken,
+});
+
+/**
+ * Example of get call to the attribution api.
+ */
+const response = await attributionClient.getAdvertisersByProfile({
+    amazonAdvertisingAPIClientId: '',
+    amazonAdvertisingAPIScope: ''
+});
+```
+
+### Class Based Alternative
+
+This approach is better to use when you need multiple client's and only want to have to pass in and
+configure credentials one time.
+
+```typescript
+import { AmazonAds, AttributionClient } from '@whitebox-co/amazon-ads-api';
+
+/**
+ * Init a new instance of the AmazonAds class.
+ *
+ * This has the advantage of only having to pass in credentials once.
+ */
+const amazonAdsApi = new AmazonAds({
+    clientId
+    clientSecret,
+    profileId,
+    refreshToken,
+});
+
+/**
+ *  Ges a fully authorized instance of the attribution client.
+ */
+const attributionClient = await amazonAdsApi.getConfiguredApi(AttributionClient);
+
+/**
+ * Example of get call to the attribution api.
+ */
+const response = await attributionClient.getAdvertisersByProfile({
+    amazonAdvertisingAPIClientId: '',
+    amazonAdvertisingAPIScope: ''
+});
+```
 
 ## Docs
 

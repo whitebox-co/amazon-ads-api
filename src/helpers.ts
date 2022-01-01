@@ -1,7 +1,12 @@
 import globalAxios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { APIConfigurationParameters } from './constants';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+/**
+ * Adds functions from each individual API class into the main Client Class
+ *
+ * @param derivedCtor
+ * @param baseCtors
+ */
 export const applyMixins = (derivedCtor: any, baseCtors: any[]): void => {
 	for (const baseCtor of baseCtors) {
 		for (const name of Object.getOwnPropertyNames(baseCtor.prototype)) {
@@ -13,6 +18,12 @@ export const applyMixins = (derivedCtor: any, baseCtors: any[]): void => {
 	}
 };
 
+/**
+ * Gets an instance of the global axios singleton.
+ *
+ * @param {APIConfigurationParameters} parameters
+ * @returns {AxiosInstance}
+ */
 export const getAxiosInstance = (parameters: APIConfigurationParameters): AxiosInstance => {
 	let axiosInstance: AxiosInstance;
 	const { axios } = parameters;

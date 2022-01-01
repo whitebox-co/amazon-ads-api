@@ -4,6 +4,14 @@ import { SCHEMAS, PATHS } from '../src/constants';
 import { apiClientTemplate } from './client-template';
 import { kebabSchemaName, generateAPIClientFileName, generateAPIClientClassname } from './util';
 
+/**
+ * Generates a single `client.ts` for each of the schemas. Extends the main class with
+ * all of the class apis that are part of the model file.
+ *
+ * @param project
+ * @param executor
+ * @param schemaName
+ */
 const generateAPIClient = (project: Project, executor: TemplateExecutor, schemaName: string) => {
 	const apiClientFileName = generateAPIClientFileName(schemaName);
 	const apiClientClassName = generateAPIClientClassname(apiClientFileName);
@@ -42,6 +50,11 @@ const generateAPIClient = (project: Project, executor: TemplateExecutor, schemaN
 	});
 };
 
+/**
+ * Creates an index.ts file with all of the client files as exports.
+ *
+ * @param project
+ */
 const generateExportStatements = (project: Project) => {
 	const compileExportStatement = template(`export * from './<%= apiClientFileName %>';`);
 
@@ -56,6 +69,10 @@ const generateExportStatements = (project: Project) => {
 	});
 };
 
+/**
+ * Loops through all of the schemas defined in the constants and generates
+ * api client files for each of the schemas.
+ */
 const generateAPIClients = () => {
 	const compiledClientTemplate = template(apiClientTemplate);
 

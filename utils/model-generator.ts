@@ -5,6 +5,13 @@ import { PATHS } from '../src/constants';
 
 const commonApiFiles: string[] = ['base.ts', 'common.ts', 'configuration.ts'];
 
+/**
+ * Uses child process to execute the `openapi-generator-cli` to generate typescript
+ * interfaces, and class apis based on the downloaded open api schema.
+ *
+ * @param schemaFilePath
+ * @param schemaFileName
+ */
 const execOpenApiGenerator = (schemaFilePath: string, schemaFileName: string) => {
 	const apiOutputFile = `${PATHS.APIS}/${schemaFileName.slice(0, schemaFileName.length - 5)}`;
 
@@ -21,17 +28,33 @@ const execOpenApiGenerator = (schemaFilePath: string, schemaFileName: string) =>
 	}
 };
 
+/**
+ * Move the generated api file to the models directory.
+ *
+ * @param schemaName
+ */
 const moveApiModelFile = (schemaName: string) => {
 	const oldPath = `${PATHS.APIS}/${schemaName}/api.ts`;
 	const newPath = `${PATHS.APIS}/models/${schemaName}.ts`;
 	fs.renameSync(oldPath, newPath);
 };
 
+/**
+ * Cleanup all of the old generated files by deleting the directories of each.
+ *
+ * @param schemaName
+ */
 const deleteGeneratedDirectory = (schemaName: string) => {
 	const oldPath = `${PATHS.APIS}/${schemaName}`;
 	fs.rmSync(oldPath, { recursive: true, force: true, maxRetries: 3 });
 };
 
+/**
+ * Copies common, base, configuration, from the auto generated files
+ * over to the models folder.
+ *
+ * @param schemaName
+ */
 const copyCommonFiles = (schemaName: string) => {
 	commonApiFiles.forEach((file) => {
 		const oldPath = `${PATHS.APIS}/${schemaName}/${file}`;
@@ -40,6 +63,17 @@ const copyCommonFiles = (schemaName: string) => {
 	});
 };
 
+/**
+ * Processes a single schema.
+ * - Executes the open api generator
+ * - Copies common generated files.
+ * - Moves generated api file.
+ * - Deletes the generated directory.
+ *
+ * @param schemaFilePath
+ * @param schemaFileName
+ * @param index
+ */
 const processSingleSchema = (schemaFilePath: string, schemaFileName: string, index: number) => {
 	if (schemaFileName.includes('.json')) {
 		const schemaName = path.parse(schemaFileName).name;
@@ -54,6 +88,10 @@ const processSingleSchema = (schemaFilePath: string, schemaFileName: string, ind
 	}
 };
 
+/**
+ * Loops through all of the schemas defined in the constants and generates
+ * models for each of them.
+ */
 const processSchemas = () => {
 	const schemaFileNames = fs.readdirSync(PATHS.SCHEMAS);
 	const customSchemaFileNames = fs.readdirSync(PATHS.CUSTOM_SCHEMAS);

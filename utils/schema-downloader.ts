@@ -5,11 +5,21 @@ import yaml from 'js-yaml';
 import { kebabSchemaName } from './util';
 import { SCHEMAS, PATHS, Schema } from '../src/constants';
 
+/**
+ * Deletes the entire `./docs/schemas` directory and creates a new one.
+ */
 const deleteOldSchemas = () => {
 	fs.rmSync(PATHS.SCHEMAS, { recursive: true, force: true, maxRetries: 2 });
 	fs.mkdirSync(PATHS.SCHEMAS);
 };
 
+/**
+ * Loads a yaml schema, converts it to a json file and removes the
+ * original yaml file.
+ *
+ * @param file
+ * @param data
+ */
 const processYamlSchemaFile = (file: string, data: any) => {
 	const { name } = path.parse(file);
 	const yamlFilePath = `${PATHS.SCHEMAS}/${file}`;
@@ -58,7 +68,11 @@ const createSchemaDocsMapping = () => {
 	const data = `const schemas = ${JSON.stringify(schemaMap, null, 2)}`;
 	fs.writeFileSync(PATHS.SCHEMAS_DOCS, data, 'utf8');
 };
-
+/**
+ * Loops through all of the schemas defined in the constants and;
+ * - Requests the latest OpenApi schema from Amazon.
+ * - Saves the schemas to `./docs/schemas/`
+ */
 const downloadSchemas = async () => {
 	deleteOldSchemas();
 
