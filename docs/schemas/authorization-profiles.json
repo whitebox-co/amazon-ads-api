@@ -354,7 +354,7 @@
       "countryCode": {
         "type": "string",
         "readOnly": true,
-        "description": "The countryCode for a given country\n|Region|`countryCode`|Country Name|\n|------|-----|-------|\n|NA|US|United States|\n|NA|CA|Canada|\n|NA|MX|Mexico|\n|NA|BR|Brazil|\n|EU|UK|United Kingdom|\n|EU|DE|Germany|\n|EU|FR|France|\n|EU|ES|Spain|\n|EU|IT|Italy|\n|EU|NL|The Netherlands|\n|EU|AE|United Arab Emirates|\n|EU|SE|Sweden|\n|FE|JP|Japan|\n|FE|AU|Australia|\n|FE|SG|Singapore|",
+        "description": "The countryCode for a given country\n|Region|`countryCode`|Country Name|\n|------|-----|-------|\n|NA|US|United States|\n|NA|CA|Canada|\n|NA|MX|Mexico|\n|NA|BR|Brazil|\n|EU|UK|United Kingdom|\n|EU|DE|Germany|\n|EU|FR|France|\n|EU|ES|Spain|\n|EU|IT|Italy|\n|EU|NL|The Netherlands|\n|EU|AE|United Arab Emirates|\n|EU|SE|Sweden|\n|FE|JP|Japan|\n|FE|AU|Australia|\n|FE|SG|Singapore|\n|EU|SE|Sweden|",
         "enum": [
           "US",
           "CA",
@@ -375,7 +375,7 @@
       },
       "sandboxCountryCode": {
         "type": "string",
-        "description": "The countryCode for a given country\n|Region|`countryCode`|Country Name|\n|------|-----|-------|\n|NA|US|United States|\n|NA|CA|Canada|\n|NA|MX|Mexico|\n|EU|UK|United Kingdom|\n|EU|DE|Germany|\n|EU|FR|France|\n|EU|ES|Spain|\n|EU|IT|Italy|\n|EU|NL|The Netherlands|\n|FE|JP|Japan|\n|FE|AU|Australia|\n|EU|AE|United Arab Emirates|",
+        "description": "The countryCode for a given country\n|Region|`countryCode`|Country Name|\n|------|-----|-------|\n|NA|US|United States|\n|NA|CA|Canada|\n|NA|MX|Mexico|\n|EU|UK|United Kingdom|\n|EU|DE|Germany|\n|EU|FR|France|\n|EU|ES|Spain|\n|EU|IT|Italy|\n|EU|NL|The Netherlands|\n|FE|JP|Japan|\n|FE|AU|Australia|\n|EU|AE|United Arab Emirates|\n|EU|SE|Sweden",
         "enum": [
           "US",
           "CA",
@@ -388,7 +388,8 @@
           "NL",
           "JP",
           "AU",
-          "AE"
+          "AE",
+          "SE"
         ]
       },
       "Profile": {
