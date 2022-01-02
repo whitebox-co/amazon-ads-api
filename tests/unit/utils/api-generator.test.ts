@@ -14,6 +14,10 @@ jest.mock('../../../utils/test-generator', () => ({
 	generateTests: jest.fn(),
 }));
 
+jest.mock('../../../utils/replace-unknown-types', () => ({
+	replaceUnknownTypes: jest.fn(),
+}));
+
 describe('api-generator', () => {
 	it('should run through all generator steps on init', () => {
 		jest.resetModules();
