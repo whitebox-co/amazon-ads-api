@@ -87,7 +87,7 @@ export enum AccountType {
 }
 
 /**
- * The countryCode for a given country |Region|`countryCode`|Country Name| |------|-----|-------| |NA|US|United States| |NA|CA|Canada| |NA|MX|Mexico| |NA|BR|Brazil| |EU|UK|United Kingdom| |EU|DE|Germany| |EU|FR|France| |EU|ES|Spain| |EU|IT|Italy| |EU|NL|The Netherlands| |EU|AE|United Arab Emirates| |EU|SE|Sweden| |FE|JP|Japan| |FE|AU|Australia| |FE|SG|Singapore|
+ * The countryCode for a given country |Region|`countryCode`|Country Name| |------|-----|-------| |NA|US|United States| |NA|CA|Canada| |NA|MX|Mexico| |NA|BR|Brazil| |EU|UK|United Kingdom| |EU|DE|Germany| |EU|FR|France| |EU|ES|Spain| |EU|IT|Italy| |EU|NL|The Netherlands| |EU|AE|United Arab Emirates| |EU|SE|Sweden| |FE|JP|Japan| |FE|AU|Australia| |FE|SG|Singapore| |EU|SE|Sweden|
  * @export
  * @enum {string}
  */
@@ -294,7 +294,7 @@ export interface RegisterVendorProfileResponse {
     profileId?: number;
 }
 /**
- * The countryCode for a given country |Region|`countryCode`|Country Name| |------|-----|-------| |NA|US|United States| |NA|CA|Canada| |NA|MX|Mexico| |EU|UK|United Kingdom| |EU|DE|Germany| |EU|FR|France| |EU|ES|Spain| |EU|IT|Italy| |EU|NL|The Netherlands| |FE|JP|Japan| |FE|AU|Australia| |EU|AE|United Arab Emirates|
+ * The countryCode for a given country |Region|`countryCode`|Country Name| |------|-----|-------| |NA|US|United States| |NA|CA|Canada| |NA|MX|Mexico| |EU|UK|United Kingdom| |EU|DE|Germany| |EU|FR|France| |EU|ES|Spain| |EU|IT|Italy| |EU|NL|The Netherlands| |FE|JP|Japan| |FE|AU|Australia| |EU|AE|United Arab Emirates| |EU|SE|Sweden
  * @export
  * @enum {string}
  */
@@ -311,7 +311,8 @@ export enum SandboxCountryCode {
     Nl = 'NL',
     Jp = 'JP',
     Au = 'AU',
-    Ae = 'AE'
+    Ae = 'AE',
+    Se = 'SE'
 }
 
 
