@@ -6,7 +6,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/whitebox-co/amazon-ads-api/Develop?label=develop)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/whitebox-co/amazon-ads-api/Generate%20API?label=api-generator)
 ![GitHub Workflow Status](https://img.shields.io/snyk/vulnerabilities/github/whitebox-co/amazon-ads-api?label=snyk%20vulnerbilities)
-![GitHub Workflow Status](https://img.shields.io/maintenance/yes/2021)
+![GitHub Workflow Status](https://img.shields.io/maintenance/yes/2022)
 
 A fully typed and auto generated [TypeScript](https://www.typescriptlang.org) library for the
 [Amazon Ads API](https://advertising.amazon.com/API/docs/en-us/info/api-overview).
