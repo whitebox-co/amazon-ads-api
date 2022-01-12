@@ -39,6 +39,7 @@ const addInterceptor = <T extends AmazonAdsApi>(client: T, outputFileName: strin
 };
 
 /**
+<<<<<<< HEAD
  * remove initialized request and response interceptor
  */
 const removeInterceptor = <T extends AmazonAdsApi>(client: T, interceptorId: number) => {
