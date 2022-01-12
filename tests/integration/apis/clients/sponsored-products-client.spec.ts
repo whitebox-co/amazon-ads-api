@@ -18,6 +18,7 @@ import {
 	TargetingExpressionPredicate,
 	TargetingExpressionPredicateTypeEnum,
 } from '../../../../src/apis/models/sponsored-products';
+
 describe('SponsoredProductsClient', () => {
 	let interceptorId: any;
 	let sponsoredProductsClient: SponsoredProductsClient;
