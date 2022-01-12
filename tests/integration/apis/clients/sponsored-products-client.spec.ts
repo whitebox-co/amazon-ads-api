@@ -5,6 +5,7 @@ import {
 	CreateCampaign,
 	CreateCampaignCampaignTypeEnum,
 	CreateCampaignTargetingTypeEnum,
+	State,
 } from '../../../../src/apis/models/sponsored-products';
 
 describe('SponsoredProductsClient', () => {
@@ -35,10 +36,16 @@ describe('SponsoredProductsClient', () => {
 
 	describe('#createCampaigns', () => {
 		it('should create a single sponsored product campaign', async () => {
+			// The only required property according to the specs is name,
+			// however if a request is made without the other properties Amazon returns a 207 response
+			// and the campaign is not created.
 			const campaigns: CreateCampaign = {
 				name: 'Marketplace_Test_Jan_12_1',
 				campaignType: CreateCampaignCampaignTypeEnum.SponsoredProducts,
 				targetingType: CreateCampaignTargetingTypeEnum.Manual,
+				state: State.Enabled,
+				dailyBudget: 1,
+				startDate: '20220112',
 			};
 
 			const results = await sponsoredProductsClient.createCampaigns({
