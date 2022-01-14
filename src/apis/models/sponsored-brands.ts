@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Sponsored Brands
- * Use the Amazon Advertising API for Sponsored Brands for campaign, ad group, keyword, negative keyword, drafts, Stores, landing pages, and Brands management operations.
+ * Amazon Ads API - Sponsored Brands
+ * Use the Amazon Ads API for Sponsored Brands for campaign, ad group, keyword, negative keyword, drafts, Stores, landing pages, and Brands management operations. For more information about Sponsored Brands, see the [Sponsored Brands Support Center](https://advertising.amazon.com/help#GQFZA83P55P747BZ). For onboarding information, see the [account setup](https://advertising.amazon.com/API/docs/v3/guides/account_setup) topic.<br/><br/> 
  *
  * The version of the OpenAPI document: 3.0
  * 
@@ -22,512 +22,260 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
 /**
- * 
+ * The type of ad format.
  * @export
  * @enum {string}
  */
 
-export enum AccessDeniedErrorCode {
-    AccessDenied = 'ACCESS_DENIED'
+export enum AdFormat {
+    ProductCollection = 'productCollection',
+    Video = 'video'
 }
 
 /**
  * 
  * @export
- * @interface AccessDeniedExceptionResponseContent
+ * @interface AdFormatError
  */
-export interface AccessDeniedExceptionResponseContent {
+export interface AdFormatError {
     /**
      * 
-     * @type {AccessDeniedErrorCode}
-     * @memberof AccessDeniedExceptionResponseContent
+     * @type {BasicErrorObject}
+     * @memberof AdFormatError
      */
-    code: AccessDeniedErrorCode;
+    AdFormatError?: BasicErrorObject;
+}
+/**
+ * 
+ * @export
+ * @interface AdGroupError
+ */
+export interface AdGroupError {
     /**
-     * Human readable error message.
+     * 
+     * @type {BasicErrorObject}
+     * @memberof AdGroupError
+     */
+    AdGroupError?: BasicErrorObject;
+}
+/**
+ * 
+ * @export
+ * @interface AssetsError
+ */
+export interface AssetsError {
+    /**
+     * 
+     * @type {BasicErrorObject}
+     * @memberof AssetsError
+     */
+    AssetsError?: BasicErrorObject;
+}
+/**
+ * 
+ * @export
+ * @interface AuthorizationError
+ */
+export interface AuthorizationError {
+    /**
+     * 
+     * @type {BasicErrorObject}
+     * @memberof AuthorizationError
+     */
+    AuthorizationError?: BasicErrorObject;
+}
+/**
+ * 
+ * @export
+ * @interface BasicErrorObject
+ */
+export interface BasicErrorObject {
+    /**
+     * 
      * @type {string}
-     * @memberof AccessDeniedExceptionResponseContent
+     * @memberof BasicErrorObject
      */
     message: string;
-}
-/**
- * The ad group settings.
- * @export
- * @interface AdGroup
- */
-export interface AdGroup {
     /**
      * 
-     * @type {Array<NegativeKeyword>}
-     * @memberof AdGroup
+     * @type {string}
+     * @memberof BasicErrorObject
      */
-    negativeKeywords?: Array<NegativeKeyword>;
+    reason: string;
     /**
      * 
-     * @type {Array<BidAdjustment>}
-     * @memberof AdGroup
+     * @type {string}
+     * @memberof BasicErrorObject
      */
-    bidAdjustments?: Array<BidAdjustment>;
+    location?: string;
     /**
      * 
-     * @type {Array<Keyword>}
-     * @memberof AdGroup
-     */
-    keywords?: Array<Keyword>;
-    /**
-     * 
-     * @type {CreativeType}
-     * @memberof AdGroup
-     */
-    creativeType?: CreativeType;
-    /**
-     * 
-     * @type {Array<NegativeProductTarget>}
-     * @memberof AdGroup
-     */
-    negativeTargets?: Array<NegativeProductTarget>;
-    /**
-     * 
-     * @type {BidOptimizationStrategy}
-     * @memberof AdGroup
-     */
-    bidOptimizationStrategy?: BidOptimizationStrategy;
-    /**
-     * 
-     * @type {Array<ProductTarget>}
-     * @memberof AdGroup
-     */
-    targets?: Array<ProductTarget>;
-    /**
-     * The ad group identifier.
      * @type {string}
-     * @memberof AdGroup
+     * @memberof BasicErrorObject
      */
-    adGroupId?: string;
-}
-/**
- * Asin component which needs to be pre moderated.
- * @export
- * @interface AsinComponent
- */
-export interface AsinComponent {
-    /**
-     * Type of the asin component.
-     * @type {string}
-     * @memberof AsinComponent
-     */
-    componentType: AsinComponentComponentTypeEnum;
-    /**
-     * Asin id to be pre moderated.
-     * @type {string}
-     * @memberof AsinComponent
-     */
-    asin: string;
-    /**
-     * Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.
-     * @type {string}
-     * @memberof AsinComponent
-     */
-    id: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum AsinComponentComponentTypeEnum {
-    LandingAsin = 'LANDING_ASIN',
-    ProductAsin = 'PRODUCT_ASIN'
-}
-
-/**
- * Pre-moderation result for an Asin component
- * @export
- * @interface AsinComponentResponse
- */
-export interface AsinComponentResponse {
-    /**
-     * The pre-moderation status of the component.
-     * @type {string}
-     * @memberof AsinComponentResponse
-     */
-    preModerationStatus?: AsinComponentResponsePreModerationStatusEnum;
-    /**
-     * Type of Asin component.
-     * @type {string}
-     * @memberof AsinComponentResponse
-     */
-    componentType?: AsinComponentResponseComponentTypeEnum;
-    /**
-     * A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.
-     * @type {Array<AsinPolicyViolation>}
-     * @memberof AsinComponentResponse
-     */
-    policyViolations?: Array<AsinPolicyViolation>;
-    /**
-     * Pre-moderated Asin Id.
-     * @type {string}
-     * @memberof AsinComponentResponse
-     */
-    asin?: string;
-    /**
-     * Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.
-     * @type {string}
-     * @memberof AsinComponentResponse
-     */
-    id?: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum AsinComponentResponsePreModerationStatusEnum {
-    Rejected = 'REJECTED',
-    Approved = 'APPROVED',
-    Failed = 'FAILED',
-    RetryableFailure = 'RETRYABLE_FAILURE'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum AsinComponentResponseComponentTypeEnum {
-    LandingAsin = 'LANDING_ASIN',
-    ProductAsin = 'PRODUCT_ASIN'
-}
-
-/**
- * 
- * @export
- * @interface AsinPolicyViolation
- */
-export interface AsinPolicyViolation {
-    /**
-     * A human-readable description of the policy.
-     * @type {string}
-     * @memberof AsinPolicyViolation
-     */
-    policyDescription?: string;
-    /**
-     * A policy violation code.
-     * @type {string}
-     * @memberof AsinPolicyViolation
-     */
-    name?: string;
-    /**
-     * Type of policy violation.
-     * @type {string}
-     * @memberof AsinPolicyViolation
-     */
-    type?: AsinPolicyViolationTypeEnum;
-    /**
-     * Address of the policy documentation. Follow the link to learn more about the specified policy.
-     * @type {string}
-     * @memberof AsinPolicyViolation
-     */
-    policyLinkUrl?: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum AsinPolicyViolationTypeEnum {
-    Warning = 'WARNING',
-    Rejected = 'REJECTED'
-}
-
-/**
- * 
- * @export
- * @interface AssociatedBudgetRuleResponse
- */
-export interface AssociatedBudgetRuleResponse {
-    /**
-     * An enumerated success or error code for machine use.
-     * @type {string}
-     * @memberof AssociatedBudgetRuleResponse
-     */
-    code?: string;
-    /**
-     * A human-readable description of the error, if unsuccessful
-     * @type {string}
-     * @memberof AssociatedBudgetRuleResponse
-     */
-    details?: string;
-    /**
-     * The budget rule identifier.
-     * @type {string}
-     * @memberof AssociatedBudgetRuleResponse
-     */
-    ruleId?: string;
+    trigger?: string;
 }
 /**
  * 
- * @export
- * @interface AssociatedCampaign
- */
-export interface AssociatedCampaign {
-    /**
-     * The campaign identifier.
-     * @type {string}
-     * @memberof AssociatedCampaign
-     */
-    campaignId: string;
-    /**
-     * The budget rule evaluation status for this campaign. Read-only.
-     * @type {string}
-     * @memberof AssociatedCampaign
-     */
-    ruleStatus: string;
-    /**
-     * The campaign name.
-     * @type {string}
-     * @memberof AssociatedCampaign
-     */
-    campaignName: string;
-}
-/**
- * 
- * @export
- * @interface AttributeTargetingException
- */
-export interface AttributeTargetingException {
-    /**
-     * 
-     * @type {string}
-     * @memberof AttributeTargetingException
-     */
-    message?: string;
-}
-/**
- * Bid adjustment settings for desired placement or shopper segment.
  * @export
  * @interface BidAdjustment
  */
 export interface BidAdjustment {
     /**
-     * Bid adjustment for placement groups and shopper segments. Value is a percentage to two decimal places. For bid adjustments in placement groups, min is -99.00 and max is 900.00. For bid adjustments in shopper segments, min is 0.00 and max is 900.00. For example: If -40.00 is set for a $5.00 bid, the resulting bid is $3.00.
+     * The enum for placement group name
+     * @type {string}
+     * @memberof BidAdjustment
+     */
+    bidAdjustmentPredicate?: BidAdjustmentBidAdjustmentPredicateEnum;
+    /**
+     * Bid adjustment for placement group. Value is a percentage to two decimal places. Example: If this is set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
      * @type {number}
      * @memberof BidAdjustment
      */
     bidAdjustmentPercent?: number;
-    /**
-     * 
-     * @type {BidAdjustmentPredicate}
-     * @memberof BidAdjustment
-     */
-    bidAdjustmentPredicate?: BidAdjustmentPredicate;
 }
-/**
- * Desired placement or shopper segment where bid adjustment will be applied.
- * @export
- * @enum {string}
- */
 
-export enum BidAdjustmentPredicate {
-    PlacementGroupTop = 'placementGroupTop',
-    PlacementGroupOther = 'placementGroupOther',
+/**
+    * @export
+    * @enum {string}
+    */
+export enum BidAdjustmentBidAdjustmentPredicateEnum {
     PlacementGroupDetailPage = 'placementGroupDetailPage',
     PlacementGroupHome = 'placementGroupHome',
+    PlacementGroupOther = 'placementGroupOther'
+}
+
+/**
+ * 
+ * @export
+ * @interface BidAdjustmentV33
+ */
+export interface BidAdjustmentV33 {
+    /**
+     * |-             Determines the predicate (placement groups and shopper segments) that the bid adjustment will be made for.             |BidAdjustmentPredicate|Description|             |------|-----------|             |PLACEMENT_GROUP_DETAIL_PAGE|Predicate for adjusting bids at detail page placement.|             |PLACEMENT_GROUP_HOME|Predicate for adjusting bids at home page placement.|             |PLACEMENT_GROUP_OTHER|Predicate for adjusting bids at pages other than detail and home pages placement.|             |SHOPPER_SEGMENT_NEW_TO_BRAND_PURCHASE|Predicate for adjusting bids for new-to-brand purchase shopper segment.|
+     * @type {string}
+     * @memberof BidAdjustmentV33
+     */
+    bidAdjustmentPredicate?: BidAdjustmentV33BidAdjustmentPredicateEnum;
+    /**
+     * |-             Bid adjustment for placement groups and shopper segments. Value is a percentage to two decimal places. For bid adjustments in placement groups, min is -99.00 and max is 900.00. For bid adjustments in shopper segments, min is 0.00 and max is 900.00. For example: If -40.00 is set for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof BidAdjustmentV33
+     */
+    bidAdjustmentPercent?: number;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum BidAdjustmentV33BidAdjustmentPredicateEnum {
+    PlacementGroupDetailPage = 'placementGroupDetailPage',
+    PlacementGroupHome = 'placementGroupHome',
+    PlacementGroupOther = 'placementGroupOther',
     ShopperSegmentNewToBrandPurchase = 'shopperSegmentNewToBrandPurchase'
 }
 
 /**
- * Automated bid optimization strategy.
+ * 
+ * @export
+ * @interface BidError
+ */
+export interface BidError {
+    /**
+     * 
+     * @type {BasicErrorObject & object}
+     * @memberof BidError
+     */
+    BidError?: BasicErrorObject & object;
+}
+/**
+ * |-         Automated bid optimization strategy.         |Bid optimization strategy|Description|         |------|-----------|         |MAXIMIZE_IMMEDIATE_SALES|Bid optimization strategy for maximizing immediate sales.|         |MAXIMIZE_NEW_TO_BRAND_CUSTOMERS|Bid optimization strategy for maximizing new to brand customers.|
  * @export
  * @enum {string}
  */
 
 export enum BidOptimizationStrategy {
-    MaximizeImmediateSales = 'maximizeImmediateSales',
-    MaximizeNewToBrandCustomers = 'maximizeNewToBrandCustomers'
+    ImmediateSales = 'MAXIMIZE_IMMEDIATE_SALES',
+    NewToBrandCustomers = 'MAXIMIZE_NEW_TO_BRAND_CUSTOMERS'
 }
 
 /**
- * The value by which to update the budget of the budget rule.
+ * | brandType | description | |-----------|-------------| | brandRegistry | The brand is in the brand registry. | | bookAuthor    | The brand is a book author. |
  * @export
  * @enum {string}
  */
 
-export enum BudgetChangeType {
-    Percent = 'PERCENT'
+export enum BrandType {
+    BrandRegistry = 'brandRegistry',
+    BookAuthor = 'bookAuthor'
 }
 
 /**
  * 
  * @export
- * @interface BudgetIncreaseBy
+ * @interface BrandsError
  */
-export interface BudgetIncreaseBy {
+export interface BrandsError {
     /**
      * 
-     * @type {BudgetChangeType}
-     * @memberof BudgetIncreaseBy
+     * @type {BasicErrorObject}
+     * @memberof BrandsError
      */
-    type: BudgetChangeType;
-    /**
-     * The budget value.
-     * @type {number}
-     * @memberof BudgetIncreaseBy
-     */
-    value: number;
-}
-/**
- * The Error Response Object.
- * @export
- * @interface BudgetRuleError
- */
-export interface BudgetRuleError {
-    /**
-     * An enumerated error code for machine use.
-     * @type {string}
-     * @memberof BudgetRuleError
-     */
-    code?: string;
-    /**
-     * A human-readable description of the response.
-     * @type {string}
-     * @memberof BudgetRuleError
-     */
-    details?: string;
+    BrandsError?: BasicErrorObject;
 }
 /**
  * 
  * @export
- * @interface BudgetRuleResponse
+ * @interface BudgetError
  */
-export interface BudgetRuleResponse {
-    /**
-     * An enumerated success or error code for machine use.
-     * @type {string}
-     * @memberof BudgetRuleResponse
-     */
-    code?: string;
-    /**
-     * A human-readable description of the error, if unsuccessful
-     * @type {string}
-     * @memberof BudgetRuleResponse
-     */
-    details?: string;
-    /**
-     * The rule identifier.
-     * @type {string}
-     * @memberof BudgetRuleResponse
-     */
-    ruleId?: string;
+export interface BudgetError {
     /**
      * 
-     * @type {Array<string>}
-     * @memberof BudgetRuleResponse
+     * @type {BasicErrorObject & object}
+     * @memberof BudgetError
      */
-    associatedCampaignIds?: Array<string>;
+    BudgetError?: BasicErrorObject & object;
 }
 /**
- * 
+ * Note that for the lifetime budget type, `startDate` and `endDate` must be specified. The lifetime budget range is from 100 to 20,000,000 and daily budget range is 1 to 1,000,000 by default for most marketplaces. For the JP marketplace, the lifetime budget range is from 10,000 to 2,000,000,000, and the daily budget range is 100 to 21,000,000.
  * @export
  * @enum {string}
  */
 
 export enum BudgetType {
-    Daily = 'daily',
-    Lifetime = 'lifetime'
-}
-
-/**
- * The comparison operator.
- * @export
- * @enum {string}
- */
-
-export enum ComparisonOperator {
-    GreaterThan = 'GREATER_THAN',
-    LessThan = 'LESS_THAN',
-    LessThanOrEqualTo = 'LESS_THAN_OR_EQUAL_TO',
-    GreaterThanOrEqualTo = 'GREATER_THAN_OR_EQUAL_TO'
+    Lifetime = 'lifetime',
+    Daily = 'daily'
 }
 
 /**
  * 
  * @export
- * @interface CreateAssociatedBudgetRulesRequest
+ * @interface CampaignError
  */
-export interface CreateAssociatedBudgetRulesRequest {
-    /**
-     * A list of budget rule identifiers.
-     * @type {Array<string>}
-     * @memberof CreateAssociatedBudgetRulesRequest
-     */
-    budgetRuleIds?: Array<string>;
-}
-/**
- * 
- * @export
- * @interface CreateAssociatedBudgetRulesResponse
- */
-export interface CreateAssociatedBudgetRulesResponse {
+export interface CampaignError {
     /**
      * 
-     * @type {Array<AssociatedBudgetRuleResponse>}
-     * @memberof CreateAssociatedBudgetRulesResponse
+     * @type {BasicErrorObject & object}
+     * @memberof CampaignError
      */
-    responses?: Array<AssociatedBudgetRuleResponse>;
+    CampaignError?: BasicErrorObject & object;
 }
 /**
  * 
  * @export
- * @interface CreateBudgetRulesResponse
+ * @interface CreativeError
  */
-export interface CreateBudgetRulesResponse {
+export interface CreativeError {
     /**
      * 
-     * @type {Array<BudgetRuleResponse>}
-     * @memberof CreateBudgetRulesResponse
+     * @type {BasicErrorObject & object}
+     * @memberof CreativeError
      */
-    responses?: Array<BudgetRuleResponse>;
+    CreativeError?: BasicErrorObject & object;
 }
 /**
- * 
- * @export
- * @interface CreateSBBudgetRulesRequest
- */
-export interface CreateSBBudgetRulesRequest {
-    /**
-     * A list of budget rule details.
-     * @type {Array<SBBudgetRuleDetails>}
-     * @memberof CreateSBBudgetRulesRequest
-     */
-    budgetRulesDetails?: Array<SBBudgetRuleDetails>;
-}
-/**
- * 
- * @export
- * @interface CreateSDBudgetRulesRequest
- */
-export interface CreateSDBudgetRulesRequest {
-    /**
-     * A list of budget rule details.
-     * @type {Array<SDBudgetRuleDetails>}
-     * @memberof CreateSDBudgetRulesRequest
-     */
-    budgetRulesDetails?: Array<SDBudgetRuleDetails>;
-}
-/**
- * 
- * @export
- * @interface CreateSPBudgetRulesRequest
- */
-export interface CreateSPBudgetRulesRequest {
-    /**
-     * A list of budget rule details.
-     * @type {Array<SPBudgetRuleDetails>}
-     * @memberof CreateSPBudgetRulesRequest
-     */
-    budgetRulesDetails?: Array<SPBudgetRuleDetails>;
-}
-/**
- * Type of creative. Only `productCollection` and `video` are supported for forecasting.
+ * collection is deprecated in favor of productCollection.
  * @export
  * @enum {string}
  */
@@ -538,746 +286,888 @@ export enum CreativeType {
 }
 
 /**
- * Date component which needs to be pre moderated. Either startDate or endDate must be populated, or both can be populated.
+ * 
  * @export
- * @interface DateComponent
+ * @interface DraftsError
  */
-export interface DateComponent {
+export interface DraftsError {
     /**
-     * Type of the date component.
-     * @type {string}
-     * @memberof DateComponent
+     * 
+     * @type {BasicErrorObject}
+     * @memberof DraftsError
      */
-    componentType: DateComponentComponentTypeEnum;
-    /**
-     * End date of the component in yyyy-MM-dd HH:mm:ss format
-     * @type {string}
-     * @memberof DateComponent
-     */
-    endDate?: string;
-    /**
-     * Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.
-     * @type {string}
-     * @memberof DateComponent
-     */
-    id: string;
-    /**
-     * Start date of the component in yyyy-MM-dd HH:mm:ss format
-     * @type {string}
-     * @memberof DateComponent
-     */
-    startDate?: string;
+    DraftsError?: BasicErrorObject;
 }
-
 /**
-    * @export
-    * @enum {string}
-    */
-export enum DateComponentComponentTypeEnum {
-    CampaignDate = 'CAMPAIGN_DATE'
-}
-
-/**
- * Pre-moderation result for a date component
+ * @type ErrorEntry
  * @export
- * @interface DateComponentResponse
  */
-export interface DateComponentResponse {
-    /**
-     * The pre-moderation status of the component.
-     * @type {string}
-     * @memberof DateComponentResponse
-     */
-    preModerationStatus?: DateComponentResponsePreModerationStatusEnum;
-    /**
-     * Type of the date component.
-     * @type {string}
-     * @memberof DateComponentResponse
-     */
-    componentType?: DateComponentResponseComponentTypeEnum;
-    /**
-     * End date of the component.
-     * @type {string}
-     * @memberof DateComponentResponse
-     */
-    endDate?: string;
-    /**
-     * A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.
-     * @type {Array<DatePolicyViolation>}
-     * @memberof DateComponentResponse
-     */
-    policyViolations?: Array<DatePolicyViolation>;
-    /**
-     * Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.
-     * @type {string}
-     * @memberof DateComponentResponse
-     */
-    id?: string;
-    /**
-     * Start date of the component.
-     * @type {string}
-     * @memberof DateComponentResponse
-     */
-    startDate?: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DateComponentResponsePreModerationStatusEnum {
-    Rejected = 'REJECTED',
-    Approved = 'APPROVED',
-    Failed = 'FAILED',
-    RetryableFailure = 'RETRYABLE_FAILURE'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum DateComponentResponseComponentTypeEnum {
-    CampaignDates = 'CAMPAIGN_DATES'
-}
+export type ErrorEntry = AdFormatError | AdGroupError | AssetsError | AuthorizationError | BidError | BrandsError | BudgetError | CampaignError | CreativeError | DraftsError | FilterError | KDPError | KeywordError | LandingPageError | MarketplaceError | ModelError | PageAsinsError | PaginationError | ProductItemsError | ProfileError | RecommendationError | SpooferError | TargetError;
 
 /**
  * 
  * @export
- * @interface DatePolicyViolation
+ * @interface Expression
  */
-export interface DatePolicyViolation {
+export interface Expression {
     /**
-     * A human-readable description of the policy.
-     * @type {string}
-     * @memberof DatePolicyViolation
+     * 
+     * @type {SBAPIProductPredicateType}
+     * @memberof Expression
      */
-    policyDescription?: string;
+    type?: SBAPIProductPredicateType;
     /**
-     * A policy violation code.
+     * The text of the targeting expression. The - token defines a range. For example, 2-4 defines a range of 2, 3, and 4.
      * @type {string}
-     * @memberof DatePolicyViolation
+     * @memberof Expression
      */
-    name?: string;
-    /**
-     * Type of policy violation.
-     * @type {string}
-     * @memberof DatePolicyViolation
-     */
-    type?: DatePolicyViolationTypeEnum;
-    /**
-     * Address of the policy documentation. Follow the link to learn more about the specified policy.
-     * @type {string}
-     * @memberof DatePolicyViolation
-     */
-    policyLinkUrl?: string;
+    value?: string;
 }
-
 /**
-    * @export
-    * @enum {string}
-    */
-export enum DatePolicyViolationTypeEnum {
-    Warning = 'WARNING',
-    Rejected = 'REJECTED'
-}
-
-/**
- * Object representing date range type rule duration.
+ * 
  * @export
- * @interface DateRangeTypeRuleDuration
+ * @interface FilterError
  */
-export interface DateRangeTypeRuleDuration {
+export interface FilterError {
     /**
-     * The end date of the budget rule in YYYYMMDD format. The end date is inclusive. Required to be equal or greater than `startDate`.
-     * @type {string}
-     * @memberof DateRangeTypeRuleDuration
+     * 
+     * @type {BasicErrorObject}
+     * @memberof FilterError
      */
-    endDate?: string;
-    /**
-     * The start date of the budget rule in YYYYMMDD format. The start date is inclusive. Required to be greater than or equal to current date.
-     * @type {string}
-     * @memberof DateRangeTypeRuleDuration
-     */
-    startDate: string;
+    FilterError?: BasicErrorObject;
 }
 /**
- * The day of the week.
+ * 
  * @export
- * @enum {string}
+ * @interface InlineObject
  */
-
-export enum DayOfWeek {
-    Monday = 'MONDAY',
-    Tuesday = 'TUESDAY',
-    Wednesday = 'WEDNESDAY',
-    Thursday = 'THURSDAY',
-    Friday = 'FRIDAY',
-    Saturday = 'SATURDAY',
-    Sunday = 'SUNDAY'
-}
-
-/**
- * Object representing event type rule duration.
- * @export
- * @interface EventTypeRuleDuration
- */
-export interface EventTypeRuleDuration {
+export interface InlineObject {
     /**
-     * The event identifier. This value is available from the budget rules recommendation API.
+     * The url to upload the media. The url expires in 15 minutes. The upload location only supports `PUT` HTTP Method to upload the media content.
      * @type {string}
-     * @memberof EventTypeRuleDuration
+     * @memberof InlineObject
      */
-    eventId: string;
+    uploadLocation?: string;
     /**
-     * The event end date in YYYYMMDD format. Read-only.
+     * The version id of the uploaded media. The upload location retrieved from /media/upload API supports versioning and returns version id in the upload response through `x-amz-version-id` header. API user can explicitly specify the version id corresponding to an upload through `version` property. `version` is optional and if it is not specified, media corresponding to the most recent version at the time of API call will be used.
      * @type {string}
-     * @memberof EventTypeRuleDuration
+     * @memberof InlineObject
      */
-    endDate?: string;
-    /**
-     * The event name. Read-only.
-     * @type {string}
-     * @memberof EventTypeRuleDuration
-     */
-    eventName?: string;
-    /**
-     * The event start date in YYYYMMDD format. Read-only. Note that this field is present only for announced events.
-     * @type {string}
-     * @memberof EventTypeRuleDuration
-     */
-    startDate?: string;
+    version?: string;
 }
 /**
- * The lower and upper bound forecast values.
+ * 
  * @export
- * @interface Forecast
+ * @interface InlineObject2
  */
-export interface Forecast {
+export interface InlineObject2 {
     /**
-     * The forecasted number of shoppers who will newly join the associated shopper segment.
+     * The identifier of the campaign for which bid recommendations are created.
      * @type {number}
-     * @memberof Forecast
+     * @memberof InlineObject2
      */
-    upperBound?: number;
-    /**
-     * The forecasted number of shoppers who will newly join the associated shopper segment.
-     * @type {number}
-     * @memberof Forecast
-     */
-    lowerBound?: number;
-}
-/**
- * The campaign performance forecast for each confidence interval. Currently only `large` interval is provided.
- * @export
- * @interface Forecasts
- */
-export interface Forecasts {
+    campaignId?: number;
     /**
      * 
-     * @type {Forecast}
-     * @memberof Forecasts
+     * @type {Array<Array<SBExpression>>}
+     * @memberof InlineObject2
      */
-    large?: Forecast;
-}
-/**
- * Request structure for shopper segment bidding campaign performance forecasts. If campaignId is provided, all other parameters are optional and will be applied on top of existing campaign attributes. If campaignId is not provided, all other parameters, except adGroupId, bidAdjustments, startDate, and endDate, must be provided.
- * @export
- * @interface GetCampaignShopperSegmentForecastRequestContent
- */
-export interface GetCampaignShopperSegmentForecastRequestContent {
+    targets?: Array<Array<SBExpression>>;
     /**
      * 
-     * @type {BudgetType}
-     * @memberof GetCampaignShopperSegmentForecastRequestContent
+     * @type {Array<SBBidRecommendationKeyword>}
+     * @memberof InlineObject2
      */
-    budgetType?: BudgetType;
+    keywords?: Array<SBBidRecommendationKeyword>;
     /**
      * 
-     * @type {Array<AdGroup>}
-     * @memberof GetCampaignShopperSegmentForecastRequestContent
+     * @type {AdFormat}
+     * @memberof InlineObject2
      */
-    adGroups?: Array<AdGroup>;
-    /**
-     * The YYYY-MM-DD end date for the campaign. Must be greater than the value for `startDate`. If not specified, the campaign has no end date and runs continuously.
-     * @type {string}
-     * @memberof GetCampaignShopperSegmentForecastRequestContent
-     */
-    endDate?: string;
-    /**
-     * The campaign identifier.
-     * @type {string}
-     * @memberof GetCampaignShopperSegmentForecastRequestContent
-     */
-    campaignId?: string;
-    /**
-     * The YYYY-MM-DD start date for the campaign. If this field is not set to a value, the current date is used.
-     * @type {string}
-     * @memberof GetCampaignShopperSegmentForecastRequestContent
-     */
-    startDate?: string;
-    /**
-     * The budget amount associated with the campaign.
-     * @type {number}
-     * @memberof GetCampaignShopperSegmentForecastRequestContent
-     */
-    budget?: number;
-}
-/**
- * Response structure for shopper segment bidding campaign performance forecasts.
- * @export
- * @interface GetCampaignShopperSegmentForecastResponseContent
- */
-export interface GetCampaignShopperSegmentForecastResponseContent {
-    /**
-     * An array of forecasts for each shopper segment. Currently only `shopperSegmentNewToBrandPurchase` segment is provided.
-     * @type {Array<ResponseOutput>}
-     * @memberof GetCampaignShopperSegmentForecastResponseContent
-     */
-    output?: Array<ResponseOutput>;
+    adFormat?: AdFormat;
 }
 /**
  * 
  * @export
- * @interface GetSBBudgetRuleResponse
+ * @interface InlineObject3
  */
-export interface GetSBBudgetRuleResponse {
+export interface InlineObject3 {
     /**
      * 
-     * @type {SBBudgetRule}
-     * @memberof GetSBBudgetRuleResponse
+     * @type {Array<SBUpdateTargetingClauseRequest>}
+     * @memberof InlineObject3
      */
-    budgetRule?: SBBudgetRule;
+    targets: Array<SBUpdateTargetingClauseRequest>;
 }
 /**
  * 
  * @export
- * @interface GetSBBudgetRulesForAdvertiserResponse
+ * @interface InlineObject4
  */
-export interface GetSBBudgetRulesForAdvertiserResponse {
-    /**
-     * A list of rules created by the advertiser.
-     * @type {Array<SBBudgetRule>}
-     * @memberof GetSBBudgetRulesForAdvertiserResponse
-     */
-    budgetRulesForAdvertiserResponse?: Array<SBBudgetRule>;
-    /**
-     * To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.
-     * @type {string}
-     * @memberof GetSBBudgetRulesForAdvertiserResponse
-     */
-    nextToken?: string;
-}
-/**
- * 
- * @export
- * @interface GetSDBudgetRuleResponse
- */
-export interface GetSDBudgetRuleResponse {
+export interface InlineObject4 {
     /**
      * 
-     * @type {SDBudgetRule}
-     * @memberof GetSDBudgetRuleResponse
+     * @type {Array<SBCreateTargetingClauseRequest>}
+     * @memberof InlineObject4
      */
-    budgetRule?: SDBudgetRule;
+    targets: Array<SBCreateTargetingClauseRequest>;
 }
 /**
  * 
  * @export
- * @interface GetSDBudgetRulesForAdvertiserResponse
+ * @interface InlineObject5
  */
-export interface GetSDBudgetRulesForAdvertiserResponse {
-    /**
-     * A list of rules created by the advertiser.
-     * @type {Array<SDBudgetRule>}
-     * @memberof GetSDBudgetRulesForAdvertiserResponse
-     */
-    budgetRulesForAdvertiserResponse?: Array<SDBudgetRule>;
-    /**
-     * To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.
-     * @type {string}
-     * @memberof GetSDBudgetRulesForAdvertiserResponse
-     */
-    nextToken?: string;
-}
-/**
- * 
- * @export
- * @interface GetSPBudgetRuleResponse
- */
-export interface GetSPBudgetRuleResponse {
+export interface InlineObject5 {
     /**
      * 
-     * @type {SPBudgetRule}
-     * @memberof GetSPBudgetRuleResponse
+     * @type {Array<SBUpdateNegativeTargetingClauseRequest>}
+     * @memberof InlineObject5
      */
-    budgetRule?: SPBudgetRule;
+    negativeTargets?: Array<SBUpdateNegativeTargetingClauseRequest>;
 }
 /**
  * 
  * @export
- * @interface GetSPBudgetRulesForAdvertiserResponse
+ * @interface InlineObject6
  */
-export interface GetSPBudgetRulesForAdvertiserResponse {
+export interface InlineObject6 {
     /**
-     * A list of rules created by the advertiser.
-     * @type {Array<SPBudgetRule>}
-     * @memberof GetSPBudgetRulesForAdvertiserResponse
+     * 
+     * @type {Array<SBCreateNegativeTargetingClauseRequest>}
+     * @memberof InlineObject6
      */
-    budgetRulesForAdvertiserResponse?: Array<SPBudgetRule>;
-    /**
-     * To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.
-     * @type {string}
-     * @memberof GetSPBudgetRulesForAdvertiserResponse
-     */
-    nextToken?: string;
+    negativeTargets: Array<SBCreateNegativeTargetingClauseRequest>;
 }
 /**
- * Request structure of headline suggestion API.
+ * 
  * @export
- * @interface HeadlineSuggestionRequest
+ * @interface InlineObject7
  */
-export interface HeadlineSuggestionRequest {
+export interface InlineObject7 {
     /**
-     * An array of ASINs associated with the creative. Note do not pass an empty array, this results in an error. 
+     * A list of ASINs.
      * @type {Array<string>}
-     * @memberof HeadlineSuggestionRequest
+     * @memberof InlineObject7
      */
     asins?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse200
+ */
+export interface InlineResponse200 {
     /**
-     * Maximum number of suggestions that API should return. Response will [0, maxNumSuggestions] suggestions (suggestions are not guaranteed).
-     * @type {number}
-     * @memberof HeadlineSuggestionRequest
+     * The Media identifier.
+     * @type {string}
+     * @memberof InlineResponse200
      */
-    maxNumSuggestions?: number;
+    mediaId?: string;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2001
+ */
+export interface InlineResponse2001 {
+    /**
+     * The Media identifier.
+     * @type {string}
+     * @memberof InlineResponse2001
+     */
+    mediaId?: string;
+    /**
+     * 
+     * @type {MediaStatus}
+     * @memberof InlineResponse2001
+     */
+    status?: MediaStatus;
+    /**
+     * 
+     * @type {Array<InlineResponse2001StatusMetadata>}
+     * @memberof InlineResponse2001
+     */
+    statusMetadata?: Array<InlineResponse2001StatusMetadata>;
+    /**
+     * The preview URL of the media. It is only available when status is `Available`.
+     * @type {string}
+     * @memberof InlineResponse2001
+     */
+    publishedMediaUrl?: string;
+}
+/**
+ * Additional status metadata. It is only available when status is `Failed` and `statusMetadata` provides additional detail on why media status is `Failed`. `statusMetadata` is comprised of code and message.
+ * @export
+ * @interface InlineResponse2001StatusMetadata
+ */
+export interface InlineResponse2001StatusMetadata {
     /**
      * 
      * @type {string}
-     * @memberof HeadlineSuggestionRequest
+     * @memberof InlineResponse2001StatusMetadata
      */
-    adFormat?: HeadlineSuggestionRequestAdFormatEnum;
+    code?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof InlineResponse2001StatusMetadata
+     */
+    message?: string;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2002
+ */
+export interface InlineResponse2002 {
+    /**
+     * Lists the bid recommendations for the keywords specified in the request.
+     * @type {Array<InlineResponse2002KeywordsBidsRecommendationSuccessResults>}
+     * @memberof InlineResponse2002
+     */
+    keywordsBidsRecommendationSuccessResults?: Array<InlineResponse2002KeywordsBidsRecommendationSuccessResults>;
+    /**
+     * Lists errors that occured during creation of keyword bid recommendations.
+     * @type {Array<Error & object>}
+     * @memberof InlineResponse2002
+     */
+    keywordsBidsRecommendationErrorResults?: Array<Error & object>;
+    /**
+     * Lists the bid recommendations for the keywords or targets specified in the request.
+     * @type {Array<InlineResponse2002TargetsBidsRecommendationSuccessResults>}
+     * @memberof InlineResponse2002
+     */
+    targetsBidsRecommendationSuccessResults?: Array<InlineResponse2002TargetsBidsRecommendationSuccessResults>;
+    /**
+     * Lists errors that occured during creation of target bid recommendations.
+     * @type {Array<Error & object>}
+     * @memberof InlineResponse2002
+     */
+    targetsBidsRecommendationErrorResults?: Array<Error & object>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2002Keyword
+ */
+export interface InlineResponse2002Keyword {
+    /**
+     * The text of the keyword.
+     * @type {string}
+     * @memberof InlineResponse2002Keyword
+     */
+    keywordText?: string;
+    /**
+     * 
+     * @type {MatchType}
+     * @memberof InlineResponse2002Keyword
+     */
+    matchType?: MatchType;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2002KeywordsBidsRecommendationSuccessResults
+ */
+export interface InlineResponse2002KeywordsBidsRecommendationSuccessResults {
+    /**
+     * The identifier of the keyword bid recommendation.
+     * @type {string}
+     * @memberof InlineResponse2002KeywordsBidsRecommendationSuccessResults
+     */
+    recommendationId?: string;
+    /**
+     * 
+     * @type {RecommendedBid}
+     * @memberof InlineResponse2002KeywordsBidsRecommendationSuccessResults
+     */
+    recommendedBid?: RecommendedBid;
+    /**
+     * 
+     * @type {InlineResponse2002Keyword}
+     * @memberof InlineResponse2002KeywordsBidsRecommendationSuccessResults
+     */
+    keyword?: InlineResponse2002Keyword;
+    /**
+     * Correlates the keyword to the keyword array index specified in the request. Zero-based.
+     * @type {number}
+     * @memberof InlineResponse2002KeywordsBidsRecommendationSuccessResults
+     */
+    keywordIndex?: number;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2002TargetsBidsRecommendationSuccessResults
+ */
+export interface InlineResponse2002TargetsBidsRecommendationSuccessResults {
+    /**
+     * The identifier of the target bid recommendation.
+     * @type {any}
+     * @memberof InlineResponse2002TargetsBidsRecommendationSuccessResults
+     */
+    recommendationId?: any | null;
+    /**
+     * 
+     * @type {RecommendedBid}
+     * @memberof InlineResponse2002TargetsBidsRecommendationSuccessResults
+     */
+    recommendedBid?: RecommendedBid;
+    /**
+     * 
+     * @type {Array<SBExpression>}
+     * @memberof InlineResponse2002TargetsBidsRecommendationSuccessResults
+     */
+    targets?: Array<SBExpression>;
+    /**
+     * Correlates the keyword to the keyword array index specified in the request. Zero-based.
+     * @type {number}
+     * @memberof InlineResponse2002TargetsBidsRecommendationSuccessResults
+     */
+    targetsIndex?: number;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2003
+ */
+export interface InlineResponse2003 {
+    /**
+     * Lists the successfully updated targets. Note that targets in the response are correlated to targets in the request using the `targetRequestIndex` field. For example, if `targetRequestIndex` is set to `2`, the values correlate to the third target object in the request.
+     * @type {Array<InlineResponse2003UpdateTargetSuccessResults>}
+     * @memberof InlineResponse2003
+     */
+    updateTargetSuccessResults?: Array<InlineResponse2003UpdateTargetSuccessResults>;
+    /**
+     * Lists errors that occured during target update. Note that errors are correlated to target update requests by the `targetRequestIndex` field. This field corresponds to the order of the target in the request. For example, if `targetRequestIndex` is set to `2`, the values correlate to the third target object in the request array.
+     * @type {Array<Error & object>}
+     * @memberof InlineResponse2003
+     */
+    updateTargetErrorResults?: Array<Error & object>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2003UpdateTargetSuccessResults
+ */
+export interface InlineResponse2003UpdateTargetSuccessResults {
+    /**
+     * The identifier of a target.
+     * @type {number}
+     * @memberof InlineResponse2003UpdateTargetSuccessResults
+     */
+    targetId?: number;
+    /**
+     * Correlates the target to the target array index specified in the request. Zero-based.
+     * @type {number}
+     * @memberof InlineResponse2003UpdateTargetSuccessResults
+     */
+    targetRequestIndex?: number;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2004
+ */
+export interface InlineResponse2004 {
+    /**
+     * Lists the successfully updated negative targets. Note that negative targets in the response are correlated to negative targets in the request using the `targetRequestIndex` field. For example, if `targetRequestIndex` is set to `2`, the values correlate to the third negative target object in the request.
+     * @type {Array<InlineResponse2004UpdateTargetSuccessResults>}
+     * @memberof InlineResponse2004
+     */
+    updateTargetSuccessResults?: Array<InlineResponse2004UpdateTargetSuccessResults>;
+    /**
+     * Lists errors that occured during negative target update. Note that errors are correlated to negative target update requests by the `negativeTargetRequestIndex` field. This field corresponds to the order of the negative target in the request. For example, if `negativeTargetRequestIndex` is set to `2`, the values correlate to the third negative target object in the request.
+     * @type {Array<Error & object>}
+     * @memberof InlineResponse2004
+     */
+    updateTargetErrorResults?: Array<Error & object>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2004UpdateTargetSuccessResults
+ */
+export interface InlineResponse2004UpdateTargetSuccessResults {
+    /**
+     * The identifier of a target.
+     * @type {number}
+     * @memberof InlineResponse2004UpdateTargetSuccessResults
+     */
+    targetId?: number;
+    /**
+     * Correlates the negative target to the negative target array index specified in the request. Zero-based.
+     * @type {number}
+     * @memberof InlineResponse2004UpdateTargetSuccessResults
+     */
+    targetRequestIndex?: number;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2005
+ */
+export interface InlineResponse2005 {
+    /**
+     * 
+     * @type {Array<SBCategoryResponse>}
+     * @memberof InlineResponse2005
+     */
+    categoryRecommendationResults?: Array<SBCategoryResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2006
+ */
+export interface InlineResponse2006 {
+    /**
+     * 
+     * @type {Array<SBBrandResponse>}
+     * @memberof InlineResponse2006
+     */
+    brandRecommendationResults?: Array<SBBrandResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2007
+ */
+export interface InlineResponse2007 {
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof InlineResponse2007
+     */
+    campaignId?: number;
+    /**
+     * The moderation status of the campaign. |Status|Description| |------|-----------| |APPROVED|Moderation for the campaign is complete.| |IN_PROGRESS|Moderation for the campaign is in progress. The expected date and time for completion are specfied in the `etaForModeration` field.| |REJECTED|The campaign has failed moderation. Specific information about the content that violated policy is available in `policyViolations`.|
+     * @type {string}
+     * @memberof InlineResponse2007
+     */
+    moderationStatus?: InlineResponse2007ModerationStatusEnum;
+    /**
+     * Expected date and time by which moderation will be complete. Note that this field is present in the response only when `moderationStatus` is set to `IN_PROGRESS`.
+     * @type {string}
+     * @memberof InlineResponse2007
+     */
+    etaForModeration?: string;
+    /**
+     * A list of policy violations for a campaign that has failed moderation. Note that this field is present in the response only when `moderationStatus` is set to `REJECTED`.
+     * @type {Array<InlineResponse2007PolicyViolations>}
+     * @memberof InlineResponse2007
+     */
+    policyViolations?: Array<InlineResponse2007PolicyViolations>;
 }
 
 /**
     * @export
     * @enum {string}
     */
-export enum HeadlineSuggestionRequestAdFormatEnum {
-    Brands = 'SPONSORED_BRANDS',
-    BrandsSpotlight = 'SPONSORED_BRANDS_SPOTLIGHT'
-}
-
-/**
- * Response structure of headline suggestion API.
- * @export
- * @interface HeadlineSuggestionResponse
- */
-export interface HeadlineSuggestionResponse {
-    /**
-     * An identifier for request made which is generated by server.
-     * @type {string}
-     * @memberof HeadlineSuggestionResponse
-     */
-    requestId?: string;
-    /**
-     * Suggestions are sorted, i.e., more suitable headline has lesser array index value
-     * @type {Array<SuggestedHeadline>}
-     * @memberof HeadlineSuggestionResponse
-     */
-    suggestions?: Array<SuggestedHeadline>;
-}
-/**
- * Image component which needs to be pre moderated. A publicly accessible imageUrl must be sent.
- * @export
- * @interface ImageComponent
- */
-export interface ImageComponent {
-    /**
-     * Type of the image component.
-     * @type {string}
-     * @memberof ImageComponent
-     */
-    componentType: ImageComponentComponentTypeEnum;
-    /**
-     * Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.
-     * @type {string}
-     * @memberof ImageComponent
-     */
-    id: string;
-    /**
-     * Url of the image to be pre moderated. The url must be publicly accessible.
-     * @type {string}
-     * @memberof ImageComponent
-     */
-    url: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ImageComponentComponentTypeEnum {
-    BrandLogo = 'BRAND_LOGO',
-    CustomImage = 'CUSTOM_IMAGE',
-    OtherImage = 'OTHER_IMAGE'
-}
-
-/**
- * Pre moderation result for a image component
- * @export
- * @interface ImageComponentResponse
- */
-export interface ImageComponentResponse {
-    /**
-     * The pre moderation status of the component.
-     * @type {string}
-     * @memberof ImageComponentResponse
-     */
-    preModerationStatus?: ImageComponentResponsePreModerationStatusEnum;
-    /**
-     * Type of the image component.
-     * @type {string}
-     * @memberof ImageComponentResponse
-     */
-    componentType?: ImageComponentResponseComponentTypeEnum;
-    /**
-     * A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.
-     * @type {Array<ImagePolicyViolation>}
-     * @memberof ImageComponentResponse
-     */
-    policyViolations?: Array<ImagePolicyViolation>;
-    /**
-     * Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.
-     * @type {string}
-     * @memberof ImageComponentResponse
-     */
-    id?: string;
-    /**
-     * Publicly accessible url of the image that got pre moderated.
-     * @type {string}
-     * @memberof ImageComponentResponse
-     */
-    url?: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ImageComponentResponsePreModerationStatusEnum {
-    Rejected = 'REJECTED',
+export enum InlineResponse2007ModerationStatusEnum {
     Approved = 'APPROVED',
-    Failed = 'FAILED',
-    RetryableFailure = 'RETRYABLE_FAILURE'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ImageComponentResponseComponentTypeEnum {
-    BrandLogo = 'BRAND_LOGO',
-    CustomImage = 'CUSTOM_IMAGE',
-    OtherImage = 'OTHER_IMAGE'
-}
-
-/**
- * Structure of a image evidence
- * @export
- * @interface ImageEvidence
- */
-export interface ImageEvidence {
-    /**
-     * The top left Y-coordinate of the content that violates the specfied policy within the image.
-     * @type {number}
-     * @memberof ImageEvidence
-     */
-    topLeftY?: number;
-    /**
-     * The top left X-coordinate of the content that violates the specfied policy within the image.
-     * @type {number}
-     * @memberof ImageEvidence
-     */
-    topLeftX?: number;
-    /**
-     * The width of the content that violates the specfied policy within the image.
-     * @type {number}
-     * @memberof ImageEvidence
-     */
-    width?: number;
-    /**
-     * The height of the content that violates the specfied policy within the image.
-     * @type {number}
-     * @memberof ImageEvidence
-     */
-    height?: number;
-}
-/**
- * Structure of policy violation for a image component
- * @export
- * @interface ImagePolicyViolation
- */
-export interface ImagePolicyViolation {
-    /**
-     * A human-readable description of the policy.
-     * @type {string}
-     * @memberof ImagePolicyViolation
-     */
-    policyDescription?: string;
-    /**
-     * List of evidences for the policy violations detected on the image component.
-     * @type {Array<ImageEvidence>}
-     * @memberof ImagePolicyViolation
-     */
-    imageEvidences?: Array<ImageEvidence>;
-    /**
-     * A policy violation code.
-     * @type {string}
-     * @memberof ImagePolicyViolation
-     */
-    name?: string;
-    /**
-     * Type of policy violation.
-     * @type {string}
-     * @memberof ImagePolicyViolation
-     */
-    type?: ImagePolicyViolationTypeEnum;
-    /**
-     * Address of the policy documentation. Follow the link to learn more about the specified policy.
-     * @type {string}
-     * @memberof ImagePolicyViolation
-     */
-    policyLinkUrl?: string;
-    /**
-     * Policy violation on an image can be detected on the ocr detected text on the image as well. This list of text evidences will have the policy violations detected on the text on top of the image.
-     * @type {Array<TextEvidence>}
-     * @memberof ImagePolicyViolation
-     */
-    textEvidences?: Array<TextEvidence>;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum ImagePolicyViolationTypeEnum {
-    Warning = 'WARNING',
+    InProgress = 'IN_PROGRESS',
     Rejected = 'REJECTED'
 }
 
 /**
  * 
  * @export
- * @enum {string}
+ * @interface InlineResponse2007PolicyViolations
  */
-
-export enum InternalErrorErrorCode {
-    InternalError = 'INTERNAL_ERROR'
+export interface InlineResponse2007PolicyViolations {
+    /**
+     * A human-readable description of the policy.
+     * @type {string}
+     * @memberof InlineResponse2007PolicyViolations
+     */
+    policyDescription?: string;
+    /**
+     * Address of the policy documentation. Follow the link to learn more about the specified policy.
+     * @type {string}
+     * @memberof InlineResponse2007PolicyViolations
+     */
+    policyLinkUrl?: string;
+    /**
+     * Information about the specific text that violates the specified policy in the campaign.
+     * @type {Array<InlineResponse2007ViolatingTextContents>}
+     * @memberof InlineResponse2007PolicyViolations
+     */
+    violatingTextContents?: Array<InlineResponse2007ViolatingTextContents>;
+    /**
+     * Information about the specific image that violates the specified policy.
+     * @type {Array<InlineResponse2007ViolatingImageContents>}
+     * @memberof InlineResponse2007PolicyViolations
+     */
+    violatingImageContents?: Array<InlineResponse2007ViolatingImageContents>;
+    /**
+     * Information about the specific ASIN in the campaign that violates the specified policy.
+     * @type {Array<InlineResponse2007ViolatingAsinContents>}
+     * @memberof InlineResponse2007PolicyViolations
+     */
+    violatingAsinContents?: Array<InlineResponse2007ViolatingAsinContents>;
 }
-
 /**
  * 
  * @export
- * @interface InternalServerExceptionResponseContent
+ * @interface InlineResponse2007TextEvidences
  */
-export interface InternalServerExceptionResponseContent {
+export interface InlineResponse2007TextEvidences {
+    /**
+     * The specific text determined to violate the specified policy in `reviewedText`.
+     * @type {string}
+     * @memberof InlineResponse2007TextEvidences
+     */
+    violatingText?: string;
     /**
      * 
-     * @type {InternalErrorErrorCode}
-     * @memberof InternalServerExceptionResponseContent
+     * @type {InlineResponse2007ViolatingTextPosition}
+     * @memberof InlineResponse2007TextEvidences
      */
-    code: InternalErrorErrorCode;
-    /**
-     * Human readable error message.
-     * @type {string}
-     * @memberof InternalServerExceptionResponseContent
-     */
-    message: string;
+    violatingTextPosition?: InlineResponse2007ViolatingTextPosition;
 }
 /**
  * 
  * @export
- * @enum {string}
+ * @interface InlineResponse2007ViolatingAsinContents
  */
-
-export enum InvalidArgumentErrorCode {
-    InvalidArgument = 'INVALID_ARGUMENT'
+export interface InlineResponse2007ViolatingAsinContents {
+    /**
+     * The ad component that includes the ASIN that violates the specified policy.
+     * @type {string}
+     * @memberof InlineResponse2007ViolatingAsinContents
+     */
+    moderatedComponent?: string;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof InlineResponse2007ViolatingAsinContents
+     */
+    asinEvidences?: Array<object>;
 }
-
 /**
- * Keyword associated with the campaign.
+ * 
+ * @export
+ * @interface InlineResponse2007ViolatingImageContents
+ */
+export interface InlineResponse2007ViolatingImageContents {
+    /**
+     * The ad component that includes the image that violates the specified policy.
+     * @type {string}
+     * @memberof InlineResponse2007ViolatingImageContents
+     */
+    moderatedComponent?: string;
+    /**
+     * Address of the image reviewed during moderation.
+     * @type {string}
+     * @memberof InlineResponse2007ViolatingImageContents
+     */
+    reviewedImageUrl?: string;
+    /**
+     * 
+     * @type {Array<object>}
+     * @memberof InlineResponse2007ViolatingImageContents
+     */
+    imageEvidences?: Array<object>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2007ViolatingTextContents
+ */
+export interface InlineResponse2007ViolatingTextContents {
+    /**
+     * The ad component that includes the text that violates the specified policy.
+     * @type {string}
+     * @memberof InlineResponse2007ViolatingTextContents
+     */
+    moderatedComponent?: string;
+    /**
+     * The specific text reviewed during moderation.
+     * @type {string}
+     * @memberof InlineResponse2007ViolatingTextContents
+     */
+    reviewedText?: string;
+    /**
+     * 
+     * @type {Array<InlineResponse2007TextEvidences>}
+     * @memberof InlineResponse2007ViolatingTextContents
+     */
+    textEvidences?: Array<InlineResponse2007TextEvidences>;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2007ViolatingTextPosition
+ */
+export interface InlineResponse2007ViolatingTextPosition {
+    /**
+     * Zero-based index into the text in `reviewedText` where the text specified in `violatingText` starts.
+     * @type {number}
+     * @memberof InlineResponse2007ViolatingTextPosition
+     */
+    start?: number;
+    /**
+     * Zero-based index into the text in `reviewedText` where the text specified in `violatingText` ends.
+     * @type {number}
+     * @memberof InlineResponse2007ViolatingTextPosition
+     */
+    end?: number;
+}
+/**
+ * 
+ * @export
+ * @interface KDPError
+ */
+export interface KDPError {
+    /**
+     * 
+     * @type {BasicErrorObject}
+     * @memberof KDPError
+     */
+    KDPError?: BasicErrorObject;
+}
+/**
+ * 
  * @export
  * @interface Keyword
  */
 export interface Keyword {
     /**
-     * 
-     * @type {MatchType}
+     * The keyword text. Maximum of 10 words.
+     * @type {string}
      * @memberof Keyword
      */
-    matchType?: MatchType;
+    keywordText?: string;
+    /**
+     * The unlocalized keyword text in the preferred locale of the advertiser.
+     * @type {string}
+     * @memberof Keyword
+     */
+    nativeLanguageKeyword?: string;
+    /**
+     * The locale preference of the advertiser. For example, if the advertiser’s preferred language is Simplified Chinese, set the locale to `zh_CN`. Supported locales include: Simplified Chinese (locale: zh_CN) for US, UK and CA. English (locale: en_GB) for DE, FR, IT and ES.
+     * @type {string}
+     * @memberof Keyword
+     */
+    nativeLanguageLocale?: string;
+    /**
+     * 
+     * @type {SBMatchType}
+     * @memberof Keyword
+     */
+    matchType?: SBMatchType;
     /**
      * The associated bid. Note that this value must be less than the budget associated with the Advertiser account. For more information, see [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features).
      * @type {number}
      * @memberof Keyword
      */
     bid?: number;
-    /**
-     * The keyword text. Maximum of 10 words.
-     * @type {string}
-     * @memberof Keyword
-     */
-    keywordText?: string;
 }
 /**
- * The match type. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Advertising support center.
+ * 
+ * @export
+ * @interface KeywordEntry
+ */
+export interface KeywordEntry {
+    /**
+     * An array of targets associated with the campaign.
+     * @type {Array<Expression>}
+     * @memberof KeywordEntry
+     */
+    expressions?: Array<Expression>;
+    /**
+     * The associated bid. Note that this value must be less than the budget associated with the Advertiser account. For more information, see [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features).
+     * @type {number}
+     * @memberof KeywordEntry
+     */
+    bid?: number;
+}
+/**
+ * 
+ * @export
+ * @interface KeywordError
+ */
+export interface KeywordError {
+    /**
+     * 
+     * @type {BasicErrorObject & object}
+     * @memberof KeywordError
+     */
+    KeywordError?: BasicErrorObject & object;
+}
+/**
+ * 
+ * @export
+ * @interface LandingPageError
+ */
+export interface LandingPageError {
+    /**
+     * 
+     * @type {BasicErrorObject & object}
+     * @memberof LandingPageError
+     */
+    LandingPageError?: BasicErrorObject & object;
+}
+/**
+ * 
+ * @export
+ * @interface ListRecommendationsRequest
+ */
+export interface ListRecommendationsRequest {
+    /**
+     * Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the `NextToken` field is empty, there are no further results.
+     * @type {string}
+     * @memberof ListRecommendationsRequest
+     */
+    nextToken?: string;
+    /**
+     * Sets a limit on the number of results returned by an operation.
+     * @type {number}
+     * @memberof ListRecommendationsRequest
+     */
+    maxResults?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ListRequest
+ */
+export interface ListRequest {
+    /**
+     * Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the `NextToken` field is empty, there are no further results.
+     * @type {string}
+     * @memberof ListRequest
+     */
+    nextToken?: string;
+    /**
+     * Sets a limit on the number of results returned by an operation.
+     * @type {number}
+     * @memberof ListRequest
+     */
+    maxResults?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ListResponse
+ */
+export interface ListResponse {
+    /**
+     * Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the `NextToken` field is empty, there are no further results.
+     * @type {string}
+     * @memberof ListResponse
+     */
+    nextToken?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MarketplaceError
+ */
+export interface MarketplaceError {
+    /**
+     * 
+     * @type {BasicErrorObject}
+     * @memberof MarketplaceError
+     */
+    MarketplaceError?: BasicErrorObject;
+}
+/**
+ * The match type. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
  * @export
  * @enum {string}
  */
 
 export enum MatchType {
+    Broad = 'broad',
     Exact = 'exact',
-    Phrase = 'phrase',
-    Broad = 'broad'
+    Phrase = 'phrase'
 }
 
 /**
- * The Error Response Object.
+ * 
  * @export
- * @interface ModerationError
+ * @interface MediaPublisherAPIError
  */
-export interface ModerationError {
+export interface MediaPublisherAPIError {
     /**
-     * The HTTP status code of the response.
+     * 
      * @type {string}
-     * @memberof ModerationError
+     * @memberof MediaPublisherAPIError
      */
     code?: string;
     /**
-     * A human-readable description of the response.
+     * 
      * @type {string}
-     * @memberof ModerationError
+     * @memberof MediaPublisherAPIError
+     */
+    message?: string;
+}
+/**
+ * Media status:  * `Processing` - The media is being processed  * `PendingDeepValidation` - The media is pending additional validation carried out during media conversion.  * `Available` - Media has successfully finished validation and conversion and the media is published.  * `Failed` - Media processing failed 
+ * @export
+ * @enum {string}
+ */
+
+export enum MediaStatus {
+    Processing = 'Processing',
+    PendingDeepValidation = 'PendingDeepValidation',
+    Available = 'Available',
+    Failed = 'Failed'
+}
+
+/**
+ * The supported media types.
+ * @export
+ * @enum {string}
+ */
+
+export enum MediaType {
+    BrandLogo = 'brandLogo',
+    Image = 'image'
+}
+
+/**
+ * 
+ * @export
+ * @interface ModelError
+ */
+export interface ModelError {
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelError
+     */
+    code?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ModelError
      */
     details?: string;
 }
 /**
- * Negative keyword associated with the campaign.
+ * 
  * @export
  * @interface NegativeKeyword
  */
 export interface NegativeKeyword {
-    /**
-     * 
-     * @type {NegativeMatchType}
-     * @memberof NegativeKeyword
-     */
-    matchType?: NegativeMatchType;
     /**
      * The keyword text. Maximum of 10 words.
      * @type {string}
      * @memberof NegativeKeyword
      */
     keywordText?: string;
+    /**
+     * 
+     * @type {SBNegativeMatchType}
+     * @memberof NegativeKeyword
+     */
+    matchType?: SBNegativeMatchType;
 }
 /**
- * The negative match type. For more information, see [negative keyword match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Advertising support center.
+ * The negative match type. For more information, see [negative keyword match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
  * @export
  * @enum {string}
  */
@@ -1288,325 +1178,51 @@ export enum NegativeMatchType {
 }
 
 /**
- * Negative expression settings for the target.
+ * 
  * @export
- * @interface NegativeProductExpression
+ * @interface PageAsinsError
  */
-export interface NegativeProductExpression {
+export interface PageAsinsError {
     /**
      * 
-     * @type {NegativeProductExpressionType}
-     * @memberof NegativeProductExpression
+     * @type {BasicErrorObject & object}
+     * @memberof PageAsinsError
      */
-    type?: NegativeProductExpressionType;
-    /**
-     * The expression value associated with targets.
-     * @type {string}
-     * @memberof NegativeProductExpression
-     */
-    value?: string;
-}
-/**
- * The negative expression type associated with the target.
- * @export
- * @enum {string}
- */
-
-export enum NegativeProductExpressionType {
-    AsinBrandSameAs = 'asinBrandSameAs',
-    AsinSameAs = 'asinSameAs'
-}
-
-/**
- * The negative target associated with the ad group.
- * @export
- * @interface NegativeProductTarget
- */
-export interface NegativeProductTarget {
-    /**
-     * 
-     * @type {Array<NegativeProductExpression>}
-     * @memberof NegativeProductTarget
-     */
-    expressions?: Array<NegativeProductExpression>;
+    PageAsinsError?: BasicErrorObject & object;
 }
 /**
  * 
  * @export
- * @interface PerformanceMeasureCondition
+ * @interface PaginationError
  */
-export interface PerformanceMeasureCondition {
+export interface PaginationError {
     /**
      * 
-     * @type {PerformanceMetric}
-     * @memberof PerformanceMeasureCondition
+     * @type {BasicErrorObject & object}
+     * @memberof PaginationError
      */
-    metricName: PerformanceMetric;
-    /**
-     * 
-     * @type {ComparisonOperator}
-     * @memberof PerformanceMeasureCondition
-     */
-    comparisonOperator: ComparisonOperator;
-    /**
-     * The performance threshold value.
-     * @type {number}
-     * @memberof PerformanceMeasureCondition
-     */
-    threshold: number;
+    PaginationError?: BasicErrorObject & object;
 }
 /**
- * The advertising performance metric.
+ * 
+ * @export
+ * @interface ProductItemsError
+ */
+export interface ProductItemsError {
+    /**
+     * 
+     * @type {BasicErrorObject}
+     * @memberof ProductItemsError
+     */
+    ProductItemsError?: BasicErrorObject;
+}
+/**
+ * 
  * @export
  * @enum {string}
  */
 
-export enum PerformanceMetric {
-    Acos = 'ACOS',
-    Ctr = 'CTR',
-    Cvr = 'CVR',
-    Roas = 'ROAS'
-}
-
-/**
- * An object giving the name of the performance metric and its value when the rule was evaluated
- * @export
- * @interface PerformanceMetricValue
- */
-export interface PerformanceMetricValue {
-    /**
-     * Name of the performance metric
-     * @type {string}
-     * @memberof PerformanceMetricValue
-     */
-    name?: string;
-    /**
-     * Value of the performance metric
-     * @type {number}
-     * @memberof PerformanceMetricValue
-     */
-    value?: number;
-}
-/**
- * Components details that needs to be sent for pre moderation.
- * @export
- * @interface PreModerationRequest
- */
-export interface PreModerationRequest {
-    /**
-     * Id of the brand/advertiser.
-     * @type {string}
-     * @memberof PreModerationRequest
-     */
-    recordId?: string;
-    /**
-     * Asin components which needs to be pre moderated.
-     * @type {Array<AsinComponent>}
-     * @memberof PreModerationRequest
-     */
-    asinComponents?: Array<AsinComponent>;
-    /**
-     * Type of Ad program to which this pre moderation components belong to.
-     * @type {string}
-     * @memberof PreModerationRequest
-     */
-    adProgram: PreModerationRequestAdProgramEnum;
-    /**
-     * Specifying locale will translate the premoderation message into that locale\'s associated language.     | Locale | Language (ISO 639) | Country (ISO 3166) |   |-----|-----|-------|   | ar-AE | Arabic (ar) | United Arab Emirates (AE) |   | zh-CN | Chinese (zh) | China (CN) |   | nl-NL | Dutch (nl) | Netherlands (NL) |   | en-AU | English (en) | Australia (AU) |   | en-CA | English (en) | Canada (CA) |   | en-IN | English (en) | India (IN) |   | en-GB | English (en) | United Kingdom (GB) |   | en-US | English (en) | United States (US) |   | fr-CA | French (fr) | Canada (CA) |   | fr-FR | French (fr) | France (FR) |   | de-DE | German (de) | Germany (DE) |   | it-IT | Italian (it) | Italy (IT) |   | ja-JP | Japanese (ja) | Japan (JP) |   | ko-KR | Korean (ko) | South Korea (KR) |   | pt-BR | Portuguese (pt) | Brazil (BR) |   | es-ES | Spanish (es) | Spain (ES) |   | es-US | Spanish (es) | United States (US) |   | es-MX | Spanish (es) | Mexico (MX) |   | tr-TR | Turkish (tr) | Turkey (TR) |   
-     * @type {string}
-     * @memberof PreModerationRequest
-     */
-    locale: PreModerationRequestLocaleEnum;
-    /**
-     * Image components which needs to be pre moderated.
-     * @type {Array<ImageComponent>}
-     * @memberof PreModerationRequest
-     */
-    imageComponents?: Array<ImageComponent>;
-    /**
-     * Date components which needs to be pre moderated.
-     * @type {Array<DateComponent>}
-     * @memberof PreModerationRequest
-     */
-    dateComponents?: Array<DateComponent>;
-    /**
-     * Text components which needs to be pre moderated.
-     * @type {Array<TextComponent>}
-     * @memberof PreModerationRequest
-     */
-    textComponents?: Array<TextComponent>;
-    /**
-     * Video components which needs to be pre moderated.
-     * @type {Array<VideoComponent>}
-     * @memberof PreModerationRequest
-     */
-    videoComponents?: Array<VideoComponent>;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum PreModerationRequestAdProgramEnum {
-    SponsoredBrands = 'SPONSORED_BRANDS',
-    SponsoredBrandsSpotlight = 'SPONSORED_BRANDS_SPOTLIGHT',
-    SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO',
-    Stores = 'STORES',
-    SponsoredDisplay = 'SPONSORED_DISPLAY',
-    Dsp = 'DSP'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum PreModerationRequestLocaleEnum {
-    ArAe = 'ar-AE',
-    ZhCn = 'zh-CN',
-    NlNl = 'nl-NL',
-    EnAu = 'en-AU',
-    EnCa = 'en-CA',
-    EnIn = 'en-IN',
-    EnGb = 'en-GB',
-    EnUs = 'en-US',
-    FrCa = 'fr-CA',
-    FrFr = 'fr-FR',
-    DeDe = 'de-DE',
-    ItIt = 'it-IT',
-    JaJp = 'ja-JP',
-    KoKr = 'ko-KR',
-    PtBr = 'pt-BR',
-    EsEs = 'es-ES',
-    EsUs = 'es-US',
-    EsMx = 'es-MX',
-    TrTr = 'tr-TR'
-}
-
-/**
- * Information regarding the policy violations if present for the components, sent for pre moderation.
- * @export
- * @interface PreModerationResponse
- */
-export interface PreModerationResponse {
-    /**
-     * Id of the brand/advertiser.
-     * @type {string}
-     * @memberof PreModerationResponse
-     */
-    recordId?: string;
-    /**
-     * Pre moderation result of the asin components. It will have information regarding the policy violations present if any.
-     * @type {Array<AsinComponentResponse>}
-     * @memberof PreModerationResponse
-     */
-    asinComponents?: Array<AsinComponentResponse>;
-    /**
-     * Unique Id for the moderation Request.
-     * @type {string}
-     * @memberof PreModerationResponse
-     */
-    preModerationId?: string;
-    /**
-     * Type of Ad program to which the pre moderation components belong to.
-     * @type {string}
-     * @memberof PreModerationResponse
-     */
-    adProgram?: PreModerationResponseAdProgramEnum;
-    /**
-     * Locale value that was passed in request.
-     * @type {string}
-     * @memberof PreModerationResponse
-     */
-    locale?: PreModerationResponseLocaleEnum;
-    /**
-     * Pre moderation result of the image components. It will have information regarding the policy violations present if any.
-     * @type {Array<ImageComponentResponse>}
-     * @memberof PreModerationResponse
-     */
-    imageComponents?: Array<ImageComponentResponse>;
-    /**
-     * Pre moderation result of the date components. It will have information regarding the policy violations present if any.
-     * @type {Array<DateComponentResponse>}
-     * @memberof PreModerationResponse
-     */
-    dateComponents?: Array<DateComponentResponse>;
-    /**
-     * Pre moderation result of the text components. It will have information regarding the policy violations present if any.
-     * @type {Array<TextComponentResponse>}
-     * @memberof PreModerationResponse
-     */
-    textComponents?: Array<TextComponentResponse>;
-    /**
-     * Pre moderation result of the video components. It will have information regarding the policy violations present if any.
-     * @type {Array<VideoComponentResponse>}
-     * @memberof PreModerationResponse
-     */
-    videoComponents?: Array<VideoComponentResponse>;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum PreModerationResponseAdProgramEnum {
-    SponsoredBrands = 'SPONSORED_BRANDS',
-    SponsoredBrandsSpotlight = 'SPONSORED_BRANDS_SPOTLIGHT',
-    SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO',
-    Stores = 'STORES',
-    SponsoredDisplay = 'SPONSORED_DISPLAY',
-    Dsp = 'DSP'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum PreModerationResponseLocaleEnum {
-    ArAe = 'ar-AE',
-    ZhCn = 'zh-CN',
-    NlNl = 'nl-NL',
-    EnAu = 'en-AU',
-    EnCa = 'en-CA',
-    EnIn = 'en-IN',
-    EnGb = 'en-GB',
-    EnUs = 'en-US',
-    FrCa = 'fr-CA',
-    FrFr = 'fr-FR',
-    DeDe = 'de-DE',
-    ItIt = 'it-IT',
-    JaJp = 'ja-JP',
-    KoKr = 'ko-KR',
-    PtBr = 'pt-BR',
-    EsEs = 'es-ES',
-    EsUs = 'es-US',
-    EsMx = 'es-MX',
-    TrTr = 'tr-TR'
-}
-
-/**
- * Expression settings for the target.
- * @export
- * @interface ProductExpression
- */
-export interface ProductExpression {
-    /**
-     * 
-     * @type {ProductExpressionType}
-     * @memberof ProductExpression
-     */
-    type?: ProductExpressionType;
-    /**
-     * The expression value associated with targets.
-     * @type {string}
-     * @memberof ProductExpression
-     */
-    value?: string;
-}
-/**
- * The expression type associated with the target.
- * @export
- * @enum {string}
- */
-
-export enum ProductExpressionType {
+export enum ProductPredicateType {
     AsinCategorySameAs = 'asinCategorySameAs',
     AsinBrandSameAs = 'asinBrandSameAs',
     AsinPriceLessThan = 'asinPriceLessThan',
@@ -1619,367 +1235,4164 @@ export enum ProductExpressionType {
 }
 
 /**
- * The target associated with the ad group. `expressions` must contain at least one of `ASIN_CATEGORY_SAME_AS`, `ASIN_BRAND_SAME_AS`, or `ASIN_SAME_AS`. Only `ASIN_CATEGORY_SAME_AS` expression may be grouped with other options.
+ * 
  * @export
- * @interface ProductTarget
+ * @interface ProfileError
  */
-export interface ProductTarget {
-    /**
-     * The associated bid. Note that this value must be less than the budget associated with the Advertiser account. For more information, see [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features).
-     * @type {number}
-     * @memberof ProductTarget
-     */
-    bid?: number;
+export interface ProfileError {
     /**
      * 
-     * @type {Array<ProductExpression>}
-     * @memberof ProductTarget
+     * @type {BasicErrorObject}
+     * @memberof ProfileError
      */
-    expressions?: Array<ProductExpression>;
+    ProfileError?: BasicErrorObject;
+}
+/**
+ * The Ad Program that the media will be attached to. Currently, we support `SponsoredBrands` with creative type `Video`
+ * @export
+ * @interface Program
+ */
+export interface Program {
+    /**
+     * 
+     * @type {string}
+     * @memberof Program
+     */
+    programType: ProgramProgramTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof Program
+     */
+    creativeType: ProgramCreativeTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ProgramProgramTypeEnum {
+    SponsoredBrands = 'SponsoredBrands'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ProgramCreativeTypeEnum {
+    Video = 'Video'
+}
+
+/**
+ * 
+ * @export
+ * @interface RecommendationError
+ */
+export interface RecommendationError {
+    /**
+     * 
+     * @type {BasicErrorObject & object}
+     * @memberof RecommendationError
+     */
+    RecommendationError?: BasicErrorObject & object;
 }
 /**
  * 
  * @export
- * @interface Recurrence
+ * @interface RecommendedBid
  */
-export interface Recurrence {
+export interface RecommendedBid {
     /**
      * 
-     * @type {RecurrenceType}
-     * @memberof Recurrence
+     * @type {number}
+     * @memberof RecommendedBid
      */
-    type?: RecurrenceType;
+    rangeEnd?: number;
     /**
-     * Object representing days of the week for weekly type rule. It is not required for daily recurrence type
-     * @type {Array<DayOfWeek>}
-     * @memberof Recurrence
+     * 
+     * @type {number}
+     * @memberof RecommendedBid
      */
-    daysOfWeek?: Array<DayOfWeek>;
+    rangeStart?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RecommendedBid
+     */
+    recommended?: number;
 }
 /**
- * depicts the type of recurrence
+ * 
  * @export
  * @enum {string}
  */
 
-export enum RecurrenceType {
-    Daily = 'DAILY',
-    Weekly = 'WEEKLY'
+export enum SBAPIProductPredicateType {
+    AsinCategorySameAs = 'asinCategorySameAs',
+    AsinBrandSameAs = 'asinBrandSameAs',
+    AsinPriceLessThan = 'asinPriceLessThan',
+    AsinPriceBetween = 'asinPriceBetween',
+    AsinPriceGreaterThan = 'asinPriceGreaterThan',
+    AsinReviewRatingLessThan = 'asinReviewRatingLessThan',
+    AsinReviewRatingBetween = 'asinReviewRatingBetween',
+    AsinReviewRatingGreaterThan = 'asinReviewRatingGreaterThan',
+    AsinSameAs = 'asinSameAs'
 }
 
 /**
- * The campaign performance forecasts for the specified shopper segment.
+ * Applies to: | Operation | Path | |-----------| -----| |[listAdGroups](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Ad_Groups)| GET /sb/adGroups| |[getAdGroup](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Ad_Groups)| GET /sb/adGroups/{adGroupId}| <br/>
  * @export
- * @interface ResponseOutput
+ * @interface SBAdGroup
  */
-export interface ResponseOutput {
+export interface SBAdGroup {
     /**
-     * 
-     * @type {ShopperSegmentType}
-     * @memberof ResponseOutput
-     */
-    shopperSegment?: ShopperSegmentType;
-    /**
-     * 
-     * @type {Forecasts}
-     * @memberof ResponseOutput
-     */
-    forecasts?: Forecasts;
-}
-/**
- * 
- * @export
- * @interface RuleDuration
- */
-export interface RuleDuration {
-    /**
-     * 
-     * @type {EventTypeRuleDuration}
-     * @memberof RuleDuration
-     */
-    eventTypeRuleDuration?: EventTypeRuleDuration;
-    /**
-     * 
-     * @type {DateRangeTypeRuleDuration}
-     * @memberof RuleDuration
-     */
-    dateRangeTypeRuleDuration?: DateRangeTypeRuleDuration;
-}
-/**
- * 
- * @export
- * @interface SBBudgetHistory
- */
-export interface SBBudgetHistory {
-    /**
-     * To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.
-     * @type {string}
-     * @memberof SBBudgetHistory
-     */
-    nextToken?: string;
-    /**
-     * 
-     * @type {Array<SBRuleBasedBudget>}
-     * @memberof SBBudgetHistory
-     */
-    history?: Array<SBRuleBasedBudget>;
-}
-/**
- * 
- * @export
- * @interface SBBudgetRule
- */
-export interface SBBudgetRule {
-    /**
-     * 
-     * @type {State}
-     * @memberof SBBudgetRule
-     */
-    ruleState?: State;
-    /**
-     * Epoch time of budget rule update. Read-only.
+     * The identifier of the campaign associated with the ad group.
      * @type {number}
-     * @memberof SBBudgetRule
+     * @memberof SBAdGroup
      */
-    lastUpdatedDate?: number;
+    campaignId?: number;
     /**
-     * Epoch time of budget rule creation. Read-only.
+     * The identifier of the ad group.
      * @type {number}
-     * @memberof SBBudgetRule
+     * @memberof SBAdGroup
      */
-    createdDate?: number;
+    adGroupId?: number;
     /**
-     * 
-     * @type {SBBudgetRuleDetails}
-     * @memberof SBBudgetRule
-     */
-    ruleDetails?: SBBudgetRuleDetails;
-    /**
-     * The budget rule identifier.
+     * The name of the ad group.
      * @type {string}
-     * @memberof SBBudgetRule
+     * @memberof SBAdGroup
      */
-    ruleId: string;
-    /**
-     * The budget rule status. Read-only.
-     * @type {string}
-     * @memberof SBBudgetRule
-     */
-    ruleStatus?: string;
+    name?: string;
 }
 /**
  * 
  * @export
- * @interface SBBudgetRuleDetails
+ * @interface SBBidRecommendationKeyword
  */
-export interface SBBudgetRuleDetails {
+export interface SBBidRecommendationKeyword {
     /**
      * 
-     * @type {RuleDuration}
-     * @memberof SBBudgetRuleDetails
+     * @type {MatchType}
+     * @memberof SBBidRecommendationKeyword
      */
-    duration?: RuleDuration;
+    matchType?: MatchType;
     /**
-     * 
-     * @type {Recurrence}
-     * @memberof SBBudgetRuleDetails
-     */
-    recurrence?: Recurrence;
-    /**
-     * 
-     * @type {SBRuleType}
-     * @memberof SBBudgetRuleDetails
-     */
-    ruleType?: SBRuleType;
-    /**
-     * 
-     * @type {BudgetIncreaseBy}
-     * @memberof SBBudgetRuleDetails
-     */
-    budgetIncreaseBy?: BudgetIncreaseBy;
-    /**
-     * The budget rule name. Required to be unique within a campaign.
+     * The text of the keyword. Maximum of 10 words.
      * @type {string}
-     * @memberof SBBudgetRuleDetails
+     * @memberof SBBidRecommendationKeyword
+     */
+    keywordText?: string;
+}
+/**
+ * The crop to apply to the selected Brand logo. A Brand logo must have minimum dimensions of 400x400. If a brandLogoAssetID is supplied but a crop is not, the crop will be defaulted to the whole image.
+ * @export
+ * @interface SBBrandLogoCrop
+ */
+export interface SBBrandLogoCrop {
+    /**
+     * The highest pixel from which to begin cropping
+     * @type {number}
+     * @memberof SBBrandLogoCrop
+     */
+    top?: number;
+    /**
+     * The leftmost pixel from which to begin cropping
+     * @type {number}
+     * @memberof SBBrandLogoCrop
+     */
+    left?: number;
+    /**
+     * The number of pixels to crop rightwards from the value specified as `left`
+     * @type {number}
+     * @memberof SBBrandLogoCrop
+     */
+    width?: number;
+    /**
+     * The number of pixels to crop down from the value specified as `top`
+     * @type {number}
+     * @memberof SBBrandLogoCrop
+     */
+    height?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SBBrandResponse
+ */
+export interface SBBrandResponse {
+    /**
+     * The Brand identifier.
+     * @type {number}
+     * @memberof SBBrandResponse
+     */
+    id?: number;
+    /**
+     * The Brand name.
+     * @type {string}
+     * @memberof SBBrandResponse
+     */
+    name?: string;
+}
+/**
+ * Applies to: | Operation | Path | |-----------| -----| |[createCampaigns](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Campaigns)| POST /sb/campaigns| |[getCampaign](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Campaigns)| GET /sb/campaigns/{campaignId}| <br/>
+ * @export
+ * @interface SBCampaign
+ */
+export interface SBCampaign {
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBCampaign
+     */
+    campaignId?: number;
+    /**
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
+     * @type {string}
+     * @memberof SBCampaign
      */
     name?: string;
     /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCampaign
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget amount associated with the campaign.
+     * @type {number}
+     * @memberof SBCampaign
+     */
+    budget?: number;
+    /**
      * 
-     * @type {PerformanceMeasureCondition}
-     * @memberof SBBudgetRuleDetails
+     * @type {BudgetType}
+     * @memberof SBCampaign
      */
-    performanceMeasureCondition?: PerformanceMeasureCondition;
-}
-/**
- * The Error Response Object.
- * @export
- * @interface SBBudgetRulesRecommendationError
- */
-export interface SBBudgetRulesRecommendationError {
+    budgetType?: BudgetType;
     /**
-     * The HTTP status code of the response.
+     * The YYYYMMDD start date for the campaign. If this field is not set to a value, the current date is used.
      * @type {string}
-     * @memberof SBBudgetRulesRecommendationError
+     * @memberof SBCampaign
      */
-    code?: string;
+    startDate?: string;
     /**
-     * A human-readable description of the response.
+     * The YYYYMMDD end date for the campaign. Must be greater than the value for `startDate`. If not specified, the campaign has no end date and runs continuously.
      * @type {string}
-     * @memberof SBBudgetRulesRecommendationError
-     */
-    details?: string;
-}
-/**
- * 
- * @export
- * @interface SBBudgetRulesRecommendationEvent
- */
-export interface SBBudgetRulesRecommendationEvent {
-    /**
-     * The event identifier.
-     * @type {string}
-     * @memberof SBBudgetRulesRecommendationEvent
-     */
-    eventId?: string;
-    /**
-     * The end date in YYYYMMDD format.
-     * @type {string}
-     * @memberof SBBudgetRulesRecommendationEvent
+     * @memberof SBCampaign
      */
     endDate?: string;
     /**
-     * The suggested budget increase expressed as a percent.
+     * 
+     * @type {State}
+     * @memberof SBCampaign
+     */
+    state?: State;
+    /**
+     * |Value|Description| |-----|-----------| |asinNotBuyable| The associated ASIN cannot be purchased due to eligibility or availability.| |billingError| The billing information associated with the account requires correction.| |ended| The value specified in the `endDate` field is in the past.| |landingPageNotAvailable| The specified landing page is not available. This may be caused by an incorrect address or a landing page with less than three ASINs.| |outOfBudget| The campaign has run out of budget.| |paused|The campaign state is set to `paused`.| |pendingReview| A newly created campaign that has not passed moderation review. Note that moderation review may take up to 72 hours. |ready| The campaign is scheduled for a future date.| |rejected| The campaign failed moderation review.| |running| The campaign is enabled and serving.| |scheduled| A transitive state between `ready` and `running`, as child entities associated with the campaign move to a running state.| |terminated| The state of the campaign is set to `archived`.| <br/>
+     * @type {string}
+     * @memberof SBCampaign
+     */
+    servingStatus?: SBCampaignServingStatusEnum;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCampaign
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCampaign
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
      * @type {number}
-     * @memberof SBBudgetRulesRecommendationEvent
+     * @memberof SBCampaign
      */
-    suggestedBudgetIncreasePercent?: number;
+    bidMultiplier?: number;
     /**
-     * The event name.
-     * @type {string}
-     * @memberof SBBudgetRulesRecommendationEvent
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCampaign
      */
-    eventName?: string;
+    bidAdjustments?: Array<BidAdjustment>;
     /**
-     * The start date in YYYYMMDD format.
-     * @type {string}
-     * @memberof SBBudgetRulesRecommendationEvent
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCampaign
      */
-    startDate?: string;
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBCampaign
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCampaign
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<object>}
+     * @memberof SBCampaign
+     */
+    keywords?: Array<object>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<object>}
+     * @memberof SBCampaign
+     */
+    negativeKeywords?: Array<object>;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBCampaignServingStatusEnum {
+    AsinNotBuyable = 'asinNotBuyable',
+    BillingError = 'billingError',
+    Ended = 'ended',
+    LandingPageNotAvailable = 'landingPageNotAvailable',
+    OutOfBudget = 'outOfBudget',
+    Paused = 'paused',
+    PendingReview = 'pendingReview',
+    Ready = 'ready',
+    Rejected = 'rejected',
+    Running = 'running',
+    Scheduled = 'scheduled',
+    Terminated = 'terminated'
+}
+
 /**
  * 
  * @export
- * @interface SBBudgetRulesRecommendationEventRequest
+ * @interface SBCampaignBase
  */
-export interface SBBudgetRulesRecommendationEventRequest {
+export interface SBCampaignBase {
     /**
      * The campaign identifier.
-     * @type {string}
-     * @memberof SBBudgetRulesRecommendationEventRequest
+     * @type {number}
+     * @memberof SBCampaignBase
      */
-    campaignId: string;
-}
-/**
- * Special events with date range and suggested budget increase.
- * @export
- * @interface SBBudgetRulesRecommendationEventResponse
- */
-export interface SBBudgetRulesRecommendationEventResponse {
+    campaignId?: number;
     /**
-     * A list of recommended special events with date range and suggested budget increase.
-     * @type {Array<SBBudgetRulesRecommendationEvent>}
-     * @memberof SBBudgetRulesRecommendationEventResponse
+     * The campaign name.
+     * @type {string}
+     * @memberof SBCampaignBase
      */
-    recommendedBudgetRuleEvents?: Array<SBBudgetRulesRecommendationEvent>;
-}
-/**
- * 
- * @export
- * @interface SBCampaignBudgetRule
- */
-export interface SBCampaignBudgetRule {
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCampaignBase
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * 
+     * @type {number}
+     * @memberof SBCampaignBase
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCampaignBase
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCampaignBase
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCampaignBase
+     */
+    endDate?: string | null;
     /**
      * 
      * @type {State}
-     * @memberof SBCampaignBudgetRule
+     * @memberof SBCampaignBase
      */
-    ruleState?: State;
+    state?: State;
     /**
-     * Epoch time of budget rule update. Read-only.
-     * @type {number}
-     * @memberof SBCampaignBudgetRule
+     * |Status|Description| |------|-----------| |ASIN_NOT_BUYABLE| The ASIN can\'t be purchased due to eligibility or availability.| |BILLING_ERROR| Billing information requires correction.| |ENDED| THe `endDate` specified in the campaign object occurs in the past.| |LANDING_PAGE_NOT_AVAILABLE| The specified landing page is not available. This may be caused by an incorrect address or a landing page with less than three ASINs.| |OUT_OF_BUDGET| The campaign has run out of budget.| |PAUSED| The campaign state set to `paused`.| |PENDING_REVIEW|: A newly created campaign that has not passed moderation review. Note that moderation review may take up to 72 hours.| |READY| The campaign is scheduled for a future date.| |REJECTED| The campaign failed moderation review.| |RUNNING| The campaign is enabled and serving.| |SCHEDULED| A transitive state between `ready` and `running`, as child entities associated with the campaign move to a running state.| |TERMINATED|The state of the campaign is set to `archived`.|
+     * @type {string}
+     * @memberof SBCampaignBase
      */
-    lastUpdatedDate?: number;
+    servingStatus?: SBCampaignBaseServingStatusEnum;
     /**
-     * Epoch time of budget rule creation. Read-only.
-     * @type {number}
-     * @memberof SBCampaignBudgetRule
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCampaignBase
      */
-    createdDate?: number;
+    brandEntityId?: string;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCampaignBase
+     */
+    portfolioId?: number;
     /**
      * 
-     * @type {SBBudgetRuleDetails}
-     * @memberof SBCampaignBudgetRule
+     * @type {AdFormat}
+     * @memberof SBCampaignBase
      */
-    ruleDetails?: SBBudgetRuleDetails;
+    adFormat?: AdFormat;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBCampaignBaseServingStatusEnum {
+    AsinNotBuyable = 'ASIN_NOT_BUYABLE',
+    BillingError = 'BILLING_ERROR',
+    Ended = 'ENDED',
+    LandingPageNotAvailable = 'LANDING_PAGE_NOT_AVAILABLE',
+    OutOfBudget = 'OUT_OF_BUDGET',
+    Paused = 'PAUSED',
+    PendingReview = 'PENDING_REVIEW',
+    Ready = 'READY',
+    Rejected = 'REJECTED',
+    Running = 'RUNNING',
+    Scheduled = 'SCHEDULED',
+    Terminated = 'TERMINATED'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBCampaignBase32
+ */
+export interface SBCampaignBase32 {
     /**
-     * The budget rule identifier.
-     * @type {string}
-     * @memberof SBCampaignBudgetRule
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBCampaignBase32
      */
-    ruleId: string;
+    campaignId?: number;
     /**
-     * The budget rule evaluation status. Read-only.
+     * The campaign name.
      * @type {string}
-     * @memberof SBCampaignBudgetRule
+     * @memberof SBCampaignBase32
      */
-    ruleStatus?: string;
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCampaignBase32
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * 
+     * @type {number}
+     * @memberof SBCampaignBase32
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCampaignBase32
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCampaignBase32
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCampaignBase32
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBCampaignBase32
+     */
+    state?: State;
+    /**
+     * |Status|Description| |------|-----------| |ASIN_NOT_BUYABLE| The ASIN can\'t be purchased due to eligibility or availability.| |BILLING_ERROR| Billing information requires correction.| |ENDED| THe `endDate` specified in the campaign object occurs in the past.| |LANDING_PAGE_NOT_AVAILABLE| The specified landing page is not available. This may be caused by an incorrect address or a landing page with less than three ASINs.| |OUT_OF_BUDGET| The campaign has run out of budget.| |PAUSED| The campaign state set to `paused`.| |PENDING_REVIEW|: A newly created campaign that has not passed moderation review. Note that moderation review may take up to 72 hours.| |READY| The campaign is scheduled for a future date.| |REJECTED| The campaign failed moderation review.| |RUNNING| The campaign is enabled and serving.| |SCHEDULED| A transitive state between `ready` and `running`, as child entities associated with the campaign move to a running state.| |TERMINATED|The state of the campaign is set to `archived`.|
+     * @type {string}
+     * @memberof SBCampaignBase32
+     */
+    servingStatus?: SBCampaignBase32ServingStatusEnum;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCampaignBase32
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCampaignBase32
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBCampaignBase32
+     */
+    adFormat?: AdFormat;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBCampaignBase32ServingStatusEnum {
+    AsinNotBuyable = 'ASIN_NOT_BUYABLE',
+    BillingError = 'BILLING_ERROR',
+    Ended = 'ENDED',
+    LandingPageNotAvailable = 'LANDING_PAGE_NOT_AVAILABLE',
+    OutOfBudget = 'OUT_OF_BUDGET',
+    Paused = 'PAUSED',
+    PendingReview = 'PENDING_REVIEW',
+    Ready = 'READY',
+    Rejected = 'REJECTED',
+    Running = 'RUNNING',
+    Scheduled = 'SCHEDULED',
+    Terminated = 'TERMINATED'
+}
+
+/**
+ * @type SBCampaignResponse
+ * @export
+ */
+export type SBCampaignResponse = SBCampaignResponseCommon | SBCampaignResponseCommon & object | SBVideoCampaignResponseCommon;
+
+/**
+ * 
+ * @export
+ * @interface SBCampaignResponseCommon
+ */
+export interface SBCampaignResponseCommon {
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBCampaignResponseCommon
+     */
+    campaignId?: number;
+    /**
+     * The campaign name.
+     * @type {string}
+     * @memberof SBCampaignResponseCommon
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCampaignResponseCommon
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * 
+     * @type {number}
+     * @memberof SBCampaignResponseCommon
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCampaignResponseCommon
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCampaignResponseCommon
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCampaignResponseCommon
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBCampaignResponseCommon
+     */
+    state?: State;
+    /**
+     * |Status|Description| |------|-----------| |ASIN_NOT_BUYABLE| The ASIN can\'t be purchased due to eligibility or availability.| |BILLING_ERROR| Billing information requires correction.| |ENDED| THe `endDate` specified in the campaign object occurs in the past.| |LANDING_PAGE_NOT_AVAILABLE| The specified landing page is not available. This may be caused by an incorrect address or a landing page with less than three ASINs.| |OUT_OF_BUDGET| The campaign has run out of budget.| |PAUSED| The campaign state set to `paused`.| |PENDING_REVIEW|: A newly created campaign that has not passed moderation review. Note that moderation review may take up to 72 hours.| |READY| The campaign is scheduled for a future date.| |REJECTED| The campaign failed moderation review.| |RUNNING| The campaign is enabled and serving.| |SCHEDULED| A transitive state between `ready` and `running`, as child entities associated with the campaign move to a running state.| |TERMINATED|The state of the campaign is set to `archived`.|
+     * @type {string}
+     * @memberof SBCampaignResponseCommon
+     */
+    servingStatus?: SBCampaignResponseCommonServingStatusEnum;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCampaignResponseCommon
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCampaignResponseCommon
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBCampaignResponseCommon
+     */
+    adFormat?: AdFormat;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCampaignResponseCommon
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. For example, if set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCampaignResponseCommon
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCampaignResponseCommon
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * 
+     * @type {SBCollectionCreative}
+     * @memberof SBCampaignResponseCommon
+     */
+    creative?: SBCollectionCreative;
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBCampaignResponseCommon
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBCampaignResponseCommonServingStatusEnum {
+    AsinNotBuyable = 'ASIN_NOT_BUYABLE',
+    BillingError = 'BILLING_ERROR',
+    Ended = 'ENDED',
+    LandingPageNotAvailable = 'LANDING_PAGE_NOT_AVAILABLE',
+    OutOfBudget = 'OUT_OF_BUDGET',
+    Paused = 'PAUSED',
+    PendingReview = 'PENDING_REVIEW',
+    Ready = 'READY',
+    Rejected = 'REJECTED',
+    Running = 'RUNNING',
+    Scheduled = 'SCHEDULED',
+    Terminated = 'TERMINATED'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBCampaignResponseCommon32
+ */
+export interface SBCampaignResponseCommon32 {
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBCampaignResponseCommon32
+     */
+    campaignId?: number;
+    /**
+     * The campaign name.
+     * @type {string}
+     * @memberof SBCampaignResponseCommon32
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCampaignResponseCommon32
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * 
+     * @type {number}
+     * @memberof SBCampaignResponseCommon32
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCampaignResponseCommon32
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCampaignResponseCommon32
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCampaignResponseCommon32
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBCampaignResponseCommon32
+     */
+    state?: State;
+    /**
+     * |Status|Description| |------|-----------| |ASIN_NOT_BUYABLE| The ASIN can\'t be purchased due to eligibility or availability.| |BILLING_ERROR| Billing information requires correction.| |ENDED| THe `endDate` specified in the campaign object occurs in the past.| |LANDING_PAGE_NOT_AVAILABLE| The specified landing page is not available. This may be caused by an incorrect address or a landing page with less than three ASINs.| |OUT_OF_BUDGET| The campaign has run out of budget.| |PAUSED| The campaign state set to `paused`.| |PENDING_REVIEW|: A newly created campaign that has not passed moderation review. Note that moderation review may take up to 72 hours.| |READY| The campaign is scheduled for a future date.| |REJECTED| The campaign failed moderation review.| |RUNNING| The campaign is enabled and serving.| |SCHEDULED| A transitive state between `ready` and `running`, as child entities associated with the campaign move to a running state.| |TERMINATED|The state of the campaign is set to `archived`.|
+     * @type {string}
+     * @memberof SBCampaignResponseCommon32
+     */
+    servingStatus?: SBCampaignResponseCommon32ServingStatusEnum;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCampaignResponseCommon32
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCampaignResponseCommon32
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBCampaignResponseCommon32
+     */
+    adFormat?: AdFormat;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCampaignResponseCommon32
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. For example, if set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCampaignResponseCommon32
+     */
+    bidMultiplier?: number;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBCampaignResponseCommon32
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBCampaignResponseCommon32
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBCampaignResponseCommon32ServingStatusEnum {
+    AsinNotBuyable = 'ASIN_NOT_BUYABLE',
+    BillingError = 'BILLING_ERROR',
+    Ended = 'ENDED',
+    LandingPageNotAvailable = 'LANDING_PAGE_NOT_AVAILABLE',
+    OutOfBudget = 'OUT_OF_BUDGET',
+    Paused = 'PAUSED',
+    PendingReview = 'PENDING_REVIEW',
+    Ready = 'READY',
+    Rejected = 'REJECTED',
+    Running = 'RUNNING',
+    Scheduled = 'SCHEDULED',
+    Terminated = 'TERMINATED'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBCampaignResponseCommon32AllOf
+ */
+export interface SBCampaignResponseCommon32AllOf {
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCampaignResponseCommon32AllOf
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. For example, if set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCampaignResponseCommon32AllOf
+     */
+    bidMultiplier?: number;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBCampaignResponseCommon32AllOf
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBCampaignResponseCommon32AllOf
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
 }
 /**
  * 
  * @export
- * @interface SBGetAssociatedCampaignsResponse
+ * @interface SBCampaignResponseCommon33
  */
-export interface SBGetAssociatedCampaignsResponse {
+export interface SBCampaignResponseCommon33 {
     /**
-     * A list of campaigns that are associated to this budget rule.
-     * @type {Array<AssociatedCampaign>}
-     * @memberof SBGetAssociatedCampaignsResponse
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBCampaignResponseCommon33
      */
-    associatedCampaigns?: Array<AssociatedCampaign>;
+    campaignId?: number;
     /**
-     * To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.
+     * The campaign name.
      * @type {string}
-     * @memberof SBGetAssociatedCampaignsResponse
+     * @memberof SBCampaignResponseCommon33
      */
-    nextToken?: string;
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCampaignResponseCommon33
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * 
+     * @type {number}
+     * @memberof SBCampaignResponseCommon33
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCampaignResponseCommon33
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCampaignResponseCommon33
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCampaignResponseCommon33
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBCampaignResponseCommon33
+     */
+    state?: State;
+    /**
+     * |Status|Description| |------|-----------| |ASIN_NOT_BUYABLE| The ASIN can\'t be purchased due to eligibility or availability.| |BILLING_ERROR| Billing information requires correction.| |ENDED| THe `endDate` specified in the campaign object occurs in the past.| |LANDING_PAGE_NOT_AVAILABLE| The specified landing page is not available. This may be caused by an incorrect address or a landing page with less than three ASINs.| |OUT_OF_BUDGET| The campaign has run out of budget.| |PAUSED| The campaign state set to `paused`.| |PENDING_REVIEW|: A newly created campaign that has not passed moderation review. Note that moderation review may take up to 72 hours.| |READY| The campaign is scheduled for a future date.| |REJECTED| The campaign failed moderation review.| |RUNNING| The campaign is enabled and serving.| |SCHEDULED| A transitive state between `ready` and `running`, as child entities associated with the campaign move to a running state.| |TERMINATED|The state of the campaign is set to `archived`.|
+     * @type {string}
+     * @memberof SBCampaignResponseCommon33
+     */
+    servingStatus?: SBCampaignResponseCommon33ServingStatusEnum;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCampaignResponseCommon33
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCampaignResponseCommon33
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBCampaignResponseCommon33
+     */
+    adFormat?: AdFormat;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCampaignResponseCommon33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. For example, if set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCampaignResponseCommon33
+     */
+    bidMultiplier?: number;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBCampaignResponseCommon33
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBCampaignResponseCommon33
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBCampaignResponseCommon33ServingStatusEnum {
+    AsinNotBuyable = 'ASIN_NOT_BUYABLE',
+    BillingError = 'BILLING_ERROR',
+    Ended = 'ENDED',
+    LandingPageNotAvailable = 'LANDING_PAGE_NOT_AVAILABLE',
+    OutOfBudget = 'OUT_OF_BUDGET',
+    Paused = 'PAUSED',
+    PendingReview = 'PENDING_REVIEW',
+    Ready = 'READY',
+    Rejected = 'REJECTED',
+    Running = 'RUNNING',
+    Scheduled = 'SCHEDULED',
+    Terminated = 'TERMINATED'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBCampaignResponseCommonAllOf
+ */
+export interface SBCampaignResponseCommonAllOf {
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCampaignResponseCommonAllOf
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. For example, if set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCampaignResponseCommonAllOf
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCampaignResponseCommonAllOf
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * 
+     * @type {SBCollectionCreative}
+     * @memberof SBCampaignResponseCommonAllOf
+     */
+    creative?: SBCollectionCreative;
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBCampaignResponseCommonAllOf
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
 }
 /**
- * The Error Response Object.
+ * 
  * @export
- * @interface SBKeywordRecommendationError
+ * @interface SBCampaignResponseCommonV33
  */
-export interface SBKeywordRecommendationError {
+export interface SBCampaignResponseCommonV33 {
     /**
-     * The HTTP status code of the response.
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    campaignId?: number;
+    /**
+     * The campaign name.
      * @type {string}
-     * @memberof SBKeywordRecommendationError
+     * @memberof SBCampaignResponseCommonV33
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * 
+     * @type {number}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    state?: State;
+    /**
+     * |Status|Description| |------|-----------| |ASIN_NOT_BUYABLE| The ASIN can\'t be purchased due to eligibility or availability.| |BILLING_ERROR| Billing information requires correction.| |ENDED| THe `endDate` specified in the campaign object occurs in the past.| |LANDING_PAGE_NOT_AVAILABLE| The specified landing page is not available. This may be caused by an incorrect address or a landing page with less than three ASINs.| |OUT_OF_BUDGET| The campaign has run out of budget.| |PAUSED| The campaign state set to `paused`.| |PENDING_REVIEW|: A newly created campaign that has not passed moderation review. Note that moderation review may take up to 72 hours.| |READY| The campaign is scheduled for a future date.| |REJECTED| The campaign failed moderation review.| |RUNNING| The campaign is enabled and serving.| |SCHEDULED| A transitive state between `ready` and `running`, as child entities associated with the campaign move to a running state.| |TERMINATED|The state of the campaign is set to `archived`.|
+     * @type {string}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    servingStatus?: SBCampaignResponseCommonV33ServingStatusEnum;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    adFormat?: AdFormat;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. For example, if set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+    /**
+     * 
+     * @type {SBCollectionCreative}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    creative?: SBCollectionCreative;
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
+    /**
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof SBCampaignResponseCommonV33
+     */
+    bidOptimizationStrategy?: BidOptimizationStrategy;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBCampaignResponseCommonV33ServingStatusEnum {
+    AsinNotBuyable = 'ASIN_NOT_BUYABLE',
+    BillingError = 'BILLING_ERROR',
+    Ended = 'ENDED',
+    LandingPageNotAvailable = 'LANDING_PAGE_NOT_AVAILABLE',
+    OutOfBudget = 'OUT_OF_BUDGET',
+    Paused = 'PAUSED',
+    PendingReview = 'PENDING_REVIEW',
+    Ready = 'READY',
+    Rejected = 'REJECTED',
+    Running = 'RUNNING',
+    Scheduled = 'SCHEDULED',
+    Terminated = 'TERMINATED'
+}
+
+/**
+ * @type SBCampaignResponseV33
+ * SB campaign
+ * @export
+ */
+export type SBCampaignResponseV33 = SBCampaignResponseCommonV33 | SBVideoCampaignResponseCommon;
+
+/**
+ * 
+ * @export
+ * @interface SBCategoryResponse
+ */
+export interface SBCategoryResponse {
+    /**
+     * The category identifier.
+     * @type {number}
+     * @memberof SBCategoryResponse
+     */
+    id?: number;
+    /**
+     * The category name.
+     * @type {string}
+     * @memberof SBCategoryResponse
+     */
+    name?: string;
+    /**
+     * Set to `true` if the category can be targeted in a targeting expression, and `false` if not.
+     * @type {boolean}
+     * @memberof SBCategoryResponse
+     */
+    isTargetable?: boolean;
+    /**
+     * The path of the category within the category catalogue.
+     * @type {string}
+     * @memberof SBCategoryResponse
+     */
+    path?: string;
+}
+/**
+ * Render one or more product images and product details.
+ * @export
+ * @interface SBCollectionCreative
+ */
+export interface SBCollectionCreative {
+    /**
+     * The brand name.
+     * @type {string}
+     * @memberof SBCollectionCreative
+     */
+    brandName?: string;
+    /**
+     * The identifier of the brand logo image from the Store assets library. See [listAssets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Stores) for more information. Note that for campaigns created in the Amazon Ads console prior to release of the Store assets library, responses will not include a value for the brandLogoAssetID field.
+     * @type {string}
+     * @memberof SBCollectionCreative
+     */
+    brandLogoAssetID?: string;
+    /**
+     * The address of the hosted image.
+     * @type {string}
+     * @memberof SBCollectionCreative
+     */
+    brandLogoUrl?: string;
+    /**
+     * The headline text. Maximum length of the string is 50 characters for all marketplaces other than Japan, which has a maximum length of 35 characters.
+     * @type {string}
+     * @memberof SBCollectionCreative
+     */
+    headline?: string;
+    /**
+     * An array of ASINs associated with the creative. **Note** do not pass an empty array. This results in an error.
+     * @type {Array<string>}
+     * @memberof SBCollectionCreative
+     */
+    asins?: Array<string>;
+    /**
+     * Note that this field is supported only in the US and UK marketplaces. Set to `true` to have Amazon show other products from your landing page in the advertisement if they are more relevant to the shopper\'s search. Set to `false` to use the ASINs specified in the `asins` field. Do not specify in unsupported marketplaces.
+     * @type {boolean}
+     * @memberof SBCollectionCreative
+     */
+    shouldOptimizeAsins?: boolean;
+    /**
+     * The identifier of the brand logo image from the Store assets library. See [listAssets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Stores) for more information. Note that for campaigns created in the Amazon Ads console prior to release of the Store assets library, responses will not include a value for the brandLogoAssetID field.
+     * @type {string}
+     * @memberof SBCollectionCreative
+     */
+    brandLogoAssetId?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SBCollectionCreativeAllOf
+ */
+export interface SBCollectionCreativeAllOf {
+    /**
+     * The brand name.
+     * @type {string}
+     * @memberof SBCollectionCreativeAllOf
+     */
+    brandName?: string;
+    /**
+     * The identifier of the brand logo image from the Store assets library. See [listAssets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Stores) for more information. Note that for campaigns created in the Amazon Ads console prior to release of the Store assets library, responses will not include a value for the brandLogoAssetID field.
+     * @type {string}
+     * @memberof SBCollectionCreativeAllOf
+     */
+    brandLogoAssetId?: string;
+    /**
+     * The address of the hosted image.
+     * @type {string}
+     * @memberof SBCollectionCreativeAllOf
+     */
+    brandLogoUrl?: string;
+    /**
+     * The headline text. Maximum length of the string is 50 characters for all marketplaces other than Japan, which has a maximum length of 35 characters.
+     * @type {string}
+     * @memberof SBCollectionCreativeAllOf
+     */
+    headline?: string;
+    /**
+     * An array of ASINs associated with the creative. **Note** do not pass an empty array. This results in an error.
+     * @type {Array<string>}
+     * @memberof SBCollectionCreativeAllOf
+     */
+    asins?: Array<string>;
+    /**
+     * Note that this field is supported only in the US and UK marketplaces. Set to `true` to have Amazon show other products from your landing page in the advertisement if they are more relevant to the shopper\'s search. Set to `false` to use the ASINs specified in the `asins` field. Do not specify in unsupported marketplaces.
+     * @type {boolean}
+     * @memberof SBCollectionCreativeAllOf
+     */
+    shouldOptimizeAsins?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface SBCommonKeywords
+ */
+export interface SBCommonKeywords {
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<SBCommonKeywordsKeywords>}
+     * @memberof SBCommonKeywords
+     */
+    keywords?: Array<SBCommonKeywordsKeywords>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
+     * @memberof SBCommonKeywords
+     */
+    negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCommonKeywordsKeywords
+ */
+export interface SBCommonKeywordsKeywords {
+    /**
+     * The keyword text. Maximum of 10 words.
+     * @type {string}
+     * @memberof SBCommonKeywordsKeywords
+     */
+    keywordText?: string;
+    /**
+     * The unlocalized keyword text in the preferred locale of the advertiser.
+     * @type {string}
+     * @memberof SBCommonKeywordsKeywords
+     */
+    nativeLanguageKeyword?: string;
+    /**
+     * The locale preference of the advertiser. For example, if the advertiser’s preferred language is Simplified Chinese, set the locale to `zh_CN`. Supported locales include: Simplified Chinese (locale: zh_CN) for US, UK and CA. English (locale: en_GB) for DE, FR, IT and ES.
+     * @type {string}
+     * @memberof SBCommonKeywordsKeywords
+     */
+    nativeLanguageLocale?: string;
+    /**
+     * 
+     * @type {MatchType}
+     * @memberof SBCommonKeywordsKeywords
+     */
+    matchType?: MatchType;
+    /**
+     * The associated bid. Note that this value must be less than the budget associated with the Advertiser account. For more information, see [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features).
+     * @type {number}
+     * @memberof SBCommonKeywordsKeywords
+     */
+    bid?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SBCommonTargets
+ */
+export interface SBCommonTargets {
+    /**
+     * 
+     * @type {Array<SBCommonTargetsTargets>}
+     * @memberof SBCommonTargets
+     */
+    targets?: Array<SBCommonTargetsTargets>;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsNegativeTargets>}
+     * @memberof SBCommonTargets
+     */
+    negativeTargets?: Array<SBCommonTargetsNegativeTargets>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCommonTargetsNegativeTargets
+ */
+export interface SBCommonTargetsNegativeTargets {
+    /**
+     * An array of targets associated with the campaign.
+     * @type {Array<SBExpression>}
+     * @memberof SBCommonTargetsNegativeTargets
+     */
+    expressions?: Array<SBExpression>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCommonTargetsTargets
+ */
+export interface SBCommonTargetsTargets {
+    /**
+     * An array of targets associated with the campaign.
+     * @type {Array<SBExpression>}
+     * @memberof SBCommonTargetsTargets
+     */
+    expressions?: Array<SBExpression>;
+    /**
+     * The associated bid. Note that this value must be less than the budget associated with the Advertiser account. For more information, see [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features).
+     * @type {number}
+     * @memberof SBCommonTargetsTargets
+     */
+    bid?: number;
+}
+/**
+ * @type SBCreateCampaignRequest
+ * @export
+ */
+export type SBCreateCampaignRequest = SBCreateCampaignWithExpressions | SBCreateCampaignWithKeywords | SBVideoCreateCampaignWithExpressions | SBVideoCreateCampaignWithKeywords;
+
+/**
+ * 
+ * @export
+ * @interface SBCreateCampaignRequestCommon
+ */
+export interface SBCreateCampaignRequestCommon {
+    /**
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
+     * @type {string}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget amount associated with the campaign.
+     * @type {number}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    state?: State;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateCampaignRequestCommon
+     */
+    landingPage?: SBLandingPage;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateCampaignRequestCommonV33
+ */
+export interface SBCreateCampaignRequestCommonV33 {
+    /**
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
+     * @type {string}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget amount associated with the campaign.
+     * @type {number}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    state?: State;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof SBCreateCampaignRequestCommonV33
+     */
+    bidOptimizationStrategy?: BidOptimizationStrategy;
+}
+/**
+ * @type SBCreateCampaignResponseV33
+ * SB create campaign
+ * @export
+ */
+export type SBCreateCampaignResponseV33 = SBCreateCampaignsResponseDefault | SBCreateCampaignsResponseFullV33;
+
+/**
+ * 
+ * @export
+ * @interface SBCreateCampaignWithExpressions
+ */
+export interface SBCreateCampaignWithExpressions {
+    /**
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
+     * @type {string}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget amount associated with the campaign.
+     * @type {number}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    state?: State;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsTargets>}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    targets?: Array<SBCommonTargetsTargets>;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsNegativeTargets>}
+     * @memberof SBCreateCampaignWithExpressions
+     */
+    negativeTargets?: Array<SBCommonTargetsNegativeTargets>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateCampaignWithKeywords
+ */
+export interface SBCreateCampaignWithKeywords {
+    /**
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
+     * @type {string}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget amount associated with the campaign.
+     * @type {number}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    state?: State;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<SBCommonKeywordsKeywords>}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    keywords?: Array<SBCommonKeywordsKeywords>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
+     * @memberof SBCreateCampaignWithKeywords
+     */
+    negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateCampaignWithKeywordsV33
+ */
+export interface SBCreateCampaignWithKeywordsV33 {
+    /**
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
+     * @type {string}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget amount associated with the campaign.
+     * @type {number}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    state?: State;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    bidOptimizationStrategy?: BidOptimizationStrategy;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<Keyword>}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    keywords?: Array<Keyword>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<NegativeKeyword>}
+     * @memberof SBCreateCampaignWithKeywordsV33
+     */
+    negativeKeywords?: Array<NegativeKeyword>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateCampaignWithKeywordsV33AllOf
+ */
+export interface SBCreateCampaignWithKeywordsV33AllOf {
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<Keyword>}
+     * @memberof SBCreateCampaignWithKeywordsV33AllOf
+     */
+    keywords?: Array<Keyword>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<NegativeKeyword>}
+     * @memberof SBCreateCampaignWithKeywordsV33AllOf
+     */
+    negativeKeywords?: Array<NegativeKeyword>;
+}
+/**
+ * |-         Applies to:         | Operation | Path |         |-----------| -----|         |[createCampaigns](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Campaigns)| POST /sb/campaigns|         <br/>
+ * @export
+ * @interface SBCreateCampaignsResponseDefault
+ */
+export interface SBCreateCampaignsResponseDefault {
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBCreateCampaignsResponseDefault
+     */
+    campaignId?: number;
+    /**
+     * An array of ad groups associated with the campaign.
+     * @type {Array<SBCreateCampaignsResponseDefaultAdGroupResponses>}
+     * @memberof SBCreateCampaignsResponseDefault
+     */
+    adGroupResponses?: Array<SBCreateCampaignsResponseDefaultAdGroupResponses>;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<SBKeywordResponse>}
+     * @memberof SBCreateCampaignsResponseDefault
+     */
+    keywordResponses?: Array<SBKeywordResponse>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<SBKeywordResponse>}
+     * @memberof SBCreateCampaignsResponseDefault
+     */
+    negativeKeywordResponses?: Array<SBKeywordResponse>;
+    /**
+     * An array of targets associated with the campaign.
+     * @type {Array<SBTargetingClauseResponse>}
+     * @memberof SBCreateCampaignsResponseDefault
+     */
+    targetingClauseResponses?: Array<SBTargetingClauseResponse>;
+    /**
+     * An array of negative targets associated with the campaign.
+     * @type {Array<SBTargetingClauseResponse>}
+     * @memberof SBCreateCampaignsResponseDefault
+     */
+    negativeTargetingClauseResponses?: Array<SBTargetingClauseResponse>;
+    /**
+     * An enumerated response code.
+     * @type {string}
+     * @memberof SBCreateCampaignsResponseDefault
      */
     code?: string;
     /**
-     * A human-readable description of the response.
+     * A human-readable description of the enumerated response code in the `code` field.
      * @type {string}
-     * @memberof SBKeywordRecommendationError
+     * @memberof SBCreateCampaignsResponseDefault
+     */
+    description?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateCampaignsResponseDefaultAdGroupResponses
+ */
+export interface SBCreateCampaignsResponseDefaultAdGroupResponses {
+    /**
+     * The ad group identifier.
+     * @type {number}
+     * @memberof SBCreateCampaignsResponseDefaultAdGroupResponses
+     */
+    adGroupId?: number;
+    /**
+     * An enumerated response code.
+     * @type {string}
+     * @memberof SBCreateCampaignsResponseDefaultAdGroupResponses
+     */
+    code?: string;
+    /**
+     * A human-readable description of the enumerated response code in the `code` field.
+     * @type {string}
+     * @memberof SBCreateCampaignsResponseDefaultAdGroupResponses
+     */
+    description?: string;
+}
+/**
+ * |-         Applies to:         | Operation | Path |         |-----------| -----|         |[createCampaigns](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Campaigns)| POST /sb/campaigns|         <br/>
+ * @export
+ * @interface SBCreateCampaignsResponseFullV33
+ */
+export interface SBCreateCampaignsResponseFullV33 {
+    /**
+     * 
+     * @type {SBCampaignResponseV33}
+     * @memberof SBCreateCampaignsResponseFullV33
+     */
+    campaign?: SBCampaignResponseV33;
+    /**
+     * 
+     * @type {SBCreateCampaignsResponseDefault}
+     * @memberof SBCreateCampaignsResponseFullV33
+     */
+    allOf?: SBCreateCampaignsResponseDefault;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateDraftCampaignNegativeKeyword
+ */
+export interface SBCreateDraftCampaignNegativeKeyword {
+    /**
+     * The keyword text. Maximum length is ten words.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignNegativeKeyword
+     */
+    keywordText?: string;
+    /**
+     * 
+     * @type {NegativeMatchType}
+     * @memberof SBCreateDraftCampaignNegativeKeyword
+     */
+    matchType?: NegativeMatchType;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateDraftCampaignPositiveKeyword
+ */
+export interface SBCreateDraftCampaignPositiveKeyword {
+    /**
+     * The keyword text. Maximum length is ten words.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignPositiveKeyword
+     */
+    keywordText?: string;
+    /**
+     * 
+     * @type {MatchType}
+     * @memberof SBCreateDraftCampaignPositiveKeyword
+     */
+    matchType?: MatchType;
+    /**
+     * The bid associated with the keyword. For information on the maximum allowable bid, see the \'keyword bid constraints by marketplace\' section of the \'supported features\' document in the \'guides\' section. Note that the bid cannot not be larger than the budget associated with the campaign.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignPositiveKeyword
+     */
+    bid?: number;
+}
+/**
+ * @type SBCreateDraftCampaignRequest
+ * @export
+ */
+export type SBCreateDraftCampaignRequest = SBCreateDraftCampaignWithKeywords | SBCreateDraftCampaignWithProductTargets | SBVideoCreateDraftCampaignWithKeywords | SBVideoCreateDraftCampaignWithProductTargets;
+
+/**
+ * 
+ * @export
+ * @interface SBCreateDraftCampaignRequestCommon
+ */
+export interface SBCreateDraftCampaignRequestCommon {
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignRequestCommon
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignRequestCommon
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateDraftCampaignRequestCommon
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignRequestCommon
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignRequestCommon
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignRequestCommon
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateDraftCampaignRequestCommon
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignRequestCommon
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCreateDraftCampaignRequestCommon
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignRequestCommon
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBCreateDraftCampaignRequestCommon
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateDraftCampaignRequestCommon
+     */
+    landingPage?: SBLandingPage;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateDraftCampaignRequestCommonV33
+ */
+export interface SBCreateDraftCampaignRequestCommonV33 {
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignRequestCommonV33
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignRequestCommonV33
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateDraftCampaignRequestCommonV33
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignRequestCommonV33
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignRequestCommonV33
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignRequestCommonV33
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateDraftCampaignRequestCommonV33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignRequestCommonV33
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof SBCreateDraftCampaignRequestCommonV33
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignRequestCommonV33
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBCreateDraftCampaignRequestCommonV33
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateDraftCampaignRequestCommonV33
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof SBCreateDraftCampaignRequestCommonV33
+     */
+    bidOptimizationStrategy?: BidOptimizationStrategy;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateDraftCampaignWithKeywords
+ */
+export interface SBCreateDraftCampaignWithKeywords {
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<SBCommonKeywordsKeywords>}
+     * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    keywords?: Array<SBCommonKeywordsKeywords>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
+     * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateDraftCampaignWithKeywordsV33
+ */
+export interface SBCreateDraftCampaignWithKeywordsV33 {
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    bidOptimizationStrategy?: BidOptimizationStrategy;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<Keyword>}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    keywords?: Array<Keyword>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<NegativeKeyword>}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    negativeKeywords?: Array<NegativeKeyword>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateDraftCampaignWithProductTargets
+ */
+export interface SBCreateDraftCampaignWithProductTargets {
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsTargets>}
+     * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    targets?: Array<SBCommonTargetsTargets>;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsNegativeTargets>}
+     * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    negativeTargets?: Array<SBCommonTargetsNegativeTargets>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateNegativeTargetingClauseRequest
+ */
+export interface SBCreateNegativeTargetingClauseRequest {
+    /**
+     * The identifier of an existing ad group. The newly created target is associated to this ad group.
+     * @type {number}
+     * @memberof SBCreateNegativeTargetingClauseRequest
+     */
+    adGroupId?: number;
+    /**
+     * The identifier of an existing campaign. The newly created target is associated to this campaign.
+     * @type {number}
+     * @memberof SBCreateNegativeTargetingClauseRequest
+     */
+    campaignId?: number;
+    /**
+     * 
+     * @type {Array<SBNegativeExpression>}
+     * @memberof SBCreateNegativeTargetingClauseRequest
+     */
+    expressions?: Array<SBNegativeExpression>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateTargetingClauseRequest
+ */
+export interface SBCreateTargetingClauseRequest {
+    /**
+     * The identifier of an existing ad group. The newly created target is associated to this ad group.
+     * @type {number}
+     * @memberof SBCreateTargetingClauseRequest
+     */
+    adGroupId?: number;
+    /**
+     * The identifier of an existing campaign. The newly created target is associated to this campaign.
+     * @type {number}
+     * @memberof SBCreateTargetingClauseRequest
+     */
+    campaignId?: number;
+    /**
+     * 
+     * @type {Array<SBExpression>}
+     * @memberof SBCreateTargetingClauseRequest
+     */
+    expressions?: Array<SBExpression>;
+    /**
+     * The associated bid. Note that this value must be less than the budget associated with the Advertiser account. For more information, see [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features).
+     * @type {number}
+     * @memberof SBCreateTargetingClauseRequest
+     */
+    bid?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateTargetsResponse
+ */
+export interface SBCreateTargetsResponse {
+    /**
+     * Lists the successfully created targets. Note that targets in the response are correlated to targets in the request using the `targetRequestIndex` field. For example, if `targetRequestIndex` is set to `2`, the values correlate to the third target object in the request.
+     * @type {Array<SBCreateTargetsResponseCreateTargetSuccessResults>}
+     * @memberof SBCreateTargetsResponse
+     */
+    createTargetSuccessResults?: Array<SBCreateTargetsResponseCreateTargetSuccessResults>;
+    /**
+     * Lists errors that occured during target creation. Note that errors are correlated to target create requests by the `targetRequestIndex` field. This field corresponds to the order of the target object in the request. For example, if `targetRequestIndex` is set to `3`, an error occured during creation of the fourth target in the request.
+     * @type {Array<Error & object>}
+     * @memberof SBCreateTargetsResponse
+     */
+    createTargetErrorResults?: Array<Error & object>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateTargetsResponseCreateTargetSuccessResults
+ */
+export interface SBCreateTargetsResponseCreateTargetSuccessResults {
+    /**
+     * Correlates the target to the target array index specified in the request. Zero-based.
+     * @type {number}
+     * @memberof SBCreateTargetsResponseCreateTargetSuccessResults
+     */
+    targetRequestIndex?: number;
+    /**
+     * The identifier of a target.
+     * @type {number}
+     * @memberof SBCreateTargetsResponseCreateTargetSuccessResults
+     */
+    targetId?: number;
+}
+/**
+ * Note that the values of each field in this object are immutable for an existing campaign.
+ * @export
+ * @interface SBCreative
+ */
+export interface SBCreative {
+    /**
+     * A brand name. Maximum length is 30 characters.
+     * @type {string}
+     * @memberof SBCreative
+     */
+    brandName?: string;
+    /**
+     * The identifier of the brand logo image from the Store assets library. See [listAssets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Stores) for more information. Note that for campaigns created in the Amazon Ads console prior to release of the Store assets library, responses will not include a value for the brandLogoAssetID field.
+     * @type {string}
+     * @memberof SBCreative
+     */
+    brandLogoAssetID?: string;
+    /**
+     * The address of the hosted image.
+     * @type {string}
+     * @memberof SBCreative
+     */
+    brandLogoUrl?: string;
+    /**
+     * The headline text. Maximum length of the string is 50 characters for all marketplaces other than Japan, which has a maximum length of 35 characters.
+     * @type {string}
+     * @memberof SBCreative
+     */
+    headline?: string;
+    /**
+     * An array of ASINs associated with the creative. **Note** do not pass an empty array, this results in an error.
+     * @type {Array<string>}
+     * @memberof SBCreative
+     */
+    asins?: Array<string>;
+    /**
+     * **NOTE** Starting on March 25th, 2021, this property will no longer be supported. This feature is currently available in the US and UK. Existing Sponsored Brands campaigns with product optimization enabled will no longer have the products in the creative automatically optimized. Campaigns with product optimization enabled will be converted to standard Sponsored Brands product collection campaigns with the default selected products showing in the creative. For POST and PUT operations, setting this property to `true` will not have any effect. The value returned in the response will always be `false`. For the GET operation, the value of this field will always be `false`. And starting on September 25th, 2021, this property will be removed completely. 
+     * @type {boolean}
+     * @memberof SBCreative
+     */
+    shouldOptimizeAsins?: boolean;
+}
+/**
+ * The crop to apply to the selected Custom image. A Custom image must have a 1200x628 aspect ratio, with a .01 delta for floating point precision. If a customImageAssetId is supplied but a crop is not, the crop will be defaulted.
+ * @export
+ * @interface SBCustomImageCrop
+ */
+export interface SBCustomImageCrop {
+    /**
+     * The highest pixel from which to begin cropping
+     * @type {number}
+     * @memberof SBCustomImageCrop
+     */
+    top?: number;
+    /**
+     * The leftmost pixel from which to begin cropping
+     * @type {number}
+     * @memberof SBCustomImageCrop
+     */
+    left?: number;
+    /**
+     * The number of pixels to crop rightwards from the value specified as `left`
+     * @type {number}
+     * @memberof SBCustomImageCrop
+     */
+    width?: number;
+    /**
+     * The number of pixels to crop down from the value specified as `top`
+     * @type {number}
+     * @memberof SBCustomImageCrop
+     */
+    height?: number;
+}
+/**
+ * A landing page including at least 3 ASINs. Note that custom landing page URLs can only be specified by vendors.
+ * @export
+ * @interface SBCustomUrlLandingPage
+ */
+export interface SBCustomUrlLandingPage {
+    /**
+     * 
+     * @type {string}
+     * @memberof SBCustomUrlLandingPage
+     */
+    pageType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SBCustomUrlLandingPage
+     */
+    url?: string;
+}
+/**
+ * An Amazon product detail page.
+ * @export
+ * @interface SBDetailPageLandingPage
+ */
+export interface SBDetailPageLandingPage {
+    /**
+     * 
+     * @type {string}
+     * @memberof SBDetailPageLandingPage
+     */
+    pageType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SBDetailPageLandingPage
+     */
+    url?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SBDraftAllTargetingClauses
+ */
+export interface SBDraftAllTargetingClauses {
+    /**
+     * An array of targets associated with the draft campaign.
+     * @type {Array<SBDraftTargetingClause>}
+     * @memberof SBDraftAllTargetingClauses
+     */
+    targets?: Array<SBDraftTargetingClause>;
+    /**
+     * An array of negative keywords associated with the draft campaign.
+     * @type {Array<SBDraftNegativeTargetingClause>}
+     * @memberof SBDraftAllTargetingClauses
+     */
+    negativeTargets?: Array<SBDraftNegativeTargetingClause>;
+}
+/**
+ * @type SBDraftCampaign
+ * @export
+ */
+export type SBDraftCampaign = SBDraftCampaignBase & object | SBVideoDraftCampaignBase & object;
+
+/**
+ * 
+ * @export
+ * @interface SBDraftCampaignBase
+ */
+export interface SBDraftCampaignBase {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBDraftCampaignBase
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Duplicate campaign names are not allowed.
+     * @type {string}
+     * @memberof SBDraftCampaignBase
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBDraftCampaignBase
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBDraftCampaignBase
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBDraftCampaignBase
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date for the campaign. If this field is not set to a value, the current date is used.
+     * @type {string}
+     * @memberof SBDraftCampaignBase
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date for the campaign. Must be greater than the value for `startDate`. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBDraftCampaignBase
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBDraftCampaignBase
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBDraftCampaignBase
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBDraftCampaignBase
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBDraftCampaignBase
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBDraftCampaignBase
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBDraftCampaignBase
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBDraftCampaignBase
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBDraftCampaignBase
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
+}
+/**
+ * 
+ * @export
+ * @interface SBDraftCampaignBaseV33
+ */
+export interface SBDraftCampaignBaseV33 {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Duplicate campaign names are not allowed.
+     * @type {string}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date for the campaign. If this field is not set to a value, the current date is used.
+     * @type {string}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date for the campaign. Must be greater than the value for `startDate`. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
+    /**
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof SBDraftCampaignBaseV33
+     */
+    bidOptimizationStrategy?: BidOptimizationStrategy;
+}
+/**
+ * 
+ * @export
+ * @interface SBDraftCampaignDeleteResponse
+ */
+export interface SBDraftCampaignDeleteResponse {
+    /**
+     * The status of the deletion request.
+     * @type {string}
+     * @memberof SBDraftCampaignDeleteResponse
+     */
+    code?: string;
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBDraftCampaignDeleteResponse
+     */
+    draftCampaignId?: number;
+}
+/**
+ * @type SBDraftCampaignResponse
+ * Applies to: | Operation | Path | |-----------| -----| |[createDraftCampaigns](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Drafts)| POST /sb/drafts/campaigns| |[updateDraftCampaigns](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Drafts)| PUT /sb/drafts/campaigns| |[deleteDraftCampaign](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Drafts)| GET /sb/drafts/campaigns/{draftCampaignId}| <br/>
+ * @export
+ */
+export type SBDraftCampaignResponse = SBDraftCampaignResponseWithExpressions | SBDraftCampaignResponseWithKeywords;
+
+/**
+ * 
+ * @export
+ * @interface SBDraftCampaignResponseCommon
+ */
+export interface SBDraftCampaignResponseCommon {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBDraftCampaignResponseCommon
+     */
+    draftCampaignId?: number;
+    /**
+     * The draft campaign response code.
+     * @type {string}
+     * @memberof SBDraftCampaignResponseCommon
+     */
+    code?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SBDraftCampaignResponseWithExpressions
+ */
+export interface SBDraftCampaignResponseWithExpressions {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBDraftCampaignResponseWithExpressions
+     */
+    draftCampaignId?: number;
+    /**
+     * The draft campaign response code.
+     * @type {string}
+     * @memberof SBDraftCampaignResponseWithExpressions
+     */
+    code?: string;
+    /**
+     * 
+     * @type {Array<SBExpressionResponse>}
+     * @memberof SBDraftCampaignResponseWithExpressions
+     */
+    targetingClauseResponses?: Array<SBExpressionResponse>;
+    /**
+     * 
+     * @type {Array<SBExpressionResponse>}
+     * @memberof SBDraftCampaignResponseWithExpressions
+     */
+    negativeTargetingClauseResponses?: Array<SBExpressionResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface SBDraftCampaignResponseWithExpressionsAllOf
+ */
+export interface SBDraftCampaignResponseWithExpressionsAllOf {
+    /**
+     * 
+     * @type {Array<SBExpressionResponse>}
+     * @memberof SBDraftCampaignResponseWithExpressionsAllOf
+     */
+    targetingClauseResponses?: Array<SBExpressionResponse>;
+    /**
+     * 
+     * @type {Array<SBExpressionResponse>}
+     * @memberof SBDraftCampaignResponseWithExpressionsAllOf
+     */
+    negativeTargetingClauseResponses?: Array<SBExpressionResponse>;
+}
+/**
+ * 
+ * @export
+ * @interface SBDraftCampaignResponseWithKeywords
+ */
+export interface SBDraftCampaignResponseWithKeywords {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBDraftCampaignResponseWithKeywords
+     */
+    draftCampaignId?: number;
+    /**
+     * The draft campaign response code.
+     * @type {string}
+     * @memberof SBDraftCampaignResponseWithKeywords
+     */
+    code?: string;
+    /**
+     * 
+     * @type {Array<SBKeywordResponse>}
+     * @memberof SBDraftCampaignResponseWithKeywords
+     */
+    keywordResponses?: Array<SBKeywordResponse>;
+    /**
+     * 
+     * @type {Array<SBKeywordResponse>}
+     * @memberof SBDraftCampaignResponseWithKeywords
+     */
+    negativeKeywordResponses?: Array<SBKeywordResponse>;
+    /**
+     * A human-readable description of the \'code\' field value.
+     * @type {string}
+     * @memberof SBDraftCampaignResponseWithKeywords
      */
     details?: string;
 }
 /**
- * The match type. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Advertising support center.
+ * 
+ * @export
+ * @interface SBDraftCampaignResponseWithKeywordsAllOf
+ */
+export interface SBDraftCampaignResponseWithKeywordsAllOf {
+    /**
+     * 
+     * @type {Array<SBKeywordResponse>}
+     * @memberof SBDraftCampaignResponseWithKeywordsAllOf
+     */
+    keywordResponses?: Array<SBKeywordResponse>;
+    /**
+     * 
+     * @type {Array<SBKeywordResponse>}
+     * @memberof SBDraftCampaignResponseWithKeywordsAllOf
+     */
+    negativeKeywordResponses?: Array<SBKeywordResponse>;
+    /**
+     * A human-readable description of the \'code\' field value.
+     * @type {string}
+     * @memberof SBDraftCampaignResponseWithKeywordsAllOf
+     */
+    details?: string;
+}
+/**
+ * @type SBDraftCampaignV33
+ * @export
+ */
+export type SBDraftCampaignV33 = SBDraftCampaignWithKeywordsV33 | SBDraftCampaignWithTargetsV33 | SBVideoDraftCampaignWithKeywords | SBVideoDraftCampaignWithTargets;
+
+/**
+ * SB create campaign with keywords
+ * @export
+ * @interface SBDraftCampaignWithKeywordsV33
+ */
+export interface SBDraftCampaignWithKeywordsV33 {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Duplicate campaign names are not allowed.
+     * @type {string}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date for the campaign. If this field is not set to a value, the current date is used.
+     * @type {string}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date for the campaign. Must be greater than the value for `startDate`. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
+    /**
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    bidOptimizationStrategy?: BidOptimizationStrategy;
+    /**
+     * An array of keywords associated with the Draft campaign.
+     * @type {Array<SBDraftKeyword>}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    keywords?: Array<SBDraftKeyword>;
+    /**
+     * An array of negative keywords associated with the Draft campaign.
+     * @type {Array<SBDraftNegativeKeyword>}
+     * @memberof SBDraftCampaignWithKeywordsV33
+     */
+    negativeKeywords?: Array<SBDraftNegativeKeyword>;
+}
+/**
+ * SB create campaign with targets
+ * @export
+ * @interface SBDraftCampaignWithTargetsV33
+ */
+export interface SBDraftCampaignWithTargetsV33 {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Duplicate campaign names are not allowed.
+     * @type {string}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date for the campaign. If this field is not set to a value, the current date is used.
+     * @type {string}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date for the campaign. Must be greater than the value for `startDate`. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
+    /**
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    bidOptimizationStrategy?: BidOptimizationStrategy;
+    /**
+     * An array of targets associated with the draft campaign.
+     * @type {Array<SBDraftTargetingClause>}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    targets?: Array<SBDraftTargetingClause>;
+    /**
+     * An array of negative keywords associated with the draft campaign.
+     * @type {Array<SBDraftNegativeTargetingClause>}
+     * @memberof SBDraftCampaignWithTargetsV33
+     */
+    negativeTargets?: Array<SBDraftNegativeTargetingClause>;
+}
+/**
+ * 
+ * @export
+ * @interface SBDraftKeyword
+ */
+export interface SBDraftKeyword {
+    /**
+     * The keyword identifier.
+     * @type {number}
+     * @memberof SBDraftKeyword
+     */
+    keywordId?: number;
+    /**
+     * The identifier of the ad group associated with the keyword.
+     * @type {number}
+     * @memberof SBDraftKeyword
+     */
+    adGroupId?: number;
+    /**
+     * The identifier of the campaign associated with the keyword.
+     * @type {number}
+     * @memberof SBDraftKeyword
+     */
+    campaignId?: number;
+    /**
+     * The keyword text. The maximum number of words for this string is 10.
+     * @type {string}
+     * @memberof SBDraftKeyword
+     */
+    keywordText?: string;
+    /**
+     * 
+     * @type {MatchType}
+     * @memberof SBDraftKeyword
+     */
+    matchType?: MatchType;
+    /**
+     * | state | description | |-------|-------------| | draft | Newly created keyword. | | pending | Keyword is under moderation. | | enabled | Keyword passed moderation. | 
+     * @type {string}
+     * @memberof SBDraftKeyword
+     */
+    state?: SBDraftKeywordStateEnum;
+    /**
+     * The bid associated with the keyword. Note that this value must be less than the budget associated with the Advertiser account. For more information, see the **Keyword bid constraints by marketplace** section of the [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features) article.
+     * @type {number}
+     * @memberof SBDraftKeyword
+     */
+    bid?: number;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBDraftKeywordStateEnum {
+    Draft = 'draft',
+    Pending = 'pending',
+    Enabled = 'enabled'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBDraftKeywordsNegativeKeywords
+ */
+export interface SBDraftKeywordsNegativeKeywords {
+    /**
+     * An array of keywords associated with the Draft campaign.
+     * @type {Array<SBDraftKeyword>}
+     * @memberof SBDraftKeywordsNegativeKeywords
+     */
+    keywords?: Array<SBDraftKeyword>;
+    /**
+     * An array of negative keywords associated with the Draft campaign.
+     * @type {Array<SBDraftNegativeKeyword>}
+     * @memberof SBDraftKeywordsNegativeKeywords
+     */
+    negativeKeywords?: Array<SBDraftNegativeKeyword>;
+}
+/**
+ * 
+ * @export
+ * @interface SBDraftNegativeKeyword
+ */
+export interface SBDraftNegativeKeyword {
+    /**
+     * The keyword identifier.
+     * @type {number}
+     * @memberof SBDraftNegativeKeyword
+     */
+    keywordId?: number;
+    /**
+     * The identifier of the ad group associated with the keyword.
+     * @type {number}
+     * @memberof SBDraftNegativeKeyword
+     */
+    adGroupId?: number;
+    /**
+     * The identifier of the campaign associated with the keyword.
+     * @type {number}
+     * @memberof SBDraftNegativeKeyword
+     */
+    campaignId?: number;
+    /**
+     * The keyword text. The maximum number of words for this string is 10.
+     * @type {string}
+     * @memberof SBDraftNegativeKeyword
+     */
+    keywordText?: string;
+    /**
+     * 
+     * @type {NegativeMatchType}
+     * @memberof SBDraftNegativeKeyword
+     */
+    matchType?: NegativeMatchType;
+    /**
+     * Newly created SB keywords are in a default state of \'draft\' before transitioning to a \'pending\' state for moderation. After moderation, the keyword will be in an enabled state.
+     * @type {string}
+     * @memberof SBDraftNegativeKeyword
+     */
+    state?: SBDraftNegativeKeywordStateEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBDraftNegativeKeywordStateEnum {
+    Draft = 'draft'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBDraftNegativeTargetingClause
+ */
+export interface SBDraftNegativeTargetingClause {
+    /**
+     * The target identifier.
+     * @type {number}
+     * @memberof SBDraftNegativeTargetingClause
+     */
+    targetId?: number;
+    /**
+     * The identifier of an existing ad group. The newly created target is associated to the specified ad group.
+     * @type {number}
+     * @memberof SBDraftNegativeTargetingClause
+     */
+    adGroupId?: number;
+    /**
+     * The identifier of an existing campaign. The newly created target is associated to the specified campaign.
+     * @type {number}
+     * @memberof SBDraftNegativeTargetingClause
+     */
+    campaignId?: number;
+    /**
+     * 
+     * @type {Array<SBNegativeExpression>}
+     * @memberof SBDraftNegativeTargetingClause
+     */
+    expressions?: Array<SBNegativeExpression>;
+    /**
+     * 
+     * @type {SBResolvedExpression}
+     * @memberof SBDraftNegativeTargetingClause
+     */
+    resolvedExpressions?: SBResolvedExpression;
+}
+/**
+ * 
+ * @export
+ * @interface SBDraftTargetingClause
+ */
+export interface SBDraftTargetingClause {
+    /**
+     * The target identifier.
+     * @type {number}
+     * @memberof SBDraftTargetingClause
+     */
+    targetId?: number;
+    /**
+     * The identifier of the ad group to which the target is associated.
+     * @type {number}
+     * @memberof SBDraftTargetingClause
+     */
+    adGroupId?: number;
+    /**
+     * The identifier of the campaign to which the target is associated.
+     * @type {number}
+     * @memberof SBDraftTargetingClause
+     */
+    campaignId?: number;
+    /**
+     * 
+     * @type {SBExpression}
+     * @memberof SBDraftTargetingClause
+     */
+    expressions?: SBExpression;
+    /**
+     * 
+     * @type {SBResolvedExpression}
+     * @memberof SBDraftTargetingClause
+     */
+    resolvedExpressions?: SBResolvedExpression;
+    /**
+     * The associated bid. Note that this value must be less than the budget associated with the Advertiser account. For more information, see [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features).
+     * @type {number}
+     * @memberof SBDraftTargetingClause
+     */
+    bid?: number;
+}
+/**
+ * A name value pair that defines a targeting expression. The `type` field defines the predicate. The `value` field defines the value to match for the predicate. 
+ * @export
+ * @interface SBExpression
+ */
+export interface SBExpression {
+    /**
+     * 
+     * @type {ProductPredicateType}
+     * @memberof SBExpression
+     */
+    type?: ProductPredicateType;
+    /**
+     * The text of the targeting expression. The `-` token defines a range. For example, `2-4` defines a range of 2, 3, and 4.
+     * @type {string}
+     * @memberof SBExpression
+     */
+    value?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SBExpressionResponse
+ */
+export interface SBExpressionResponse {
+    /**
+     * The targeting expression identifier.
+     * @type {number}
+     * @memberof SBExpressionResponse
+     */
+    targetId?: number;
+    /**
+     * An enumerated response code.
+     * @type {string}
+     * @memberof SBExpressionResponse
+     */
+    code?: string;
+}
+/**
+ * @type SBGetDraftCampaignResponse
+ * @export
+ */
+export type SBGetDraftCampaignResponse = SBDraftCampaignBase | SBVideoDraftCampaignBase;
+
+/**
+ * Applies to: | Operation | Path | |-----------| -----| |[listKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords)| GET /sb/keywords| |[getKeyword](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords)| GET /sb/keywords/{keywordId}| <br/>
+ * @export
+ * @interface SBKeyword
+ */
+export interface SBKeyword {
+    /**
+     * The keyword identifier.
+     * @type {number}
+     * @memberof SBKeyword
+     */
+    keywordId?: number;
+    /**
+     * The identifier of the ad group associated with the keyword.
+     * @type {number}
+     * @memberof SBKeyword
+     */
+    adGroupId?: number;
+    /**
+     * The identifier of the campaign associated with the keyword.
+     * @type {number}
+     * @memberof SBKeyword
+     */
+    campaignId?: number;
+    /**
+     * The keyword text. The maximum number of words for this string is 10.
+     * @type {string}
+     * @memberof SBKeyword
+     */
+    keywordText?: string;
+    /**
+     * The unlocalized keyword text in the preferred locale of the advertiser.
+     * @type {string}
+     * @memberof SBKeyword
+     */
+    nativeLanguageKeyword?: string;
+    /**
+     * 
+     * @type {MatchType}
+     * @memberof SBKeyword
+     */
+    matchType?: MatchType;
+    /**
+     * 
+     * @type {SBKeywordState}
+     * @memberof SBKeyword
+     */
+    state?: SBKeywordState;
+    /**
+     * The bid associated with the keyword. Note that this value must be less than the budget associated with the Advertiser account. For more information, see the **Keyword bid constraints by marketplace** section of the [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features) article.
+     * @type {number}
+     * @memberof SBKeyword
+     */
+    bid?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SBKeywordExpression
+ */
+export interface SBKeywordExpression {
+    /**
+     * 
+     * @type {MatchType}
+     * @memberof SBKeywordExpression
+     */
+    type?: MatchType;
+    /**
+     * The text of the keyword. Maximum of 10 words.
+     * @type {string}
+     * @memberof SBKeywordExpression
+     */
+    value?: string;
+}
+/**
+ * Applies to: | Operation | Path | |-----------| -----| |[createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords)| POST /sb/keywords| |[createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords)|POST /sb/negativeKeywords| |[updateNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords)|PUT /sb/negativeKeywords| |[archiveNegativeKeyword](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords)|DELETE /sb/negativeKeywords/{keywordId}| <br/>
+ * @export
+ * @interface SBKeywordResponse
+ */
+export interface SBKeywordResponse {
+    /**
+     * The keyword identifier.
+     * @type {number}
+     * @memberof SBKeywordResponse
+     */
+    keywordId?: number;
+    /**
+     * An enumerated response code.
+     * @type {string}
+     * @memberof SBKeywordResponse
+     */
+    code?: string;
+    /**
+     * A human-readable description of the enumerated response code in the `code` field.
+     * @type {string}
+     * @memberof SBKeywordResponse
+     */
+    details?: string;
+}
+/**
+ * Newly created SB keywords are in a default state of \'draft\' before transitioning to a \'pending\' state for moderation. After moderation, the keyword will be in an enabled state.
  * @export
  * @enum {string}
  */
 
-export enum SBKeywordRecommendationMatchType {
+export enum SBKeywordState {
+    Enabled = 'enabled',
+    Paused = 'paused',
+    Pending = 'pending',
+    Archived = 'archived',
+    Draft = 'draft'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBKeywordsNegativeKeywords
+ */
+export interface SBKeywordsNegativeKeywords {
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<Keyword>}
+     * @memberof SBKeywordsNegativeKeywords
+     */
+    keywords?: Array<Keyword>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<NegativeKeyword>}
+     * @memberof SBKeywordsNegativeKeywords
+     */
+    negativeKeywords?: Array<NegativeKeyword>;
+}
+/**
+ * Specifies either an array of ASINs for a simple landing page or the URL of a Store page. Vendors may also specify the URL of a custom landing page. Shoppers are sent to the specified simple landing page, custom landing page, or Store page when the ad is clicked. Note that this property can be updated when the campaign is in a draft state, but can\'t be updated while the campaign is in moderation or once it\'s been approved. If the campaign is rejected for any reason, it returns to a draft state.
+ * @export
+ * @interface SBLandingPage
+ */
+export interface SBLandingPage {
+    /**
+     * An array of ASINs used to generate a simple landing page. The response includes the URL of the generated simple landing page. Do not include this property in the request if the `url` property is also included, these properties are mutually exclusive.
+     * @type {Array<string>}
+     * @memberof SBLandingPage
+     */
+    asins?: Array<string>;
+    /**
+     * URL of an existing simple landing page or Store page. Vendors may also specify the URL of a custom landing page. If a custom URL is specified, the landing page must include the ASINs of at least three products that are advertised as part of the campaign. Do not include this property in the request if the `asins` property is also included, these properties are mutually exclusive.
+     * @type {string}
+     * @memberof SBLandingPage
+     */
+    url?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SBListCampaignItem
+ */
+export interface SBListCampaignItem {
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBListCampaignItem
+     */
+    campaignId?: number;
+    /**
+     * The campaign name.
+     * @type {string}
+     * @memberof SBListCampaignItem
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBListCampaignItem
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * 
+     * @type {number}
+     * @memberof SBListCampaignItem
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBListCampaignItem
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBListCampaignItem
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBListCampaignItem
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBListCampaignItem
+     */
+    state?: State;
+    /**
+     * |Status|Description| |------|-----------| |ASIN_NOT_BUYABLE| The ASIN can\'t be purchased due to eligibility or availability.| |BILLING_ERROR| Billing information requires correction.| |ENDED| THe `endDate` specified in the campaign object occurs in the past.| |LANDING_PAGE_NOT_AVAILABLE| The specified landing page is not available. This may be caused by an incorrect address or a landing page with less than three ASINs.| |OUT_OF_BUDGET| The campaign has run out of budget.| |PAUSED| The campaign state set to `paused`.| |PENDING_REVIEW|: A newly created campaign that has not passed moderation review. Note that moderation review may take up to 72 hours.| |READY| The campaign is scheduled for a future date.| |REJECTED| The campaign failed moderation review.| |RUNNING| The campaign is enabled and serving.| |SCHEDULED| A transitive state between `ready` and `running`, as child entities associated with the campaign move to a running state.| |TERMINATED|The state of the campaign is set to `archived`.|
+     * @type {string}
+     * @memberof SBListCampaignItem
+     */
+    servingStatus?: SBListCampaignItemServingStatusEnum;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBListCampaignItem
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBListCampaignItem
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBListCampaignItem
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBListCampaignItem
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
+    /**
+     * Set to true to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBListCampaignItem
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBListCampaignItem
+     */
+    bidMultiplier?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBListCampaignItem
+     */
+    creative?: SBCreative;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBListCampaignItem
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBListCampaignItemServingStatusEnum {
+    AsinNotBuyable = 'ASIN_NOT_BUYABLE',
+    BillingError = 'BILLING_ERROR',
+    Ended = 'ENDED',
+    LandingPageNotAvailable = 'LANDING_PAGE_NOT_AVAILABLE',
+    OutOfBudget = 'OUT_OF_BUDGET',
+    Paused = 'PAUSED',
+    PendingReview = 'PENDING_REVIEW',
+    Ready = 'READY',
+    Rejected = 'REJECTED',
+    Running = 'RUNNING',
+    Scheduled = 'SCHEDULED',
+    Terminated = 'TERMINATED'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBListCampaignItemAllOf
+ */
+export interface SBListCampaignItemAllOf {
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBListCampaignItemAllOf
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
+    /**
+     * Set to true to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBListCampaignItemAllOf
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBListCampaignItemAllOf
+     */
+    bidMultiplier?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBListCampaignItemAllOf
+     */
+    creative?: SBCreative;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBListCampaignItemAllOf
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+}
+/**
+ * 
+ * @export
+ * @interface SBListCampaignItemV33
+ */
+export interface SBListCampaignItemV33 {
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBListCampaignItemV33
+     */
+    campaignId?: number;
+    /**
+     * The campaign name.
+     * @type {string}
+     * @memberof SBListCampaignItemV33
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBListCampaignItemV33
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * 
+     * @type {number}
+     * @memberof SBListCampaignItemV33
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBListCampaignItemV33
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBListCampaignItemV33
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBListCampaignItemV33
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBListCampaignItemV33
+     */
+    state?: State;
+    /**
+     * |Status|Description| |------|-----------| |ASIN_NOT_BUYABLE| The ASIN can\'t be purchased due to eligibility or availability.| |BILLING_ERROR| Billing information requires correction.| |ENDED| THe `endDate` specified in the campaign object occurs in the past.| |LANDING_PAGE_NOT_AVAILABLE| The specified landing page is not available. This may be caused by an incorrect address or a landing page with less than three ASINs.| |OUT_OF_BUDGET| The campaign has run out of budget.| |PAUSED| The campaign state set to `paused`.| |PENDING_REVIEW|: A newly created campaign that has not passed moderation review. Note that moderation review may take up to 72 hours.| |READY| The campaign is scheduled for a future date.| |REJECTED| The campaign failed moderation review.| |RUNNING| The campaign is enabled and serving.| |SCHEDULED| A transitive state between `ready` and `running`, as child entities associated with the campaign move to a running state.| |TERMINATED|The state of the campaign is set to `archived`.|
+     * @type {string}
+     * @memberof SBListCampaignItemV33
+     */
+    servingStatus?: SBListCampaignItemV33ServingStatusEnum;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBListCampaignItemV33
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBListCampaignItemV33
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBListCampaignItemV33
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBListCampaignItemV33
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
+    /**
+     * Set to true to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBListCampaignItemV33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBListCampaignItemV33
+     */
+    bidMultiplier?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBListCampaignItemV33
+     */
+    creative?: SBCreative;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof SBListCampaignItemV33
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+    /**
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof SBListCampaignItemV33
+     */
+    bidOptimizationStrategy?: BidOptimizationStrategy;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBListCampaignItemV33ServingStatusEnum {
+    AsinNotBuyable = 'ASIN_NOT_BUYABLE',
+    BillingError = 'BILLING_ERROR',
+    Ended = 'ENDED',
+    LandingPageNotAvailable = 'LANDING_PAGE_NOT_AVAILABLE',
+    OutOfBudget = 'OUT_OF_BUDGET',
+    Paused = 'PAUSED',
+    PendingReview = 'PENDING_REVIEW',
+    Ready = 'READY',
+    Rejected = 'REJECTED',
+    Running = 'RUNNING',
+    Scheduled = 'SCHEDULED',
+    Terminated = 'TERMINATED'
+}
+
+/**
+ * @type SBListCampaignsResponse
+ * Applies to: | Operation | Path | |-----------| -----| |[listCampaigns](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Campaigns)| GET /sb/campaigns| <br/>
+ * @export
+ */
+export type SBListCampaignsResponse = SBListCampaignsResponseCommon & object;
+
+/**
+ * 
+ * @export
+ * @interface SBListCampaignsResponseCommon
+ */
+export interface SBListCampaignsResponseCommon {
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBListCampaignsResponseCommon
+     */
+    campaignId?: number;
+    /**
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
+     * @type {string}
+     * @memberof SBListCampaignsResponseCommon
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBListCampaignsResponseCommon
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget amount associated with the campaign.
+     * @type {number}
+     * @memberof SBListCampaignsResponseCommon
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBListCampaignsResponseCommon
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date for the campaign. If this field is not set to a value, the current date is used.
+     * @type {string}
+     * @memberof SBListCampaignsResponseCommon
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date for the campaign. Must be greater than the value for `startDate`. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBListCampaignsResponseCommon
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBListCampaignsResponseCommon
+     */
+    state?: State;
+    /**
+     * |Value|Description| |-----|-----------| |asinNotBuyable| The associated ASIN cannot be purchased due to eligibility or availability.| |billingError| The billing information associated with the account requires correction.| |ended| The value specified in the `endDate` field is in the past.| |landingPageNotAvailable| The specified landing page is not available. This may be caused by an incorrect address or a landing page with less than three ASINs.| |outOfBudget| The campaign has run out of budget.| |paused|The campaign state is set to `paused`.| |pendingReview| A newly created campaign that has not passed moderation review. Note that moderation review may take up to 72 hours. |ready| The campaign is scheduled for a future date.| |rejected| The campaign failed moderation review.| |running| The campaign is enabled and serving.| |scheduled| A transitive state between `ready` and `running`, as child entities associated with the campaign move to a running state.| |terminated| The state of the campaign is set to `archived`.| <br/>
+     * @type {string}
+     * @memberof SBListCampaignsResponseCommon
+     */
+    servingStatus?: SBListCampaignsResponseCommonServingStatusEnum;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBListCampaignsResponseCommon
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBListCampaignsResponseCommon
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBDetailPageLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBListCampaignsResponseCommon
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBDetailPageLandingPage | SBCustomUrlLandingPage;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBListCampaignsResponseCommonServingStatusEnum {
+    AsinNotBuyable = 'asinNotBuyable',
+    BillingError = 'billingError',
+    Ended = 'ended',
+    LandingPageNotAvailable = 'landingPageNotAvailable',
+    OutOfBudget = 'outOfBudget',
+    Paused = 'paused',
+    PendingReview = 'pendingReview',
+    Ready = 'ready',
+    Rejected = 'rejected',
+    Running = 'running',
+    Scheduled = 'scheduled',
+    Terminated = 'terminated'
+}
+
+/**
+ * @type SBListDraftCampaignsResponseV33
+ * @export
+ */
+export type SBListDraftCampaignsResponseV33 = SBDraftCampaignBaseV33 | SBVideoDraftCampaignBase;
+
+/**
+ * The match type. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
+ * @export
+ * @enum {string}
+ */
+
+export enum SBMatchType {
     Broad = 'broad',
     Exact = 'exact',
     Phrase = 'phrase'
@@ -1988,1238 +5401,3446 @@ export enum SBKeywordRecommendationMatchType {
 /**
  * 
  * @export
- * @interface SBKeywordRecommendationRequestAsin
+ * @interface SBNegativeExpression
  */
-export interface SBKeywordRecommendationRequestAsin {
+export interface SBNegativeExpression {
     /**
      * 
-     * @type {Array<string>}
-     * @memberof SBKeywordRecommendationRequestAsin
-     */
-    asins: Array<string>;
-    /**
-     * Maximum number of suggestions to return. Max value is 1000. If not provided, default to 100.
-     * @type {number}
-     * @memberof SBKeywordRecommendationRequestAsin
-     */
-    maxNumSuggestions?: number;
-    /**
-     * Optional locale to request keyword suggestion translations. For example, to request Simplified Chinese translations in US, provide locale “zh_CN”. Response will include both keyword suggestions and their translations. Supported locales include: Simplified Chinese (locale: “zh_CN”) for US, UK and CA. English (locale: “en_GB”) for DE, FR, IT and ES.
      * @type {string}
-     * @memberof SBKeywordRecommendationRequestAsin
+     * @memberof SBNegativeExpression
      */
-    locale?: string;
+    type?: SBNegativeExpressionTypeEnum;
+    /**
+     * The text of the negative expression.
+     * @type {string}
+     * @memberof SBNegativeExpression
+     */
+    value?: string;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBNegativeExpressionTypeEnum {
+    AsinBrandSameAs = 'asinBrandSameAs',
+    AsinSameAs = 'asinSameAs'
+}
+
 /**
  * 
  * @export
- * @interface SBKeywordRecommendationRequestUrl
+ * @interface SBNegativeKeyword
  */
-export interface SBKeywordRecommendationRequestUrl {
+export interface SBNegativeKeyword {
     /**
-     * Maximum number of suggestions to return. Max value is 1000. If not provided, default to 100.
+     * The keyword identifier.
      * @type {number}
-     * @memberof SBKeywordRecommendationRequestUrl
+     * @memberof SBNegativeKeyword
      */
-    maxNumSuggestions?: number;
+    keywordId?: number;
     /**
-     * Optional locale to request keyword suggestion translations. For example, to request Simplified Chinese translations in US, provide locale “zh_CN”. Response will include both keyword suggestions and their translations. Supported locales include: Simplified Chinese (locale: “zh_CN”) for US, UK and CA. English (locale: “en_GB”) for DE, FR, IT and ES.
-     * @type {string}
-     * @memberof SBKeywordRecommendationRequestUrl
+     * The identifier of the ad group associated with the keyword.
+     * @type {number}
+     * @memberof SBNegativeKeyword
      */
-    locale?: string;
+    adGroupId?: number;
     /**
-     * The URL of the Stores page, or, Vendors may also specify the URL of a custom landing page.
-     * @type {string}
-     * @memberof SBKeywordRecommendationRequestUrl
+     * The identifier of the campaign associated with the keyword.
+     * @type {number}
+     * @memberof SBNegativeKeyword
      */
-    url: string;
+    campaignId?: number;
+    /**
+     * The keyword text. The maximum number of words for this string is 10.
+     * @type {string}
+     * @memberof SBNegativeKeyword
+     */
+    keywordText?: string;
+    /**
+     * 
+     * @type {NegativeMatchType}
+     * @memberof SBNegativeKeyword
+     */
+    matchType?: NegativeMatchType;
+    /**
+     * 
+     * @type {SBKeywordState}
+     * @memberof SBNegativeKeyword
+     */
+    state?: SBKeywordState;
 }
 /**
- * A recommendation identifier that describes the suggested action for the recommendation. |Identifier|Description| |----------|-----------| |addKeyword|The suggested action is to add the keyword.| <br/>
+ * The current state of the negative keyword. Newly created SB negative keywords are in a default state of \'draft\' before transitioning to a \'pending\' state for moderation review. \'enabled\' refers to negative keywords that are active. \'archived\' refers to negative keywords that are permanently inactive and cannot be returned to the \'enabled\' state.
  * @export
  * @enum {string}
  */
 
-export enum SBKeywordRecommendationType {
-    AddKeyword = 'addKeyword'
+export enum SBNegativeKeywordState {
+    Enabled = 'enabled',
+    Pending = 'pending',
+    Archived = 'archived',
+    Draft = 'draft'
+}
+
+/**
+ * The negative match type. For more information, see [negative keyword match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
+ * @export
+ * @enum {string}
+ */
+
+export enum SBNegativeMatchType {
+    NegativeExact = 'negativeExact',
+    NegativePhrase = 'negativePhrase'
 }
 
 /**
  * 
  * @export
- * @interface SBKeywordSuggestion
+ * @interface SBNegativeResolvedExpression
  */
-export interface SBKeywordSuggestion {
+export interface SBNegativeResolvedExpression {
     /**
      * 
-     * @type {SBKeywordRecommendationMatchType}
-     * @memberof SBKeywordSuggestion
-     */
-    matchType?: SBKeywordRecommendationMatchType;
-    /**
-     * Localized keyword value if locale was specified.
      * @type {string}
-     * @memberof SBKeywordSuggestion
+     * @memberof SBNegativeResolvedExpression
      */
-    translation?: string;
+    type?: SBNegativeResolvedExpressionTypeEnum;
     /**
-     * Unique ID for each recommendation.
+     * The human-readable negative target text.
      * @type {string}
-     * @memberof SBKeywordSuggestion
+     * @memberof SBNegativeResolvedExpression
      */
-    recommendationId?: string;
+    value?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBNegativeResolvedExpressionTypeEnum {
+    AsinBrandSameAs = 'asinBrandSameAs',
+    AsinSameAs = 'asinSameAs'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBNegativeTarget
+ */
+export interface SBNegativeTarget {
     /**
      * 
-     * @type {SBKeywordRecommendationType}
-     * @memberof SBKeywordSuggestion
+     * @type {Array<SBExpression>}
+     * @memberof SBNegativeTarget
      */
-    type?: SBKeywordRecommendationType;
+    expressions?: Array<SBExpression>;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum SBNegativeTargetState {
+    Enabled = 'enabled',
+    Pending = 'pending',
+    Archived = 'archived'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBNegativeTargetingClause
+ */
+export interface SBNegativeTargetingClause {
     /**
-     * Recommended keyword value.
+     * The target identifier.
+     * @type {number}
+     * @memberof SBNegativeTargetingClause
+     */
+    targetId?: number;
+    /**
+     * The identifier of an existing ad group. The newly created target is associated to this ad group
+     * @type {number}
+     * @memberof SBNegativeTargetingClause
+     */
+    adGroupId?: number;
+    /**
+     * The identifier of an existing campaign. The newly created target is associated to this campaign
+     * @type {number}
+     * @memberof SBNegativeTargetingClause
+     */
+    campaignId?: number;
+    /**
+     * 
+     * @type {Array<SBNegativeExpression>}
+     * @memberof SBNegativeTargetingClause
+     */
+    expressions?: Array<SBNegativeExpression>;
+    /**
+     * 
+     * @type {SBResolvedExpression}
+     * @memberof SBNegativeTargetingClause
+     */
+    resolvedExpressions?: SBResolvedExpression;
+    /**
+     * 
+     * @type {SBProductTargetState}
+     * @memberof SBNegativeTargetingClause
+     */
+    state?: SBProductTargetState;
+}
+/**
+ * 
+ * @export
+ * @interface SBProductCollectionCreative
+ */
+export interface SBProductCollectionCreative {
+    /**
+     * 
+     * @type {SBBrandLogoCrop}
+     * @memberof SBProductCollectionCreative
+     */
+    brandLogoCrop?: SBBrandLogoCrop;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof SBProductCollectionCreative
+     */
+    asins?: Array<string>;
+    /**
+     * The address of the hosted image.
      * @type {string}
-     * @memberof SBKeywordSuggestion
+     * @memberof SBProductCollectionCreative
+     */
+    brandLogoUrl?: string;
+    /**
+     * A brand name. Maximum length is 30 characters.
+     * @type {string}
+     * @memberof SBProductCollectionCreative
+     */
+    brandName?: string;
+    /**
+     * The identifier of the Custom image from the Store assets library. See [the policy](https://advertising.amazon.com/resources/ad-policy/sponsored-ads-policies#customimage) for more information on what constitutes a valid Custom image.
+     * @type {string}
+     * @memberof SBProductCollectionCreative
+     */
+    customImageAssetId?: string;
+    /**
+     * Starting on March 25th, 2021, this property will no longer be supported. This feature is currently available in the US and UK. Existing Sponsored Brands campaigns with product optimization enabled will no longer have the products in the creative automatically optimized. Campaigns with product optimization enabled will be converted to standard Sponsored Brands product collection campaigns with the default selected products showing in the creative. For POST and PUT operations, setting this property to true will not have any effect. The value returned in the response will always be false. For the GET operation, the value of this field will always be false. And starting on September 25th, 2021, this property will be removed completely.
+     * @type {boolean}
+     * @memberof SBProductCollectionCreative
+     */
+    shouldOptimizeAsins?: boolean;
+    /**
+     * 
+     * @type {SBCustomImageCrop}
+     * @memberof SBProductCollectionCreative
+     */
+    customImageCrop?: SBCustomImageCrop;
+    /**
+     * The address of the hosted Custom image.
+     * @type {string}
+     * @memberof SBProductCollectionCreative
+     */
+    customImageUrl?: string;
+    /**
+     * The identifier of the brand logo image from the Store assets library. See [listAssets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Stores) for more information. Note that for campaigns created in the Amazon Advertising console prior to release of the Store assets library, responses will not include a value for the brandLogoAssetID field.
+     * @type {string}
+     * @memberof SBProductCollectionCreative
+     */
+    brandLogoAssetID?: string;
+    /**
+     * The headline text. Maximum length of the string is 50 characters for all marketplaces other than Japan, which has a maximum length of 35 characters.
+     * @type {string}
+     * @memberof SBProductCollectionCreative
+     */
+    headline?: string;
+}
+/**
+ * A landing page showcasing a list of ASINs.
+ * @export
+ * @interface SBProductListLandingPage
+ */
+export interface SBProductListLandingPage {
+    /**
+     * 
+     * @type {string}
+     * @memberof SBProductListLandingPage
+     */
+    pageType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SBProductListLandingPage
+     */
+    url?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SBProductListLandingPageAllOf
+ */
+export interface SBProductListLandingPageAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof SBProductListLandingPageAllOf
+     */
+    pageType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SBProductListLandingPageAllOf
+     */
+    url?: string;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum SBProductTargetState {
+    Enabled = 'enabled',
+    Paused = 'paused',
+    Pending = 'pending',
+    Archived = 'archived',
+    Draft = 'draft'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBResolvedExpression
+ */
+export interface SBResolvedExpression {
+    /**
+     * 
+     * @type {ProductPredicateType}
+     * @memberof SBResolvedExpression
+     */
+    type?: ProductPredicateType;
+    /**
+     * The human-readable target text.
+     * @type {string}
+     * @memberof SBResolvedExpression
      */
     value?: string;
 }
 /**
- * 
+ * An Amazon Store page or subpage.
  * @export
- * @interface SBListAssociatedBudgetRulesResponse
+ * @interface SBStoreLandingPage
  */
-export interface SBListAssociatedBudgetRulesResponse {
+export interface SBStoreLandingPage {
     /**
-     * A list of associated budget rules.
-     * @type {Array<SBCampaignBudgetRule>}
-     * @memberof SBListAssociatedBudgetRulesResponse
+     * 
+     * @type {string}
+     * @memberof SBStoreLandingPage
      */
-    associatedRules?: Array<SBCampaignBudgetRule>;
+    pageType?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SBStoreLandingPage
+     */
+    url?: string;
 }
 /**
  * 
  * @export
- * @interface SBRuleBasedBudget
+ * @interface SBStoreSpotlightCreative
  */
-export interface SBRuleBasedBudget {
-    /**
-     * Epoch time of budget rule execution.
-     * @type {number}
-     * @memberof SBRuleBasedBudget
-     */
-    executionTime?: number;
+export interface SBStoreSpotlightCreative {
     /**
      * 
-     * @type {SBBudgetRule}
-     * @memberof SBRuleBasedBudget
+     * @type {SBBrandLogoCrop}
+     * @memberof SBStoreSpotlightCreative
      */
-    appliedRule?: SBBudgetRule;
+    brandLogoCrop?: SBBrandLogoCrop;
     /**
-     * The budget value.
-     * @type {number}
-     * @memberof SBRuleBasedBudget
+     * The address of the hosted image.
+     * @type {string}
+     * @memberof SBStoreSpotlightCreative
      */
-    ruleBasedBudgetValue?: number;
+    brandLogoUrl?: string;
     /**
-     * The daily budget value.
-     * @type {number}
-     * @memberof SBRuleBasedBudget
+     * A brand name. Maximum length is 30 characters.
+     * @type {string}
+     * @memberof SBStoreSpotlightCreative
      */
-    dailyBudgetValue?: number;
+    brandName?: string;
     /**
      * 
-     * @type {PerformanceMetricValue}
-     * @memberof SBRuleBasedBudget
+     * @type {Array<SBStoreSpotlightCreativeSubpages>}
+     * @memberof SBStoreSpotlightCreative
      */
-    performanceMetric?: PerformanceMetricValue;
+    subpages?: Array<SBStoreSpotlightCreativeSubpages>;
+    /**
+     * The identifier of the brand logo image from the Store assets library. See [listAssets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Stores) for more information. Note that for campaigns created in the Amazon Advertising console prior to release of the Store assets library, responses will not include a value for the brandLogoAssetID field.
+     * @type {string}
+     * @memberof SBStoreSpotlightCreative
+     */
+    brandLogoAssetID?: string;
+    /**
+     * The headline text. Maximum length of the string is 50 characters for all marketplaces other than Japan, which has a maximum length of 35 characters.
+     * @type {string}
+     * @memberof SBStoreSpotlightCreative
+     */
+    headline?: string;
 }
 /**
  * 
  * @export
- * @interface SBRuleDuration
+ * @interface SBStoreSpotlightCreativeSubpages
  */
-export interface SBRuleDuration {
+export interface SBStoreSpotlightCreativeSubpages {
     /**
-     * 
-     * @type {DateRangeTypeRuleDuration}
-     * @memberof SBRuleDuration
+     * The title of the subpage. Maximum length is 50 characters.
+     * @type {string}
+     * @memberof SBStoreSpotlightCreativeSubpages
      */
-    dateRangeTypeRuleDuration: DateRangeTypeRuleDuration;
+    pageTitle?: string;
+    /**
+     * An ASIN on the Store subpage. The ASIN image will be used to represent the subpage.
+     * @type {string}
+     * @memberof SBStoreSpotlightCreativeSubpages
+     */
+    asin?: string;
+    /**
+     * URL of an existing Store page. Must be a subpage of the Store landing page associated with the campaign.
+     * @type {string}
+     * @memberof SBStoreSpotlightCreativeSubpages
+     */
+    url?: string;
 }
 /**
- * The type of budget rule. SCHEDULE: A budget rule based on a start and end date.
+ * @type SBSubmitDraftCampaignResponse
  * @export
- * @enum {string}
  */
+export type SBSubmitDraftCampaignResponse = SBDraftCampaignResponseWithExpressions & object | SBDraftCampaignResponseWithKeywords & object;
 
-export enum SBRuleType {
-    Schedule = 'SCHEDULE'
+/**
+ * 
+ * @export
+ * @interface SBTarget
+ */
+export interface SBTarget {
+    /**
+     * 
+     * @type {Array<SBExpression>}
+     * @memberof SBTarget
+     */
+    expressions?: Array<SBExpression>;
+    /**
+     * The associated bid. Note that this value must be less than the budget associated with the Advertiser account. For more information, see [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features).
+     * @type {number}
+     * @memberof SBTarget
+     */
+    bid?: number;
 }
+/**
+ * 
+ * @export
+ * @interface SBTargetingClause
+ */
+export interface SBTargetingClause {
+    /**
+     * The target identifier.
+     * @type {number}
+     * @memberof SBTargetingClause
+     */
+    targetId?: number;
+    /**
+     * The identifier of the ad group to which the target is associated.
+     * @type {number}
+     * @memberof SBTargetingClause
+     */
+    adGroupId?: number;
+    /**
+     * The identifier of the campaign to which the target is associated.
+     * @type {number}
+     * @memberof SBTargetingClause
+     */
+    campaignId?: number;
+    /**
+     * 
+     * @type {SBExpression}
+     * @memberof SBTargetingClause
+     */
+    expressions?: SBExpression;
+    /**
+     * 
+     * @type {SBResolvedExpression}
+     * @memberof SBTargetingClause
+     */
+    resolvedExpressions?: SBResolvedExpression;
+    /**
+     * 
+     * @type {SBProductTargetState}
+     * @memberof SBTargetingClause
+     */
+    state?: SBProductTargetState;
+    /**
+     * The associated bid. Note that this value must be less than the budget associated with the Advertiser account. For more information, see [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features).
+     * @type {number}
+     * @memberof SBTargetingClause
+     */
+    bid?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SBTargetingClauseResponse
+ */
+export interface SBTargetingClauseResponse {
+    /**
+     * The target identifier.
+     * @type {number}
+     * @memberof SBTargetingClauseResponse
+     */
+    targetId?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SBTargetingClauseResponse
+     */
+    code?: string;
+}
+/**
+ * 
+ * @export
+ * @interface SBTargetsNegativeTargets
+ */
+export interface SBTargetsNegativeTargets {
+    /**
+     * 
+     * @type {Array<SBTarget>}
+     * @memberof SBTargetsNegativeTargets
+     */
+    targets?: Array<SBTarget>;
+    /**
+     * 
+     * @type {Array<SBNegativeTarget>}
+     * @memberof SBTargetsNegativeTargets
+     */
+    negativeTargets?: Array<SBNegativeTarget>;
+}
+/**
+ * Applies to: | Operation | Path | |-----------| -----| |[updateCampaigns](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Campaigns)| PUT /sb/campaigns| |[archiveCampaigns](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Campaigns)|DELETE /sb/campaigns/{campaignId}| <br/>
+ * @export
+ * @interface SBUpdateCampaignResponse
+ */
+export interface SBUpdateCampaignResponse {
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBUpdateCampaignResponse
+     */
+    campaignId?: number;
+    /**
+     * An enumerated response code.
+     * @type {string}
+     * @memberof SBUpdateCampaignResponse
+     */
+    code?: string;
+    /**
+     * A human-readable description of the enumerated response code in the `code` field.
+     * @type {string}
+     * @memberof SBUpdateCampaignResponse
+     */
+    details?: string;
+}
+/**
+ * |-         Applies to:         | Operation | Path |         |-----------| -----|         |[updateCampaigns](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Campaigns)| PUT /sb/campaigns|         |[archiveCampaigns](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Campaigns)|DELETE /sb/campaigns/{campaignId}|         <br/>
+ * @export
+ * @interface SBUpdateCampaignResponseDefault
+ */
+export interface SBUpdateCampaignResponseDefault {
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBUpdateCampaignResponseDefault
+     */
+    campaignId?: number;
+    /**
+     * An enumerated response code.
+     * @type {string}
+     * @memberof SBUpdateCampaignResponseDefault
+     */
+    code?: string;
+    /**
+     * A human-readable description of the enumerated response code in the `code` field.
+     * @type {string}
+     * @memberof SBUpdateCampaignResponseDefault
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Array<ErrorEntry>}
+     * @memberof SBUpdateCampaignResponseDefault
+     */
+    errors?: Array<ErrorEntry>;
+}
+/**
+ * 
+ * @export
+ * @interface SBUpdateCampaignResponseItemV33
+ */
+export interface SBUpdateCampaignResponseItemV33 {
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBUpdateCampaignResponseItemV33
+     */
+    campaignId?: number;
+    /**
+     * An enumerated response code.
+     * @type {string}
+     * @memberof SBUpdateCampaignResponseItemV33
+     */
+    code?: string;
+    /**
+     * A human-readable description of the enumerated response code in the `code` field.
+     * @type {string}
+     * @memberof SBUpdateCampaignResponseItemV33
+     */
+    description?: string;
+    /**
+     * 
+     * @type {Array<ErrorEntry>}
+     * @memberof SBUpdateCampaignResponseItemV33
+     */
+    errors?: Array<ErrorEntry>;
+    /**
+     * 
+     * @type {SBCampaignResponseV33}
+     * @memberof SBUpdateCampaignResponseItemV33
+     */
+    campaign?: SBCampaignResponseV33;
+}
+/**
+ * 
+ * @export
+ * @interface SBUpdateCampaignResponseItemV33AllOf
+ */
+export interface SBUpdateCampaignResponseItemV33AllOf {
+    /**
+     * 
+     * @type {SBCampaignResponseV33}
+     * @memberof SBUpdateCampaignResponseItemV33AllOf
+     */
+    campaign?: SBCampaignResponseV33;
+}
+/**
+ * @type SBUpdateDraftCampaignRequest
+ * @export
+ */
+export type SBUpdateDraftCampaignRequest = SBUpdateDraftCampaignRequestWithKeywords | SBUpdateDraftCampaignRequestWithProductTargets | SBVideoUpdateDraftCampaignRequestWithKeywords;
 
 /**
- * a large JSON string containing a tree of category nodes. Each category node has the fields - category id, category name, and child categories.
+ * 
  * @export
- * @interface SBTargetableCategories
+ * @interface SBUpdateDraftCampaignRequestCommon
  */
-export interface SBTargetableCategories {
+export interface SBUpdateDraftCampaignRequestCommon {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommon
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommon
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommon
+     */
+    budget: number;
     /**
      * 
-     * @type {string}
-     * @memberof SBTargetableCategories
+     * @type {BudgetType}
+     * @memberof SBUpdateDraftCampaignRequestCommon
      */
-    categoryTree?: string;
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommon
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommon
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommon
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBUpdateDraftCampaignRequestCommon
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommon
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBUpdateDraftCampaignRequestCommon
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommon
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBUpdateDraftCampaignRequestCommon
+     */
+    creative?: SBCreative;
 }
 /**
  * 
  * @export
- * @interface SDBudgetHistory
+ * @interface SBUpdateDraftCampaignRequestCommonAllOf
  */
-export interface SDBudgetHistory {
+export interface SBUpdateDraftCampaignRequestCommonAllOf {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommonAllOf
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommonAllOf
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommonAllOf
+     */
+    budget: number;
     /**
      * 
-     * @type {Array<SDRuleBasedBudget>}
-     * @memberof SDBudgetHistory
+     * @type {BudgetType}
+     * @memberof SBUpdateDraftCampaignRequestCommonAllOf
      */
-    history?: Array<SDRuleBasedBudget>;
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommonAllOf
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommonAllOf
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommonAllOf
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBUpdateDraftCampaignRequestCommonAllOf
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommonAllOf
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBUpdateDraftCampaignRequestCommonAllOf
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommonAllOf
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBUpdateDraftCampaignRequestCommonAllOf
+     */
+    creative?: SBCreative;
 }
 /**
  * 
  * @export
- * @interface SDBudgetRule
+ * @interface SBUpdateDraftCampaignRequestCommonV33
  */
-export interface SDBudgetRule {
+export interface SBUpdateDraftCampaignRequestCommonV33 {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     */
+    budget: number;
     /**
      * 
-     * @type {State}
-     * @memberof SDBudgetRule
+     * @type {BudgetType}
+     * @memberof SBUpdateDraftCampaignRequestCommonV33
      */
-    ruleState?: State;
+    budgetType: BudgetType;
     /**
-     * Epoch time of budget rule update. Read-only.
-     * @type {number}
-     * @memberof SDBudgetRule
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommonV33
      */
-    lastUpdatedDate?: number;
+    startDate?: string;
     /**
-     * Epoch time of budget rule creation. Read-only.
-     * @type {number}
-     * @memberof SDBudgetRule
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommonV33
      */
-    createdDate?: number;
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     */
+    portfolioId?: number;
     /**
      * 
-     * @type {SDBudgetRuleDetails}
-     * @memberof SDBudgetRule
+     * @type {SBCreative}
+     * @memberof SBUpdateDraftCampaignRequestCommonV33
      */
-    ruleDetails?: SDBudgetRuleDetails;
+    creative?: SBCreative;
     /**
-     * The budget rule identifier.
-     * @type {string}
-     * @memberof SDBudgetRule
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof SBUpdateDraftCampaignRequestCommonV33
      */
-    ruleId: string;
-    /**
-     * The budget rule status. Read-only.
-     * @type {string}
-     * @memberof SDBudgetRule
-     */
-    ruleStatus?: string;
+    bidOptimizationStrategy?: BidOptimizationStrategy;
 }
 /**
- * Object representing details of a budget rule for SD campaign
+ * @type SBUpdateDraftCampaignRequestV33
  * @export
- * @interface SDBudgetRuleDetails
  */
-export interface SDBudgetRuleDetails {
+export type SBUpdateDraftCampaignRequestV33 = SBUpdateDraftCampaignRequestWithKeywordsV33 | SBUpdateDraftCampaignRequestWithProductTargetsV33 | SBVideoUpdateDraftCampaignRequestWithKeywords | SBVideoUpdateDraftCampaignRequestWithProductTargets;
+
+/**
+ * 
+ * @export
+ * @interface SBUpdateDraftCampaignRequestWithKeywords
+ */
+export interface SBUpdateDraftCampaignRequestWithKeywords {
     /**
-     * 
-     * @type {RuleDuration}
-     * @memberof SDBudgetRuleDetails
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywords
      */
-    duration?: RuleDuration;
+    draftCampaignId: number;
     /**
-     * 
-     * @type {Recurrence}
-     * @memberof SDBudgetRuleDetails
-     */
-    recurrence?: Recurrence;
-    /**
-     * 
-     * @type {SDRuleType}
-     * @memberof SDBudgetRuleDetails
-     */
-    ruleType?: SDRuleType;
-    /**
-     * 
-     * @type {BudgetIncreaseBy}
-     * @memberof SDBudgetRuleDetails
-     */
-    budgetIncreaseBy?: BudgetIncreaseBy;
-    /**
-     * The budget rule name. Required to be unique within a campaign.
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
      * @type {string}
-     * @memberof SDBudgetRuleDetails
+     * @memberof SBUpdateDraftCampaignRequestWithKeywords
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywords
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywords
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywords
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywords
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywords
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywords
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywords
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywords
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywords
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywords
+     */
+    creative?: SBCreative;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords>}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywords
+     */
+    keywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywords
+     */
+    negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
+}
+/**
+ * 
+ * @export
+ * @interface SBUpdateDraftCampaignRequestWithKeywordsAllOf
+ */
+export interface SBUpdateDraftCampaignRequestWithKeywordsAllOf {
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords>}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsAllOf
+     */
+    keywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsAllOf
+     */
+    negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
+}
+/**
+ * 
+ * @export
+ * @interface SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords
+ */
+export interface SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords {
+    /**
+     * The keyword text. Maximum of 10 words.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords
+     */
+    keywordText?: string;
+    /**
+     * 
+     * @type {MatchType}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords
+     */
+    matchType?: MatchType;
+    /**
+     * The associated bid. Note that this value must be less than the budget associated with the Advertiser account. For more information, see [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features).
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords
+     */
+    bid?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords
+ */
+export interface SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords {
+    /**
+     * The keyword text. Maximum of 10 words.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords
+     */
+    keywordText?: string;
+    /**
+     * 
+     * @type {NegativeMatchType}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords
+     */
+    matchType?: NegativeMatchType;
+}
+/**
+ * 
+ * @export
+ * @interface SBUpdateDraftCampaignRequestWithKeywordsV33
+ */
+export interface SBUpdateDraftCampaignRequestWithKeywordsV33 {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    bidOptimizationStrategy?: BidOptimizationStrategy;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<Keyword>}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    keywords?: Array<Keyword>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<NegativeKeyword>}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    negativeKeywords?: Array<NegativeKeyword>;
+}
+/**
+ * 
+ * @export
+ * @interface SBUpdateDraftCampaignRequestWithProductTargets
+ */
+export interface SBUpdateDraftCampaignRequestWithProductTargets {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargets
+     */
+    draftCampaignId: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargets
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargets
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargets
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargets
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargets
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargets
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargets
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargets
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * @type {Array<BidAdjustment>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargets
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargets
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargets
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfTargets>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargets
+     */
+    targets?: Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfTargets>;
+    /**
+     * 
+     * @type {Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfNegativeTargets>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargets
+     */
+    negativeTargets?: Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfNegativeTargets>;
+}
+/**
+ * 
+ * @export
+ * @interface SBUpdateDraftCampaignRequestWithProductTargetsAllOf
+ */
+export interface SBUpdateDraftCampaignRequestWithProductTargetsAllOf {
+    /**
+     * 
+     * @type {Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfTargets>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsAllOf
+     */
+    targets?: Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfTargets>;
+    /**
+     * 
+     * @type {Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfNegativeTargets>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsAllOf
+     */
+    negativeTargets?: Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfNegativeTargets>;
+}
+/**
+ * 
+ * @export
+ * @interface SBUpdateDraftCampaignRequestWithProductTargetsAllOfNegativeTargets
+ */
+export interface SBUpdateDraftCampaignRequestWithProductTargetsAllOfNegativeTargets {
+    /**
+     * 
+     * @type {Array<SBExpression>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsAllOfNegativeTargets
+     */
+    expressions?: Array<SBExpression>;
+}
+/**
+ * 
+ * @export
+ * @interface SBUpdateDraftCampaignRequestWithProductTargetsAllOfTargets
+ */
+export interface SBUpdateDraftCampaignRequestWithProductTargetsAllOfTargets {
+    /**
+     * 
+     * @type {Array<SBExpression>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsAllOfTargets
+     */
+    expressions?: Array<SBExpression>;
+    /**
+     * The associated bid. Note that this value must be less than the budget associated with the Advertiser account. For more information, see [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features).
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsAllOfTargets
+     */
+    bid?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SBUpdateDraftCampaignRequestWithProductTargetsV33
+ */
+export interface SBUpdateDraftCampaignRequestWithProductTargetsV33 {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBCreative}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    creative?: SBCreative;
+    /**
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    bidOptimizationStrategy?: BidOptimizationStrategy;
+    /**
+     * 
+     * @type {Array<SBTarget>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    targets?: Array<SBTarget>;
+    /**
+     * 
+     * @type {Array<SBNegativeTarget>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    negativeTargets?: Array<SBNegativeTarget>;
+}
+/**
+ * 
+ * @export
+ * @interface SBUpdateNegativeTargetingClauseRequest
+ */
+export interface SBUpdateNegativeTargetingClauseRequest {
+    /**
+     * The target identifier.
+     * @type {number}
+     * @memberof SBUpdateNegativeTargetingClauseRequest
+     */
+    targetId?: number;
+    /**
+     * The identifier of an existing ad group. The newly created target is associated to this ad group.
+     * @type {number}
+     * @memberof SBUpdateNegativeTargetingClauseRequest
+     */
+    adGroupId?: number;
+    /**
+     * 
+     * @type {SBProductTargetState}
+     * @memberof SBUpdateNegativeTargetingClauseRequest
+     */
+    state?: SBProductTargetState;
+}
+/**
+ * 
+ * @export
+ * @interface SBUpdateTargetingClauseRequest
+ */
+export interface SBUpdateTargetingClauseRequest {
+    /**
+     * The identifier of the target.
+     * @type {number}
+     * @memberof SBUpdateTargetingClauseRequest
+     */
+    targetId?: number;
+    /**
+     * The identifier of the ad group to which the target is associated.
+     * @type {number}
+     * @memberof SBUpdateTargetingClauseRequest
+     */
+    adGroupId?: number;
+    /**
+     * The identifier of the campaign to which the target is associated.
+     * @type {number}
+     * @memberof SBUpdateTargetingClauseRequest
+     */
+    campaignId?: number;
+    /**
+     * 
+     * @type {SBProductTargetState}
+     * @memberof SBUpdateTargetingClauseRequest
+     */
+    state?: SBProductTargetState;
+    /**
+     * The associated bid. Note that this value must be less than the budget associated with the Advertiser account. For more information, see [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features).
+     * @type {number}
+     * @memberof SBUpdateTargetingClauseRequest
+     */
+    bid?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SBVideoCampaignResponseCommon
+ */
+export interface SBVideoCampaignResponseCommon {
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBVideoCampaignResponseCommon
+     */
+    campaignId?: number;
+    /**
+     * The campaign name.
+     * @type {string}
+     * @memberof SBVideoCampaignResponseCommon
      */
     name?: string;
     /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBVideoCampaignResponseCommon
+     */
+    tags?: { [key: string]: string; };
+    /**
      * 
-     * @type {PerformanceMeasureCondition}
-     * @memberof SDBudgetRuleDetails
+     * @type {number}
+     * @memberof SBVideoCampaignResponseCommon
      */
-    performanceMeasureCondition?: PerformanceMeasureCondition;
-}
-/**
- * 
- * @export
- * @interface SDGetAssociatedCampaignsResponse
- */
-export interface SDGetAssociatedCampaignsResponse {
+    budget?: number;
     /**
-     * A list of campaigns that are associated to this budget rule.
-     * @type {Array<AssociatedCampaign>}
-     * @memberof SDGetAssociatedCampaignsResponse
+     * 
+     * @type {BudgetType}
+     * @memberof SBVideoCampaignResponseCommon
      */
-    associatedCampaigns?: Array<AssociatedCampaign>;
+    budgetType?: BudgetType;
     /**
-     * To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
      * @type {string}
-     * @memberof SDGetAssociatedCampaignsResponse
+     * @memberof SBVideoCampaignResponseCommon
      */
-    nextToken?: string;
-}
-/**
- * 
- * @export
- * @interface SDListAssociatedBudgetRulesResponse
- */
-export interface SDListAssociatedBudgetRulesResponse {
+    startDate?: string | null;
     /**
-     * A list of associated budget rules.
-     * @type {Array<SDBudgetRule>}
-     * @memberof SDListAssociatedBudgetRulesResponse
-     */
-    associatedRules?: Array<SDBudgetRule>;
-}
-/**
- * 
- * @export
- * @interface SDRuleBasedBudget
- */
-export interface SDRuleBasedBudget {
-    /**
-     * Epoch time of budget rule execution.
-     * @type {number}
-     * @memberof SDRuleBasedBudget
-     */
-    executionTime?: number;
-    /**
-     * 
-     * @type {SDBudgetRule}
-     * @memberof SDRuleBasedBudget
-     */
-    appliedRule?: SDBudgetRule;
-    /**
-     * The budget value.
-     * @type {number}
-     * @memberof SDRuleBasedBudget
-     */
-    ruleBasedBudgetValue?: number;
-    /**
-     * The daily budget value.
-     * @type {number}
-     * @memberof SDRuleBasedBudget
-     */
-    dailyBudgetValue?: number;
-    /**
-     * 
-     * @type {PerformanceMetricValue}
-     * @memberof SDRuleBasedBudget
-     */
-    performanceMetric?: PerformanceMetricValue;
-}
-/**
- * The type of budget rule. SCHEDULE: A budget rule based on a start and end date. PERFORMANCE: A budget rule based on advertising performance criteria.
- * @export
- * @enum {string}
- */
-
-export enum SDRuleType {
-    Schedule = 'SCHEDULE',
-    Performance = 'PERFORMANCE'
-}
-
-/**
- * 
- * @export
- * @interface SPBudgetHistory
- */
-export interface SPBudgetHistory {
-    /**
-     * To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
      * @type {string}
-     * @memberof SPBudgetHistory
+     * @memberof SBVideoCampaignResponseCommon
      */
-    nextToken?: string;
-    /**
-     * 
-     * @type {Array<SPRuleBasedBudget>}
-     * @memberof SPBudgetHistory
-     */
-    history?: Array<SPRuleBasedBudget>;
-}
-/**
- * 
- * @export
- * @interface SPBudgetRule
- */
-export interface SPBudgetRule {
+    endDate?: string | null;
     /**
      * 
      * @type {State}
-     * @memberof SPBudgetRule
+     * @memberof SBVideoCampaignResponseCommon
      */
-    ruleState?: State;
+    state?: State;
     /**
-     * Epoch time of budget rule update. Read-only.
-     * @type {number}
-     * @memberof SPBudgetRule
+     * |Status|Description| |------|-----------| |ASIN_NOT_BUYABLE| The ASIN can\'t be purchased due to eligibility or availability.| |BILLING_ERROR| Billing information requires correction.| |ENDED| THe `endDate` specified in the campaign object occurs in the past.| |LANDING_PAGE_NOT_AVAILABLE| The specified landing page is not available. This may be caused by an incorrect address or a landing page with less than three ASINs.| |OUT_OF_BUDGET| The campaign has run out of budget.| |PAUSED| The campaign state set to `paused`.| |PENDING_REVIEW|: A newly created campaign that has not passed moderation review. Note that moderation review may take up to 72 hours.| |READY| The campaign is scheduled for a future date.| |REJECTED| The campaign failed moderation review.| |RUNNING| The campaign is enabled and serving.| |SCHEDULED| A transitive state between `ready` and `running`, as child entities associated with the campaign move to a running state.| |TERMINATED|The state of the campaign is set to `archived`.|
+     * @type {string}
+     * @memberof SBVideoCampaignResponseCommon
      */
-    lastUpdatedDate?: number;
+    servingStatus?: SBVideoCampaignResponseCommonServingStatusEnum;
     /**
-     * Epoch time of budget rule creation. Read-only.
-     * @type {number}
-     * @memberof SPBudgetRule
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBVideoCampaignResponseCommon
      */
-    createdDate?: number;
+    brandEntityId?: string;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBVideoCampaignResponseCommon
+     */
+    portfolioId?: number;
     /**
      * 
-     * @type {SPBudgetRuleDetails}
-     * @memberof SPBudgetRule
+     * @type {AdFormat}
+     * @memberof SBVideoCampaignResponseCommon
      */
-    ruleDetails?: SPBudgetRuleDetails;
+    adFormat?: AdFormat;
     /**
-     * The budget rule identifier.
-     * @type {string}
-     * @memberof SPBudgetRule
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoCampaignResponseCommon
      */
-    ruleId: string;
+    creative?: SBVideoCreative;
     /**
-     * The budget rule status. Read-only.
-     * @type {string}
-     * @memberof SPBudgetRule
+     * 
+     * @type {SBDetailPageLandingPage}
+     * @memberof SBVideoCampaignResponseCommon
      */
-    ruleStatus?: string;
+    landingPage?: SBDetailPageLandingPage;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBVideoCampaignResponseCommonServingStatusEnum {
+    AsinNotBuyable = 'ASIN_NOT_BUYABLE',
+    BillingError = 'BILLING_ERROR',
+    Ended = 'ENDED',
+    LandingPageNotAvailable = 'LANDING_PAGE_NOT_AVAILABLE',
+    OutOfBudget = 'OUT_OF_BUDGET',
+    Paused = 'PAUSED',
+    PendingReview = 'PENDING_REVIEW',
+    Ready = 'READY',
+    Rejected = 'REJECTED',
+    Running = 'RUNNING',
+    Scheduled = 'SCHEDULED',
+    Terminated = 'TERMINATED'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBVideoCampaignResponseCommonAllOf
+ */
+export interface SBVideoCampaignResponseCommonAllOf {
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBVideoCampaignResponseCommonAllOf
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoCampaignResponseCommonAllOf
+     */
+    creative?: SBVideoCreative;
+    /**
+     * 
+     * @type {SBDetailPageLandingPage}
+     * @memberof SBVideoCampaignResponseCommonAllOf
+     */
+    landingPage?: SBDetailPageLandingPage;
 }
 /**
- * Object representing details of a budget rule for SP campaign
+ * 
  * @export
- * @interface SPBudgetRuleDetails
+ * @interface SBVideoCreateCampaignRequestCommon
  */
-export interface SPBudgetRuleDetails {
+export interface SBVideoCreateCampaignRequestCommon {
     /**
-     * 
-     * @type {RuleDuration}
-     * @memberof SPBudgetRuleDetails
-     */
-    duration?: RuleDuration;
-    /**
-     * 
-     * @type {Recurrence}
-     * @memberof SPBudgetRuleDetails
-     */
-    recurrence?: Recurrence;
-    /**
-     * 
-     * @type {SPRuleType}
-     * @memberof SPBudgetRuleDetails
-     */
-    ruleType?: SPRuleType;
-    /**
-     * 
-     * @type {BudgetIncreaseBy}
-     * @memberof SPBudgetRuleDetails
-     */
-    budgetIncreaseBy?: BudgetIncreaseBy;
-    /**
-     * The budget rule name. Required to be unique within a campaign.
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
      * @type {string}
-     * @memberof SPBudgetRuleDetails
+     * @memberof SBVideoCreateCampaignRequestCommon
      */
     name?: string;
     /**
-     * 
-     * @type {PerformanceMeasureCondition}
-     * @memberof SPBudgetRuleDetails
+     * The budget amount associated with the campaign.
+     * @type {number}
+     * @memberof SBVideoCreateCampaignRequestCommon
      */
-    performanceMeasureCondition?: PerformanceMeasureCondition;
-}
-/**
- * 
- * @export
- * @interface SPCampaignBudgetRule
- */
-export interface SPCampaignBudgetRule {
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBVideoCreateCampaignRequestCommon
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBVideoCreateCampaignRequestCommon
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBVideoCreateCampaignRequestCommon
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBVideoCreateCampaignRequestCommon
+     */
+    adFormat?: AdFormat;
     /**
      * 
      * @type {State}
-     * @memberof SPCampaignBudgetRule
+     * @memberof SBVideoCreateCampaignRequestCommon
      */
-    ruleState?: State;
+    state?: State;
     /**
-     * Epoch time of budget rule update. Read-only.
-     * @type {number}
-     * @memberof SPCampaignBudgetRule
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBVideoCreateCampaignRequestCommon
      */
-    lastUpdatedDate?: number;
+    brandEntityId?: string;
     /**
-     * Epoch time of budget rule creation. Read-only.
+     * The identifier of the portfolio to which the campaign is associated.
      * @type {number}
-     * @memberof SPCampaignBudgetRule
+     * @memberof SBVideoCreateCampaignRequestCommon
      */
-    createdDate?: number;
+    portfolioId?: number;
     /**
      * 
-     * @type {SPBudgetRuleDetails}
-     * @memberof SPCampaignBudgetRule
+     * @type {SBVideoCreative}
+     * @memberof SBVideoCreateCampaignRequestCommon
      */
-    ruleDetails?: SPBudgetRuleDetails;
-    /**
-     * The budget rule identifier.
-     * @type {string}
-     * @memberof SPCampaignBudgetRule
-     */
-    ruleId: string;
-    /**
-     * The budget rule evaluation status. Read-only.
-     * @type {string}
-     * @memberof SPCampaignBudgetRule
-     */
-    ruleStatus?: string;
+    creative?: SBVideoCreative;
 }
 /**
  * 
  * @export
- * @interface SPGetAssociatedCampaignsResponse
+ * @interface SBVideoCreateCampaignWithExpressions
  */
-export interface SPGetAssociatedCampaignsResponse {
+export interface SBVideoCreateCampaignWithExpressions {
     /**
-     * A list of campaigns that are associated to this budget rule.
-     * @type {Array<AssociatedCampaign>}
-     * @memberof SPGetAssociatedCampaignsResponse
-     */
-    associatedCampaigns?: Array<AssociatedCampaign>;
-    /**
-     * To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
      * @type {string}
-     * @memberof SPGetAssociatedCampaignsResponse
+     * @memberof SBVideoCreateCampaignWithExpressions
      */
-    nextToken?: string;
+    name?: string;
+    /**
+     * The budget amount associated with the campaign.
+     * @type {number}
+     * @memberof SBVideoCreateCampaignWithExpressions
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBVideoCreateCampaignWithExpressions
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBVideoCreateCampaignWithExpressions
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBVideoCreateCampaignWithExpressions
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBVideoCreateCampaignWithExpressions
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBVideoCreateCampaignWithExpressions
+     */
+    state?: State;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBVideoCreateCampaignWithExpressions
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBVideoCreateCampaignWithExpressions
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoCreateCampaignWithExpressions
+     */
+    creative?: SBVideoCreative;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsTargets>}
+     * @memberof SBVideoCreateCampaignWithExpressions
+     */
+    targets?: Array<SBCommonTargetsTargets>;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsNegativeTargets>}
+     * @memberof SBVideoCreateCampaignWithExpressions
+     */
+    negativeTargets?: Array<SBCommonTargetsNegativeTargets>;
 }
 /**
  * 
  * @export
- * @interface SPListAssociatedBudgetRulesResponse
+ * @interface SBVideoCreateCampaignWithKeywords
  */
-export interface SPListAssociatedBudgetRulesResponse {
+export interface SBVideoCreateCampaignWithKeywords {
     /**
-     * A list of associated budget rules.
-     * @type {Array<SPCampaignBudgetRule>}
-     * @memberof SPListAssociatedBudgetRulesResponse
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
+     * @type {string}
+     * @memberof SBVideoCreateCampaignWithKeywords
      */
-    associatedRules?: Array<SPCampaignBudgetRule>;
+    name?: string;
+    /**
+     * The budget amount associated with the campaign.
+     * @type {number}
+     * @memberof SBVideoCreateCampaignWithKeywords
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBVideoCreateCampaignWithKeywords
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBVideoCreateCampaignWithKeywords
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBVideoCreateCampaignWithKeywords
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBVideoCreateCampaignWithKeywords
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBVideoCreateCampaignWithKeywords
+     */
+    state?: State;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBVideoCreateCampaignWithKeywords
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBVideoCreateCampaignWithKeywords
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoCreateCampaignWithKeywords
+     */
+    creative?: SBVideoCreative;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<SBCommonKeywordsKeywords>}
+     * @memberof SBVideoCreateCampaignWithKeywords
+     */
+    keywords?: Array<SBCommonKeywordsKeywords>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
+     * @memberof SBVideoCreateCampaignWithKeywords
+     */
+    negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
 }
 /**
  * 
  * @export
- * @interface SPRuleBasedBudget
+ * @interface SBVideoCreateDraftCampaignRequestCommon
  */
-export interface SPRuleBasedBudget {
+export interface SBVideoCreateDraftCampaignRequestCommon {
     /**
-     * Epoch time of budget rule execution.
-     * @type {number}
-     * @memberof SPRuleBasedBudget
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBVideoCreateDraftCampaignRequestCommon
      */
-    executionTime?: number;
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBVideoCreateDraftCampaignRequestCommon
+     */
+    budget: number;
     /**
      * 
-     * @type {SPBudgetRule}
-     * @memberof SPRuleBasedBudget
+     * @type {BudgetType}
+     * @memberof SBVideoCreateDraftCampaignRequestCommon
      */
-    appliedRule?: SPBudgetRule;
+    budgetType: BudgetType;
     /**
-     * The budget value.
-     * @type {number}
-     * @memberof SPRuleBasedBudget
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBVideoCreateDraftCampaignRequestCommon
      */
-    ruleBasedBudgetValue?: number;
+    startDate?: string;
     /**
-     * The daily budget value.
-     * @type {number}
-     * @memberof SPRuleBasedBudget
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBVideoCreateDraftCampaignRequestCommon
      */
-    dailyBudgetValue?: number;
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBVideoCreateDraftCampaignRequestCommon
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBVideoCreateDraftCampaignRequestCommon
+     */
+    portfolioId?: number;
     /**
      * 
-     * @type {PerformanceMetricValue}
-     * @memberof SPRuleBasedBudget
+     * @type {AdFormat}
+     * @memberof SBVideoCreateDraftCampaignRequestCommon
      */
-    performanceMetric?: PerformanceMetricValue;
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoCreateDraftCampaignRequestCommon
+     */
+    creative?: SBVideoCreative;
 }
 /**
- * The type of budget rule. SCHEDULE: A budget rule based on a start and end date. PERFORMANCE: A budget rule based on advertising performance criteria.
+ * 
  * @export
- * @enum {string}
+ * @interface SBVideoCreateDraftCampaignWithKeywords
  */
-
-export enum SPRuleType {
-    Schedule = 'SCHEDULE',
-    Performance = 'PERFORMANCE'
+export interface SBVideoCreateDraftCampaignWithKeywords {
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBVideoCreateDraftCampaignWithKeywords
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBVideoCreateDraftCampaignWithKeywords
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBVideoCreateDraftCampaignWithKeywords
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBVideoCreateDraftCampaignWithKeywords
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBVideoCreateDraftCampaignWithKeywords
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBVideoCreateDraftCampaignWithKeywords
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBVideoCreateDraftCampaignWithKeywords
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBVideoCreateDraftCampaignWithKeywords
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoCreateDraftCampaignWithKeywords
+     */
+    creative?: SBVideoCreative;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<SBCommonKeywordsKeywords>}
+     * @memberof SBVideoCreateDraftCampaignWithKeywords
+     */
+    keywords?: Array<SBCommonKeywordsKeywords>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
+     * @memberof SBVideoCreateDraftCampaignWithKeywords
+     */
+    negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
 }
-
 /**
- * The shopper segment type.
+ * 
  * @export
- * @enum {string}
+ * @interface SBVideoCreateDraftCampaignWithProductTargets
  */
-
-export enum ShopperSegmentType {
-    ShopperSegmentNewToBrandPurchase = 'shopperSegmentNewToBrandPurchase'
+export interface SBVideoCreateDraftCampaignWithProductTargets {
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBVideoCreateDraftCampaignWithProductTargets
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBVideoCreateDraftCampaignWithProductTargets
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBVideoCreateDraftCampaignWithProductTargets
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBVideoCreateDraftCampaignWithProductTargets
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBVideoCreateDraftCampaignWithProductTargets
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBVideoCreateDraftCampaignWithProductTargets
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBVideoCreateDraftCampaignWithProductTargets
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBVideoCreateDraftCampaignWithProductTargets
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoCreateDraftCampaignWithProductTargets
+     */
+    creative?: SBVideoCreative;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsTargets>}
+     * @memberof SBVideoCreateDraftCampaignWithProductTargets
+     */
+    targets?: Array<SBCommonTargetsTargets>;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsNegativeTargets>}
+     * @memberof SBVideoCreateDraftCampaignWithProductTargets
+     */
+    negativeTargets?: Array<SBCommonTargetsNegativeTargets>;
+}
+/**
+ * Render one product image with associated media.
+ * @export
+ * @interface SBVideoCreative
+ */
+export interface SBVideoCreative {
+    /**
+     * An array of ASINs associated with the creative.
+     * @type {Array<string>}
+     * @memberof SBVideoCreative
+     */
+    asins?: Array<string>;
+    /**
+     * Video Asset IDs associated with the creative.
+     * @type {Array<string>}
+     * @memberof SBVideoCreative
+     */
+    videoMediaIds?: Array<string>;
+    /**
+     * Type of creative
+     * @type {string}
+     * @memberof SBVideoCreative
+     */
+    type?: SBVideoCreativeTypeEnum;
 }
 
 /**
- * The budget rule state.
+    * @export
+    * @enum {string}
+    */
+export enum SBVideoCreativeTypeEnum {
+    Video = 'video'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBVideoCreativeAllOf
+ */
+export interface SBVideoCreativeAllOf {
+    /**
+     * An array of ASINs associated with the creative.
+     * @type {Array<string>}
+     * @memberof SBVideoCreativeAllOf
+     */
+    asins?: Array<string>;
+    /**
+     * Video Asset IDs associated with the creative.
+     * @type {Array<string>}
+     * @memberof SBVideoCreativeAllOf
+     */
+    videoMediaIds?: Array<string>;
+    /**
+     * Type of creative
+     * @type {string}
+     * @memberof SBVideoCreativeAllOf
+     */
+    type?: SBVideoCreativeAllOfTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBVideoCreativeAllOfTypeEnum {
+    Video = 'video'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBVideoDraftCampaignBase
+ */
+export interface SBVideoDraftCampaignBase {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBVideoDraftCampaignBase
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Duplicate campaign names are not allowed.
+     * @type {string}
+     * @memberof SBVideoDraftCampaignBase
+     */
+    name?: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBVideoDraftCampaignBase
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBVideoDraftCampaignBase
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date for the campaign. If this field is not set to a value, the current date is used.
+     * @type {string}
+     * @memberof SBVideoDraftCampaignBase
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date for the campaign. Must be greater than the value for `startDate`. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBVideoDraftCampaignBase
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBVideoDraftCampaignBase
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBVideoDraftCampaignBase
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBVideoDraftCampaignBase
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoDraftCampaignBase
+     */
+    creative?: SBVideoCreative;
+    /**
+     * 
+     * @type {SBDetailPageLandingPage}
+     * @memberof SBVideoDraftCampaignBase
+     */
+    landingPage?: SBDetailPageLandingPage;
+}
+/**
+ * SB create video campaign with keywords
+ * @export
+ * @interface SBVideoDraftCampaignWithKeywords
+ */
+export interface SBVideoDraftCampaignWithKeywords {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBVideoDraftCampaignWithKeywords
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Duplicate campaign names are not allowed.
+     * @type {string}
+     * @memberof SBVideoDraftCampaignWithKeywords
+     */
+    name?: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBVideoDraftCampaignWithKeywords
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBVideoDraftCampaignWithKeywords
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date for the campaign. If this field is not set to a value, the current date is used.
+     * @type {string}
+     * @memberof SBVideoDraftCampaignWithKeywords
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date for the campaign. Must be greater than the value for `startDate`. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBVideoDraftCampaignWithKeywords
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBVideoDraftCampaignWithKeywords
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBVideoDraftCampaignWithKeywords
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBVideoDraftCampaignWithKeywords
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoDraftCampaignWithKeywords
+     */
+    creative?: SBVideoCreative;
+    /**
+     * 
+     * @type {SBDetailPageLandingPage}
+     * @memberof SBVideoDraftCampaignWithKeywords
+     */
+    landingPage?: SBDetailPageLandingPage;
+    /**
+     * An array of keywords associated with the Draft campaign.
+     * @type {Array<SBDraftKeyword>}
+     * @memberof SBVideoDraftCampaignWithKeywords
+     */
+    keywords?: Array<SBDraftKeyword>;
+    /**
+     * An array of negative keywords associated with the Draft campaign.
+     * @type {Array<SBDraftNegativeKeyword>}
+     * @memberof SBVideoDraftCampaignWithKeywords
+     */
+    negativeKeywords?: Array<SBDraftNegativeKeyword>;
+}
+/**
+ * SB create video campaign with targets
+ * @export
+ * @interface SBVideoDraftCampaignWithTargets
+ */
+export interface SBVideoDraftCampaignWithTargets {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBVideoDraftCampaignWithTargets
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Duplicate campaign names are not allowed.
+     * @type {string}
+     * @memberof SBVideoDraftCampaignWithTargets
+     */
+    name?: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBVideoDraftCampaignWithTargets
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBVideoDraftCampaignWithTargets
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date for the campaign. If this field is not set to a value, the current date is used.
+     * @type {string}
+     * @memberof SBVideoDraftCampaignWithTargets
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date for the campaign. Must be greater than the value for `startDate`. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBVideoDraftCampaignWithTargets
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBVideoDraftCampaignWithTargets
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBVideoDraftCampaignWithTargets
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBVideoDraftCampaignWithTargets
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoDraftCampaignWithTargets
+     */
+    creative?: SBVideoCreative;
+    /**
+     * 
+     * @type {SBDetailPageLandingPage}
+     * @memberof SBVideoDraftCampaignWithTargets
+     */
+    landingPage?: SBDetailPageLandingPage;
+    /**
+     * An array of targets associated with the draft campaign.
+     * @type {Array<SBDraftTargetingClause>}
+     * @memberof SBVideoDraftCampaignWithTargets
+     */
+    targets?: Array<SBDraftTargetingClause>;
+    /**
+     * An array of negative keywords associated with the draft campaign.
+     * @type {Array<SBDraftNegativeTargetingClause>}
+     * @memberof SBVideoDraftCampaignWithTargets
+     */
+    negativeTargets?: Array<SBDraftNegativeTargetingClause>;
+}
+/**
+ * 
+ * @export
+ * @interface SBVideoListCampaignItem
+ */
+export interface SBVideoListCampaignItem {
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof SBVideoListCampaignItem
+     */
+    campaignId?: number;
+    /**
+     * The campaign name.
+     * @type {string}
+     * @memberof SBVideoListCampaignItem
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBVideoListCampaignItem
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * 
+     * @type {number}
+     * @memberof SBVideoListCampaignItem
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBVideoListCampaignItem
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBVideoListCampaignItem
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBVideoListCampaignItem
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBVideoListCampaignItem
+     */
+    state?: State;
+    /**
+     * |Status|Description| |------|-----------| |ASIN_NOT_BUYABLE| The ASIN can\'t be purchased due to eligibility or availability.| |BILLING_ERROR| Billing information requires correction.| |ENDED| THe `endDate` specified in the campaign object occurs in the past.| |LANDING_PAGE_NOT_AVAILABLE| The specified landing page is not available. This may be caused by an incorrect address or a landing page with less than three ASINs.| |OUT_OF_BUDGET| The campaign has run out of budget.| |PAUSED| The campaign state set to `paused`.| |PENDING_REVIEW|: A newly created campaign that has not passed moderation review. Note that moderation review may take up to 72 hours.| |READY| The campaign is scheduled for a future date.| |REJECTED| The campaign failed moderation review.| |RUNNING| The campaign is enabled and serving.| |SCHEDULED| A transitive state between `ready` and `running`, as child entities associated with the campaign move to a running state.| |TERMINATED|The state of the campaign is set to `archived`.|
+     * @type {string}
+     * @memberof SBVideoListCampaignItem
+     */
+    servingStatus?: SBVideoListCampaignItemServingStatusEnum;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBVideoListCampaignItem
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBVideoListCampaignItem
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormat}
+     * @memberof SBVideoListCampaignItem
+     */
+    adFormat?: AdFormat;
+    /**
+     * 
+     * @type {SBDetailPageLandingPage}
+     * @memberof SBVideoListCampaignItem
+     */
+    landingPage?: SBDetailPageLandingPage;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoListCampaignItem
+     */
+    creative?: SBVideoCreative;
+    /**
+     * 
+     * @type {SupplySource}
+     * @memberof SBVideoListCampaignItem
+     */
+    supplySource?: SupplySource;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SBVideoListCampaignItemServingStatusEnum {
+    AsinNotBuyable = 'ASIN_NOT_BUYABLE',
+    BillingError = 'BILLING_ERROR',
+    Ended = 'ENDED',
+    LandingPageNotAvailable = 'LANDING_PAGE_NOT_AVAILABLE',
+    OutOfBudget = 'OUT_OF_BUDGET',
+    Paused = 'PAUSED',
+    PendingReview = 'PENDING_REVIEW',
+    Ready = 'READY',
+    Rejected = 'REJECTED',
+    Running = 'RUNNING',
+    Scheduled = 'SCHEDULED',
+    Terminated = 'TERMINATED'
+}
+
+/**
+ * 
+ * @export
+ * @interface SBVideoListCampaignItemAllOf
+ */
+export interface SBVideoListCampaignItemAllOf {
+    /**
+     * 
+     * @type {SBDetailPageLandingPage}
+     * @memberof SBVideoListCampaignItemAllOf
+     */
+    landingPage?: SBDetailPageLandingPage;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoListCampaignItemAllOf
+     */
+    creative?: SBVideoCreative;
+    /**
+     * 
+     * @type {SupplySource}
+     * @memberof SBVideoListCampaignItemAllOf
+     */
+    supplySource?: SupplySource;
+}
+/**
+ * 
+ * @export
+ * @interface SBVideoUpdateDraftCampaignRequestCommon
+ */
+export interface SBVideoUpdateDraftCampaignRequestCommon {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommon
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommon
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommon
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommon
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommon
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommon
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommon
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommon
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommon
+     */
+    creative?: SBVideoCreative;
+}
+/**
+ * 
+ * @export
+ * @interface SBVideoUpdateDraftCampaignRequestCommonAllOf
+ */
+export interface SBVideoUpdateDraftCampaignRequestCommonAllOf {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommonAllOf
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommonAllOf
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommonAllOf
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommonAllOf
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommonAllOf
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommonAllOf
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommonAllOf
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommonAllOf
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoUpdateDraftCampaignRequestCommonAllOf
+     */
+    creative?: SBVideoCreative;
+}
+/**
+ * 
+ * @export
+ * @interface SBVideoUpdateDraftCampaignRequestWithKeywords
+ */
+export interface SBVideoUpdateDraftCampaignRequestWithKeywords {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithKeywords
+     */
+    draftCampaignId: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithKeywords
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithKeywords
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithKeywords
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithKeywords
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithKeywords
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithKeywords
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithKeywords
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithKeywords
+     */
+    creative?: SBVideoCreative;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords>}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithKeywords
+     */
+    keywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithKeywords
+     */
+    negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
+}
+/**
+ * 
+ * @export
+ * @interface SBVideoUpdateDraftCampaignRequestWithProductTargets
+ */
+export interface SBVideoUpdateDraftCampaignRequestWithProductTargets {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithProductTargets
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithProductTargets
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithProductTargets
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithProductTargets
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithProductTargets
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithProductTargets
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithProductTargets
+     */
+    brandEntityId?: string;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithProductTargets
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBVideoCreative}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithProductTargets
+     */
+    creative?: SBVideoCreative;
+    /**
+     * 
+     * @type {Array<SBTarget>}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithProductTargets
+     */
+    targets?: Array<SBTarget>;
+    /**
+     * 
+     * @type {Array<SBNegativeTarget>}
+     * @memberof SBVideoUpdateDraftCampaignRequestWithProductTargets
+     */
+    negativeTargets?: Array<SBNegativeTarget>;
+}
+/**
+ * 
+ * @export
+ * @interface ShopperSegmentBiddingControls
+ */
+export interface ShopperSegmentBiddingControls {
+    /**
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof ShopperSegmentBiddingControls
+     */
+    bidOptimizationStrategy?: BidOptimizationStrategy;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof ShopperSegmentBiddingControls
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+}
+/**
+ * 
+ * @export
+ * @interface SpooferError
+ */
+export interface SpooferError {
+    /**
+     * 
+     * @type {BasicErrorObject}
+     * @memberof SpooferError
+     */
+    SpooferError?: BasicErrorObject;
+}
+/**
+ * 
  * @export
  * @enum {string}
  */
 
 export enum State {
-    Active = 'ACTIVE',
-    Paused = 'PAUSED'
+    Enabled = 'enabled',
+    Paused = 'paused',
+    Archived = 'archived'
 }
 
 /**
- * Suggested Headline in response object.
- * @export
- * @interface SuggestedHeadline
- */
-export interface SuggestedHeadline {
-    /**
-     * Unique Id of suggested headline.
-     * @type {string}
-     * @memberof SuggestedHeadline
-     */
-    headlineId?: string;
-    /**
-     * String that contains suggested headline.
-     * @type {string}
-     * @memberof SuggestedHeadline
-     */
-    headline?: string;
-}
-/**
- * Text component which needs to be pre moderated
- * @export
- * @interface TextComponent
- */
-export interface TextComponent {
-    /**
-     * Type of text component.
-     * @type {string}
-     * @memberof TextComponent
-     */
-    componentType: TextComponentComponentTypeEnum;
-    /**
-     * Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.
-     * @type {string}
-     * @memberof TextComponent
-     */
-    id: string;
-    /**
-     * Text which needs to be moderated.
-     * @type {string}
-     * @memberof TextComponent
-     */
-    text: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum TextComponentComponentTypeEnum {
-    Headline = 'HEADLINE',
-    BrandName = 'BRAND_NAME',
-    OtherText = 'OTHER_TEXT'
-}
-
-/**
- * Pre moderation result for a text component
- * @export
- * @interface TextComponentResponse
- */
-export interface TextComponentResponse {
-    /**
-     * The pre moderation status of the component.
-     * @type {string}
-     * @memberof TextComponentResponse
-     */
-    preModerationStatus?: TextComponentResponsePreModerationStatusEnum;
-    /**
-     * Type of the text component.
-     * @type {string}
-     * @memberof TextComponentResponse
-     */
-    componentType?: TextComponentResponseComponentTypeEnum;
-    /**
-     * A list of corrected text without any policy violation. You could consider replacing the component with one of the corrected texts
-     * @type {Array<string>}
-     * @memberof TextComponentResponse
-     */
-    corrections?: Array<string>;
-    /**
-     * A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.
-     * @type {Array<TextPolicyViolation>}
-     * @memberof TextComponentResponse
-     */
-    policyViolations?: Array<TextPolicyViolation>;
-    /**
-     * Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.
-     * @type {string}
-     * @memberof TextComponentResponse
-     */
-    id?: string;
-    /**
-     * Text which got pre moderated.
-     * @type {string}
-     * @memberof TextComponentResponse
-     */
-    text?: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum TextComponentResponsePreModerationStatusEnum {
-    Rejected = 'REJECTED',
-    Approved = 'APPROVED',
-    Failed = 'FAILED',
-    RetryableFailure = 'RETRYABLE_FAILURE'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum TextComponentResponseComponentTypeEnum {
-    Headline = 'HEADLINE',
-    BrandName = 'BRAND_NAME',
-    OtherText = 'OTHER_TEXT'
-}
-
-/**
- * Structure of a text evidence
- * @export
- * @interface TextEvidence
- */
-export interface TextEvidence {
-    /**
-     * The specific text determined to violate the specified policy in reviewedText.
-     * @type {string}
-     * @memberof TextEvidence
-     */
-    violatingText?: string;
-    /**
-     * 
-     * @type {TextEvidencePosition}
-     * @memberof TextEvidence
-     */
-    position?: TextEvidencePosition;
-}
-/**
- * Position in the textComponent where the policy violation is detected.
- * @export
- * @interface TextEvidencePosition
- */
-export interface TextEvidencePosition {
-    /**
-     * Zero-based index into the text in textComponent where the text specified in violatingText starts.
-     * @type {number}
-     * @memberof TextEvidencePosition
-     */
-    start?: number;
-    /**
-     * Zero-based index into the text in textComponent where the text specified in violatingText ends.
-     * @type {number}
-     * @memberof TextEvidencePosition
-     */
-    end?: number;
-}
-/**
- * Structure of policy violation for a text component
- * @export
- * @interface TextPolicyViolation
- */
-export interface TextPolicyViolation {
-    /**
-     * A human-readable description of the policy.
-     * @type {string}
-     * @memberof TextPolicyViolation
-     */
-    policyDescription?: string;
-    /**
-     * A policy violation code.
-     * @type {string}
-     * @memberof TextPolicyViolation
-     */
-    name?: string;
-    /**
-     * Type of policy violation.
-     * @type {string}
-     * @memberof TextPolicyViolation
-     */
-    type?: TextPolicyViolationTypeEnum;
-    /**
-     * Address of the policy documentation. Follow the link to learn more about the specified policy.
-     * @type {string}
-     * @memberof TextPolicyViolation
-     */
-    policyLinkUrl?: string;
-    /**
-     * List of text evidences
-     * @type {Array<TextEvidence>}
-     * @memberof TextPolicyViolation
-     */
-    textEvidences?: Array<TextEvidence>;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum TextPolicyViolationTypeEnum {
-    Warning = 'WARNING',
-    Rejected = 'REJECTED'
-}
-
-/**
- * 
+ * The supply source of the campaign. Use `AMAZON` for placements on Amazon website. Use `STREAMING_VIDEO` for off-site video placements such as IMDb TV. Default value is `AMAZON`
  * @export
  * @enum {string}
  */
 
-export enum ThrottledErrorCode {
-    Throttled = 'THROTTLED'
+export enum SupplySource {
+    Amazon = 'AMAZON',
+    StreamingVideo = 'STREAMING_VIDEO'
 }
 
 /**
  * 
  * @export
- * @interface ThrottlingExceptionResponseContent
+ * @interface TargetError
  */
-export interface ThrottlingExceptionResponseContent {
+export interface TargetError {
     /**
      * 
-     * @type {ThrottledErrorCode}
-     * @memberof ThrottlingExceptionResponseContent
+     * @type {BasicErrorObject & object}
+     * @memberof TargetError
      */
-    code: ThrottledErrorCode;
-    /**
-     * Human readable error message.
-     * @type {string}
-     * @memberof ThrottlingExceptionResponseContent
-     */
-    message: string;
-}
-/**
- * 
- * @export
- * @enum {string}
- */
-
-export enum UnauthorizedErrorCode {
-    Unauthorized = 'UNAUTHORIZED'
+    TargetError?: BasicErrorObject & object;
 }
 
 /**
- * 
- * @export
- * @interface UnauthorizedExceptionResponseContent
- */
-export interface UnauthorizedExceptionResponseContent {
-    /**
-     * 
-     * @type {UnauthorizedErrorCode}
-     * @memberof UnauthorizedExceptionResponseContent
-     */
-    code: UnauthorizedErrorCode;
-    /**
-     * Human readable error message.
-     * @type {string}
-     * @memberof UnauthorizedExceptionResponseContent
-     */
-    message: string;
-}
-/**
- * 
- * @export
- * @interface UpdateBudgetRulesResponse
- */
-export interface UpdateBudgetRulesResponse {
-    /**
-     * 
-     * @type {Array<BudgetRuleResponse>}
-     * @memberof UpdateBudgetRulesResponse
-     */
-    responses?: Array<BudgetRuleResponse>;
-}
-/**
- * 
- * @export
- * @interface UpdateSBBudgetRulesRequest
- */
-export interface UpdateSBBudgetRulesRequest {
-    /**
-     * A list of budget rule details.
-     * @type {Array<SBBudgetRule>}
-     * @memberof UpdateSBBudgetRulesRequest
-     */
-    budgetRulesDetails?: Array<SBBudgetRule>;
-}
-/**
- * Request object for updating budget rule for SD campaign
- * @export
- * @interface UpdateSDBudgetRulesRequest
- */
-export interface UpdateSDBudgetRulesRequest {
-    /**
-     * A list of budget rule details.
-     * @type {Array<SDBudgetRule>}
-     * @memberof UpdateSDBudgetRulesRequest
-     */
-    budgetRulesDetails?: Array<SDBudgetRule>;
-}
-/**
- * Request object for updating budget rule for SP campaign
- * @export
- * @interface UpdateSPBudgetRulesRequest
- */
-export interface UpdateSPBudgetRulesRequest {
-    /**
-     * A list of budget rule details.
-     * @type {Array<SPBudgetRule>}
-     * @memberof UpdateSPBudgetRulesRequest
-     */
-    budgetRulesDetails?: Array<SPBudgetRule>;
-}
-/**
- * 
- * @export
- * @interface ValidationExceptionResponseContent
- */
-export interface ValidationExceptionResponseContent {
-    /**
-     * 
-     * @type {InvalidArgumentErrorCode}
-     * @memberof ValidationExceptionResponseContent
-     */
-    code: InvalidArgumentErrorCode;
-    /**
-     * Human readable error message.
-     * @type {string}
-     * @memberof ValidationExceptionResponseContent
-     */
-    message: string;
-}
-/**
- * Video component which needs to be pre moderated. A publicly accessible videoUrl must be sent.
- * @export
- * @interface VideoComponent
- */
-export interface VideoComponent {
-    /**
-     * Type of the video component.
-     * @type {string}
-     * @memberof VideoComponent
-     */
-    componentType: VideoComponentComponentTypeEnum;
-    /**
-     * Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.
-     * @type {string}
-     * @memberof VideoComponent
-     */
-    id: string;
-    /**
-     * Url of the video to be pre moderated. The url must be publicly accessible.
-     * @type {string}
-     * @memberof VideoComponent
-     */
-    url: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum VideoComponentComponentTypeEnum {
-    SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO',
-    OtherVideo = 'OTHER_VIDEO'
-}
-
-/**
- * Pre moderation result for a video component
- * @export
- * @interface VideoComponentResponse
- */
-export interface VideoComponentResponse {
-    /**
-     * The pre moderation status of the component.
-     * @type {string}
-     * @memberof VideoComponentResponse
-     */
-    preModerationStatus?: VideoComponentResponsePreModerationStatusEnum;
-    /**
-     * Type of the video component.
-     * @type {string}
-     * @memberof VideoComponentResponse
-     */
-    componentType?: VideoComponentResponseComponentTypeEnum;
-    /**
-     * A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.
-     * @type {Array<VideoPolicyViolation>}
-     * @memberof VideoComponentResponse
-     */
-    policyViolations?: Array<VideoPolicyViolation>;
-    /**
-     * Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.
-     * @type {string}
-     * @memberof VideoComponentResponse
-     */
-    id?: string;
-    /**
-     * Publicly accessible url of the video that got pre moderated.
-     * @type {string}
-     * @memberof VideoComponentResponse
-     */
-    url?: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum VideoComponentResponsePreModerationStatusEnum {
-    Rejected = 'REJECTED',
-    Approved = 'APPROVED',
-    Failed = 'FAILED',
-    RetryableFailure = 'RETRYABLE_FAILURE'
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export enum VideoComponentResponseComponentTypeEnum {
-    SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO',
-    OtherVideo = 'OTHER_VIDEO'
-}
-
-/**
- * Structure of a video evidence
- * @export
- * @interface VideoEvidence
- */
-export interface VideoEvidence {
-    /**
-     * The start position (in seconds) of the content that violates the specified policy within the video.
-     * @type {number}
-     * @memberof VideoEvidence
-     */
-    start?: number;
-    /**
-     * The end position (in seconds) of the content that violates the specified policy within the video.
-     * @type {number}
-     * @memberof VideoEvidence
-     */
-    end?: number;
-}
-/**
- * Structure of policy violation for a video component
- * @export
- * @interface VideoPolicyViolation
- */
-export interface VideoPolicyViolation {
-    /**
-     * A human-readable description of the policy.
-     * @type {string}
-     * @memberof VideoPolicyViolation
-     */
-    policyDescription?: string;
-    /**
-     * List of evidences for the policy violations detected on the video component.
-     * @type {Array<VideoEvidence>}
-     * @memberof VideoPolicyViolation
-     */
-    videoEvidences?: Array<VideoEvidence>;
-    /**
-     * A policy violation code.
-     * @type {string}
-     * @memberof VideoPolicyViolation
-     */
-    name?: string;
-    /**
-     * Type of policy violation.
-     * @type {string}
-     * @memberof VideoPolicyViolation
-     */
-    type?: VideoPolicyViolationTypeEnum;
-    /**
-     * Address of the policy documentation. Follow the link to learn more about the specified policy.
-     * @type {string}
-     * @memberof VideoPolicyViolation
-     */
-    policyLinkUrl?: string;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum VideoPolicyViolationTypeEnum {
-    Warning = 'WARNING',
-    Rejected = 'REJECTED'
-}
-
-
-/**
- * BudgetRulesApi - axios parameter creator
+ * AdGroupsApi - axios parameter creator
  * @export
  */
-export const BudgetRulesApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AdGroupsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * A maximum of 250 rules can be associated to a campaign. Note that the name of each rule associated to a campaign is required to be unique.  **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-         * @summary Associates one or more budget rules to a campaign specified by identifer.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} campaignId The campaign identifier.
-         * @param {CreateAssociatedBudgetRulesRequest} createAssociatedBudgetRulesRequest 
+         * 
+         * @summary Gets an ad group specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} adGroupId The identifier of an existing ad group.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createAssociatedBudgetRulesForSBCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, createAssociatedBudgetRulesRequest: CreateAssociatedBudgetRulesRequest, options: any = {}): Promise<RequestArgs> => {
+        getAdGroup: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, adGroupId: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('createAssociatedBudgetRulesForSBCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            assertParamExists('getAdGroup', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('createAssociatedBudgetRulesForSBCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            assertParamExists('getAdGroup', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'adGroupId' is not null or undefined
+            assertParamExists('getAdGroup', 'adGroupId', adGroupId)
+            const localVarPath = `/sb/adGroups/{adGroupId}`
+                .replace(`{${"adGroupId"}}`, encodeURIComponent(String(adGroupId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Gets an array of ad groups associated with the client identifier passed in the authorization header, filtered by specified criteria.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of ad groups. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of ad groups in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten ad groups set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten ad groups, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {string} [name] The returned array includes only ad groups with the specified name.
+         * @param {string} [adGroupIdFilter] The returned array includes only ad groups with identifiers matching those specified in the comma-delimited string.
+         * @param {string} [campaignIdFilter] The returned array includes only ad groups associated with campaign identifiers matching those specified in the comma-delimited string.
+         * @param {CreativeType} [creativeType] Filter by the type of creative the campaign is associated with. To get ad groups associated with non-video campaigns specify \&#39;productCollection\&#39;. To get ad groups associated with video campaigns, this must be set to \&#39;video\&#39;. Returns all ad groups if not specified.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAdGroups: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, name?: string, adGroupIdFilter?: string, campaignIdFilter?: string, creativeType?: CreativeType, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('listAdGroups', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('listAdGroups', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sb/adGroups`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (startIndex !== undefined) {
+                localVarQueryParameter['startIndex'] = startIndex;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (adGroupIdFilter !== undefined) {
+                localVarQueryParameter['adGroupIdFilter'] = adGroupIdFilter;
+            }
+
+            if (campaignIdFilter !== undefined) {
+                localVarQueryParameter['campaignIdFilter'] = campaignIdFilter;
+            }
+
+            if (creativeType !== undefined) {
+                localVarQueryParameter['creativeType'] = creativeType;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AdGroupsApi - functional programming interface
+ * @export
+ */
+export const AdGroupsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AdGroupsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Gets an ad group specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} adGroupId The identifier of an existing ad group.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAdGroup(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, adGroupId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBAdGroup>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAdGroup(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, adGroupId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Gets an array of ad groups associated with the client identifier passed in the authorization header, filtered by specified criteria.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of ad groups. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of ad groups in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten ad groups set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten ad groups, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {string} [name] The returned array includes only ad groups with the specified name.
+         * @param {string} [adGroupIdFilter] The returned array includes only ad groups with identifiers matching those specified in the comma-delimited string.
+         * @param {string} [campaignIdFilter] The returned array includes only ad groups associated with campaign identifiers matching those specified in the comma-delimited string.
+         * @param {CreativeType} [creativeType] Filter by the type of creative the campaign is associated with. To get ad groups associated with non-video campaigns specify \&#39;productCollection\&#39;. To get ad groups associated with video campaigns, this must be set to \&#39;video\&#39;. Returns all ad groups if not specified.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listAdGroups(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, name?: string, adGroupIdFilter?: string, campaignIdFilter?: string, creativeType?: CreativeType, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SBAdGroup>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAdGroups(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, name, adGroupIdFilter, campaignIdFilter, creativeType, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * AdGroupsApi - factory interface
+ * @export
+ */
+export const AdGroupsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AdGroupsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Gets an ad group specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} adGroupId The identifier of an existing ad group.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAdGroup(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, adGroupId: number, options?: any): AxiosPromise<SBAdGroup> {
+            return localVarFp.getAdGroup(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, adGroupId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Gets an array of ad groups associated with the client identifier passed in the authorization header, filtered by specified criteria.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of ad groups. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of ad groups in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten ad groups set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten ad groups, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {string} [name] The returned array includes only ad groups with the specified name.
+         * @param {string} [adGroupIdFilter] The returned array includes only ad groups with identifiers matching those specified in the comma-delimited string.
+         * @param {string} [campaignIdFilter] The returned array includes only ad groups associated with campaign identifiers matching those specified in the comma-delimited string.
+         * @param {CreativeType} [creativeType] Filter by the type of creative the campaign is associated with. To get ad groups associated with non-video campaigns specify \&#39;productCollection\&#39;. To get ad groups associated with video campaigns, this must be set to \&#39;video\&#39;. Returns all ad groups if not specified.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAdGroups(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, name?: string, adGroupIdFilter?: string, campaignIdFilter?: string, creativeType?: CreativeType, options?: any): AxiosPromise<Array<SBAdGroup>> {
+            return localVarFp.listAdGroups(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, name, adGroupIdFilter, campaignIdFilter, creativeType, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getAdGroup operation in AdGroupsApi.
+ * @export
+ * @interface AdGroupsApiGetAdGroupRequest
+ */
+export interface AdGroupsApiGetAdGroupRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof AdGroupsApiGetAdGroup
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof AdGroupsApiGetAdGroup
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The identifier of an existing ad group.
+     * @type {number}
+     * @memberof AdGroupsApiGetAdGroup
+     */
+    readonly adGroupId: number
+}
+
+/**
+ * Request parameters for listAdGroups operation in AdGroupsApi.
+ * @export
+ * @interface AdGroupsApiListAdGroupsRequest
+ */
+export interface AdGroupsApiListAdGroupsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof AdGroupsApiListAdGroups
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof AdGroupsApiListAdGroups
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Sets a zero-based offset into the requested set of ad groups. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+     * @type {number}
+     * @memberof AdGroupsApiListAdGroups
+     */
+    readonly startIndex?: number
+
+    /**
+     * Sets the number of ad groups in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten ad groups set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten ad groups, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+     * @type {number}
+     * @memberof AdGroupsApiListAdGroups
+     */
+    readonly count?: number
+
+    /**
+     * The returned array includes only ad groups with the specified name.
+     * @type {string}
+     * @memberof AdGroupsApiListAdGroups
+     */
+    readonly name?: string
+
+    /**
+     * The returned array includes only ad groups with identifiers matching those specified in the comma-delimited string.
+     * @type {string}
+     * @memberof AdGroupsApiListAdGroups
+     */
+    readonly adGroupIdFilter?: string
+
+    /**
+     * The returned array includes only ad groups associated with campaign identifiers matching those specified in the comma-delimited string.
+     * @type {string}
+     * @memberof AdGroupsApiListAdGroups
+     */
+    readonly campaignIdFilter?: string
+
+    /**
+     * Filter by the type of creative the campaign is associated with. To get ad groups associated with non-video campaigns specify \&#39;productCollection\&#39;. To get ad groups associated with video campaigns, this must be set to \&#39;video\&#39;. Returns all ad groups if not specified.
+     * @type {CreativeType}
+     * @memberof AdGroupsApiListAdGroups
+     */
+    readonly creativeType?: CreativeType
+}
+
+/**
+ * AdGroupsApi - object-oriented interface
+ * @export
+ * @class AdGroupsApi
+ * @extends {BaseAPI}
+ */
+export class AdGroupsApi extends BaseAPI {
+    /**
+     * 
+     * @summary Gets an ad group specified by identifier.
+     * @param {AdGroupsApiGetAdGroupRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdGroupsApi
+     */
+    public getAdGroup(requestParameters: AdGroupsApiGetAdGroupRequest, options?: any) {
+        return AdGroupsApiFp(this.configuration).getAdGroup(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.adGroupId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Gets an array of ad groups associated with the client identifier passed in the authorization header, filtered by specified criteria.
+     * @param {AdGroupsApiListAdGroupsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AdGroupsApi
+     */
+    public listAdGroups(requestParameters: AdGroupsApiListAdGroupsRequest, options?: any) {
+        return AdGroupsApiFp(this.configuration).listAdGroups(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.startIndex, requestParameters.count, requestParameters.name, requestParameters.adGroupIdFilter, requestParameters.campaignIdFilter, requestParameters.creativeType, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * BidRecommendationsApi - axios parameter creator
+ * @export
+ */
+export const BidRecommendationsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Get a list of bid recommendation objects for a specified list of keywords or products.
+         * @param {InlineObject2} [inlineObject2] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBidsRecommendations: async (inlineObject2?: InlineObject2, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/sb/recommendations/bids`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbbidsrecommendation.v3.1+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BidRecommendationsApi - functional programming interface
+ * @export
+ */
+export const BidRecommendationsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BidRecommendationsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Get a list of bid recommendation objects for a specified list of keywords or products.
+         * @param {InlineObject2} [inlineObject2] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBidsRecommendations(inlineObject2?: InlineObject2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2002>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBidsRecommendations(inlineObject2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BidRecommendationsApi - factory interface
+ * @export
+ */
+export const BidRecommendationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BidRecommendationsApiFp(configuration)
+    return {
+        /**
+         * Get a list of bid recommendation objects for a specified list of keywords or products.
+         * @param {InlineObject2} [inlineObject2] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBidsRecommendations(inlineObject2?: InlineObject2, options?: any): AxiosPromise<InlineResponse2002> {
+            return localVarFp.getBidsRecommendations(inlineObject2, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getBidsRecommendations operation in BidRecommendationsApi.
+ * @export
+ * @interface BidRecommendationsApiGetBidsRecommendationsRequest
+ */
+export interface BidRecommendationsApiGetBidsRecommendationsRequest {
+    /**
+     * 
+     * @type {InlineObject2}
+     * @memberof BidRecommendationsApiGetBidsRecommendations
+     */
+    readonly inlineObject2?: InlineObject2
+}
+
+/**
+ * BidRecommendationsApi - object-oriented interface
+ * @export
+ * @class BidRecommendationsApi
+ * @extends {BaseAPI}
+ */
+export class BidRecommendationsApi extends BaseAPI {
+    /**
+     * Get a list of bid recommendation objects for a specified list of keywords or products.
+     * @param {BidRecommendationsApiGetBidsRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BidRecommendationsApi
+     */
+    public getBidsRecommendations(requestParameters: BidRecommendationsApiGetBidsRecommendationsRequest = {}, options?: any) {
+        return BidRecommendationsApiFp(this.configuration).getBidsRecommendations(requestParameters.inlineObject2, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * BrandsApi - axios parameter creator
+ * @export
+ */
+export const BrandsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Gets an array of Brand data objects for the Brand associated with the profile ID passed in the header. For more information about Brands, see [Brand Services](https://brandservices.amazon.com/).
+         * @summary getBrands
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {BrandType} [brandTypeFilter] The returned array is filtered to include only brands with brand type set to one of the values in the specified comma-delimited list. Returns all brands if not specified.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBrands: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, brandTypeFilter?: BrandType, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getBrands', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getBrands', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/brands`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (brandTypeFilter !== undefined) {
+                localVarQueryParameter['brandTypeFilter'] = brandTypeFilter;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BrandsApi - functional programming interface
+ * @export
+ */
+export const BrandsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BrandsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Gets an array of Brand data objects for the Brand associated with the profile ID passed in the header. For more information about Brands, see [Brand Services](https://brandservices.amazon.com/).
+         * @summary getBrands
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {BrandType} [brandTypeFilter] The returned array is filtered to include only brands with brand type set to one of the values in the specified comma-delimited list. Returns all brands if not specified.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBrands(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, brandTypeFilter?: BrandType, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBrands(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, brandTypeFilter, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BrandsApi - factory interface
+ * @export
+ */
+export const BrandsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BrandsApiFp(configuration)
+    return {
+        /**
+         * Gets an array of Brand data objects for the Brand associated with the profile ID passed in the header. For more information about Brands, see [Brand Services](https://brandservices.amazon.com/).
+         * @summary getBrands
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {BrandType} [brandTypeFilter] The returned array is filtered to include only brands with brand type set to one of the values in the specified comma-delimited list. Returns all brands if not specified.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBrands(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, brandTypeFilter?: BrandType, options?: any): AxiosPromise<Array<object>> {
+            return localVarFp.getBrands(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, brandTypeFilter, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getBrands operation in BrandsApi.
+ * @export
+ * @interface BrandsApiGetBrandsRequest
+ */
+export interface BrandsApiGetBrandsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof BrandsApiGetBrands
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof BrandsApiGetBrands
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The returned array is filtered to include only brands with brand type set to one of the values in the specified comma-delimited list. Returns all brands if not specified.
+     * @type {BrandType}
+     * @memberof BrandsApiGetBrands
+     */
+    readonly brandTypeFilter?: BrandType
+}
+
+/**
+ * BrandsApi - object-oriented interface
+ * @export
+ * @class BrandsApi
+ * @extends {BaseAPI}
+ */
+export class BrandsApi extends BaseAPI {
+    /**
+     * Gets an array of Brand data objects for the Brand associated with the profile ID passed in the header. For more information about Brands, see [Brand Services](https://brandservices.amazon.com/).
+     * @summary getBrands
+     * @param {BrandsApiGetBrandsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BrandsApi
+     */
+    public getBrands(requestParameters: BrandsApiGetBrandsRequest, options?: any) {
+        return BrandsApiFp(this.configuration).getBrands(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.brandTypeFilter, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * CampaignsApi - axios parameter creator
+ * @export
+ */
+export const CampaignsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * @summary Archives a campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} campaignId The identifier of an existing campaign.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        archiveCampaign: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('archiveCampaign', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('archiveCampaign', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
             // verify required parameter 'campaignId' is not null or undefined
-            assertParamExists('createAssociatedBudgetRulesForSBCampaigns', 'campaignId', campaignId)
-            // verify required parameter 'createAssociatedBudgetRulesRequest' is not null or undefined
-            assertParamExists('createAssociatedBudgetRulesForSBCampaigns', 'createAssociatedBudgetRulesRequest', createAssociatedBudgetRulesRequest)
-            const localVarPath = `/sb/campaigns/{campaignId}/budgetRules`
+            assertParamExists('archiveCampaign', 'campaignId', campaignId)
+            const localVarPath = `/sb/campaigns/{campaignId}`
                 .replace(`{${"campaignId"}}`, encodeURIComponent(String(campaignId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
-            }
-
-            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createAssociatedBudgetRulesRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-         * @summary Creates one or more budget rules.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {CreateSBBudgetRulesRequest} createSBBudgetRulesRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBudgetRulesForSBCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createSBBudgetRulesRequest: CreateSBBudgetRulesRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('createBudgetRulesForSBCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('createBudgetRulesForSBCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            // verify required parameter 'createSBBudgetRulesRequest' is not null or undefined
-            assertParamExists('createBudgetRulesForSBCampaigns', 'createSBBudgetRulesRequest', createSBBudgetRulesRequest)
-            const localVarPath = `/sb/budgetRules`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
-            }
-
-            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createSBBudgetRulesRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-         * @summary Disassociates a budget rule specified by identifier from a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} campaignId The campaign identifier.
-         * @param {string} budgetRuleId The budget rule identifier.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        disassociateAssociatedBudgetRuleForSBCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, budgetRuleId: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('disassociateAssociatedBudgetRuleForSBCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('disassociateAssociatedBudgetRuleForSBCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            // verify required parameter 'campaignId' is not null or undefined
-            assertParamExists('disassociateAssociatedBudgetRuleForSBCampaigns', 'campaignId', campaignId)
-            // verify required parameter 'budgetRuleId' is not null or undefined
-            assertParamExists('disassociateAssociatedBudgetRuleForSBCampaigns', 'budgetRuleId', budgetRuleId)
-            const localVarPath = `/sb/campaigns/{campaignId}/budgetRules/{budgetRuleId}`
-                .replace(`{${"campaignId"}}`, encodeURIComponent(String(campaignId)))
-                .replace(`{${"budgetRuleId"}}`, encodeURIComponent(String(budgetRuleId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3231,6 +8852,10 @@ export const BudgetRulesApiAxiosParamCreator = function (configuration?: Configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
                 localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
             }
@@ -3251,23 +8876,20 @@ export const BudgetRulesApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets a budget rule specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} budgetRuleId The budget rule identifier.
+         * See the [create a Sponsored Brands campaign](https://advertising.amazon.com/help#GQFZA83P55P747BZ) topic in the Amazon Ads Support Center for more information about the campaign review process. **Note** to retrieve the state of a campaign submitted for creation, use the listCampaign operation and the campaign identifier from this operation. On SB creation, the state field is read-only.  <br>**To create a video campaign specify adFormat as \'video\'. If adFormat is not specified a Product Collection campaign will be created. Only a single video campaign can be created at a time.** <br>**Note** each campaign in campaign creation operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords). <br>**Note** each campaign in campaign creation operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting). <br>**Note** that keywords or expressions *can not* be recreated for a campaign if the keyword or expression has previously been associated with a campaign and subsequently archived. 
+         * @summary Creates one or more new Campaigns.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<SBCreateCampaignRequest>} [sBCreateCampaignRequest] An array of campaigns.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBudgetRuleByRuleIdForSBCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, budgetRuleId: string, options: any = {}): Promise<RequestArgs> => {
+        createCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBCreateCampaignRequest?: Array<SBCreateCampaignRequest>, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('getBudgetRuleByRuleIdForSBCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            assertParamExists('createCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('getBudgetRuleByRuleIdForSBCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            // verify required parameter 'budgetRuleId' is not null or undefined
-            assertParamExists('getBudgetRuleByRuleIdForSBCampaigns', 'budgetRuleId', budgetRuleId)
-            const localVarPath = `/sb/budgetRules/{budgetRuleId}`
-                .replace(`{${"budgetRuleId"}}`, encodeURIComponent(String(budgetRuleId)));
+            assertParamExists('createCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sb/campaigns`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3275,9 +8897,13 @@ export const BudgetRulesApiAxiosParamCreator = function (configuration?: Configu
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
                 localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
@@ -3289,9 +8915,12 @@ export const BudgetRulesApiAxiosParamCreator = function (configuration?: Configu
 
 
     
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbcreatecampaignresponse.v3+json';
+
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(sBCreateCampaignRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3300,91 +8929,22 @@ export const BudgetRulesApiAxiosParamCreator = function (configuration?: Configu
         },
         /**
          * 
-         * @summary Gets all the campaigns associated with a budget rule
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} budgetRuleId The budget rule identifier.
-         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
-         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
+         * @summary Gets a campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} campaignId The identifier of an existing campaign.
+         * @param {string} [locale] The returned array includes only keywords associated with locale matching those specified by identifier.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCampaignsAssociatedWithSBBudgetRule: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, budgetRuleId: string, pageSize: number, nextToken?: string, options: any = {}): Promise<RequestArgs> => {
+        getCampaign: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, locale?: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('getCampaignsAssociatedWithSBBudgetRule', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            assertParamExists('getCampaign', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('getCampaignsAssociatedWithSBBudgetRule', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            // verify required parameter 'budgetRuleId' is not null or undefined
-            assertParamExists('getCampaignsAssociatedWithSBBudgetRule', 'budgetRuleId', budgetRuleId)
-            // verify required parameter 'pageSize' is not null or undefined
-            assertParamExists('getCampaignsAssociatedWithSBBudgetRule', 'pageSize', pageSize)
-            const localVarPath = `/sb/budgetRules/{budgetRuleId}/campaigns`
-                .replace(`{${"budgetRuleId"}}`, encodeURIComponent(String(budgetRuleId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (nextToken !== undefined) {
-                localVarQueryParameter['nextToken'] = nextToken;
-            }
-
-            if (pageSize !== undefined) {
-                localVarQueryParameter['pageSize'] = pageSize;
-            }
-
-            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
-            }
-
-            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets the budget history for a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} campaignId The campaign identifier.
-         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
-         * @param {string} startDate The start date of the budget history in YYYYMMDD format.
-         * @param {string} endDate The end date of the budget history in YYYYMMDD format.
-         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getRuleBasedBudgetHistoryForSBCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, pageSize: number, startDate: string, endDate: string, nextToken?: string, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('getRuleBasedBudgetHistoryForSBCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('getRuleBasedBudgetHistoryForSBCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            assertParamExists('getCampaign', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
             // verify required parameter 'campaignId' is not null or undefined
-            assertParamExists('getRuleBasedBudgetHistoryForSBCampaigns', 'campaignId', campaignId)
-            // verify required parameter 'pageSize' is not null or undefined
-            assertParamExists('getRuleBasedBudgetHistoryForSBCampaigns', 'pageSize', pageSize)
-            // verify required parameter 'startDate' is not null or undefined
-            assertParamExists('getRuleBasedBudgetHistoryForSBCampaigns', 'startDate', startDate)
-            // verify required parameter 'endDate' is not null or undefined
-            assertParamExists('getRuleBasedBudgetHistoryForSBCampaigns', 'endDate', endDate)
-            const localVarPath = `/sb/campaigns/{campaignId}/budgetRules/budgetHistory`
+            assertParamExists('getCampaign', 'campaignId', campaignId)
+            const localVarPath = `/sb/campaigns/{campaignId}`
                 .replace(`{${"campaignId"}}`, encodeURIComponent(String(campaignId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3397,20 +8957,12 @@ export const BudgetRulesApiAxiosParamCreator = function (configuration?: Configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (nextToken !== undefined) {
-                localVarQueryParameter['nextToken'] = nextToken;
-            }
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
-            if (pageSize !== undefined) {
-                localVarQueryParameter['pageSize'] = pageSize;
-            }
-
-            if (startDate !== undefined) {
-                localVarQueryParameter['startDate'] = startDate;
-            }
-
-            if (endDate !== undefined) {
-                localVarQueryParameter['endDate'] = endDate;
+            if (locale !== undefined) {
+                localVarQueryParameter['locale'] = locale;
             }
 
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
@@ -3433,23 +8985,27 @@ export const BudgetRulesApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * 
-         * @summary Get all budget rules created by an advertiser
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
-         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
+         * Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. Returns both productCollection and video campaigns. Use either `adFormatFilter` or `creativeType` to filter campaigns by ad formats such as `productCollection` or `video`. <br>**Note:** An advertiser that has lost brand eligibility will not be able to use any write operations such as `POST`, `PUT`, and `DELETE`. This includes the `GET` operation `/pageAsins`. However, the rest of the `GET` operations such as `/sb/campaigns` will be usable regardless of advertiser\'s eligibility status.
+         * @summary Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of campaigns. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of campaigns in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten campaigns set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten campaigns, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {State} [stateFilter] The returned array is filtered to include only campaigns with state set to one of the values in the specified comma-delimited list. Defaults to &#x60;enabled&#x60; and &#x60;paused&#x60;.&lt;br/&gt;&lt;br/&gt;  **Note** that Campaigns rejected during moderation have state set to &#x60;archived&#x60;.
+         * @param {string} [name] The returned array includes only campaigns with the specified name.
+         * @param {string} [portfolioIdFilter] The returned array includes only campaigns associated with Portfolio identifiers matching those specified in the comma-delimited string.
+         * @param {string} [campaignIdFilter] The returned array includes only campaigns with identifiers matching those specified in the comma-delimited string.
+         * @param {AdFormat} [adFormatFilter] The returned array includes only campaigns with ad format matching those specified in the comma-delimited adFormats. Returns all campaigns if not specified.
+         * @param {CreativeType} [creativeType] Filter by the type of creative the campaign is associated with. To get non-video campaigns specify \&#39;productCollection\&#39;. To get video campaigns, this must be set to \&#39;video\&#39;. Returns all campaigns if not specified.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSBBudgetRulesForAdvertiser: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, pageSize: number, nextToken?: string, options: any = {}): Promise<RequestArgs> => {
+        listCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, stateFilter?: State, name?: string, portfolioIdFilter?: string, campaignIdFilter?: string, adFormatFilter?: AdFormat, creativeType?: CreativeType, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('getSBBudgetRulesForAdvertiser', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            assertParamExists('listCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('getSBBudgetRulesForAdvertiser', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            // verify required parameter 'pageSize' is not null or undefined
-            assertParamExists('getSBBudgetRulesForAdvertiser', 'pageSize', pageSize)
-            const localVarPath = `/sb/budgetRules`;
+            assertParamExists('listCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sb/campaigns`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3461,12 +9017,40 @@ export const BudgetRulesApiAxiosParamCreator = function (configuration?: Configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (nextToken !== undefined) {
-                localVarQueryParameter['nextToken'] = nextToken;
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (startIndex !== undefined) {
+                localVarQueryParameter['startIndex'] = startIndex;
             }
 
-            if (pageSize !== undefined) {
-                localVarQueryParameter['pageSize'] = pageSize;
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (stateFilter !== undefined) {
+                localVarQueryParameter['stateFilter'] = stateFilter;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (portfolioIdFilter !== undefined) {
+                localVarQueryParameter['portfolioIdFilter'] = portfolioIdFilter;
+            }
+
+            if (campaignIdFilter !== undefined) {
+                localVarQueryParameter['campaignIdFilter'] = campaignIdFilter;
+            }
+
+            if (adFormatFilter !== undefined) {
+                localVarQueryParameter['adFormatFilter'] = adFormatFilter;
+            }
+
+            if (creativeType !== undefined) {
+                localVarQueryParameter['creativeType'] = creativeType;
             }
 
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
@@ -3489,70 +9073,20 @@ export const BudgetRulesApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets a list of budget rules associated to a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} campaignId The campaign identifier.
+         * Mutable fields: * `name`  * `state` * `portfolioId` * `budget` * `bidOptimization` * `bidMultiplier` * `bidAdjustments` * `endDate`
+         * @summary Updates one or more campaigns.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of campaigns with updated field values.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAssociatedBudgetRulesForSBCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, options: any = {}): Promise<RequestArgs> => {
+        updateCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('listAssociatedBudgetRulesForSBCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            assertParamExists('updateCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('listAssociatedBudgetRulesForSBCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            // verify required parameter 'campaignId' is not null or undefined
-            assertParamExists('listAssociatedBudgetRulesForSBCampaigns', 'campaignId', campaignId)
-            const localVarPath = `/sb/campaigns/{campaignId}/budgetRules`
-                .replace(`{${"campaignId"}}`, encodeURIComponent(String(campaignId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
-            }
-
-            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-         * @summary Update one or more budget rules.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {UpdateSBBudgetRulesRequest} updateSBBudgetRulesRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateBudgetRulesForSBCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, updateSBBudgetRulesRequest: UpdateSBBudgetRulesRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('updateBudgetRulesForSBCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('updateBudgetRulesForSBCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            // verify required parameter 'updateSBBudgetRulesRequest' is not null or undefined
-            assertParamExists('updateBudgetRulesForSBCampaigns', 'updateSBBudgetRulesRequest', updateSBBudgetRulesRequest)
-            const localVarPath = `/sb/budgetRules`;
+            assertParamExists('updateCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sb/campaigns`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -3564,757 +9098,9 @@ export const BudgetRulesApiAxiosParamCreator = function (configuration?: Configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
-            }
-
-            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateSBBudgetRulesRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * BudgetRulesApi - functional programming interface
- * @export
- */
-export const BudgetRulesApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = BudgetRulesApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * A maximum of 250 rules can be associated to a campaign. Note that the name of each rule associated to a campaign is required to be unique.  **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-         * @summary Associates one or more budget rules to a campaign specified by identifer.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} campaignId The campaign identifier.
-         * @param {CreateAssociatedBudgetRulesRequest} createAssociatedBudgetRulesRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createAssociatedBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, createAssociatedBudgetRulesRequest: CreateAssociatedBudgetRulesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateAssociatedBudgetRulesResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createAssociatedBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, createAssociatedBudgetRulesRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-         * @summary Creates one or more budget rules.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {CreateSBBudgetRulesRequest} createSBBudgetRulesRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async createBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createSBBudgetRulesRequest: CreateSBBudgetRulesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateBudgetRulesResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, createSBBudgetRulesRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-         * @summary Disassociates a budget rule specified by identifier from a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} campaignId The campaign identifier.
-         * @param {string} budgetRuleId The budget rule identifier.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async disassociateAssociatedBudgetRuleForSBCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, budgetRuleId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.disassociateAssociatedBudgetRuleForSBCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, budgetRuleId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets a budget rule specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} budgetRuleId The budget rule identifier.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getBudgetRuleByRuleIdForSBCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, budgetRuleId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSBBudgetRuleResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBudgetRuleByRuleIdForSBCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetRuleId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Gets all the campaigns associated with a budget rule
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} budgetRuleId The budget rule identifier.
-         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
-         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getCampaignsAssociatedWithSBBudgetRule(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, budgetRuleId: string, pageSize: number, nextToken?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBGetAssociatedCampaignsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCampaignsAssociatedWithSBBudgetRule(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetRuleId, pageSize, nextToken, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets the budget history for a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} campaignId The campaign identifier.
-         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
-         * @param {string} startDate The start date of the budget history in YYYYMMDD format.
-         * @param {string} endDate The end date of the budget history in YYYYMMDD format.
-         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getRuleBasedBudgetHistoryForSBCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, pageSize: number, startDate: string, endDate: string, nextToken?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBBudgetHistory>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getRuleBasedBudgetHistoryForSBCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, pageSize, startDate, endDate, nextToken, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Get all budget rules created by an advertiser
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
-         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getSBBudgetRulesForAdvertiser(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, pageSize: number, nextToken?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSBBudgetRulesForAdvertiserResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSBBudgetRulesForAdvertiser(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, pageSize, nextToken, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets a list of budget rules associated to a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} campaignId The campaign identifier.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async listAssociatedBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBListAssociatedBudgetRulesResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listAssociatedBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-         * @summary Update one or more budget rules.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {UpdateSBBudgetRulesRequest} updateSBBudgetRulesRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async updateBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, updateSBBudgetRulesRequest: UpdateSBBudgetRulesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateBudgetRulesResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, updateSBBudgetRulesRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * BudgetRulesApi - factory interface
- * @export
- */
-export const BudgetRulesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = BudgetRulesApiFp(configuration)
-    return {
-        /**
-         * A maximum of 250 rules can be associated to a campaign. Note that the name of each rule associated to a campaign is required to be unique.  **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-         * @summary Associates one or more budget rules to a campaign specified by identifer.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} campaignId The campaign identifier.
-         * @param {CreateAssociatedBudgetRulesRequest} createAssociatedBudgetRulesRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createAssociatedBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, createAssociatedBudgetRulesRequest: CreateAssociatedBudgetRulesRequest, options?: any): AxiosPromise<CreateAssociatedBudgetRulesResponse> {
-            return localVarFp.createAssociatedBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, createAssociatedBudgetRulesRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-         * @summary Creates one or more budget rules.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {CreateSBBudgetRulesRequest} createSBBudgetRulesRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createSBBudgetRulesRequest: CreateSBBudgetRulesRequest, options?: any): AxiosPromise<CreateBudgetRulesResponse> {
-            return localVarFp.createBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, createSBBudgetRulesRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-         * @summary Disassociates a budget rule specified by identifier from a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} campaignId The campaign identifier.
-         * @param {string} budgetRuleId The budget rule identifier.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        disassociateAssociatedBudgetRuleForSBCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, budgetRuleId: string, options?: any): AxiosPromise<object> {
-            return localVarFp.disassociateAssociatedBudgetRuleForSBCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, budgetRuleId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets a budget rule specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} budgetRuleId The budget rule identifier.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBudgetRuleByRuleIdForSBCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, budgetRuleId: string, options?: any): AxiosPromise<GetSBBudgetRuleResponse> {
-            return localVarFp.getBudgetRuleByRuleIdForSBCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetRuleId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Gets all the campaigns associated with a budget rule
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} budgetRuleId The budget rule identifier.
-         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
-         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCampaignsAssociatedWithSBBudgetRule(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, budgetRuleId: string, pageSize: number, nextToken?: string, options?: any): AxiosPromise<SBGetAssociatedCampaignsResponse> {
-            return localVarFp.getCampaignsAssociatedWithSBBudgetRule(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetRuleId, pageSize, nextToken, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets the budget history for a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} campaignId The campaign identifier.
-         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
-         * @param {string} startDate The start date of the budget history in YYYYMMDD format.
-         * @param {string} endDate The end date of the budget history in YYYYMMDD format.
-         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getRuleBasedBudgetHistoryForSBCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, pageSize: number, startDate: string, endDate: string, nextToken?: string, options?: any): AxiosPromise<SBBudgetHistory> {
-            return localVarFp.getRuleBasedBudgetHistoryForSBCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, pageSize, startDate, endDate, nextToken, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get all budget rules created by an advertiser
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
-         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSBBudgetRulesForAdvertiser(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, pageSize: number, nextToken?: string, options?: any): AxiosPromise<GetSBBudgetRulesForAdvertiserResponse> {
-            return localVarFp.getSBBudgetRulesForAdvertiser(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, pageSize, nextToken, options).then((request) => request(axios, basePath));
-        },
-        /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets a list of budget rules associated to a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {number} campaignId The campaign identifier.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        listAssociatedBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, options?: any): AxiosPromise<SBListAssociatedBudgetRulesResponse> {
-            return localVarFp.listAssociatedBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-         * @summary Update one or more budget rules.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {UpdateSBBudgetRulesRequest} updateSBBudgetRulesRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, updateSBBudgetRulesRequest: UpdateSBBudgetRulesRequest, options?: any): AxiosPromise<UpdateBudgetRulesResponse> {
-            return localVarFp.updateBudgetRulesForSBCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, updateSBBudgetRulesRequest, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for createAssociatedBudgetRulesForSBCampaigns operation in BudgetRulesApi.
- * @export
- * @interface BudgetRulesApiCreateAssociatedBudgetRulesForSBCampaignsRequest
- */
-export interface BudgetRulesApiCreateAssociatedBudgetRulesForSBCampaignsRequest {
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiCreateAssociatedBudgetRulesForSBCampaigns
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiCreateAssociatedBudgetRulesForSBCampaigns
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
-     * The campaign identifier.
-     * @type {number}
-     * @memberof BudgetRulesApiCreateAssociatedBudgetRulesForSBCampaigns
-     */
-    readonly campaignId: number
-
-    /**
-     * 
-     * @type {CreateAssociatedBudgetRulesRequest}
-     * @memberof BudgetRulesApiCreateAssociatedBudgetRulesForSBCampaigns
-     */
-    readonly createAssociatedBudgetRulesRequest: CreateAssociatedBudgetRulesRequest
-}
-
-/**
- * Request parameters for createBudgetRulesForSBCampaigns operation in BudgetRulesApi.
- * @export
- * @interface BudgetRulesApiCreateBudgetRulesForSBCampaignsRequest
- */
-export interface BudgetRulesApiCreateBudgetRulesForSBCampaignsRequest {
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiCreateBudgetRulesForSBCampaigns
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiCreateBudgetRulesForSBCampaigns
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
-     * 
-     * @type {CreateSBBudgetRulesRequest}
-     * @memberof BudgetRulesApiCreateBudgetRulesForSBCampaigns
-     */
-    readonly createSBBudgetRulesRequest: CreateSBBudgetRulesRequest
-}
-
-/**
- * Request parameters for disassociateAssociatedBudgetRuleForSBCampaigns operation in BudgetRulesApi.
- * @export
- * @interface BudgetRulesApiDisassociateAssociatedBudgetRuleForSBCampaignsRequest
- */
-export interface BudgetRulesApiDisassociateAssociatedBudgetRuleForSBCampaignsRequest {
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiDisassociateAssociatedBudgetRuleForSBCampaigns
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiDisassociateAssociatedBudgetRuleForSBCampaigns
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
-     * The campaign identifier.
-     * @type {number}
-     * @memberof BudgetRulesApiDisassociateAssociatedBudgetRuleForSBCampaigns
-     */
-    readonly campaignId: number
-
-    /**
-     * The budget rule identifier.
-     * @type {string}
-     * @memberof BudgetRulesApiDisassociateAssociatedBudgetRuleForSBCampaigns
-     */
-    readonly budgetRuleId: string
-}
-
-/**
- * Request parameters for getBudgetRuleByRuleIdForSBCampaigns operation in BudgetRulesApi.
- * @export
- * @interface BudgetRulesApiGetBudgetRuleByRuleIdForSBCampaignsRequest
- */
-export interface BudgetRulesApiGetBudgetRuleByRuleIdForSBCampaignsRequest {
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiGetBudgetRuleByRuleIdForSBCampaigns
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiGetBudgetRuleByRuleIdForSBCampaigns
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
-     * The budget rule identifier.
-     * @type {string}
-     * @memberof BudgetRulesApiGetBudgetRuleByRuleIdForSBCampaigns
-     */
-    readonly budgetRuleId: string
-}
-
-/**
- * Request parameters for getCampaignsAssociatedWithSBBudgetRule operation in BudgetRulesApi.
- * @export
- * @interface BudgetRulesApiGetCampaignsAssociatedWithSBBudgetRuleRequest
- */
-export interface BudgetRulesApiGetCampaignsAssociatedWithSBBudgetRuleRequest {
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiGetCampaignsAssociatedWithSBBudgetRule
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiGetCampaignsAssociatedWithSBBudgetRule
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
-     * The budget rule identifier.
-     * @type {string}
-     * @memberof BudgetRulesApiGetCampaignsAssociatedWithSBBudgetRule
-     */
-    readonly budgetRuleId: string
-
-    /**
-     * Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
-     * @type {number}
-     * @memberof BudgetRulesApiGetCampaignsAssociatedWithSBBudgetRule
-     */
-    readonly pageSize: number
-
-    /**
-     * To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
-     * @type {string}
-     * @memberof BudgetRulesApiGetCampaignsAssociatedWithSBBudgetRule
-     */
-    readonly nextToken?: string
-}
-
-/**
- * Request parameters for getRuleBasedBudgetHistoryForSBCampaigns operation in BudgetRulesApi.
- * @export
- * @interface BudgetRulesApiGetRuleBasedBudgetHistoryForSBCampaignsRequest
- */
-export interface BudgetRulesApiGetRuleBasedBudgetHistoryForSBCampaignsRequest {
-    /**
-     * The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiGetRuleBasedBudgetHistoryForSBCampaigns
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiGetRuleBasedBudgetHistoryForSBCampaigns
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
-     * The campaign identifier.
-     * @type {number}
-     * @memberof BudgetRulesApiGetRuleBasedBudgetHistoryForSBCampaigns
-     */
-    readonly campaignId: number
-
-    /**
-     * Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
-     * @type {number}
-     * @memberof BudgetRulesApiGetRuleBasedBudgetHistoryForSBCampaigns
-     */
-    readonly pageSize: number
-
-    /**
-     * The start date of the budget history in YYYYMMDD format.
-     * @type {string}
-     * @memberof BudgetRulesApiGetRuleBasedBudgetHistoryForSBCampaigns
-     */
-    readonly startDate: string
-
-    /**
-     * The end date of the budget history in YYYYMMDD format.
-     * @type {string}
-     * @memberof BudgetRulesApiGetRuleBasedBudgetHistoryForSBCampaigns
-     */
-    readonly endDate: string
-
-    /**
-     * To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
-     * @type {string}
-     * @memberof BudgetRulesApiGetRuleBasedBudgetHistoryForSBCampaigns
-     */
-    readonly nextToken?: string
-}
-
-/**
- * Request parameters for getSBBudgetRulesForAdvertiser operation in BudgetRulesApi.
- * @export
- * @interface BudgetRulesApiGetSBBudgetRulesForAdvertiserRequest
- */
-export interface BudgetRulesApiGetSBBudgetRulesForAdvertiserRequest {
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiGetSBBudgetRulesForAdvertiser
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiGetSBBudgetRulesForAdvertiser
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
-     * Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
-     * @type {number}
-     * @memberof BudgetRulesApiGetSBBudgetRulesForAdvertiser
-     */
-    readonly pageSize: number
-
-    /**
-     * To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
-     * @type {string}
-     * @memberof BudgetRulesApiGetSBBudgetRulesForAdvertiser
-     */
-    readonly nextToken?: string
-}
-
-/**
- * Request parameters for listAssociatedBudgetRulesForSBCampaigns operation in BudgetRulesApi.
- * @export
- * @interface BudgetRulesApiListAssociatedBudgetRulesForSBCampaignsRequest
- */
-export interface BudgetRulesApiListAssociatedBudgetRulesForSBCampaignsRequest {
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiListAssociatedBudgetRulesForSBCampaigns
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiListAssociatedBudgetRulesForSBCampaigns
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
-     * The campaign identifier.
-     * @type {number}
-     * @memberof BudgetRulesApiListAssociatedBudgetRulesForSBCampaigns
-     */
-    readonly campaignId: number
-}
-
-/**
- * Request parameters for updateBudgetRulesForSBCampaigns operation in BudgetRulesApi.
- * @export
- * @interface BudgetRulesApiUpdateBudgetRulesForSBCampaignsRequest
- */
-export interface BudgetRulesApiUpdateBudgetRulesForSBCampaignsRequest {
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiUpdateBudgetRulesForSBCampaigns
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof BudgetRulesApiUpdateBudgetRulesForSBCampaigns
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
-     * 
-     * @type {UpdateSBBudgetRulesRequest}
-     * @memberof BudgetRulesApiUpdateBudgetRulesForSBCampaigns
-     */
-    readonly updateSBBudgetRulesRequest: UpdateSBBudgetRulesRequest
-}
-
-/**
- * BudgetRulesApi - object-oriented interface
- * @export
- * @class BudgetRulesApi
- * @extends {BaseAPI}
- */
-export class BudgetRulesApi extends BaseAPI {
-    /**
-     * A maximum of 250 rules can be associated to a campaign. Note that the name of each rule associated to a campaign is required to be unique.  **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-     * @summary Associates one or more budget rules to a campaign specified by identifer.
-     * @param {BudgetRulesApiCreateAssociatedBudgetRulesForSBCampaignsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BudgetRulesApi
-     */
-    public createAssociatedBudgetRulesForSBCampaigns(requestParameters: BudgetRulesApiCreateAssociatedBudgetRulesForSBCampaignsRequest, options?: any) {
-        return BudgetRulesApiFp(this.configuration).createAssociatedBudgetRulesForSBCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.campaignId, requestParameters.createAssociatedBudgetRulesRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     *   **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-     * @summary Creates one or more budget rules.
-     * @param {BudgetRulesApiCreateBudgetRulesForSBCampaignsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BudgetRulesApi
-     */
-    public createBudgetRulesForSBCampaigns(requestParameters: BudgetRulesApiCreateBudgetRulesForSBCampaignsRequest, options?: any) {
-        return BudgetRulesApiFp(this.configuration).createBudgetRulesForSBCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.createSBBudgetRulesRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     *   **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-     * @summary Disassociates a budget rule specified by identifier from a campaign specified by identifier.
-     * @param {BudgetRulesApiDisassociateAssociatedBudgetRuleForSBCampaignsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BudgetRulesApi
-     */
-    public disassociateAssociatedBudgetRuleForSBCampaigns(requestParameters: BudgetRulesApiDisassociateAssociatedBudgetRuleForSBCampaignsRequest, options?: any) {
-        return BudgetRulesApiFp(this.configuration).disassociateAssociatedBudgetRuleForSBCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.campaignId, requestParameters.budgetRuleId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-     * @summary Gets a budget rule specified by identifier.
-     * @param {BudgetRulesApiGetBudgetRuleByRuleIdForSBCampaignsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BudgetRulesApi
-     */
-    public getBudgetRuleByRuleIdForSBCampaigns(requestParameters: BudgetRulesApiGetBudgetRuleByRuleIdForSBCampaignsRequest, options?: any) {
-        return BudgetRulesApiFp(this.configuration).getBudgetRuleByRuleIdForSBCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.budgetRuleId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Gets all the campaigns associated with a budget rule
-     * @param {BudgetRulesApiGetCampaignsAssociatedWithSBBudgetRuleRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BudgetRulesApi
-     */
-    public getCampaignsAssociatedWithSBBudgetRule(requestParameters: BudgetRulesApiGetCampaignsAssociatedWithSBBudgetRuleRequest, options?: any) {
-        return BudgetRulesApiFp(this.configuration).getCampaignsAssociatedWithSBBudgetRule(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.budgetRuleId, requestParameters.pageSize, requestParameters.nextToken, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-     * @summary Gets the budget history for a campaign specified by identifier.
-     * @param {BudgetRulesApiGetRuleBasedBudgetHistoryForSBCampaignsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BudgetRulesApi
-     */
-    public getRuleBasedBudgetHistoryForSBCampaigns(requestParameters: BudgetRulesApiGetRuleBasedBudgetHistoryForSBCampaignsRequest, options?: any) {
-        return BudgetRulesApiFp(this.configuration).getRuleBasedBudgetHistoryForSBCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.campaignId, requestParameters.pageSize, requestParameters.startDate, requestParameters.endDate, requestParameters.nextToken, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get all budget rules created by an advertiser
-     * @param {BudgetRulesApiGetSBBudgetRulesForAdvertiserRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BudgetRulesApi
-     */
-    public getSBBudgetRulesForAdvertiser(requestParameters: BudgetRulesApiGetSBBudgetRulesForAdvertiserRequest, options?: any) {
-        return BudgetRulesApiFp(this.configuration).getSBBudgetRulesForAdvertiser(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.pageSize, requestParameters.nextToken, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-     * @summary Gets a list of budget rules associated to a campaign specified by identifier.
-     * @param {BudgetRulesApiListAssociatedBudgetRulesForSBCampaignsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BudgetRulesApi
-     */
-    public listAssociatedBudgetRulesForSBCampaigns(requestParameters: BudgetRulesApiListAssociatedBudgetRulesForSBCampaignsRequest, options?: any) {
-        return BudgetRulesApiFp(this.configuration).listAssociatedBudgetRulesForSBCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.campaignId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     *   **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
-     * @summary Update one or more budget rules.
-     * @param {BudgetRulesApiUpdateBudgetRulesForSBCampaignsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BudgetRulesApi
-     */
-    public updateBudgetRulesForSBCampaigns(requestParameters: BudgetRulesApiUpdateBudgetRulesForSBCampaignsRequest, options?: any) {
-        return BudgetRulesApiFp(this.configuration).updateBudgetRulesForSBCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.updateSBBudgetRulesRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * BudgetRulesRecommendationApi - axios parameter creator
- * @export
- */
-export const BudgetRulesRecommendationApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * A rule enables an automatic budget increase for a specified date range or for a special event. The response also includes a suggested budget increase for each special event.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets a list of special events with suggested date range and suggested budget increase for a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {any} [uNKNOWNBASETYPE] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        sBGetBudgetRulesRecommendation: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, uNKNOWNBASETYPE?: any, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('sBGetBudgetRulesRecommendation', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('sBGetBudgetRulesRecommendation', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            const localVarPath = `/sb/campaigns/budgetRules/recommendations`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
                 localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
@@ -4326,12 +9112,12 @@ export const BudgetRulesRecommendationApiAxiosParamCreator = function (configura
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbbudgetrulesrecommendation.v3+json';
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbupdatecampaignresponse.v3+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(uNKNOWNBASETYPE, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4342,536 +9128,452 @@ export const BudgetRulesRecommendationApiAxiosParamCreator = function (configura
 };
 
 /**
- * BudgetRulesRecommendationApi - functional programming interface
+ * CampaignsApi - functional programming interface
  * @export
  */
-export const BudgetRulesRecommendationApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = BudgetRulesRecommendationApiAxiosParamCreator(configuration)
+export const CampaignsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CampaignsApiAxiosParamCreator(configuration)
     return {
         /**
-         * A rule enables an automatic budget increase for a specified date range or for a special event. The response also includes a suggested budget increase for each special event.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets a list of special events with suggested date range and suggested budget increase for a campaign specified by identifier.
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * @summary Archives a campaign specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {any} [uNKNOWNBASETYPE] 
+         * @param {number} campaignId The identifier of an existing campaign.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async sBGetBudgetRulesRecommendation(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, uNKNOWNBASETYPE?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBBudgetRulesRecommendationEventResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.sBGetBudgetRulesRecommendation(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, uNKNOWNBASETYPE, options);
+        async archiveCampaign(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBUpdateCampaignResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.archiveCampaign(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * See the [create a Sponsored Brands campaign](https://advertising.amazon.com/help#GQFZA83P55P747BZ) topic in the Amazon Ads Support Center for more information about the campaign review process. **Note** to retrieve the state of a campaign submitted for creation, use the listCampaign operation and the campaign identifier from this operation. On SB creation, the state field is read-only.  <br>**To create a video campaign specify adFormat as \'video\'. If adFormat is not specified a Product Collection campaign will be created. Only a single video campaign can be created at a time.** <br>**Note** each campaign in campaign creation operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords). <br>**Note** each campaign in campaign creation operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting). <br>**Note** that keywords or expressions *can not* be recreated for a campaign if the keyword or expression has previously been associated with a campaign and subsequently archived. 
+         * @summary Creates one or more new Campaigns.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<SBCreateCampaignRequest>} [sBCreateCampaignRequest] An array of campaigns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBCreateCampaignRequest?: Array<SBCreateCampaignRequest>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sBCreateCampaignRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Gets a campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} campaignId The identifier of an existing campaign.
+         * @param {string} [locale] The returned array includes only keywords associated with locale matching those specified by identifier.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCampaign(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, locale?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBCampaignResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCampaign(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, locale, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. Returns both productCollection and video campaigns. Use either `adFormatFilter` or `creativeType` to filter campaigns by ad formats such as `productCollection` or `video`. <br>**Note:** An advertiser that has lost brand eligibility will not be able to use any write operations such as `POST`, `PUT`, and `DELETE`. This includes the `GET` operation `/pageAsins`. However, the rest of the `GET` operations such as `/sb/campaigns` will be usable regardless of advertiser\'s eligibility status.
+         * @summary Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of campaigns. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of campaigns in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten campaigns set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten campaigns, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {State} [stateFilter] The returned array is filtered to include only campaigns with state set to one of the values in the specified comma-delimited list. Defaults to &#x60;enabled&#x60; and &#x60;paused&#x60;.&lt;br/&gt;&lt;br/&gt;  **Note** that Campaigns rejected during moderation have state set to &#x60;archived&#x60;.
+         * @param {string} [name] The returned array includes only campaigns with the specified name.
+         * @param {string} [portfolioIdFilter] The returned array includes only campaigns associated with Portfolio identifiers matching those specified in the comma-delimited string.
+         * @param {string} [campaignIdFilter] The returned array includes only campaigns with identifiers matching those specified in the comma-delimited string.
+         * @param {AdFormat} [adFormatFilter] The returned array includes only campaigns with ad format matching those specified in the comma-delimited adFormats. Returns all campaigns if not specified.
+         * @param {CreativeType} [creativeType] Filter by the type of creative the campaign is associated with. To get non-video campaigns specify \&#39;productCollection\&#39;. To get video campaigns, this must be set to \&#39;video\&#39;. Returns all campaigns if not specified.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, stateFilter?: State, name?: string, portfolioIdFilter?: string, campaignIdFilter?: string, adFormatFilter?: AdFormat, creativeType?: CreativeType, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SBListCampaignsResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, stateFilter, name, portfolioIdFilter, campaignIdFilter, adFormatFilter, creativeType, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Mutable fields: * `name`  * `state` * `portfolioId` * `budget` * `bidOptimization` * `bidMultiplier` * `bidAdjustments` * `endDate`
+         * @summary Updates one or more campaigns.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of campaigns with updated field values.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SBUpdateCampaignResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, requestBody, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * BudgetRulesRecommendationApi - factory interface
+ * CampaignsApi - factory interface
  * @export
  */
-export const BudgetRulesRecommendationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = BudgetRulesRecommendationApiFp(configuration)
+export const CampaignsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CampaignsApiFp(configuration)
     return {
         /**
-         * A rule enables an automatic budget increase for a specified date range or for a special event. The response also includes a suggested budget increase for each special event.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets a list of special events with suggested date range and suggested budget increase for a campaign specified by identifier.
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * @summary Archives a campaign specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {any} [uNKNOWNBASETYPE] 
+         * @param {number} campaignId The identifier of an existing campaign.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        sBGetBudgetRulesRecommendation(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, uNKNOWNBASETYPE?: any, options?: any): AxiosPromise<SBBudgetRulesRecommendationEventResponse> {
-            return localVarFp.sBGetBudgetRulesRecommendation(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, uNKNOWNBASETYPE, options).then((request) => request(axios, basePath));
+        archiveCampaign(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, options?: any): AxiosPromise<SBUpdateCampaignResponse> {
+            return localVarFp.archiveCampaign(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * See the [create a Sponsored Brands campaign](https://advertising.amazon.com/help#GQFZA83P55P747BZ) topic in the Amazon Ads Support Center for more information about the campaign review process. **Note** to retrieve the state of a campaign submitted for creation, use the listCampaign operation and the campaign identifier from this operation. On SB creation, the state field is read-only.  <br>**To create a video campaign specify adFormat as \'video\'. If adFormat is not specified a Product Collection campaign will be created. Only a single video campaign can be created at a time.** <br>**Note** each campaign in campaign creation operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords). <br>**Note** each campaign in campaign creation operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting). <br>**Note** that keywords or expressions *can not* be recreated for a campaign if the keyword or expression has previously been associated with a campaign and subsequently archived. 
+         * @summary Creates one or more new Campaigns.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<SBCreateCampaignRequest>} [sBCreateCampaignRequest] An array of campaigns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBCreateCampaignRequest?: Array<SBCreateCampaignRequest>, options?: any): AxiosPromise<object> {
+            return localVarFp.createCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sBCreateCampaignRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Gets a campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} campaignId The identifier of an existing campaign.
+         * @param {string} [locale] The returned array includes only keywords associated with locale matching those specified by identifier.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCampaign(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, locale?: string, options?: any): AxiosPromise<SBCampaignResponse> {
+            return localVarFp.getCampaign(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, locale, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. Returns both productCollection and video campaigns. Use either `adFormatFilter` or `creativeType` to filter campaigns by ad formats such as `productCollection` or `video`. <br>**Note:** An advertiser that has lost brand eligibility will not be able to use any write operations such as `POST`, `PUT`, and `DELETE`. This includes the `GET` operation `/pageAsins`. However, the rest of the `GET` operations such as `/sb/campaigns` will be usable regardless of advertiser\'s eligibility status.
+         * @summary Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of campaigns. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of campaigns in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten campaigns set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten campaigns, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {State} [stateFilter] The returned array is filtered to include only campaigns with state set to one of the values in the specified comma-delimited list. Defaults to &#x60;enabled&#x60; and &#x60;paused&#x60;.&lt;br/&gt;&lt;br/&gt;  **Note** that Campaigns rejected during moderation have state set to &#x60;archived&#x60;.
+         * @param {string} [name] The returned array includes only campaigns with the specified name.
+         * @param {string} [portfolioIdFilter] The returned array includes only campaigns associated with Portfolio identifiers matching those specified in the comma-delimited string.
+         * @param {string} [campaignIdFilter] The returned array includes only campaigns with identifiers matching those specified in the comma-delimited string.
+         * @param {AdFormat} [adFormatFilter] The returned array includes only campaigns with ad format matching those specified in the comma-delimited adFormats. Returns all campaigns if not specified.
+         * @param {CreativeType} [creativeType] Filter by the type of creative the campaign is associated with. To get non-video campaigns specify \&#39;productCollection\&#39;. To get video campaigns, this must be set to \&#39;video\&#39;. Returns all campaigns if not specified.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, stateFilter?: State, name?: string, portfolioIdFilter?: string, campaignIdFilter?: string, adFormatFilter?: AdFormat, creativeType?: CreativeType, options?: any): AxiosPromise<Array<SBListCampaignsResponse>> {
+            return localVarFp.listCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, stateFilter, name, portfolioIdFilter, campaignIdFilter, adFormatFilter, creativeType, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Mutable fields: * `name`  * `state` * `portfolioId` * `budget` * `bidOptimization` * `bidMultiplier` * `bidAdjustments` * `endDate`
+         * @summary Updates one or more campaigns.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of campaigns with updated field values.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options?: any): AxiosPromise<Array<SBUpdateCampaignResponse>> {
+            return localVarFp.updateCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, requestBody, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for sBGetBudgetRulesRecommendation operation in BudgetRulesRecommendationApi.
+ * Request parameters for archiveCampaign operation in CampaignsApi.
  * @export
- * @interface BudgetRulesRecommendationApiSBGetBudgetRulesRecommendationRequest
+ * @interface CampaignsApiArchiveCampaignRequest
  */
-export interface BudgetRulesRecommendationApiSBGetBudgetRulesRecommendationRequest {
+export interface CampaignsApiArchiveCampaignRequest {
     /**
      * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
      * @type {string}
-     * @memberof BudgetRulesRecommendationApiSBGetBudgetRulesRecommendation
+     * @memberof CampaignsApiArchiveCampaign
      */
     readonly amazonAdvertisingAPIClientId: string
 
     /**
      * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
      * @type {string}
-     * @memberof BudgetRulesRecommendationApiSBGetBudgetRulesRecommendation
+     * @memberof CampaignsApiArchiveCampaign
      */
     readonly amazonAdvertisingAPIScope: string
 
     /**
-     * 
-     * @type {any}
-     * @memberof BudgetRulesRecommendationApiSBGetBudgetRulesRecommendation
+     * The identifier of an existing campaign.
+     * @type {number}
+     * @memberof CampaignsApiArchiveCampaign
      */
-    readonly uNKNOWNBASETYPE?: any
+    readonly campaignId: number
 }
 
 /**
- * BudgetRulesRecommendationApi - object-oriented interface
+ * Request parameters for createCampaigns operation in CampaignsApi.
  * @export
- * @class BudgetRulesRecommendationApi
- * @extends {BaseAPI}
+ * @interface CampaignsApiCreateCampaignsRequest
  */
-export class BudgetRulesRecommendationApi extends BaseAPI {
-    /**
-     * A rule enables an automatic budget increase for a specified date range or for a special event. The response also includes a suggested budget increase for each special event.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-     * @summary Gets a list of special events with suggested date range and suggested budget increase for a campaign specified by identifier.
-     * @param {BudgetRulesRecommendationApiSBGetBudgetRulesRecommendationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BudgetRulesRecommendationApi
-     */
-    public sBGetBudgetRulesRecommendation(requestParameters: BudgetRulesRecommendationApiSBGetBudgetRulesRecommendationRequest, options?: any) {
-        return BudgetRulesRecommendationApiFp(this.configuration).sBGetBudgetRulesRecommendation(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.uNKNOWNBASETYPE, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * DefaultApi - axios parameter creator
- * @export
- */
-export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Gets shopper segment bidding campaign performance forecasts.  **Requires one of these permissions**: [\"advertiser_campaign_view\"]
-         * @param {GetCampaignShopperSegmentForecastRequestContent} [getCampaignShopperSegmentForecastRequestContent] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCampaignShopperSegmentForecast: async (getCampaignShopperSegmentForecastRequestContent?: GetCampaignShopperSegmentForecastRequestContent, options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/sb/campaign/shopperSegments/forecast`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/vnd.SBForecastingAPILambda.SponsoredBrandsCampaignShopperSegmentForecastResource.v1+json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(getCampaignShopperSegmentForecastRequestContent, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * DefaultApi - functional programming interface
- * @export
- */
-export const DefaultApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * Gets shopper segment bidding campaign performance forecasts.  **Requires one of these permissions**: [\"advertiser_campaign_view\"]
-         * @param {GetCampaignShopperSegmentForecastRequestContent} [getCampaignShopperSegmentForecastRequestContent] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getCampaignShopperSegmentForecast(getCampaignShopperSegmentForecastRequestContent?: GetCampaignShopperSegmentForecastRequestContent, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCampaignShopperSegmentForecastResponseContent>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCampaignShopperSegmentForecast(getCampaignShopperSegmentForecastRequestContent, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * DefaultApi - factory interface
- * @export
- */
-export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = DefaultApiFp(configuration)
-    return {
-        /**
-         * Gets shopper segment bidding campaign performance forecasts.  **Requires one of these permissions**: [\"advertiser_campaign_view\"]
-         * @param {GetCampaignShopperSegmentForecastRequestContent} [getCampaignShopperSegmentForecastRequestContent] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCampaignShopperSegmentForecast(getCampaignShopperSegmentForecastRequestContent?: GetCampaignShopperSegmentForecastRequestContent, options?: any): AxiosPromise<GetCampaignShopperSegmentForecastResponseContent> {
-            return localVarFp.getCampaignShopperSegmentForecast(getCampaignShopperSegmentForecastRequestContent, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for getCampaignShopperSegmentForecast operation in DefaultApi.
- * @export
- * @interface DefaultApiGetCampaignShopperSegmentForecastRequest
- */
-export interface DefaultApiGetCampaignShopperSegmentForecastRequest {
-    /**
-     * 
-     * @type {GetCampaignShopperSegmentForecastRequestContent}
-     * @memberof DefaultApiGetCampaignShopperSegmentForecast
-     */
-    readonly getCampaignShopperSegmentForecastRequestContent?: GetCampaignShopperSegmentForecastRequestContent
-}
-
-/**
- * DefaultApi - object-oriented interface
- * @export
- * @class DefaultApi
- * @extends {BaseAPI}
- */
-export class DefaultApi extends BaseAPI {
-    /**
-     * Gets shopper segment bidding campaign performance forecasts.  **Requires one of these permissions**: [\"advertiser_campaign_view\"]
-     * @param {DefaultApiGetCampaignShopperSegmentForecastRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public getCampaignShopperSegmentForecast(requestParameters: DefaultApiGetCampaignShopperSegmentForecastRequest = {}, options?: any) {
-        return DefaultApiFp(this.configuration).getCampaignShopperSegmentForecast(requestParameters.getCampaignShopperSegmentForecastRequestContent, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * KeywordRecommendationsApi - axios parameter creator
- * @export
- */
-export const KeywordRecommendationsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Gets an array of keyword recommendation objects for a set of ASINs included either on a landing page or a Stores page. Vendors may also specify a custom landing page.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets keyword recommendations
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {SBKeywordRecommendationRequestAsin | SBKeywordRecommendationRequestUrl} [sBKeywordRecommendationRequestAsinSBKeywordRecommendationRequestUrl] **Must contain exactly only one of**     1.) An array of ASINs for which keyword recommendations are generated.     2.) The URL of a Stores page. Vendors may also specify the URL of a custom landing page. The products on the landing page are used to generate keyword recommendations.     Optional parameters include the max number of suggestions and locale for keyword translations. Supported locales include: Simplified Chinese (locale: “zh_CN”) for US, UK and CA. English (locale:  “en_GB”) for DE, FR, IT and ES. If locale is invalid or unsupported, no translations will be returned.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getKeywordRecommendations: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBKeywordRecommendationRequestAsinSBKeywordRecommendationRequestUrl?: SBKeywordRecommendationRequestAsin | SBKeywordRecommendationRequestUrl, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('getKeywordRecommendations', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('getKeywordRecommendations', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            const localVarPath = `/sb/recommendations/keyword`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
-            }
-
-            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbkeywordrecommendation.v3+json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(sBKeywordRecommendationRequestAsinSBKeywordRecommendationRequestUrl, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * KeywordRecommendationsApi - functional programming interface
- * @export
- */
-export const KeywordRecommendationsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = KeywordRecommendationsApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * Gets an array of keyword recommendation objects for a set of ASINs included either on a landing page or a Stores page. Vendors may also specify a custom landing page.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets keyword recommendations
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {SBKeywordRecommendationRequestAsin | SBKeywordRecommendationRequestUrl} [sBKeywordRecommendationRequestAsinSBKeywordRecommendationRequestUrl] **Must contain exactly only one of**     1.) An array of ASINs for which keyword recommendations are generated.     2.) The URL of a Stores page. Vendors may also specify the URL of a custom landing page. The products on the landing page are used to generate keyword recommendations.     Optional parameters include the max number of suggestions and locale for keyword translations. Supported locales include: Simplified Chinese (locale: “zh_CN”) for US, UK and CA. English (locale:  “en_GB”) for DE, FR, IT and ES. If locale is invalid or unsupported, no translations will be returned.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getKeywordRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBKeywordRecommendationRequestAsinSBKeywordRecommendationRequestUrl?: SBKeywordRecommendationRequestAsin | SBKeywordRecommendationRequestUrl, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SBKeywordSuggestion>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getKeywordRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sBKeywordRecommendationRequestAsinSBKeywordRecommendationRequestUrl, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * KeywordRecommendationsApi - factory interface
- * @export
- */
-export const KeywordRecommendationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = KeywordRecommendationsApiFp(configuration)
-    return {
-        /**
-         * Gets an array of keyword recommendation objects for a set of ASINs included either on a landing page or a Stores page. Vendors may also specify a custom landing page.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Gets keyword recommendations
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {SBKeywordRecommendationRequestAsin | SBKeywordRecommendationRequestUrl} [sBKeywordRecommendationRequestAsinSBKeywordRecommendationRequestUrl] **Must contain exactly only one of**     1.) An array of ASINs for which keyword recommendations are generated.     2.) The URL of a Stores page. Vendors may also specify the URL of a custom landing page. The products on the landing page are used to generate keyword recommendations.     Optional parameters include the max number of suggestions and locale for keyword translations. Supported locales include: Simplified Chinese (locale: “zh_CN”) for US, UK and CA. English (locale:  “en_GB”) for DE, FR, IT and ES. If locale is invalid or unsupported, no translations will be returned.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getKeywordRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBKeywordRecommendationRequestAsinSBKeywordRecommendationRequestUrl?: SBKeywordRecommendationRequestAsin | SBKeywordRecommendationRequestUrl, options?: any): AxiosPromise<Array<SBKeywordSuggestion>> {
-            return localVarFp.getKeywordRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sBKeywordRecommendationRequestAsinSBKeywordRecommendationRequestUrl, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for getKeywordRecommendations operation in KeywordRecommendationsApi.
- * @export
- * @interface KeywordRecommendationsApiGetKeywordRecommendationsRequest
- */
-export interface KeywordRecommendationsApiGetKeywordRecommendationsRequest {
+export interface CampaignsApiCreateCampaignsRequest {
     /**
      * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
      * @type {string}
-     * @memberof KeywordRecommendationsApiGetKeywordRecommendations
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-     * @type {string}
-     * @memberof KeywordRecommendationsApiGetKeywordRecommendations
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
-     * **Must contain exactly only one of**     1.) An array of ASINs for which keyword recommendations are generated.     2.) The URL of a Stores page. Vendors may also specify the URL of a custom landing page. The products on the landing page are used to generate keyword recommendations.     Optional parameters include the max number of suggestions and locale for keyword translations. Supported locales include: Simplified Chinese (locale: “zh_CN”) for US, UK and CA. English (locale:  “en_GB”) for DE, FR, IT and ES. If locale is invalid or unsupported, no translations will be returned.
-     * @type {SBKeywordRecommendationRequestAsin | SBKeywordRecommendationRequestUrl}
-     * @memberof KeywordRecommendationsApiGetKeywordRecommendations
-     */
-    readonly sBKeywordRecommendationRequestAsinSBKeywordRecommendationRequestUrl?: SBKeywordRecommendationRequestAsin | SBKeywordRecommendationRequestUrl
-}
-
-/**
- * KeywordRecommendationsApi - object-oriented interface
- * @export
- * @class KeywordRecommendationsApi
- * @extends {BaseAPI}
- */
-export class KeywordRecommendationsApi extends BaseAPI {
-    /**
-     * Gets an array of keyword recommendation objects for a set of ASINs included either on a landing page or a Stores page. Vendors may also specify a custom landing page.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-     * @summary Gets keyword recommendations
-     * @param {KeywordRecommendationsApiGetKeywordRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof KeywordRecommendationsApi
-     */
-    public getKeywordRecommendations(requestParameters: KeywordRecommendationsApiGetKeywordRecommendationsRequest, options?: any) {
-        return KeywordRecommendationsApiFp(this.configuration).getKeywordRecommendations(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.sBKeywordRecommendationRequestAsinSBKeywordRecommendationRequestUrl, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * RecommendationsApi - axios parameter creator
- * @export
- */
-export const RecommendationsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * API to receive creative headline suggestions.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {HeadlineSuggestionRequest} headlineSuggestionRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getHeadlineRecommendations: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, headlineSuggestionRequest: HeadlineSuggestionRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('getHeadlineRecommendations', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('getHeadlineRecommendations', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            // verify required parameter 'headlineSuggestionRequest' is not null or undefined
-            assertParamExists('getHeadlineRecommendations', 'headlineSuggestionRequest', headlineSuggestionRequest)
-            const localVarPath = `/sb/recommendations/creative/headline`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
-            }
-
-            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(headlineSuggestionRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * RecommendationsApi - functional programming interface
- * @export
- */
-export const RecommendationsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = RecommendationsApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * API to receive creative headline suggestions.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {HeadlineSuggestionRequest} headlineSuggestionRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getHeadlineRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, headlineSuggestionRequest: HeadlineSuggestionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HeadlineSuggestionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getHeadlineRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, headlineSuggestionRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * RecommendationsApi - factory interface
- * @export
- */
-export const RecommendationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = RecommendationsApiFp(configuration)
-    return {
-        /**
-         * API to receive creative headline suggestions.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {HeadlineSuggestionRequest} headlineSuggestionRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getHeadlineRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, headlineSuggestionRequest: HeadlineSuggestionRequest, options?: any): AxiosPromise<HeadlineSuggestionResponse> {
-            return localVarFp.getHeadlineRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, headlineSuggestionRequest, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for getHeadlineRecommendations operation in RecommendationsApi.
- * @export
- * @interface RecommendationsApiGetHeadlineRecommendationsRequest
- */
-export interface RecommendationsApiGetHeadlineRecommendationsRequest {
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-     * @type {string}
-     * @memberof RecommendationsApiGetHeadlineRecommendations
+     * @memberof CampaignsApiCreateCampaigns
      */
     readonly amazonAdvertisingAPIClientId: string
 
     /**
      * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
      * @type {string}
-     * @memberof RecommendationsApiGetHeadlineRecommendations
+     * @memberof CampaignsApiCreateCampaigns
      */
     readonly amazonAdvertisingAPIScope: string
 
     /**
-     * 
-     * @type {HeadlineSuggestionRequest}
-     * @memberof RecommendationsApiGetHeadlineRecommendations
+     * An array of campaigns.
+     * @type {Array<SBCreateCampaignRequest>}
+     * @memberof CampaignsApiCreateCampaigns
      */
-    readonly headlineSuggestionRequest: HeadlineSuggestionRequest
+    readonly sBCreateCampaignRequest?: Array<SBCreateCampaignRequest>
 }
 
 /**
- * RecommendationsApi - object-oriented interface
+ * Request parameters for getCampaign operation in CampaignsApi.
  * @export
- * @class RecommendationsApi
+ * @interface CampaignsApiGetCampaignRequest
+ */
+export interface CampaignsApiGetCampaignRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof CampaignsApiGetCampaign
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof CampaignsApiGetCampaign
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The identifier of an existing campaign.
+     * @type {number}
+     * @memberof CampaignsApiGetCampaign
+     */
+    readonly campaignId: number
+
+    /**
+     * The returned array includes only keywords associated with locale matching those specified by identifier.
+     * @type {string}
+     * @memberof CampaignsApiGetCampaign
+     */
+    readonly locale?: string
+}
+
+/**
+ * Request parameters for listCampaigns operation in CampaignsApi.
+ * @export
+ * @interface CampaignsApiListCampaignsRequest
+ */
+export interface CampaignsApiListCampaignsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof CampaignsApiListCampaigns
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof CampaignsApiListCampaigns
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Sets a zero-based offset into the requested set of campaigns. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+     * @type {number}
+     * @memberof CampaignsApiListCampaigns
+     */
+    readonly startIndex?: number
+
+    /**
+     * Sets the number of campaigns in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten campaigns set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten campaigns, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+     * @type {number}
+     * @memberof CampaignsApiListCampaigns
+     */
+    readonly count?: number
+
+    /**
+     * The returned array is filtered to include only campaigns with state set to one of the values in the specified comma-delimited list. Defaults to &#x60;enabled&#x60; and &#x60;paused&#x60;.&lt;br/&gt;&lt;br/&gt;  **Note** that Campaigns rejected during moderation have state set to &#x60;archived&#x60;.
+     * @type {State}
+     * @memberof CampaignsApiListCampaigns
+     */
+    readonly stateFilter?: State
+
+    /**
+     * The returned array includes only campaigns with the specified name.
+     * @type {string}
+     * @memberof CampaignsApiListCampaigns
+     */
+    readonly name?: string
+
+    /**
+     * The returned array includes only campaigns associated with Portfolio identifiers matching those specified in the comma-delimited string.
+     * @type {string}
+     * @memberof CampaignsApiListCampaigns
+     */
+    readonly portfolioIdFilter?: string
+
+    /**
+     * The returned array includes only campaigns with identifiers matching those specified in the comma-delimited string.
+     * @type {string}
+     * @memberof CampaignsApiListCampaigns
+     */
+    readonly campaignIdFilter?: string
+
+    /**
+     * The returned array includes only campaigns with ad format matching those specified in the comma-delimited adFormats. Returns all campaigns if not specified.
+     * @type {AdFormat}
+     * @memberof CampaignsApiListCampaigns
+     */
+    readonly adFormatFilter?: AdFormat
+
+    /**
+     * Filter by the type of creative the campaign is associated with. To get non-video campaigns specify \&#39;productCollection\&#39;. To get video campaigns, this must be set to \&#39;video\&#39;. Returns all campaigns if not specified.
+     * @type {CreativeType}
+     * @memberof CampaignsApiListCampaigns
+     */
+    readonly creativeType?: CreativeType
+}
+
+/**
+ * Request parameters for updateCampaigns operation in CampaignsApi.
+ * @export
+ * @interface CampaignsApiUpdateCampaignsRequest
+ */
+export interface CampaignsApiUpdateCampaignsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof CampaignsApiUpdateCampaigns
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof CampaignsApiUpdateCampaigns
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * An array of campaigns with updated field values.
+     * @type {Array<object>}
+     * @memberof CampaignsApiUpdateCampaigns
+     */
+    readonly requestBody?: Array<object>
+}
+
+/**
+ * CampaignsApi - object-oriented interface
+ * @export
+ * @class CampaignsApi
  * @extends {BaseAPI}
  */
-export class RecommendationsApi extends BaseAPI {
+export class CampaignsApi extends BaseAPI {
     /**
-     * API to receive creative headline suggestions.
-     * @param {RecommendationsApiGetHeadlineRecommendationsRequest} requestParameters Request parameters.
+     * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+     * @summary Archives a campaign specified by identifier.
+     * @param {CampaignsApiArchiveCampaignRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof RecommendationsApi
+     * @memberof CampaignsApi
      */
-    public getHeadlineRecommendations(requestParameters: RecommendationsApiGetHeadlineRecommendationsRequest, options?: any) {
-        return RecommendationsApiFp(this.configuration).getHeadlineRecommendations(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.headlineSuggestionRequest, options).then((request) => request(this.axios, this.basePath));
+    public archiveCampaign(requestParameters: CampaignsApiArchiveCampaignRequest, options?: any) {
+        return CampaignsApiFp(this.configuration).archiveCampaign(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.campaignId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * See the [create a Sponsored Brands campaign](https://advertising.amazon.com/help#GQFZA83P55P747BZ) topic in the Amazon Ads Support Center for more information about the campaign review process. **Note** to retrieve the state of a campaign submitted for creation, use the listCampaign operation and the campaign identifier from this operation. On SB creation, the state field is read-only.  <br>**To create a video campaign specify adFormat as \'video\'. If adFormat is not specified a Product Collection campaign will be created. Only a single video campaign can be created at a time.** <br>**Note** each campaign in campaign creation operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords). <br>**Note** each campaign in campaign creation operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting). <br>**Note** that keywords or expressions *can not* be recreated for a campaign if the keyword or expression has previously been associated with a campaign and subsequently archived. 
+     * @summary Creates one or more new Campaigns.
+     * @param {CampaignsApiCreateCampaignsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CampaignsApi
+     */
+    public createCampaigns(requestParameters: CampaignsApiCreateCampaignsRequest, options?: any) {
+        return CampaignsApiFp(this.configuration).createCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.sBCreateCampaignRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Gets a campaign specified by identifier.
+     * @param {CampaignsApiGetCampaignRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CampaignsApi
+     */
+    public getCampaign(requestParameters: CampaignsApiGetCampaignRequest, options?: any) {
+        return CampaignsApiFp(this.configuration).getCampaign(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.campaignId, requestParameters.locale, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. Returns both productCollection and video campaigns. Use either `adFormatFilter` or `creativeType` to filter campaigns by ad formats such as `productCollection` or `video`. <br>**Note:** An advertiser that has lost brand eligibility will not be able to use any write operations such as `POST`, `PUT`, and `DELETE`. This includes the `GET` operation `/pageAsins`. However, the rest of the `GET` operations such as `/sb/campaigns` will be usable regardless of advertiser\'s eligibility status.
+     * @summary Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria.
+     * @param {CampaignsApiListCampaignsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CampaignsApi
+     */
+    public listCampaigns(requestParameters: CampaignsApiListCampaignsRequest, options?: any) {
+        return CampaignsApiFp(this.configuration).listCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.startIndex, requestParameters.count, requestParameters.stateFilter, requestParameters.name, requestParameters.portfolioIdFilter, requestParameters.campaignIdFilter, requestParameters.adFormatFilter, requestParameters.creativeType, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Mutable fields: * `name`  * `state` * `portfolioId` * `budget` * `bidOptimization` * `bidMultiplier` * `bidAdjustments` * `endDate`
+     * @summary Updates one or more campaigns.
+     * @param {CampaignsApiUpdateCampaignsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CampaignsApi
+     */
+    public updateCampaigns(requestParameters: CampaignsApiUpdateCampaignsRequest, options?: any) {
+        return CampaignsApiFp(this.configuration).updateCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
 
 /**
- * SuggestionsApi - axios parameter creator
+ * DraftsApi - axios parameter creator
  * @export
  */
-export const SuggestionsApiAxiosParamCreator = function (configuration?: Configuration) {
+export const DraftsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * API to receive creative headline suggestions.
+         * Creates sponsored brands draft campaigns. <br>**To create a video campaign specify adFormat as \'video\'. If adFormat is not specified then a product collection draft is created.** <br>Note each draft campaign can have keywords, negative keywords, targets and negative targets with batch size of upto 100. <br>**Note** each draft campaign in this operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords). <br>**Note** each draft campaign in this operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting).
+         * @summary Creates one or more new draft campaigns.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {HeadlineSuggestionRequest} headlineSuggestionRequest 
+         * @param {Array<SBCreateDraftCampaignRequest>} [sBCreateDraftCampaignRequest] An array of draft campaigns.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getHeadlineRecommendations: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, headlineSuggestionRequest: HeadlineSuggestionRequest, options: any = {}): Promise<RequestArgs> => {
+        createDraftCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBCreateDraftCampaignRequest?: Array<SBCreateDraftCampaignRequest>, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('getHeadlineRecommendations', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            assertParamExists('createDraftCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('getHeadlineRecommendations', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            // verify required parameter 'headlineSuggestionRequest' is not null or undefined
-            assertParamExists('getHeadlineRecommendations', 'headlineSuggestionRequest', headlineSuggestionRequest)
-            const localVarPath = `/sb/recommendations/creative/headline`;
+            assertParamExists('createDraftCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sb/drafts/campaigns`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -4883,6 +9585,10 @@ export const SuggestionsApiAxiosParamCreator = function (configuration?: Configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
                 localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
             }
@@ -4893,135 +9599,88 @@ export const SuggestionsApiAxiosParamCreator = function (configuration?: Configu
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbdraftcampaignresponse.v3+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(headlineSuggestionRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(sBCreateDraftCampaignRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
-    }
-};
-
-/**
- * SuggestionsApi - functional programming interface
- * @export
- */
-export const SuggestionsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = SuggestionsApiAxiosParamCreator(configuration)
-    return {
         /**
-         * API to receive creative headline suggestions.
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * @summary Archives a draft campaign specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {HeadlineSuggestionRequest} headlineSuggestionRequest 
+         * @param {number} draftCampaignId The identifier of an existing draft campaign.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getHeadlineRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, headlineSuggestionRequest: HeadlineSuggestionRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HeadlineSuggestionResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getHeadlineRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, headlineSuggestionRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-    }
-};
-
-/**
- * SuggestionsApi - factory interface
- * @export
- */
-export const SuggestionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = SuggestionsApiFp(configuration)
-    return {
-        /**
-         * API to receive creative headline suggestions.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {HeadlineSuggestionRequest} headlineSuggestionRequest 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getHeadlineRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, headlineSuggestionRequest: HeadlineSuggestionRequest, options?: any): AxiosPromise<HeadlineSuggestionResponse> {
-            return localVarFp.getHeadlineRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, headlineSuggestionRequest, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * Request parameters for getHeadlineRecommendations operation in SuggestionsApi.
- * @export
- * @interface SuggestionsApiGetHeadlineRecommendationsRequest
- */
-export interface SuggestionsApiGetHeadlineRecommendationsRequest {
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-     * @type {string}
-     * @memberof SuggestionsApiGetHeadlineRecommendations
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-     * @type {string}
-     * @memberof SuggestionsApiGetHeadlineRecommendations
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
-     * 
-     * @type {HeadlineSuggestionRequest}
-     * @memberof SuggestionsApiGetHeadlineRecommendations
-     */
-    readonly headlineSuggestionRequest: HeadlineSuggestionRequest
-}
-
-/**
- * SuggestionsApi - object-oriented interface
- * @export
- * @class SuggestionsApi
- * @extends {BaseAPI}
- */
-export class SuggestionsApi extends BaseAPI {
-    /**
-     * API to receive creative headline suggestions.
-     * @param {SuggestionsApiGetHeadlineRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SuggestionsApi
-     */
-    public getHeadlineRecommendations(requestParameters: SuggestionsApiGetHeadlineRecommendationsRequest, options?: any) {
-        return SuggestionsApiFp(this.configuration).getHeadlineRecommendations(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.headlineSuggestionRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-/**
- * TargetsApi - axios parameter creator
- * @export
- */
-export const TargetsApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * Gets all targetable categories given the supply source, returned aa a large JSON string containing a tree of category nodes.
-         * @summary Get all targetable categories for Sponsored Brands.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {'AMAZON' | 'STREAMING_VIDEO'} supplySource The supply source where the target will be used. Use &#x60;AMAZON&#x60; for placements on Amazon website. Use &#x60;STREAMING_VIDEO&#x60; for off-site video placements such as IMDb TV.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSbTargetableCategories: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, supplySource: 'AMAZON' | 'STREAMING_VIDEO', options: any = {}): Promise<RequestArgs> => {
+        deleteDraftCampaign: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, draftCampaignId: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('getSbTargetableCategories', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            assertParamExists('deleteDraftCampaign', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('getSbTargetableCategories', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            // verify required parameter 'supplySource' is not null or undefined
-            assertParamExists('getSbTargetableCategories', 'supplySource', supplySource)
-            const localVarPath = `/sb/targets/categories`;
+            assertParamExists('deleteDraftCampaign', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'draftCampaignId' is not null or undefined
+            assertParamExists('deleteDraftCampaign', 'draftCampaignId', draftCampaignId)
+            const localVarPath = `/sb/drafts/campaigns/{draftCampaignId}`
+                .replace(`{${"draftCampaignId"}}`, encodeURIComponent(String(draftCampaignId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Gets a draft campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} draftCampaignId The identifier of an existing draft campaign.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDraftCampaign: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, draftCampaignId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getDraftCampaign', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getDraftCampaign', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'draftCampaignId' is not null or undefined
+            assertParamExists('getDraftCampaign', 'draftCampaignId', draftCampaignId)
+            const localVarPath = `/sb/drafts/campaigns/{draftCampaignId}`
+                .replace(`{${"draftCampaignId"}}`, encodeURIComponent(String(draftCampaignId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -5033,8 +9692,1482 @@ export const TargetsApiAxiosParamCreator = function (configuration?: Configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (supplySource !== undefined) {
-                localVarQueryParameter['supplySource'] = supplySource;
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Gets an array of all draft campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. <br>**Returns both productCollection and video draft campaigns by default. Use adFormatFilter to filter drafts by ad formats.**
+         * @summary Gets an array of draft campaign objects.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of draft campaigns. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of draft campaigns in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten ad groups set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten ad groups, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {string} [name] The returned array only includes draft campaigns with the specified name.
+         * @param {string} [draftCampaignIdFilter] The returned array includes only draft campaigns with identifiers matching those specified in the comma-delimited string.
+         * @param {string} [portfolioIdFilter] The returned array includes only campaigns associated with Portfolio identifiers matching those specified in the comma-delimited string.
+         * @param {AdFormat} [adFormatFilter] The returned array includes only draft campaigns with ad format matching those specified in the comma-delimited adFormats. Returns all drafts if not specified.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDraftCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, name?: string, draftCampaignIdFilter?: string, portfolioIdFilter?: string, adFormatFilter?: AdFormat, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('listDraftCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('listDraftCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sb/drafts/campaigns`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (startIndex !== undefined) {
+                localVarQueryParameter['startIndex'] = startIndex;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (draftCampaignIdFilter !== undefined) {
+                localVarQueryParameter['draftCampaignIdFilter'] = draftCampaignIdFilter;
+            }
+
+            if (portfolioIdFilter !== undefined) {
+                localVarQueryParameter['portfolioIdFilter'] = portfolioIdFilter;
+            }
+
+            if (adFormatFilter !== undefined) {
+                localVarQueryParameter['adFormatFilter'] = adFormatFilter;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * On successful submission, a campaign is created with an identifier that could be different from the original draft campaign identifier. The new identifier is returned in the response. Note that when a draft campaign is approved, the \'status\' and \'servingStatus\' fields are changed to values associated with an active campaign.
+         * @summary Submits one or more existing draft campaigns to the moderation approval queue.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<number>} [requestBody] A comma-delimited list of draft campaign identifiers. Maximum length is 10 draft campaign identifiers.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        submitDraftCampaign: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<number>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('submitDraftCampaign', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('submitDraftCampaign', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sb/drafts/campaigns/submit`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbcampaign.v3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Updates one or more draft campaigns.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<SBUpdateDraftCampaignRequest>} [sBUpdateDraftCampaignRequest] An array of draft campaign objects with updated values.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDraftCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBUpdateDraftCampaignRequest?: Array<SBUpdateDraftCampaignRequest>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('updateDraftCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('updateDraftCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sb/drafts/campaigns`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbdraftcampaignresponse.v3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(sBUpdateDraftCampaignRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DraftsApi - functional programming interface
+ * @export
+ */
+export const DraftsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DraftsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Creates sponsored brands draft campaigns. <br>**To create a video campaign specify adFormat as \'video\'. If adFormat is not specified then a product collection draft is created.** <br>Note each draft campaign can have keywords, negative keywords, targets and negative targets with batch size of upto 100. <br>**Note** each draft campaign in this operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords). <br>**Note** each draft campaign in this operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting).
+         * @summary Creates one or more new draft campaigns.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<SBCreateDraftCampaignRequest>} [sBCreateDraftCampaignRequest] An array of draft campaigns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createDraftCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBCreateDraftCampaignRequest?: Array<SBCreateDraftCampaignRequest>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBDraftCampaignResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createDraftCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sBCreateDraftCampaignRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * @summary Archives a draft campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} draftCampaignId The identifier of an existing draft campaign.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteDraftCampaign(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, draftCampaignId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBDraftCampaignDeleteResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDraftCampaign(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, draftCampaignId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Gets a draft campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} draftCampaignId The identifier of an existing draft campaign.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDraftCampaign(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, draftCampaignId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBDraftCampaign>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDraftCampaign(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, draftCampaignId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Gets an array of all draft campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. <br>**Returns both productCollection and video draft campaigns by default. Use adFormatFilter to filter drafts by ad formats.**
+         * @summary Gets an array of draft campaign objects.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of draft campaigns. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of draft campaigns in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten ad groups set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten ad groups, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {string} [name] The returned array only includes draft campaigns with the specified name.
+         * @param {string} [draftCampaignIdFilter] The returned array includes only draft campaigns with identifiers matching those specified in the comma-delimited string.
+         * @param {string} [portfolioIdFilter] The returned array includes only campaigns associated with Portfolio identifiers matching those specified in the comma-delimited string.
+         * @param {AdFormat} [adFormatFilter] The returned array includes only draft campaigns with ad format matching those specified in the comma-delimited adFormats. Returns all drafts if not specified.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listDraftCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, name?: string, draftCampaignIdFilter?: string, portfolioIdFilter?: string, adFormatFilter?: AdFormat, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SBGetDraftCampaignResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listDraftCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, name, draftCampaignIdFilter, portfolioIdFilter, adFormatFilter, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * On successful submission, a campaign is created with an identifier that could be different from the original draft campaign identifier. The new identifier is returned in the response. Note that when a draft campaign is approved, the \'status\' and \'servingStatus\' fields are changed to values associated with an active campaign.
+         * @summary Submits one or more existing draft campaigns to the moderation approval queue.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<number>} [requestBody] A comma-delimited list of draft campaign identifiers. Maximum length is 10 draft campaign identifiers.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async submitDraftCampaign(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<number>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBSubmitDraftCampaignResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.submitDraftCampaign(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, requestBody, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Updates one or more draft campaigns.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<SBUpdateDraftCampaignRequest>} [sBUpdateDraftCampaignRequest] An array of draft campaign objects with updated values.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateDraftCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBUpdateDraftCampaignRequest?: Array<SBUpdateDraftCampaignRequest>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SBDraftCampaignResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateDraftCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sBUpdateDraftCampaignRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * DraftsApi - factory interface
+ * @export
+ */
+export const DraftsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DraftsApiFp(configuration)
+    return {
+        /**
+         * Creates sponsored brands draft campaigns. <br>**To create a video campaign specify adFormat as \'video\'. If adFormat is not specified then a product collection draft is created.** <br>Note each draft campaign can have keywords, negative keywords, targets and negative targets with batch size of upto 100. <br>**Note** each draft campaign in this operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords). <br>**Note** each draft campaign in this operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting).
+         * @summary Creates one or more new draft campaigns.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<SBCreateDraftCampaignRequest>} [sBCreateDraftCampaignRequest] An array of draft campaigns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDraftCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBCreateDraftCampaignRequest?: Array<SBCreateDraftCampaignRequest>, options?: any): AxiosPromise<SBDraftCampaignResponse> {
+            return localVarFp.createDraftCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sBCreateDraftCampaignRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * @summary Archives a draft campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} draftCampaignId The identifier of an existing draft campaign.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDraftCampaign(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, draftCampaignId: number, options?: any): AxiosPromise<SBDraftCampaignDeleteResponse> {
+            return localVarFp.deleteDraftCampaign(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, draftCampaignId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Gets a draft campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} draftCampaignId The identifier of an existing draft campaign.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDraftCampaign(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, draftCampaignId: number, options?: any): AxiosPromise<SBDraftCampaign> {
+            return localVarFp.getDraftCampaign(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, draftCampaignId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Gets an array of all draft campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. <br>**Returns both productCollection and video draft campaigns by default. Use adFormatFilter to filter drafts by ad formats.**
+         * @summary Gets an array of draft campaign objects.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of draft campaigns. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of draft campaigns in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten ad groups set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten ad groups, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {string} [name] The returned array only includes draft campaigns with the specified name.
+         * @param {string} [draftCampaignIdFilter] The returned array includes only draft campaigns with identifiers matching those specified in the comma-delimited string.
+         * @param {string} [portfolioIdFilter] The returned array includes only campaigns associated with Portfolio identifiers matching those specified in the comma-delimited string.
+         * @param {AdFormat} [adFormatFilter] The returned array includes only draft campaigns with ad format matching those specified in the comma-delimited adFormats. Returns all drafts if not specified.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listDraftCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, name?: string, draftCampaignIdFilter?: string, portfolioIdFilter?: string, adFormatFilter?: AdFormat, options?: any): AxiosPromise<Array<SBGetDraftCampaignResponse>> {
+            return localVarFp.listDraftCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, name, draftCampaignIdFilter, portfolioIdFilter, adFormatFilter, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * On successful submission, a campaign is created with an identifier that could be different from the original draft campaign identifier. The new identifier is returned in the response. Note that when a draft campaign is approved, the \'status\' and \'servingStatus\' fields are changed to values associated with an active campaign.
+         * @summary Submits one or more existing draft campaigns to the moderation approval queue.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<number>} [requestBody] A comma-delimited list of draft campaign identifiers. Maximum length is 10 draft campaign identifiers.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        submitDraftCampaign(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<number>, options?: any): AxiosPromise<SBSubmitDraftCampaignResponse> {
+            return localVarFp.submitDraftCampaign(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Updates one or more draft campaigns.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<SBUpdateDraftCampaignRequest>} [sBUpdateDraftCampaignRequest] An array of draft campaign objects with updated values.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDraftCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBUpdateDraftCampaignRequest?: Array<SBUpdateDraftCampaignRequest>, options?: any): AxiosPromise<Array<SBDraftCampaignResponse>> {
+            return localVarFp.updateDraftCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sBUpdateDraftCampaignRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for createDraftCampaigns operation in DraftsApi.
+ * @export
+ * @interface DraftsApiCreateDraftCampaignsRequest
+ */
+export interface DraftsApiCreateDraftCampaignsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof DraftsApiCreateDraftCampaigns
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof DraftsApiCreateDraftCampaigns
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * An array of draft campaigns.
+     * @type {Array<SBCreateDraftCampaignRequest>}
+     * @memberof DraftsApiCreateDraftCampaigns
+     */
+    readonly sBCreateDraftCampaignRequest?: Array<SBCreateDraftCampaignRequest>
+}
+
+/**
+ * Request parameters for deleteDraftCampaign operation in DraftsApi.
+ * @export
+ * @interface DraftsApiDeleteDraftCampaignRequest
+ */
+export interface DraftsApiDeleteDraftCampaignRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof DraftsApiDeleteDraftCampaign
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof DraftsApiDeleteDraftCampaign
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The identifier of an existing draft campaign.
+     * @type {number}
+     * @memberof DraftsApiDeleteDraftCampaign
+     */
+    readonly draftCampaignId: number
+}
+
+/**
+ * Request parameters for getDraftCampaign operation in DraftsApi.
+ * @export
+ * @interface DraftsApiGetDraftCampaignRequest
+ */
+export interface DraftsApiGetDraftCampaignRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof DraftsApiGetDraftCampaign
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof DraftsApiGetDraftCampaign
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The identifier of an existing draft campaign.
+     * @type {number}
+     * @memberof DraftsApiGetDraftCampaign
+     */
+    readonly draftCampaignId: number
+}
+
+/**
+ * Request parameters for listDraftCampaigns operation in DraftsApi.
+ * @export
+ * @interface DraftsApiListDraftCampaignsRequest
+ */
+export interface DraftsApiListDraftCampaignsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof DraftsApiListDraftCampaigns
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof DraftsApiListDraftCampaigns
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Sets a zero-based offset into the requested set of draft campaigns. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+     * @type {number}
+     * @memberof DraftsApiListDraftCampaigns
+     */
+    readonly startIndex?: number
+
+    /**
+     * Sets the number of draft campaigns in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten ad groups set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten ad groups, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+     * @type {number}
+     * @memberof DraftsApiListDraftCampaigns
+     */
+    readonly count?: number
+
+    /**
+     * The returned array only includes draft campaigns with the specified name.
+     * @type {string}
+     * @memberof DraftsApiListDraftCampaigns
+     */
+    readonly name?: string
+
+    /**
+     * The returned array includes only draft campaigns with identifiers matching those specified in the comma-delimited string.
+     * @type {string}
+     * @memberof DraftsApiListDraftCampaigns
+     */
+    readonly draftCampaignIdFilter?: string
+
+    /**
+     * The returned array includes only campaigns associated with Portfolio identifiers matching those specified in the comma-delimited string.
+     * @type {string}
+     * @memberof DraftsApiListDraftCampaigns
+     */
+    readonly portfolioIdFilter?: string
+
+    /**
+     * The returned array includes only draft campaigns with ad format matching those specified in the comma-delimited adFormats. Returns all drafts if not specified.
+     * @type {AdFormat}
+     * @memberof DraftsApiListDraftCampaigns
+     */
+    readonly adFormatFilter?: AdFormat
+}
+
+/**
+ * Request parameters for submitDraftCampaign operation in DraftsApi.
+ * @export
+ * @interface DraftsApiSubmitDraftCampaignRequest
+ */
+export interface DraftsApiSubmitDraftCampaignRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof DraftsApiSubmitDraftCampaign
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof DraftsApiSubmitDraftCampaign
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * A comma-delimited list of draft campaign identifiers. Maximum length is 10 draft campaign identifiers.
+     * @type {Array<number>}
+     * @memberof DraftsApiSubmitDraftCampaign
+     */
+    readonly requestBody?: Array<number>
+}
+
+/**
+ * Request parameters for updateDraftCampaigns operation in DraftsApi.
+ * @export
+ * @interface DraftsApiUpdateDraftCampaignsRequest
+ */
+export interface DraftsApiUpdateDraftCampaignsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof DraftsApiUpdateDraftCampaigns
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof DraftsApiUpdateDraftCampaigns
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * An array of draft campaign objects with updated values.
+     * @type {Array<SBUpdateDraftCampaignRequest>}
+     * @memberof DraftsApiUpdateDraftCampaigns
+     */
+    readonly sBUpdateDraftCampaignRequest?: Array<SBUpdateDraftCampaignRequest>
+}
+
+/**
+ * DraftsApi - object-oriented interface
+ * @export
+ * @class DraftsApi
+ * @extends {BaseAPI}
+ */
+export class DraftsApi extends BaseAPI {
+    /**
+     * Creates sponsored brands draft campaigns. <br>**To create a video campaign specify adFormat as \'video\'. If adFormat is not specified then a product collection draft is created.** <br>Note each draft campaign can have keywords, negative keywords, targets and negative targets with batch size of upto 100. <br>**Note** each draft campaign in this operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords). <br>**Note** each draft campaign in this operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting).
+     * @summary Creates one or more new draft campaigns.
+     * @param {DraftsApiCreateDraftCampaignsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DraftsApi
+     */
+    public createDraftCampaigns(requestParameters: DraftsApiCreateDraftCampaignsRequest, options?: any) {
+        return DraftsApiFp(this.configuration).createDraftCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.sBCreateDraftCampaignRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+     * @summary Archives a draft campaign specified by identifier.
+     * @param {DraftsApiDeleteDraftCampaignRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DraftsApi
+     */
+    public deleteDraftCampaign(requestParameters: DraftsApiDeleteDraftCampaignRequest, options?: any) {
+        return DraftsApiFp(this.configuration).deleteDraftCampaign(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.draftCampaignId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Gets a draft campaign specified by identifier.
+     * @param {DraftsApiGetDraftCampaignRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DraftsApi
+     */
+    public getDraftCampaign(requestParameters: DraftsApiGetDraftCampaignRequest, options?: any) {
+        return DraftsApiFp(this.configuration).getDraftCampaign(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.draftCampaignId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gets an array of all draft campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. <br>**Returns both productCollection and video draft campaigns by default. Use adFormatFilter to filter drafts by ad formats.**
+     * @summary Gets an array of draft campaign objects.
+     * @param {DraftsApiListDraftCampaignsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DraftsApi
+     */
+    public listDraftCampaigns(requestParameters: DraftsApiListDraftCampaignsRequest, options?: any) {
+        return DraftsApiFp(this.configuration).listDraftCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.startIndex, requestParameters.count, requestParameters.name, requestParameters.draftCampaignIdFilter, requestParameters.portfolioIdFilter, requestParameters.adFormatFilter, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * On successful submission, a campaign is created with an identifier that could be different from the original draft campaign identifier. The new identifier is returned in the response. Note that when a draft campaign is approved, the \'status\' and \'servingStatus\' fields are changed to values associated with an active campaign.
+     * @summary Submits one or more existing draft campaigns to the moderation approval queue.
+     * @param {DraftsApiSubmitDraftCampaignRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DraftsApi
+     */
+    public submitDraftCampaign(requestParameters: DraftsApiSubmitDraftCampaignRequest, options?: any) {
+        return DraftsApiFp(this.configuration).submitDraftCampaign(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Updates one or more draft campaigns.
+     * @param {DraftsApiUpdateDraftCampaignsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DraftsApi
+     */
+    public updateDraftCampaigns(requestParameters: DraftsApiUpdateDraftCampaignsRequest, options?: any) {
+        return DraftsApiFp(this.configuration).updateDraftCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.sBUpdateDraftCampaignRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * KeywordsApi - axios parameter creator
+ * @export
+ */
+export const KeywordsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * @summary Archives a keyword specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} keywordId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        archiveKeyword: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keywordId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('archiveKeyword', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('archiveKeyword', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'keywordId' is not null or undefined
+            assertParamExists('archiveKeyword', 'keywordId', keywordId)
+            const localVarPath = `/sb/keywords/{keywordId}`
+                .replace(`{${"keywordId"}}`, encodeURIComponent(String(keywordId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Note that `state` can\'t be set at keyword creation. Keywords submitted for creation have state set to `pending` while under moderation review. Moderation review may take up to 72 hours. <br/>Note that keywords can be created on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 keywords.
+         * @summary Creates one or more keywords.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of keywords.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createKeywords: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('createKeywords', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('createKeywords', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sb/keywords`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbkeywordresponse.v3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Gets a keyword specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} keywordId The identifier of an existing keyword.
+         * @param {string} [locale] The returned array includes only keywords associated with locale matching those specified by identifier.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKeyword: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keywordId: number, locale?: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getKeyword', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getKeyword', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'keywordId' is not null or undefined
+            assertParamExists('getKeyword', 'keywordId', keywordId)
+            const localVarPath = `/sb/keywords/{keywordId}`
+                .replace(`{${"keywordId"}}`, encodeURIComponent(String(keywordId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (locale !== undefined) {
+                localVarQueryParameter['locale'] = locale;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Gets an array of keywords, filtered by optional criteria.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of keywords. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of keywords in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten keywords set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten keywords, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {MatchType} [matchTypeFilter] The returned array is filtered to include only keywords with &#x60;matchType&#x60; set to one of the values in the specified comma-delimited list.
+         * @param {string} [keywordText] The returned array includes only keywords with the specified text.
+         * @param {'enabled' | 'paused' | 'archived'} [stateFilter] The returned array is filtered to include only keywords with \&#39;state\&#39; set to one of the values in the specified comma-delimited list.
+         * @param {string} [campaignIdFilter] The returned array includes only keywords associated with campaigns matching those specified by identifier in the comma-delimited string.
+         * @param {string} [adGroupIdFilter] The returned array includes only keywords associated with ad groups matching those specified by identifier in the comma-delimited string.
+         * @param {string} [keywordIdFilter] The returned array includes only keywords with identifiers matching those specified in the comma-delimited string.
+         * @param {CreativeType} [creativeType] Filter by the type of creative the campaign is associated with. To get keywords associated with non-video campaigns specify \&#39;productCollection\&#39;. To get keywords associated with video campaigns, this must be set to \&#39;video\&#39;. Returns all keywords if not specified.
+         * @param {string} [locale] The returned array includes only keywords with locale matching those specified string.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listKeywords: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, matchTypeFilter?: MatchType, keywordText?: string, stateFilter?: 'enabled' | 'paused' | 'archived', campaignIdFilter?: string, adGroupIdFilter?: string, keywordIdFilter?: string, creativeType?: CreativeType, locale?: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('listKeywords', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('listKeywords', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sb/keywords`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (startIndex !== undefined) {
+                localVarQueryParameter['startIndex'] = startIndex;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (matchTypeFilter !== undefined) {
+                localVarQueryParameter['matchTypeFilter'] = matchTypeFilter;
+            }
+
+            if (keywordText !== undefined) {
+                localVarQueryParameter['keywordText'] = keywordText;
+            }
+
+            if (stateFilter !== undefined) {
+                localVarQueryParameter['stateFilter'] = stateFilter;
+            }
+
+            if (campaignIdFilter !== undefined) {
+                localVarQueryParameter['campaignIdFilter'] = campaignIdFilter;
+            }
+
+            if (adGroupIdFilter !== undefined) {
+                localVarQueryParameter['adGroupIdFilter'] = adGroupIdFilter;
+            }
+
+            if (keywordIdFilter !== undefined) {
+                localVarQueryParameter['keywordIdFilter'] = keywordIdFilter;
+            }
+
+            if (creativeType !== undefined) {
+                localVarQueryParameter['creativeType'] = creativeType;
+            }
+
+            if (locale !== undefined) {
+                localVarQueryParameter['locale'] = locale;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Keywords submitted for update may have state set to `pending` for moderation review. Moderation may take up to 72 hours. <br/>Note that keywords can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 keywords.
+         * @summary Updates one or more keywords.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of keywords.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateKeywords: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('updateKeywords', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('updateKeywords', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sb/keywords`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbkeywordresponse.v3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * KeywordsApi - functional programming interface
+ * @export
+ */
+export const KeywordsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = KeywordsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * @summary Archives a keyword specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} keywordId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async archiveKeyword(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keywordId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBKeywordResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.archiveKeyword(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, keywordId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Note that `state` can\'t be set at keyword creation. Keywords submitted for creation have state set to `pending` while under moderation review. Moderation review may take up to 72 hours. <br/>Note that keywords can be created on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 keywords.
+         * @summary Creates one or more keywords.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of keywords.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createKeywords(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBKeywordResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createKeywords(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, requestBody, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Gets a keyword specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} keywordId The identifier of an existing keyword.
+         * @param {string} [locale] The returned array includes only keywords associated with locale matching those specified by identifier.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getKeyword(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keywordId: number, locale?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBKeyword>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getKeyword(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, keywordId, locale, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Gets an array of keywords, filtered by optional criteria.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of keywords. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of keywords in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten keywords set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten keywords, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {MatchType} [matchTypeFilter] The returned array is filtered to include only keywords with &#x60;matchType&#x60; set to one of the values in the specified comma-delimited list.
+         * @param {string} [keywordText] The returned array includes only keywords with the specified text.
+         * @param {'enabled' | 'paused' | 'archived'} [stateFilter] The returned array is filtered to include only keywords with \&#39;state\&#39; set to one of the values in the specified comma-delimited list.
+         * @param {string} [campaignIdFilter] The returned array includes only keywords associated with campaigns matching those specified by identifier in the comma-delimited string.
+         * @param {string} [adGroupIdFilter] The returned array includes only keywords associated with ad groups matching those specified by identifier in the comma-delimited string.
+         * @param {string} [keywordIdFilter] The returned array includes only keywords with identifiers matching those specified in the comma-delimited string.
+         * @param {CreativeType} [creativeType] Filter by the type of creative the campaign is associated with. To get keywords associated with non-video campaigns specify \&#39;productCollection\&#39;. To get keywords associated with video campaigns, this must be set to \&#39;video\&#39;. Returns all keywords if not specified.
+         * @param {string} [locale] The returned array includes only keywords with locale matching those specified string.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listKeywords(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, matchTypeFilter?: MatchType, keywordText?: string, stateFilter?: 'enabled' | 'paused' | 'archived', campaignIdFilter?: string, adGroupIdFilter?: string, keywordIdFilter?: string, creativeType?: CreativeType, locale?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SBKeyword>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listKeywords(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, matchTypeFilter, keywordText, stateFilter, campaignIdFilter, adGroupIdFilter, keywordIdFilter, creativeType, locale, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Keywords submitted for update may have state set to `pending` for moderation review. Moderation may take up to 72 hours. <br/>Note that keywords can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 keywords.
+         * @summary Updates one or more keywords.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of keywords.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateKeywords(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBKeywordResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateKeywords(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, requestBody, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * KeywordsApi - factory interface
+ * @export
+ */
+export const KeywordsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = KeywordsApiFp(configuration)
+    return {
+        /**
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * @summary Archives a keyword specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} keywordId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        archiveKeyword(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keywordId: number, options?: any): AxiosPromise<SBKeywordResponse> {
+            return localVarFp.archiveKeyword(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, keywordId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Note that `state` can\'t be set at keyword creation. Keywords submitted for creation have state set to `pending` while under moderation review. Moderation review may take up to 72 hours. <br/>Note that keywords can be created on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 keywords.
+         * @summary Creates one or more keywords.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of keywords.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createKeywords(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options?: any): AxiosPromise<SBKeywordResponse> {
+            return localVarFp.createKeywords(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Gets a keyword specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} keywordId The identifier of an existing keyword.
+         * @param {string} [locale] The returned array includes only keywords associated with locale matching those specified by identifier.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getKeyword(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keywordId: number, locale?: string, options?: any): AxiosPromise<SBKeyword> {
+            return localVarFp.getKeyword(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, keywordId, locale, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Gets an array of keywords, filtered by optional criteria.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of keywords. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of keywords in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten keywords set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten keywords, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {MatchType} [matchTypeFilter] The returned array is filtered to include only keywords with &#x60;matchType&#x60; set to one of the values in the specified comma-delimited list.
+         * @param {string} [keywordText] The returned array includes only keywords with the specified text.
+         * @param {'enabled' | 'paused' | 'archived'} [stateFilter] The returned array is filtered to include only keywords with \&#39;state\&#39; set to one of the values in the specified comma-delimited list.
+         * @param {string} [campaignIdFilter] The returned array includes only keywords associated with campaigns matching those specified by identifier in the comma-delimited string.
+         * @param {string} [adGroupIdFilter] The returned array includes only keywords associated with ad groups matching those specified by identifier in the comma-delimited string.
+         * @param {string} [keywordIdFilter] The returned array includes only keywords with identifiers matching those specified in the comma-delimited string.
+         * @param {CreativeType} [creativeType] Filter by the type of creative the campaign is associated with. To get keywords associated with non-video campaigns specify \&#39;productCollection\&#39;. To get keywords associated with video campaigns, this must be set to \&#39;video\&#39;. Returns all keywords if not specified.
+         * @param {string} [locale] The returned array includes only keywords with locale matching those specified string.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listKeywords(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, matchTypeFilter?: MatchType, keywordText?: string, stateFilter?: 'enabled' | 'paused' | 'archived', campaignIdFilter?: string, adGroupIdFilter?: string, keywordIdFilter?: string, creativeType?: CreativeType, locale?: string, options?: any): AxiosPromise<Array<SBKeyword>> {
+            return localVarFp.listKeywords(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, matchTypeFilter, keywordText, stateFilter, campaignIdFilter, adGroupIdFilter, keywordIdFilter, creativeType, locale, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Keywords submitted for update may have state set to `pending` for moderation review. Moderation may take up to 72 hours. <br/>Note that keywords can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 keywords.
+         * @summary Updates one or more keywords.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of keywords.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateKeywords(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options?: any): AxiosPromise<SBKeywordResponse> {
+            return localVarFp.updateKeywords(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, requestBody, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for archiveKeyword operation in KeywordsApi.
+ * @export
+ * @interface KeywordsApiArchiveKeywordRequest
+ */
+export interface KeywordsApiArchiveKeywordRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof KeywordsApiArchiveKeyword
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof KeywordsApiArchiveKeyword
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof KeywordsApiArchiveKeyword
+     */
+    readonly keywordId: number
+}
+
+/**
+ * Request parameters for createKeywords operation in KeywordsApi.
+ * @export
+ * @interface KeywordsApiCreateKeywordsRequest
+ */
+export interface KeywordsApiCreateKeywordsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof KeywordsApiCreateKeywords
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof KeywordsApiCreateKeywords
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * An array of keywords.
+     * @type {Array<object>}
+     * @memberof KeywordsApiCreateKeywords
+     */
+    readonly requestBody?: Array<object>
+}
+
+/**
+ * Request parameters for getKeyword operation in KeywordsApi.
+ * @export
+ * @interface KeywordsApiGetKeywordRequest
+ */
+export interface KeywordsApiGetKeywordRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof KeywordsApiGetKeyword
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof KeywordsApiGetKeyword
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The identifier of an existing keyword.
+     * @type {number}
+     * @memberof KeywordsApiGetKeyword
+     */
+    readonly keywordId: number
+
+    /**
+     * The returned array includes only keywords associated with locale matching those specified by identifier.
+     * @type {string}
+     * @memberof KeywordsApiGetKeyword
+     */
+    readonly locale?: string
+}
+
+/**
+ * Request parameters for listKeywords operation in KeywordsApi.
+ * @export
+ * @interface KeywordsApiListKeywordsRequest
+ */
+export interface KeywordsApiListKeywordsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof KeywordsApiListKeywords
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof KeywordsApiListKeywords
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Sets a zero-based offset into the requested set of keywords. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+     * @type {number}
+     * @memberof KeywordsApiListKeywords
+     */
+    readonly startIndex?: number
+
+    /**
+     * Sets the number of keywords in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten keywords set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten keywords, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+     * @type {number}
+     * @memberof KeywordsApiListKeywords
+     */
+    readonly count?: number
+
+    /**
+     * The returned array is filtered to include only keywords with &#x60;matchType&#x60; set to one of the values in the specified comma-delimited list.
+     * @type {MatchType}
+     * @memberof KeywordsApiListKeywords
+     */
+    readonly matchTypeFilter?: MatchType
+
+    /**
+     * The returned array includes only keywords with the specified text.
+     * @type {string}
+     * @memberof KeywordsApiListKeywords
+     */
+    readonly keywordText?: string
+
+    /**
+     * The returned array is filtered to include only keywords with \&#39;state\&#39; set to one of the values in the specified comma-delimited list.
+     * @type {'enabled' | 'paused' | 'archived'}
+     * @memberof KeywordsApiListKeywords
+     */
+    readonly stateFilter?: 'enabled' | 'paused' | 'archived'
+
+    /**
+     * The returned array includes only keywords associated with campaigns matching those specified by identifier in the comma-delimited string.
+     * @type {string}
+     * @memberof KeywordsApiListKeywords
+     */
+    readonly campaignIdFilter?: string
+
+    /**
+     * The returned array includes only keywords associated with ad groups matching those specified by identifier in the comma-delimited string.
+     * @type {string}
+     * @memberof KeywordsApiListKeywords
+     */
+    readonly adGroupIdFilter?: string
+
+    /**
+     * The returned array includes only keywords with identifiers matching those specified in the comma-delimited string.
+     * @type {string}
+     * @memberof KeywordsApiListKeywords
+     */
+    readonly keywordIdFilter?: string
+
+    /**
+     * Filter by the type of creative the campaign is associated with. To get keywords associated with non-video campaigns specify \&#39;productCollection\&#39;. To get keywords associated with video campaigns, this must be set to \&#39;video\&#39;. Returns all keywords if not specified.
+     * @type {CreativeType}
+     * @memberof KeywordsApiListKeywords
+     */
+    readonly creativeType?: CreativeType
+
+    /**
+     * The returned array includes only keywords with locale matching those specified string.
+     * @type {string}
+     * @memberof KeywordsApiListKeywords
+     */
+    readonly locale?: string
+}
+
+/**
+ * Request parameters for updateKeywords operation in KeywordsApi.
+ * @export
+ * @interface KeywordsApiUpdateKeywordsRequest
+ */
+export interface KeywordsApiUpdateKeywordsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof KeywordsApiUpdateKeywords
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof KeywordsApiUpdateKeywords
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * An array of keywords.
+     * @type {Array<object>}
+     * @memberof KeywordsApiUpdateKeywords
+     */
+    readonly requestBody?: Array<object>
+}
+
+/**
+ * KeywordsApi - object-oriented interface
+ * @export
+ * @class KeywordsApi
+ * @extends {BaseAPI}
+ */
+export class KeywordsApi extends BaseAPI {
+    /**
+     * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+     * @summary Archives a keyword specified by identifier.
+     * @param {KeywordsApiArchiveKeywordRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KeywordsApi
+     */
+    public archiveKeyword(requestParameters: KeywordsApiArchiveKeywordRequest, options?: any) {
+        return KeywordsApiFp(this.configuration).archiveKeyword(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.keywordId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Note that `state` can\'t be set at keyword creation. Keywords submitted for creation have state set to `pending` while under moderation review. Moderation review may take up to 72 hours. <br/>Note that keywords can be created on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 keywords.
+     * @summary Creates one or more keywords.
+     * @param {KeywordsApiCreateKeywordsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KeywordsApi
+     */
+    public createKeywords(requestParameters: KeywordsApiCreateKeywordsRequest, options?: any) {
+        return KeywordsApiFp(this.configuration).createKeywords(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Gets a keyword specified by identifier.
+     * @param {KeywordsApiGetKeywordRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KeywordsApi
+     */
+    public getKeyword(requestParameters: KeywordsApiGetKeywordRequest, options?: any) {
+        return KeywordsApiFp(this.configuration).getKeyword(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.keywordId, requestParameters.locale, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Gets an array of keywords, filtered by optional criteria.
+     * @param {KeywordsApiListKeywordsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KeywordsApi
+     */
+    public listKeywords(requestParameters: KeywordsApiListKeywordsRequest, options?: any) {
+        return KeywordsApiFp(this.configuration).listKeywords(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.startIndex, requestParameters.count, requestParameters.matchTypeFilter, requestParameters.keywordText, requestParameters.stateFilter, requestParameters.campaignIdFilter, requestParameters.adGroupIdFilter, requestParameters.keywordIdFilter, requestParameters.creativeType, requestParameters.locale, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Keywords submitted for update may have state set to `pending` for moderation review. Moderation may take up to 72 hours. <br/>Note that keywords can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 keywords.
+     * @summary Updates one or more keywords.
+     * @param {KeywordsApiUpdateKeywordsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof KeywordsApi
+     */
+    public updateKeywords(requestParameters: KeywordsApiUpdateKeywordsRequest, options?: any) {
+        return KeywordsApiFp(this.configuration).updateKeywords(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * LandingPageAsinsApi - axios parameter creator
+ * @export
+ */
+export const LandingPageAsinsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Note that for sellers, the addresss must be a Store page. Vendors may also specify a custom landing page address.
+         * @summary Gets ASIN information for a specified address.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} pageUrl For sellers, the address of a Store page. Vendors may also specify the address of a custom landing page. For more information, see the [Stores section](https://advertising.amazon.com/help#GPRM3ZHEXEY5RBFZ) of the Amazon Ads support center.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAsins: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, pageUrl: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('listAsins', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('listAsins', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'pageUrl' is not null or undefined
+            assertParamExists('listAsins', 'pageUrl', pageUrl)
+            const localVarPath = `/pageAsins`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (pageUrl !== undefined) {
+                localVarQueryParameter['pageUrl'] = pageUrl;
             }
 
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
@@ -5060,95 +11193,2967 @@ export const TargetsApiAxiosParamCreator = function (configuration?: Configurati
 };
 
 /**
- * TargetsApi - functional programming interface
+ * LandingPageAsinsApi - functional programming interface
  * @export
  */
-export const TargetsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = TargetsApiAxiosParamCreator(configuration)
+export const LandingPageAsinsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = LandingPageAsinsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Gets all targetable categories given the supply source, returned aa a large JSON string containing a tree of category nodes.
-         * @summary Get all targetable categories for Sponsored Brands.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {'AMAZON' | 'STREAMING_VIDEO'} supplySource The supply source where the target will be used. Use &#x60;AMAZON&#x60; for placements on Amazon website. Use &#x60;STREAMING_VIDEO&#x60; for off-site video placements such as IMDb TV.
+         * Note that for sellers, the addresss must be a Store page. Vendors may also specify a custom landing page address.
+         * @summary Gets ASIN information for a specified address.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} pageUrl For sellers, the address of a Store page. Vendors may also specify the address of a custom landing page. For more information, see the [Stores section](https://advertising.amazon.com/help#GPRM3ZHEXEY5RBFZ) of the Amazon Ads support center.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSbTargetableCategories(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, supplySource: 'AMAZON' | 'STREAMING_VIDEO', options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBTargetableCategories>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSbTargetableCategories(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, supplySource, options);
+        async listAsins(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, pageUrl: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAsins(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, pageUrl, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * TargetsApi - factory interface
+ * LandingPageAsinsApi - factory interface
  * @export
  */
-export const TargetsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = TargetsApiFp(configuration)
+export const LandingPageAsinsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = LandingPageAsinsApiFp(configuration)
     return {
         /**
-         * Gets all targetable categories given the supply source, returned aa a large JSON string containing a tree of category nodes.
-         * @summary Get all targetable categories for Sponsored Brands.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {'AMAZON' | 'STREAMING_VIDEO'} supplySource The supply source where the target will be used. Use &#x60;AMAZON&#x60; for placements on Amazon website. Use &#x60;STREAMING_VIDEO&#x60; for off-site video placements such as IMDb TV.
+         * Note that for sellers, the addresss must be a Store page. Vendors may also specify a custom landing page address.
+         * @summary Gets ASIN information for a specified address.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} pageUrl For sellers, the address of a Store page. Vendors may also specify the address of a custom landing page. For more information, see the [Stores section](https://advertising.amazon.com/help#GPRM3ZHEXEY5RBFZ) of the Amazon Ads support center.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSbTargetableCategories(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, supplySource: 'AMAZON' | 'STREAMING_VIDEO', options?: any): AxiosPromise<SBTargetableCategories> {
-            return localVarFp.getSbTargetableCategories(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, supplySource, options).then((request) => request(axios, basePath));
+        listAsins(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, pageUrl: string, options?: any): AxiosPromise<object> {
+            return localVarFp.listAsins(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, pageUrl, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getSbTargetableCategories operation in TargetsApi.
+ * Request parameters for listAsins operation in LandingPageAsinsApi.
  * @export
- * @interface TargetsApiGetSbTargetableCategoriesRequest
+ * @interface LandingPageAsinsApiListAsinsRequest
  */
-export interface TargetsApiGetSbTargetableCategoriesRequest {
+export interface LandingPageAsinsApiListAsinsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
      * @type {string}
-     * @memberof TargetsApiGetSbTargetableCategories
+     * @memberof LandingPageAsinsApiListAsins
      */
     readonly amazonAdvertisingAPIClientId: string
 
     /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
      * @type {string}
-     * @memberof TargetsApiGetSbTargetableCategories
+     * @memberof LandingPageAsinsApiListAsins
      */
     readonly amazonAdvertisingAPIScope: string
 
     /**
-     * The supply source where the target will be used. Use &#x60;AMAZON&#x60; for placements on Amazon website. Use &#x60;STREAMING_VIDEO&#x60; for off-site video placements such as IMDb TV.
-     * @type {'AMAZON' | 'STREAMING_VIDEO'}
-     * @memberof TargetsApiGetSbTargetableCategories
+     * For sellers, the address of a Store page. Vendors may also specify the address of a custom landing page. For more information, see the [Stores section](https://advertising.amazon.com/help#GPRM3ZHEXEY5RBFZ) of the Amazon Ads support center.
+     * @type {string}
+     * @memberof LandingPageAsinsApiListAsins
      */
-    readonly supplySource: 'AMAZON' | 'STREAMING_VIDEO'
+    readonly pageUrl: string
 }
 
 /**
- * TargetsApi - object-oriented interface
+ * LandingPageAsinsApi - object-oriented interface
  * @export
- * @class TargetsApi
+ * @class LandingPageAsinsApi
  * @extends {BaseAPI}
  */
-export class TargetsApi extends BaseAPI {
+export class LandingPageAsinsApi extends BaseAPI {
     /**
-     * Gets all targetable categories given the supply source, returned aa a large JSON string containing a tree of category nodes.
-     * @summary Get all targetable categories for Sponsored Brands.
-     * @param {TargetsApiGetSbTargetableCategoriesRequest} requestParameters Request parameters.
+     * Note that for sellers, the addresss must be a Store page. Vendors may also specify a custom landing page address.
+     * @summary Gets ASIN information for a specified address.
+     * @param {LandingPageAsinsApiListAsinsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TargetsApi
+     * @memberof LandingPageAsinsApi
      */
-    public getSbTargetableCategories(requestParameters: TargetsApiGetSbTargetableCategoriesRequest, options?: any) {
-        return TargetsApiFp(this.configuration).getSbTargetableCategories(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.supplySource, options).then((request) => request(this.axios, this.basePath));
+    public listAsins(requestParameters: LandingPageAsinsApiListAsinsRequest, options?: any) {
+        return LandingPageAsinsApiFp(this.configuration).listAsins(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.pageUrl, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * MediaApi - axios parameter creator
+ * @export
+ */
+export const MediaApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * The API should be called once the media is uploaded to the location provided by the /media/upload API endpoint. The API creates a Media resource for the uploaded media. Media resource is comprised of Media Identifier. The Media Identifier can be used to attach media to Ad Program (Sponsored Brands).  The API internally kicks off the asynchronous validation and processing workflow of the uploaded media. As a result, Media may not be immediately available for usage (to create Sponsored Brands Video Campaign) as soon as the response is received. See /media/describe API doc for instructions on when media is ready for campaign creation.
+         * @summary The API is used to notify that the upload is completed.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {InlineObject} inlineObject 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        completeUpload: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, inlineObject: InlineObject, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('completeUpload', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('completeUpload', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'inlineObject' is not null or undefined
+            assertParamExists('completeUpload', 'inlineObject', inlineObject)
+            const localVarPath = `/media/complete`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Creates an ephemeral resource (upload location) to upload Media for an Ad Program. The upload location is short lived and expires in 15 minutes. Once the upload is complete, /media/complete API should be used to notify that the upload is complete. <p> The upload location only supports `PUT` HTTP Method to upload the media content. If the upload location expires, API user will get `403 Forbidden` response. </p>
+         * @summary Creates an ephemeral resource (upload location) to upload Media for an Ad Program (SponsoredBrands).
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Program} program The Ad Program that the media will be attached to. Specify &#x60;SponsoredBrands&#x60; with creative type &#x60;Video&#x60; for Sponsored brands video campaigns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUploadResource: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, program: Program, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('createUploadResource', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('createUploadResource', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'program' is not null or undefined
+            assertParamExists('createUploadResource', 'program', program)
+            const localVarPath = `/media/upload`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(program, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * API to poll for media status. In order to attach media to campaign, media should be in either `PendingDeepValidation` or `Available` status.  `Available` status guarantees that media has completed processing and published for usage.  Though media can be attached to campaign once the status of the media transitions to `PendingDeepValidation`, media could still fail additional validation and transition to `Failed` status. For example in the context of SBV, SBV campaign can be created when status transitions to `PendingDeepValidation`, it could result in SBV campaign to be rejected later if media transitions to `Failed` status.
+         * @summary API to poll for media status
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} mediaId Media Identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        describeMedia: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, mediaId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('describeMedia', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('describeMedia', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'mediaId' is not null or undefined
+            assertParamExists('describeMedia', 'mediaId', mediaId)
+            const localVarPath = `/media/describe`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (mediaId !== undefined) {
+                localVarQueryParameter['mediaId'] = mediaId;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * MediaApi - functional programming interface
+ * @export
+ */
+export const MediaApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = MediaApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * The API should be called once the media is uploaded to the location provided by the /media/upload API endpoint. The API creates a Media resource for the uploaded media. Media resource is comprised of Media Identifier. The Media Identifier can be used to attach media to Ad Program (Sponsored Brands).  The API internally kicks off the asynchronous validation and processing workflow of the uploaded media. As a result, Media may not be immediately available for usage (to create Sponsored Brands Video Campaign) as soon as the response is received. See /media/describe API doc for instructions on when media is ready for campaign creation.
+         * @summary The API is used to notify that the upload is completed.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {InlineObject} inlineObject 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async completeUpload(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, inlineObject: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.completeUpload(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, inlineObject, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Creates an ephemeral resource (upload location) to upload Media for an Ad Program. The upload location is short lived and expires in 15 minutes. Once the upload is complete, /media/complete API should be used to notify that the upload is complete. <p> The upload location only supports `PUT` HTTP Method to upload the media content. If the upload location expires, API user will get `403 Forbidden` response. </p>
+         * @summary Creates an ephemeral resource (upload location) to upload Media for an Ad Program (SponsoredBrands).
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Program} program The Ad Program that the media will be attached to. Specify &#x60;SponsoredBrands&#x60; with creative type &#x60;Video&#x60; for Sponsored brands video campaigns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createUploadResource(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, program: Program, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createUploadResource(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, program, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * API to poll for media status. In order to attach media to campaign, media should be in either `PendingDeepValidation` or `Available` status.  `Available` status guarantees that media has completed processing and published for usage.  Though media can be attached to campaign once the status of the media transitions to `PendingDeepValidation`, media could still fail additional validation and transition to `Failed` status. For example in the context of SBV, SBV campaign can be created when status transitions to `PendingDeepValidation`, it could result in SBV campaign to be rejected later if media transitions to `Failed` status.
+         * @summary API to poll for media status
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} mediaId Media Identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async describeMedia(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, mediaId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2001>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.describeMedia(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, mediaId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * MediaApi - factory interface
+ * @export
+ */
+export const MediaApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = MediaApiFp(configuration)
+    return {
+        /**
+         * The API should be called once the media is uploaded to the location provided by the /media/upload API endpoint. The API creates a Media resource for the uploaded media. Media resource is comprised of Media Identifier. The Media Identifier can be used to attach media to Ad Program (Sponsored Brands).  The API internally kicks off the asynchronous validation and processing workflow of the uploaded media. As a result, Media may not be immediately available for usage (to create Sponsored Brands Video Campaign) as soon as the response is received. See /media/describe API doc for instructions on when media is ready for campaign creation.
+         * @summary The API is used to notify that the upload is completed.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {InlineObject} inlineObject 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        completeUpload(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, inlineObject: InlineObject, options?: any): AxiosPromise<InlineResponse200> {
+            return localVarFp.completeUpload(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, inlineObject, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Creates an ephemeral resource (upload location) to upload Media for an Ad Program. The upload location is short lived and expires in 15 minutes. Once the upload is complete, /media/complete API should be used to notify that the upload is complete. <p> The upload location only supports `PUT` HTTP Method to upload the media content. If the upload location expires, API user will get `403 Forbidden` response. </p>
+         * @summary Creates an ephemeral resource (upload location) to upload Media for an Ad Program (SponsoredBrands).
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Program} program The Ad Program that the media will be attached to. Specify &#x60;SponsoredBrands&#x60; with creative type &#x60;Video&#x60; for Sponsored brands video campaigns.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createUploadResource(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, program: Program, options?: any): AxiosPromise<string> {
+            return localVarFp.createUploadResource(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, program, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * API to poll for media status. In order to attach media to campaign, media should be in either `PendingDeepValidation` or `Available` status.  `Available` status guarantees that media has completed processing and published for usage.  Though media can be attached to campaign once the status of the media transitions to `PendingDeepValidation`, media could still fail additional validation and transition to `Failed` status. For example in the context of SBV, SBV campaign can be created when status transitions to `PendingDeepValidation`, it could result in SBV campaign to be rejected later if media transitions to `Failed` status.
+         * @summary API to poll for media status
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} mediaId Media Identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        describeMedia(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, mediaId: string, options?: any): AxiosPromise<InlineResponse2001> {
+            return localVarFp.describeMedia(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, mediaId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for completeUpload operation in MediaApi.
+ * @export
+ * @interface MediaApiCompleteUploadRequest
+ */
+export interface MediaApiCompleteUploadRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MediaApiCompleteUpload
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof MediaApiCompleteUpload
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * 
+     * @type {InlineObject}
+     * @memberof MediaApiCompleteUpload
+     */
+    readonly inlineObject: InlineObject
+}
+
+/**
+ * Request parameters for createUploadResource operation in MediaApi.
+ * @export
+ * @interface MediaApiCreateUploadResourceRequest
+ */
+export interface MediaApiCreateUploadResourceRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MediaApiCreateUploadResource
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof MediaApiCreateUploadResource
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The Ad Program that the media will be attached to. Specify &#x60;SponsoredBrands&#x60; with creative type &#x60;Video&#x60; for Sponsored brands video campaigns.
+     * @type {Program}
+     * @memberof MediaApiCreateUploadResource
+     */
+    readonly program: Program
+}
+
+/**
+ * Request parameters for describeMedia operation in MediaApi.
+ * @export
+ * @interface MediaApiDescribeMediaRequest
+ */
+export interface MediaApiDescribeMediaRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MediaApiDescribeMedia
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof MediaApiDescribeMedia
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Media Identifier
+     * @type {string}
+     * @memberof MediaApiDescribeMedia
+     */
+    readonly mediaId: string
+}
+
+/**
+ * MediaApi - object-oriented interface
+ * @export
+ * @class MediaApi
+ * @extends {BaseAPI}
+ */
+export class MediaApi extends BaseAPI {
+    /**
+     * The API should be called once the media is uploaded to the location provided by the /media/upload API endpoint. The API creates a Media resource for the uploaded media. Media resource is comprised of Media Identifier. The Media Identifier can be used to attach media to Ad Program (Sponsored Brands).  The API internally kicks off the asynchronous validation and processing workflow of the uploaded media. As a result, Media may not be immediately available for usage (to create Sponsored Brands Video Campaign) as soon as the response is received. See /media/describe API doc for instructions on when media is ready for campaign creation.
+     * @summary The API is used to notify that the upload is completed.
+     * @param {MediaApiCompleteUploadRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MediaApi
+     */
+    public completeUpload(requestParameters: MediaApiCompleteUploadRequest, options?: any) {
+        return MediaApiFp(this.configuration).completeUpload(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.inlineObject, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Creates an ephemeral resource (upload location) to upload Media for an Ad Program. The upload location is short lived and expires in 15 minutes. Once the upload is complete, /media/complete API should be used to notify that the upload is complete. <p> The upload location only supports `PUT` HTTP Method to upload the media content. If the upload location expires, API user will get `403 Forbidden` response. </p>
+     * @summary Creates an ephemeral resource (upload location) to upload Media for an Ad Program (SponsoredBrands).
+     * @param {MediaApiCreateUploadResourceRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MediaApi
+     */
+    public createUploadResource(requestParameters: MediaApiCreateUploadResourceRequest, options?: any) {
+        return MediaApiFp(this.configuration).createUploadResource(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.program, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * API to poll for media status. In order to attach media to campaign, media should be in either `PendingDeepValidation` or `Available` status.  `Available` status guarantees that media has completed processing and published for usage.  Though media can be attached to campaign once the status of the media transitions to `PendingDeepValidation`, media could still fail additional validation and transition to `Failed` status. For example in the context of SBV, SBV campaign can be created when status transitions to `PendingDeepValidation`, it could result in SBV campaign to be rejected later if media transitions to `Failed` status.
+     * @summary API to poll for media status
+     * @param {MediaApiDescribeMediaRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MediaApi
+     */
+    public describeMedia(requestParameters: MediaApiDescribeMediaRequest, options?: any) {
+        return MediaApiFp(this.configuration).describeMedia(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.mediaId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ModerationApi - axios parameter creator
+ * @export
+ */
+export const ModerationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Note that this resource is only available for campaigns in the US marketplace.
+         * @summary Gets the moderation result for a campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} campaignId The campaign identifier.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sbModerationCampaignsCampaignIdGet: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('sbModerationCampaignsCampaignIdGet', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('sbModerationCampaignsCampaignIdGet', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'campaignId' is not null or undefined
+            assertParamExists('sbModerationCampaignsCampaignIdGet', 'campaignId', campaignId)
+            const localVarPath = `/sb/moderation/campaigns/{campaignId}`
+                .replace(`{${"campaignId"}}`, encodeURIComponent(String(campaignId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ModerationApi - functional programming interface
+ * @export
+ */
+export const ModerationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ModerationApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Note that this resource is only available for campaigns in the US marketplace.
+         * @summary Gets the moderation result for a campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} campaignId The campaign identifier.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sbModerationCampaignsCampaignIdGet(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2007>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sbModerationCampaignsCampaignIdGet(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ModerationApi - factory interface
+ * @export
+ */
+export const ModerationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ModerationApiFp(configuration)
+    return {
+        /**
+         * Note that this resource is only available for campaigns in the US marketplace.
+         * @summary Gets the moderation result for a campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} campaignId The campaign identifier.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sbModerationCampaignsCampaignIdGet(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, options?: any): AxiosPromise<InlineResponse2007> {
+            return localVarFp.sbModerationCampaignsCampaignIdGet(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for sbModerationCampaignsCampaignIdGet operation in ModerationApi.
+ * @export
+ * @interface ModerationApiSbModerationCampaignsCampaignIdGetRequest
+ */
+export interface ModerationApiSbModerationCampaignsCampaignIdGetRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof ModerationApiSbModerationCampaignsCampaignIdGet
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof ModerationApiSbModerationCampaignsCampaignIdGet
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof ModerationApiSbModerationCampaignsCampaignIdGet
+     */
+    readonly campaignId: number
+}
+
+/**
+ * ModerationApi - object-oriented interface
+ * @export
+ * @class ModerationApi
+ * @extends {BaseAPI}
+ */
+export class ModerationApi extends BaseAPI {
+    /**
+     * Note that this resource is only available for campaigns in the US marketplace.
+     * @summary Gets the moderation result for a campaign specified by identifier.
+     * @param {ModerationApiSbModerationCampaignsCampaignIdGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ModerationApi
+     */
+    public sbModerationCampaignsCampaignIdGet(requestParameters: ModerationApiSbModerationCampaignsCampaignIdGetRequest, options?: any) {
+        return ModerationApiFp(this.configuration).sbModerationCampaignsCampaignIdGet(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.campaignId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * NegativeKeywordsApi - axios parameter creator
+ * @export
+ */
+export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * @summary Archives a negative keyword specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} keywordId The identifier of an existing campaign.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        archiveNegativeKeyword: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keywordId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('archiveNegativeKeyword', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('archiveNegativeKeyword', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'keywordId' is not null or undefined
+            assertParamExists('archiveNegativeKeyword', 'keywordId', keywordId)
+            const localVarPath = `/sb/negativeKeywords/{keywordId}`
+                .replace(`{${"keywordId"}}`, encodeURIComponent(String(keywordId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Note that `bid` and `state` can\'t be set at negative keyword creation. <br/>Note that Negative keywords submitted for creation have state set to `pending` while under moderation review. Moderation review may take up to 72 hours. <br/>Note that negative keywords can be created on campaigns one where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative keywords. <br>**Note** that negative keywords *can not* be recreated for a campaign if the negative keyword has previously been associated with a campaign and subsequently archived. 
+         * @summary Creates one or more negative keywords.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of negative keywords.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNegativeKeywords: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('createNegativeKeywords', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('createNegativeKeywords', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sb/negativeKeywords`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbkeywordresponse.v3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Gets a negative keyword specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} keywordId The identifier of an existing negative keyword.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNegativeKeyword: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keywordId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getNegativeKeyword', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getNegativeKeyword', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'keywordId' is not null or undefined
+            assertParamExists('getNegativeKeyword', 'keywordId', keywordId)
+            const localVarPath = `/sb/negativeKeywords/{keywordId}`
+                .replace(`{${"keywordId"}}`, encodeURIComponent(String(keywordId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Gets an array of negative keywords, filtered by optional criteria.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of negative keywords. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of negative keywords in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten negative keywords set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten negative keywords, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {NegativeMatchType} [matchTypeFilter] The returned array is filtered to include only negative keywords with &#x60;matchType&#x60; set to one of the values in the specified comma-delimited list.
+         * @param {string} [keywordText] The returned array includes only negative keywords with the specified text.
+         * @param {State} [stateFilter] The returned array includes only negative keywords with &#x60;state&#x60; set to the specified value.
+         * @param {string} [campaignIdFilter] The returned array includes only negative keywords associated with campaigns matching those specified by identifier in the comma-delimited string.
+         * @param {string} [adGroupIdFilter] The returned array includes only negative keywords associated with ad groups matching those specified by identifier in the comma-delimited string.
+         * @param {string} [keywordIdFilter] The returned array includes only negative keywords with identifiers matching those specified in the comma-delimited string.
+         * @param {CreativeType} [creativeType] Filter by the type of creative the campaign is associated with. To get negative keywords associated with non-video campaigns specify \&#39;productCollection\&#39;. To get negative keywords associated with video campaigns, this must be set to \&#39;video\&#39;. Returns all negative keywords if not specified.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listNegativeKeywords: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, matchTypeFilter?: NegativeMatchType, keywordText?: string, stateFilter?: State, campaignIdFilter?: string, adGroupIdFilter?: string, keywordIdFilter?: string, creativeType?: CreativeType, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('listNegativeKeywords', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('listNegativeKeywords', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sb/negativeKeywords`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (startIndex !== undefined) {
+                localVarQueryParameter['startIndex'] = startIndex;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (matchTypeFilter !== undefined) {
+                localVarQueryParameter['matchTypeFilter'] = matchTypeFilter;
+            }
+
+            if (keywordText !== undefined) {
+                localVarQueryParameter['keywordText'] = keywordText;
+            }
+
+            if (stateFilter !== undefined) {
+                localVarQueryParameter['stateFilter'] = stateFilter;
+            }
+
+            if (campaignIdFilter !== undefined) {
+                localVarQueryParameter['campaignIdFilter'] = campaignIdFilter;
+            }
+
+            if (adGroupIdFilter !== undefined) {
+                localVarQueryParameter['adGroupIdFilter'] = adGroupIdFilter;
+            }
+
+            if (keywordIdFilter !== undefined) {
+                localVarQueryParameter['keywordIdFilter'] = keywordIdFilter;
+            }
+
+            if (creativeType !== undefined) {
+                localVarQueryParameter['creativeType'] = creativeType;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Negative keywords submitted for update may have state set to `pending` for moderation review. Moderation may take up to 72 hours. <br/>Note that negative keywords can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative keywords.
+         * @summary Updates one or more negative keywords.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of negative keywords.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateNegativeKeywords: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('updateNegativeKeywords', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('updateNegativeKeywords', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sb/negativeKeywords`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbkeywordresponse.v3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(requestBody, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * NegativeKeywordsApi - functional programming interface
+ * @export
+ */
+export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = NegativeKeywordsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * @summary Archives a negative keyword specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} keywordId The identifier of an existing campaign.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async archiveNegativeKeyword(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keywordId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBKeywordResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.archiveNegativeKeyword(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, keywordId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Note that `bid` and `state` can\'t be set at negative keyword creation. <br/>Note that Negative keywords submitted for creation have state set to `pending` while under moderation review. Moderation review may take up to 72 hours. <br/>Note that negative keywords can be created on campaigns one where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative keywords. <br>**Note** that negative keywords *can not* be recreated for a campaign if the negative keyword has previously been associated with a campaign and subsequently archived. 
+         * @summary Creates one or more negative keywords.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of negative keywords.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createNegativeKeywords(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SBKeywordResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createNegativeKeywords(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, requestBody, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Gets a negative keyword specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} keywordId The identifier of an existing negative keyword.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getNegativeKeyword(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keywordId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getNegativeKeyword(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, keywordId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Gets an array of negative keywords, filtered by optional criteria.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of negative keywords. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of negative keywords in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten negative keywords set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten negative keywords, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {NegativeMatchType} [matchTypeFilter] The returned array is filtered to include only negative keywords with &#x60;matchType&#x60; set to one of the values in the specified comma-delimited list.
+         * @param {string} [keywordText] The returned array includes only negative keywords with the specified text.
+         * @param {State} [stateFilter] The returned array includes only negative keywords with &#x60;state&#x60; set to the specified value.
+         * @param {string} [campaignIdFilter] The returned array includes only negative keywords associated with campaigns matching those specified by identifier in the comma-delimited string.
+         * @param {string} [adGroupIdFilter] The returned array includes only negative keywords associated with ad groups matching those specified by identifier in the comma-delimited string.
+         * @param {string} [keywordIdFilter] The returned array includes only negative keywords with identifiers matching those specified in the comma-delimited string.
+         * @param {CreativeType} [creativeType] Filter by the type of creative the campaign is associated with. To get negative keywords associated with non-video campaigns specify \&#39;productCollection\&#39;. To get negative keywords associated with video campaigns, this must be set to \&#39;video\&#39;. Returns all negative keywords if not specified.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listNegativeKeywords(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, matchTypeFilter?: NegativeMatchType, keywordText?: string, stateFilter?: State, campaignIdFilter?: string, adGroupIdFilter?: string, keywordIdFilter?: string, creativeType?: CreativeType, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SBNegativeKeyword>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listNegativeKeywords(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, matchTypeFilter, keywordText, stateFilter, campaignIdFilter, adGroupIdFilter, keywordIdFilter, creativeType, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Negative keywords submitted for update may have state set to `pending` for moderation review. Moderation may take up to 72 hours. <br/>Note that negative keywords can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative keywords.
+         * @summary Updates one or more negative keywords.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of negative keywords.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateNegativeKeywords(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SBKeywordResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateNegativeKeywords(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, requestBody, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * NegativeKeywordsApi - factory interface
+ * @export
+ */
+export const NegativeKeywordsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = NegativeKeywordsApiFp(configuration)
+    return {
+        /**
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * @summary Archives a negative keyword specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} keywordId The identifier of an existing campaign.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        archiveNegativeKeyword(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keywordId: number, options?: any): AxiosPromise<SBKeywordResponse> {
+            return localVarFp.archiveNegativeKeyword(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, keywordId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Note that `bid` and `state` can\'t be set at negative keyword creation. <br/>Note that Negative keywords submitted for creation have state set to `pending` while under moderation review. Moderation review may take up to 72 hours. <br/>Note that negative keywords can be created on campaigns one where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative keywords. <br>**Note** that negative keywords *can not* be recreated for a campaign if the negative keyword has previously been associated with a campaign and subsequently archived. 
+         * @summary Creates one or more negative keywords.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of negative keywords.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNegativeKeywords(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options?: any): AxiosPromise<Array<SBKeywordResponse>> {
+            return localVarFp.createNegativeKeywords(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, requestBody, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Gets a negative keyword specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} keywordId The identifier of an existing negative keyword.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNegativeKeyword(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keywordId: number, options?: any): AxiosPromise<object> {
+            return localVarFp.getNegativeKeyword(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, keywordId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Gets an array of negative keywords, filtered by optional criteria.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Sets a zero-based offset into the requested set of negative keywords. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+         * @param {number} [count] Sets the number of negative keywords in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten negative keywords set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten negative keywords, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {NegativeMatchType} [matchTypeFilter] The returned array is filtered to include only negative keywords with &#x60;matchType&#x60; set to one of the values in the specified comma-delimited list.
+         * @param {string} [keywordText] The returned array includes only negative keywords with the specified text.
+         * @param {State} [stateFilter] The returned array includes only negative keywords with &#x60;state&#x60; set to the specified value.
+         * @param {string} [campaignIdFilter] The returned array includes only negative keywords associated with campaigns matching those specified by identifier in the comma-delimited string.
+         * @param {string} [adGroupIdFilter] The returned array includes only negative keywords associated with ad groups matching those specified by identifier in the comma-delimited string.
+         * @param {string} [keywordIdFilter] The returned array includes only negative keywords with identifiers matching those specified in the comma-delimited string.
+         * @param {CreativeType} [creativeType] Filter by the type of creative the campaign is associated with. To get negative keywords associated with non-video campaigns specify \&#39;productCollection\&#39;. To get negative keywords associated with video campaigns, this must be set to \&#39;video\&#39;. Returns all negative keywords if not specified.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listNegativeKeywords(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, matchTypeFilter?: NegativeMatchType, keywordText?: string, stateFilter?: State, campaignIdFilter?: string, adGroupIdFilter?: string, keywordIdFilter?: string, creativeType?: CreativeType, options?: any): AxiosPromise<Array<SBNegativeKeyword>> {
+            return localVarFp.listNegativeKeywords(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, matchTypeFilter, keywordText, stateFilter, campaignIdFilter, adGroupIdFilter, keywordIdFilter, creativeType, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Negative keywords submitted for update may have state set to `pending` for moderation review. Moderation may take up to 72 hours. <br/>Note that negative keywords can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative keywords.
+         * @summary Updates one or more negative keywords.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<object>} [requestBody] An array of negative keywords.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateNegativeKeywords(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, requestBody?: Array<object>, options?: any): AxiosPromise<Array<SBKeywordResponse>> {
+            return localVarFp.updateNegativeKeywords(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, requestBody, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for archiveNegativeKeyword operation in NegativeKeywordsApi.
+ * @export
+ * @interface NegativeKeywordsApiArchiveNegativeKeywordRequest
+ */
+export interface NegativeKeywordsApiArchiveNegativeKeywordRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof NegativeKeywordsApiArchiveNegativeKeyword
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof NegativeKeywordsApiArchiveNegativeKeyword
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The identifier of an existing campaign.
+     * @type {number}
+     * @memberof NegativeKeywordsApiArchiveNegativeKeyword
+     */
+    readonly keywordId: number
+}
+
+/**
+ * Request parameters for createNegativeKeywords operation in NegativeKeywordsApi.
+ * @export
+ * @interface NegativeKeywordsApiCreateNegativeKeywordsRequest
+ */
+export interface NegativeKeywordsApiCreateNegativeKeywordsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof NegativeKeywordsApiCreateNegativeKeywords
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof NegativeKeywordsApiCreateNegativeKeywords
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * An array of negative keywords.
+     * @type {Array<object>}
+     * @memberof NegativeKeywordsApiCreateNegativeKeywords
+     */
+    readonly requestBody?: Array<object>
+}
+
+/**
+ * Request parameters for getNegativeKeyword operation in NegativeKeywordsApi.
+ * @export
+ * @interface NegativeKeywordsApiGetNegativeKeywordRequest
+ */
+export interface NegativeKeywordsApiGetNegativeKeywordRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof NegativeKeywordsApiGetNegativeKeyword
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof NegativeKeywordsApiGetNegativeKeyword
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The identifier of an existing negative keyword.
+     * @type {number}
+     * @memberof NegativeKeywordsApiGetNegativeKeyword
+     */
+    readonly keywordId: number
+}
+
+/**
+ * Request parameters for listNegativeKeywords operation in NegativeKeywordsApi.
+ * @export
+ * @interface NegativeKeywordsApiListNegativeKeywordsRequest
+ */
+export interface NegativeKeywordsApiListNegativeKeywordsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof NegativeKeywordsApiListNegativeKeywords
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof NegativeKeywordsApiListNegativeKeywords
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Sets a zero-based offset into the requested set of negative keywords. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
+     * @type {number}
+     * @memberof NegativeKeywordsApiListNegativeKeywords
+     */
+    readonly startIndex?: number
+
+    /**
+     * Sets the number of negative keywords in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten negative keywords set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten negative keywords, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+     * @type {number}
+     * @memberof NegativeKeywordsApiListNegativeKeywords
+     */
+    readonly count?: number
+
+    /**
+     * The returned array is filtered to include only negative keywords with &#x60;matchType&#x60; set to one of the values in the specified comma-delimited list.
+     * @type {NegativeMatchType}
+     * @memberof NegativeKeywordsApiListNegativeKeywords
+     */
+    readonly matchTypeFilter?: NegativeMatchType
+
+    /**
+     * The returned array includes only negative keywords with the specified text.
+     * @type {string}
+     * @memberof NegativeKeywordsApiListNegativeKeywords
+     */
+    readonly keywordText?: string
+
+    /**
+     * The returned array includes only negative keywords with &#x60;state&#x60; set to the specified value.
+     * @type {State}
+     * @memberof NegativeKeywordsApiListNegativeKeywords
+     */
+    readonly stateFilter?: State
+
+    /**
+     * The returned array includes only negative keywords associated with campaigns matching those specified by identifier in the comma-delimited string.
+     * @type {string}
+     * @memberof NegativeKeywordsApiListNegativeKeywords
+     */
+    readonly campaignIdFilter?: string
+
+    /**
+     * The returned array includes only negative keywords associated with ad groups matching those specified by identifier in the comma-delimited string.
+     * @type {string}
+     * @memberof NegativeKeywordsApiListNegativeKeywords
+     */
+    readonly adGroupIdFilter?: string
+
+    /**
+     * The returned array includes only negative keywords with identifiers matching those specified in the comma-delimited string.
+     * @type {string}
+     * @memberof NegativeKeywordsApiListNegativeKeywords
+     */
+    readonly keywordIdFilter?: string
+
+    /**
+     * Filter by the type of creative the campaign is associated with. To get negative keywords associated with non-video campaigns specify \&#39;productCollection\&#39;. To get negative keywords associated with video campaigns, this must be set to \&#39;video\&#39;. Returns all negative keywords if not specified.
+     * @type {CreativeType}
+     * @memberof NegativeKeywordsApiListNegativeKeywords
+     */
+    readonly creativeType?: CreativeType
+}
+
+/**
+ * Request parameters for updateNegativeKeywords operation in NegativeKeywordsApi.
+ * @export
+ * @interface NegativeKeywordsApiUpdateNegativeKeywordsRequest
+ */
+export interface NegativeKeywordsApiUpdateNegativeKeywordsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof NegativeKeywordsApiUpdateNegativeKeywords
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof NegativeKeywordsApiUpdateNegativeKeywords
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * An array of negative keywords.
+     * @type {Array<object>}
+     * @memberof NegativeKeywordsApiUpdateNegativeKeywords
+     */
+    readonly requestBody?: Array<object>
+}
+
+/**
+ * NegativeKeywordsApi - object-oriented interface
+ * @export
+ * @class NegativeKeywordsApi
+ * @extends {BaseAPI}
+ */
+export class NegativeKeywordsApi extends BaseAPI {
+    /**
+     * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+     * @summary Archives a negative keyword specified by identifier.
+     * @param {NegativeKeywordsApiArchiveNegativeKeywordRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NegativeKeywordsApi
+     */
+    public archiveNegativeKeyword(requestParameters: NegativeKeywordsApiArchiveNegativeKeywordRequest, options?: any) {
+        return NegativeKeywordsApiFp(this.configuration).archiveNegativeKeyword(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.keywordId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Note that `bid` and `state` can\'t be set at negative keyword creation. <br/>Note that Negative keywords submitted for creation have state set to `pending` while under moderation review. Moderation review may take up to 72 hours. <br/>Note that negative keywords can be created on campaigns one where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative keywords. <br>**Note** that negative keywords *can not* be recreated for a campaign if the negative keyword has previously been associated with a campaign and subsequently archived. 
+     * @summary Creates one or more negative keywords.
+     * @param {NegativeKeywordsApiCreateNegativeKeywordsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NegativeKeywordsApi
+     */
+    public createNegativeKeywords(requestParameters: NegativeKeywordsApiCreateNegativeKeywordsRequest, options?: any) {
+        return NegativeKeywordsApiFp(this.configuration).createNegativeKeywords(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Gets a negative keyword specified by identifier.
+     * @param {NegativeKeywordsApiGetNegativeKeywordRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NegativeKeywordsApi
+     */
+    public getNegativeKeyword(requestParameters: NegativeKeywordsApiGetNegativeKeywordRequest, options?: any) {
+        return NegativeKeywordsApiFp(this.configuration).getNegativeKeyword(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.keywordId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Gets an array of negative keywords, filtered by optional criteria.
+     * @param {NegativeKeywordsApiListNegativeKeywordsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NegativeKeywordsApi
+     */
+    public listNegativeKeywords(requestParameters: NegativeKeywordsApiListNegativeKeywordsRequest, options?: any) {
+        return NegativeKeywordsApiFp(this.configuration).listNegativeKeywords(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.startIndex, requestParameters.count, requestParameters.matchTypeFilter, requestParameters.keywordText, requestParameters.stateFilter, requestParameters.campaignIdFilter, requestParameters.adGroupIdFilter, requestParameters.keywordIdFilter, requestParameters.creativeType, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Negative keywords submitted for update may have state set to `pending` for moderation review. Moderation may take up to 72 hours. <br/>Note that negative keywords can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative keywords.
+     * @summary Updates one or more negative keywords.
+     * @param {NegativeKeywordsApiUpdateNegativeKeywordsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NegativeKeywordsApi
+     */
+    public updateNegativeKeywords(requestParameters: NegativeKeywordsApiUpdateNegativeKeywordsRequest, options?: any) {
+        return NegativeKeywordsApiFp(this.configuration).updateNegativeKeywords(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.requestBody, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * NegativeProductTargetingApi - axios parameter creator
+ * @export
+ */
+export const NegativeProductTargetingApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Archives a negative target specified by identifier. Note that archiving is permanent, and once a negative target has been archived it can\'t be made active again.
+         * @param {number} negativeTargetId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        archiveNegativeTarget: async (negativeTargetId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'negativeTargetId' is not null or undefined
+            assertParamExists('archiveNegativeTarget', 'negativeTargetId', negativeTargetId)
+            const localVarPath = `/sb/negativeTargets/{negativeTargetId}`
+                .replace(`{${"negativeTargetId"}}`, encodeURIComponent(String(negativeTargetId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create one or more negative targets.
+         * @param {InlineObject6} [inlineObject6] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNegativeTargets: async (inlineObject6?: InlineObject6, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/sb/negativeTargets`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbcreatenegativetargetsrequest.v3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject6, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Gets a negative target specified by identifier.
+         * @param {number} negativeTargetId The identifier of an existing negative target.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNegativeTarget: async (negativeTargetId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'negativeTargetId' is not null or undefined
+            assertParamExists('getNegativeTarget', 'negativeTargetId', negativeTargetId)
+            const localVarPath = `/sb/negativeTargets/{negativeTargetId}`
+                .replace(`{${"negativeTargetId"}}`, encodeURIComponent(String(negativeTargetId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Gets a list of product negative targets associated with the client identifier passed in the authorization header, filtered by specified criteria.
+         * @param {any} [uNKNOWNBASETYPE] A set of filters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listNegativeTargets: async (uNKNOWNBASETYPE?: any, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/sb/negativeTargets/list`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sblistnegativetargetsresponse.v3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(uNKNOWNBASETYPE, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Updates one or more negative targets.
+         * @param {InlineObject5} [inlineObject5] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateNegativeTargets: async (inlineObject5?: InlineObject5, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/sb/negativeTargets`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.updatenegativetargetsresponse.v3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject5, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * NegativeProductTargetingApi - functional programming interface
+ * @export
+ */
+export const NegativeProductTargetingApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = NegativeProductTargetingApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Archives a negative target specified by identifier. Note that archiving is permanent, and once a negative target has been archived it can\'t be made active again.
+         * @param {number} negativeTargetId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async archiveNegativeTarget(negativeTargetId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBTargetingClauseResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.archiveNegativeTarget(negativeTargetId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create one or more negative targets.
+         * @param {InlineObject6} [inlineObject6] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createNegativeTargets(inlineObject6?: InlineObject6, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBCreateTargetsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createNegativeTargets(inlineObject6, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Gets a negative target specified by identifier.
+         * @param {number} negativeTargetId The identifier of an existing negative target.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getNegativeTarget(negativeTargetId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBNegativeTargetingClause>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getNegativeTarget(negativeTargetId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Gets a list of product negative targets associated with the client identifier passed in the authorization header, filtered by specified criteria.
+         * @param {any} [uNKNOWNBASETYPE] A set of filters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listNegativeTargets(uNKNOWNBASETYPE?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListResponse & object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listNegativeTargets(uNKNOWNBASETYPE, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Updates one or more negative targets.
+         * @param {InlineObject5} [inlineObject5] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateNegativeTargets(inlineObject5?: InlineObject5, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2004>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateNegativeTargets(inlineObject5, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * NegativeProductTargetingApi - factory interface
+ * @export
+ */
+export const NegativeProductTargetingApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = NegativeProductTargetingApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Archives a negative target specified by identifier. Note that archiving is permanent, and once a negative target has been archived it can\'t be made active again.
+         * @param {number} negativeTargetId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        archiveNegativeTarget(negativeTargetId: number, options?: any): AxiosPromise<SBTargetingClauseResponse> {
+            return localVarFp.archiveNegativeTarget(negativeTargetId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create one or more negative targets.
+         * @param {InlineObject6} [inlineObject6] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createNegativeTargets(inlineObject6?: InlineObject6, options?: any): AxiosPromise<SBCreateTargetsResponse> {
+            return localVarFp.createNegativeTargets(inlineObject6, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Gets a negative target specified by identifier.
+         * @param {number} negativeTargetId The identifier of an existing negative target.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getNegativeTarget(negativeTargetId: number, options?: any): AxiosPromise<SBNegativeTargetingClause> {
+            return localVarFp.getNegativeTarget(negativeTargetId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Gets a list of product negative targets associated with the client identifier passed in the authorization header, filtered by specified criteria.
+         * @param {any} [uNKNOWNBASETYPE] A set of filters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listNegativeTargets(uNKNOWNBASETYPE?: any, options?: any): AxiosPromise<ListResponse & object> {
+            return localVarFp.listNegativeTargets(uNKNOWNBASETYPE, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Updates one or more negative targets.
+         * @param {InlineObject5} [inlineObject5] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateNegativeTargets(inlineObject5?: InlineObject5, options?: any): AxiosPromise<InlineResponse2004> {
+            return localVarFp.updateNegativeTargets(inlineObject5, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for archiveNegativeTarget operation in NegativeProductTargetingApi.
+ * @export
+ * @interface NegativeProductTargetingApiArchiveNegativeTargetRequest
+ */
+export interface NegativeProductTargetingApiArchiveNegativeTargetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof NegativeProductTargetingApiArchiveNegativeTarget
+     */
+    readonly negativeTargetId: number
+}
+
+/**
+ * Request parameters for createNegativeTargets operation in NegativeProductTargetingApi.
+ * @export
+ * @interface NegativeProductTargetingApiCreateNegativeTargetsRequest
+ */
+export interface NegativeProductTargetingApiCreateNegativeTargetsRequest {
+    /**
+     * 
+     * @type {InlineObject6}
+     * @memberof NegativeProductTargetingApiCreateNegativeTargets
+     */
+    readonly inlineObject6?: InlineObject6
+}
+
+/**
+ * Request parameters for getNegativeTarget operation in NegativeProductTargetingApi.
+ * @export
+ * @interface NegativeProductTargetingApiGetNegativeTargetRequest
+ */
+export interface NegativeProductTargetingApiGetNegativeTargetRequest {
+    /**
+     * The identifier of an existing negative target.
+     * @type {number}
+     * @memberof NegativeProductTargetingApiGetNegativeTarget
+     */
+    readonly negativeTargetId: number
+}
+
+/**
+ * Request parameters for listNegativeTargets operation in NegativeProductTargetingApi.
+ * @export
+ * @interface NegativeProductTargetingApiListNegativeTargetsRequest
+ */
+export interface NegativeProductTargetingApiListNegativeTargetsRequest {
+    /**
+     * A set of filters.
+     * @type {any}
+     * @memberof NegativeProductTargetingApiListNegativeTargets
+     */
+    readonly uNKNOWNBASETYPE?: any
+}
+
+/**
+ * Request parameters for updateNegativeTargets operation in NegativeProductTargetingApi.
+ * @export
+ * @interface NegativeProductTargetingApiUpdateNegativeTargetsRequest
+ */
+export interface NegativeProductTargetingApiUpdateNegativeTargetsRequest {
+    /**
+     * 
+     * @type {InlineObject5}
+     * @memberof NegativeProductTargetingApiUpdateNegativeTargets
+     */
+    readonly inlineObject5?: InlineObject5
+}
+
+/**
+ * NegativeProductTargetingApi - object-oriented interface
+ * @export
+ * @class NegativeProductTargetingApi
+ * @extends {BaseAPI}
+ */
+export class NegativeProductTargetingApi extends BaseAPI {
+    /**
+     * 
+     * @summary Archives a negative target specified by identifier. Note that archiving is permanent, and once a negative target has been archived it can\'t be made active again.
+     * @param {NegativeProductTargetingApiArchiveNegativeTargetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NegativeProductTargetingApi
+     */
+    public archiveNegativeTarget(requestParameters: NegativeProductTargetingApiArchiveNegativeTargetRequest, options?: any) {
+        return NegativeProductTargetingApiFp(this.configuration).archiveNegativeTarget(requestParameters.negativeTargetId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create one or more negative targets.
+     * @param {NegativeProductTargetingApiCreateNegativeTargetsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NegativeProductTargetingApi
+     */
+    public createNegativeTargets(requestParameters: NegativeProductTargetingApiCreateNegativeTargetsRequest = {}, options?: any) {
+        return NegativeProductTargetingApiFp(this.configuration).createNegativeTargets(requestParameters.inlineObject6, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Gets a negative target specified by identifier.
+     * @param {NegativeProductTargetingApiGetNegativeTargetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NegativeProductTargetingApi
+     */
+    public getNegativeTarget(requestParameters: NegativeProductTargetingApiGetNegativeTargetRequest, options?: any) {
+        return NegativeProductTargetingApiFp(this.configuration).getNegativeTarget(requestParameters.negativeTargetId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Gets a list of product negative targets associated with the client identifier passed in the authorization header, filtered by specified criteria.
+     * @param {NegativeProductTargetingApiListNegativeTargetsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NegativeProductTargetingApi
+     */
+    public listNegativeTargets(requestParameters: NegativeProductTargetingApiListNegativeTargetsRequest = {}, options?: any) {
+        return NegativeProductTargetingApiFp(this.configuration).listNegativeTargets(requestParameters.uNKNOWNBASETYPE, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Updates one or more negative targets.
+     * @param {NegativeProductTargetingApiUpdateNegativeTargetsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NegativeProductTargetingApi
+     */
+    public updateNegativeTargets(requestParameters: NegativeProductTargetingApiUpdateNegativeTargetsRequest = {}, options?: any) {
+        return NegativeProductTargetingApiFp(this.configuration).updateNegativeTargets(requestParameters.inlineObject5, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ProductTargetingApi - axios parameter creator
+ * @export
+ */
+export const ProductTargetingApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * The identifier of an existing target.
+         * @summary Archives a target specified by identifier. Note that archiving is permanent, and once a target has been archived it can\'t be made active again.
+         * @param {number} targetId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        archiveTarget: async (targetId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'targetId' is not null or undefined
+            assertParamExists('archiveTarget', 'targetId', targetId)
+            const localVarPath = `/sb/targets/{targetId}`
+                .replace(`{${"targetId"}}`, encodeURIComponent(String(targetId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create one or more targets.
+         * @param {InlineObject4} [inlineObject4] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTargets: async (inlineObject4?: InlineObject4, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/sb/targets`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbcreatetargetsresponse.v3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject4, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Gets a target specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} targetId The identifier of an existing target.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTarget: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, targetId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getTarget', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getTarget', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'targetId' is not null or undefined
+            assertParamExists('getTarget', 'targetId', targetId)
+            const localVarPath = `/sb/targets/{targetId}`
+                .replace(`{${"targetId"}}`, encodeURIComponent(String(targetId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Gets a list of product targets associated with the client identifier passed in the authorization header, filtered by specified criteria.
+         * @param {any} [uNKNOWNBASETYPE] A set of filters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTargets: async (uNKNOWNBASETYPE?: any, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/sb/targets/list`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sblisttargetsresponse.v3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(uNKNOWNBASETYPE, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Updates one or more targets.
+         * @param {InlineObject3} [inlineObject3] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTargets: async (inlineObject3?: InlineObject3, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/sb/targets`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.updatetargetsresponse.v3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject3, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ProductTargetingApi - functional programming interface
+ * @export
+ */
+export const ProductTargetingApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ProductTargetingApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * The identifier of an existing target.
+         * @summary Archives a target specified by identifier. Note that archiving is permanent, and once a target has been archived it can\'t be made active again.
+         * @param {number} targetId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async archiveTarget(targetId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBTargetingClauseResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.archiveTarget(targetId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create one or more targets.
+         * @param {InlineObject4} [inlineObject4] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createTargets(inlineObject4?: InlineObject4, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBCreateTargetsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createTargets(inlineObject4, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Gets a target specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} targetId The identifier of an existing target.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTarget(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, targetId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBTargetingClause>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTarget(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, targetId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Gets a list of product targets associated with the client identifier passed in the authorization header, filtered by specified criteria.
+         * @param {any} [uNKNOWNBASETYPE] A set of filters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listTargets(uNKNOWNBASETYPE?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListResponse & object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listTargets(uNKNOWNBASETYPE, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Updates one or more targets.
+         * @param {InlineObject3} [inlineObject3] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateTargets(inlineObject3?: InlineObject3, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2003>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateTargets(inlineObject3, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ProductTargetingApi - factory interface
+ * @export
+ */
+export const ProductTargetingApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ProductTargetingApiFp(configuration)
+    return {
+        /**
+         * The identifier of an existing target.
+         * @summary Archives a target specified by identifier. Note that archiving is permanent, and once a target has been archived it can\'t be made active again.
+         * @param {number} targetId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        archiveTarget(targetId: number, options?: any): AxiosPromise<SBTargetingClauseResponse> {
+            return localVarFp.archiveTarget(targetId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create one or more targets.
+         * @param {InlineObject4} [inlineObject4] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTargets(inlineObject4?: InlineObject4, options?: any): AxiosPromise<SBCreateTargetsResponse> {
+            return localVarFp.createTargets(inlineObject4, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Gets a target specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} targetId The identifier of an existing target.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTarget(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, targetId: number, options?: any): AxiosPromise<SBTargetingClause> {
+            return localVarFp.getTarget(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, targetId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Gets a list of product targets associated with the client identifier passed in the authorization header, filtered by specified criteria.
+         * @param {any} [uNKNOWNBASETYPE] A set of filters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listTargets(uNKNOWNBASETYPE?: any, options?: any): AxiosPromise<ListResponse & object> {
+            return localVarFp.listTargets(uNKNOWNBASETYPE, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Updates one or more targets.
+         * @param {InlineObject3} [inlineObject3] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateTargets(inlineObject3?: InlineObject3, options?: any): AxiosPromise<InlineResponse2003> {
+            return localVarFp.updateTargets(inlineObject3, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for archiveTarget operation in ProductTargetingApi.
+ * @export
+ * @interface ProductTargetingApiArchiveTargetRequest
+ */
+export interface ProductTargetingApiArchiveTargetRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof ProductTargetingApiArchiveTarget
+     */
+    readonly targetId: number
+}
+
+/**
+ * Request parameters for createTargets operation in ProductTargetingApi.
+ * @export
+ * @interface ProductTargetingApiCreateTargetsRequest
+ */
+export interface ProductTargetingApiCreateTargetsRequest {
+    /**
+     * 
+     * @type {InlineObject4}
+     * @memberof ProductTargetingApiCreateTargets
+     */
+    readonly inlineObject4?: InlineObject4
+}
+
+/**
+ * Request parameters for getTarget operation in ProductTargetingApi.
+ * @export
+ * @interface ProductTargetingApiGetTargetRequest
+ */
+export interface ProductTargetingApiGetTargetRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof ProductTargetingApiGetTarget
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof ProductTargetingApiGetTarget
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The identifier of an existing target.
+     * @type {number}
+     * @memberof ProductTargetingApiGetTarget
+     */
+    readonly targetId: number
+}
+
+/**
+ * Request parameters for listTargets operation in ProductTargetingApi.
+ * @export
+ * @interface ProductTargetingApiListTargetsRequest
+ */
+export interface ProductTargetingApiListTargetsRequest {
+    /**
+     * A set of filters.
+     * @type {any}
+     * @memberof ProductTargetingApiListTargets
+     */
+    readonly uNKNOWNBASETYPE?: any
+}
+
+/**
+ * Request parameters for updateTargets operation in ProductTargetingApi.
+ * @export
+ * @interface ProductTargetingApiUpdateTargetsRequest
+ */
+export interface ProductTargetingApiUpdateTargetsRequest {
+    /**
+     * 
+     * @type {InlineObject3}
+     * @memberof ProductTargetingApiUpdateTargets
+     */
+    readonly inlineObject3?: InlineObject3
+}
+
+/**
+ * ProductTargetingApi - object-oriented interface
+ * @export
+ * @class ProductTargetingApi
+ * @extends {BaseAPI}
+ */
+export class ProductTargetingApi extends BaseAPI {
+    /**
+     * The identifier of an existing target.
+     * @summary Archives a target specified by identifier. Note that archiving is permanent, and once a target has been archived it can\'t be made active again.
+     * @param {ProductTargetingApiArchiveTargetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductTargetingApi
+     */
+    public archiveTarget(requestParameters: ProductTargetingApiArchiveTargetRequest, options?: any) {
+        return ProductTargetingApiFp(this.configuration).archiveTarget(requestParameters.targetId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create one or more targets.
+     * @param {ProductTargetingApiCreateTargetsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductTargetingApi
+     */
+    public createTargets(requestParameters: ProductTargetingApiCreateTargetsRequest = {}, options?: any) {
+        return ProductTargetingApiFp(this.configuration).createTargets(requestParameters.inlineObject4, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Gets a target specified by identifier.
+     * @param {ProductTargetingApiGetTargetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductTargetingApi
+     */
+    public getTarget(requestParameters: ProductTargetingApiGetTargetRequest, options?: any) {
+        return ProductTargetingApiFp(this.configuration).getTarget(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.targetId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gets a list of product targets associated with the client identifier passed in the authorization header, filtered by specified criteria.
+     * @param {ProductTargetingApiListTargetsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductTargetingApi
+     */
+    public listTargets(requestParameters: ProductTargetingApiListTargetsRequest = {}, options?: any) {
+        return ProductTargetingApiFp(this.configuration).listTargets(requestParameters.uNKNOWNBASETYPE, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Updates one or more targets.
+     * @param {ProductTargetingApiUpdateTargetsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductTargetingApi
+     */
+    public updateTargets(requestParameters: ProductTargetingApiUpdateTargetsRequest = {}, options?: any) {
+        return ProductTargetingApiFp(this.configuration).updateTargets(requestParameters.inlineObject3, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * StoresApi - axios parameter creator
+ * @export
+ */
+export const StoresApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Image assets are stored in the Store Assets Library. Note that there may be a delay before the image is displayed in the console.
+         * @summary Creates a new image asset.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} contentDisposition The name of the image file.
+         * @param {string} contentType The image format type. The following table lists the valid image types: |Image Type|Description| |----------|-----------| |PNG|[Portable network graphics](https://en.wikipedia.org/wiki/Portable_Network_Graphics)| |JPEG|[JPEG](https://en.wikipedia.org/wiki/JPEG)| |GIF|[Graphics interchange format](https://en.wikipedia.org/wiki/GIF)|
+         * @param {string} [assetInfo] A JSON object specifying the Brand entity identifier an media type. The Brand entity identifier is optional, but media type is not. |Field|Type|Values| |-----|-----|-----| |brandEntityId|string|The Brand entity identifier.| |mediaType|string| Only &#x60;brandLogo&#x60; is currently supported.| Example: &#x60;&#x60;&#x60; {   brandEntityId: \\\&quot;12345678\\\&quot;,   mediaType: {     \\\&quot;brandLogo\\\&quot;   } } &#x60;&#x60;&#x60;
+         * @param {any} [asset] The binary data for the image. For more information,  File size must be smaller than 1MB, and the resolution must be a minimum of 400 pixels by 400 pixels.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAsset: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, contentDisposition: string, contentType: string, assetInfo?: string, asset?: any, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('createAsset', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('createAsset', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'contentDisposition' is not null or undefined
+            assertParamExists('createAsset', 'contentDisposition', contentDisposition)
+            // verify required parameter 'contentType' is not null or undefined
+            assertParamExists('createAsset', 'contentType', contentType)
+            const localVarPath = `/stores/assets`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+            if (contentDisposition !== undefined && contentDisposition !== null) {
+                localVarHeaderParameter['Content-Disposition'] = String(contentDisposition);
+            }
+
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter['Content-Type'] = String(contentType);
+            }
+
+
+            if (assetInfo !== undefined) { 
+                localVarFormParams.append('assetInfo', assetInfo as any);
+            }
+    
+            if (asset !== undefined) { 
+                localVarFormParams.append('asset', asset as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * For sellers or vendors, gets an array of assets associated with the specified brand entity identifier. Vendors are not required to specify a brand entity identifier, and in this case all assets associated with the vendor are returned.
+         * @summary Gets a list of assets associated with a specified brand entity identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} [brandEntityId] For sellers, this field is required. It is the Brand entity identifier of the Brand for which assets are returned. This identifier is retrieved using the [getBrands operation](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/brands). For vendors, this field is optional. If a vendor does not specify this field, all assets associated with the vendor are returned. For more information about the [difference between a seller and a vendor](https://advertising.amazon.com/resources/faq#advertising-basics), see the Amazon Ads FAQ.
+         * @param {MediaType} [mediaType] Specifies the media types used to filter the returned array. Currently, only the &#x60;brandLogo&#x60; type is supported. If not specified, all media types are returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAssets: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, brandEntityId?: string, mediaType?: MediaType, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('listAssets', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('listAssets', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/stores/assets`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (brandEntityId !== undefined) {
+                localVarQueryParameter['brandEntityId'] = brandEntityId;
+            }
+
+            if (mediaType !== undefined) {
+                localVarQueryParameter['mediaType'] = mediaType;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * StoresApi - functional programming interface
+ * @export
+ */
+export const StoresApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = StoresApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Image assets are stored in the Store Assets Library. Note that there may be a delay before the image is displayed in the console.
+         * @summary Creates a new image asset.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} contentDisposition The name of the image file.
+         * @param {string} contentType The image format type. The following table lists the valid image types: |Image Type|Description| |----------|-----------| |PNG|[Portable network graphics](https://en.wikipedia.org/wiki/Portable_Network_Graphics)| |JPEG|[JPEG](https://en.wikipedia.org/wiki/JPEG)| |GIF|[Graphics interchange format](https://en.wikipedia.org/wiki/GIF)|
+         * @param {string} [assetInfo] A JSON object specifying the Brand entity identifier an media type. The Brand entity identifier is optional, but media type is not. |Field|Type|Values| |-----|-----|-----| |brandEntityId|string|The Brand entity identifier.| |mediaType|string| Only &#x60;brandLogo&#x60; is currently supported.| Example: &#x60;&#x60;&#x60; {   brandEntityId: \\\&quot;12345678\\\&quot;,   mediaType: {     \\\&quot;brandLogo\\\&quot;   } } &#x60;&#x60;&#x60;
+         * @param {any} [asset] The binary data for the image. For more information,  File size must be smaller than 1MB, and the resolution must be a minimum of 400 pixels by 400 pixels.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createAsset(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, contentDisposition: string, contentType: string, assetInfo?: string, asset?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createAsset(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, contentDisposition, contentType, assetInfo, asset, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * For sellers or vendors, gets an array of assets associated with the specified brand entity identifier. Vendors are not required to specify a brand entity identifier, and in this case all assets associated with the vendor are returned.
+         * @summary Gets a list of assets associated with a specified brand entity identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} [brandEntityId] For sellers, this field is required. It is the Brand entity identifier of the Brand for which assets are returned. This identifier is retrieved using the [getBrands operation](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/brands). For vendors, this field is optional. If a vendor does not specify this field, all assets associated with the vendor are returned. For more information about the [difference between a seller and a vendor](https://advertising.amazon.com/resources/faq#advertising-basics), see the Amazon Ads FAQ.
+         * @param {MediaType} [mediaType] Specifies the media types used to filter the returned array. Currently, only the &#x60;brandLogo&#x60; type is supported. If not specified, all media types are returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listAssets(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, brandEntityId?: string, mediaType?: MediaType, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAssets(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, brandEntityId, mediaType, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * StoresApi - factory interface
+ * @export
+ */
+export const StoresApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = StoresApiFp(configuration)
+    return {
+        /**
+         * Image assets are stored in the Store Assets Library. Note that there may be a delay before the image is displayed in the console.
+         * @summary Creates a new image asset.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} contentDisposition The name of the image file.
+         * @param {string} contentType The image format type. The following table lists the valid image types: |Image Type|Description| |----------|-----------| |PNG|[Portable network graphics](https://en.wikipedia.org/wiki/Portable_Network_Graphics)| |JPEG|[JPEG](https://en.wikipedia.org/wiki/JPEG)| |GIF|[Graphics interchange format](https://en.wikipedia.org/wiki/GIF)|
+         * @param {string} [assetInfo] A JSON object specifying the Brand entity identifier an media type. The Brand entity identifier is optional, but media type is not. |Field|Type|Values| |-----|-----|-----| |brandEntityId|string|The Brand entity identifier.| |mediaType|string| Only &#x60;brandLogo&#x60; is currently supported.| Example: &#x60;&#x60;&#x60; {   brandEntityId: \\\&quot;12345678\\\&quot;,   mediaType: {     \\\&quot;brandLogo\\\&quot;   } } &#x60;&#x60;&#x60;
+         * @param {any} [asset] The binary data for the image. For more information,  File size must be smaller than 1MB, and the resolution must be a minimum of 400 pixels by 400 pixels.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createAsset(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, contentDisposition: string, contentType: string, assetInfo?: string, asset?: any, options?: any): AxiosPromise<object> {
+            return localVarFp.createAsset(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, contentDisposition, contentType, assetInfo, asset, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * For sellers or vendors, gets an array of assets associated with the specified brand entity identifier. Vendors are not required to specify a brand entity identifier, and in this case all assets associated with the vendor are returned.
+         * @summary Gets a list of assets associated with a specified brand entity identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} [brandEntityId] For sellers, this field is required. It is the Brand entity identifier of the Brand for which assets are returned. This identifier is retrieved using the [getBrands operation](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/brands). For vendors, this field is optional. If a vendor does not specify this field, all assets associated with the vendor are returned. For more information about the [difference between a seller and a vendor](https://advertising.amazon.com/resources/faq#advertising-basics), see the Amazon Ads FAQ.
+         * @param {MediaType} [mediaType] Specifies the media types used to filter the returned array. Currently, only the &#x60;brandLogo&#x60; type is supported. If not specified, all media types are returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listAssets(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, brandEntityId?: string, mediaType?: MediaType, options?: any): AxiosPromise<Array<object>> {
+            return localVarFp.listAssets(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, brandEntityId, mediaType, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for createAsset operation in StoresApi.
+ * @export
+ * @interface StoresApiCreateAssetRequest
+ */
+export interface StoresApiCreateAssetRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof StoresApiCreateAsset
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof StoresApiCreateAsset
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The name of the image file.
+     * @type {string}
+     * @memberof StoresApiCreateAsset
+     */
+    readonly contentDisposition: string
+
+    /**
+     * The image format type. The following table lists the valid image types: |Image Type|Description| |----------|-----------| |PNG|[Portable network graphics](https://en.wikipedia.org/wiki/Portable_Network_Graphics)| |JPEG|[JPEG](https://en.wikipedia.org/wiki/JPEG)| |GIF|[Graphics interchange format](https://en.wikipedia.org/wiki/GIF)|
+     * @type {string}
+     * @memberof StoresApiCreateAsset
+     */
+    readonly contentType: string
+
+    /**
+     * A JSON object specifying the Brand entity identifier an media type. The Brand entity identifier is optional, but media type is not. |Field|Type|Values| |-----|-----|-----| |brandEntityId|string|The Brand entity identifier.| |mediaType|string| Only &#x60;brandLogo&#x60; is currently supported.| Example: &#x60;&#x60;&#x60; {   brandEntityId: \\\&quot;12345678\\\&quot;,   mediaType: {     \\\&quot;brandLogo\\\&quot;   } } &#x60;&#x60;&#x60;
+     * @type {string}
+     * @memberof StoresApiCreateAsset
+     */
+    readonly assetInfo?: string
+
+    /**
+     * The binary data for the image. For more information,  File size must be smaller than 1MB, and the resolution must be a minimum of 400 pixels by 400 pixels.
+     * @type {any}
+     * @memberof StoresApiCreateAsset
+     */
+    readonly asset?: any
+}
+
+/**
+ * Request parameters for listAssets operation in StoresApi.
+ * @export
+ * @interface StoresApiListAssetsRequest
+ */
+export interface StoresApiListAssetsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof StoresApiListAssets
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof StoresApiListAssets
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * For sellers, this field is required. It is the Brand entity identifier of the Brand for which assets are returned. This identifier is retrieved using the [getBrands operation](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/brands). For vendors, this field is optional. If a vendor does not specify this field, all assets associated with the vendor are returned. For more information about the [difference between a seller and a vendor](https://advertising.amazon.com/resources/faq#advertising-basics), see the Amazon Ads FAQ.
+     * @type {string}
+     * @memberof StoresApiListAssets
+     */
+    readonly brandEntityId?: string
+
+    /**
+     * Specifies the media types used to filter the returned array. Currently, only the &#x60;brandLogo&#x60; type is supported. If not specified, all media types are returned.
+     * @type {MediaType}
+     * @memberof StoresApiListAssets
+     */
+    readonly mediaType?: MediaType
+}
+
+/**
+ * StoresApi - object-oriented interface
+ * @export
+ * @class StoresApi
+ * @extends {BaseAPI}
+ */
+export class StoresApi extends BaseAPI {
+    /**
+     * Image assets are stored in the Store Assets Library. Note that there may be a delay before the image is displayed in the console.
+     * @summary Creates a new image asset.
+     * @param {StoresApiCreateAssetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoresApi
+     */
+    public createAsset(requestParameters: StoresApiCreateAssetRequest, options?: any) {
+        return StoresApiFp(this.configuration).createAsset(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.contentDisposition, requestParameters.contentType, requestParameters.assetInfo, requestParameters.asset, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * For sellers or vendors, gets an array of assets associated with the specified brand entity identifier. Vendors are not required to specify a brand entity identifier, and in this case all assets associated with the vendor are returned.
+     * @summary Gets a list of assets associated with a specified brand entity identifier.
+     * @param {StoresApiListAssetsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StoresApi
+     */
+    public listAssets(requestParameters: StoresApiListAssetsRequest, options?: any) {
+        return StoresApiFp(this.configuration).listAssets(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.brandEntityId, requestParameters.mediaType, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * TargetingRecommendationsApi - axios parameter creator
+ * @export
+ */
+export const TargetingRecommendationsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * The Brand suggestions are based on a list of either category identifiers or keywords passed in the request. It is not valid to specify both category identifiers and keywords in the request.
+         * @summary Gets a list of brand suggestions.
+         * @param {any} [uNKNOWNBASETYPE] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBrandRecommendations: async (uNKNOWNBASETYPE?: any, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/sb/recommendations/targets/brand`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbbrandrecommendations.v3.0+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(uNKNOWNBASETYPE, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Recommendations are based on the ASINs that are passed in the request.
+         * @summary Gets a list of recommended products for targeting.
+         * @param {any} [uNKNOWNBASETYPE] A list of ASINs.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProductRecommendations: async (uNKNOWNBASETYPE?: any, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/sb/recommendations/targets/product/list`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbproductrecommendations.v3.0+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(uNKNOWNBASETYPE, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Recommendations are based on the ASINs that are passed in the request.
+         * @summary Gets a list of recommended categories for targeting.
+         * @param {InlineObject7} [inlineObject7] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTargetingCategories: async (inlineObject7?: InlineObject7, options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/sb/recommendations/targets/category`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbcategoryrecommendations.v3.0+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject7, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * TargetingRecommendationsApi - functional programming interface
+ * @export
+ */
+export const TargetingRecommendationsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = TargetingRecommendationsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * The Brand suggestions are based on a list of either category identifiers or keywords passed in the request. It is not valid to specify both category identifiers and keywords in the request.
+         * @summary Gets a list of brand suggestions.
+         * @param {any} [uNKNOWNBASETYPE] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBrandRecommendations(uNKNOWNBASETYPE?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2006>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBrandRecommendations(uNKNOWNBASETYPE, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Recommendations are based on the ASINs that are passed in the request.
+         * @summary Gets a list of recommended products for targeting.
+         * @param {any} [uNKNOWNBASETYPE] A list of ASINs.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getProductRecommendations(uNKNOWNBASETYPE?: any, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListResponse & object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProductRecommendations(uNKNOWNBASETYPE, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Recommendations are based on the ASINs that are passed in the request.
+         * @summary Gets a list of recommended categories for targeting.
+         * @param {InlineObject7} [inlineObject7] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getTargetingCategories(inlineObject7?: InlineObject7, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2005>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTargetingCategories(inlineObject7, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * TargetingRecommendationsApi - factory interface
+ * @export
+ */
+export const TargetingRecommendationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = TargetingRecommendationsApiFp(configuration)
+    return {
+        /**
+         * The Brand suggestions are based on a list of either category identifiers or keywords passed in the request. It is not valid to specify both category identifiers and keywords in the request.
+         * @summary Gets a list of brand suggestions.
+         * @param {any} [uNKNOWNBASETYPE] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBrandRecommendations(uNKNOWNBASETYPE?: any, options?: any): AxiosPromise<InlineResponse2006> {
+            return localVarFp.getBrandRecommendations(uNKNOWNBASETYPE, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Recommendations are based on the ASINs that are passed in the request.
+         * @summary Gets a list of recommended products for targeting.
+         * @param {any} [uNKNOWNBASETYPE] A list of ASINs.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProductRecommendations(uNKNOWNBASETYPE?: any, options?: any): AxiosPromise<ListResponse & object> {
+            return localVarFp.getProductRecommendations(uNKNOWNBASETYPE, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Recommendations are based on the ASINs that are passed in the request.
+         * @summary Gets a list of recommended categories for targeting.
+         * @param {InlineObject7} [inlineObject7] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getTargetingCategories(inlineObject7?: InlineObject7, options?: any): AxiosPromise<InlineResponse2005> {
+            return localVarFp.getTargetingCategories(inlineObject7, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getBrandRecommendations operation in TargetingRecommendationsApi.
+ * @export
+ * @interface TargetingRecommendationsApiGetBrandRecommendationsRequest
+ */
+export interface TargetingRecommendationsApiGetBrandRecommendationsRequest {
+    /**
+     * 
+     * @type {any}
+     * @memberof TargetingRecommendationsApiGetBrandRecommendations
+     */
+    readonly uNKNOWNBASETYPE?: any
+}
+
+/**
+ * Request parameters for getProductRecommendations operation in TargetingRecommendationsApi.
+ * @export
+ * @interface TargetingRecommendationsApiGetProductRecommendationsRequest
+ */
+export interface TargetingRecommendationsApiGetProductRecommendationsRequest {
+    /**
+     * A list of ASINs.
+     * @type {any}
+     * @memberof TargetingRecommendationsApiGetProductRecommendations
+     */
+    readonly uNKNOWNBASETYPE?: any
+}
+
+/**
+ * Request parameters for getTargetingCategories operation in TargetingRecommendationsApi.
+ * @export
+ * @interface TargetingRecommendationsApiGetTargetingCategoriesRequest
+ */
+export interface TargetingRecommendationsApiGetTargetingCategoriesRequest {
+    /**
+     * 
+     * @type {InlineObject7}
+     * @memberof TargetingRecommendationsApiGetTargetingCategories
+     */
+    readonly inlineObject7?: InlineObject7
+}
+
+/**
+ * TargetingRecommendationsApi - object-oriented interface
+ * @export
+ * @class TargetingRecommendationsApi
+ * @extends {BaseAPI}
+ */
+export class TargetingRecommendationsApi extends BaseAPI {
+    /**
+     * The Brand suggestions are based on a list of either category identifiers or keywords passed in the request. It is not valid to specify both category identifiers and keywords in the request.
+     * @summary Gets a list of brand suggestions.
+     * @param {TargetingRecommendationsApiGetBrandRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TargetingRecommendationsApi
+     */
+    public getBrandRecommendations(requestParameters: TargetingRecommendationsApiGetBrandRecommendationsRequest = {}, options?: any) {
+        return TargetingRecommendationsApiFp(this.configuration).getBrandRecommendations(requestParameters.uNKNOWNBASETYPE, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Recommendations are based on the ASINs that are passed in the request.
+     * @summary Gets a list of recommended products for targeting.
+     * @param {TargetingRecommendationsApiGetProductRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TargetingRecommendationsApi
+     */
+    public getProductRecommendations(requestParameters: TargetingRecommendationsApiGetProductRecommendationsRequest = {}, options?: any) {
+        return TargetingRecommendationsApiFp(this.configuration).getProductRecommendations(requestParameters.uNKNOWNBASETYPE, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Recommendations are based on the ASINs that are passed in the request.
+     * @summary Gets a list of recommended categories for targeting.
+     * @param {TargetingRecommendationsApiGetTargetingCategoriesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TargetingRecommendationsApi
+     */
+    public getTargetingCategories(requestParameters: TargetingRecommendationsApiGetTargetingCategoriesRequest = {}, options?: any) {
+        return TargetingRecommendationsApiFp(this.configuration).getTargetingCategories(requestParameters.inlineObject7, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

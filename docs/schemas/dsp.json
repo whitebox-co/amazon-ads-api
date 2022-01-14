@@ -8556,6 +8556,11 @@
           "200": {
             "description": "Success",
             "content": {
+              "application/vnd.supplysources.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupplySourceResponseV1_2"
+                }
+              },
               "application/vnd.supplysources.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/SupplySourceResponse"
@@ -8576,6 +8581,11 @@
           "400": {
             "description": "Bad Request.",
             "content": {
+              "application/vnd.supplysources.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
               "application/vnd.supplysources.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
@@ -8596,6 +8606,11 @@
           "401": {
             "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
             "content": {
+              "application/vnd.supplysources.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
               "application/vnd.supplysources.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
@@ -8616,6 +8631,11 @@
           "403": {
             "description": "Forbidden. The request failed because the user does not have access to the specified resource.",
             "content": {
+              "application/vnd.supplysources.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
               "application/vnd.supplysources.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
@@ -8636,6 +8656,11 @@
           "415": {
             "description": "Unsupported Media Type - Version not supported.",
             "content": {
+              "application/vnd.supplysources.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
               "application/vnd.supplysources.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
@@ -8656,6 +8681,11 @@
           "429": {
             "description": "Too Many Requests. The request was rate-limited. Retry later.",
             "content": {
+              "application/vnd.supplysources.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
               "application/vnd.supplysources.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
@@ -8676,6 +8706,11 @@
           "500": {
             "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
             "content": {
+              "application/vnd.supplysources.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
               "application/vnd.supplysources.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
@@ -11162,6 +11197,8 @@
           "deals": {
             "type": "array",
             "description": "The list of deal supply sources to target.",
+            "maxItems": 100,
+            "minItems": 0,
             "items": {
               "$ref": "#/components/schemas/Identifier"
             }
@@ -11173,7 +11210,9 @@
         "properties": {
           "supplySources": {
             "type": "array",
-            "description": "The list of supply sources to target.",
+            "description": "The list of supply sources to target. In case of OPEN_EXCHANGE, the ID is of consolidated supply source.",
+            "maxItems": 1000,
+            "minItems": 0,
             "items": {
               "$ref": "#/components/schemas/Identifier"
             }
@@ -11289,11 +11328,11 @@
         "description": "The type of viewability tier.",
         "enum": [
           "ALLOW_ALL",
-          "VIEWABILITY_TIER_GT70",
-          "VIEWABILITY_TIER_GT60",
-          "VIEWABILITY_TIER_GT50",
-          "VIEWABILITY_TIER_GT40",
-          "VIEWABILITY_TIER_LT40"
+          "VIEWABILITY_TIER_GT_70",
+          "VIEWABILITY_TIER_GT_60",
+          "VIEWABILITY_TIER_GT_50",
+          "VIEWABILITY_TIER_GT_40",
+          "VIEWABILITY_TIER_LT_40"
         ]
       },
       "ThirdPartyPreBidTargeting": {
@@ -12622,6 +12661,30 @@
               "properties": {
                 "dealInfo": {
                   "$ref": "#/components/schemas/DealInfoV1_1"
+                }
+              }
+            }
+          }
+        }
+      },
+      "SupplySourceResponseV1_2": {
+        "type": "object",
+        "properties": {
+          "nextToken": {
+            "type": "string"
+          },
+          "supplySources": {
+            "type": "array",
+            "description": "Array of supply source items sorted by deal start time (if available) then ID, ascending.",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/SupplySource"
+                }
+              ],
+              "properties": {
+                "dealInfo": {
+                  "$ref": "#/components/schemas/DealInfoV1_2"
                 }
               }
             }
@@ -14060,11 +14123,11 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "ID of the supply source item"
+            "description": "ID of the supply source item. For OPEN_EXCHANGE type, it is ID of the consolidated supply source item."
           },
           "name": {
             "type": "string",
-            "description": "User friendly name of the supply source item"
+            "description": "The name of the supply source item. For OPEN_EXCHANGE type, it is the name of the consolidated supply source item."
           },
           "supplySourceType": {
             "type": "string",
@@ -14111,7 +14174,8 @@
             "format": "date-time"
           },
           "exchangeName": {
-            "type": "string"
+            "type": "string",
+            "description": "The name of the supply source item to which the deal belongs. If deal belongs to OPEN_EXCHANGE, it is the name of the consolidated supply source item."
           }
         }
       },
@@ -14126,6 +14190,21 @@
             "$ref": "#/components/schemas/DealFee"
           }
         }
+      },
+      "DealInfoV1_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DealInfoV1_1"
+          },
+          {
+            "properties": {
+              "dealId": {
+                "type": "string",
+                "description": "ID provided by the user while creating the deal."
+              }
+            }
+          }
+        ]
       },
       "DomainListMetadata": {
         "type": "object",

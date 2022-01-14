@@ -68,8 +68,8 @@ const schemas = [
     "url": "./schemas/sponsored-brands.json"
   },
   {
-    "name": "Sponsored Brands",
-    "url": "./schemas/sponsored-brands.json"
+    "name": "Sponsored Brands - Extra",
+    "url": "./schemas/sponsored-brands-extra.json"
   },
   {
     "name": "Sponsored Brands - Pre Moderation",

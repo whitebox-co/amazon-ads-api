@@ -8,12 +8,12 @@
  * Do not edit the class manually.
  */
 
-import { BudgetRulesApi,BudgetRulesRecommendationApi,DefaultApi,KeywordRecommendationsApi,RecommendationsApi,SuggestionsApi,TargetsApi } from '../models/sponsored-brands';
+import { AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,StoresApi,TargetingRecommendationsApi } from '../models/sponsored-brands';
 import { Configuration } from '../models/configuration';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
 import { getAxiosInstance, applyMixins } from '../../helpers';
 
-export class SponsoredBrandsClient extends BudgetRulesApi {
+export class SponsoredBrandsClient extends AdGroupsApi {
   constructor(parameters: APIConfigurationParameters) {
     const axios = getAxiosInstance(parameters)
     const configuration = new Configuration(parameters)
@@ -22,6 +22,6 @@ export class SponsoredBrandsClient extends BudgetRulesApi {
 }
 
 
-    export interface SponsoredBrandsClient extends BudgetRulesApi,BudgetRulesRecommendationApi,DefaultApi,KeywordRecommendationsApi,RecommendationsApi,SuggestionsApi,TargetsApi {}
-    applyMixins(SponsoredBrandsClient, [BudgetRulesApi,BudgetRulesRecommendationApi,DefaultApi,KeywordRecommendationsApi,RecommendationsApi,SuggestionsApi,TargetsApi])
+    export interface SponsoredBrandsClient extends AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,StoresApi,TargetingRecommendationsApi {}
+    applyMixins(SponsoredBrandsClient, [AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,StoresApi,TargetingRecommendationsApi])
     

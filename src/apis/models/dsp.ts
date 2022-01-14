@@ -826,7 +826,7 @@ export interface DealInfo {
      */
     endDate?: string;
     /**
-     * 
+     * The name of the supply source item to which the deal belongs. If deal belongs to OPEN_EXCHANGE, it is the name of the consolidated supply source item.
      * @type {string}
      * @memberof DealInfo
      */
@@ -891,7 +891,7 @@ export interface DealInfoV11 {
      */
     endDate?: string;
     /**
-     * 
+     * The name of the supply source item to which the deal belongs. If deal belongs to OPEN_EXCHANGE, it is the name of the consolidated supply source item.
      * @type {string}
      * @memberof DealInfoV11
      */
@@ -907,6 +907,84 @@ export enum DealInfoV11DealTypeEnum {
     PrivateAuction = 'PRIVATE_AUCTION'
 }
 
+/**
+ * 
+ * @export
+ * @interface DealInfoV12
+ */
+export interface DealInfoV12 {
+    /**
+     * 
+     * @type {string}
+     * @memberof DealInfoV12
+     */
+    dealType?: DealInfoV12DealTypeEnum;
+    /**
+     * 
+     * @type {string}
+     * @memberof DealInfoV12
+     */
+    dealGroup?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DealInfoV12
+     */
+    publisherName?: string;
+    /**
+     * Price of the deal
+     * @type {number}
+     * @memberof DealInfoV12
+     */
+    dealPrice?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof DealInfoV12
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof DealInfoV12
+     */
+    endDate?: string;
+    /**
+     * The name of the supply source item to which the deal belongs. If deal belongs to OPEN_EXCHANGE, it is the name of the consolidated supply source item.
+     * @type {string}
+     * @memberof DealInfoV12
+     */
+    exchangeName?: string;
+    /**
+     * ID provided by the user while creating the deal.
+     * @type {string}
+     * @memberof DealInfoV12
+     */
+    dealId?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DealInfoV12DealTypeEnum {
+    PreferredDeal = 'PREFERRED_DEAL',
+    PrivateAuction = 'PRIVATE_AUCTION'
+}
+
+/**
+ * 
+ * @export
+ * @interface DealInfoV12AllOf
+ */
+export interface DealInfoV12AllOf {
+    /**
+     * ID provided by the user while creating the deal.
+     * @type {string}
+     * @memberof DealInfoV12AllOf
+     */
+    dealId?: string;
+}
 /**
  * This will be used to control the delivery activation status of order and lineitem  resource. Active - Activate order or lineitem. INACTIVE - Pause the order or lineitem. 
  * @export
@@ -6801,13 +6879,13 @@ export interface SupplyDealTargeting {
  */
 export interface SupplySource {
     /**
-     * ID of the supply source item
+     * ID of the supply source item. For OPEN_EXCHANGE type, it is ID of the consolidated supply source item.
      * @type {string}
      * @memberof SupplySource
      */
     id?: string;
     /**
-     * User friendly name of the supply source item
+     * The name of the supply source item. For OPEN_EXCHANGE type, it is the name of the consolidated supply source item.
      * @type {string}
      * @memberof SupplySource
      */
@@ -6877,11 +6955,30 @@ export interface SupplySourceResponseV11 {
 /**
  * 
  * @export
+ * @interface SupplySourceResponseV12
+ */
+export interface SupplySourceResponseV12 {
+    /**
+     * 
+     * @type {string}
+     * @memberof SupplySourceResponseV12
+     */
+    nextToken?: string;
+    /**
+     * Array of supply source items sorted by deal start time (if available) then ID, ascending.
+     * @type {Array<SupplySource>}
+     * @memberof SupplySourceResponseV12
+     */
+    supplySources?: Array<SupplySource>;
+}
+/**
+ * 
+ * @export
  * @interface SupplySourceTargeting
  */
 export interface SupplySourceTargeting {
     /**
-     * The list of supply sources to target.
+     * The list of supply sources to target. In case of OPEN_EXCHANGE, the ID is of consolidated supply source.
      * @type {Array<string>}
      * @memberof SupplySourceTargeting
      */
@@ -7606,11 +7703,11 @@ export interface VideoThirdPartyPreBidTargeting {
 
 export enum ViewabilityTier {
     AllowAll = 'ALLOW_ALL',
-    ViewabilityTierGt70 = 'VIEWABILITY_TIER_GT70',
-    ViewabilityTierGt60 = 'VIEWABILITY_TIER_GT60',
-    ViewabilityTierGt50 = 'VIEWABILITY_TIER_GT50',
-    ViewabilityTierGt40 = 'VIEWABILITY_TIER_GT40',
-    ViewabilityTierLt40 = 'VIEWABILITY_TIER_LT40'
+    ViewabilityTierGt70 = 'VIEWABILITY_TIER_GT_70',
+    ViewabilityTierGt60 = 'VIEWABILITY_TIER_GT_60',
+    ViewabilityTierGt50 = 'VIEWABILITY_TIER_GT_50',
+    ViewabilityTierGt40 = 'VIEWABILITY_TIER_GT_40',
+    ViewabilityTierLt40 = 'VIEWABILITY_TIER_LT_40'
 }
 
 
@@ -8596,7 +8693,7 @@ export const DiscoveryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSupplySources(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemType: DiscoveryLineItemTypes, supplySourceType: 'AMAZON_EXCLUSIVE' | 'OPEN_EXCHANGE' | 'DEAL', orderId?: string, advertiserId?: string, deviceTypes?: Array<'DESKTOP' | 'MOBILE' | 'DESKTOP_AND_MOBILE' | 'CONNECTED_TV'>, nextToken?: string, maxResults?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SupplySourceResponse>> {
+        async getSupplySources(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemType: DiscoveryLineItemTypes, supplySourceType: 'AMAZON_EXCLUSIVE' | 'OPEN_EXCHANGE' | 'DEAL', orderId?: string, advertiserId?: string, deviceTypes?: Array<'DESKTOP' | 'MOBILE' | 'DESKTOP_AND_MOBILE' | 'CONNECTED_TV'>, nextToken?: string, maxResults?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SupplySourceResponseV12>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSupplySources(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, lineItemType, supplySourceType, orderId, advertiserId, deviceTypes, nextToken, maxResults, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -8749,7 +8846,7 @@ export const DiscoveryApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSupplySources(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemType: DiscoveryLineItemTypes, supplySourceType: 'AMAZON_EXCLUSIVE' | 'OPEN_EXCHANGE' | 'DEAL', orderId?: string, advertiserId?: string, deviceTypes?: Array<'DESKTOP' | 'MOBILE' | 'DESKTOP_AND_MOBILE' | 'CONNECTED_TV'>, nextToken?: string, maxResults?: number, options?: any): AxiosPromise<SupplySourceResponse> {
+        getSupplySources(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemType: DiscoveryLineItemTypes, supplySourceType: 'AMAZON_EXCLUSIVE' | 'OPEN_EXCHANGE' | 'DEAL', orderId?: string, advertiserId?: string, deviceTypes?: Array<'DESKTOP' | 'MOBILE' | 'DESKTOP_AND_MOBILE' | 'CONNECTED_TV'>, nextToken?: string, maxResults?: number, options?: any): AxiosPromise<SupplySourceResponseV12> {
             return localVarFp.getSupplySources(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, lineItemType, supplySourceType, orderId, advertiserId, deviceTypes, nextToken, maxResults, options).then((request) => request(axios, basePath));
         },
     };
