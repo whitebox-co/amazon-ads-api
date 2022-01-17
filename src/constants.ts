@@ -20,6 +20,7 @@ import {
 	DspReportsClient,
 	SponsoredBrandsCategoryBenchmarkClient,
 	SponsoredBrandsClient,
+	SponsoredBrandsExtraClient,
 	SponsoredBrandsPreModerationClient,
 	SponsoredBrandsReportsClient,
 	SponsoredBrandsSnapshotsClient,
@@ -50,6 +51,7 @@ export declare type AmazonAdsApi =
 	| DspReportsClient
 	| SponsoredBrandsCategoryBenchmarkClient
 	| SponsoredBrandsClient
+	| SponsoredBrandsExtraClient
 	| SponsoredBrandsPreModerationClient
 	| SponsoredBrandsReportsClient
 	| SponsoredBrandsSnapshotsClient
