@@ -166,6 +166,7 @@ specified documentation.
 npm run build       # build the project (output to ./lib)
 npm run dev         # run ts-node-dev to watch and rebuild project while in development.
 npm run lint        # runs eslint linter
+npm test -- -i/-u -t "<DESCRIBE_OR_IT_NAME>" # Example: npm test -- -i -t "Attribution"
 ```
 
 ### API Generation
