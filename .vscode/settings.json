@@ -48,6 +48,7 @@
 		"TLDR",
 		"quicktype",
 		"preversion",
-		"postversion"
+		"postversion",
+		"openapi"
 	]
 }
