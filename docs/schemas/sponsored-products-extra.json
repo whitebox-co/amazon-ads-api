@@ -5,174 +5,41 @@
     "version": "3.0"
   },
   "paths": {
-    "/sp/campaigns/{campaignId}/budgetRules/budgetHistory": {
-      "get": {
-        "summary": "Gets the budget history for a campaign specified by identifier.",
-        "description": "The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
-        "operationId": "getRuleBasedBudgetHistoryForSPCampaigns",
-        "responses": {
-          "200": {
-            "description": "Successful operation.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SPBudgetHistory"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized. The request failed because user is not authenticated or is not allowed to invoke the operation.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests. The request was rate-limited. Retry later.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "format": "int64",
-              "type": "number"
-            },
-            "in": "path",
-            "name": "campaignId",
-            "description": "The campaign identifier.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "nextToken",
-            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results."
-          },
-          {
-            "schema": {
-              "type": "number"
-            },
-            "in": "query",
-            "name": "pageSize",
-            "description": "Sets a limit on the number of results returned. Maximum limit of `pageSize` is 30.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "startDate",
-            "description": "The start date of the budget history in YYYYMMDD format.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "endDate",
-            "description": "The end date of the budget history in YYYYMMDD format.",
-            "required": true
-          }
-        ],
-        "tags": [
-          "BudgetRules"
-        ]
-      }
-    },
-    "/sp/rules/campaignOptimization/eligibility": {
+    "/sp/targets/bid/recommendations": {
       "post": {
-        "summary": "Gets a campaign optimization rule recommendation for SP campaigns.",
+        "summary": "The current version of the theme-based bid recommendation resource supports auto-targeting expressions only. Note that the currency for bid recommendations are in local currency units.",
         "requestBody": {
           "content": {
-            "application/vnd.optimizationrules.v1+json": {
+            "application/vnd.spthemebasedbidrecommendation.v3+json": {
               "schema": {
-                "$ref": "#/components/schemas/SPCampaignOptimizationRecommendationsAPIRequest"
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/AdGroupThemeBasedBidRecommendationRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/AsinsThemeBasedBidRecommendationRequest"
+                  }
+                ],
+                "discriminator": {
+                  "mapping": {
+                    "BIDS_FOR_EXISTING_AD_GROUP": "#/components/schemas/AdGroupThemeBasedBidRecommendationRequest",
+                    "BIDS_FOR_NEW_AD_GROUP": "#/components/schemas/AsinsThemeBasedBidRecommendationRequest"
+                  },
+                  "propertyName": "recommendationType"
+                }
               }
             }
-          },
-          "required": true
+          }
         },
-        "operationId": "GetOptimizationRuleEligibility",
+        "description": "Gets theme-based bid recommendations for new or existing ad groups.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "operationId": "GetThemeBasedBidRecommendationForAdGroup_v1",
         "responses": {
           "200": {
             "description": "Successful Operation.",
             "content": {
-              "application/vnd.optimizationrules.v1+json": {
+              "application/vnd.spthemebasedbidrecommendation.v3+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SPCampaignOptimizationRecommendationAPIResponse"
+                  "$ref": "#/components/schemas/ThemeBasedBidRecommendationResponse"
                 }
               }
             }
@@ -182,63 +49,52 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                  "$ref": "#/components/schemas/BidRecommendationError"
                 }
               }
             }
           },
           "401": {
-            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "description": "Unauthorized. Request failed because user is not authenticated or is not allowed to invoke the operation.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                  "$ref": "#/components/schemas/BidRecommendationError"
                 }
               }
             }
           },
           "422": {
-            "description": "Unprocessable Entity. The server understood the request, but was unable to process the instruction.",
+            "description": "Unprocessable entity. Failed due to invalid parameters.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                  "$ref": "#/components/schemas/BidRecommendationError"
                 }
               }
             }
           },
           "429": {
-            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "description": "Too Many Requests. Request was rate-limited. Retry later.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                  "$ref": "#/components/schemas/BidRecommendationError"
                 }
               }
             }
           },
           "500": {
-            "description": "Internal Server Error.",
+            "description": "Internal Server Error. Something went wrong on the server.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                  "$ref": "#/components/schemas/BidRecommendationError"
                 }
               }
             }
           }
         },
-        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
         "parameters": [
           {
             "schema": {
@@ -246,7 +102,7 @@
             },
             "in": "header",
             "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
             "required": true
           },
           {
@@ -255,12 +111,12 @@
             },
             "in": "header",
             "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
             "required": true
           }
         ],
         "tags": [
-          "Campaign Optimization Rules"
+          "ThemeBasedBidRecommendation"
         ]
       }
     },
@@ -446,459 +302,6 @@
         ]
       }
     },
-    "/sp/budgetRules": {
-      "post": {
-        "summary": "Creates one or more budget rules.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateSPBudgetRulesRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "operationId": "CreateBudgetRulesForSPCampaigns",
-        "responses": {
-          "207": {
-            "description": "Multi-status. An object containing a list of budget rule response objects reflecting the same order as the input.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateBudgetRulesResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests. The request was rate-limited. Retry later.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          }
-        },
-        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\"]",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          }
-        ],
-        "tags": [
-          "BudgetRules"
-        ]
-      },
-      "get": {
-        "summary": "Get all budget rules created by an advertiser",
-        "operationId": "GetSPBudgetRulesForAdvertiser",
-        "responses": {
-          "200": {
-            "description": "Successful operation.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetSPBudgetRulesForAdvertiserResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests. The request was rate-limited. Retry later.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "nextToken",
-            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results."
-          },
-          {
-            "schema": {
-              "type": "number"
-            },
-            "in": "query",
-            "name": "pageSize",
-            "description": "Sets a limit on the number of results returned. Maximum limit of `pageSize` is 30.",
-            "required": true
-          }
-        ],
-        "tags": [
-          "BudgetRules"
-        ]
-      },
-      "put": {
-        "summary": "Updates one or more budget rules.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateSPBudgetRulesRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "operationId": "UpdateBudgetRulesForSPCampaigns",
-        "responses": {
-          "207": {
-            "description": "Multi-status. An object containing a list of budget rule response objects reflecting the same order as the input.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UpdateBudgetRulesResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests. The request was rate-limited. Retry later.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          }
-        },
-        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\"]",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          }
-        ],
-        "tags": [
-          "BudgetRules"
-        ]
-      }
-    },
-    "/sp/targets/categories/recommendations": {
-      "post": {
-        "summary": "Returns a list of category recommendations for the input list of ASINs.",
-        "requestBody": {
-          "content": {
-            "application/vnd.spproducttargeting.v3+json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetCategoryRecommendationsForAsinsRequest"
-              }
-            }
-          }
-        },
-        "operationId": "getCategoryRecommendationsForASINs",
-        "description": "Returns a list of category recommendations for the input list of ASINs. Use this API to discover relevant categories to target. To find ASINs, either use the Product Metadata API or browse the Amazon Retail Website. <br> <ul><li>Response can be requested in different versions with the help of accept header. Please review the response mediaTypes for more information.</li><ul>\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/vnd.spproducttargetingresponse.v3+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CategoryRecommendations"
-                }
-              },
-              "application/vnd.spproducttargetingresponse.v4+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CategoryRecommendationsWithAsinCounts"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BadRequestException"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Request failed because user is not authenticated.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedException"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity - Failed due to invalid parameters.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnprocessableEntityException"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests - Request was rate-limited. Retry later.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ThrottlingException"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error - Something went wrong on the server. Retry\nlater and report an error if unresolved.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalServerException"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Prefer",
-            "description": "Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.",
-            "required": false
-          }
-        ],
-        "tags": [
-          "Product Targeting"
-        ]
-      }
-    },
     "/v2/sp/productAds": {
       "get": {
         "operationId": "listProductAdsV2",
@@ -951,580 +354,6 @@
         ],
         "tags": [
           "Product ads"
-        ]
-      }
-    },
-    "/sp/budgetRules/{budgetRuleId}": {
-      "get": {
-        "summary": "Gets a budget rule specified by identifier.",
-        "operationId": "GetBudgetRuleByRuleIdForSPCampaigns",
-        "responses": {
-          "200": {
-            "description": "Successful operation.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetSPBudgetRuleResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests. The request was rate-limited. Retry later.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRuleError"
-                }
-              }
-            }
-          }
-        },
-        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "name": "budgetRuleId",
-            "description": "The budget rule identifier.",
-            "required": true
-          }
-        ],
-        "tags": [
-          "BudgetRules"
-        ]
-      }
-    },
-    "/sp/rules/campaignOptimization/{campaignOptimizationId}": {
-      "get": {
-        "summary": "Gets a campaign optimization rule specified by identifier.",
-        "operationId": "GetCampaignOptimizationRule",
-        "responses": {
-          "200": {
-            "description": "Successful operation.",
-            "content": {
-              "application/vnd.optimizationrules.v1+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetSPCampaignOptimizationRuleResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests. The request was rate-limited. Retry later.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          }
-        },
-        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "name": "campaignOptimizationId",
-            "description": "The sp campaign optimization rule identifier.",
-            "required": true
-          }
-        ],
-        "tags": [
-          "Campaign Optimization Rules"
-        ]
-      },
-      "delete": {
-        "summary": "Deletes a campaign optimization rule specified by identifier.",
-        "operationId": "DeleteCampaignOptimizationRule",
-        "responses": {
-          "200": {
-            "description": "Successful operation.",
-            "content": {
-              "application/vnd.optimizationrules.v1+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DeleteSPCampaignOptimizationRuleResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests. The request was rate-limited. Retry later.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
-                }
-              }
-            }
-          }
-        },
-        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\"]",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "path",
-            "name": "campaignOptimizationId",
-            "description": "The sp campaign optimization rule identifier.",
-            "required": true
-          }
-        ],
-        "tags": [
-          "Campaign Optimization Rules"
-        ]
-      }
-    },
-    "/sp/negativeTargets/brands/recommendations": {
-      "get": {
-        "summary": "Returns brands recommended for negative targeting.",
-        "operationId": "getNegativeBrands",
-        "description": "Returns brands recommended for negative targeting. Only available for Sellers and Vendors. These recommendations include your own brands because targeting your own brands usually results in lower performance than targeting competitors' brands.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
-        "responses": {
-          "200": {
-            "description": "success",
-            "content": {
-              "application/vnd.spproducttargetingresponse.v3+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Brands"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - The input fails to satisfy the constraints of the API.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BadRequestException"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Request failed because user is not authenticated.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UnauthorizedException"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Access Denied - Request failed because the user is not allowed to invoke the operation.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AccessDeniedException"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests - Request was rate-limited. Retry later.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ThrottlingException"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error - Something went wrong on the server. Retry\nlater and report an error if unresolved.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalServerException"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Prefer",
-            "description": "Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.",
-            "required": false
-          }
-        ],
-        "tags": [
-          "Product Targeting"
-        ]
-      }
-    },
-    "/sp/campaigns/budgetRecommendations": {
-      "post": {
-        "summary": "Get recommended daily budget and estimated missed opportunities for campaigns.",
-        "requestBody": {
-          "content": {
-            "application/vnd.budgetrecommendation.v3+json": {
-              "schema": {
-                "$ref": "#/components/schemas/BudgetRecommendationRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "description": "Given a list of campaigns as input, this API provides the following metrics -  <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign's chances of running out of budget. <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. <br> <b>3. Estimated missed impressions, clicks and sales </b> - for all campaigns. These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopt the recommended budget. These are estimates based on previous website traffic and campaign's historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions. Note: the API only supports NA region currently and when you send the requst, please make sure the campaign belongs to the corresponding marketplace.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
-        "operationId": "getBudgetRecommendations",
-        "responses": {
-          "200": {
-            "description": "Successful Operation.",
-            "content": {
-              "application/vnd.budgetrecommendation.v3+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BudgetRecommendationResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request.",
-            "content": {
-              "application/vnd.budgetrecommendation.v3+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SPTORBudgetRecommendationError"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
-            "content": {
-              "application/vnd.budgetrecommendation.v3+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SPTORBudgetRecommendationError"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden - access to the requested resource is forbidden",
-            "content": {
-              "application/vnd.budgetrecommendation.v3+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SPTORBudgetRecommendationError"
-                }
-              }
-            }
-          },
-          "415": {
-            "description": "Unsupported Media Type - the payload is in a format not supported by this method.",
-            "content": {
-              "application/vnd.budgetrecommendation.v3+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SPTORBudgetRecommendationError"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Unprocessable Entity - Failed due to invalid parameters.",
-            "content": {
-              "application/vnd.budgetrecommendation.v3+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SPTORBudgetRecommendationError"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests - request was rate-limited. Retry later.",
-            "content": {
-              "application/vnd.budgetrecommendation.v3+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SPTORBudgetRecommendationError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server DBCError - something went wrong on the server. Retry later and report a DBCError if unresolved.",
-            "content": {
-              "application/vnd.budgetrecommendation.v3+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SPTORBudgetRecommendationError"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
-            "required": true
-          }
-        ],
-        "tags": [
-          "Budget recommendations and missed opportunities"
         ]
       }
     },
@@ -1690,61 +519,6 @@
         ],
         "tags": [
           "Product Targeting"
-        ]
-      }
-    },
-    "/v2/sp/adGroups": {
-      "get": {
-        "operationId": "listAdGroupsV2",
-        "description": "Public api for listing sponsored products for ad groups\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
-        "responses": {
-          "200": {
-            "$ref": "#/components/responses/v2SPListAdGroupResponse"
-          },
-          "400": {
-            "$ref": "#/components/responses/SPBadRequestError"
-          },
-          "401": {
-            "$ref": "#/components/responses/SPUnauthorizedError"
-          },
-          "404": {
-            "$ref": "#/components/responses/SPNotFoundError"
-          },
-          "429": {
-            "$ref": "#/components/responses/SPTooManyRequestError"
-          },
-          "500": {
-            "$ref": "#/components/responses/SPInternalServerError"
-          }
-        },
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/SPClientHeader"
-          },
-          {
-            "$ref": "#/components/parameters/SPProfileHeader"
-          },
-          {
-            "$ref": "#/components/parameters/SPStartIndexQueryString"
-          },
-          {
-            "$ref": "#/components/parameters/SPCountQueryString"
-          },
-          {
-            "$ref": "#/components/parameters/SPCampaignTypeQueryString"
-          },
-          {
-            "$ref": "#/components/parameters/SPStateFilterQueryString"
-          },
-          {
-            "$ref": "#/components/parameters/SPNameQueryString"
-          },
-          {
-            "$ref": "#/components/parameters/SPCampaignIdFilterQueryString"
-          }
-        ],
-        "tags": [
-          "Ad groups"
         ]
       }
     },
@@ -2546,97 +1320,6 @@
         ]
       }
     },
-    "/sp/campaigns/budgetRules/recommendations": {
-      "post": {
-        "summary": "Gets a list of special events with suggested date range and suggested budget increase for a campaign specified by identifier.",
-        "requestBody": {
-          "content": {
-            "application/vnd.spbudgetrulesrecommendation.v3+json": {
-              "schema": {
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/SPBudgetRulesRecommendationEventRequest"
-                  }
-                ],
-                "discriminator": {
-                  "mapping": {
-                    "EVENTS_FOR_EXISTING_CAMPAIGN": "#/components/schemas/SPBudgetRulesRecommendationEventRequest"
-                  },
-                  "propertyName": "recommendationType"
-                }
-              }
-            }
-          }
-        },
-        "operationId": "SPGetBudgetRulesRecommendation",
-        "description": "A rule enables an automatic budget increase for a specified date range or for a special event. The response also includes a suggested budget increase for each special event.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
-        "responses": {
-          "200": {
-            "description": "Successful Operation.",
-            "content": {
-              "application/vnd.spbudgetrulesrecommendation.v3+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SPBudgetRulesRecommendationEventResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request.",
-            "content": {
-              "application/vnd.spbudgetrulesrecommendation.v3+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SPBudgetRulesRecommendationError"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests. Request was rate-limited. Retry later.",
-            "content": {
-              "application/vnd.spbudgetrulesrecommendation.v3+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SPBudgetRulesRecommendationError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error. Something went wrong on the server.",
-            "content": {
-              "application/vnd.spbudgetrulesrecommendation.v3+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SPBudgetRulesRecommendationError"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
-            "required": true
-          }
-        ],
-        "tags": [
-          "BudgetRulesRecommendation"
-        ]
-      }
-    },
     "/sp/targets/products/recommendations": {
       "post": {
         "summary": "Suggested target ASINs for your advertised product",
@@ -3063,6 +1746,1438 @@
         ]
       }
     },
+    "/sp/campaigns/{campaignId}/budgetRules/budgetHistory": {
+      "get": {
+        "summary": "Gets the budget history for a campaign specified by identifier.",
+        "description": "The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "operationId": "getRuleBasedBudgetHistoryForSPCampaigns",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPBudgetHistory"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "format": "int64",
+              "type": "number"
+            },
+            "in": "path",
+            "name": "campaignId",
+            "description": "The campaign identifier.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "nextToken",
+            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results."
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "pageSize",
+            "description": "Sets a limit on the number of results returned. Maximum limit of `pageSize` is 30.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "startDate",
+            "description": "The start date of the budget history in YYYYMMDD format.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "endDate",
+            "description": "The end date of the budget history in YYYYMMDD format.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "BudgetRules"
+        ]
+      }
+    },
+    "/sp/rules/campaignOptimization/eligibility": {
+      "post": {
+        "summary": "Gets a campaign optimization rule recommendation for SP campaigns.",
+        "requestBody": {
+          "content": {
+            "application/vnd.optimizationrules.v1+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SPCampaignOptimizationRecommendationsAPIRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "operationId": "GetOptimizationRuleEligibility",
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "content": {
+              "application/vnd.optimizationrules.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPCampaignOptimizationRecommendationAPIResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Campaign Optimization Rules"
+        ]
+      }
+    },
+    "/sp/budgetRules": {
+      "post": {
+        "summary": "Creates one or more budget rules.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSPBudgetRulesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "operationId": "CreateBudgetRulesForSPCampaigns",
+        "responses": {
+          "207": {
+            "description": "Multi-status. An object containing a list of budget rule response objects reflecting the same order as the input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBudgetRulesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\"]",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "BudgetRules"
+        ]
+      },
+      "get": {
+        "summary": "Get all budget rules created by an advertiser",
+        "operationId": "GetSPBudgetRulesForAdvertiser",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSPBudgetRulesForAdvertiserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "nextToken",
+            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results."
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "pageSize",
+            "description": "Sets a limit on the number of results returned. Maximum limit of `pageSize` is 30.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "BudgetRules"
+        ]
+      },
+      "put": {
+        "summary": "Updates one or more budget rules.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSPBudgetRulesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "operationId": "UpdateBudgetRulesForSPCampaigns",
+        "responses": {
+          "207": {
+            "description": "Multi-status. An object containing a list of budget rule response objects reflecting the same order as the input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateBudgetRulesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\"]",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "BudgetRules"
+        ]
+      }
+    },
+    "/sp/targets/categories/recommendations": {
+      "post": {
+        "summary": "Returns a list of category recommendations for the input list of ASINs.",
+        "requestBody": {
+          "content": {
+            "application/vnd.spproducttargeting.v3+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetCategoryRecommendationsForAsinsRequest"
+              }
+            }
+          }
+        },
+        "operationId": "getCategoryRecommendationsForASINs",
+        "description": "Returns a list of category recommendations for the input list of ASINs. Use this API to discover relevant categories to target. To find ASINs, either use the Product Metadata API or browse the Amazon Retail Website. <br> <ul><li>Response can be requested in different versions with the help of accept header. Please review the response mediaTypes for more information.</li><ul>\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/vnd.spproducttargetingresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryRecommendations"
+                }
+              },
+              "application/vnd.spproducttargetingresponse.v4+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryRecommendationsWithAsinCounts"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Request failed because user is not authenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedException"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity - Failed due to invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnprocessableEntityException"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThrottlingException"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Something went wrong on the server. Retry\nlater and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerException"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Prefer",
+            "description": "Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.",
+            "required": false
+          }
+        ],
+        "tags": [
+          "Product Targeting"
+        ]
+      }
+    },
+    "/sp/budgetRules/{budgetRuleId}": {
+      "get": {
+        "summary": "Gets a budget rule specified by identifier.",
+        "operationId": "GetBudgetRuleByRuleIdForSPCampaigns",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSPBudgetRuleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "budgetRuleId",
+            "description": "The budget rule identifier.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "BudgetRules"
+        ]
+      }
+    },
+    "/sp/rules/campaignOptimization/{campaignOptimizationId}": {
+      "get": {
+        "summary": "Gets a campaign optimization rule specified by identifier.",
+        "operationId": "GetCampaignOptimizationRule",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/vnd.optimizationrules.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSPCampaignOptimizationRuleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "campaignOptimizationId",
+            "description": "The sp campaign optimization rule identifier.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Campaign Optimization Rules"
+        ]
+      },
+      "delete": {
+        "summary": "Deletes a campaign optimization rule specified by identifier.",
+        "operationId": "DeleteCampaignOptimizationRule",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/vnd.optimizationrules.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteSPCampaignOptimizationRuleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CampaignOptimizationRuleError"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\"]",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "campaignOptimizationId",
+            "description": "The sp campaign optimization rule identifier.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Campaign Optimization Rules"
+        ]
+      }
+    },
+    "/sp/negativeTargets/brands/recommendations": {
+      "get": {
+        "summary": "Returns brands recommended for negative targeting.",
+        "operationId": "getNegativeBrands",
+        "description": "Returns brands recommended for negative targeting. Only available for Sellers and Vendors. These recommendations include your own brands because targeting your own brands usually results in lower performance than targeting competitors' brands.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/vnd.spproducttargetingresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Brands"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - The input fails to satisfy the constraints of the API.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestException"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Request failed because user is not authenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedException"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access Denied - Request failed because the user is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccessDeniedException"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ThrottlingException"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Something went wrong on the server. Retry\nlater and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerException"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Prefer",
+            "description": "Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.",
+            "required": false
+          }
+        ],
+        "tags": [
+          "Product Targeting"
+        ]
+      }
+    },
+    "/sp/campaigns/budgetRecommendations": {
+      "post": {
+        "summary": "Get recommended daily budget and estimated missed opportunities for campaigns.",
+        "requestBody": {
+          "content": {
+            "application/vnd.budgetrecommendation.v3+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BudgetRecommendationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "Given a list of campaigns as input, this API provides the following metrics -  <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign's chances of running out of budget. <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. <br> <b>3. Estimated missed impressions, clicks and sales </b> - for all campaigns. These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopt the recommended budget. These are estimates based on previous website traffic and campaign's historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions. Note: the API only supports NA region currently and when you send the requst, please make sure the campaign belongs to the corresponding marketplace.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "operationId": "getBudgetRecommendations",
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "content": {
+              "application/vnd.budgetrecommendation.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRecommendationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/vnd.budgetrecommendation.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPTORBudgetRecommendationError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/vnd.budgetrecommendation.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPTORBudgetRecommendationError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - access to the requested resource is forbidden",
+            "content": {
+              "application/vnd.budgetrecommendation.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPTORBudgetRecommendationError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type - the payload is in a format not supported by this method.",
+            "content": {
+              "application/vnd.budgetrecommendation.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPTORBudgetRecommendationError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Failed due to invalid parameters.",
+            "content": {
+              "application/vnd.budgetrecommendation.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPTORBudgetRecommendationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - request was rate-limited. Retry later.",
+            "content": {
+              "application/vnd.budgetrecommendation.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPTORBudgetRecommendationError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server DBCError - something went wrong on the server. Retry later and report a DBCError if unresolved.",
+            "content": {
+              "application/vnd.budgetrecommendation.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPTORBudgetRecommendationError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Budget recommendations and missed opportunities"
+        ]
+      }
+    },
+    "/v2/sp/adGroups": {
+      "get": {
+        "operationId": "listAdGroupsV2",
+        "description": "Public api for listing sponsored products for ad groups\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/v2SPListAdGroupResponse"
+          },
+          "400": {
+            "$ref": "#/components/responses/SPBadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/SPUnauthorizedError"
+          },
+          "404": {
+            "$ref": "#/components/responses/SPNotFoundError"
+          },
+          "429": {
+            "$ref": "#/components/responses/SPTooManyRequestError"
+          },
+          "500": {
+            "$ref": "#/components/responses/SPInternalServerError"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SPClientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/SPProfileHeader"
+          },
+          {
+            "$ref": "#/components/parameters/SPStartIndexQueryString"
+          },
+          {
+            "$ref": "#/components/parameters/SPCountQueryString"
+          },
+          {
+            "$ref": "#/components/parameters/SPCampaignTypeQueryString"
+          },
+          {
+            "$ref": "#/components/parameters/SPStateFilterQueryString"
+          },
+          {
+            "$ref": "#/components/parameters/SPNameQueryString"
+          },
+          {
+            "$ref": "#/components/parameters/SPCampaignIdFilterQueryString"
+          }
+        ],
+        "tags": [
+          "Ad groups"
+        ]
+      }
+    },
+    "/sp/campaigns/budgetRules/recommendations": {
+      "post": {
+        "summary": "Gets a list of special events with suggested date range and suggested budget increase for a campaign specified by identifier.",
+        "requestBody": {
+          "content": {
+            "application/vnd.spbudgetrulesrecommendation.v3+json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/SPBudgetRulesRecommendationEventRequest"
+                  }
+                ],
+                "discriminator": {
+                  "mapping": {
+                    "EVENTS_FOR_EXISTING_CAMPAIGN": "#/components/schemas/SPBudgetRulesRecommendationEventRequest"
+                  },
+                  "propertyName": "recommendationType"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "SPGetBudgetRulesRecommendation",
+        "description": "A rule enables an automatic budget increase for a specified date range or for a special event. The response also includes a suggested budget increase for each special event.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "content": {
+              "application/vnd.spbudgetrulesrecommendation.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPBudgetRulesRecommendationEventResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/vnd.spbudgetrulesrecommendation.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPBudgetRulesRecommendationError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. Request was rate-limited. Retry later.",
+            "content": {
+              "application/vnd.spbudgetrulesrecommendation.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPBudgetRulesRecommendationError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server.",
+            "content": {
+              "application/vnd.spbudgetrulesrecommendation.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SPBudgetRulesRecommendationError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "BudgetRulesRecommendation"
+        ]
+      }
+    },
     "/v2/sp/campaigns/extended": {
       "get": {
         "operationId": "listCampaignsExV2",
@@ -3274,6 +3389,18 @@
           "nextToken": {
             "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.",
             "type": "string"
+          }
+        }
+      },
+      "RangeMetricValue": {
+        "description": "Describes lower and upper bounds of the range.",
+        "type": "object",
+        "properties": {
+          "lower": {
+            "type": "integer"
+          },
+          "upper": {
+            "type": "integer"
           }
         }
       },
@@ -3492,6 +3619,18 @@
           "keywordText": {
             "description": "Restricts results to keywords that match the specified text exactly.",
             "type": "string"
+          }
+        }
+      },
+      "ImpactMetric": {
+        "description": "The impacts are given in the same order of suggested bids.",
+        "type": "object",
+        "properties": {
+          "values": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RangeMetricValue"
+            }
           }
         }
       },
@@ -4462,6 +4601,34 @@
           }
         }
       },
+      "TargetingExpression": {
+        "description": "The targeting expression. The `type` property specifies the targeting option. Use `CLOSE_MATCH` to match your auto targeting ads closely to the specified value. Use `LOOSE_MATCH` to match your auto targeting ads broadly to the specified value. Use `SUBSTITUTES` to display your auto targeting ads along with substitutable products. Use `COMPLEMENTS` to display your auto targeting ads along with affiliated products. Use `KEYWORD_BROAD_MATCH` to broadly match your keyword targeting ads with search queries. Use `KEYWORD_EXACT_MATCH` to exactly match your keyword targeting ads with search queries. Use `KEYWORD_PHRASE_MATCH` to match your keyword targeting ads with search phrases.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "CLOSE_MATCH",
+              "LOOSE_MATCH",
+              "SUBSTITUTES",
+              "COMPLEMENTS",
+              "KEYWORD_BROAD_MATCH",
+              "KEYWORD_EXACT_MATCH",
+              "KEYWORD_PHRASE_MATCH"
+            ]
+          },
+          "value": {
+            "description": "The targeting expression value.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "example": {
+          "type": "CLOSE_MATCH"
+        }
+      },
       "CreateSPCampaignOptimizationRulesRequest": {
         "type": "object",
         "properties": {
@@ -4685,6 +4852,108 @@
           }
         }
       },
+      "ThemeBasedBidRecommendation": {
+        "type": "object",
+        "properties": {
+          "theme": {
+            "description": "The bid recommendation theme.",
+            "type": "string",
+            "enum": [
+              "CONVERSION_OPPORTUNITIES"
+            ]
+          },
+          "bidRecommendationsForTargetingExpressions": {
+            "description": "The bid recommendations for targeting expressions listed in the request.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BidRecommendationPerTargetingExpression"
+            }
+          },
+          "impactMetrics": {
+            "$ref": "#/components/schemas/ImpactMetrics"
+          }
+        },
+        "required": [
+          "theme",
+          "bidRecommendationsForTargetingExpressions"
+        ],
+        "example": {
+          "theme": "CONVERSION_OPPORTUNITIES",
+          "bidRecommendationsForTargetingExpressions": [
+            {
+              "suggestedBid": {
+                "bidValues": [
+                  {
+                    "suggestedBid": "1"
+                  },
+                  {
+                    "suggestedBid": "1.5"
+                  },
+                  {
+                    "suggestedBid": "2"
+                  }
+                ],
+                "targetingExpression": {
+                  "type": "CLOSE_MATCH"
+                }
+              },
+              "targetingExpression": {
+                "type": "CLOSE_MATCH"
+              }
+            },
+            {
+              "bidValues": [
+                {
+                  "suggestedBid": "1.1"
+                },
+                {
+                  "suggestedBid": "1.4"
+                },
+                {
+                  "suggestedBid": "2.2"
+                }
+              ],
+              "targetingExpression": {
+                "type": "LOOSE_MATCH"
+              }
+            }
+          ],
+          "impactMetrics": {
+            "clicks": {
+              "values": [
+                {
+                  "lower": "30",
+                  "upper": "70"
+                },
+                {
+                  "lower": "80",
+                  "upper": "90"
+                },
+                {
+                  "lower": "95",
+                  "upper": "120"
+                }
+              ]
+            },
+            "orders": {
+              "values": [
+                {
+                  "lower": "3",
+                  "upper": "6"
+                },
+                {
+                  "lower": "7",
+                  "upper": "10"
+                },
+                {
+                  "lower": "11",
+                  "upper": "15"
+                }
+              ]
+            }
+          }
+        }
+      },
       "CategoryItem": {
         "type": "object",
         "properties": {
@@ -4810,6 +5079,16 @@
           }
         }
       },
+      "BiddingStrategy": {
+        "description": "The bidding strategy selected for the campaign. Use `LEGACY_FOR_SALES` to lower your bid in real time when your ad may be less likely to convert to a sale. Use `AUTO_FOR_SALES` to increase your bid in real time when your ad may be more likely to convert to a sale or lower your bid when less likely to convert to a sale. Use `MANUAL` to use your exact bid along with any manual adjustments.",
+        "type": "string",
+        "enum": [
+          "LEGACY_FOR_SALES",
+          "AUTO_FOR_SALES",
+          "MANUAL"
+        ],
+        "example": "AUTO_FOR_SALES"
+      },
       "SPTORBudgetRecommendationError": {
         "type": "object",
         "properties": {
@@ -4855,6 +5134,28 @@
             "type": "number"
           }
         }
+      },
+      "TargetingExpressionList": {
+        "maxItems": 100,
+        "description": "The list of targeting expressions. Maximum of 100 per request, use pagination for more if needed.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/TargetingExpression"
+        },
+        "example": [
+          {
+            "type": "CLOSE_MATCH"
+          },
+          {
+            "type": "LOOSE_MATCH"
+          },
+          {
+            "type": "SUBSTITUTES"
+          },
+          {
+            "type": "COMPLEMENTS"
+          }
+        ]
       },
       "SPBudgetRulesRecommendationError": {
         "description": "The Error Response Object.",
@@ -5106,6 +5407,24 @@
           "PERFORMANCE"
         ]
       },
+      "BidValue": {
+        "description": "Bid value of the bid recommendations",
+        "type": "object",
+        "properties": {
+          "suggestedBid": {
+            "format": "double",
+            "description": "The suggested bid.",
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "suggestedBid"
+        ],
+        "example": {
+          "suggestedBid": "1.2"
+        }
+      },
       "UnprocessableEntityException": {
         "description": "Returns information about UnprocessableEntityException.",
         "type": "object",
@@ -5336,6 +5655,54 @@
           }
         }
       },
+      "AdGroupThemeBasedBidRecommendationRequest": {
+        "type": "object",
+        "properties": {
+          "targetingExpressions": {
+            "$ref": "#/components/schemas/TargetingExpressionList"
+          },
+          "campaignId": {
+            "description": "The campaign identifier.",
+            "type": "string"
+          },
+          "recommendationType": {
+            "description": "The bid recommendation type.",
+            "type": "string",
+            "enum": [
+              "BIDS_FOR_EXISTING_AD_GROUP"
+            ]
+          },
+          "adGroupId": {
+            "description": "The ad group identifier.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "recommendationType",
+          "targetingExpressions",
+          "campaignId",
+          "adGroupId"
+        ],
+        "example": {
+          "targetingExpressions": [
+            {
+              "type": "CLOSE_MATCH"
+            },
+            {
+              "type": "LOOSE_MATCH"
+            },
+            {
+              "type": "SUBSTITUTES"
+            },
+            {
+              "type": "COMPLEMENTS"
+            }
+          ],
+          "campaignId": "ABCD1234",
+          "recommendationType": "BIDS_FOR_EXISTING_AD_GROUP",
+          "adGroupId": "EFGH5678"
+        }
+      },
       "AssociatedBudgetRuleResponse": {
         "type": "object",
         "properties": {
@@ -5434,6 +5801,27 @@
               }
             }
           }
+        }
+      },
+      "BidRecommendationError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "A machine-readable error code.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "details"
+        ],
+        "example": {
+          "code": "422",
+          "details": "The ad group ID was not valid."
         }
       },
       "ComparisonOperator": {
@@ -5541,6 +5929,89 @@
               "manual"
             ]
           }
+        }
+      },
+      "AsinsThemeBasedBidRecommendationRequest": {
+        "type": "object",
+        "properties": {
+          "asins": {
+            "maxItems": 50,
+            "description": "The list of ad ASINs in the ad group.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "targetingExpressions": {
+            "$ref": "#/components/schemas/TargetingExpressionList"
+          },
+          "bidding": {
+            "description": "Bidding control configuration for the campaign.",
+            "type": "object",
+            "properties": {
+              "adjustments": {
+                "maxItems": 2,
+                "description": "Placement adjustment configuration for the campaign.",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PlacementAdjustment"
+                }
+              },
+              "strategy": {
+                "$ref": "#/components/schemas/BiddingStrategy"
+              }
+            },
+            "required": [
+              "strategy"
+            ]
+          },
+          "recommendationType": {
+            "description": "The bid recommendation type.",
+            "type": "string",
+            "enum": [
+              "BIDS_FOR_NEW_AD_GROUP"
+            ]
+          }
+        },
+        "required": [
+          "recommendationType",
+          "asins",
+          "targetingExpressions",
+          "bidding"
+        ],
+        "example": {
+          "asins": [
+            "asin1",
+            "asin2"
+          ],
+          "targetingExpressions": [
+            {
+              "type": "CLOSE_MATCH"
+            },
+            {
+              "type": "LOOSE_MATCH"
+            },
+            {
+              "type": "SUBSTITUTES"
+            },
+            {
+              "type": "COMPLEMENTS"
+            }
+          ],
+          "bidding": {
+            "adjustments": [
+              {
+                "predicate": "PLACEMENT_TOP",
+                "percentage": "100"
+              },
+              {
+                "predicate": "PLACEMENT_PRODUCT_PAGE",
+                "percentage": "50"
+              }
+            ],
+            "strategy": "AUTO_FOR_SALES"
+          },
+          "recommendationType": "BIDS_FOR_NEW_AD_GROUP"
         }
       },
       "KeywordTarget": {
@@ -5679,6 +6150,97 @@
           }
         }
       },
+      "ThemeBasedBidRecommendationResponse": {
+        "description": "A list of bid recommendation themes and associated bid recommendations.",
+        "type": "object",
+        "properties": {
+          "bidRecommendations": {
+            "maxItems": 2,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ThemeBasedBidRecommendation"
+            }
+          }
+        },
+        "required": [
+          "bidRecommendations"
+        ],
+        "example": {
+          "bidRecommendations": [
+            {
+              "theme": "CONVERSION_OPPORTUNITIES",
+              "bidRecommendationsForTargetingExpressions": [
+                {
+                  "bidValues": [
+                    {
+                      "suggestedBid": "1"
+                    },
+                    {
+                      "suggestedBid": "1.5"
+                    },
+                    {
+                      "suggestedBid": "2"
+                    }
+                  ],
+                  "targetingExpression": {
+                    "type": "CLOSE_MATCH"
+                  }
+                },
+                {
+                  "bidValues": [
+                    {
+                      "suggestedBid": "1.1"
+                    },
+                    {
+                      "suggestedBid": "1.4"
+                    },
+                    {
+                      "suggestedBid": "2.2"
+                    }
+                  ],
+                  "targetingExpression": {
+                    "type": "LOOSE_MATCH"
+                  }
+                }
+              ],
+              "impactMetrics": {
+                "clicks": {
+                  "values": [
+                    {
+                      "lower": "30",
+                      "upper": "70"
+                    },
+                    {
+                      "lower": "80",
+                      "upper": "90"
+                    },
+                    {
+                      "lower": "95",
+                      "upper": "120"
+                    }
+                  ]
+                },
+                "orders": {
+                  "values": [
+                    {
+                      "lower": "3",
+                      "upper": "6"
+                    },
+                    {
+                      "lower": "7",
+                      "upper": "10"
+                    },
+                    {
+                      "lower": "11",
+                      "upper": "15"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
       "CreateSBBudgetRulesRequest": {
         "type": "object",
         "properties": {
@@ -5792,6 +6354,41 @@
         "description": "The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. This table details the maximum allowable bid (in local currency) for keywords by marketplace:\n| Marketplace | Currency | Min / Max bid for SP |\n| --- | --- | --- |\n| US | USD | 0.02 / 1000 |\n| CA | CAD | 0.02 / 1000 |\n| UK | GBP | 0.02 / 1000 |\n| DE | EUR | 0.02 / 1000 |\n| FR | EUR | 0.02 / 1000 |\n| ES | EUR | 0.02 / 1000 |\n| IT | EUR | 0.02 / 1000 |\n| JP | JPY | 2.0 / 100000 |\n| AU | AUD | 0.10 / 1410 |\n| AE | AED | 0.24 / 184.0 |",
         "type": "number",
         "minimum": 0.02
+      },
+      "BidRecommendationPerTargetingExpression": {
+        "type": "object",
+        "properties": {
+          "bidValues": {
+            "maxItems": 3,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BidValue"
+            }
+          },
+          "targetingExpression": {
+            "$ref": "#/components/schemas/TargetingExpression"
+          }
+        },
+        "required": [
+          "targetingExpression",
+          "bidValues"
+        ],
+        "example": {
+          "bidValues": [
+            {
+              "suggestedBid": "1"
+            },
+            {
+              "suggestedBid": "1.5"
+            },
+            {
+              "suggestedBid": "2"
+            }
+          ],
+          "targetingExpression": {
+            "type": "CLOSE_MATCH"
+          }
+        }
       },
       "GetSPCampaignOptimizationRuleResponse": {
         "type": "object",
@@ -6041,6 +6638,18 @@
           }
         }
       },
+      "ImpactMetrics": {
+        "description": "The impact metrics are weekly clicks and orders received by similar products. You can look at the increase in clicks and orders to choose the right bid for your targets.",
+        "type": "object",
+        "properties": {
+          "clicks": {
+            "$ref": "#/components/schemas/ImpactMetric"
+          },
+          "orders": {
+            "$ref": "#/components/schemas/ImpactMetric"
+          }
+        }
+      },
       "UpdateSPBudgetRulesRequest": {
         "description": "Request object for updating budget rule for SP campaign",
         "type": "object",
@@ -6053,6 +6662,28 @@
               "$ref": "#/components/schemas/SPBudgetRule"
             }
           }
+        }
+      },
+      "PlacementAdjustment": {
+        "description": "Specifies bid adjustments based on the placement location. Use `PLACEMENT_TOP` for the top of the search page. Use `PLACEMENT_PRODUCT_PAGE` for a product page.",
+        "type": "object",
+        "properties": {
+          "predicate": {
+            "type": "string",
+            "enum": [
+              "PLACEMENT_TOP",
+              "PLACEMENT_PRODUCT_PAGE"
+            ]
+          },
+          "percentage": {
+            "maximum": 900,
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "example": {
+          "predicate": "PLACEMENT_TOP",
+          "percentage": "100"
         }
       },
       "SPBudgetRulesRecommendationEvent": {

@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-import { AdGroupsApi,BudgetRecommendationsAndMissedOpportunitiesApi,BudgetRulesApi,BudgetRulesRecommendationApi,CampaignOptimizationRulesApi,CampaignsApi,GetRankedKeywordsRecommendationsApi,ProductAdsApi,ProductRecommendationServiceApi,ProductTargetingApi } from '../models/sponsored-products-extra';
+import { AdGroupsApi,BudgetRecommendationsAndMissedOpportunitiesApi,BudgetRulesApi,BudgetRulesRecommendationApi,CampaignOptimizationRulesApi,CampaignsApi,GetRankedKeywordsRecommendationsApi,ProductAdsApi,ProductRecommendationServiceApi,ProductTargetingApi,ThemeBasedBidRecommendationApi } from '../models/sponsored-products-extra';
 import { Configuration } from '../models/configuration';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
 import { getAxiosInstance, applyMixins } from '../../helpers';
@@ -22,6 +22,6 @@ export class SponsoredProductsExtraClient extends AdGroupsApi {
 }
 
 
-    export interface SponsoredProductsExtraClient extends AdGroupsApi,BudgetRecommendationsAndMissedOpportunitiesApi,BudgetRulesApi,BudgetRulesRecommendationApi,CampaignOptimizationRulesApi,CampaignsApi,GetRankedKeywordsRecommendationsApi,ProductAdsApi,ProductRecommendationServiceApi,ProductTargetingApi {}
-    applyMixins(SponsoredProductsExtraClient, [AdGroupsApi,BudgetRecommendationsAndMissedOpportunitiesApi,BudgetRulesApi,BudgetRulesRecommendationApi,CampaignOptimizationRulesApi,CampaignsApi,GetRankedKeywordsRecommendationsApi,ProductAdsApi,ProductRecommendationServiceApi,ProductTargetingApi])
+    export interface SponsoredProductsExtraClient extends AdGroupsApi,BudgetRecommendationsAndMissedOpportunitiesApi,BudgetRulesApi,BudgetRulesRecommendationApi,CampaignOptimizationRulesApi,CampaignsApi,GetRankedKeywordsRecommendationsApi,ProductAdsApi,ProductRecommendationServiceApi,ProductTargetingApi,ThemeBasedBidRecommendationApi {}
+    applyMixins(SponsoredProductsExtraClient, [AdGroupsApi,BudgetRecommendationsAndMissedOpportunitiesApi,BudgetRulesApi,BudgetRulesRecommendationApi,CampaignOptimizationRulesApi,CampaignsApi,GetRankedKeywordsRecommendationsApi,ProductAdsApi,ProductRecommendationServiceApi,ProductTargetingApi,ThemeBasedBidRecommendationApi])
     

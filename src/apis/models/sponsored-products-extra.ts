@@ -112,6 +112,46 @@ export enum AdGroupKeywordTargetRankRecommendationRequestLocaleEnum {
 /**
  * 
  * @export
+ * @interface AdGroupThemeBasedBidRecommendationRequest
+ */
+export interface AdGroupThemeBasedBidRecommendationRequest {
+    /**
+     * The list of targeting expressions. Maximum of 100 per request, use pagination for more if needed.
+     * @type {Array<TargetingExpression>}
+     * @memberof AdGroupThemeBasedBidRecommendationRequest
+     */
+    targetingExpressions: Array<TargetingExpression>;
+    /**
+     * The campaign identifier.
+     * @type {string}
+     * @memberof AdGroupThemeBasedBidRecommendationRequest
+     */
+    campaignId: string;
+    /**
+     * The bid recommendation type.
+     * @type {string}
+     * @memberof AdGroupThemeBasedBidRecommendationRequest
+     */
+    recommendationType: AdGroupThemeBasedBidRecommendationRequestRecommendationTypeEnum;
+    /**
+     * The ad group identifier.
+     * @type {string}
+     * @memberof AdGroupThemeBasedBidRecommendationRequest
+     */
+    adGroupId: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AdGroupThemeBasedBidRecommendationRequestRecommendationTypeEnum {
+    BidsForExistingAdGroup = 'BIDS_FOR_EXISTING_AD_GROUP'
+}
+
+/**
+ * 
+ * @export
  * @interface AgeRange
  */
 export interface AgeRange {
@@ -194,6 +234,65 @@ export enum AsinsKeywordTargetRankRecommendationRequestLocaleEnum {
 /**
  * 
  * @export
+ * @interface AsinsThemeBasedBidRecommendationRequest
+ */
+export interface AsinsThemeBasedBidRecommendationRequest {
+    /**
+     * The list of ad ASINs in the ad group.
+     * @type {Array<string>}
+     * @memberof AsinsThemeBasedBidRecommendationRequest
+     */
+    asins: Array<string>;
+    /**
+     * The list of targeting expressions. Maximum of 100 per request, use pagination for more if needed.
+     * @type {Array<TargetingExpression>}
+     * @memberof AsinsThemeBasedBidRecommendationRequest
+     */
+    targetingExpressions: Array<TargetingExpression>;
+    /**
+     * 
+     * @type {AsinsThemeBasedBidRecommendationRequestBidding}
+     * @memberof AsinsThemeBasedBidRecommendationRequest
+     */
+    bidding: AsinsThemeBasedBidRecommendationRequestBidding;
+    /**
+     * The bid recommendation type.
+     * @type {string}
+     * @memberof AsinsThemeBasedBidRecommendationRequest
+     */
+    recommendationType: AsinsThemeBasedBidRecommendationRequestRecommendationTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AsinsThemeBasedBidRecommendationRequestRecommendationTypeEnum {
+    BidsForNewAdGroup = 'BIDS_FOR_NEW_AD_GROUP'
+}
+
+/**
+ * Bidding control configuration for the campaign.
+ * @export
+ * @interface AsinsThemeBasedBidRecommendationRequestBidding
+ */
+export interface AsinsThemeBasedBidRecommendationRequestBidding {
+    /**
+     * Placement adjustment configuration for the campaign.
+     * @type {Array<PlacementAdjustment>}
+     * @memberof AsinsThemeBasedBidRecommendationRequestBidding
+     */
+    adjustments?: Array<PlacementAdjustment>;
+    /**
+     * 
+     * @type {BiddingStrategy}
+     * @memberof AsinsThemeBasedBidRecommendationRequestBidding
+     */
+    strategy: BiddingStrategy;
+}
+/**
+ * 
+ * @export
  * @interface AssociatedBudgetRuleResponse
  */
 export interface AssociatedBudgetRuleResponse {
@@ -261,6 +360,44 @@ export interface BadRequestException {
     details?: string;
 }
 /**
+ * 
+ * @export
+ * @interface BidRecommendationError
+ */
+export interface BidRecommendationError {
+    /**
+     * A machine-readable error code.
+     * @type {string}
+     * @memberof BidRecommendationError
+     */
+    code: string;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof BidRecommendationError
+     */
+    details: string;
+}
+/**
+ * 
+ * @export
+ * @interface BidRecommendationPerTargetingExpression
+ */
+export interface BidRecommendationPerTargetingExpression {
+    /**
+     * 
+     * @type {Array<BidValue>}
+     * @memberof BidRecommendationPerTargetingExpression
+     */
+    bidValues: Array<BidValue>;
+    /**
+     * 
+     * @type {TargetingExpression}
+     * @memberof BidRecommendationPerTargetingExpression
+     */
+    targetingExpression: TargetingExpression;
+}
+/**
  * Suggested bid range
  * @export
  * @interface BidSuggestion
@@ -291,6 +428,31 @@ export interface BidSuggestion {
      */
     rangeEnd?: number;
 }
+/**
+ * Bid value of the bid recommendations
+ * @export
+ * @interface BidValue
+ */
+export interface BidValue {
+    /**
+     * The suggested bid.
+     * @type {number}
+     * @memberof BidValue
+     */
+    suggestedBid: number;
+}
+/**
+ * The bidding strategy selected for the campaign. Use `LEGACY_FOR_SALES` to lower your bid in real time when your ad may be less likely to convert to a sale. Use `AUTO_FOR_SALES` to increase your bid in real time when your ad may be more likely to convert to a sale or lower your bid when less likely to convert to a sale. Use `MANUAL` to use your exact bid along with any manual adjustments.
+ * @export
+ * @enum {string}
+ */
+
+export enum BiddingStrategy {
+    LegacyForSales = 'LEGACY_FOR_SALES',
+    AutoForSales = 'AUTO_FOR_SALES',
+    Manual = 'MANUAL'
+}
+
 /**
  * 
  * @export
@@ -1210,6 +1372,38 @@ export interface GetTargetableAsinCountsRequest {
     priceRange?: PriceRange;
 }
 /**
+ * The impacts are given in the same order of suggested bids.
+ * @export
+ * @interface ImpactMetric
+ */
+export interface ImpactMetric {
+    /**
+     * 
+     * @type {Array<RangeMetricValue>}
+     * @memberof ImpactMetric
+     */
+    values?: Array<RangeMetricValue>;
+}
+/**
+ * The impact metrics are weekly clicks and orders received by similar products. You can look at the increase in clicks and orders to choose the right bid for your targets.
+ * @export
+ * @interface ImpactMetrics
+ */
+export interface ImpactMetrics {
+    /**
+     * 
+     * @type {ImpactMetric}
+     * @memberof ImpactMetrics
+     */
+    clicks?: ImpactMetric;
+    /**
+     * 
+     * @type {ImpactMetric}
+     * @memberof ImpactMetrics
+     */
+    orders?: ImpactMetric;
+}
+/**
  * 
  * @export
  * @interface IntegerRange
@@ -1537,6 +1731,35 @@ export interface PerformanceMetricValue {
     value?: number;
 }
 /**
+ * Specifies bid adjustments based on the placement location. Use `PLACEMENT_TOP` for the top of the search page. Use `PLACEMENT_PRODUCT_PAGE` for a product page.
+ * @export
+ * @interface PlacementAdjustment
+ */
+export interface PlacementAdjustment {
+    /**
+     * 
+     * @type {string}
+     * @memberof PlacementAdjustment
+     */
+    predicate?: PlacementAdjustmentPredicateEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof PlacementAdjustment
+     */
+    percentage?: number;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum PlacementAdjustmentPredicateEnum {
+    Top = 'PLACEMENT_TOP',
+    ProductPage = 'PLACEMENT_PRODUCT_PAGE'
+}
+
+/**
  * A range of prices. We use this to retrieve the number of targetable ASINs that falls within this price range.
  * @export
  * @interface PriceRange
@@ -1796,6 +2019,25 @@ export interface Range {
      * @memberof Range
      */
     max?: number;
+}
+/**
+ * Describes lower and upper bounds of the range.
+ * @export
+ * @interface RangeMetricValue
+ */
+export interface RangeMetricValue {
+    /**
+     * 
+     * @type {number}
+     * @memberof RangeMetricValue
+     */
+    lower?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof RangeMetricValue
+     */
+    upper?: number;
 }
 /**
  * 
@@ -3576,6 +3818,87 @@ export interface TargetableCategories {
      * @memberof TargetableCategories
      */
     categoryTree?: string;
+}
+/**
+ * The targeting expression. The `type` property specifies the targeting option. Use `CLOSE_MATCH` to match your auto targeting ads closely to the specified value. Use `LOOSE_MATCH` to match your auto targeting ads broadly to the specified value. Use `SUBSTITUTES` to display your auto targeting ads along with substitutable products. Use `COMPLEMENTS` to display your auto targeting ads along with affiliated products. Use `KEYWORD_BROAD_MATCH` to broadly match your keyword targeting ads with search queries. Use `KEYWORD_EXACT_MATCH` to exactly match your keyword targeting ads with search queries. Use `KEYWORD_PHRASE_MATCH` to match your keyword targeting ads with search phrases.
+ * @export
+ * @interface TargetingExpression
+ */
+export interface TargetingExpression {
+    /**
+     * 
+     * @type {string}
+     * @memberof TargetingExpression
+     */
+    type: TargetingExpressionTypeEnum;
+    /**
+     * The targeting expression value.
+     * @type {string}
+     * @memberof TargetingExpression
+     */
+    value?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum TargetingExpressionTypeEnum {
+    CloseMatch = 'CLOSE_MATCH',
+    LooseMatch = 'LOOSE_MATCH',
+    Substitutes = 'SUBSTITUTES',
+    Complements = 'COMPLEMENTS',
+    KeywordBroadMatch = 'KEYWORD_BROAD_MATCH',
+    KeywordExactMatch = 'KEYWORD_EXACT_MATCH',
+    KeywordPhraseMatch = 'KEYWORD_PHRASE_MATCH'
+}
+
+/**
+ * 
+ * @export
+ * @interface ThemeBasedBidRecommendation
+ */
+export interface ThemeBasedBidRecommendation {
+    /**
+     * The bid recommendation theme.
+     * @type {string}
+     * @memberof ThemeBasedBidRecommendation
+     */
+    theme: ThemeBasedBidRecommendationThemeEnum;
+    /**
+     * The bid recommendations for targeting expressions listed in the request.
+     * @type {Array<BidRecommendationPerTargetingExpression>}
+     * @memberof ThemeBasedBidRecommendation
+     */
+    bidRecommendationsForTargetingExpressions: Array<BidRecommendationPerTargetingExpression>;
+    /**
+     * 
+     * @type {ImpactMetrics}
+     * @memberof ThemeBasedBidRecommendation
+     */
+    impactMetrics?: ImpactMetrics;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ThemeBasedBidRecommendationThemeEnum {
+    ConversionOpportunities = 'CONVERSION_OPPORTUNITIES'
+}
+
+/**
+ * A list of bid recommendation themes and associated bid recommendations.
+ * @export
+ * @interface ThemeBasedBidRecommendationResponse
+ */
+export interface ThemeBasedBidRecommendationResponse {
+    /**
+     * 
+     * @type {Array<ThemeBasedBidRecommendation>}
+     * @memberof ThemeBasedBidRecommendationResponse
+     */
+    bidRecommendations: Array<ThemeBasedBidRecommendation>;
 }
 /**
  * Recommended asins grouped by theme attribute.
@@ -8227,6 +8550,157 @@ export class ProductTargetingApi extends BaseAPI {
      */
     public searchBrands(requestParameters: ProductTargetingApiSearchBrandsRequest, options?: any) {
         return ProductTargetingApiFp(this.configuration).searchBrands(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.prefer, requestParameters.searchBrandsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ThemeBasedBidRecommendationApi - axios parameter creator
+ * @export
+ */
+export const ThemeBasedBidRecommendationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Gets theme-based bid recommendations for new or existing ad groups.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary The current version of the theme-based bid recommendation resource supports auto-targeting expressions only. Note that the currency for bid recommendations are in local currency units.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {AdGroupThemeBasedBidRecommendationRequest | AsinsThemeBasedBidRecommendationRequest} [adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getThemeBasedBidRecommendationForAdGroupV1: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest?: AdGroupThemeBasedBidRecommendationRequest | AsinsThemeBasedBidRecommendationRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getThemeBasedBidRecommendationForAdGroupV1', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getThemeBasedBidRecommendationForAdGroupV1', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sp/targets/bid/recommendations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.spthemebasedbidrecommendation.v3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ThemeBasedBidRecommendationApi - functional programming interface
+ * @export
+ */
+export const ThemeBasedBidRecommendationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ThemeBasedBidRecommendationApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Gets theme-based bid recommendations for new or existing ad groups.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary The current version of the theme-based bid recommendation resource supports auto-targeting expressions only. Note that the currency for bid recommendations are in local currency units.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {AdGroupThemeBasedBidRecommendationRequest | AsinsThemeBasedBidRecommendationRequest} [adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getThemeBasedBidRecommendationForAdGroupV1(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest?: AdGroupThemeBasedBidRecommendationRequest | AsinsThemeBasedBidRecommendationRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ThemeBasedBidRecommendationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getThemeBasedBidRecommendationForAdGroupV1(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ThemeBasedBidRecommendationApi - factory interface
+ * @export
+ */
+export const ThemeBasedBidRecommendationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ThemeBasedBidRecommendationApiFp(configuration)
+    return {
+        /**
+         * Gets theme-based bid recommendations for new or existing ad groups.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary The current version of the theme-based bid recommendation resource supports auto-targeting expressions only. Note that the currency for bid recommendations are in local currency units.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {AdGroupThemeBasedBidRecommendationRequest | AsinsThemeBasedBidRecommendationRequest} [adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getThemeBasedBidRecommendationForAdGroupV1(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest?: AdGroupThemeBasedBidRecommendationRequest | AsinsThemeBasedBidRecommendationRequest, options?: any): AxiosPromise<ThemeBasedBidRecommendationResponse> {
+            return localVarFp.getThemeBasedBidRecommendationForAdGroupV1(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getThemeBasedBidRecommendationForAdGroupV1 operation in ThemeBasedBidRecommendationApi.
+ * @export
+ * @interface ThemeBasedBidRecommendationApiGetThemeBasedBidRecommendationForAdGroupV1Request
+ */
+export interface ThemeBasedBidRecommendationApiGetThemeBasedBidRecommendationForAdGroupV1Request {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof ThemeBasedBidRecommendationApiGetThemeBasedBidRecommendationForAdGroupV1
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof ThemeBasedBidRecommendationApiGetThemeBasedBidRecommendationForAdGroupV1
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * 
+     * @type {AdGroupThemeBasedBidRecommendationRequest | AsinsThemeBasedBidRecommendationRequest}
+     * @memberof ThemeBasedBidRecommendationApiGetThemeBasedBidRecommendationForAdGroupV1
+     */
+    readonly adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest?: AdGroupThemeBasedBidRecommendationRequest | AsinsThemeBasedBidRecommendationRequest
+}
+
+/**
+ * ThemeBasedBidRecommendationApi - object-oriented interface
+ * @export
+ * @class ThemeBasedBidRecommendationApi
+ * @extends {BaseAPI}
+ */
+export class ThemeBasedBidRecommendationApi extends BaseAPI {
+    /**
+     * Gets theme-based bid recommendations for new or existing ad groups.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+     * @summary The current version of the theme-based bid recommendation resource supports auto-targeting expressions only. Note that the currency for bid recommendations are in local currency units.
+     * @param {ThemeBasedBidRecommendationApiGetThemeBasedBidRecommendationForAdGroupV1Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ThemeBasedBidRecommendationApi
+     */
+    public getThemeBasedBidRecommendationForAdGroupV1(requestParameters: ThemeBasedBidRecommendationApiGetThemeBasedBidRecommendationForAdGroupV1Request, options?: any) {
+        return ThemeBasedBidRecommendationApiFp(this.configuration).getThemeBasedBidRecommendationForAdGroupV1(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
