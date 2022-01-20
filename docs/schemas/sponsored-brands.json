@@ -1128,101 +1128,6 @@
         ]
       }
     },
-    "/sb/targets/categories": {
-      "get": {
-        "summary": "Get all targetable categories for Sponsored Brands.",
-        "operationId": "getSbTargetableCategories",
-        "description": "Gets all targetable categories given the supply source, returned aa a large JSON string containing a tree of category nodes.",
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/vnd.sbTargetableCategoriesResponse.v1+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SBTargetableCategories"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request.",
-            "content": {
-              "application/vnd.sbAttributeTargetingError.v1+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AttributeTargetingException"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Request failed because user is not authenticated.",
-            "content": {
-              "application/vnd.sbAttributeTargetingError.v1+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AttributeTargetingException"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests - Request was rate-limited. Retry later.",
-            "content": {
-              "application/vnd.sbAttributeTargetingError.v1+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AttributeTargetingException"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error - Something went wrong on the server.",
-            "content": {
-              "application/vnd.sbAttributeTargetingError.v1+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AttributeTargetingException"
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "header",
-            "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "AMAZON",
-                "STREAMING_VIDEO"
-              ]
-            },
-            "in": "query",
-            "name": "supplySource",
-            "description": "The supply source where the target will be used. Use `AMAZON` for placements on Amazon website. Use `STREAMING_VIDEO` for off-site video placements such as IMDb TV.",
-            "required": true
-          }
-        ],
-        "tags": [
-          "Targets"
-        ]
-      }
-    },
     "/sb/campaigns/{campaignId}/budgetRules": {
       "post": {
         "summary": "Associates one or more budget rules to a campaign specified by identifer.",
@@ -1885,9 +1790,6 @@
           }
         }
       },
-      "AttributeTargetingErrorMessage": {
-        "type": "string"
-      },
       "BudgetRuleResponse": {
         "type": "object",
         "properties": {
@@ -2233,14 +2135,6 @@
           "url": {
             "description": "Publicly accessible url of the video that got pre moderated.",
             "type": "string"
-          }
-        }
-      },
-      "AttributeTargetingException": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "$ref": "#/components/schemas/AttributeTargetingErrorMessage"
           }
         }
       },
@@ -2793,6 +2687,15 @@
             "description": "Maximum number of suggestions to return. Max value is 1000. If not provided, default to 100.",
             "type": "integer"
           },
+          "creativeAsins": {
+            "type": "array",
+            "items": {
+              "description": "Optional. An array of creative ASINs that are displayed in the SB creative.",
+              "maximum": 3,
+              "type": "string",
+              "minimum": 0
+            }
+          },
           "locale": {
             "description": "Optional locale to request keyword suggestion translations. For example, to request Simplified Chinese translations in US, provide locale “zh_CN”. Response will include both keyword suggestions and their translations. Supported locales include: Simplified Chinese (locale: “zh_CN”) for US, UK and CA. English (locale: “en_GB”) for DE, FR, IT and ES.",
             "type": "string"
@@ -2947,7 +2850,7 @@
           "asins": {
             "type": "array",
             "items": {
-              "description": "An array of ASINs.",
+              "description": "An array of landing page ASINs.",
               "maximum": 100,
               "type": "string",
               "minimum": 1
@@ -2957,6 +2860,15 @@
             "format": "int64",
             "description": "Maximum number of suggestions to return. Max value is 1000. If not provided, default to 100.",
             "type": "integer"
+          },
+          "creativeAsins": {
+            "type": "array",
+            "items": {
+              "description": "Optional. An array of creative ASINs that are displayed in the SB creative.",
+              "maximum": 3,
+              "type": "string",
+              "minimum": 0
+            }
           },
           "locale": {
             "description": "Optional locale to request keyword suggestion translations. For example, to request Simplified Chinese translations in US, provide locale “zh_CN”. Response will include both keyword suggestions and their translations. Supported locales include: Simplified Chinese (locale: “zh_CN”) for US, UK and CA. English (locale: “en_GB”) for DE, FR, IT and ES.",
@@ -3751,16 +3663,6 @@
           }
         }
       },
-      "SBTargetableCategories": {
-        "description": "a large JSON string containing a tree of category nodes. Each category node has the fields - category id, category name, and child categories.",
-        "type": "object",
-        "properties": {
-          "categoryTree": {
-            "type": "string"
-          }
-        },
-        "example": "[{\"id\":2617941011,\"na\":\"Arts, Crafts & Sewing\",\"ch\":[{\"id\":2747968011,\"na\":\"Painting, Drawing & Art Supplies\",\"ch\":[],\"ta\":true}],\"ta\":false}]"
-      },
       "NegativeKeyword": {
         "description": "Negative keyword associated with the campaign.",
         "type": "object",
@@ -3831,11 +3733,11 @@
         "description": "Desired placement or shopper segment where bid adjustment will be applied.",
         "type": "string",
         "enum": [
-          "placementGroupTop",
-          "placementGroupOther",
-          "placementGroupDetailPage",
-          "placementGroupHome",
-          "shopperSegmentNewToBrandPurchase"
+          "PLACEMENT_GROUP_TOP",
+          "PLACEMENT_GROUP_OTHER",
+          "PLACEMENT_GROUP_DETAIL_PAGE",
+          "PLACEMENT_GROUP_HOME",
+          "SHOPPER_SEGMENT_NEW_TO_BRAND_PURCHASE"
         ]
       },
       "UpdateSPBudgetRulesRequest": {
