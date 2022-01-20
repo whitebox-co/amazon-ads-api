@@ -24,7 +24,7 @@ const generateApis = async () => {
 
 // Immediately run if told to do so (used in package scripts mostly)
 if (process.env.RUN_API_GENERATOR) {
-	generateTests();
+	generateApis();
 }
 
 export { generateApis };
