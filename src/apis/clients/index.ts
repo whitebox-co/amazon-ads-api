@@ -15,7 +15,7 @@ export * from './dsp-measurement-client';
 export * from './dsp-reports-client';
 export * from './dsp-advertiser-client';
 export * from './sponsored-brands-client';
-export * from './sponsored-brands-client';
+export * from './sponsored-brands-extra-client';
 export * from './sponsored-brands-pre-moderation-client';
 export * from './sponsored-brands-category-benchmark-client';
 export * from './sponsored-brands-stores-client';

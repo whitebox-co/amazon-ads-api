@@ -1358,6 +1358,62 @@ export interface InlineResponse200 {
 /**
  * 
  * @export
+ * @interface InlineResponse2001
+ */
+export interface InlineResponse2001 {
+    /**
+     * The unique ID for your requested report.
+     * @type {string}
+     * @memberof InlineResponse2001
+     */
+    reportId?: string;
+    /**
+     * The record type of the report. It can be `campaign`, `adGroup`, `keyword`, `productAd`, or `targets`.
+     * @type {string}
+     * @memberof InlineResponse2001
+     */
+    recordType?: string;
+    /**
+     * The status of the report. Status is one of `IN_PROGRESS`, `SUCCESS`, or `FAILURE`.
+     * @type {string}
+     * @memberof InlineResponse2001
+     */
+    status?: string;
+    /**
+     * Description of the status.
+     * @type {string}
+     * @memberof InlineResponse2001
+     */
+    statusDetails?: string;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2002
+ */
+export interface InlineResponse2002 {
+    /**
+     * The unique ID for your requested report.
+     * @type {string}
+     * @memberof InlineResponse2002
+     */
+    reportId?: string;
+    /**
+     * The status of the report. Status is one of `IN_PROGRESS`, `SUCCESS`, or `FAILURE`.
+     * @type {string}
+     * @memberof InlineResponse2002
+     */
+    status?: string;
+    /**
+     * Description of the status.
+     * @type {string}
+     * @memberof InlineResponse2002
+     */
+    statusDetails?: string;
+}
+/**
+ * 
+ * @export
  * @interface InlineResponse200Recommendations
  */
 export interface InlineResponse200Recommendations {
@@ -2266,19 +2322,19 @@ export interface RefinementsResponseBrands {
  */
 export interface Report {
     /**
-     * Filters the response to include reports with `state` set to one of the values in the comma-delimited list. Note that this filter is only valid for reports of the following **type** and `segment`: |  report type | segment | |-------------|---------| | campaigns | query | | adGroup | query or placement | | keyword | placement | | targets | placement | | productAd | query or placement | Asins and targets report types are **not supported**.
+     * Filters the response to include reports with `stateFilter` set to one of the values in the comma-delimited list. `stateFilter` and `segment` cannot be used in the same report request.  `asins` report types do not support the use of `stateFilter`.
      * @type {string}
      * @memberof Report
      */
     stateFilter?: ReportStateFilterEnum;
     /**
-     * The type of campaign. Only required for asins report - don\'t use with other report types.
+     * The type of campaign. Only required for `asins` reports - don\'t use with other report types.
      * @type {string}
      * @memberof Report
      */
     campaignType?: ReportCampaignTypeEnum;
     /**
-     * Dimension on which the report is segmented. Note that Search-terms report for auto-targeted campaigns created before 11/14/2018 can be accessed from the `/v2/sp/keywords/report` resource. Search-terms report for auto-targeted campaigns generated on-and-after 11/14/2018 can be accessed from the  `/v2/sp/targets/report` resource. Also, keyword search terms reports only return search terms that have generated at least one click or one sale. | Dimension | Description | |-----------|-------------| | query | The optional dimension on which to segment a keyword report. This is also referred to as the search terms report. Only works for keywords reports.| | placement | The optional dimension on which to segment a campaigns report. Placement refers to the location on a page where your ad appears. Only works for campaigns reports. |
+     * A secondary dimension used to further segment certain types of reports. `stateFilter` and `segment` cannot be used in the same report request. Keyword search term reports only return search terms that have generated at least one click or sale.  **Note**: Search term reports for auto-targeted campaigns created before 11/14/2018 can be accessed from the `/v2/sp/keywords/report` resource. Search term reports for auto-targeted campaigns generated on-and-after 11/14/2018 can be accessed from the `/v2/sp/targets/report` resource.   | Dimension | Valid report types | Description | |-----------|-------------|-------------| | query | keywords, targets | Segments a report based on customer search term. | | placement | campaigns | Segments a `campaigns` report based on the page location where the ad appeared. |
      * @type {string}
      * @memberof Report
      */
@@ -11867,6 +11923,58 @@ export class ProductTargetingApi extends BaseAPI {
 export const ReportsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```
+         * @summary Downloads a previously requested report identified by report ID.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} reportId The identifier of the requested report.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadReport: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('downloadReport', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('downloadReport', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'reportId' is not null or undefined
+            assertParamExists('downloadReport', 'reportId', reportId)
+            const localVarPath = `/v2/reports/{reportId}/download`
+                .replace(`{${"reportId"}}`, encodeURIComponent(String(reportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * 
          * @summary Gets a previously requested report specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
@@ -11985,6 +12093,19 @@ export const ReportsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ReportsApiAxiosParamCreator(configuration)
     return {
         /**
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```
+         * @summary Downloads a previously requested report identified by report ID.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} reportId The identifier of the requested report.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async downloadReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.downloadReport(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * 
          * @summary Gets a previously requested report specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
@@ -11993,7 +12114,7 @@ export const ReportsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Report>> {
+        async getReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2002>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getReport(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -12007,7 +12128,7 @@ export const ReportsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async requestReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, recordType: 'campaigns' | 'adGroups' | 'keywords' | 'productAds' | 'asins' | 'targets', report?: Report, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Report>> {
+        async requestReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, recordType: 'campaigns' | 'adGroups' | 'keywords' | 'productAds' | 'asins' | 'targets', report?: Report, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2001>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.requestReport(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, recordType, report, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -12022,6 +12143,18 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = ReportsApiFp(configuration)
     return {
         /**
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```
+         * @summary Downloads a previously requested report identified by report ID.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} reportId The identifier of the requested report.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.downloadReport(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options).then((request) => request(axios, basePath));
+        },
+        /**
          * 
          * @summary Gets a previously requested report specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
@@ -12030,7 +12163,7 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: number, options?: any): AxiosPromise<Report> {
+        getReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: number, options?: any): AxiosPromise<InlineResponse2002> {
             return localVarFp.getReport(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -12043,11 +12176,39 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        requestReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, recordType: 'campaigns' | 'adGroups' | 'keywords' | 'productAds' | 'asins' | 'targets', report?: Report, options?: any): AxiosPromise<Report> {
+        requestReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, recordType: 'campaigns' | 'adGroups' | 'keywords' | 'productAds' | 'asins' | 'targets', report?: Report, options?: any): AxiosPromise<InlineResponse2001> {
             return localVarFp.requestReport(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, recordType, report, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for downloadReport operation in ReportsApi.
+ * @export
+ * @interface ReportsApiDownloadReportRequest
+ */
+export interface ReportsApiDownloadReportRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
+     * @type {string}
+     * @memberof ReportsApiDownloadReport
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof ReportsApiDownloadReport
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The identifier of the requested report.
+     * @type {string}
+     * @memberof ReportsApiDownloadReport
+     */
+    readonly reportId: string
+}
 
 /**
  * Request parameters for getReport operation in ReportsApi.
@@ -12119,6 +12280,18 @@ export interface ReportsApiRequestReportRequest {
  * @extends {BaseAPI}
  */
 export class ReportsApi extends BaseAPI {
+    /**
+     * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```
+     * @summary Downloads a previously requested report identified by report ID.
+     * @param {ReportsApiDownloadReportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public downloadReport(requestParameters: ReportsApiDownloadReportRequest, options?: any) {
+        return ReportsApiFp(this.configuration).downloadReport(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.reportId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Gets a previously requested report specified by identifier.

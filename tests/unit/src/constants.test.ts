@@ -108,7 +108,7 @@ describe('constants', () => {
 				version: '3.0',
 			},
 			{
-				name: 'Sponsored Brands',
+				name: 'Sponsored Brands - Extra',
 				schemaUrl: 'https://dtrnk0o2zy01c.cloudfront.net/openapi/en-us/dest/SponsoredBrands_prod_3p.json',
 				version: '3.0',
 			},

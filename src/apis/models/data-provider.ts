@@ -716,7 +716,7 @@ export interface V2DpAudiencePatches {
      */
     op?: V2DpAudiencePatchesOpEnum;
     /**
-     * A formatted string that specifies the URL of the record. The format of the string is `/<recordIdType>-<recordIdValue>/audiences`, where \'recordIdType\' specifies the record\'s origin and \'recordIdValue\' specifies the record\'s Id. Valid \'recordIdType\' values are `COOKIE`, a cookie Id sent from a data provider to Amazon by a cookie sync, and `MAID`, a mobile advertising identifier.
+     * A formatted string that specifies the URL of the record. The format of the string is `/<recordIdType>-<recordIdValue>/audiences`, where \'recordIdType\' specifies the record\'s origin and \'recordIdValue\' specifies the record\'s Id. Valid \'recordIdType\' values are `COOKIE`, a cookie Id sent from a data provider to Amazon by a cookie sync; `MAID`, a mobile advertising identifier; `EXTERNAL_USER_ID`, an external id defined by data providers.
      * @type {string}
      * @memberof V2DpAudiencePatches
      */

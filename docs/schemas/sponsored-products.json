@@ -3296,7 +3296,25 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Report"
+                  "type": "object",
+                  "properties": {
+                    "reportId": {
+                      "type": "string",
+                      "description": "The unique ID for your requested report."
+                    },
+                    "recordType": {
+                      "type": "string",
+                      "description": "The record type of the report. It can be `campaign`, `adGroup`, `keyword`, `productAd`, or `targets`."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the report. Status is one of `IN_PROGRESS`, `SUCCESS`, or `FAILURE`."
+                    },
+                    "statusDetails": {
+                      "type": "string",
+                      "description": "Description of the status."
+                    }
+                  }
                 }
               }
             }
@@ -3343,18 +3361,21 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Report"
-                }
-              }
-            }
-          },
-          "307": {
-            "description": "Temporary redirect.",
-            "headers": {
-              "Location": {
-                "schema": {
-                  "type": "string",
-                  "description": "The download location of the requested report."
+                  "type": "object",
+                  "properties": {
+                    "reportId": {
+                      "type": "string",
+                      "description": "The unique ID for your requested report."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the report. Status is one of `IN_PROGRESS`, `SUCCESS`, or `FAILURE`."
+                    },
+                    "statusDetails": {
+                      "type": "string",
+                      "description": "Description of the status."
+                    }
+                  }
                 }
               }
             }
@@ -3364,6 +3385,86 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/v2/reports/{reportId}/download": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Downloads a previously requested report identified by report ID.",
+        "description": "Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created. \n\nThe report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.\n\n**Note**: The report files in S3 are gzipped.\n\n*Example report download*\n\n```\n$ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\"\n```",
+        "operationId": "downloadReport",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "name": "reportId",
+            "in": "path",
+            "description": "The identifier of the requested report.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "307": {
+            "description": "Successful operation.",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Redirect URI with S3 file location containing report data"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found - requested resource does not exist or is not visible for the authenticated user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests - request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error - something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -5312,7 +5413,7 @@
         "properties": {
           "stateFilter": {
             "type": "string",
-            "description": "Filters the response to include reports with `state` set to one of the values in the comma-delimited list. Note that this filter is only valid for reports of the following **type** and `segment`:\n|  report type | segment |\n|-------------|---------|\n| campaigns | query |\n| adGroup | query or placement |\n| keyword | placement |\n| targets | placement |\n| productAd | query or placement |\nAsins and targets report types are **not supported**.",
+            "description": "Filters the response to include reports with `stateFilter` set to one of the values in the comma-delimited list. `stateFilter` and `segment` cannot be used in the same report request. \n`asins` report types do not support the use of `stateFilter`.",
             "enum": [
               "enabled",
               "paused",
@@ -5321,7 +5422,7 @@
           },
           "campaignType": {
             "type": "string",
-            "description": "The type of campaign. Only required for asins report - don't use with other report types.",
+            "description": "The type of campaign. Only required for `asins` reports - don't use with other report types.",
             "required": [
               "sponsoredProducts"
             ],
@@ -5330,7 +5431,7 @@
             ]
           },
           "segment": {
-            "description": "Dimension on which the report is segmented. Note that Search-terms report for auto-targeted campaigns created before 11/14/2018 can be accessed from the `/v2/sp/keywords/report` resource. Search-terms report for auto-targeted campaigns generated on-and-after 11/14/2018 can be accessed from the  `/v2/sp/targets/report` resource. Also, keyword search terms reports only return search terms that have generated at least one click or one sale.\n| Dimension | Description |\n|-----------|-------------|\n| query | The optional dimension on which to segment a keyword report. This is also referred to as the search terms report. Only works for keywords reports.|\n| placement | The optional dimension on which to segment a campaigns report. Placement refers to the location on a page where your ad appears. Only works for campaigns reports. |",
+            "description": "A secondary dimension used to further segment certain types of reports. `stateFilter` and `segment` cannot be used in the same report request. Keyword search term reports only return search terms that have generated at least one click or sale.\n\n**Note**: Search term reports for auto-targeted campaigns created before 11/14/2018 can be accessed from the `/v2/sp/keywords/report` resource. Search term reports for auto-targeted campaigns generated on-and-after 11/14/2018 can be accessed from the `/v2/sp/targets/report` resource. \n\n| Dimension | Valid report types | Description |\n|-----------|-------------|-------------|\n| query | keywords, targets | Segments a report based on customer search term. |\n| placement | campaigns | Segments a `campaigns` report based on the page location where the ad appeared. |",
             "type": "string",
             "enum": [
               "query",
