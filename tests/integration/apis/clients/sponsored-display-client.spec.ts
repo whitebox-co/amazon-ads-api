@@ -1,7 +1,9 @@
 import * as env from '../../../environment';
 import amazonApi, { SponsoredDisplayClient } from '../../../../src/index';
+import { addInterceptor, removeInterceptor } from '../../../../utils/payload-interceptors';
 
 describe('SponsoredDisplayClient', () => {
+	let interceptorId: any;
 	let sponsoredDisplayClient: SponsoredDisplayClient;
 
 	beforeAll(async () => {
@@ -11,6 +13,15 @@ describe('SponsoredDisplayClient', () => {
 			profileId: env.AMAZON_ADS_PROFILE_ID,
 			refreshToken: env.AMAZON_ADS_REFRESH_TOKEN,
 		});
+	});
+
+	beforeEach(() => {
+		const testName = expect.getState().currentTestName;
+		interceptorId = addInterceptor(sponsoredDisplayClient, testName);
+	});
+
+	afterEach(() => {
+		removeInterceptor(sponsoredDisplayClient, interceptorId);
 	});
 
 	it('should instantiate the api', () => {
