@@ -66,6 +66,7 @@ describe('SponsoredProductsClient', () => {
 				state: State.Paused,
 				dailyBudget: 1,
 				startDate: '20220113',
+				endDate: '20220113',
 			};
 
 			const results = await sponsoredProductsClient.createCampaigns({
