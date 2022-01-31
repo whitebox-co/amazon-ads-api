@@ -42,7 +42,7 @@ const getLimit = async (domain: string, descriptorEntries: any[]): Promise<RateL
 			descriptors: [{ entries: descriptorEntries }],
 		});
 	} catch (err) {
-		if (err.response.status === 429) {
+		if (err.response?.status === 429) {
 			response = err.response;
 		} else {
 			throw err;

@@ -85,9 +85,9 @@ const configuration: AmazonAdsApiConfiguration = {
 		count: 3,    // defaults to 3
         refreshTime: 5000, // in ms. defaults to 5000
         maxWaitTime: 5000, // in ms. defaults to 5000
-		retryCallback?: (jobId: string) => { console.log(`Retrying job ${id}`); };  // optional
-	};
-	envoyProxyRateLimitUrl: 'http://localhost:8123'; // optional (see https://github.com/envoyproxy/ratelimit)
+		retryCallback?: (jobId: string) => { console.log(`Retrying job ${jobId}`); }  // optional
+	},
+	envoyProxyRateLimitUrl: 'http://localhost:8080' // optional (see https://github.com/envoyproxy/ratelimit)
 };
 
 // set the configuration options (totally optional, defaults are set above)
@@ -137,9 +137,9 @@ const configuration: AmazonAdsApiConfiguration = {
 		count: 3,    // defaults to 3
         refreshTime: 5000, // in ms. defaults to 5000
         maxWaitTime: 5000, // in ms. defaults to 5000
-		retryCallback?: (jobId: string) => { console.log(`Retrying job ${id}`); };  // optional
-	};
-	envoyProxyRateLimitUrl: 'localhost:8123'; // optional (see https://github.com/envoyproxy/ratelimit)
+		retryCallback?: (jobId: string) => { console.log(`Retrying job ${jobId}`); }  // optional
+	},
+	envoyProxyRateLimitUrl: 'localhost:8080' // optional (see https://github.com/envoyproxy/ratelimit)
 };
 
 // The user provided api credentials

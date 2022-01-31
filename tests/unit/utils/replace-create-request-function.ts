@@ -10,10 +10,10 @@ describe('replace-create-request-function', () => {
 	});
 
 	it('should run replaceCreateRequestFunction on init when node env var RUN_REPLACE_REQUEST_FUNCTION is set', () => {
-		process.env.RUN_REPLACE_UNKNOWNS = 'true';
+		process.env.RUN_REPLACE_REQUEST_FUNCTION = 'true';
 
 		expect(() => {
-			require('../../../utils/replace-unknown-types');
+			require('../../../utils/replace-create-request-function');
 		}).not.toThrow();
 	});
 

@@ -1,23 +1,9 @@
 import globalAxios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
-import Bottleneck from 'bottleneck';
 import { RequestArgs } from './apis/models/base';
 import { Configuration } from './apis/models/configuration';
 import { APIConfigurationParameters } from './constants';
 import envoyRateLimit, { RateLimitResponseCode } from './connectors/envoy-rate-limit';
-import { getConfiguration } from './config';
-
-const config = getConfiguration();
-
-// init limiters depending on configuration
-let adsLimiter: Bottleneck;
-if (config.throttling) {
-	adsLimiter = new Bottleneck(config.throttling);
-
-	// retry on failures (up to configuration retry count)
-	adsLimiter.on('failed', (error, jobInfo) => {
-		if (jobInfo.retryCount < config.retries.count) return config.retries.refreshTime;
-	});
-}
+import { getConfiguration, getLimiter } from './config';
 
 /**
  * Adds functions from each individual API class into the main Client Class
@@ -81,6 +67,8 @@ export const createRequestFunction = (
 	configuration?: Configuration
 ) => {
 	return async (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+		const config = getConfiguration();
+		const limiter = getLimiter();
 		const axiosRequestArgs = { ...axiosArgs.options, url: (configuration?.basePath || basePath) + axiosArgs.url };
 		const endpoint = axiosArgs.url;
 		const action = axiosRequestArgs.method;
@@ -102,7 +90,7 @@ export const createRequestFunction = (
 		}
 
 		// wrap the axios request in the limiter if configuration enables throttling
-		const request = adsLimiter ? adsLimiter.wrap(axios.request) : axios.request;
+		const request = limiter ? limiter.wrap(axios.request) : axios.request;
 
 		// return the rate limited or normal request.
 		return request(axiosRequestArgs);
