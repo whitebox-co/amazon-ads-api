@@ -20,7 +20,7 @@ TLDR: It did not exist, and we needed it!
 
 -   Amazon does not provide a Typescript, NodeJs, or Javascript library to access their endpoints.
 -   Existing implementations, the few that there are, did not include full the full Amazon Ads REST implementation,
-    were not auto-generated based on the schemas or did not meet our criteria for using open-source software.
+    were not auto-generated based on the schemas, or did not meet our criteria for using open-source software.
 
 ## How it works
 
@@ -60,7 +60,7 @@ There are two distinct parts of this SDK.
    exported class. These are the main entry points into using the SDK to connect to the remote endpoints.
 
 To properly authorize against each endpoint, the Amazon Ads API requires passing both access tokens and refresh tokens.
-Our SDK handles this transparently to the end-user by exposing a mechanism to manage caching and refreshing the
+Our SDK handles this transparently to the end-user by exposing a mechanism to manage the cache and to refresh the
 access tokens. To take advantage of this, the user must use the `getConfiguredApi` function to instantiate an
 individual client.
 
@@ -70,7 +70,28 @@ Use this approach when you only need to use a single client. If multiple clients
 it is better to use the AmazonAds Class.
 
 ```typescript
-import amazonAdsApi, { AttributionClient } from '@whitebox-co/amazon-ads-api';
+import amazonAdsApi, { AttributionClient, AmazonAdsApiConfiguration, setConfiguration } from '@whitebox-co/amazon-ads-api';
+
+// The optional configuration
+const configuration: AmazonAdsApiConfiguration = {
+    throttling: {
+        reservoir: 100,
+        reservoirRefreshAmount: 100,
+        reservoirRefreshInterval: 60 * 1000,
+        maxConcurrent: 5,
+        minTime: 333,
+    },
+	retries: {
+		count: 3,    // defaults to 3
+        refreshTime: 5000, // in ms. defaults to 5000
+        maxWaitTime: 5000, // in ms. defaults to 5000
+		retryCallback?: (jobId: string) => { console.log(`Retrying job ${id}`); };  // optional
+	};
+	envoyProxyRateLimitUrl: 'http://localhost:8123'; // optional (see https://github.com/envoyproxy/ratelimit)
+};
+
+// set the configuration options (totally optional, defaults are set above)
+setConfiguration(configuration);
 
 /**
  * Init the amazon ads, attribution client, with client credentials and get back a fully
@@ -103,17 +124,38 @@ configure credentials one time.
 ```typescript
 import { AmazonAds, AttributionClient } from '@whitebox-co/amazon-ads-api';
 
+// The optional configuration
+const configuration: AmazonAdsApiConfiguration = {
+    throttling: {
+        reservoir: 100,
+        reservoirRefreshAmount: 100,
+        reservoirRefreshInterval: 60 * 1000,
+        maxConcurrent: 5,
+        minTime: 333,
+    },
+	retries: {
+		count: 3,    // defaults to 3
+        refreshTime: 5000, // in ms. defaults to 5000
+        maxWaitTime: 5000, // in ms. defaults to 5000
+		retryCallback?: (jobId: string) => { console.log(`Retrying job ${id}`); };  // optional
+	};
+	envoyProxyRateLimitUrl: 'localhost:8123'; // optional (see https://github.com/envoyproxy/ratelimit)
+};
+
+// The user provided api credentials
+const apiCredentials: AmazonAdvertisingAPICredentials = {
+    clientId
+    clientSecret,
+    profileId,
+    refreshToken,
+}
+
 /**
  * Init a new instance of the AmazonAds class.
  *
  * This has the advantage of only having to pass in credentials once.
  */
-const amazonAdsApi = new AmazonAds({
-    clientId
-    clientSecret,
-    profileId,
-    refreshToken,
-});
+const amazonAdsApi = new AmazonAds(apiCredentials, configuration);
 
 /**
  *  Retrieves a fully authorized instance of the attribution client.
@@ -157,7 +199,7 @@ specified documentation.
 
 ### Prerequisites
 
--   [Java Runtime](https://www.java.com/en/download/manual.jsp) - Necessary to run the openapi-generator
+-   [Java Runtime](https://www.java.com/en/download/manual.jsp) - Necessary to run the `openapi-generator`
 -   [Node](https://nodejs.org/en/) - To install and build the library.
 -   [Amazon Ads API Experience](https://advertising.amazon.com/API/docs/en-us/info/api-overview) - Helpful to have
     experience with the Amazon Ads REST API.

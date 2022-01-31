@@ -6,6 +6,8 @@ import { processSchemas } from '../../../utils/model-generator';
 jest.mock('fs');
 jest.mock('child_process');
 
+jest.mock('../../../utils/replace-create-request-function');
+
 const schemaFileNames = ['testSchemaOne.json', 'testSchemaTwo.json'];
 
 describe('model-generator', () => {

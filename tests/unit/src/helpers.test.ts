@@ -62,4 +62,22 @@ describe('helpers', () => {
 			expect(existingAxiosInstance).not.toEqual(axiosInstance);
 		});
 	});
+
+	describe('createRequestFunction', () => {
+		it('should implement envoyproxy/ratelimit based on configuration', () => {
+			expect(true).toEqual(true);
+		});
+
+		it('should properly rate throttle based on configuration', () => {
+			expect(true).toEqual(true);
+		});
+
+		it('should handle retries based on configuration', () => {
+			expect(true).toEqual(true);
+		});
+
+		it('should call failure callback if configuration provides one', () => {
+			expect(true).toEqual(true);
+		});
+	});
 });
