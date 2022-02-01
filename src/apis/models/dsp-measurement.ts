@@ -88,6 +88,12 @@ export interface BaseEligibilityRequestV1M1 {
  */
 export interface BaseStudyV1 {
     /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<string>}
+     * @memberof BaseStudyV1
+     */
+    statusReasons?: Array<string>;
+    /**
      * The study survey canonical identifier.
      * @type {string}
      * @memberof BaseStudyV1
@@ -124,9 +130,10 @@ export interface BaseStudyV1 {
      */
     studyResultStatus?: BaseStudyV1StudyResultStatusEnum;
     /**
-     * List of reasons for rejection, this will only be available if the status is REJECTED.
+     * List of reasons for rejection, this will only be available if the status is REJECTED. This field is deprecated, use statusReasons instead.
      * @type {Array<string>}
      * @memberof BaseStudyV1
+     * @deprecated
      */
     rejectionReasons?: Array<string>;
     /**
@@ -178,6 +185,119 @@ export interface BaseStudyV1 {
     * @enum {string}
     */
 export enum BaseStudyV1StudyResultStatusEnum {
+    Available = 'AVAILABLE'
+}
+
+/**
+ * The base study object.
+ * @export
+ * @interface BaseStudyV1M1
+ */
+export interface BaseStudyV1M1 {
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<string>}
+     * @memberof BaseStudyV1M1
+     */
+    statusReasons?: Array<string>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof BaseStudyV1M1
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof BaseStudyV1M1
+     */
+    endDate?: string;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof BaseStudyV1M1
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof BaseStudyV1M1
+     */
+    vendorProductId?: string;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof BaseStudyV1M1
+     */
+    lastUpdatedDate?: string;
+    /**
+     * The status of result of the study.
+     * @type {string}
+     * @memberof BaseStudyV1M1
+     */
+    studyResultStatus?: BaseStudyV1M1StudyResultStatusEnum;
+    /**
+     * List of reasons for rejection, this will only be available if the status is REJECTED. This field is deprecated, use statusReasons instead.
+     * @type {Array<string>}
+     * @memberof BaseStudyV1M1
+     * @deprecated
+     */
+    rejectionReasons?: Array<string>;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof BaseStudyV1M1
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof BaseStudyV1M1
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof BaseStudyV1M1
+     */
+    comment?: string;
+    /**
+     * 
+     * @type {Array<ResourceLinkV1M1>}
+     * @memberof BaseStudyV1M1
+     */
+    links?: Array<ResourceLinkV1M1>;
+    /**
+     * The study canonical identifier. Immutable field. This is required for update.
+     * @type {string}
+     * @memberof BaseStudyV1M1
+     */
+    id?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof BaseStudyV1M1
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {StudyStatusV1}
+     * @memberof BaseStudyV1M1
+     */
+    status?: StudyStatusV1;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof BaseStudyV1M1
+     */
+    createDate?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum BaseStudyV1M1StudyResultStatusEnum {
     Available = 'AVAILABLE'
 }
 
@@ -382,25 +502,6 @@ export interface BrandLiftSummaryV1M1 {
     questionText?: string;
 }
 /**
- * The object specifying a response in custom survey question.
- * @export
- * @interface CustomSurveyQuestionResponseV1M1
- */
-export interface CustomSurveyQuestionResponseV1M1 {
-    /**
-     * The custom survey question response text value.
-     * @type {string}
-     * @memberof CustomSurveyQuestionResponseV1M1
-     */
-    value?: string;
-    /**
-     * Whether if the response is a qualifying response.
-     * @type {boolean}
-     * @memberof CustomSurveyQuestionResponseV1M1
-     */
-    isQualifying?: boolean;
-}
-/**
  * The templated measurement survey question.
  * @export
  * @interface CustomSurveyQuestionV1
@@ -422,31 +523,6 @@ export interface CustomSurveyQuestionV1 {
      * The survey question text.
      * @type {string}
      * @memberof CustomSurveyQuestionV1
-     */
-    questionText?: string;
-}
-/**
- * The customed measurement survey question.
- * @export
- * @interface CustomSurveyQuestionV1M1
- */
-export interface CustomSurveyQuestionV1M1 {
-    /**
-     * 
-     * @type {Array<CustomSurveyQuestionResponseV1M1>}
-     * @memberof CustomSurveyQuestionV1M1
-     */
-    responses?: Array<CustomSurveyQuestionResponseV1M1>;
-    /**
-     * 
-     * @type {SurveyQuestionTypeV1M1}
-     * @memberof CustomSurveyQuestionV1M1
-     */
-    type?: SurveyQuestionTypeV1M1;
-    /**
-     * The survey question text.
-     * @type {string}
-     * @memberof CustomSurveyQuestionV1M1
      */
     questionText?: string;
 }
@@ -636,6 +712,12 @@ export interface DSPBrandLiftMetadataV1M1 {
  */
 export interface DSPBrandLiftStudyV1 {
     /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<string>}
+     * @memberof DSPBrandLiftStudyV1
+     */
+    statusReasons?: Array<string>;
+    /**
      * The study survey canonical identifier.
      * @type {string}
      * @memberof DSPBrandLiftStudyV1
@@ -672,9 +754,10 @@ export interface DSPBrandLiftStudyV1 {
      */
     studyResultStatus?: DSPBrandLiftStudyV1StudyResultStatusEnum;
     /**
-     * List of reasons for rejection, this will only be available if the status is REJECTED.
+     * List of reasons for rejection, this will only be available if the status is REJECTED. This field is deprecated, use statusReasons instead.
      * @type {Array<string>}
      * @memberof DSPBrandLiftStudyV1
+     * @deprecated
      */
     rejectionReasons?: Array<string>;
     /**
@@ -778,6 +861,12 @@ export enum DSPBrandLiftStudyV1StudyResultStatusEnum {
  */
 export interface DSPBrandLiftStudyV1M1 {
     /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<string>}
+     * @memberof DSPBrandLiftStudyV1M1
+     */
+    statusReasons?: Array<string>;
+    /**
      * The study survey canonical identifier.
      * @type {string}
      * @memberof DSPBrandLiftStudyV1M1
@@ -814,9 +903,10 @@ export interface DSPBrandLiftStudyV1M1 {
      */
     studyResultStatus?: DSPBrandLiftStudyV1M1StudyResultStatusEnum;
     /**
-     * List of reasons for rejection, this will only be available if the status is REJECTED.
+     * List of reasons for rejection, this will only be available if the status is REJECTED. This field is deprecated, use statusReasons instead.
      * @type {Array<string>}
      * @memberof DSPBrandLiftStudyV1M1
+     * @deprecated
      */
     rejectionReasons?: Array<string>;
     /**
@@ -837,6 +927,12 @@ export interface DSPBrandLiftStudyV1M1 {
      * @memberof DSPBrandLiftStudyV1M1
      */
     comment?: string;
+    /**
+     * 
+     * @type {Array<ResourceLinkV1M1>}
+     * @memberof DSPBrandLiftStudyV1M1
+     */
+    links?: Array<ResourceLinkV1M1>;
     /**
      * The study canonical identifier. Immutable field. This is required for update.
      * @type {string}
@@ -941,6 +1037,31 @@ export interface DSPCampaignMeasurementMetadataV1 {
      * The associated advertiser identifier. Immutable field.
      * @type {string}
      * @memberof DSPCampaignMeasurementMetadataV1
+     */
+    advertiserId?: string;
+}
+/**
+ * The basic model for all DSP CAMPAIGN_MEASUREMENT objective studies.
+ * @export
+ * @interface DSPCampaignMeasurementMetadataV1M1
+ */
+export interface DSPCampaignMeasurementMetadataV1M1 {
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the study.
+     * @type {Array<string>}
+     * @memberof DSPCampaignMeasurementMetadataV1M1
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of canonical order identifiers that are associated with the study. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof DSPCampaignMeasurementMetadataV1M1
+     */
+    orderIds?: Array<string>;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof DSPCampaignMeasurementMetadataV1M1
      */
     advertiserId?: string;
 }
@@ -1124,6 +1245,25 @@ export enum FundingTypeV1M1 {
     ThirdPartyPayment = 'THIRD_PARTY_PAYMENT'
 }
 
+/**
+ * The grid question response object. Only applicable for SINGLE_SELECT_GRID type question.
+ * @export
+ * @interface GridQuestionResponsesV1M1
+ */
+export interface GridQuestionResponsesV1M1 {
+    /**
+     * 
+     * @type {Array<SurveyQuestionPlaceholderFieldValueV1>}
+     * @memberof GridQuestionResponsesV1M1
+     */
+    columns?: Array<SurveyQuestionPlaceholderFieldValueV1>;
+    /**
+     * 
+     * @type {Array<SurveyQuestionPlaceholderFieldValueV1>}
+     * @memberof GridQuestionResponsesV1M1
+     */
+    rows?: Array<SurveyQuestionPlaceholderFieldValueV1>;
+}
 /**
  * The measurement country.
  * @export
@@ -1440,6 +1580,25 @@ export enum PlaceholderValueTypeV1 {
 }
 
 /**
+ * The link that can be used to access corresponding resources in advertising portal.
+ * @export
+ * @interface ResourceLinkV1M1
+ */
+export interface ResourceLinkV1M1 {
+    /**
+     * The resource name.
+     * @type {string}
+     * @memberof ResourceLinkV1M1
+     */
+    name?: string;
+    /**
+     * The resource url.
+     * @type {string}
+     * @memberof ResourceLinkV1M1
+     */
+    url?: string;
+}
+/**
  * Measurement category based on the purpose of the measurement.
  * @export
  * @enum {string}
@@ -1512,9 +1671,16 @@ export interface StudyResponsesV1 {
  */
 export interface StudyReviewRequestV1 {
     /**
-     * List of reasons for rejection, this will only be required if the status is REJECTED.
+     * List of reasons for study status. For example, when study is marked REJECTED or INELIGIBLE, this field would be available.
      * @type {Array<string>}
      * @memberof StudyReviewRequestV1
+     */
+    statusReasons?: Array<string>;
+    /**
+     * List of reasons for rejection, this will only be required if the status is REJECTED. This field is deprecated, use statusReasons instead.
+     * @type {Array<string>}
+     * @memberof StudyReviewRequestV1
+     * @deprecated
      */
     rejectionReasons?: Array<string>;
     /**
@@ -1544,7 +1710,8 @@ export interface StudyReviewRequestV1 {
 
 export enum StudyReviewStatusV1 {
     Approved = 'APPROVED',
-    Rejected = 'REJECTED'
+    Rejected = 'REJECTED',
+    Infeasible = 'INFEASIBLE'
 }
 
 /**
@@ -1560,7 +1727,8 @@ export enum StudyStatusV1 {
     Rejected = 'REJECTED',
     Ended = 'ENDED',
     Cancelled = 'CANCELLED',
-    Draft = 'DRAFT'
+    Draft = 'DRAFT',
+    Infeasible = 'INFEASIBLE'
 }
 
 /**
@@ -1692,7 +1860,7 @@ export interface SurveyQuestionGridQuestionResponseV1M1 {
  */
 
 export enum SurveyQuestionObjectiveTypeV1 {
-    AidedAwareness = 'AIDED_AWARENESS',
+    Awareness = 'AWARENESS',
     Preference = 'PREFERENCE',
     Favorability = 'FAVORABILITY',
     AdRecall = 'AD_RECALL',
@@ -1707,7 +1875,7 @@ export enum SurveyQuestionObjectiveTypeV1 {
  */
 
 export enum SurveyQuestionObjectiveTypeV1M1 {
-    AidedAwareness = 'AIDED_AWARENESS',
+    Awareness = 'AWARENESS',
     Preference = 'PREFERENCE',
     Favorability = 'FAVORABILITY',
     AdRecall = 'AD_RECALL',
@@ -2384,6 +2552,7 @@ export interface SurveyV1 {
      * A list of custom survey questions.
      * @type {Array<CustomSurveyQuestionV1>}
      * @memberof SurveyV1
+     * @deprecated
      */
     customQuestions?: Array<CustomSurveyQuestionV1>;
     /**
@@ -2419,16 +2588,17 @@ export interface SurveyV1M1 {
     vendorProductId?: string;
     /**
      * A list of templated survey questions.
-     * @type {Array<TemplatedSurveyQuestionV1>}
+     * @type {Array<TemplatedSurveyQuestionV1M1>}
      * @memberof SurveyV1M1
      */
-    templatedQuestions?: Array<TemplatedSurveyQuestionV1>;
+    templatedQuestions?: Array<TemplatedSurveyQuestionV1M1>;
     /**
      * A list of custom survey questions.
-     * @type {Array<CustomSurveyQuestionV1M1>}
+     * @type {Array<CustomSurveyQuestionV1>}
      * @memberof SurveyV1M1
+     * @deprecated
      */
-    customQuestions?: Array<CustomSurveyQuestionV1M1>;
+    customQuestions?: Array<CustomSurveyQuestionV1>;
     /**
      * The associated study identifier. Survey needs to be created prior to the study creation.
      * @type {string}
@@ -2464,6 +2634,31 @@ export interface TemplatedSurveyQuestionV1 {
      * The survey question template canonical identifier.
      * @type {string}
      * @memberof TemplatedSurveyQuestionV1
+     */
+    id?: string;
+}
+/**
+ * The templated measurement survey question.
+ * @export
+ * @interface TemplatedSurveyQuestionV1M1
+ */
+export interface TemplatedSurveyQuestionV1M1 {
+    /**
+     * 
+     * @type {GridQuestionResponsesV1M1}
+     * @memberof TemplatedSurveyQuestionV1M1
+     */
+    gridQuestionResponse?: GridQuestionResponsesV1M1;
+    /**
+     * List of question placeholders
+     * @type {Array<SurveyQuestionPlaceholderV1>}
+     * @memberof TemplatedSurveyQuestionV1M1
+     */
+    placeholders?: Array<SurveyQuestionPlaceholderV1>;
+    /**
+     * The survey question template canonical identifier.
+     * @type {string}
+     * @memberof TemplatedSurveyQuestionV1M1
      */
     id?: string;
 }
@@ -2921,6 +3116,12 @@ export interface VendorProductV1M1 {
      * @memberof VendorProductV1M1
      */
     fundingType?: FundingTypeV1M1;
+    /**
+     * The vendor product display name.
+     * @type {string}
+     * @memberof VendorProductV1M1
+     */
+    displayName?: string;
     /**
      * 
      * @type {StudyTypeV1}

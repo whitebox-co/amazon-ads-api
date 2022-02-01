@@ -854,32 +854,25 @@ export const AddOrRemoveRecordsApiAxiosParamCreator = function (configuration?: 
          * 
          * @summary Associates or disassociates a record with an audience. Note that the API call rate is limited to 100 transactions per second (TPS). Calls exceeding this rate are throttled. Payload size is limited to 1MB. Calls with a payload larger than 1MB receive a 413 response.
          * @param {string} authorization A valid access token.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} host The Amazon Ads API endpoint.
          * @param {string} contentType The &#x60;Content-Type&#x60; is application/json.
-         * @param {number} audienceId The audience identifier.
          * @param {InlineObject2} inlineObject2 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v2DpAudiencePatch: async (authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, inlineObject2: InlineObject2, options: any = {}): Promise<RequestArgs> => {
+        v2DpAudiencePatch: async (authorization: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, inlineObject2: InlineObject2, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'authorization' is not null or undefined
             assertParamExists('v2DpAudiencePatch', 'authorization', authorization)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('v2DpAudiencePatch', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('v2DpAudiencePatch', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'host' is not null or undefined
             assertParamExists('v2DpAudiencePatch', 'host', host)
             // verify required parameter 'contentType' is not null or undefined
             assertParamExists('v2DpAudiencePatch', 'contentType', contentType)
-            // verify required parameter 'audienceId' is not null or undefined
-            assertParamExists('v2DpAudiencePatch', 'audienceId', audienceId)
             // verify required parameter 'inlineObject2' is not null or undefined
             assertParamExists('v2DpAudiencePatch', 'inlineObject2', inlineObject2)
-            const localVarPath = `/v2/dp/audience`
-                .replace(`{${"audienceId"}}`, encodeURIComponent(String(audienceId)));
+            const localVarPath = `/v2/dp/audience`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -893,10 +886,6 @@ export const AddOrRemoveRecordsApiAxiosParamCreator = function (configuration?: 
 
             if (authorization !== undefined && authorization !== null) {
                 localVarHeaderParameter['Authorization'] = String(authorization);
-            }
-
-            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
             }
 
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
@@ -939,17 +928,15 @@ export const AddOrRemoveRecordsApiFp = function(configuration?: Configuration) {
          * 
          * @summary Associates or disassociates a record with an audience. Note that the API call rate is limited to 100 transactions per second (TPS). Calls exceeding this rate are throttled. Payload size is limited to 1MB. Calls with a payload larger than 1MB receive a 413 response.
          * @param {string} authorization A valid access token.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} host The Amazon Ads API endpoint.
          * @param {string} contentType The &#x60;Content-Type&#x60; is application/json.
-         * @param {number} audienceId The audience identifier.
          * @param {InlineObject2} inlineObject2 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async v2DpAudiencePatch(authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, inlineObject2: InlineObject2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2002>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v2DpAudiencePatch(authorization, amazonAdvertisingAPIScope, amazonAdvertisingAPIClientId, host, contentType, audienceId, inlineObject2, options);
+        async v2DpAudiencePatch(authorization: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, inlineObject2: InlineObject2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2002>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.v2DpAudiencePatch(authorization, amazonAdvertisingAPIClientId, host, contentType, inlineObject2, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -966,17 +953,15 @@ export const AddOrRemoveRecordsApiFactory = function (configuration?: Configurat
          * 
          * @summary Associates or disassociates a record with an audience. Note that the API call rate is limited to 100 transactions per second (TPS). Calls exceeding this rate are throttled. Payload size is limited to 1MB. Calls with a payload larger than 1MB receive a 413 response.
          * @param {string} authorization A valid access token.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} host The Amazon Ads API endpoint.
          * @param {string} contentType The &#x60;Content-Type&#x60; is application/json.
-         * @param {number} audienceId The audience identifier.
          * @param {InlineObject2} inlineObject2 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v2DpAudiencePatch(authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, inlineObject2: InlineObject2, options?: any): AxiosPromise<InlineResponse2002> {
-            return localVarFp.v2DpAudiencePatch(authorization, amazonAdvertisingAPIScope, amazonAdvertisingAPIClientId, host, contentType, audienceId, inlineObject2, options).then((request) => request(axios, basePath));
+        v2DpAudiencePatch(authorization: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, inlineObject2: InlineObject2, options?: any): AxiosPromise<InlineResponse2002> {
+            return localVarFp.v2DpAudiencePatch(authorization, amazonAdvertisingAPIClientId, host, contentType, inlineObject2, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -993,13 +978,6 @@ export interface AddOrRemoveRecordsApiV2DpAudiencePatchRequest {
      * @memberof AddOrRemoveRecordsApiV2DpAudiencePatch
      */
     readonly authorization: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-     * @type {string}
-     * @memberof AddOrRemoveRecordsApiV2DpAudiencePatch
-     */
-    readonly amazonAdvertisingAPIScope: string
 
     /**
      * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -1021,13 +999,6 @@ export interface AddOrRemoveRecordsApiV2DpAudiencePatchRequest {
      * @memberof AddOrRemoveRecordsApiV2DpAudiencePatch
      */
     readonly contentType: string
-
-    /**
-     * The audience identifier.
-     * @type {number}
-     * @memberof AddOrRemoveRecordsApiV2DpAudiencePatch
-     */
-    readonly audienceId: number
 
     /**
      * 
@@ -1053,7 +1024,7 @@ export class AddOrRemoveRecordsApi extends BaseAPI {
      * @memberof AddOrRemoveRecordsApi
      */
     public v2DpAudiencePatch(requestParameters: AddOrRemoveRecordsApiV2DpAudiencePatchRequest, options?: any) {
-        return AddOrRemoveRecordsApiFp(this.configuration).v2DpAudiencePatch(requestParameters.authorization, requestParameters.amazonAdvertisingAPIScope, requestParameters.amazonAdvertisingAPIClientId, requestParameters.host, requestParameters.contentType, requestParameters.audienceId, requestParameters.inlineObject2, options).then((request) => request(this.axios, this.basePath));
+        return AddOrRemoveRecordsApiFp(this.configuration).v2DpAudiencePatch(requestParameters.authorization, requestParameters.amazonAdvertisingAPIClientId, requestParameters.host, requestParameters.contentType, requestParameters.inlineObject2, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1068,7 +1039,6 @@ export const MetadataApiAxiosParamCreator = function (configuration?: Configurat
          * 
          * @summary Gets metadata for an audience specified by identifier. Note that the API call rate is limited to 1 transaction per second (TPS). Calls exceeding this rate are throttled.
          * @param {string} authorization A valid access token.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} host The Amazon Ads API endpoint.
          * @param {string} contentType The &#x60;Content-Type&#x60; is application/json.
@@ -1076,11 +1046,9 @@ export const MetadataApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v2DpAudiencemetadataAudienceIdGet: async (authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, options: any = {}): Promise<RequestArgs> => {
+        v2DpAudiencemetadataAudienceIdGet: async (authorization: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'authorization' is not null or undefined
             assertParamExists('v2DpAudiencemetadataAudienceIdGet', 'authorization', authorization)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('v2DpAudiencemetadataAudienceIdGet', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('v2DpAudiencemetadataAudienceIdGet', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'host' is not null or undefined
@@ -1104,10 +1072,6 @@ export const MetadataApiAxiosParamCreator = function (configuration?: Configurat
 
             if (authorization !== undefined && authorization !== null) {
                 localVarHeaderParameter['Authorization'] = String(authorization);
-            }
-
-            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
             }
 
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
@@ -1137,7 +1101,6 @@ export const MetadataApiAxiosParamCreator = function (configuration?: Configurat
          * 
          * @summary Updates metadata of an existing audience specified by identifier. Note that the API call rate is limited to 1 transaction per second (TPS). Calls exceeding this rate are throttled.
          * @param {string} authorization A valid access token.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} host The Amazon Ads API endpoint.
          * @param {string} contentType The &#x60;Content-Type&#x60; is application/json.
@@ -1146,11 +1109,9 @@ export const MetadataApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v2DpAudiencemetadataAudienceIdPut: async (authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, inlineObject1: InlineObject1, options: any = {}): Promise<RequestArgs> => {
+        v2DpAudiencemetadataAudienceIdPut: async (authorization: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, inlineObject1: InlineObject1, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'authorization' is not null or undefined
             assertParamExists('v2DpAudiencemetadataAudienceIdPut', 'authorization', authorization)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('v2DpAudiencemetadataAudienceIdPut', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('v2DpAudiencemetadataAudienceIdPut', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'host' is not null or undefined
@@ -1176,10 +1137,6 @@ export const MetadataApiAxiosParamCreator = function (configuration?: Configurat
 
             if (authorization !== undefined && authorization !== null) {
                 localVarHeaderParameter['Authorization'] = String(authorization);
-            }
-
-            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
             }
 
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
@@ -1212,7 +1169,6 @@ export const MetadataApiAxiosParamCreator = function (configuration?: Configurat
          * 
          * @summary Creates a new data provider audience. Note that the API call rate is limited to 1 transaction per second (TPS). Calls exceeding this rate are throttled.
          * @param {string} authorization A valid access token.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} host The Amazon Ads API endpoint.
          * @param {string} contentType The &#x60;Content-Type&#x60; is application/json.
@@ -1220,11 +1176,9 @@ export const MetadataApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v2DpAudiencemetadataPost: async (authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, inlineObject: InlineObject, options: any = {}): Promise<RequestArgs> => {
+        v2DpAudiencemetadataPost: async (authorization: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, inlineObject: InlineObject, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'authorization' is not null or undefined
             assertParamExists('v2DpAudiencemetadataPost', 'authorization', authorization)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('v2DpAudiencemetadataPost', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('v2DpAudiencemetadataPost', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'host' is not null or undefined
@@ -1247,10 +1201,6 @@ export const MetadataApiAxiosParamCreator = function (configuration?: Configurat
 
             if (authorization !== undefined && authorization !== null) {
                 localVarHeaderParameter['Authorization'] = String(authorization);
-            }
-
-            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
             }
 
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
@@ -1293,7 +1243,6 @@ export const MetadataApiFp = function(configuration?: Configuration) {
          * 
          * @summary Gets metadata for an audience specified by identifier. Note that the API call rate is limited to 1 transaction per second (TPS). Calls exceeding this rate are throttled.
          * @param {string} authorization A valid access token.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} host The Amazon Ads API endpoint.
          * @param {string} contentType The &#x60;Content-Type&#x60; is application/json.
@@ -1301,15 +1250,14 @@ export const MetadataApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async v2DpAudiencemetadataAudienceIdGet(authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2001>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v2DpAudiencemetadataAudienceIdGet(authorization, amazonAdvertisingAPIScope, amazonAdvertisingAPIClientId, host, contentType, audienceId, options);
+        async v2DpAudiencemetadataAudienceIdGet(authorization: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2001>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.v2DpAudiencemetadataAudienceIdGet(authorization, amazonAdvertisingAPIClientId, host, contentType, audienceId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Updates metadata of an existing audience specified by identifier. Note that the API call rate is limited to 1 transaction per second (TPS). Calls exceeding this rate are throttled.
          * @param {string} authorization A valid access token.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} host The Amazon Ads API endpoint.
          * @param {string} contentType The &#x60;Content-Type&#x60; is application/json.
@@ -1318,15 +1266,14 @@ export const MetadataApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async v2DpAudiencemetadataAudienceIdPut(authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, inlineObject1: InlineObject1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v2DpAudiencemetadataAudienceIdPut(authorization, amazonAdvertisingAPIScope, amazonAdvertisingAPIClientId, host, contentType, audienceId, inlineObject1, options);
+        async v2DpAudiencemetadataAudienceIdPut(authorization: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, inlineObject1: InlineObject1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.v2DpAudiencemetadataAudienceIdPut(authorization, amazonAdvertisingAPIClientId, host, contentType, audienceId, inlineObject1, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary Creates a new data provider audience. Note that the API call rate is limited to 1 transaction per second (TPS). Calls exceeding this rate are throttled.
          * @param {string} authorization A valid access token.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} host The Amazon Ads API endpoint.
          * @param {string} contentType The &#x60;Content-Type&#x60; is application/json.
@@ -1334,8 +1281,8 @@ export const MetadataApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async v2DpAudiencemetadataPost(authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, inlineObject: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v2DpAudiencemetadataPost(authorization, amazonAdvertisingAPIScope, amazonAdvertisingAPIClientId, host, contentType, inlineObject, options);
+        async v2DpAudiencemetadataPost(authorization: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, inlineObject: InlineObject, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse200>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.v2DpAudiencemetadataPost(authorization, amazonAdvertisingAPIClientId, host, contentType, inlineObject, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1352,7 +1299,6 @@ export const MetadataApiFactory = function (configuration?: Configuration, baseP
          * 
          * @summary Gets metadata for an audience specified by identifier. Note that the API call rate is limited to 1 transaction per second (TPS). Calls exceeding this rate are throttled.
          * @param {string} authorization A valid access token.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} host The Amazon Ads API endpoint.
          * @param {string} contentType The &#x60;Content-Type&#x60; is application/json.
@@ -1360,14 +1306,13 @@ export const MetadataApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v2DpAudiencemetadataAudienceIdGet(authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, options?: any): AxiosPromise<InlineResponse2001> {
-            return localVarFp.v2DpAudiencemetadataAudienceIdGet(authorization, amazonAdvertisingAPIScope, amazonAdvertisingAPIClientId, host, contentType, audienceId, options).then((request) => request(axios, basePath));
+        v2DpAudiencemetadataAudienceIdGet(authorization: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, options?: any): AxiosPromise<InlineResponse2001> {
+            return localVarFp.v2DpAudiencemetadataAudienceIdGet(authorization, amazonAdvertisingAPIClientId, host, contentType, audienceId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Updates metadata of an existing audience specified by identifier. Note that the API call rate is limited to 1 transaction per second (TPS). Calls exceeding this rate are throttled.
          * @param {string} authorization A valid access token.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} host The Amazon Ads API endpoint.
          * @param {string} contentType The &#x60;Content-Type&#x60; is application/json.
@@ -1376,14 +1321,13 @@ export const MetadataApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v2DpAudiencemetadataAudienceIdPut(authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, inlineObject1: InlineObject1, options?: any): AxiosPromise<InlineResponse200> {
-            return localVarFp.v2DpAudiencemetadataAudienceIdPut(authorization, amazonAdvertisingAPIScope, amazonAdvertisingAPIClientId, host, contentType, audienceId, inlineObject1, options).then((request) => request(axios, basePath));
+        v2DpAudiencemetadataAudienceIdPut(authorization: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, audienceId: number, inlineObject1: InlineObject1, options?: any): AxiosPromise<InlineResponse200> {
+            return localVarFp.v2DpAudiencemetadataAudienceIdPut(authorization, amazonAdvertisingAPIClientId, host, contentType, audienceId, inlineObject1, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Creates a new data provider audience. Note that the API call rate is limited to 1 transaction per second (TPS). Calls exceeding this rate are throttled.
          * @param {string} authorization A valid access token.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} host The Amazon Ads API endpoint.
          * @param {string} contentType The &#x60;Content-Type&#x60; is application/json.
@@ -1391,8 +1335,8 @@ export const MetadataApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v2DpAudiencemetadataPost(authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, inlineObject: InlineObject, options?: any): AxiosPromise<InlineResponse200> {
-            return localVarFp.v2DpAudiencemetadataPost(authorization, amazonAdvertisingAPIScope, amazonAdvertisingAPIClientId, host, contentType, inlineObject, options).then((request) => request(axios, basePath));
+        v2DpAudiencemetadataPost(authorization: string, amazonAdvertisingAPIClientId: string, host: string, contentType: string, inlineObject: InlineObject, options?: any): AxiosPromise<InlineResponse200> {
+            return localVarFp.v2DpAudiencemetadataPost(authorization, amazonAdvertisingAPIClientId, host, contentType, inlineObject, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1409,13 +1353,6 @@ export interface MetadataApiV2DpAudiencemetadataAudienceIdGetRequest {
      * @memberof MetadataApiV2DpAudiencemetadataAudienceIdGet
      */
     readonly authorization: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-     * @type {string}
-     * @memberof MetadataApiV2DpAudiencemetadataAudienceIdGet
-     */
-    readonly amazonAdvertisingAPIScope: string
 
     /**
      * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -1458,13 +1395,6 @@ export interface MetadataApiV2DpAudiencemetadataAudienceIdPutRequest {
      * @memberof MetadataApiV2DpAudiencemetadataAudienceIdPut
      */
     readonly authorization: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-     * @type {string}
-     * @memberof MetadataApiV2DpAudiencemetadataAudienceIdPut
-     */
-    readonly amazonAdvertisingAPIScope: string
 
     /**
      * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -1516,13 +1446,6 @@ export interface MetadataApiV2DpAudiencemetadataPostRequest {
     readonly authorization: string
 
     /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-     * @type {string}
-     * @memberof MetadataApiV2DpAudiencemetadataPost
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
      * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
      * @type {string}
      * @memberof MetadataApiV2DpAudiencemetadataPost
@@ -1567,7 +1490,7 @@ export class MetadataApi extends BaseAPI {
      * @memberof MetadataApi
      */
     public v2DpAudiencemetadataAudienceIdGet(requestParameters: MetadataApiV2DpAudiencemetadataAudienceIdGetRequest, options?: any) {
-        return MetadataApiFp(this.configuration).v2DpAudiencemetadataAudienceIdGet(requestParameters.authorization, requestParameters.amazonAdvertisingAPIScope, requestParameters.amazonAdvertisingAPIClientId, requestParameters.host, requestParameters.contentType, requestParameters.audienceId, options).then((request) => request(this.axios, this.basePath));
+        return MetadataApiFp(this.configuration).v2DpAudiencemetadataAudienceIdGet(requestParameters.authorization, requestParameters.amazonAdvertisingAPIClientId, requestParameters.host, requestParameters.contentType, requestParameters.audienceId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1579,7 +1502,7 @@ export class MetadataApi extends BaseAPI {
      * @memberof MetadataApi
      */
     public v2DpAudiencemetadataAudienceIdPut(requestParameters: MetadataApiV2DpAudiencemetadataAudienceIdPutRequest, options?: any) {
-        return MetadataApiFp(this.configuration).v2DpAudiencemetadataAudienceIdPut(requestParameters.authorization, requestParameters.amazonAdvertisingAPIScope, requestParameters.amazonAdvertisingAPIClientId, requestParameters.host, requestParameters.contentType, requestParameters.audienceId, requestParameters.inlineObject1, options).then((request) => request(this.axios, this.basePath));
+        return MetadataApiFp(this.configuration).v2DpAudiencemetadataAudienceIdPut(requestParameters.authorization, requestParameters.amazonAdvertisingAPIClientId, requestParameters.host, requestParameters.contentType, requestParameters.audienceId, requestParameters.inlineObject1, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1591,7 +1514,7 @@ export class MetadataApi extends BaseAPI {
      * @memberof MetadataApi
      */
     public v2DpAudiencemetadataPost(requestParameters: MetadataApiV2DpAudiencemetadataPostRequest, options?: any) {
-        return MetadataApiFp(this.configuration).v2DpAudiencemetadataPost(requestParameters.authorization, requestParameters.amazonAdvertisingAPIScope, requestParameters.amazonAdvertisingAPIClientId, requestParameters.host, requestParameters.contentType, requestParameters.inlineObject, options).then((request) => request(this.axios, this.basePath));
+        return MetadataApiFp(this.configuration).v2DpAudiencemetadataPost(requestParameters.authorization, requestParameters.amazonAdvertisingAPIClientId, requestParameters.host, requestParameters.contentType, requestParameters.inlineObject, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1606,7 +1529,6 @@ export const UserDeletionApiAxiosParamCreator = function (configuration?: Config
          * Deletes user data sourced from data providers. Deletes users scoped either to an advertiser or for the data provider. The SLA for data deletion is 30 days.
          * @summary Deletes user data originally sourced from the client. The API call rate is limited to 1 transactions per second (TPS). Calls exceeding this rate are throttled. Payload size is limited to 1000 users or 1MB. Calls with a more than 1000 users or 1MB will receive a 413 response.
          * @param {string} authorization A valid access token. 
-         * @param {string} amazonAdvertisingAPIScope The profile identifier.
          * @param {string} amazonAdvertisingAPIClientID The client identifier.
          * @param {string} host A valid Amazon Ads API endpoint. 
          * @param {string} contentType The Content-Type is &#x60;application/json&#x60;.
@@ -1614,19 +1536,17 @@ export const UserDeletionApiAxiosParamCreator = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v2DpUsersDelete: async (authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientID: string, host: string, contentType: string, inlineObject3: InlineObject3, options: any = {}): Promise<RequestArgs> => {
+        v2DpUsersPatch: async (authorization: string, amazonAdvertisingAPIClientID: string, host: string, contentType: string, inlineObject3: InlineObject3, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'authorization' is not null or undefined
-            assertParamExists('v2DpUsersDelete', 'authorization', authorization)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('v2DpUsersDelete', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            assertParamExists('v2DpUsersPatch', 'authorization', authorization)
             // verify required parameter 'amazonAdvertisingAPIClientID' is not null or undefined
-            assertParamExists('v2DpUsersDelete', 'amazonAdvertisingAPIClientID', amazonAdvertisingAPIClientID)
+            assertParamExists('v2DpUsersPatch', 'amazonAdvertisingAPIClientID', amazonAdvertisingAPIClientID)
             // verify required parameter 'host' is not null or undefined
-            assertParamExists('v2DpUsersDelete', 'host', host)
+            assertParamExists('v2DpUsersPatch', 'host', host)
             // verify required parameter 'contentType' is not null or undefined
-            assertParamExists('v2DpUsersDelete', 'contentType', contentType)
+            assertParamExists('v2DpUsersPatch', 'contentType', contentType)
             // verify required parameter 'inlineObject3' is not null or undefined
-            assertParamExists('v2DpUsersDelete', 'inlineObject3', inlineObject3)
+            assertParamExists('v2DpUsersPatch', 'inlineObject3', inlineObject3)
             const localVarPath = `/v2/dp/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1635,16 +1555,12 @@ export const UserDeletionApiAxiosParamCreator = function (configuration?: Config
                 baseOptions = configuration.baseOptions;
             }
 
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
             if (authorization !== undefined && authorization !== null) {
                 localVarHeaderParameter['Authorization'] = String(authorization);
-            }
-
-            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
             }
 
             if (amazonAdvertisingAPIClientID !== undefined && amazonAdvertisingAPIClientID !== null) {
@@ -1687,7 +1603,6 @@ export const UserDeletionApiFp = function(configuration?: Configuration) {
          * Deletes user data sourced from data providers. Deletes users scoped either to an advertiser or for the data provider. The SLA for data deletion is 30 days.
          * @summary Deletes user data originally sourced from the client. The API call rate is limited to 1 transactions per second (TPS). Calls exceeding this rate are throttled. Payload size is limited to 1000 users or 1MB. Calls with a more than 1000 users or 1MB will receive a 413 response.
          * @param {string} authorization A valid access token. 
-         * @param {string} amazonAdvertisingAPIScope The profile identifier.
          * @param {string} amazonAdvertisingAPIClientID The client identifier.
          * @param {string} host A valid Amazon Ads API endpoint. 
          * @param {string} contentType The Content-Type is &#x60;application/json&#x60;.
@@ -1695,8 +1610,8 @@ export const UserDeletionApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async v2DpUsersDelete(authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientID: string, host: string, contentType: string, inlineObject3: InlineObject3, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse202>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v2DpUsersDelete(authorization, amazonAdvertisingAPIScope, amazonAdvertisingAPIClientID, host, contentType, inlineObject3, options);
+        async v2DpUsersPatch(authorization: string, amazonAdvertisingAPIClientID: string, host: string, contentType: string, inlineObject3: InlineObject3, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse202>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.v2DpUsersPatch(authorization, amazonAdvertisingAPIClientID, host, contentType, inlineObject3, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1713,7 +1628,6 @@ export const UserDeletionApiFactory = function (configuration?: Configuration, b
          * Deletes user data sourced from data providers. Deletes users scoped either to an advertiser or for the data provider. The SLA for data deletion is 30 days.
          * @summary Deletes user data originally sourced from the client. The API call rate is limited to 1 transactions per second (TPS). Calls exceeding this rate are throttled. Payload size is limited to 1000 users or 1MB. Calls with a more than 1000 users or 1MB will receive a 413 response.
          * @param {string} authorization A valid access token. 
-         * @param {string} amazonAdvertisingAPIScope The profile identifier.
          * @param {string} amazonAdvertisingAPIClientID The client identifier.
          * @param {string} host A valid Amazon Ads API endpoint. 
          * @param {string} contentType The Content-Type is &#x60;application/json&#x60;.
@@ -1721,57 +1635,50 @@ export const UserDeletionApiFactory = function (configuration?: Configuration, b
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        v2DpUsersDelete(authorization: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIClientID: string, host: string, contentType: string, inlineObject3: InlineObject3, options?: any): AxiosPromise<InlineResponse202> {
-            return localVarFp.v2DpUsersDelete(authorization, amazonAdvertisingAPIScope, amazonAdvertisingAPIClientID, host, contentType, inlineObject3, options).then((request) => request(axios, basePath));
+        v2DpUsersPatch(authorization: string, amazonAdvertisingAPIClientID: string, host: string, contentType: string, inlineObject3: InlineObject3, options?: any): AxiosPromise<InlineResponse202> {
+            return localVarFp.v2DpUsersPatch(authorization, amazonAdvertisingAPIClientID, host, contentType, inlineObject3, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for v2DpUsersDelete operation in UserDeletionApi.
+ * Request parameters for v2DpUsersPatch operation in UserDeletionApi.
  * @export
- * @interface UserDeletionApiV2DpUsersDeleteRequest
+ * @interface UserDeletionApiV2DpUsersPatchRequest
  */
-export interface UserDeletionApiV2DpUsersDeleteRequest {
+export interface UserDeletionApiV2DpUsersPatchRequest {
     /**
      * A valid access token. 
      * @type {string}
-     * @memberof UserDeletionApiV2DpUsersDelete
+     * @memberof UserDeletionApiV2DpUsersPatch
      */
     readonly authorization: string
 
     /**
-     * The profile identifier.
-     * @type {string}
-     * @memberof UserDeletionApiV2DpUsersDelete
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
      * The client identifier.
      * @type {string}
-     * @memberof UserDeletionApiV2DpUsersDelete
+     * @memberof UserDeletionApiV2DpUsersPatch
      */
     readonly amazonAdvertisingAPIClientID: string
 
     /**
      * A valid Amazon Ads API endpoint. 
      * @type {string}
-     * @memberof UserDeletionApiV2DpUsersDelete
+     * @memberof UserDeletionApiV2DpUsersPatch
      */
     readonly host: string
 
     /**
      * The Content-Type is &#x60;application/json&#x60;.
      * @type {string}
-     * @memberof UserDeletionApiV2DpUsersDelete
+     * @memberof UserDeletionApiV2DpUsersPatch
      */
     readonly contentType: string
 
     /**
      * 
      * @type {InlineObject3}
-     * @memberof UserDeletionApiV2DpUsersDelete
+     * @memberof UserDeletionApiV2DpUsersPatch
      */
     readonly inlineObject3: InlineObject3
 }
@@ -1786,13 +1693,13 @@ export class UserDeletionApi extends BaseAPI {
     /**
      * Deletes user data sourced from data providers. Deletes users scoped either to an advertiser or for the data provider. The SLA for data deletion is 30 days.
      * @summary Deletes user data originally sourced from the client. The API call rate is limited to 1 transactions per second (TPS). Calls exceeding this rate are throttled. Payload size is limited to 1000 users or 1MB. Calls with a more than 1000 users or 1MB will receive a 413 response.
-     * @param {UserDeletionApiV2DpUsersDeleteRequest} requestParameters Request parameters.
+     * @param {UserDeletionApiV2DpUsersPatchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UserDeletionApi
      */
-    public v2DpUsersDelete(requestParameters: UserDeletionApiV2DpUsersDeleteRequest, options?: any) {
-        return UserDeletionApiFp(this.configuration).v2DpUsersDelete(requestParameters.authorization, requestParameters.amazonAdvertisingAPIScope, requestParameters.amazonAdvertisingAPIClientID, requestParameters.host, requestParameters.contentType, requestParameters.inlineObject3, options).then((request) => request(this.axios, this.basePath));
+    public v2DpUsersPatch(requestParameters: UserDeletionApiV2DpUsersPatchRequest, options?: any) {
+        return UserDeletionApiFp(this.configuration).v2DpUsersPatch(requestParameters.authorization, requestParameters.amazonAdvertisingAPIClientID, requestParameters.host, requestParameters.contentType, requestParameters.inlineObject3, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

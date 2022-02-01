@@ -8562,7 +8562,7 @@ export const ThemeBasedBidRecommendationApiAxiosParamCreator = function (configu
     return {
         /**
          * Gets theme-based bid recommendations for new or existing ad groups.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary The current version of the theme-based bid recommendation resource supports auto-targeting expressions only. Note that the currency for bid recommendations are in local currency units.
+         * @summary The current version of the theme-based bid recommendation service supports auto-targeting and keyword targeting expressions only. Note that the currency for bid recommendations are in local currency units.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {AdGroupThemeBasedBidRecommendationRequest | AsinsThemeBasedBidRecommendationRequest} [adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest] 
@@ -8620,7 +8620,7 @@ export const ThemeBasedBidRecommendationApiFp = function(configuration?: Configu
     return {
         /**
          * Gets theme-based bid recommendations for new or existing ad groups.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary The current version of the theme-based bid recommendation resource supports auto-targeting expressions only. Note that the currency for bid recommendations are in local currency units.
+         * @summary The current version of the theme-based bid recommendation service supports auto-targeting and keyword targeting expressions only. Note that the currency for bid recommendations are in local currency units.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {AdGroupThemeBasedBidRecommendationRequest | AsinsThemeBasedBidRecommendationRequest} [adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest] 
@@ -8643,7 +8643,7 @@ export const ThemeBasedBidRecommendationApiFactory = function (configuration?: C
     return {
         /**
          * Gets theme-based bid recommendations for new or existing ad groups.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary The current version of the theme-based bid recommendation resource supports auto-targeting expressions only. Note that the currency for bid recommendations are in local currency units.
+         * @summary The current version of the theme-based bid recommendation service supports auto-targeting and keyword targeting expressions only. Note that the currency for bid recommendations are in local currency units.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {AdGroupThemeBasedBidRecommendationRequest | AsinsThemeBasedBidRecommendationRequest} [adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest] 
@@ -8693,7 +8693,7 @@ export interface ThemeBasedBidRecommendationApiGetThemeBasedBidRecommendationFor
 export class ThemeBasedBidRecommendationApi extends BaseAPI {
     /**
      * Gets theme-based bid recommendations for new or existing ad groups.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-     * @summary The current version of the theme-based bid recommendation resource supports auto-targeting expressions only. Note that the currency for bid recommendations are in local currency units.
+     * @summary The current version of the theme-based bid recommendation service supports auto-targeting and keyword targeting expressions only. Note that the currency for bid recommendations are in local currency units.
      * @param {ThemeBasedBidRecommendationApiGetThemeBasedBidRecommendationForAdGroupV1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

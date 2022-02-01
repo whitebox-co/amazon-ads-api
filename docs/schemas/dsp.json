@@ -3600,6 +3600,11 @@
           "200": {
             "description": "Successful operation.",
             "content": {
+              "application/vnd.dsplineitems.v3.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LineItemV3_1"
+                }
+              },
               "application/vnd.dsplineitems.v3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/LineItemV3"
@@ -4600,6 +4605,16 @@
         "requestBody": {
           "description": "An array of lineitem objects. For each object, specify required fields and their values. Maximum length of the array is 1.",
           "content": {
+            "application/vnd.dsplineitems.v3.1+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/LineItemV3_1"
+                },
+                "minItems": 1,
+                "maxItems": 1
+              }
+            },
             "application/vnd.dsplineitems.v3+json": {
               "schema": {
                 "type": "array",
@@ -4646,6 +4661,14 @@
           "207": {
             "description": "Multi-status. This holds array of items which represents success or failure corresponding to the index in the request body.",
             "content": {
+              "application/vnd.dsplineitemsresponse.v3.1+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LineItemResponse"
+                  }
+                }
+              },
               "application/vnd.dsplineitemsresponse.v3+json": {
                 "schema": {
                   "type": "array",
@@ -5134,6 +5157,16 @@
         "requestBody": {
           "description": "An array of line item objects. For each object, specify required fields and their values. Maximum length of the array is 1.",
           "content": {
+            "application/vnd.dsplineitems.v3.1+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/LineItemV3_1"
+                },
+                "minItems": 1,
+                "maxItems": 1
+              }
+            },
             "application/vnd.dsplineitems.v3+json": {
               "schema": {
                 "type": "array",
@@ -5180,6 +5213,14 @@
           "207": {
             "description": "Multi-status. This holds array of items which represents success or failure corresponding to the index in the request body.",
             "content": {
+              "application/vnd.dsplineitemsresponse.v3.1+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LineItemResponse"
+                  }
+                }
+              },
               "application/vnd.dsplineitemsresponse.v3+json": {
                 "schema": {
                   "type": "array",
@@ -9364,6 +9405,75 @@
         }
       }
     },
+    "/dsp/preBidTargeting/oracleDataCloud/standardPredicts": {
+      "get": {
+        "tags": [
+          "Discovery"
+        ],
+        "summary": "Gets Oracle Data Cloud provided standard predicts for pre-bid targeting.",
+        "description": "Retrieves standard predict pre-bid targeting data.",
+        "operationId": "getOdcStandardPredicts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "in": "query",
+            "name": "nextToken",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Token to be used to request additional entries. If not provided, up to the first 320 entries are returned. Note: subsequent calls must be made using the same parameters as used in previous requests that returned the provided nextToken.",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/vnd.odcstandardpredicts.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OdcStandardPredicts"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "415": {
+            "$ref": "#/components/responses/UnsupportedMediaType"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/EndpointRequestTimedOut"
+          }
+        }
+      }
+    },
     "/dsp/goalConfigurations": {
       "get": {
         "tags": [
@@ -10334,6 +10444,18 @@
           "optimization"
         ]
       },
+      "LineItemV3_1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LineItemV3"
+          }
+        ],
+        "properties": {
+          "targeting": {
+            "$ref": "#/components/schemas/LineItemTargetingV3_1"
+          }
+        }
+      },
       "LineItemResponse": {
         "description": "Response for the line item create/update operations. Success contains only lineItemId and failure contains only errorDetails corresponding to that requested index in that batch (array of items).",
         "type": "object",
@@ -10608,6 +10730,23 @@
           }
         }
       },
+      "LineItemTargetingV3_1": {
+        "type": "object",
+        "properties": {
+          "standardDisplayTargeting": {
+            "$ref": "#/components/schemas/StandardDisplayTargetingV3_1"
+          },
+          "aapMobileAppTargeting": {
+            "$ref": "#/components/schemas/AapMobileAppTargetingV3_1"
+          },
+          "amazonMobileDisplayTargeting": {
+            "$ref": "#/components/schemas/AmazonMobileDisplayTargetingV3_1"
+          },
+          "videoTargeting": {
+            "$ref": "#/components/schemas/VideoTargetingV3_1"
+          }
+        }
+      },
       "AmazonMobileDisplayTargeting": {
         "type": "object",
         "properties": {
@@ -10671,6 +10810,18 @@
           "contextualTargeting": {
             "type": "boolean",
             "description": "Set to `true` to enable contextual targeting. Contextual targeting targets the detail page of products that are frequently viewed or purchased with the products in your ad. Note that this feature applies to Dynamic eCommerce ads only."
+          }
+        }
+      },
+      "AmazonMobileDisplayTargetingV3_1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AmazonMobileDisplayTargetingV3"
+          }
+        ],
+        "properties": {
+          "thirdPartyPreBidTargeting": {
+            "$ref": "#/components/schemas/MobileDisplayThirdPartyPreBidTargetingV3_1"
           }
         }
       },
@@ -10924,6 +11075,18 @@
           }
         }
       },
+      "VideoTargetingV3_1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/VideoTargetingV3"
+          }
+        ],
+        "properties": {
+          "thirdPartyPreBidTargeting": {
+            "$ref": "#/components/schemas/VideoThirdPartyPreBidTargetingV3_1"
+          }
+        }
+      },
       "StandardDisplayTargeting": {
         "type": "object",
         "properties": {
@@ -11034,6 +11197,18 @@
           }
         }
       },
+      "StandardDisplayTargetingV3_1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StandardDisplayTargetingV3"
+          }
+        ],
+        "properties": {
+          "thirdPartyPreBidTargeting": {
+            "$ref": "#/components/schemas/StandardDisplayThirdPartyPreBidTargetingV3_1"
+          }
+        }
+      },
       "AapMobileAppTargeting": {
         "type": "object",
         "properties": {
@@ -11135,6 +11310,18 @@
               "PORTRAIT",
               "LANDSCAPE"
             ]
+          }
+        }
+      },
+      "AapMobileAppTargetingV3_1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AapMobileAppTargetingV3"
+          }
+        ],
+        "properties": {
+          "thirdPartyPreBidTargeting": {
+            "$ref": "#/components/schemas/MobileAppThirdPartyPreBidTargetingV3_1"
           }
         }
       },
@@ -11374,6 +11561,18 @@
           }
         }
       },
+      "MobileDisplayThirdPartyPreBidTargetingV3_1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/MobileDisplayThirdPartyPreBidTargeting"
+          }
+        ],
+        "properties": {
+          "pixalate": {
+            "$ref": "#/components/schemas/Pixalate"
+          }
+        }
+      },
       "StandardDisplayThirdPartyPreBidTargeting": {
         "type": "object",
         "description": "Amazon DSP automatically filters fraudulent and invalid traffic as well as unsafe content using a combination of proprietary technology and solutions from comScore and Sizmek. This service is available by default and at no extra charge for Amazon DSP customers. You may choose to augment the default filters with pre-bid targeting products offered by third parties. These services are currently offered at no charge.",
@@ -11382,10 +11581,25 @@
             "$ref": "#/components/schemas/StandardDisplayDoubleVerify"
           },
           "oracleDataCloud": {
-            "$ref": "#/components/schemas/OracleDataCloud"
+            "$ref": "#/components/schemas/OracleDataCloudV3"
           },
           "integralAdScience": {
             "$ref": "#/components/schemas/StandardDisplayIntegralAdScience"
+          }
+        }
+      },
+      "StandardDisplayThirdPartyPreBidTargetingV3_1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StandardDisplayThirdPartyPreBidTargeting"
+          }
+        ],
+        "properties": {
+          "oracleDataCloud": {
+            "$ref": "#/components/schemas/OracleDataCloudV3_1"
+          },
+          "pixalate": {
+            "$ref": "#/components/schemas/Pixalate"
           }
         }
       },
@@ -11397,10 +11611,25 @@
             "$ref": "#/components/schemas/MobileAppDoubleVerify"
           },
           "oracleDataCloud": {
-            "$ref": "#/components/schemas/OracleDataCloud"
+            "$ref": "#/components/schemas/OracleDataCloudV3"
           },
           "integralAdScience": {
             "$ref": "#/components/schemas/MobileAppIntegralAdScience"
+          }
+        }
+      },
+      "MobileAppThirdPartyPreBidTargetingV3_1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/MobileAppThirdPartyPreBidTargeting"
+          }
+        ],
+        "properties": {
+          "oracleDataCloud": {
+            "$ref": "#/components/schemas/OracleDataCloudV3_1"
+          },
+          "pixalate": {
+            "$ref": "#/components/schemas/Pixalate"
           }
         }
       },
@@ -11412,10 +11641,55 @@
             "$ref": "#/components/schemas/VideoDoubleVerify"
           },
           "oracleDataCloud": {
-            "$ref": "#/components/schemas/OracleDataCloud"
+            "$ref": "#/components/schemas/OracleDataCloudV3"
           },
           "integralAdScience": {
             "$ref": "#/components/schemas/VideoIntegralAdScience"
+          }
+        }
+      },
+      "VideoThirdPartyPreBidTargetingV3_1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/VideoThirdPartyPreBidTargeting"
+          }
+        ],
+        "properties": {
+          "oracleDataCloud": {
+            "$ref": "#/components/schemas/OracleDataCloudV3_1"
+          },
+          "pixalate": {
+            "$ref": "#/components/schemas/Pixalate"
+          }
+        }
+      },
+      "Pixalate": {
+        "type": "object",
+        "description": "Pixalate is a third party provider for digital ad verification. Pixalate offers technologies that drive high-quality advertising media.",
+        "properties": {
+          "fraudInvalidTraffic": {
+            "$ref": "#/components/schemas/PixalateFraudInvalidTraffic"
+          }
+        }
+      },
+      "PixalateFraudInvalidTraffic": {
+        "type": "object",
+        "properties": {
+          "excludeIpAddressAndUserAgents": {
+            "type": "boolean",
+            "description": "Set to `true` to exclude traffic from IPV4 and IPV6 addresses and usger agents identified to to be fraudulent or invalid."
+          },
+          "excludeOttAndMobileDevices": {
+            "type": "boolean",
+            "description": "Set to `true` to exclude traffic from OTT and Mobile devices identified to be fraudulent or invalid."
+          },
+          "excludeAppsAndDomains": {
+            "type": "boolean",
+            "description": "Set to `true` to exclude traffic from Apps and Domains identified to be fraudulent or invalid."
+          },
+          "excludeRemovedAppsFromAppStores": {
+            "type": "boolean",
+            "description": "Set to `true` to exlude traffic from Apps that have been removed from the google play and apple app stores in the last 6 months."
           }
         }
       },
@@ -11874,6 +12148,68 @@
             "description": "The custom segment predict identifier."
           }
         }
+      },
+      "OracleDataCloudV3": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OracleDataCloud"
+          }
+        ],
+        "properties": {
+          "viewability": {
+            "$ref": "#/components/schemas/ODCViewability"
+          }
+        }
+      },
+      "OracleDataCloudV3_1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OracleDataCloudV3"
+          }
+        ],
+        "properties": {
+          "standardPredictsSegmentIds": {
+            "type": "array",
+            "description": "The standard predict segment identifiers.",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "maxItems": 320
+          }
+        }
+      },
+      "ODCViewability": {
+        "type": "object",
+        "description": "The ODC viewability standard.",
+        "properties": {
+          "standard": {
+            "type": "string",
+            "description": "The viewability standard.",
+            "enum": [
+              "NONE",
+              "MRC"
+            ],
+            "example": "MRC"
+          },
+          "viewabilityTargeting": {
+            "type": "string",
+            "description": "The type of ODC MRC viewability tier.",
+            "enum": [
+              "VIEWABILITY_TIER_GT_80",
+              "VIEWABILITY_TIER_GT_70",
+              "VIEWABILITY_TIER_GT_60",
+              "VIEWABILITY_TIER_GT_50",
+              "VIEWABILITY_TIER_GT_40",
+              "VIEWABILITY_TIER_GT_30",
+              "VIEWABILITY_TIER_GT_20"
+            ]
+          }
+        },
+        "required": [
+          "standard",
+          "viewabilityTargeting"
+        ]
       },
       "OracleDataCloudBrandSafety": {
         "type": "object",
@@ -14292,12 +14628,28 @@
           "customPredicts": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/OdcCustomPredict"
+              "$ref": "#/components/schemas/OdcPredict"
             }
           }
         }
       },
-      "OdcCustomPredict": {
+      "OdcStandardPredicts": {
+        "type": "object",
+        "properties": {
+          "nextToken": {
+            "type": "string"
+          },
+          "standardPredicts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OdcPredict"
+            },
+            "minItems": 1,
+            "maxItems": 320
+          }
+        }
+      },
+      "OdcPredict": {
         "type": "object",
         "properties": {
           "id": {

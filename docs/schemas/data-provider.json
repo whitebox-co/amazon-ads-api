@@ -36,9 +36,6 @@
             "$ref": "#/components/parameters/authorizationHeader"
           },
           {
-            "$ref": "#/components/parameters/profileHeader"
-          },
-          {
             "$ref": "#/components/parameters/clientHeader"
           },
           {
@@ -178,9 +175,6 @@
             "$ref": "#/components/parameters/authorizationHeader"
           },
           {
-            "$ref": "#/components/parameters/profileHeader"
-          },
-          {
             "$ref": "#/components/parameters/clientHeader"
           },
           {
@@ -300,9 +294,6 @@
             "$ref": "#/components/parameters/authorizationHeader"
           },
           {
-            "$ref": "#/components/parameters/profileHeader"
-          },
-          {
             "$ref": "#/components/parameters/clientHeader"
           },
           {
@@ -415,9 +406,6 @@
             "$ref": "#/components/parameters/authorizationHeader"
           },
           {
-            "$ref": "#/components/parameters/profileHeader"
-          },
-          {
             "$ref": "#/components/parameters/clientHeader"
           },
           {
@@ -425,9 +413,6 @@
           },
           {
             "$ref": "#/components/parameters/contentTypeHeader"
-          },
-          {
-            "$ref": "#/components/parameters/audienceId"
           }
         ],
         "requestBody": {
@@ -564,7 +549,7 @@
       }
     },
     "/v2/dp/users": {
-      "delete": {
+      "patch": {
         "description": "Deletes user data sourced from data providers. Deletes users scoped either to an advertiser or for the data provider. The SLA for data deletion is 30 days.",
         "summary": "Deletes user data originally sourced from the client. The API call rate is limited to 1 transactions per second (TPS). Calls exceeding this rate are throttled. Payload size is limited to 1000 users or 1MB. Calls with a more than 1000 users or 1MB will receive a 413 response.",
         "tags": [
@@ -579,16 +564,6 @@
             },
             "description": "A valid access token. ",
             "example": "Bearer Atza|IQEBLjAsAhRmHjNgHpi0UDme37rR6CuUpSR",
-            "required": true
-          },
-          {
-            "in": "header",
-            "name": "Amazon-Advertising-API-Scope",
-            "schema": {
-              "type": "string"
-            },
-            "description": "The profile identifier.",
-            "example": 195213312458027,
             "required": true
           },
           {
@@ -1130,15 +1105,6 @@
         "description": "The Amazon Ads API endpoint.",
         "example": "advertising-api.amazon.com",
         "required": true
-      },
-      "profileHeader": {
-        "name": "Amazon-Advertising-API-Scope",
-        "in": "header",
-        "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
-        "required": true,
-        "schema": {
-          "type": "string"
-        }
       }
     },
     "responses": {
