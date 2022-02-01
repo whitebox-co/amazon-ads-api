@@ -417,7 +417,7 @@ export interface BrandMetricsGenerateReportResponse {
      * @type {string}
      * @memberof BrandMetricsGenerateReportResponse
      */
-    location: string;
+    location?: string;
     /**
      * The expiration time of the URI in the location property in milliseconds. The expiration time is the interval between the time the response was generated and the time the URI expires.
      * @type {number}
@@ -463,6 +463,12 @@ export interface BrandMetricsGetReportByIdResponse {
      */
     reportId: string;
     /**
+     * List of first 200 brands for which the Brand Metrics report is generated. The report may contain more than 200 brands. This list is only populated with brands if the Brand Metrics are available for the brands that an advertiser has access to.
+     * @type {Array<BrandMetricsGetReportByIdResponseBrandsInfo>}
+     * @memberof BrandMetricsGetReportByIdResponse
+     */
+    brandsInfo?: Array<BrandMetricsGetReportByIdResponseBrandsInfo>;
+    /**
      * Format of the report
      * @type {string}
      * @memberof BrandMetricsGetReportByIdResponse
@@ -475,11 +481,11 @@ export interface BrandMetricsGetReportByIdResponse {
      */
     statusDetails: string;
     /**
-     * The URI address of the report.
+     * The URI address of the report. Only available if the report is generated successfully. The location is empty if the Brand Metrics are not available or if the report is not generated successfully.
      * @type {string}
      * @memberof BrandMetricsGetReportByIdResponse
      */
-    location: string;
+    location?: string;
     /**
      * The expiration time of the URI in the location property in milliseconds. The expiration time is the interval between the time the response was generated and the time the URI expires.
      * @type {number}
@@ -512,6 +518,25 @@ export enum BrandMetricsGetReportByIdResponseStatusEnum {
     Failure = 'FAILURE'
 }
 
+/**
+ * 
+ * @export
+ * @interface BrandMetricsGetReportByIdResponseBrandsInfo
+ */
+export interface BrandMetricsGetReportByIdResponseBrandsInfo {
+    /**
+     * Brand Name
+     * @type {string}
+     * @memberof BrandMetricsGetReportByIdResponseBrandsInfo
+     */
+    name?: string;
+    /**
+     * Id
+     * @type {string}
+     * @memberof BrandMetricsGetReportByIdResponseBrandsInfo
+     */
+    id?: string;
+}
 /**
  * Request object to generate Brand Metrics for the Brands
  * @export

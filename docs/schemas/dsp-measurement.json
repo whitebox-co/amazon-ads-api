@@ -232,7 +232,7 @@
           },
           {
             "schema": {
-              "default": "10",
+              "default": 10,
               "maximum": 100,
               "type": "integer",
               "minimum": 1
@@ -717,7 +717,7 @@
           },
           {
             "schema": {
-              "default": "10",
+              "default": 10,
               "maximum": 100,
               "type": "integer",
               "minimum": 1
@@ -962,7 +962,7 @@
           },
           {
             "schema": {
-              "default": "10",
+              "default": 10,
               "maximum": 100,
               "type": "integer",
               "minimum": 1
@@ -1401,7 +1401,7 @@
           },
           {
             "schema": {
-              "default": "10",
+              "default": 10,
               "maximum": 100,
               "type": "integer",
               "minimum": 1
@@ -1830,7 +1830,7 @@
           },
           {
             "schema": {
-              "default": "10",
+              "default": 10,
               "maximum": 100,
               "type": "integer",
               "minimum": 1
@@ -2269,7 +2269,7 @@
           },
           {
             "schema": {
-              "default": "10",
+              "default": 10,
               "maximum": 100,
               "type": "integer",
               "minimum": 1
@@ -2812,18 +2812,141 @@
           "ERROR"
         ]
       },
+      "BaseStudyV1M1": {
+        "description": "The base study object.",
+        "type": "object",
+        "properties": {
+          "statusReasons": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.",
+            "readOnly": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "surveyId": {
+            "description": "The study survey canonical identifier.",
+            "type": "string"
+          },
+          "endDate": {
+            "format": "date-time",
+            "description": "The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "externalReferenceId": {
+            "description": "Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.",
+            "type": "string"
+          },
+          "vendorProductId": {
+            "description": "Associated vendor product canonical identifier.",
+            "type": "string"
+          },
+          "lastUpdatedDate": {
+            "format": "date-time",
+            "description": "The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "studyResultStatus": {
+            "description": "The status of result of the study.",
+            "type": "string",
+            "enum": [
+              "AVAILABLE"
+            ]
+          },
+          "rejectionReasons": {
+            "minItems": 0,
+            "maxItems": 100,
+            "deprecated": true,
+            "description": "List of reasons for rejection, this will only be available if the status is REJECTED. This field is deprecated, use statusReasons instead.",
+            "readOnly": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "reviewDate": {
+            "format": "date-time",
+            "description": "The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "name": {
+            "description": "The study name.",
+            "type": "string"
+          },
+          "comment": {
+            "description": "The approver's comment on why the study is approved/rejected.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "links": {
+            "minItems": 0,
+            "maxItems": 100,
+            "readOnly": true,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceLinkV1M1"
+            }
+          },
+          "id": {
+            "description": "The study canonical identifier. Immutable field. This is required for update.",
+            "type": "string"
+          },
+          "startDate": {
+            "format": "date-time",
+            "description": "The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StudyStatusV1"
+          },
+          "createDate": {
+            "format": "date-time",
+            "description": "The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+            "readOnly": true,
+            "type": "string"
+          }
+        }
+      },
       "SurveyQuestionObjectiveTypeV1": {
         "description": "The survey objective.",
         "readOnly": true,
         "type": "string",
         "enum": [
-          "AIDED_AWARENESS",
+          "AWARENESS",
           "PREFERENCE",
           "FAVORABILITY",
           "AD_RECALL",
           "INTENT",
           "ATTITUDES"
         ]
+      },
+      "GridQuestionResponsesV1M1": {
+        "description": "The grid question response object. Only applicable for SINGLE_SELECT_GRID type question.",
+        "type": "object",
+        "properties": {
+          "columns": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyQuestionPlaceholderFieldValueV1"
+            }
+          },
+          "rows": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyQuestionPlaceholderFieldValueV1"
+            }
+          }
+        }
       },
       "PaginatedVendorProductPoliciesV1": {
         "description": "A list of measurement vendor products policies.",
@@ -2998,6 +3121,28 @@
           }
         }
       },
+      "TemplatedSurveyQuestionV1M1": {
+        "description": "The templated measurement survey question.",
+        "type": "object",
+        "properties": {
+          "gridQuestionResponse": {
+            "$ref": "#/components/schemas/GridQuestionResponsesV1M1"
+          },
+          "placeholders": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "List of question placeholders",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyQuestionPlaceholderV1"
+            }
+          },
+          "id": {
+            "description": "The survey question template canonical identifier.",
+            "type": "string"
+          }
+        }
+      },
       "PaginatedVendorProductPoliciesV1M1": {
         "description": "A list of measurement vendor products policies.",
         "type": "object",
@@ -3039,6 +3184,20 @@
             "items": {
               "$ref": "#/components/schemas/SubErrorV1"
             }
+          }
+        }
+      },
+      "ResourceLinkV1M1": {
+        "description": "The link that can be used to access corresponding resources in advertising portal.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The resource name.",
+            "type": "string"
+          },
+          "url": {
+            "description": "The resource url.",
+            "type": "string"
           }
         }
       },
@@ -3114,27 +3273,6 @@
           }
         }
       },
-      "CustomSurveyQuestionV1M1": {
-        "description": "The customed measurement survey question.",
-        "type": "object",
-        "properties": {
-          "responses": {
-            "minItems": 0,
-            "maxItems": 100,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomSurveyQuestionResponseV1M1"
-            }
-          },
-          "type": {
-            "$ref": "#/components/schemas/SurveyQuestionTypeV1M1"
-          },
-          "questionText": {
-            "description": "The survey question text.",
-            "type": "string"
-          }
-        }
-      },
       "VendorTypeV1M1": {
         "description": "The measurement vendor type, each study type will have different supported vendors.",
         "readOnly": true,
@@ -3165,6 +3303,34 @@
             "items": {
               "$ref": "#/components/schemas/SurveyQuestionPlaceholderFieldValueV1"
             }
+          }
+        }
+      },
+      "DSPCampaignMeasurementMetadataV1M1": {
+        "description": "The basic model for all DSP CAMPAIGN_MEASUREMENT objective studies.",
+        "type": "object",
+        "properties": {
+          "excludedLineItemIds": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "A list of canonical lineItem identifiers that are excluded from the study.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "orderIds": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "A list of canonical order identifiers that are associated with the study. By default all lineItems in those orders will be included.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "advertiserId": {
+            "description": "The associated advertiser identifier. Immutable field.",
+            "type": "string"
           }
         }
       },
@@ -3400,7 +3566,8 @@
           "REJECTED",
           "ENDED",
           "CANCELLED",
-          "DRAFT"
+          "DRAFT",
+          "INFEASIBLE"
         ]
       },
       "MeasurementCountryV1": {
@@ -3565,6 +3732,7 @@
         ]
       },
       "CustomSurveyQuestionV1": {
+        "deprecated": true,
         "description": "The templated measurement survey question.",
         "type": "object",
         "properties": {
@@ -3662,6 +3830,11 @@
           "fundingType": {
             "$ref": "#/components/schemas/FundingTypeV1M1"
           },
+          "displayName": {
+            "description": "The vendor product display name.",
+            "readOnly": true,
+            "type": "string"
+          },
           "studyType": {
             "$ref": "#/components/schemas/StudyTypeV1"
           },
@@ -3687,7 +3860,7 @@
         "readOnly": true,
         "type": "string",
         "enum": [
-          "AIDED_AWARENESS",
+          "AWARENESS",
           "PREFERENCE",
           "FAVORABILITY",
           "AD_RECALL",
@@ -3775,20 +3948,6 @@
             "items": {
               "$ref": "#/components/schemas/SubErrorV1"
             }
-          }
-        }
-      },
-      "CustomSurveyQuestionResponseV1M1": {
-        "description": "The object specifying a response in custom survey question.",
-        "type": "object",
-        "properties": {
-          "value": {
-            "description": "The custom survey question response text value.",
-            "type": "string"
-          },
-          "isQualifying": {
-            "description": "Whether if the response is a qualifying response.",
-            "type": "boolean"
           }
         }
       },
@@ -4111,10 +4270,10 @@
       "DSPBrandLiftStudyV1M1": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/BaseStudyV1"
+            "$ref": "#/components/schemas/BaseStudyV1M1"
           },
           {
-            "$ref": "#/components/schemas/DSPCampaignMeasurementMetadataV1"
+            "$ref": "#/components/schemas/DSPCampaignMeasurementMetadataV1M1"
           },
           {
             "$ref": "#/components/schemas/DSPBrandLiftMetadataV1M1"
@@ -4229,10 +4388,21 @@
         "description": "Review an study.",
         "type": "object",
         "properties": {
+          "statusReasons": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "List of reasons for study status. For example, when study is marked REJECTED or INELIGIBLE, this field would be available.",
+            "readOnly": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "rejectionReasons": {
             "minItems": 0,
             "maxItems": 100,
-            "description": "List of reasons for rejection, this will only be required if the status is REJECTED.",
+            "deprecated": true,
+            "description": "List of reasons for rejection, this will only be required if the status is REJECTED. This field is deprecated, use statusReasons instead.",
             "type": "array",
             "items": {
               "type": "string"
@@ -4340,7 +4510,8 @@
         "type": "string",
         "enum": [
           "APPROVED",
-          "REJECTED"
+          "REJECTED",
+          "INFEASIBLE"
         ]
       },
       "EligibilityMetadataV1": {
@@ -4521,6 +4692,7 @@
           "customQuestions": {
             "minItems": 1,
             "maxItems": 100,
+            "deprecated": true,
             "description": "A list of custom survey questions.",
             "type": "array",
             "items": {
@@ -4599,6 +4771,16 @@
         "description": "The base study object.",
         "type": "object",
         "properties": {
+          "statusReasons": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.",
+            "readOnly": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "surveyId": {
             "description": "The study survey canonical identifier.",
             "type": "string"
@@ -4633,7 +4815,8 @@
           "rejectionReasons": {
             "minItems": 0,
             "maxItems": 100,
-            "description": "List of reasons for rejection, this will only be available if the status is REJECTED.",
+            "deprecated": true,
+            "description": "List of reasons for rejection, this will only be available if the status is REJECTED. This field is deprecated, use statusReasons instead.",
             "readOnly": true,
             "type": "array",
             "items": {
@@ -4929,16 +5112,17 @@
             "description": "A list of templated survey questions.",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TemplatedSurveyQuestionV1"
+              "$ref": "#/components/schemas/TemplatedSurveyQuestionV1M1"
             }
           },
           "customQuestions": {
             "minItems": 1,
             "maxItems": 100,
+            "deprecated": true,
             "description": "A list of custom survey questions.",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/CustomSurveyQuestionV1M1"
+              "$ref": "#/components/schemas/CustomSurveyQuestionV1"
             }
           },
           "studyId": {

@@ -213,17 +213,17 @@ export const SCHEMAS: Schema[] = [
 	},
 	{
 		name: 'Sponsored Brands - Stores',
-		schemaUrl: '',
+		schemaUrl: 'http://localhost/custom-schemas/sponsored-brands-stores',
 		version: '',
 	},
 	{
 		name: 'Sponsored Brands - Reports',
-		schemaUrl: '',
+		schemaUrl: 'http://localhost/custom-schemas/sponsored-brands-reports',
 		version: '',
 	},
 	{
 		name: 'Sponsored Brands - Snapshots',
-		schemaUrl: '',
+		schemaUrl: 'http://localhost/custom-schemas/sponsored-brands-snapshots',
 		version: '',
 	},
 	{

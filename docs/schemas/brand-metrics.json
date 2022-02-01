@@ -24,7 +24,7 @@
           "400": {
             "description": "Bad Request.",
             "content": {
-              "application/vnd.insightsBrandMetrics.v1+json": {
+              "application/vnd.insightsBrandMetricsError.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/brandMetricsError"
                 }
@@ -34,7 +34,7 @@
           "401": {
             "description": "Unauthorized. Request failed because user is not authenticated or is not allowed to invoke the operation.",
             "content": {
-              "application/vnd.insightsBrandMetrics.v1+json": {
+              "application/vnd.insightsBrandMetricsError.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/brandMetricsError"
                 }
@@ -44,7 +44,7 @@
           "403": {
             "description": "Forbidden. Request failed because user does not have access to a specified resource.",
             "content": {
-              "application/vnd.insightsBrandMetrics.v1+json": {
+              "application/vnd.insightsBrandMetricsError.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/brandMetricsError"
                 }
@@ -54,7 +54,7 @@
           "422": {
             "description": "Unprocessable Entity - Request was understood, but contained invalid parameters.",
             "content": {
-              "application/vnd.insightsBrandMetrics.v1+json": {
+              "application/vnd.insightsBrandMetricsError.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/brandMetricsError"
                 }
@@ -64,7 +64,7 @@
           "429": {
             "description": "Too many requests. The request was rate-limited. Retry later.",
             "content": {
-              "application/vnd.insightsBrandMetrics.v1+json": {
+              "application/vnd.insightsBrandMetricsError.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/brandMetricsError"
                 }
@@ -74,7 +74,7 @@
           "500": {
             "description": "Internal server error. Retry later. Contact support if this response persists.",
             "content": {
-              "application/vnd.insightsBrandMetrics.v1+json": {
+              "application/vnd.insightsBrandMetricsError.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/brandMetricsError"
                 }
@@ -146,7 +146,7 @@
           "400": {
             "description": "Bad Request.",
             "content": {
-              "application/vnd.insightsBrandMetrics.v1+json": {
+              "application/vnd.insightsBrandMetricsError.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/brandMetricsError"
                 }
@@ -156,7 +156,7 @@
           "401": {
             "description": "Unauthorized. Request failed because user is not authenticated or is not allowed to invoke the operation.",
             "content": {
-              "application/vnd.insightsBrandMetrics.v1+json": {
+              "application/vnd.insightsBrandMetricsError.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/brandMetricsError"
                 }
@@ -166,7 +166,7 @@
           "403": {
             "description": "Forbidden. Request failed because user does not have access to a specified resource.",
             "content": {
-              "application/vnd.insightsBrandMetrics.v1+json": {
+              "application/vnd.insightsBrandMetricsError.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/brandMetricsError"
                 }
@@ -176,7 +176,7 @@
           "422": {
             "description": "Unprocessable Entity - Request was understood, but contained invalid parameters",
             "content": {
-              "application/vnd.insightsBrandMetrics.v1+json": {
+              "application/vnd.insightsBrandMetricsError.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/brandMetricsError"
                 }
@@ -186,7 +186,7 @@
           "429": {
             "description": "Too many requests. The request was rate-limited. Retry later.",
             "content": {
-              "application/vnd.insightsBrandMetrics.v1+json": {
+              "application/vnd.insightsBrandMetricsError.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/brandMetricsError"
                 }
@@ -196,7 +196,7 @@
           "500": {
             "description": "Internal server error. Retry later. Contact support if this response persists.",
             "content": {
-              "application/vnd.insightsBrandMetrics.v1+json": {
+              "application/vnd.insightsBrandMetricsError.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/brandMetricsError"
                 }
@@ -329,7 +329,6 @@
           "format",
           "status",
           "statusDetails",
-          "location",
           "expiration"
         ]
       },
@@ -1007,6 +1006,27 @@
             "type": "string",
             "example": "1111123123"
           },
+          "brandsInfo": {
+            "minItems": 0,
+            "maxItems": 200,
+            "description": "List of first 200 brands for which the Brand Metrics report is generated. The report may contain more than 200 brands. This list is only populated with brands if the Brand Metrics are available for the brands that an advertiser has access to.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "description": "Brand Name",
+                  "type": "string",
+                  "example": "Mattress Mogul"
+                },
+                "id": {
+                  "description": "Id",
+                  "type": "string",
+                  "example": "BRAND|BRAND_AID|1105e623-c816-3dce-b47f-da12aa762188"
+                }
+              }
+            }
+          },
           "format": {
             "default": "JSON",
             "description": "Format of the report",
@@ -1021,7 +1041,7 @@
             "type": "string"
           },
           "location": {
-            "description": "The URI address of the report.",
+            "description": "The URI address of the report. Only available if the report is generated successfully. The location is empty if the Brand Metrics are not available or if the report is not generated successfully.",
             "type": "string",
             "example": "https://bbm-eu-west-1-6213123.s3-eu-west-1.amazonaws.com/report.csv"
           },
@@ -1045,7 +1065,6 @@
           "format",
           "status",
           "statusDetails",
-          "location",
           "expiration"
         ]
       },

@@ -7,7 +7,7 @@
   "paths": {
     "/sp/targets/bid/recommendations": {
       "post": {
-        "summary": "The current version of the theme-based bid recommendation resource supports auto-targeting expressions only. Note that the currency for bid recommendations are in local currency units.",
+        "summary": "The current version of the theme-based bid recommendation service supports auto-targeting and keyword targeting expressions only. Note that the currency for bid recommendations are in local currency units.",
         "requestBody": {
           "content": {
             "application/vnd.spthemebasedbidrecommendation.v3+json": {

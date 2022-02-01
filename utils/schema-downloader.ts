@@ -58,7 +58,7 @@ const saveSchemaFile = (schema: Schema, data: any) => {
  */
 const createSchemaDocsMapping = () => {
 	const schemaMap = SCHEMAS.map((schema) => {
-		const schemaFolder = schema.schemaUrl?.length === 0 ? 'custom-schemas' : 'schemas';
+		const schemaFolder = schema.schemaUrl.includes('localhost') ? 'custom-schemas' : 'schemas';
 		return {
 			name: schema.name,
 			url: `./${schemaFolder}/${kebabSchemaName(schema.name, 'json')}`,

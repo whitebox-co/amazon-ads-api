@@ -201,6 +201,95 @@ export enum AapMobileAppTargetingV3DeviceOrientationTargetingEnum {
 }
 
 /**
+ * 
+ * @export
+ * @interface AapMobileAppTargetingV31
+ */
+export interface AapMobileAppTargetingV31 {
+    /**
+     * 
+     * @type {MobileAppThirdPartyPreBidTargetingV31}
+     * @memberof AapMobileAppTargetingV31
+     */
+    thirdPartyPreBidTargeting?: MobileAppThirdPartyPreBidTargetingV31;
+    /**
+     * 
+     * @type {UserLocationTargetingV3}
+     * @memberof AapMobileAppTargetingV31
+     */
+    userLocationTargeting?: UserLocationTargetingV3;
+    /**
+     * 
+     * @type {AmazonViewabilityTargeting}
+     * @memberof AapMobileAppTargetingV31
+     */
+    amazonViewabilityTargeting?: AmazonViewabilityTargeting;
+    /**
+     * 
+     * @type {SupplyTargeting}
+     * @memberof AapMobileAppTargetingV31
+     */
+    supplyTargeting?: SupplyTargeting;
+    /**
+     * 
+     * @type {GeoLocationTargeting}
+     * @memberof AapMobileAppTargetingV31
+     */
+    geoLocationTargeting?: GeoLocationTargeting;
+    /**
+     * 
+     * @type {SegmentTargeting}
+     * @memberof AapMobileAppTargetingV31
+     */
+    segmentTargeting?: SegmentTargeting;
+    /**
+     * 
+     * @type {DayPartTargeting}
+     * @memberof AapMobileAppTargetingV31
+     */
+    dayPartTargeting?: DayPartTargeting;
+    /**
+     * 
+     * @type {MobileAppTargeting}
+     * @memberof AapMobileAppTargetingV31
+     */
+    mobileAppTargeting?: MobileAppTargeting;
+    /**
+     * The targeted mobile application device type. Note that this is applicable only for the `AAP_MOBILE APP` type of line item. It is required input for `AAP_MOBILE APP` line item type.
+     * @type {Array<string>}
+     * @memberof AapMobileAppTargetingV31
+     */
+    deviceTypeTargeting?: Array<AapMobileAppTargetingV31DeviceTypeTargetingEnum>;
+    /**
+     * The mobile device orientation targeting type.
+     * @type {string}
+     * @memberof AapMobileAppTargetingV31
+     */
+    deviceOrientationTargeting?: AapMobileAppTargetingV31DeviceOrientationTargetingEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AapMobileAppTargetingV31DeviceTypeTargetingEnum {
+    Iphone = 'IPHONE',
+    Ipad = 'IPAD',
+    Android = 'ANDROID',
+    KindleFire = 'KINDLE_FIRE',
+    KindleFireHd = 'KINDLE_FIRE_HD'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AapMobileAppTargetingV31DeviceOrientationTargetingEnum {
+    Any = 'ANY',
+    Portrait = 'PORTRAIT',
+    Landscape = 'LANDSCAPE'
+}
+
+/**
  * The service fee associated with an agency.
  * @export
  * @interface AgencyFee
@@ -345,6 +434,67 @@ export interface AmazonMobileDisplayTargetingV3 {
      * Set to `true` to enable contextual targeting. Contextual targeting targets the detail page of products that are frequently viewed or purchased with the products in your ad. Note that this feature applies to Dynamic eCommerce ads only.
      * @type {boolean}
      * @memberof AmazonMobileDisplayTargetingV3
+     */
+    contextualTargeting?: boolean;
+}
+/**
+ * 
+ * @export
+ * @interface AmazonMobileDisplayTargetingV31
+ */
+export interface AmazonMobileDisplayTargetingV31 {
+    /**
+     * 
+     * @type {MobileDisplayThirdPartyPreBidTargetingV31}
+     * @memberof AmazonMobileDisplayTargetingV31
+     */
+    thirdPartyPreBidTargeting?: MobileDisplayThirdPartyPreBidTargetingV31;
+    /**
+     * 
+     * @type {UserLocationTargetingV3}
+     * @memberof AmazonMobileDisplayTargetingV31
+     */
+    userLocationTargeting?: UserLocationTargetingV3;
+    /**
+     * 
+     * @type {AmazonViewabilityTargeting}
+     * @memberof AmazonMobileDisplayTargetingV31
+     */
+    amazonViewabilityTargeting?: AmazonViewabilityTargeting;
+    /**
+     * 
+     * @type {SupplyTargeting}
+     * @memberof AmazonMobileDisplayTargetingV31
+     */
+    supplyTargeting?: SupplyTargeting;
+    /**
+     * 
+     * @type {GeoLocationTargeting}
+     * @memberof AmazonMobileDisplayTargetingV31
+     */
+    geoLocationTargeting?: GeoLocationTargeting;
+    /**
+     * 
+     * @type {SegmentTargeting}
+     * @memberof AmazonMobileDisplayTargetingV31
+     */
+    segmentTargeting?: SegmentTargeting;
+    /**
+     * 
+     * @type {DayPartTargeting}
+     * @memberof AmazonMobileDisplayTargetingV31
+     */
+    dayPartTargeting?: DayPartTargeting;
+    /**
+     * 
+     * @type {MobileOsTargeting}
+     * @memberof AmazonMobileDisplayTargetingV31
+     */
+    mobileOsTargeting?: MobileOsTargeting;
+    /**
+     * Set to `true` to enable contextual targeting. Contextual targeting targets the detail page of products that are frequently viewed or purchased with the products in your ad. Note that this feature applies to Dynamic eCommerce ads only.
+     * @type {boolean}
+     * @memberof AmazonMobileDisplayTargetingV31
      */
     contextualTargeting?: boolean;
 }
@@ -4502,6 +4652,37 @@ export interface LineItemTargetingV3 {
     videoTargeting?: VideoTargetingV3;
 }
 /**
+ * 
+ * @export
+ * @interface LineItemTargetingV31
+ */
+export interface LineItemTargetingV31 {
+    /**
+     * 
+     * @type {StandardDisplayTargetingV31}
+     * @memberof LineItemTargetingV31
+     */
+    standardDisplayTargeting?: StandardDisplayTargetingV31;
+    /**
+     * 
+     * @type {AapMobileAppTargetingV31}
+     * @memberof LineItemTargetingV31
+     */
+    aapMobileAppTargeting?: AapMobileAppTargetingV31;
+    /**
+     * 
+     * @type {AmazonMobileDisplayTargetingV31}
+     * @memberof LineItemTargetingV31
+     */
+    amazonMobileDisplayTargeting?: AmazonMobileDisplayTargetingV31;
+    /**
+     * 
+     * @type {VideoTargetingV31}
+     * @memberof LineItemTargetingV31
+     */
+    videoTargeting?: VideoTargetingV31;
+}
+/**
  * The line item type.
  * @export
  * @enum {string}
@@ -4796,6 +4977,139 @@ export interface LineItemV3 {
 /**
  * 
  * @export
+ * @interface LineItemV31
+ */
+export interface LineItemV31 {
+    /**
+     * 
+     * @type {LineItemTargetingV31}
+     * @memberof LineItemV31
+     */
+    targeting?: LineItemTargetingV31;
+    /**
+     * The line item identifier. This is required when we perform update operations. Immutable field.
+     * @type {string}
+     * @memberof LineItemV31
+     */
+    lineItemId?: string;
+    /**
+     * 
+     * @type {LineItemTypeV21}
+     * @memberof LineItemV31
+     */
+    lineItemType: LineItemTypeV21;
+    /**
+     * The line item name.
+     * @type {string}
+     * @memberof LineItemV31
+     */
+    name: string;
+    /**
+     * The order to which the line item is associated. Immutable field.
+     * @type {string}
+     * @memberof LineItemV31
+     */
+    orderId: string;
+    /**
+     * The external identifier of the line item.
+     * @type {string}
+     * @memberof LineItemV31
+     */
+    externalId?: string;
+    /**
+     * The line item start date in ISO date format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-07-16T19:20:30+01:00.
+     * @type {string}
+     * @memberof LineItemV31
+     */
+    startDateTime: string;
+    /**
+     * The line item end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-07-16T19:20:30+01:00
+     * @type {string}
+     * @memberof LineItemV31
+     */
+    endDateTime: string;
+    /**
+     * The line item comments.
+     * @type {string}
+     * @memberof LineItemV31
+     */
+    comments?: string;
+    /**
+     * 
+     * @type {DeliveryActivationStatus}
+     * @memberof LineItemV31
+     */
+    deliveryActivationStatus?: DeliveryActivationStatus;
+    /**
+     * 
+     * @type {LineItemDeliveryStatus}
+     * @memberof LineItemV31
+     */
+    deliveryStatus?: LineItemDeliveryStatus;
+    /**
+     * 
+     * @type {LineItemClassification}
+     * @memberof LineItemV31
+     */
+    lineItemClassification: LineItemClassification;
+    /**
+     * 
+     * @type {FrequencyCap}
+     * @memberof LineItemV31
+     */
+    frequencyCap: FrequencyCap;
+    /**
+     * 
+     * @type {LineItemBudget}
+     * @memberof LineItemV31
+     */
+    budget?: LineItemBudget;
+    /**
+     * 
+     * @type {CurrencyCodeV3}
+     * @memberof LineItemV31
+     */
+    currencyCode?: CurrencyCodeV3;
+    /**
+     * 
+     * @type {AppliedFees}
+     * @memberof LineItemV31
+     */
+    appliedFees?: AppliedFees;
+    /**
+     * 
+     * @type {Bidding}
+     * @memberof LineItemV31
+     */
+    bidding: Bidding;
+    /**
+     * 
+     * @type {LineItemOptimization}
+     * @memberof LineItemV31
+     */
+    optimization: LineItemOptimization;
+    /**
+     * 
+     * @type {CreativeOptions}
+     * @memberof LineItemV31
+     */
+    creativeOptions?: CreativeOptions;
+    /**
+     * The line item creation date.
+     * @type {string}
+     * @memberof LineItemV31
+     */
+    creationDate?: string;
+    /**
+     * The line item last updated date.
+     * @type {string}
+     * @memberof LineItemV31
+     */
+    lastUpdatedDate?: string;
+}
+/**
+ * 
+ * @export
  * @interface LineItems
  */
 export interface LineItems {
@@ -5054,14 +5368,45 @@ export interface MobileAppThirdPartyPreBidTargeting {
     doubleVerify?: MobileAppDoubleVerify;
     /**
      * 
-     * @type {OracleDataCloud}
+     * @type {OracleDataCloudV3}
      * @memberof MobileAppThirdPartyPreBidTargeting
      */
-    oracleDataCloud?: OracleDataCloud;
+    oracleDataCloud?: OracleDataCloudV3;
     /**
      * 
      * @type {MobileAppIntegralAdScience}
      * @memberof MobileAppThirdPartyPreBidTargeting
+     */
+    integralAdScience?: MobileAppIntegralAdScience;
+}
+/**
+ * 
+ * @export
+ * @interface MobileAppThirdPartyPreBidTargetingV31
+ */
+export interface MobileAppThirdPartyPreBidTargetingV31 {
+    /**
+     * 
+     * @type {OracleDataCloudV31}
+     * @memberof MobileAppThirdPartyPreBidTargetingV31
+     */
+    oracleDataCloud?: OracleDataCloudV31;
+    /**
+     * 
+     * @type {Pixalate}
+     * @memberof MobileAppThirdPartyPreBidTargetingV31
+     */
+    pixalate?: Pixalate;
+    /**
+     * 
+     * @type {MobileAppDoubleVerify}
+     * @memberof MobileAppThirdPartyPreBidTargetingV31
+     */
+    doubleVerify?: MobileAppDoubleVerify;
+    /**
+     * 
+     * @type {MobileAppIntegralAdScience}
+     * @memberof MobileAppThirdPartyPreBidTargetingV31
      */
     integralAdScience?: MobileAppIntegralAdScience;
 }
@@ -5111,6 +5456,31 @@ export interface MobileDisplayThirdPartyPreBidTargeting {
     integralAdScience?: MobileDisplayIntegralAdScience;
 }
 /**
+ * 
+ * @export
+ * @interface MobileDisplayThirdPartyPreBidTargetingV31
+ */
+export interface MobileDisplayThirdPartyPreBidTargetingV31 {
+    /**
+     * 
+     * @type {Pixalate}
+     * @memberof MobileDisplayThirdPartyPreBidTargetingV31
+     */
+    pixalate?: Pixalate;
+    /**
+     * 
+     * @type {MobileDisplayDoubleVerify}
+     * @memberof MobileDisplayThirdPartyPreBidTargetingV31
+     */
+    doubleVerify?: MobileDisplayDoubleVerify;
+    /**
+     * 
+     * @type {MobileDisplayIntegralAdScience}
+     * @memberof MobileDisplayThirdPartyPreBidTargetingV31
+     */
+    integralAdScience?: MobileDisplayIntegralAdScience;
+}
+/**
  * The mobile operating system targeting type.
  * @export
  * @enum {string}
@@ -5148,24 +5518,47 @@ export interface ModelError {
     errors?: Array<SubError>;
 }
 /**
- * 
+ * The ODC viewability standard.
  * @export
- * @interface OdcCustomPredict
+ * @interface ODCViewability
  */
-export interface OdcCustomPredict {
+export interface ODCViewability {
     /**
-     * The segment identifier.
+     * The viewability standard.
      * @type {string}
-     * @memberof OdcCustomPredict
+     * @memberof ODCViewability
      */
-    id: string;
+    standard: ODCViewabilityStandardEnum;
     /**
-     * The segment name.
+     * The type of ODC MRC viewability tier.
      * @type {string}
-     * @memberof OdcCustomPredict
+     * @memberof ODCViewability
      */
-    name: string;
+    viewabilityTargeting: ODCViewabilityViewabilityTargetingEnum;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ODCViewabilityStandardEnum {
+    None = 'NONE',
+    Mrc = 'MRC'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ODCViewabilityViewabilityTargetingEnum {
+    _80 = 'VIEWABILITY_TIER_GT_80',
+    _70 = 'VIEWABILITY_TIER_GT_70',
+    _60 = 'VIEWABILITY_TIER_GT_60',
+    _50 = 'VIEWABILITY_TIER_GT_50',
+    _40 = 'VIEWABILITY_TIER_GT_40',
+    _30 = 'VIEWABILITY_TIER_GT_30',
+    _20 = 'VIEWABILITY_TIER_GT_20'
+}
+
 /**
  * 
  * @export
@@ -5180,10 +5573,48 @@ export interface OdcCustomPredicts {
     nextToken?: string;
     /**
      * 
-     * @type {Array<OdcCustomPredict>}
+     * @type {Array<OdcPredict>}
      * @memberof OdcCustomPredicts
      */
-    customPredicts?: Array<OdcCustomPredict>;
+    customPredicts?: Array<OdcPredict>;
+}
+/**
+ * 
+ * @export
+ * @interface OdcPredict
+ */
+export interface OdcPredict {
+    /**
+     * The segment identifier.
+     * @type {string}
+     * @memberof OdcPredict
+     */
+    id: string;
+    /**
+     * The segment name.
+     * @type {string}
+     * @memberof OdcPredict
+     */
+    name: string;
+}
+/**
+ * 
+ * @export
+ * @interface OdcStandardPredicts
+ */
+export interface OdcStandardPredicts {
+    /**
+     * 
+     * @type {string}
+     * @memberof OdcStandardPredicts
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<OdcPredict>}
+     * @memberof OdcStandardPredicts
+     */
+    standardPredicts?: Array<OdcPredict>;
 }
 /**
  * Oracle Data Cloud is a third party provider in digital ad verification. Oracle Data Cloud offers technologies to drive high-quality advertising media.
@@ -5272,6 +5703,102 @@ export enum OracleDataCloudBrandSafetyEssentialProtectionEnum {
     Obscenity = 'OBSCENITY',
     Terrorism = 'TERRORISM',
     Tobacco = 'TOBACCO'
+}
+
+/**
+ * 
+ * @export
+ * @interface OracleDataCloudV3
+ */
+export interface OracleDataCloudV3 {
+    /**
+     * 
+     * @type {ODCViewability}
+     * @memberof OracleDataCloudV3
+     */
+    viewability?: ODCViewability;
+    /**
+     * 
+     * @type {OracleDataCloudBrandSafety}
+     * @memberof OracleDataCloudV3
+     */
+    brandSafety?: OracleDataCloudBrandSafety;
+    /**
+     * The fraud invalid traffic type.
+     * @type {string}
+     * @memberof OracleDataCloudV3
+     */
+    fraudInvalidTraffic?: OracleDataCloudV3FraudInvalidTrafficEnum;
+    /**
+     * The custom segment identifier.
+     * @type {string}
+     * @memberof OracleDataCloudV3
+     */
+    customSegmentId?: string;
+    /**
+     * The custom segment predict identifier.
+     * @type {string}
+     * @memberof OracleDataCloudV3
+     */
+    contextualPredictsSegmentId?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum OracleDataCloudV3FraudInvalidTrafficEnum {
+    AllowAll = 'ALLOW_ALL',
+    FraudInvalidTrafficEssentialProtection = 'FRAUD_INVALID_TRAFFIC_ESSENTIAL_PROTECTION',
+    FraudInvalidTrafficMaximumProtection = 'FRAUD_INVALID_TRAFFIC_MAXIMUM_PROTECTION'
+}
+
+/**
+ * 
+ * @export
+ * @interface OracleDataCloudV31
+ */
+export interface OracleDataCloudV31 {
+    /**
+     * The standard predict segment identifiers.
+     * @type {Array<string>}
+     * @memberof OracleDataCloudV31
+     */
+    standardPredictsSegmentIds?: Array<string>;
+    /**
+     * 
+     * @type {OracleDataCloudBrandSafety}
+     * @memberof OracleDataCloudV31
+     */
+    brandSafety?: OracleDataCloudBrandSafety;
+    /**
+     * The fraud invalid traffic type.
+     * @type {string}
+     * @memberof OracleDataCloudV31
+     */
+    fraudInvalidTraffic?: OracleDataCloudV31FraudInvalidTrafficEnum;
+    /**
+     * The custom segment identifier.
+     * @type {string}
+     * @memberof OracleDataCloudV31
+     */
+    customSegmentId?: string;
+    /**
+     * The custom segment predict identifier.
+     * @type {string}
+     * @memberof OracleDataCloudV31
+     */
+    contextualPredictsSegmentId?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum OracleDataCloudV31FraudInvalidTrafficEnum {
+    AllowAll = 'ALLOW_ALL',
+    FraudInvalidTrafficEssentialProtection = 'FRAUD_INVALID_TRAFFIC_ESSENTIAL_PROTECTION',
+    FraudInvalidTrafficMaximumProtection = 'FRAUD_INVALID_TRAFFIC_MAXIMUM_PROTECTION'
 }
 
 /**
@@ -6146,6 +6673,50 @@ export enum PacingCatchUpBoostEnum {
 }
 
 /**
+ * Pixalate is a third party provider for digital ad verification. Pixalate offers technologies that drive high-quality advertising media.
+ * @export
+ * @interface Pixalate
+ */
+export interface Pixalate {
+    /**
+     * 
+     * @type {PixalateFraudInvalidTraffic}
+     * @memberof Pixalate
+     */
+    fraudInvalidTraffic?: PixalateFraudInvalidTraffic;
+}
+/**
+ * 
+ * @export
+ * @interface PixalateFraudInvalidTraffic
+ */
+export interface PixalateFraudInvalidTraffic {
+    /**
+     * Set to `true` to exclude traffic from IPV4 and IPV6 addresses and usger agents identified to to be fraudulent or invalid.
+     * @type {boolean}
+     * @memberof PixalateFraudInvalidTraffic
+     */
+    excludeIpAddressAndUserAgents?: boolean;
+    /**
+     * Set to `true` to exclude traffic from OTT and Mobile devices identified to be fraudulent or invalid.
+     * @type {boolean}
+     * @memberof PixalateFraudInvalidTraffic
+     */
+    excludeOttAndMobileDevices?: boolean;
+    /**
+     * Set to `true` to exclude traffic from Apps and Domains identified to be fraudulent or invalid.
+     * @type {boolean}
+     * @memberof PixalateFraudInvalidTraffic
+     */
+    excludeAppsAndDomains?: boolean;
+    /**
+     * Set to `true` to exlude traffic from Apps that have been removed from the google play and apple app stores in the last 6 months.
+     * @type {boolean}
+     * @memberof PixalateFraudInvalidTraffic
+     */
+    excludeRemovedAppsFromAppStores?: boolean;
+}
+/**
  * 
  * @export
  * @interface Pixel
@@ -6811,6 +7382,102 @@ export enum StandardDisplayTargetingV3DeviceTypeTargetingEnum {
 }
 
 /**
+ * 
+ * @export
+ * @interface StandardDisplayTargetingV31
+ */
+export interface StandardDisplayTargetingV31 {
+    /**
+     * 
+     * @type {StandardDisplayThirdPartyPreBidTargetingV31}
+     * @memberof StandardDisplayTargetingV31
+     */
+    thirdPartyPreBidTargeting?: StandardDisplayThirdPartyPreBidTargetingV31;
+    /**
+     * 
+     * @type {UserLocationTargetingV3}
+     * @memberof StandardDisplayTargetingV31
+     */
+    userLocationTargeting?: UserLocationTargetingV3;
+    /**
+     * 
+     * @type {AmazonViewabilityTargeting}
+     * @memberof StandardDisplayTargetingV31
+     */
+    amazonViewabilityTargeting?: AmazonViewabilityTargeting;
+    /**
+     * 
+     * @type {SupplyTargeting}
+     * @memberof StandardDisplayTargetingV31
+     */
+    supplyTargeting?: SupplyTargeting;
+    /**
+     * 
+     * @type {GeoLocationTargeting}
+     * @memberof StandardDisplayTargetingV31
+     */
+    geoLocationTargeting?: GeoLocationTargeting;
+    /**
+     * 
+     * @type {SegmentTargeting}
+     * @memberof StandardDisplayTargetingV31
+     */
+    segmentTargeting?: SegmentTargeting;
+    /**
+     * 
+     * @type {DayPartTargeting}
+     * @memberof StandardDisplayTargetingV31
+     */
+    dayPartTargeting?: DayPartTargeting;
+    /**
+     * 
+     * @type {DomainList}
+     * @memberof StandardDisplayTargetingV31
+     */
+    domainListTargeting?: DomainList;
+    /**
+     * The targeted device type for standard display line item type. It is required input for `STANDARD_DISPLAY` line item type.
+     * @type {string}
+     * @memberof StandardDisplayTargetingV31
+     */
+    deviceTypeTargeting?: StandardDisplayTargetingV31DeviceTypeTargetingEnum;
+    /**
+     * 
+     * @type {MobileOsTargeting}
+     * @memberof StandardDisplayTargetingV31
+     */
+    mobileOsTargeting?: MobileOsTargeting;
+    /**
+     * 
+     * @type {SiteLanguageTargetingV3}
+     * @memberof StandardDisplayTargetingV31
+     */
+    siteLanguageTargeting?: SiteLanguageTargetingV3;
+    /**
+     * The IAB content category type. IAB content categories enable advertisers to target websites according to their subject matter by scanning their content. This helps deliver ads to relevant sites while ensuring that the ads are not displayed near undesirable content.
+     * @type {Array<string>}
+     * @memberof StandardDisplayTargetingV31
+     */
+    contentTargeting?: Array<string>;
+    /**
+     * Set to `true` to enable contextual targeting. Contextual targeting targets the detail page of products that are frequently viewed or purchased with the products in your ad. Note that this feature applies to Dynamic eCommerce ads only.
+     * @type {boolean}
+     * @memberof StandardDisplayTargetingV31
+     */
+    contextualTargeting?: boolean;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum StandardDisplayTargetingV31DeviceTypeTargetingEnum {
+    DesktopAndMobile = 'DESKTOP_AND_MOBILE',
+    Mobile = 'MOBILE',
+    Desktop = 'DESKTOP'
+}
+
+/**
  * Amazon DSP automatically filters fraudulent and invalid traffic as well as unsafe content using a combination of proprietary technology and solutions from comScore and Sizmek. This service is available by default and at no extra charge for Amazon DSP customers. You may choose to augment the default filters with pre-bid targeting products offered by third parties. These services are currently offered at no charge.
  * @export
  * @interface StandardDisplayThirdPartyPreBidTargeting
@@ -6824,14 +7491,45 @@ export interface StandardDisplayThirdPartyPreBidTargeting {
     doubleVerify?: StandardDisplayDoubleVerify;
     /**
      * 
-     * @type {OracleDataCloud}
+     * @type {OracleDataCloudV3}
      * @memberof StandardDisplayThirdPartyPreBidTargeting
      */
-    oracleDataCloud?: OracleDataCloud;
+    oracleDataCloud?: OracleDataCloudV3;
     /**
      * 
      * @type {StandardDisplayIntegralAdScience}
      * @memberof StandardDisplayThirdPartyPreBidTargeting
+     */
+    integralAdScience?: StandardDisplayIntegralAdScience;
+}
+/**
+ * 
+ * @export
+ * @interface StandardDisplayThirdPartyPreBidTargetingV31
+ */
+export interface StandardDisplayThirdPartyPreBidTargetingV31 {
+    /**
+     * 
+     * @type {OracleDataCloudV31}
+     * @memberof StandardDisplayThirdPartyPreBidTargetingV31
+     */
+    oracleDataCloud?: OracleDataCloudV31;
+    /**
+     * 
+     * @type {Pixalate}
+     * @memberof StandardDisplayThirdPartyPreBidTargetingV31
+     */
+    pixalate?: Pixalate;
+    /**
+     * 
+     * @type {StandardDisplayDoubleVerify}
+     * @memberof StandardDisplayThirdPartyPreBidTargetingV31
+     */
+    doubleVerify?: StandardDisplayDoubleVerify;
+    /**
+     * 
+     * @type {StandardDisplayIntegralAdScience}
+     * @memberof StandardDisplayThirdPartyPreBidTargetingV31
      */
     integralAdScience?: StandardDisplayIntegralAdScience;
 }
@@ -7672,6 +8370,186 @@ export enum VideoTargetingV3VideoCompletionTargetingEnum {
 }
 
 /**
+ * 
+ * @export
+ * @interface VideoTargetingV31
+ */
+export interface VideoTargetingV31 {
+    /**
+     * 
+     * @type {VideoThirdPartyPreBidTargetingV31}
+     * @memberof VideoTargetingV31
+     */
+    thirdPartyPreBidTargeting?: VideoThirdPartyPreBidTargetingV31;
+    /**
+     * 
+     * @type {UserLocationTargetingV3}
+     * @memberof VideoTargetingV31
+     */
+    userLocationTargeting?: UserLocationTargetingV3;
+    /**
+     * 
+     * @type {AmazonViewabilityTargeting}
+     * @memberof VideoTargetingV31
+     */
+    amazonViewabilityTargeting?: AmazonViewabilityTargeting;
+    /**
+     * 
+     * @type {SupplyTargeting}
+     * @memberof VideoTargetingV31
+     */
+    supplyTargeting?: SupplyTargeting;
+    /**
+     * 
+     * @type {GeoLocationTargeting}
+     * @memberof VideoTargetingV31
+     */
+    geoLocationTargeting?: GeoLocationTargeting;
+    /**
+     * 
+     * @type {SegmentTargeting}
+     * @memberof VideoTargetingV31
+     */
+    segmentTargeting?: SegmentTargeting;
+    /**
+     * 
+     * @type {DayPartTargeting}
+     * @memberof VideoTargetingV31
+     */
+    dayPartTargeting?: DayPartTargeting;
+    /**
+     * 
+     * @type {DomainList}
+     * @memberof VideoTargetingV31
+     */
+    domainListTargeting?: DomainList;
+    /**
+     * The targeted device type for video line item type. A list of device types can be provided.
+     * @type {Array<string>}
+     * @memberof VideoTargetingV31
+     */
+    deviceTypeTargeting?: Array<VideoTargetingV31DeviceTypeTargetingEnum>;
+    /**
+     * The targeted mobile environment for video line item type. It is required only when `MOBILE` device type is selected.
+     * @type {Array<string>}
+     * @memberof VideoTargetingV31
+     */
+    mobileEnvironmentTargeting?: Array<VideoTargetingV31MobileEnvironmentTargetingEnum>;
+    /**
+     * 
+     * @type {SiteLanguageTargetingV3}
+     * @memberof VideoTargetingV31
+     */
+    siteLanguageTargeting?: SiteLanguageTargetingV3;
+    /**
+     * The IAB content category type. IAB content categories enable advertisers to target websites according to their subject matter by scanning their content. This helps deliver ads to relevant sites while ensuring that the ads are not displayed near undesirable content.
+     * @type {Array<string>}
+     * @memberof VideoTargetingV31
+     */
+    contentTargeting?: Array<string>;
+    /**
+     * Target video inventory by how the video will be started. A list can be provided. If ANY is selected, no other type can be provided.
+     * @type {Array<string>}
+     * @memberof VideoTargetingV31
+     */
+    videoInitiationTypeTargeting?: Array<VideoTargetingV31VideoInitiationTypeTargetingEnum>;
+    /**
+     * Target a specific type of ad slot used to serve the video. A list can be provided.
+     * @type {Array<string>}
+     * @memberof VideoTargetingV31
+     */
+    videoAdFormatTargeting?: Array<VideoTargetingV31VideoAdFormatTargetingEnum>;
+    /**
+     * Limit IN STREAM ad slot to full episode players (FEP).
+     * @type {boolean}
+     * @memberof VideoTargetingV31
+     */
+    limitToFepTargeting?: boolean;
+    /**
+     * Target video inventory by publisher’s player size. A list can be provided.
+     * @type {Array<string>}
+     * @memberof VideoTargetingV31
+     */
+    videoPlayerSizeTargeting?: Array<VideoTargetingV31VideoPlayerSizeTargetingEnum>;
+    /**
+     * These are predictions based on machine learning and aren’t guaranteed. Selecting a higher percentage limits overall reach.
+     * @type {string}
+     * @memberof VideoTargetingV31
+     */
+    videoCompletionTargeting?: VideoTargetingV31VideoCompletionTargetingEnum;
+    /**
+     * 
+     * @type {OttTargeting}
+     * @memberof VideoTargetingV31
+     */
+    ottTargeting?: OttTargeting;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum VideoTargetingV31DeviceTypeTargetingEnum {
+    Mobile = 'MOBILE',
+    Desktop = 'DESKTOP',
+    ConnectedTv = 'CONNECTED_TV'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum VideoTargetingV31MobileEnvironmentTargetingEnum {
+    Web = 'WEB',
+    App = 'APP'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum VideoTargetingV31VideoInitiationTypeTargetingEnum {
+    Any = 'ANY',
+    UserInitiatedOnly = 'USER_INITIATED_ONLY',
+    AutoplayOnly = 'AUTOPLAY_ONLY',
+    Unknown = 'UNKNOWN'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum VideoTargetingV31VideoAdFormatTargetingEnum {
+    InStream = 'IN_STREAM',
+    OutStream = 'OUT_STREAM',
+    InStreamAndOutStream = 'IN_STREAM_AND_OUT_STREAM'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum VideoTargetingV31VideoPlayerSizeTargetingEnum {
+    Any = 'ANY',
+    Small = 'SMALL',
+    Medium = 'MEDIUM',
+    Large = 'LARGE',
+    Unknown = 'UNKNOWN'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum VideoTargetingV31VideoCompletionTargetingEnum {
+    NoTargeting = 'NO_TARGETING',
+    VideoCompletionGte10 = 'VIDEO_COMPLETION_GTE_10',
+    VideoCompletionGte20 = 'VIDEO_COMPLETION_GTE_20',
+    VideoCompletionGte30 = 'VIDEO_COMPLETION_GTE_30',
+    VideoCompletionGte40 = 'VIDEO_COMPLETION_GTE_40',
+    VideoCompletionGte50 = 'VIDEO_COMPLETION_GTE_50',
+    VideoCompletionGte60 = 'VIDEO_COMPLETION_GTE_60',
+    VideoCompletionGte70 = 'VIDEO_COMPLETION_GTE_70',
+    VideoCompletionGte80 = 'VIDEO_COMPLETION_GTE_80',
+    VideoCompletionGte90 = 'VIDEO_COMPLETION_GTE_90'
+}
+
+/**
  * Amazon DSP automatically filters fraudulent and invalid traffic as well as unsafe content using a combination of proprietary technology and solutions from comScore and Sizmek. This service is available by default and at no extra charge for Amazon DSP customers. You may choose to augment the default filters with pre-bid targeting products offered by third parties. These services are currently offered at no charge.
  * @export
  * @interface VideoThirdPartyPreBidTargeting
@@ -7685,14 +8563,45 @@ export interface VideoThirdPartyPreBidTargeting {
     doubleVerify?: VideoDoubleVerify;
     /**
      * 
-     * @type {OracleDataCloud}
+     * @type {OracleDataCloudV3}
      * @memberof VideoThirdPartyPreBidTargeting
      */
-    oracleDataCloud?: OracleDataCloud;
+    oracleDataCloud?: OracleDataCloudV3;
     /**
      * 
      * @type {VideoIntegralAdScience}
      * @memberof VideoThirdPartyPreBidTargeting
+     */
+    integralAdScience?: VideoIntegralAdScience;
+}
+/**
+ * 
+ * @export
+ * @interface VideoThirdPartyPreBidTargetingV31
+ */
+export interface VideoThirdPartyPreBidTargetingV31 {
+    /**
+     * 
+     * @type {OracleDataCloudV31}
+     * @memberof VideoThirdPartyPreBidTargetingV31
+     */
+    oracleDataCloud?: OracleDataCloudV31;
+    /**
+     * 
+     * @type {Pixalate}
+     * @memberof VideoThirdPartyPreBidTargetingV31
+     */
+    pixalate?: Pixalate;
+    /**
+     * 
+     * @type {VideoDoubleVerify}
+     * @memberof VideoThirdPartyPreBidTargetingV31
+     */
+    doubleVerify?: VideoDoubleVerify;
+    /**
+     * 
+     * @type {VideoIntegralAdScience}
+     * @memberof VideoThirdPartyPreBidTargetingV31
      */
     integralAdScience?: VideoIntegralAdScience;
 }
@@ -8334,6 +9243,55 @@ export const DiscoveryApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
+         * Retrieves standard predict pre-bid targeting data.
+         * @summary Gets Oracle Data Cloud provided standard predicts for pre-bid targeting.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {string} [nextToken] Token to be used to request additional entries. If not provided, up to the first 320 entries are returned. Note: subsequent calls must be made using the same parameters as used in previous requests that returned the provided nextToken.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOdcStandardPredicts: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getOdcStandardPredicts', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getOdcStandardPredicts', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/preBidTargeting/oracleDataCloud/standardPredicts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (nextToken !== undefined) {
+                localVarQueryParameter['nextToken'] = nextToken;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Gets a list of pixels based on filters. AdvertiserIdFilter must be provided. Results are sorted by create time in ascending order (earliest first).
          * @summary Gets a list of pixel objects based on filters
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -8650,6 +9608,19 @@ export const DiscoveryApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Retrieves standard predict pre-bid targeting data.
+         * @summary Gets Oracle Data Cloud provided standard predicts for pre-bid targeting.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {string} [nextToken] Token to be used to request additional entries. If not provided, up to the first 320 entries are returned. Note: subsequent calls must be made using the same parameters as used in previous requests that returned the provided nextToken.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOdcStandardPredicts(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OdcStandardPredicts>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOdcStandardPredicts(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Gets a list of pixels based on filters. AdvertiserIdFilter must be provided. Results are sorted by create time in ascending order (earliest first).
          * @summary Gets a list of pixel objects based on filters
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -8803,6 +9774,18 @@ export const DiscoveryApiFactory = function (configuration?: Configuration, base
          */
         getOdcCustomPredicts(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, options?: any): AxiosPromise<OdcCustomPredicts> {
             return localVarFp.getOdcCustomPredicts(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Retrieves standard predict pre-bid targeting data.
+         * @summary Gets Oracle Data Cloud provided standard predicts for pre-bid targeting.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {string} [nextToken] Token to be used to request additional entries. If not provided, up to the first 320 entries are returned. Note: subsequent calls must be made using the same parameters as used in previous requests that returned the provided nextToken.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOdcStandardPredicts(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, options?: any): AxiosPromise<OdcStandardPredicts> {
+            return localVarFp.getOdcStandardPredicts(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets a list of pixels based on filters. AdvertiserIdFilter must be provided. Results are sorted by create time in ascending order (earliest first).
@@ -9134,6 +10117,34 @@ export interface DiscoveryApiGetOdcCustomPredictsRequest {
 }
 
 /**
+ * Request parameters for getOdcStandardPredicts operation in DiscoveryApi.
+ * @export
+ * @interface DiscoveryApiGetOdcStandardPredictsRequest
+ */
+export interface DiscoveryApiGetOdcStandardPredictsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof DiscoveryApiGetOdcStandardPredicts
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+     * @type {string}
+     * @memberof DiscoveryApiGetOdcStandardPredicts
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Token to be used to request additional entries. If not provided, up to the first 320 entries are returned. Note: subsequent calls must be made using the same parameters as used in previous requests that returned the provided nextToken.
+     * @type {string}
+     * @memberof DiscoveryApiGetOdcStandardPredicts
+     */
+    readonly nextToken?: string
+}
+
+/**
  * Request parameters for getPixels operation in DiscoveryApi.
  * @export
  * @interface DiscoveryApiGetPixelsRequest
@@ -9376,6 +10387,18 @@ export class DiscoveryApi extends BaseAPI {
      */
     public getOdcCustomPredicts(requestParameters: DiscoveryApiGetOdcCustomPredictsRequest, options?: any) {
         return DiscoveryApiFp(this.configuration).getOdcCustomPredicts(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.nextToken, requestParameters.maxResults, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Retrieves standard predict pre-bid targeting data.
+     * @summary Gets Oracle Data Cloud provided standard predicts for pre-bid targeting.
+     * @param {DiscoveryApiGetOdcStandardPredictsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DiscoveryApi
+     */
+    public getOdcStandardPredicts(requestParameters: DiscoveryApiGetOdcStandardPredictsRequest, options?: any) {
+        return DiscoveryApiFp(this.configuration).getOdcStandardPredicts(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.nextToken, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10074,11 +11097,11 @@ export const LineItemApiAxiosParamCreator = function (configuration?: Configurat
          * @summary Create line item.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
-         * @param {Array<LineItemV3>} [lineItemV3] An array of lineitem objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {Array<LineItemV31>} [lineItemV31] An array of lineitem objects. For each object, specify required fields and their values. Maximum length of the array is 1.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createLineItems: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemV3?: Array<LineItemV3>, options: any = {}): Promise<RequestArgs> => {
+        createLineItems: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemV31?: Array<LineItemV31>, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('createLineItems', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
@@ -10105,12 +11128,12 @@ export const LineItemApiAxiosParamCreator = function (configuration?: Configurat
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/vnd.dsplineitems.v3+json';
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.dsplineitems.v3.1+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(lineItemV3, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(lineItemV31, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -10294,11 +11317,11 @@ export const LineItemApiAxiosParamCreator = function (configuration?: Configurat
          * @summary Update line item.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
-         * @param {Array<LineItemV3>} [lineItemV3] An array of line item objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {Array<LineItemV31>} [lineItemV31] An array of line item objects. For each object, specify required fields and their values. Maximum length of the array is 1.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateLineItems: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemV3?: Array<LineItemV3>, options: any = {}): Promise<RequestArgs> => {
+        updateLineItems: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemV31?: Array<LineItemV31>, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('updateLineItems', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
@@ -10325,12 +11348,12 @@ export const LineItemApiAxiosParamCreator = function (configuration?: Configurat
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/vnd.dsplineitems.v3+json';
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.dsplineitems.v3.1+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(lineItemV3, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(lineItemV31, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -10352,12 +11375,12 @@ export const LineItemApiFp = function(configuration?: Configuration) {
          * @summary Create line item.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
-         * @param {Array<LineItemV3>} [lineItemV3] An array of lineitem objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {Array<LineItemV31>} [lineItemV31] An array of lineitem objects. For each object, specify required fields and their values. Maximum length of the array is 1.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createLineItems(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemV3?: Array<LineItemV3>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<LineItemResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createLineItems(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, lineItemV3, options);
+        async createLineItems(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemV31?: Array<LineItemV31>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<LineItemResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createLineItems(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, lineItemV31, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -10369,7 +11392,7 @@ export const LineItemApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLineItem(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LineItemV3>> {
+        async getLineItem(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LineItemV31>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getLineItem(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, lineItemId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -10409,12 +11432,12 @@ export const LineItemApiFp = function(configuration?: Configuration) {
          * @summary Update line item.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
-         * @param {Array<LineItemV3>} [lineItemV3] An array of line item objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {Array<LineItemV31>} [lineItemV31] An array of line item objects. For each object, specify required fields and their values. Maximum length of the array is 1.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateLineItems(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemV3?: Array<LineItemV3>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<LineItemResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateLineItems(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, lineItemV3, options);
+        async updateLineItems(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemV31?: Array<LineItemV31>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<LineItemResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateLineItems(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, lineItemV31, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -10432,12 +11455,12 @@ export const LineItemApiFactory = function (configuration?: Configuration, baseP
          * @summary Create line item.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
-         * @param {Array<LineItemV3>} [lineItemV3] An array of lineitem objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {Array<LineItemV31>} [lineItemV31] An array of lineitem objects. For each object, specify required fields and their values. Maximum length of the array is 1.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createLineItems(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemV3?: Array<LineItemV3>, options?: any): AxiosPromise<Array<LineItemResponse>> {
-            return localVarFp.createLineItems(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, lineItemV3, options).then((request) => request(axios, basePath));
+        createLineItems(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemV31?: Array<LineItemV31>, options?: any): AxiosPromise<Array<LineItemResponse>> {
+            return localVarFp.createLineItems(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, lineItemV31, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets line item specified by identifier.
@@ -10448,7 +11471,7 @@ export const LineItemApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLineItem(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemId: string, options?: any): AxiosPromise<LineItemV3> {
+        getLineItem(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemId: string, options?: any): AxiosPromise<LineItemV31> {
             return localVarFp.getLineItem(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, lineItemId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10485,12 +11508,12 @@ export const LineItemApiFactory = function (configuration?: Configuration, baseP
          * @summary Update line item.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
-         * @param {Array<LineItemV3>} [lineItemV3] An array of line item objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {Array<LineItemV31>} [lineItemV31] An array of line item objects. For each object, specify required fields and their values. Maximum length of the array is 1.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateLineItems(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemV3?: Array<LineItemV3>, options?: any): AxiosPromise<Array<LineItemResponse>> {
-            return localVarFp.updateLineItems(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, lineItemV3, options).then((request) => request(axios, basePath));
+        updateLineItems(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemV31?: Array<LineItemV31>, options?: any): AxiosPromise<Array<LineItemResponse>> {
+            return localVarFp.updateLineItems(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, lineItemV31, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -10517,10 +11540,10 @@ export interface LineItemApiCreateLineItemsRequest {
 
     /**
      * An array of lineitem objects. For each object, specify required fields and their values. Maximum length of the array is 1.
-     * @type {Array<LineItemV3>}
+     * @type {Array<LineItemV31>}
      * @memberof LineItemApiCreateLineItems
      */
-    readonly lineItemV3?: Array<LineItemV3>
+    readonly lineItemV31?: Array<LineItemV31>
 }
 
 /**
@@ -10664,10 +11687,10 @@ export interface LineItemApiUpdateLineItemsRequest {
 
     /**
      * An array of line item objects. For each object, specify required fields and their values. Maximum length of the array is 1.
-     * @type {Array<LineItemV3>}
+     * @type {Array<LineItemV31>}
      * @memberof LineItemApiUpdateLineItems
      */
-    readonly lineItemV3?: Array<LineItemV3>
+    readonly lineItemV31?: Array<LineItemV31>
 }
 
 /**
@@ -10686,7 +11709,7 @@ export class LineItemApi extends BaseAPI {
      * @memberof LineItemApi
      */
     public createLineItems(requestParameters: LineItemApiCreateLineItemsRequest, options?: any) {
-        return LineItemApiFp(this.configuration).createLineItems(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.lineItemV3, options).then((request) => request(this.axios, this.basePath));
+        return LineItemApiFp(this.configuration).createLineItems(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.lineItemV31, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -10734,7 +11757,7 @@ export class LineItemApi extends BaseAPI {
      * @memberof LineItemApi
      */
     public updateLineItems(requestParameters: LineItemApiUpdateLineItemsRequest, options?: any) {
-        return LineItemApiFp(this.configuration).updateLineItems(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.lineItemV3, options).then((request) => request(this.axios, this.basePath));
+        return LineItemApiFp(this.configuration).updateLineItems(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.lineItemV31, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
