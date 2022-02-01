@@ -60,7 +60,7 @@
   },
   "types": "lib/src/index.d.ts",
   "dependencies": {
-    "axios": "^0.21.2"
+    "axios": "^0.25.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
