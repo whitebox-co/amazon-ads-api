@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { AmazonAdsApiConfiguration } from './config';
+import { setConfiguration } from './config';
 
 import {
 	AmazonAdsApi,
@@ -122,7 +124,9 @@ const getConfiguredApi = async <T extends AmazonAdsApi>(
  * Class based AmazonAds implementation
  */
 export class AmazonAds {
-	constructor(public credentials: AmazonAdvertisingAPICredentials) {}
+	constructor(public credentials: AmazonAdvertisingAPICredentials, public configuration?: AmazonAdsApiConfiguration) {
+		setConfiguration(configuration);
+	}
 
 	/**
 	 * Generates a fully instantiated and configured Amazon Ads Client. Each `Client` is specific
@@ -144,6 +148,7 @@ export class AmazonAds {
 	};
 }
 
+export * from './config';
 export * from './constants';
 export * from './apis/clients';
 

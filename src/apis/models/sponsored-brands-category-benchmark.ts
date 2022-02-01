@@ -17,9 +17,10 @@ import { Configuration } from './configuration';
 import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString } from './common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
+import { createRequestFunction } from "../../helpers";
 
 /**
  * Advertising cost of sales (ACOS) is the percentage of sales spent on advertising (total spend / total sales). A lower ACOS infers higher efficiency of your advertising investment relative to your advertising spend. This structure contains the value, median (50th percentile), bottom 25% and top 25% performance quartile values of peers. Peers are aggregated at the category level, and include brands in the same category, with products containing similar features. Note: null is a valid value in these objects and signifies insufficient peers exist to allow the calculation and/or display of the metric or the benchmark.

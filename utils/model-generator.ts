@@ -2,6 +2,7 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { PATHS } from '../src/constants';
+import { replaceCreateRequestFunction } from './replace-create-request-function';
 
 const commonApiFiles: string[] = ['base.ts', 'common.ts', 'configuration.ts'];
 
@@ -105,6 +106,8 @@ const processSchemas = () => {
 		const filePath = path.join(PATHS.CUSTOM_SCHEMAS, fileName);
 		processSingleSchema(filePath, fileName, index);
 	});
+
+	replaceCreateRequestFunction();
 };
 
 // Immediately run if told to do so (used in package scripts mostly)
