@@ -168,3 +168,4 @@ docs/typedoc
 hasChanges.txt
 docs/testing/integration/payloads/solution-provider-use-cases/*.json
 docs/testing/integration/payloads/methods/*.json
+/.env-examples
