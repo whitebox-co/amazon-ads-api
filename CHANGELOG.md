@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0](https://github.com/whitebox-co/amazon-ads-api/compare/v1.1.0...v1.2.0) (2022-02-01)
+
+### Bug Fixes
+
+-   **deps:** bump axios from 0.21.4 to 0.25.0 ([#53](https://github.com/whitebox-co/amazon-ads-api/issues/53)) ([8f8ff60](https://github.com/whitebox-co/amazon-ads-api/commit/8f8ff60401bbcc4be0d9871fc1a8ec2a1ce4407f))
+
+### Features
+
+-   add throttling and rate-limiting ([#49](https://github.com/whitebox-co/amazon-ads-api/issues/49)) ([5cf5adb](https://github.com/whitebox-co/amazon-ads-api/commit/5cf5adbfe934aa5beb5af8d85b920de8841c4b8a)), closes [#30](https://github.com/whitebox-co/amazon-ads-api/issues/30)
+-   auto-generated amazon api updates to brand, data, dsp, and sponsored-products ([6e1313b](https://github.com/whitebox-co/amazon-ads-api/commit/6e1313b8a11286b4d6d17b88e3e15100d6df9084))
+
 # [1.1.0](https://github.com/whitebox-co/amazon-ads-api/compare/v1.0.0...v1.1.0) (2022-01-21)
 
 ### Bug Fixes
