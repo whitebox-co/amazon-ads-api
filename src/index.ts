@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Bottleneck from 'bottleneck';
 import { AmazonAdsApiConfiguration } from './config';
 import { setConfiguration } from './config';
 
@@ -124,8 +125,12 @@ const getConfiguredApi = async <T extends AmazonAdsApi>(
  * Class based AmazonAds implementation
  */
 export class AmazonAds {
-	constructor(public credentials: AmazonAdvertisingAPICredentials, public configuration?: AmazonAdsApiConfiguration) {
-		setConfiguration(configuration);
+	constructor(
+		public credentials: AmazonAdvertisingAPICredentials,
+		public configuration?: AmazonAdsApiConfiguration,
+		limiter?: Bottleneck
+	) {
+		setConfiguration(configuration, limiter);
 	}
 
 	/**
