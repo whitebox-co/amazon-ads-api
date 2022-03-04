@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/whitebox-co/amazon-ads-api/compare/v1.2.0...v1.3.0) (2022-03-04)
+
+### Features
+
+-   auto generated updates based on latest amazon schema changes ([9cff834](https://github.com/whitebox-co/amazon-ads-api/commit/9cff8348a3ba73fc3c970849009c22f576b662ac))
+-   configuration and adsapi constructor now take a bottleneck limiter as an optional param ([bda0901](https://github.com/whitebox-co/amazon-ads-api/commit/bda09014e04f5c0b025e69f8719a06af4c75d975))
+
 # [1.2.0](https://github.com/whitebox-co/amazon-ads-api/compare/v1.1.0...v1.2.0) (2022-02-01)
 
 ### Bug Fixes
