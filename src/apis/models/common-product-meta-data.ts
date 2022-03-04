@@ -148,6 +148,31 @@ export interface ListPrice {
     type?: string;
 }
 /**
+ * 
+ * @export
+ * @interface Merchant
+ */
+export interface Merchant {
+    /**
+     * 
+     * @type {string}
+     * @memberof Merchant
+     */
+    encryptedMerchantId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Merchant
+     */
+    sku?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Merchant
+     */
+    merchantName?: string;
+}
+/**
  * Error response object.
  * @export
  * @interface ModelError
@@ -209,6 +234,12 @@ export interface ProductInfoModel {
      * @memberof ProductInfoModel
      */
     tvIconURL?: string;
+    /**
+     * 
+     * @type {Merchant}
+     * @memberof ProductInfoModel
+     */
+    merchant?: Merchant;
     /**
      * 
      * @type {TvPreviewMetadata}
@@ -305,12 +336,6 @@ export interface ProductInfoModel {
      * @memberof ProductInfoModel
      */
     href?: string;
-    /**
-     * sku of the item
-     * @type {string}
-     * @memberof ProductInfoModel
-     */
-    sku?: string;
     /**
      * List of ASIN variations of the book item
      * @type {Array<string>}

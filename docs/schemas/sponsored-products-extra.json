@@ -1437,7 +1437,7 @@
           }
         },
         "operationId": "searchBrands",
-        "description": "Returns brands related to keyword input for negative targeting.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "description": "Returns up to 100 brands related to keyword input for negative targeting.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
         "responses": {
           "200": {
             "description": "success",
@@ -3324,11 +3324,6 @@
             "format": "double",
             "description": "return on ad spend value",
             "type": "number"
-          },
-          "averageBid": {
-            "format": "double",
-            "description": "average bid",
-            "type": "number"
           }
         }
       },
@@ -3546,11 +3541,6 @@
               "metricName": "ROAS",
               "comparisonOperator": "GREATER_THAN",
               "threshold": "7"
-            },
-            {
-              "metricName": "AVERAGE_BID",
-              "comparisonOperator": "LESS_THAN",
-              "threshold": "15"
             }
           ],
           "ruleType": "BID",
@@ -4552,7 +4542,7 @@
         "example": "[{\"id\":2748212011,\"na\":\"Art Paper\",\"ch\":[{\"id\":8090742011,\"na\":\"Palette Paper\",\"ch\":[],\"ta\":true, \"asinCountRange\":{\"min\":11,\"max\":19}},{\"id\":8090734011,\"na\":\"Sketchbooks & Notebooks\",\"ch\":[],\"ta\":true, \"asinCountRange\":{\"min\":3,\"max\":5}}],\"ta\":true,\"asinCountRange\":{\"min\":57,\"max\":84}},{\"id\":12898291,\"na\":\"Tracing Paper\",\"ch\":[],\"ta\":true, \"asinCountRange\":{\"min\":24,\"max\":40}}]"
       },
       "RuleConditionMetric": {
-        "description": "The advertising performance metric. ROAS is calculated across 21 days and average_bid across 7 days",
+        "description": "The advertising performance metric. ROAS is the only supported metric.",
         "type": "string",
         "enum": [
           "ROAS",
@@ -4670,11 +4660,6 @@
               "metricName": "ROAS",
               "comparisonOperator": "GREATER_THAN",
               "threshold": "4"
-            },
-            {
-              "metricName": "AVERAGE_BID",
-              "comparisonOperator": "LESS_THAN",
-              "threshold": "10"
             }
           ],
           "ruleType": "BID",
@@ -5578,7 +5563,7 @@
             }
           },
           "count": {
-            "description": "Count of objects requested in the response. The count will be applied on the objects returned under `recommendations` array in response body.  <ul> <li>Requesting `application/vnd.spproductrecommendationresponse.themes.v3+json` mediatype applies the count on `ThemeRecommendation` objects.If no count value is passed a default of `5` is assumed. The API will return a maximum of `10` themes irrespective of how large the count is set. </li> <li>Requesting `application/vnd.spproductrecommendationresponse.asins.v3+json` mediatype applies count on the `ProductRecommendation` objects in reponse body.If no count value is passed a default of `100` is assumed. The API will return a maximum of `1000` recommendations irrespective of how large the count is set. </li> </ul> Please refer the response Schemas for more info.",
+            "description": "Count of objects requested in the response. The count will be applied on the objects returned under `recommendations` array in response body.  <ul> <li>Requesting `application/vnd.spproductrecommendationresponse.themes.v3+json` mediatype applies the count on `ThemeRecommendation` objects.If no count value is passed a default of `5` is assumed. The API will return a maximum of `10` themes irrespective of how large the count is set. </li> <li>Requesting `application/vnd.spproductrecommendationresponse.asins.v3+json` mediatype applies count on the `ProductRecommendation` objects in response body.If no count value is passed a default of `100` is assumed. The API will return a maximum of `1000` recommendations irrespective of how large the count is set. </li> </ul> Please refer the response Schemas for more info.",
             "type": "integer",
             "minimum": 1,
             "example": "5"

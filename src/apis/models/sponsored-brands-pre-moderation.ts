@@ -353,6 +353,16 @@ export interface HeadlineSuggestionResponse {
     suggestions?: Array<SuggestedHeadline>;
 }
 /**
+ * The unique identifiers type based on the adProgram of the ad.
+ * @export
+ * @enum {string}
+ */
+
+export enum IdType {
+    AdId = 'AD_ID'
+}
+
+/**
  * Image component which needs to be pre moderated. A publicly accessible imageUrl must be sent.
  * @export
  * @interface ImageComponent
@@ -446,6 +456,37 @@ export enum ImageComponentResponseComponentTypeEnum {
     OtherImage = 'OTHER_IMAGE'
 }
 
+/**
+ * 
+ * @export
+ * @interface ImageCrop
+ */
+export interface ImageCrop {
+    /**
+     * Policy violated region\'s top left Y-axis pixel value.
+     * @type {number}
+     * @memberof ImageCrop
+     */
+    topLeftY?: number;
+    /**
+     * Policy violated region\'s top left X-axis pixel value.
+     * @type {number}
+     * @memberof ImageCrop
+     */
+    topLeftX?: number;
+    /**
+     * Policy violated region\'s width in pixel.
+     * @type {number}
+     * @memberof ImageCrop
+     */
+    width?: number;
+    /**
+     * Policy violated region\'s height in pixel.
+     * @type {number}
+     * @memberof ImageCrop
+     */
+    height?: number;
+}
 /**
  * Structure of a image evidence
  * @export
@@ -548,6 +589,325 @@ export interface ModerationError {
      * @memberof ModerationError
      */
     details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ModerationResult
+ */
+export interface ModerationResult {
+    /**
+     * The version identifier that helps to keep track of multiple versions of a submitted ad. In case of Sponsored Brands this is the creative version id.
+     * @type {string}
+     * @memberof ModerationResult
+     */
+    versionId?: string;
+    /**
+     * 
+     * @type {IdType}
+     * @memberof ModerationResult
+     */
+    idType?: IdType;
+    /**
+     * 
+     * @type {ModerationStatus}
+     * @memberof ModerationResult
+     */
+    moderationStatus?: ModerationStatus;
+    /**
+     * A list of policy violations for a campaign that has failed moderation. Note that this field is present in the response only when moderationStatus is set to REJECTED.
+     * @type {Array<PolicyViolation>}
+     * @memberof ModerationResult
+     */
+    policyViolations?: Array<PolicyViolation>;
+    /**
+     * Expected date and time by which moderation will be complete. The format is ISO 8601 in UTC time zone. Note that this field is present in the response only when moderationStatus is set to IN_PROGRESS.
+     * @type {string}
+     * @memberof ModerationResult
+     */
+    etaForModeration?: string;
+    /**
+     * The unique identifier of the ad which can be obtained after the ad is created using create APIs.
+     * @type {string}
+     * @memberof ModerationResult
+     */
+    id?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ModerationResultsAccessDeniedError
+ */
+export interface ModerationResultsAccessDeniedError {
+    /**
+     * Access denied error code.
+     * @type {string}
+     * @memberof ModerationResultsAccessDeniedError
+     */
+    code?: ModerationResultsAccessDeniedErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof ModerationResultsAccessDeniedError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ModerationResultsAccessDeniedErrorCodeEnum {
+    AccessDenied = 'ACCESS_DENIED'
+}
+
+/**
+ * The program type of the ad.
+ * @export
+ * @enum {string}
+ */
+
+export enum ModerationResultsAdProgramType {
+    ProductCollection = 'SB_PRODUCT_COLLECTION',
+    StoreSpotlight = 'SB_STORE_SPOTLIGHT',
+    Video = 'SB_VIDEO'
+}
+
+/**
+ * 
+ * @export
+ * @interface ModerationResultsBadRequestError
+ */
+export interface ModerationResultsBadRequestError {
+    /**
+     * Bad request error code.
+     * @type {string}
+     * @memberof ModerationResultsBadRequestError
+     */
+    code?: ModerationResultsBadRequestErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof ModerationResultsBadRequestError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ModerationResultsBadRequestErrorCodeEnum {
+    BadRequest = 'BAD_REQUEST'
+}
+
+/**
+ * 
+ * @export
+ * @interface ModerationResultsInternalServerError
+ */
+export interface ModerationResultsInternalServerError {
+    /**
+     * Internal error code.
+     * @type {string}
+     * @memberof ModerationResultsInternalServerError
+     */
+    code?: ModerationResultsInternalServerErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof ModerationResultsInternalServerError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ModerationResultsInternalServerErrorCodeEnum {
+    InternalError = 'INTERNAL_ERROR'
+}
+
+/**
+ * 
+ * @export
+ * @interface ModerationResultsNotFoundError
+ */
+export interface ModerationResultsNotFoundError {
+    /**
+     * Not found error code.
+     * @type {string}
+     * @memberof ModerationResultsNotFoundError
+     */
+    code?: ModerationResultsNotFoundErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof ModerationResultsNotFoundError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ModerationResultsNotFoundErrorCodeEnum {
+    NotFound = 'NOT_FOUND'
+}
+
+/**
+ * 
+ * @export
+ * @interface ModerationResultsRequest
+ */
+export interface ModerationResultsRequest {
+    /**
+     * Filter by specific version id of the ad. The API will return the ad\'s all versions moderation status if this field is empty.
+     * @type {Array<string>}
+     * @memberof ModerationResultsRequest
+     */
+    versionIdFilter?: Array<string>;
+    /**
+     * 
+     * @type {IdType}
+     * @memberof ModerationResultsRequest
+     */
+    idType: IdType;
+    /**
+     * 
+     * @type {ModerationResultsAdProgramType}
+     * @memberof ModerationResultsRequest
+     */
+    adProgramType: ModerationResultsAdProgramType;
+    /**
+     * Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the `NextToken` field is empty, there are no further results.
+     * @type {string}
+     * @memberof ModerationResultsRequest
+     */
+    nextToken?: string;
+    /**
+     * Sets a limit on the number of results returned by an operation.
+     * @type {number}
+     * @memberof ModerationResultsRequest
+     */
+    maxResults: number;
+    /**
+     * Filter by specific moderation status.
+     * @type {Array<ModerationStatus>}
+     * @memberof ModerationResultsRequest
+     */
+    moderationStatusFilter?: Array<ModerationStatus>;
+    /**
+     * The unique identifier of the ad which can be obtained after the ad is created using create APIs.
+     * @type {string}
+     * @memberof ModerationResultsRequest
+     */
+    id: string;
+}
+/**
+ * 
+ * @export
+ * @interface ModerationResultsResponse
+ */
+export interface ModerationResultsResponse {
+    /**
+     * 
+     * @type {Array<ModerationResult>}
+     * @memberof ModerationResultsResponse
+     */
+    moderationResults?: Array<ModerationResult>;
+    /**
+     * Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the `NextToken` field is empty, there are no further results.
+     * @type {string}
+     * @memberof ModerationResultsResponse
+     */
+    nextToken?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ModerationResultsThrottlingError
+ */
+export interface ModerationResultsThrottlingError {
+    /**
+     * Throttled error code.
+     * @type {string}
+     * @memberof ModerationResultsThrottlingError
+     */
+    code?: ModerationResultsThrottlingErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof ModerationResultsThrottlingError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ModerationResultsThrottlingErrorCodeEnum {
+    Throttled = 'THROTTLED'
+}
+
+/**
+ * The moderation status of the ad.
+ * @export
+ * @enum {string}
+ */
+
+export enum ModerationStatus {
+    Approved = 'APPROVED',
+    InProgress = 'IN_PROGRESS',
+    Rejected = 'REJECTED',
+    Failed = 'FAILED'
+}
+
+/**
+ * 
+ * @export
+ * @interface PolicyViolation
+ */
+export interface PolicyViolation {
+    /**
+     * A human-readable description of the policy.
+     * @type {string}
+     * @memberof PolicyViolation
+     */
+    policyDescription?: string;
+    /**
+     * 
+     * @type {Array<ViolatingTextContent>}
+     * @memberof PolicyViolation
+     */
+    violatingTextContents?: Array<ViolatingTextContent>;
+    /**
+     * 
+     * @type {Array<ViolatingImageContent>}
+     * @memberof PolicyViolation
+     */
+    violatingImageContents?: Array<ViolatingImageContent>;
+    /**
+     * Address of the policy documentation. Follow the link to learn more about the specified policy.
+     * @type {string}
+     * @memberof PolicyViolation
+     */
+    policyLinkUrl?: string;
+    /**
+     * 
+     * @type {Array<ViolatingVideoContent>}
+     * @memberof PolicyViolation
+     */
+    violatingVideoContents?: Array<ViolatingVideoContent>;
+    /**
+     * 
+     * @type {Array<ViolatingAsinContent>}
+     * @memberof PolicyViolation
+     */
+    violatingAsinContents?: Array<ViolatingAsinContent>;
 }
 /**
  * Components details that needs to be sent for pre moderation.
@@ -948,6 +1308,25 @@ export enum TextPolicyViolationTypeEnum {
 }
 
 /**
+ * 
+ * @export
+ * @interface TextPosition
+ */
+export interface TextPosition {
+    /**
+     * Zero-based index into the text in reviewedText where the text specified in violatingText starts.
+     * @type {number}
+     * @memberof TextPosition
+     */
+    start?: number;
+    /**
+     * Zero-based index into the text in reviewedText where the text specified in violatingText ends.
+     * @type {number}
+     * @memberof TextPosition
+     */
+    end?: number;
+}
+/**
  * Video component which needs to be pre moderated. A publicly accessible videoUrl must be sent.
  * @export
  * @interface VideoComponent
@@ -1105,6 +1484,177 @@ export enum VideoPolicyViolationTypeEnum {
     Rejected = 'REJECTED'
 }
 
+/**
+ * 
+ * @export
+ * @interface VideoPosition
+ */
+export interface VideoPosition {
+    /**
+     * Start time of the video having the policy violation.
+     * @type {number}
+     * @memberof VideoPosition
+     */
+    start?: number;
+    /**
+     * End time of the video having the policy violation.
+     * @type {number}
+     * @memberof VideoPosition
+     */
+    end?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ViolatingAsinContent
+ */
+export interface ViolatingAsinContent {
+    /**
+     * 
+     * @type {Array<ViolatingAsinEvidence>}
+     * @memberof ViolatingAsinContent
+     */
+    violatingAsinEvidences?: Array<ViolatingAsinEvidence>;
+    /**
+     * Moderation component which marked the policy violation.
+     * @type {string}
+     * @memberof ViolatingAsinContent
+     */
+    moderatedComponent?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ViolatingAsinEvidence
+ */
+export interface ViolatingAsinEvidence {
+    /**
+     * ASIN which has the ad policy violation.
+     * @type {string}
+     * @memberof ViolatingAsinEvidence
+     */
+    asin?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ViolatingImageContent
+ */
+export interface ViolatingImageContent {
+    /**
+     * 
+     * @type {Array<ViolatingImageEvidence>}
+     * @memberof ViolatingImageContent
+     */
+    violatingImageEvidences?: Array<ViolatingImageEvidence>;
+    /**
+     * Moderation component which marked the policy violation.
+     * @type {string}
+     * @memberof ViolatingImageContent
+     */
+    moderatedComponent?: string;
+    /**
+     * URL of the image which has the ad policy violation.
+     * @type {string}
+     * @memberof ViolatingImageContent
+     */
+    reviewedImageUrl?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ViolatingImageEvidence
+ */
+export interface ViolatingImageEvidence {
+    /**
+     * 
+     * @type {ImageCrop}
+     * @memberof ViolatingImageEvidence
+     */
+    violatingImageCrop?: ImageCrop;
+}
+/**
+ * Information about the specific text that violates the specified policy in the campaign.
+ * @export
+ * @interface ViolatingTextContent
+ */
+export interface ViolatingTextContent {
+    /**
+     * The actual text on which the moderation was done.
+     * @type {string}
+     * @memberof ViolatingTextContent
+     */
+    reviewedText?: string;
+    /**
+     * 
+     * @type {Array<ViolatingTextEvidence>}
+     * @memberof ViolatingTextContent
+     */
+    violatingTextEvidences?: Array<ViolatingTextEvidence>;
+    /**
+     * Moderation component which marked the policy violation.
+     * @type {string}
+     * @memberof ViolatingTextContent
+     */
+    moderatedComponent?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ViolatingTextEvidence
+ */
+export interface ViolatingTextEvidence {
+    /**
+     * 
+     * @type {TextPosition}
+     * @memberof ViolatingTextEvidence
+     */
+    violatingTextPosition?: TextPosition;
+    /**
+     * The specific text determined to violate the specified policy in reviewedText.
+     * @type {string}
+     * @memberof ViolatingTextEvidence
+     */
+    violatingText?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ViolatingVideoContent
+ */
+export interface ViolatingVideoContent {
+    /**
+     * 
+     * @type {Array<ViolatingVideoEvidence>}
+     * @memberof ViolatingVideoContent
+     */
+    violatingVideoEvidences?: Array<ViolatingVideoEvidence>;
+    /**
+     * Moderation component which marked the policy violation.
+     * @type {string}
+     * @memberof ViolatingVideoContent
+     */
+    moderatedComponent?: string;
+    /**
+     * URL of the video which has the ad policy violation.
+     * @type {string}
+     * @memberof ViolatingVideoContent
+     */
+    reviewedVideoUrl?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ViolatingVideoEvidence
+ */
+export interface ViolatingVideoEvidence {
+    /**
+     * 
+     * @type {VideoPosition}
+     * @memberof ViolatingVideoEvidence
+     */
+    violatingVideoPosition?: VideoPosition;
+}
 
 /**
  * PreModerationApi - axios parameter creator

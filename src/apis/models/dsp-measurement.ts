@@ -1067,6 +1067,287 @@ export interface DSPCampaignMeasurementMetadataV1M1 {
     advertiserId?: string;
 }
 /**
+ * The basic model for all DSP OMNICHANNEL_METRICS objective studies.
+ * @export
+ * @interface DSPOmnichannelMetricsMetadataV1M2
+ */
+export interface DSPOmnichannelMetricsMetadataV1M2 {
+    /**
+     * A list of canonical brand ids to be tracked for off-Amazon conversions.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsMetadataV1M2
+     */
+    brandIds?: Array<string>;
+}
+/**
+ * DSP OMNICHANNEL_METRICS study object.
+ * @export
+ * @interface DSPOmnichannelMetricsStudyV1M2
+ */
+export interface DSPOmnichannelMetricsStudyV1M2 {
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    statusReasons?: Array<string>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    endDate?: string;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    vendorProductId?: string;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    lastUpdatedDate?: string;
+    /**
+     * The status of result of the study.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    studyResultStatus?: DSPOmnichannelMetricsStudyV1M2StudyResultStatusEnum;
+    /**
+     * List of reasons for rejection, this will only be available if the status is REJECTED. This field is deprecated, use statusReasons instead.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     * @deprecated
+     */
+    rejectionReasons?: Array<string>;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    comment?: string;
+    /**
+     * The study canonical identifier. Immutable field. This is required for update.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    id?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {StudyStatusV1}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    status?: StudyStatusV1;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    createDate?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the study.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of canonical order identifiers that are associated with the study. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    orderIds?: Array<string>;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    advertiserId?: string;
+    /**
+     * A list of canonical brand ids to be tracked for off-Amazon conversions.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    brandIds?: Array<string>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DSPOmnichannelMetricsStudyV1M2StudyResultStatusEnum {
+    Available = 'AVAILABLE'
+}
+
+/**
+ * DSP OMNICHANNEL_METRICS study object.
+ * @export
+ * @interface DSPOmnichannelMetricsStudyV1M3
+ */
+export interface DSPOmnichannelMetricsStudyV1M3 {
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    statusReasons?: Array<string>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    endDate?: string;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    vendorProductId?: string;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    lastUpdatedDate?: string;
+    /**
+     * The status of result of the study.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    studyResultStatus?: DSPOmnichannelMetricsStudyV1M3StudyResultStatusEnum;
+    /**
+     * List of reasons for rejection, this will only be available if the status is REJECTED. This field is deprecated, use statusReasons instead.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     * @deprecated
+     */
+    rejectionReasons?: Array<string>;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    comment?: string;
+    /**
+     * 
+     * @type {Array<ResourceLinkV1M1>}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    links?: Array<ResourceLinkV1M1>;
+    /**
+     * The study canonical identifier. Immutable field. This is required for update.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    id?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {StudyStatusV1}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    status?: StudyStatusV1;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    createDate?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the study.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of canonical order identifiers that are associated with the study. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    orderIds?: Array<string>;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    advertiserId?: string;
+    /**
+     * A list of canonical brand ids to be tracked for off-Amazon conversions.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    brandIds?: Array<string>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DSPOmnichannelMetricsStudyV1M3StudyResultStatusEnum {
+    Available = 'AVAILABLE'
+}
+
+/**
  * Fields that will be checked as part of eligibility API call.
  * @export
  * @enum {string}
