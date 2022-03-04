@@ -152,6 +152,9 @@
           "tvIconURL": {
             "type": "string"
           },
+          "merchant": {
+            "$ref": "#/components/schemas/merchant"
+          },
           "tvPreviewMetadata": {
             "$ref": "#/components/schemas/tvPreviewMetadata"
           },
@@ -232,11 +235,6 @@
             "type": "string",
             "example": "https:/amazon.com/dp/B0018OFKJS"
           },
-          "sku": {
-            "description": "sku of the item",
-            "type": "string",
-            "example": "SKU1"
-          },
           "titleAuthority": {
             "description": "List of ASIN variations of the book item",
             "type": "array",
@@ -294,6 +292,20 @@
             "description": "Currency of the price",
             "type": "string",
             "example": "USD"
+          }
+        }
+      },
+      "merchant": {
+        "type": "object",
+        "properties": {
+          "encryptedMerchantId": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "merchantName": {
+            "type": "string"
           }
         }
       },

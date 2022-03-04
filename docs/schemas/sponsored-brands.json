@@ -6589,7 +6589,7 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters."
+            "description": "The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters. Note that idempotency for this field works different for sellers and vendors. Sellers aren't allowed to have duplicate campaign names, but vendors can have duplicate campaign names."
           },
           "tags": {
             "$ref": "#/components/schemas/CampaignTags"

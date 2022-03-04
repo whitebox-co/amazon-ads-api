@@ -2600,7 +2600,7 @@ export type SBCreateCampaignRequest = SBCreateCampaignWithExpressions | SBCreate
  */
 export interface SBCreateCampaignRequestCommon {
     /**
-     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters. Note that idempotency for this field works different for sellers and vendors. Sellers aren\'t allowed to have duplicate campaign names, but vendors can have duplicate campaign names.
      * @type {string}
      * @memberof SBCreateCampaignRequestCommon
      */
@@ -2697,7 +2697,7 @@ export interface SBCreateCampaignRequestCommon {
  */
 export interface SBCreateCampaignRequestCommonV33 {
     /**
-     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters. Note that idempotency for this field works different for sellers and vendors. Sellers aren\'t allowed to have duplicate campaign names, but vendors can have duplicate campaign names.
      * @type {string}
      * @memberof SBCreateCampaignRequestCommonV33
      */
@@ -2807,7 +2807,7 @@ export type SBCreateCampaignResponseV33 = SBCreateCampaignsResponseDefault | SBC
  */
 export interface SBCreateCampaignWithExpressions {
     /**
-     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters. Note that idempotency for this field works different for sellers and vendors. Sellers aren\'t allowed to have duplicate campaign names, but vendors can have duplicate campaign names.
      * @type {string}
      * @memberof SBCreateCampaignWithExpressions
      */
@@ -2916,7 +2916,7 @@ export interface SBCreateCampaignWithExpressions {
  */
 export interface SBCreateCampaignWithKeywords {
     /**
-     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters. Note that idempotency for this field works different for sellers and vendors. Sellers aren\'t allowed to have duplicate campaign names, but vendors can have duplicate campaign names.
      * @type {string}
      * @memberof SBCreateCampaignWithKeywords
      */
@@ -3025,7 +3025,7 @@ export interface SBCreateCampaignWithKeywords {
  */
 export interface SBCreateCampaignWithKeywordsV33 {
     /**
-     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters.
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters. Note that idempotency for this field works different for sellers and vendors. Sellers aren\'t allowed to have duplicate campaign names, but vendors can have duplicate campaign names.
      * @type {string}
      * @memberof SBCreateCampaignWithKeywordsV33
      */

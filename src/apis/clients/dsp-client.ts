@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-import { CreativeApi,DiscoveryApi,FileUploadsApi,ImageCreativeApi,LineItemApi,LineItemCreativeAssociationApi,ModerationApi,OrderApi,ResponsiveECommerceCreativeApi,VideoCreativeApi } from '../models/dsp';
+import { CreativeApi,DiscoveryApi,FileUploadsApi,ImageCreativeApi,LineItemApi,LineItemCreativeAssociationApi,ModerationApi,OrderApi,ResponsiveECommerceCreativeApi,ThirdPartyCreativeApi,VideoCreativeApi } from '../models/dsp';
 import { Configuration } from '../models/configuration';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
 import { getAxiosInstance, applyMixins } from '../../helpers';
@@ -22,6 +22,6 @@ export class DspClient extends CreativeApi {
 }
 
 
-    export interface DspClient extends CreativeApi,DiscoveryApi,FileUploadsApi,ImageCreativeApi,LineItemApi,LineItemCreativeAssociationApi,ModerationApi,OrderApi,ResponsiveECommerceCreativeApi,VideoCreativeApi {}
-    applyMixins(DspClient, [CreativeApi,DiscoveryApi,FileUploadsApi,ImageCreativeApi,LineItemApi,LineItemCreativeAssociationApi,ModerationApi,OrderApi,ResponsiveECommerceCreativeApi,VideoCreativeApi])
+    export interface DspClient extends CreativeApi,DiscoveryApi,FileUploadsApi,ImageCreativeApi,LineItemApi,LineItemCreativeAssociationApi,ModerationApi,OrderApi,ResponsiveECommerceCreativeApi,ThirdPartyCreativeApi,VideoCreativeApi {}
+    applyMixins(DspClient, [CreativeApi,DiscoveryApi,FileUploadsApi,ImageCreativeApi,LineItemApi,LineItemCreativeAssociationApi,ModerationApi,OrderApi,ResponsiveECommerceCreativeApi,ThirdPartyCreativeApi,VideoCreativeApi])
     

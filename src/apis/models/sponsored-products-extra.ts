@@ -1202,7 +1202,7 @@ export interface GetProductRecommendationsRequest {
      */
     adAsins: Array<string>;
     /**
-     * Count of objects requested in the response. The count will be applied on the objects returned under `recommendations` array in response body.  <ul> <li>Requesting `application/vnd.spproductrecommendationresponse.themes.v3+json` mediatype applies the count on `ThemeRecommendation` objects.If no count value is passed a default of `5` is assumed. The API will return a maximum of `10` themes irrespective of how large the count is set. </li> <li>Requesting `application/vnd.spproductrecommendationresponse.asins.v3+json` mediatype applies count on the `ProductRecommendation` objects in reponse body.If no count value is passed a default of `100` is assumed. The API will return a maximum of `1000` recommendations irrespective of how large the count is set. </li> </ul> Please refer the response Schemas for more info.
+     * Count of objects requested in the response. The count will be applied on the objects returned under `recommendations` array in response body.  <ul> <li>Requesting `application/vnd.spproductrecommendationresponse.themes.v3+json` mediatype applies the count on `ThemeRecommendation` objects.If no count value is passed a default of `5` is assumed. The API will return a maximum of `10` themes irrespective of how large the count is set. </li> <li>Requesting `application/vnd.spproductrecommendationresponse.asins.v3+json` mediatype applies count on the `ProductRecommendation` objects in response body.If no count value is passed a default of `100` is assumed. The API will return a maximum of `1000` recommendations irrespective of how large the count is set. </li> </ul> Please refer the response Schemas for more info.
      * @type {number}
      * @memberof GetProductRecommendationsRequest
      */
@@ -2255,7 +2255,7 @@ export interface RuleCondition {
     threshold: number;
 }
 /**
- * The advertising performance metric. ROAS is calculated across 21 days and average_bid across 7 days
+ * The advertising performance metric. ROAS is the only supported metric.
  * @export
  * @enum {string}
  */
@@ -2384,12 +2384,6 @@ export interface RuleRecommendationMetrics {
      * @memberof RuleRecommendationMetrics
      */
     roas?: number;
-    /**
-     * average bid
-     * @type {number}
-     * @memberof RuleRecommendationMetrics
-     */
-    averageBid?: number;
 }
 /**
  * The campaign optimization rule state.
@@ -8045,7 +8039,7 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
             };
         },
         /**
-         * Returns brands related to keyword input for negative targeting.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * Returns up to 100 brands related to keyword input for negative targeting.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Returns brands related to keyword input for negative targeting.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
@@ -8176,7 +8170,7 @@ export const ProductTargetingApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Returns brands related to keyword input for negative targeting.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * Returns up to 100 brands related to keyword input for negative targeting.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Returns brands related to keyword input for negative targeting.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
@@ -8263,7 +8257,7 @@ export const ProductTargetingApiFactory = function (configuration?: Configuratio
             return localVarFp.getTargetableCategories(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, prefer, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns brands related to keyword input for negative targeting.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * Returns up to 100 brands related to keyword input for negative targeting.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Returns brands related to keyword input for negative targeting.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
@@ -8542,7 +8536,7 @@ export class ProductTargetingApi extends BaseAPI {
     }
 
     /**
-     * Returns brands related to keyword input for negative targeting.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+     * Returns up to 100 brands related to keyword input for negative targeting.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
      * @summary Returns brands related to keyword input for negative targeting.
      * @param {ProductTargetingApiSearchBrandsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

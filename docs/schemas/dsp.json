@@ -33,6 +33,9 @@
       "name": "Responsive eCommerce Creative"
     },
     {
+      "name": "Third Party Creative"
+    },
+    {
       "name": "Moderation"
     },
     {
@@ -2651,7 +2654,7 @@
           "Order"
         ],
         "summary": "Get conversion tracking products by identifier",
-        "description": "Get conversion tracking products by identifier. If the order was previsouly updated by list of products, response will be a list of products. The maximum size of list will be 2000. If the order was previously updated by product file, please use '/dsp/orders/{orderId}/conversionTracking/products/export' to export as a file.",
+        "description": "Get conversion tracking products by identifier. If the order was previously updated by list of products, response will be a list of products. The maximum size of list will be 2000. If the order was previously updated by product file, please use '/dsp/orders/{orderId}/conversionTracking/products/export' to export as a file.",
         "operationId": "getProductsByOrderId",
         "parameters": [
           {
@@ -7296,6 +7299,275 @@
         }
       }
     },
+    "/dsp/creatives/thirdParty": {
+      "get": {
+        "tags": [
+          "Third Party Creative"
+        ],
+        "summary": "Get third party creative(s).",
+        "description": "Get a third party creative matching criteria provided in request.\n\nNote that a future update will add support to get multiple third party creatives at a time.\n",
+        "operationId": "getThirdPartyCreatives",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "$ref": "#/components/parameters/creativeIdFilter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/vnd.dspthirdpartycreatives.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DspReadThirdPartyCreativesResponseV1"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "415": {
+            "$ref": "#/components/responses/UnsupportedMediaType"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/EndpointRequestTimedOut"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Third Party Creative"
+        ],
+        "summary": "Create third party creative(s).",
+        "description": "Create a third party creative.\n\nNote that a future update will add support to create multiple third party creatives at a time.\n",
+        "operationId": "createThirdPartyCreative",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          }
+        ],
+        "requestBody": {
+          "description": "An array of creative objects. For each object, specify required fields and their values. Maximum length of the array is 1.",
+          "content": {
+            "application/vnd.dspcreatethirdpartycreatives.v1+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DspCreateThirdPartyCreativesRequestV1"
+              }
+            }
+          }
+        },
+        "responses": {
+          "207": {
+            "description": "Multi-status. This holds array of items which represents success or failure corresponding to the index in the request body.",
+            "content": {
+              "application/vnd.dspthirdpartycreativesresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DspThirdPartyCreativesResponseV1"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "415": {
+            "$ref": "#/components/responses/UnsupportedMediaType"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/EndpointRequestTimedOut"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Third Party Creative"
+        ],
+        "summary": "Update third party creative(s).",
+        "description": "Update a third party creative.\n\nNote that a future update will add support to update multiple third party creatives at a time.\n",
+        "operationId": "updateThirdPartyCreative",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          }
+        ],
+        "requestBody": {
+          "description": "An array of creative objects. For each object, specify required fields and their values. Maximum length of the array is 1.",
+          "content": {
+            "application/vnd.dspupdatethirdpartycreatives.v1+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DspUpdateThirdPartyCreativesRequestV1"
+              }
+            }
+          }
+        },
+        "responses": {
+          "207": {
+            "description": "Multi-status. This holds array of items which represents success or failure corresponding to the index in the request body.",
+            "content": {
+              "application/vnd.dspthirdpartycreativesresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DspThirdPartyCreativesResponseV1"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "415": {
+            "$ref": "#/components/responses/UnsupportedMediaType"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/EndpointRequestTimedOut"
+          }
+        }
+      }
+    },
+    "/dsp/creatives/thirdParty/preview": {
+      "post": {
+        "tags": [
+          "Third Party Creative"
+        ],
+        "summary": "Preview third party creative.",
+        "description": "Preview a third party creative.\n",
+        "operationId": "previewThirdPartyCreative",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          }
+        ],
+        "requestBody": {
+          "description": "A preview request.",
+          "content": {
+            "application/vnd.dsppreviewthirdpartycreatives.v1+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DspThirdPartyCreativePreviewRequestV1"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/vnd.dsppreviewcreativesresponse.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DspCreativePreviewResponseV1"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "415": {
+            "$ref": "#/components/responses/UnsupportedMediaType"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/EndpointRequestTimedOut"
+          }
+        }
+      }
+    },
     "/dsp/moderation/creatives": {
       "get": {
         "tags": [
@@ -7391,7 +7663,7 @@
           {
             "name": "count",
             "in": "query",
-            "description": "Optional. Sets the number of results in the returned array. Use in conjunction with the `startIndex` parameter to control pagination. For example, to return the first ten results set `startIndex=0` and `count=10`. To return the next ten results, set `startIndex=10` and `count=10`, and so on.",
+            "description": "Optional. Sets the number of results in the returned array. Use in conjunction with the `startIndex` parameter to control pagination. For example, to return the first ten results set `startIndex=0` and `count=10`. To return the next ten results, set `startIndex=10` and `count=10`, and so on. Maximum of count is 20.",
             "schema": {
               "type": "integer",
               "default": 20,
@@ -13264,12 +13536,10 @@
         ]
       },
       "DspImageCreativeSupplyV1": {
-        "description": "Different supply of image creative.",
-        "type": "string",
-        "enum": [
-          "DESKTOP",
-          "MOBILE_OO",
-          "MOBILE_AAP"
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DspCreativeSupplyV1"
+          }
         ]
       },
       "DspImageClickThroughActionV1": {
@@ -13770,6 +14040,198 @@
           }
         }
       },
+      "DspCreateThirdPartyCreativesRequestV1": {
+        "description": "Create Third Party creatives request.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/DspCreateThirdPartyCreativeRequestV1"
+        },
+        "minItems": 1,
+        "maxItems": 1
+      },
+      "DspCreateThirdPartyCreativeRequestV1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DspBaseCreateCreativeRequestV1"
+          },
+          {
+            "$ref": "#/components/schemas/DspReadWriteThirdPartyCreativeAttributesV1"
+          },
+          {
+            "type": "object",
+            "description": "Create Third Party creative request.",
+            "properties": {
+              "supply": {
+                "$ref": "#/components/schemas/DspCreativeSupplyV1"
+              }
+            },
+            "required": [
+              "supply"
+            ]
+          }
+        ]
+      },
+      "DspUpdateThirdPartyCreativesRequestV1": {
+        "type": "array",
+        "description": "Update Third Party creatives request.",
+        "items": {
+          "$ref": "#/components/schemas/DspUpdateThirdPartyCreativeRequestV1"
+        },
+        "minItems": 1,
+        "maxItems": 1
+      },
+      "DspUpdateThirdPartyCreativeRequestV1": {
+        "description": "Update Third Party creative request.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DspBaseUpdateCreativeRequestV1"
+          },
+          {
+            "$ref": "#/components/schemas/DspReadWriteThirdPartyCreativeAttributesV1"
+          }
+        ]
+      },
+      "DspReadWriteThirdPartyCreativeAttributesV1": {
+        "type": "object",
+        "description": "This holds common properties that can we written and updated for Third Party creative.",
+        "properties": {
+          "externalId": {
+            "type": "string",
+            "description": "The creative external Id."
+          },
+          "size": {
+            "$ref": "#/components/schemas/DspSizeV1"
+          },
+          "tagSource": {
+            "type": "string",
+            "description": "The third party tag associated with creative."
+          },
+          "destination": {
+            "description": "Choose `AMAZON` if the `tag` links to an Amazon site like Amazon.com or IMDb. Otherwise choose `OTHER`.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/DspClickThroughDestinationV1"
+              }
+            ]
+          },
+          "thirdPartyTrackers": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 5,
+            "items": {
+              "$ref": "#/components/schemas/DspThirdPartyTrackerV1"
+            }
+          },
+          "additionalHtml": {
+            "type": "string",
+            "description": "Add HTML to the creative for surveys or other arbitrary HTML.",
+            "maxLength": 5000
+          },
+          "adChoicesPosition": {
+            "$ref": "#/components/schemas/DspAdChoicesPositionV1"
+          }
+        },
+        "required": [
+          "tagSource"
+        ]
+      },
+      "DspReadThirdPartyCreativesResponseV1": {
+        "type": "object",
+        "description": "Read Third Party creative creatives response.",
+        "properties": {
+          "creatives": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DspThirdPartyCreativeV1"
+            },
+            "minItems": 1,
+            "maxItems": 1
+          }
+        }
+      },
+      "DspThirdPartyCreativeV1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DspCreateThirdPartyCreativeRequestV1"
+          },
+          {
+            "$ref": "#/components/schemas/DspUpdateThirdPartyCreativeRequestV1"
+          },
+          {
+            "$ref": "#/components/schemas/DspBaseReadCreativeV1"
+          }
+        ]
+      },
+      "DspThirdPartyCreativesResponseV1": {
+        "description": "Create/Update third party creatives response.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/DspCreativeResponseV1"
+        },
+        "minItems": 1,
+        "maxItems": 1
+      },
+      "DspThirdPartyCreativePreviewRequestV1": {
+        "description": "Third Party creative preview request. Either `creativeId` or `creativeModel` must be provided, but not both.",
+        "type": "object",
+        "properties": {
+          "creativeId": {
+            "description": "The identifier of the creative.",
+            "type": "string"
+          },
+          "creativeModel": {
+            "$ref": "#/components/schemas/DspThirdPartyCreativePreviewModelV1"
+          },
+          "previewConfiguration": {
+            "$ref": "#/components/schemas/DspPreviewConfigurationV1"
+          }
+        },
+        "required": [
+          "previewConfiguration"
+        ]
+      },
+      "DspThirdPartyCreativePreviewModelV1": {
+        "description": "Third Party Creative preview model. Populate this to preview a new creative.",
+        "type": "object",
+        "properties": {
+          "marketplace": {
+            "$ref": "#/components/schemas/DspCreativeMarketplaceV1"
+          },
+          "supply": {
+            "$ref": "#/components/schemas/DspCreativeSupplyV1"
+          },
+          "size": {
+            "$ref": "#/components/schemas/DspSizeV1"
+          },
+          "tagSource": {
+            "type": "string",
+            "description": "The third party tag associated with creative."
+          },
+          "additionalHtml": {
+            "type": "string",
+            "description": "Add HTML to the creative for surveys or other arbitrary HTML.",
+            "maxLength": 5000
+          },
+          "adChoicesPosition": {
+            "$ref": "#/components/schemas/DspAdChoicesPositionV1"
+          },
+          "thirdPartyTrackers": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 5,
+            "items": {
+              "$ref": "#/components/schemas/DspThirdPartyTrackerV1"
+            }
+          }
+        },
+        "required": [
+          "marketplace",
+          "supply",
+          "size",
+          "tagSource",
+          "adChoicesPosition"
+        ]
+      },
       "DspClickThroughDetailPageActionV1": {
         "type": "object",
         "description": "Click through Action - Detail Page. This is applicable only to `MOBILE_OO` and `MOBILE_AAP` supply.",
@@ -13960,6 +14422,15 @@
           "height"
         ]
       },
+      "DspCreativeSupplyV1": {
+        "description": "Different supported supply of creative.",
+        "type": "string",
+        "enum": [
+          "DESKTOP",
+          "MOBILE_OO",
+          "MOBILE_AAP"
+        ]
+      },
       "DspAdChoicesPositionV1": {
         "type": "string",
         "description": "Default value is TOP_RIGHT.",
@@ -14026,6 +14497,15 @@
             "default": true
           }
         }
+      },
+      "DspClickThroughDestinationV1": {
+        "type": "string",
+        "description": "Choose `AMAZON` if the `click through` links to an Amazon site like Amazon.com or IMDb. Otherwise choose `OTHER`.",
+        "enum": [
+          "AMAZON",
+          "OTHER"
+        ],
+        "default": "OTHER"
       },
       "DspBaseReadCreativeV1": {
         "type": "object",

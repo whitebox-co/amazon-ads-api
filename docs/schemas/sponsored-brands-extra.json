@@ -1644,6 +1644,14 @@
           "PAUSED"
         ]
       },
+      "ViolatingImageEvidence": {
+        "type": "object",
+        "properties": {
+          "violatingImageCrop": {
+            "$ref": "#/components/schemas/ImageCrop"
+          }
+        }
+      },
       "AccessDeniedExceptionResponseContent": {
         "type": "object",
         "properties": {
@@ -1748,6 +1756,23 @@
           }
         }
       },
+      "ViolatingAsinContent": {
+        "type": "object",
+        "properties": {
+          "violatingAsinEvidences": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingAsinEvidence"
+            }
+          },
+          "moderatedComponent": {
+            "description": "Moderation component which marked the policy violation.",
+            "type": "string"
+          }
+        }
+      },
       "SBBudgetHistory": {
         "type": "object",
         "properties": {
@@ -1789,6 +1814,13 @@
             "example": "https://advertising.amazon.com/resources/ad-policy/en/creative-acceptance#alcohol"
           }
         }
+      },
+      "IdType": {
+        "description": "The unique identifiers type based on the adProgram of the ad.",
+        "type": "string",
+        "enum": [
+          "AD_ID"
+        ]
       },
       "BudgetRuleResponse": {
         "type": "object",
@@ -1873,6 +1905,22 @@
           }
         }
       },
+      "ModerationResultsResponse": {
+        "type": "object",
+        "properties": {
+          "moderationResults": {
+            "minItems": 1,
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModerationResult"
+            }
+          },
+          "nextToken": {
+            "$ref": "#/components/schemas/NextToken"
+          }
+        }
+      },
       "NegativeProductTarget": {
         "description": "The negative target associated with the ad group.",
         "type": "object",
@@ -1886,6 +1934,10 @@
             }
           }
         }
+      },
+      "Id": {
+        "description": "The unique identifier of the ad which can be obtained after the ad is created using create APIs.",
+        "type": "string"
       },
       "SBBudgetRulesRecommendationEventResponse": {
         "description": "Special events with date range and suggested budget increase.",
@@ -2062,6 +2114,22 @@
           },
           "performanceMeasureCondition": {
             "$ref": "#/components/schemas/PerformanceMeasureCondition"
+          }
+        }
+      },
+      "ModerationResultsAccessDeniedError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Access denied error code.",
+            "type": "string",
+            "enum": [
+              "ACCESS_DENIED"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
           }
         }
       },
@@ -2344,6 +2412,22 @@
           }
         }
       },
+      "ModerationResultsNotFoundError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Not found error code.",
+            "type": "string",
+            "enum": [
+              "NOT_FOUND"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "SPRuleType": {
         "description": "The type of budget rule. SCHEDULE: A budget rule based on a start and end date. PERFORMANCE: A budget rule based on advertising performance criteria.",
         "type": "string",
@@ -2351,6 +2435,10 @@
           "SCHEDULE",
           "PERFORMANCE"
         ]
+      },
+      "VersionId": {
+        "description": "The version identifier that helps to keep track of multiple versions of a submitted ad. In case of Sponsored Brands this is the creative version id.",
+        "type": "string"
       },
       "SBBudgetRulesRecommendationEventRequest": {
         "type": "object",
@@ -2400,6 +2488,22 @@
           }
         }
       },
+      "ModerationResultsThrottlingError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Throttled error code.",
+            "type": "string",
+            "enum": [
+              "THROTTLED"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "Keyword": {
         "description": "Keyword associated with the campaign.",
         "type": "object",
@@ -2440,6 +2544,18 @@
                 "type": "integer"
               }
             }
+          }
+        }
+      },
+      "ViolatingTextEvidence": {
+        "type": "object",
+        "properties": {
+          "violatingTextPosition": {
+            "$ref": "#/components/schemas/TextPosition"
+          },
+          "violatingText": {
+            "description": "The specific text determined to violate the specified policy in reviewedText.",
+            "type": "string"
           }
         }
       },
@@ -2525,6 +2641,22 @@
           "UNAUTHORIZED"
         ]
       },
+      "ModerationResultsBadRequestError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Bad request error code.",
+            "type": "string",
+            "enum": [
+              "BAD_REQUEST"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "InvalidArgumentErrorCode": {
         "type": "string",
         "enum": [
@@ -2578,6 +2710,40 @@
             "items": {
               "$ref": "#/components/schemas/SBCampaignBudgetRule"
             }
+          }
+        }
+      },
+      "ImageCrop": {
+        "type": "object",
+        "properties": {
+          "topLeftY": {
+            "format": "int64",
+            "description": "Policy violated region's top left Y-axis pixel value.",
+            "type": "integer"
+          },
+          "topLeftX": {
+            "format": "int64",
+            "description": "Policy violated region's top left X-axis pixel value.",
+            "type": "integer"
+          },
+          "width": {
+            "format": "int64",
+            "description": "Policy violated region's width in pixel.",
+            "type": "integer"
+          },
+          "height": {
+            "format": "int64",
+            "description": "Policy violated region's height in pixel.",
+            "type": "integer"
+          }
+        }
+      },
+      "ViolatingAsinEvidence": {
+        "type": "object",
+        "properties": {
+          "asin": {
+            "description": "ASIN which has the ad policy violation.",
+            "type": "string"
           }
         }
       },
@@ -2703,6 +2869,36 @@
           "url": {
             "description": "The URL of the Stores page, or, Vendors may also specify the URL of a custom landing page.",
             "type": "string"
+          }
+        }
+      },
+      "ViolatingTextContent": {
+        "description": "Information about the specific text that violates the specified policy in the campaign.",
+        "type": "object",
+        "properties": {
+          "reviewedText": {
+            "description": "The actual text on which the moderation was done.",
+            "type": "string"
+          },
+          "violatingTextEvidences": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingTextEvidence"
+            }
+          },
+          "moderatedComponent": {
+            "description": "Moderation component which marked the policy violation.",
+            "type": "string"
+          }
+        }
+      },
+      "ViolatingVideoEvidence": {
+        "type": "object",
+        "properties": {
+          "violatingVideoPosition": {
+            "$ref": "#/components/schemas/VideoPosition"
           }
         }
       },
@@ -2833,6 +3029,27 @@
           }
         }
       },
+      "ViolatingVideoContent": {
+        "type": "object",
+        "properties": {
+          "violatingVideoEvidences": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingVideoEvidence"
+            }
+          },
+          "moderatedComponent": {
+            "description": "Moderation component which marked the policy violation.",
+            "type": "string"
+          },
+          "reviewedVideoUrl": {
+            "description": "URL of the video which has the ad policy violation.",
+            "type": "string"
+          }
+        }
+      },
       "SDRuleType": {
         "description": "The type of budget rule. SCHEDULE: A budget rule based on a start and end date. PERFORMANCE: A budget rule based on advertising performance criteria.",
         "type": "string",
@@ -2911,6 +3128,56 @@
           "asinBrandSameAs",
           "asinSameAs"
         ]
+      },
+      "ModerationResultsRequest": {
+        "type": "object",
+        "required": [
+          "id",
+          "idType",
+          "adProgramType",
+          "maxResults"
+        ],
+        "properties": {
+          "versionIdFilter": {
+            "minItems": 0,
+            "maxItems": 200,
+            "uniqueItems": true,
+            "description": "Filter by specific version id of the ad. The API will return the ad's all versions moderation status if this field is empty.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VersionId"
+            }
+          },
+          "idType": {
+            "$ref": "#/components/schemas/IdType"
+          },
+          "adProgramType": {
+            "$ref": "#/components/schemas/ModerationResultsAdProgramType"
+          },
+          "nextToken": {
+            "$ref": "#/components/schemas/NextToken"
+          },
+          "maxResults": {
+            "format": "int32",
+            "description": "Sets a limit on the number of results returned by an operation.",
+            "maximum": 10,
+            "type": "integer",
+            "minimum": 1
+          },
+          "moderationStatusFilter": {
+            "minItems": 0,
+            "maxItems": 20,
+            "uniqueItems": true,
+            "description": "Filter by specific moderation status.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModerationStatus"
+            }
+          },
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          }
+        }
       },
       "SBRuleDuration": {
         "type": "object",
@@ -3183,6 +3450,36 @@
           }
         }
       },
+      "ModerationResult": {
+        "type": "object",
+        "properties": {
+          "versionId": {
+            "$ref": "#/components/schemas/VersionId"
+          },
+          "idType": {
+            "$ref": "#/components/schemas/IdType"
+          },
+          "moderationStatus": {
+            "$ref": "#/components/schemas/ModerationStatus"
+          },
+          "policyViolations": {
+            "minItems": 0,
+            "maxItems": 200,
+            "description": "A list of policy violations for a campaign that has failed moderation. Note that this field is present in the response only when moderationStatus is set to REJECTED.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PolicyViolation"
+            }
+          },
+          "etaForModeration": {
+            "description": "Expected date and time by which moderation will be complete. The format is ISO 8601 in UTC time zone. Note that this field is present in the response only when moderationStatus is set to IN_PROGRESS.",
+            "type": "string"
+          },
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          }
+        }
+      },
       "Forecast": {
         "description": "The lower and upper bound forecast values.",
         "type": "object",
@@ -3265,6 +3562,10 @@
             "type": "string"
           }
         }
+      },
+      "NextToken": {
+        "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the `NextToken` field is empty, there are no further results.",
+        "type": "string"
       },
       "SDListAssociatedBudgetRulesResponse": {
         "type": "object",
@@ -3370,6 +3671,27 @@
           }
         }
       },
+      "ViolatingImageContent": {
+        "type": "object",
+        "properties": {
+          "violatingImageEvidences": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingImageEvidence"
+            }
+          },
+          "moderatedComponent": {
+            "description": "Moderation component which marked the policy violation.",
+            "type": "string"
+          },
+          "reviewedImageUrl": {
+            "description": "URL of the image which has the ad policy violation.",
+            "type": "string"
+          }
+        }
+      },
       "SBRuleBasedBudget": {
         "type": "object",
         "properties": {
@@ -3418,6 +3740,22 @@
             "items": {
               "$ref": "#/components/schemas/SBBudgetRuleDetails"
             }
+          }
+        }
+      },
+      "ModerationResultsInternalServerError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Internal error code.",
+            "type": "string",
+            "enum": [
+              "INTERNAL_ERROR"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
           }
         }
       },
@@ -3663,6 +4001,15 @@
           }
         }
       },
+      "ModerationResultsAdProgramType": {
+        "description": "The program type of the ad.",
+        "type": "string",
+        "enum": [
+          "SB_PRODUCT_COLLECTION",
+          "SB_STORE_SPOTLIGHT",
+          "SB_VIDEO"
+        ]
+      },
       "NegativeKeyword": {
         "description": "Negative keyword associated with the campaign.",
         "type": "object",
@@ -3715,6 +4062,31 @@
           }
         }
       },
+      "VideoPosition": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "format": "int64",
+            "description": "Start time of the video having the policy violation.",
+            "type": "integer"
+          },
+          "end": {
+            "format": "int64",
+            "description": "End time of the video having the policy violation.",
+            "type": "integer"
+          }
+        }
+      },
+      "ModerationStatus": {
+        "description": "The moderation status of the ad.",
+        "type": "string",
+        "enum": [
+          "APPROVED",
+          "IN_PROGRESS",
+          "REJECTED",
+          "FAILED"
+        ]
+      },
       "BudgetRuleError": {
         "description": "The Error Response Object.",
         "type": "object",
@@ -3754,6 +4126,21 @@
           }
         }
       },
+      "TextPosition": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "format": "int64",
+            "description": "Zero-based index into the text in reviewedText where the text specified in violatingText starts.",
+            "type": "integer"
+          },
+          "end": {
+            "format": "int64",
+            "description": "Zero-based index into the text in reviewedText where the text specified in violatingText ends.",
+            "type": "integer"
+          }
+        }
+      },
       "AssociatedCampaign": {
         "type": "object",
         "required": [
@@ -3773,6 +4160,51 @@
           "campaignName": {
             "description": "The campaign name.",
             "type": "string"
+          }
+        }
+      },
+      "PolicyViolation": {
+        "type": "object",
+        "properties": {
+          "policyDescription": {
+            "description": "A human-readable description of the policy.",
+            "type": "string"
+          },
+          "violatingTextContents": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingTextContent"
+            }
+          },
+          "violatingImageContents": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingImageContent"
+            }
+          },
+          "policyLinkUrl": {
+            "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+            "type": "string"
+          },
+          "violatingVideoContents": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingVideoContent"
+            }
+          },
+          "violatingAsinContents": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingAsinContent"
+            }
           }
         }
       },
@@ -3879,7 +4311,26 @@
     "callbacks": {},
     "links": {},
     "securitySchemes": {},
-    "parameters": {}
+    "parameters": {
+      "clientHeader": {
+        "schema": {
+          "type": "string"
+        },
+        "in": "header",
+        "name": "Amazon-Advertising-API-ClientId",
+        "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+        "required": true
+      },
+      "profileHeader": {
+        "schema": {
+          "type": "string"
+        },
+        "in": "header",
+        "name": "Amazon-Advertising-API-Scope",
+        "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id `profileId` from the response to pass it as input.",
+        "required": true
+      }
+    }
   },
   "openapi": "3.0.1"
 }
