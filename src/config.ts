@@ -27,12 +27,16 @@ const retryCallbackListener = (error, jobInfo) => {
  *
  * @param {AmazonAdsApiConfiguration} config The user config
  */
-const setConfiguration = (config: AmazonAdsApiConfiguration): void => {
-	if (config.throttling && !adsLimiter) {
-		adsLimiter = new Bottleneck(config.throttling);
-		adsLimiter.on('failed', retryCallbackListener);
-	} else if (config.throttling && adsLimiter) {
-		adsLimiter.updateSettings(config);
+const setConfiguration = (config: AmazonAdsApiConfiguration, limiter?: Bottleneck): void => {
+	if (configuration !== config && !limiter) {
+		if (config.throttling && !adsLimiter) {
+			adsLimiter = new Bottleneck(config.throttling);
+			adsLimiter.on('failed', retryCallbackListener);
+		} else if (config.throttling && adsLimiter) {
+			adsLimiter.updateSettings(config);
+		}
+	} else if (limiter) {
+		adsLimiter = limiter;
 	}
 	configuration = config;
 };
