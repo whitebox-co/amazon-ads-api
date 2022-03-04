@@ -1780,6 +1780,17 @@ export enum DspClickThroughAndroidAppDownloadActionV1StorePriorityEnum {
 }
 
 /**
+ * Choose `AMAZON` if the `click through` links to an Amazon site like Amazon.com or IMDb. Otherwise choose `OTHER`.
+ * @export
+ * @enum {string}
+ */
+
+export enum DspClickThroughDestinationV1 {
+    Amazon = 'AMAZON',
+    Other = 'OTHER'
+}
+
+/**
  * Click through Action - Detail Page. This is applicable only to `MOBILE_OO` and `MOBILE_AAP` supply.
  * @export
  * @interface DspClickThroughDetailPageActionV1
@@ -2046,6 +2057,92 @@ export interface DspCreateRecCreativeRequestV1 {
     thirdPartyTrackers?: Array<DspThirdPartyTrackerV1>;
 }
 /**
+ * 
+ * @export
+ * @interface DspCreateThirdPartyCreativeRequestV1
+ */
+export interface DspCreateThirdPartyCreativeRequestV1 {
+    /**
+     * The creative name.
+     * @type {string}
+     * @memberof DspCreateThirdPartyCreativeRequestV1
+     */
+    name: string;
+    /**
+     * The advertiser Id. It\'s an immutable field.
+     * @type {string}
+     * @memberof DspCreateThirdPartyCreativeRequestV1
+     */
+    advertiserId: string;
+    /**
+     * 
+     * @type {DspCreativeMarketplaceV1}
+     * @memberof DspCreateThirdPartyCreativeRequestV1
+     */
+    marketplace: DspCreativeMarketplaceV1;
+    /**
+     * The creative external Id.
+     * @type {string}
+     * @memberof DspCreateThirdPartyCreativeRequestV1
+     */
+    externalId?: string;
+    /**
+     * 
+     * @type {DspSizeV1}
+     * @memberof DspCreateThirdPartyCreativeRequestV1
+     */
+    size?: DspSizeV1;
+    /**
+     * The third party tag associated with creative.
+     * @type {string}
+     * @memberof DspCreateThirdPartyCreativeRequestV1
+     */
+    tagSource: string;
+    /**
+     * Choose `AMAZON` if the `tag` links to an Amazon site like Amazon.com or IMDb. Otherwise choose `OTHER`.
+     * @type {DspClickThroughDestinationV1}
+     * @memberof DspCreateThirdPartyCreativeRequestV1
+     */
+    destination?: DspClickThroughDestinationV1;
+    /**
+     * 
+     * @type {Array<DspThirdPartyTrackerV1>}
+     * @memberof DspCreateThirdPartyCreativeRequestV1
+     */
+    thirdPartyTrackers?: Array<DspThirdPartyTrackerV1>;
+    /**
+     * Add HTML to the creative for surveys or other arbitrary HTML.
+     * @type {string}
+     * @memberof DspCreateThirdPartyCreativeRequestV1
+     */
+    additionalHtml?: string;
+    /**
+     * 
+     * @type {DspAdChoicesPositionV1}
+     * @memberof DspCreateThirdPartyCreativeRequestV1
+     */
+    adChoicesPosition?: DspAdChoicesPositionV1;
+    /**
+     * 
+     * @type {DspCreativeSupplyV1}
+     * @memberof DspCreateThirdPartyCreativeRequestV1
+     */
+    supply: DspCreativeSupplyV1;
+}
+/**
+ * Create Third Party creative request.
+ * @export
+ * @interface DspCreateThirdPartyCreativeRequestV1AllOf
+ */
+export interface DspCreateThirdPartyCreativeRequestV1AllOf {
+    /**
+     * 
+     * @type {DspCreativeSupplyV1}
+     * @memberof DspCreateThirdPartyCreativeRequestV1AllOf
+     */
+    supply: DspCreativeSupplyV1;
+}
+/**
  * Create video creative request
  * @export
  * @interface DspCreateVideoCreativeRequestV1
@@ -2184,6 +2281,18 @@ export interface DspCreativeResponseV1 {
      */
     errorDetails?: Error;
 }
+/**
+ * Different supported supply of creative.
+ * @export
+ * @enum {string}
+ */
+
+export enum DspCreativeSupplyV1 {
+    Desktop = 'DESKTOP',
+    MobileOo = 'MOBILE_OO',
+    MobileAap = 'MOBILE_AAP'
+}
+
 /**
  * Click through Action - Custom Url.
  * @export
@@ -2333,17 +2442,12 @@ export interface DspImageCreativePreviewRequestV1 {
     previewConfiguration?: DspPreviewConfigurationV1;
 }
 /**
- * Different supply of image creative.
+ * 
  * @export
- * @enum {string}
+ * @interface DspImageCreativeSupplyV1
  */
-
-export enum DspImageCreativeSupplyV1 {
-    Desktop = 'DESKTOP',
-    MobileOo = 'MOBILE_OO',
-    MobileAap = 'MOBILE_AAP'
+export interface DspImageCreativeSupplyV1 {
 }
-
 /**
  * 
  * @export
@@ -2487,6 +2591,19 @@ export interface DspReadRecCreativesResponseV1 {
     creatives?: Array<DspRecCreativeV1>;
 }
 /**
+ * Read Third Party creative creatives response.
+ * @export
+ * @interface DspReadThirdPartyCreativesResponseV1
+ */
+export interface DspReadThirdPartyCreativesResponseV1 {
+    /**
+     * 
+     * @type {Array<DspThirdPartyCreativeV1>}
+     * @memberof DspReadThirdPartyCreativesResponseV1
+     */
+    creatives?: Array<DspThirdPartyCreativeV1>;
+}
+/**
  * Read video creatives response.
  * @export
  * @interface DspReadVideoCreativesResponseV1
@@ -2614,6 +2731,55 @@ export interface DspReadWriteRecCreativeAttributesV1 {
      * @memberof DspReadWriteRecCreativeAttributesV1
      */
     thirdPartyTrackers?: Array<DspThirdPartyTrackerV1>;
+}
+/**
+ * This holds common properties that can we written and updated for Third Party creative.
+ * @export
+ * @interface DspReadWriteThirdPartyCreativeAttributesV1
+ */
+export interface DspReadWriteThirdPartyCreativeAttributesV1 {
+    /**
+     * The creative external Id.
+     * @type {string}
+     * @memberof DspReadWriteThirdPartyCreativeAttributesV1
+     */
+    externalId?: string;
+    /**
+     * 
+     * @type {DspSizeV1}
+     * @memberof DspReadWriteThirdPartyCreativeAttributesV1
+     */
+    size?: DspSizeV1;
+    /**
+     * The third party tag associated with creative.
+     * @type {string}
+     * @memberof DspReadWriteThirdPartyCreativeAttributesV1
+     */
+    tagSource: string;
+    /**
+     * Choose `AMAZON` if the `tag` links to an Amazon site like Amazon.com or IMDb. Otherwise choose `OTHER`.
+     * @type {DspClickThroughDestinationV1}
+     * @memberof DspReadWriteThirdPartyCreativeAttributesV1
+     */
+    destination?: DspClickThroughDestinationV1;
+    /**
+     * 
+     * @type {Array<DspThirdPartyTrackerV1>}
+     * @memberof DspReadWriteThirdPartyCreativeAttributesV1
+     */
+    thirdPartyTrackers?: Array<DspThirdPartyTrackerV1>;
+    /**
+     * Add HTML to the creative for surveys or other arbitrary HTML.
+     * @type {string}
+     * @memberof DspReadWriteThirdPartyCreativeAttributesV1
+     */
+    additionalHtml?: string;
+    /**
+     * 
+     * @type {DspAdChoicesPositionV1}
+     * @memberof DspReadWriteThirdPartyCreativeAttributesV1
+     */
+    adChoicesPosition?: DspAdChoicesPositionV1;
 }
 /**
  * This holds common properties that can we written and updated for video creative
@@ -2962,6 +3128,177 @@ export interface DspSizeV1 {
     height: number;
 }
 /**
+ * Third Party Creative preview model. Populate this to preview a new creative.
+ * @export
+ * @interface DspThirdPartyCreativePreviewModelV1
+ */
+export interface DspThirdPartyCreativePreviewModelV1 {
+    /**
+     * 
+     * @type {DspCreativeMarketplaceV1}
+     * @memberof DspThirdPartyCreativePreviewModelV1
+     */
+    marketplace: DspCreativeMarketplaceV1;
+    /**
+     * 
+     * @type {DspCreativeSupplyV1}
+     * @memberof DspThirdPartyCreativePreviewModelV1
+     */
+    supply: DspCreativeSupplyV1;
+    /**
+     * 
+     * @type {DspSizeV1}
+     * @memberof DspThirdPartyCreativePreviewModelV1
+     */
+    size: DspSizeV1;
+    /**
+     * The third party tag associated with creative.
+     * @type {string}
+     * @memberof DspThirdPartyCreativePreviewModelV1
+     */
+    tagSource: string;
+    /**
+     * Add HTML to the creative for surveys or other arbitrary HTML.
+     * @type {string}
+     * @memberof DspThirdPartyCreativePreviewModelV1
+     */
+    additionalHtml?: string;
+    /**
+     * 
+     * @type {DspAdChoicesPositionV1}
+     * @memberof DspThirdPartyCreativePreviewModelV1
+     */
+    adChoicesPosition: DspAdChoicesPositionV1;
+    /**
+     * 
+     * @type {Array<DspThirdPartyTrackerV1>}
+     * @memberof DspThirdPartyCreativePreviewModelV1
+     */
+    thirdPartyTrackers?: Array<DspThirdPartyTrackerV1>;
+}
+/**
+ * Third Party creative preview request. Either `creativeId` or `creativeModel` must be provided, but not both.
+ * @export
+ * @interface DspThirdPartyCreativePreviewRequestV1
+ */
+export interface DspThirdPartyCreativePreviewRequestV1 {
+    /**
+     * The identifier of the creative.
+     * @type {string}
+     * @memberof DspThirdPartyCreativePreviewRequestV1
+     */
+    creativeId?: string;
+    /**
+     * 
+     * @type {DspThirdPartyCreativePreviewModelV1}
+     * @memberof DspThirdPartyCreativePreviewRequestV1
+     */
+    creativeModel?: DspThirdPartyCreativePreviewModelV1;
+    /**
+     * 
+     * @type {DspPreviewConfigurationV1}
+     * @memberof DspThirdPartyCreativePreviewRequestV1
+     */
+    previewConfiguration: DspPreviewConfigurationV1;
+}
+/**
+ * 
+ * @export
+ * @interface DspThirdPartyCreativeV1
+ */
+export interface DspThirdPartyCreativeV1 {
+    /**
+     * The creative name.
+     * @type {string}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    name: string;
+    /**
+     * The advertiser Id. It\'s an immutable field.
+     * @type {string}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    advertiserId: string;
+    /**
+     * 
+     * @type {DspCreativeMarketplaceV1}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    marketplace: DspCreativeMarketplaceV1;
+    /**
+     * The creative external Id.
+     * @type {string}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    externalId?: string;
+    /**
+     * 
+     * @type {DspSizeV1}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    size?: DspSizeV1;
+    /**
+     * The third party tag associated with creative.
+     * @type {string}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    tagSource: string;
+    /**
+     * Choose `AMAZON` if the `tag` links to an Amazon site like Amazon.com or IMDb. Otherwise choose `OTHER`.
+     * @type {DspClickThroughDestinationV1}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    destination?: DspClickThroughDestinationV1;
+    /**
+     * 
+     * @type {Array<DspThirdPartyTrackerV1>}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    thirdPartyTrackers?: Array<DspThirdPartyTrackerV1>;
+    /**
+     * Add HTML to the creative for surveys or other arbitrary HTML.
+     * @type {string}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    additionalHtml?: string;
+    /**
+     * 
+     * @type {DspAdChoicesPositionV1}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    adChoicesPosition?: DspAdChoicesPositionV1;
+    /**
+     * 
+     * @type {DspCreativeSupplyV1}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    supply: DspCreativeSupplyV1;
+    /**
+     * The creative Id. It will be used to perform update operation. It\'s an immutable field.
+     * @type {string}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    creativeId: string;
+    /**
+     * 
+     * @type {DspCreativeApprovalStatusV1}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    approvalStatus?: DspCreativeApprovalStatusV1;
+    /**
+     * The creative created date.
+     * @type {string}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    createdDate?: string;
+    /**
+     * The creative last updated date.
+     * @type {string}
+     * @memberof DspThirdPartyCreativeV1
+     */
+    lastUpdatedDate?: string;
+}
+/**
  * Third party creative tracker type.
  * @export
  * @enum {string}
@@ -3129,6 +3466,67 @@ export interface DspUpdateRecCreativeRequestV1 {
      * @memberof DspUpdateRecCreativeRequestV1
      */
     thirdPartyTrackers?: Array<DspThirdPartyTrackerV1>;
+}
+/**
+ * Update Third Party creative request.
+ * @export
+ * @interface DspUpdateThirdPartyCreativeRequestV1
+ */
+export interface DspUpdateThirdPartyCreativeRequestV1 {
+    /**
+     * The creative name.
+     * @type {string}
+     * @memberof DspUpdateThirdPartyCreativeRequestV1
+     */
+    name: string;
+    /**
+     * The creative Id. It will be used to perform update operation. It\'s an immutable field.
+     * @type {string}
+     * @memberof DspUpdateThirdPartyCreativeRequestV1
+     */
+    creativeId: string;
+    /**
+     * The creative external Id.
+     * @type {string}
+     * @memberof DspUpdateThirdPartyCreativeRequestV1
+     */
+    externalId?: string;
+    /**
+     * 
+     * @type {DspSizeV1}
+     * @memberof DspUpdateThirdPartyCreativeRequestV1
+     */
+    size?: DspSizeV1;
+    /**
+     * The third party tag associated with creative.
+     * @type {string}
+     * @memberof DspUpdateThirdPartyCreativeRequestV1
+     */
+    tagSource: string;
+    /**
+     * Choose `AMAZON` if the `tag` links to an Amazon site like Amazon.com or IMDb. Otherwise choose `OTHER`.
+     * @type {DspClickThroughDestinationV1}
+     * @memberof DspUpdateThirdPartyCreativeRequestV1
+     */
+    destination?: DspClickThroughDestinationV1;
+    /**
+     * 
+     * @type {Array<DspThirdPartyTrackerV1>}
+     * @memberof DspUpdateThirdPartyCreativeRequestV1
+     */
+    thirdPartyTrackers?: Array<DspThirdPartyTrackerV1>;
+    /**
+     * Add HTML to the creative for surveys or other arbitrary HTML.
+     * @type {string}
+     * @memberof DspUpdateThirdPartyCreativeRequestV1
+     */
+    additionalHtml?: string;
+    /**
+     * 
+     * @type {DspAdChoicesPositionV1}
+     * @memberof DspUpdateThirdPartyCreativeRequestV1
+     */
+    adChoicesPosition?: DspAdChoicesPositionV1;
 }
 /**
  * Update video creative request
@@ -11822,7 +12220,7 @@ export const LineItemCreativeAssociationApiAxiosParamCreator = function (configu
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
          * @param {string} lineItemIdFilter The returned array includes only associations to line items matching those specified in the comma-delimited string.
-         * @param {number} [count] Optional. Sets the number of results in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten results set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten results, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {number} [count] Optional. Sets the number of results in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten results set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten results, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on. Maximum of count is 20.
          * @param {number} [startIndex] Optional. Sets a zero-based offset into the requested set of results. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array. Default startIndex is 0.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -11954,7 +12352,7 @@ export const LineItemCreativeAssociationApiFp = function(configuration?: Configu
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
          * @param {string} lineItemIdFilter The returned array includes only associations to line items matching those specified in the comma-delimited string.
-         * @param {number} [count] Optional. Sets the number of results in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten results set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten results, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {number} [count] Optional. Sets the number of results in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten results set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten results, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on. Maximum of count is 20.
          * @param {number} [startIndex] Optional. Sets a zero-based offset into the requested set of results. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array. Default startIndex is 0.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12004,7 +12402,7 @@ export const LineItemCreativeAssociationApiFactory = function (configuration?: C
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
          * @param {string} lineItemIdFilter The returned array includes only associations to line items matching those specified in the comma-delimited string.
-         * @param {number} [count] Optional. Sets the number of results in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten results set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten results, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+         * @param {number} [count] Optional. Sets the number of results in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten results set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten results, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on. Maximum of count is 20.
          * @param {number} [startIndex] Optional. Sets a zero-based offset into the requested set of results. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array. Default startIndex is 0.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -12083,7 +12481,7 @@ export interface LineItemCreativeAssociationApiListLineItemCreativeAssociationsR
     readonly lineItemIdFilter: string
 
     /**
-     * Optional. Sets the number of results in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten results set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten results, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
+     * Optional. Sets the number of results in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten results set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten results, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on. Maximum of count is 20.
      * @type {number}
      * @memberof LineItemCreativeAssociationApiListLineItemCreativeAssociations
      */
@@ -12692,7 +13090,7 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Get conversion tracking products by identifier. If the order was previsouly updated by list of products, response will be a list of products. The maximum size of list will be 2000. If the order was previously updated by product file, please use \'/dsp/orders/{orderId}/conversionTracking/products/export\' to export as a file.
+         * Get conversion tracking products by identifier. If the order was previously updated by list of products, response will be a list of products. The maximum size of list will be 2000. If the order was previously updated by product file, please use \'/dsp/orders/{orderId}/conversionTracking/products/export\' to export as a file.
          * @summary Get conversion tracking products by identifier
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
@@ -13053,7 +13451,7 @@ export const OrderApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get conversion tracking products by identifier. If the order was previsouly updated by list of products, response will be a list of products. The maximum size of list will be 2000. If the order was previously updated by product file, please use \'/dsp/orders/{orderId}/conversionTracking/products/export\' to export as a file.
+         * Get conversion tracking products by identifier. If the order was previously updated by list of products, response will be a list of products. The maximum size of list will be 2000. If the order was previously updated by product file, please use \'/dsp/orders/{orderId}/conversionTracking/products/export\' to export as a file.
          * @summary Get conversion tracking products by identifier
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
@@ -13220,7 +13618,7 @@ export const OrderApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getPixelsByOrderId(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, orderId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get conversion tracking products by identifier. If the order was previsouly updated by list of products, response will be a list of products. The maximum size of list will be 2000. If the order was previously updated by product file, please use \'/dsp/orders/{orderId}/conversionTracking/products/export\' to export as a file.
+         * Get conversion tracking products by identifier. If the order was previously updated by list of products, response will be a list of products. The maximum size of list will be 2000. If the order was previously updated by product file, please use \'/dsp/orders/{orderId}/conversionTracking/products/export\' to export as a file.
          * @summary Get conversion tracking products by identifier
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
@@ -13769,7 +14167,7 @@ export class OrderApi extends BaseAPI {
     }
 
     /**
-     * Get conversion tracking products by identifier. If the order was previsouly updated by list of products, response will be a list of products. The maximum size of list will be 2000. If the order was previously updated by product file, please use \'/dsp/orders/{orderId}/conversionTracking/products/export\' to export as a file.
+     * Get conversion tracking products by identifier. If the order was previously updated by list of products, response will be a list of products. The maximum size of list will be 2000. If the order was previously updated by product file, please use \'/dsp/orders/{orderId}/conversionTracking/products/export\' to export as a file.
      * @summary Get conversion tracking products by identifier
      * @param {OrderApiGetProductsByOrderIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -14319,6 +14717,499 @@ export class ResponsiveECommerceCreativeApi extends BaseAPI {
      */
     public updateRecCreatives(requestParameters: ResponsiveECommerceCreativeApiUpdateRecCreativesRequest, options?: any) {
         return ResponsiveECommerceCreativeApiFp(this.configuration).updateRecCreatives(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.dspUpdateRecCreativeRequestV1, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * ThirdPartyCreativeApi - axios parameter creator
+ * @export
+ */
+export const ThirdPartyCreativeApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Create a third party creative.  Note that a future update will add support to create multiple third party creatives at a time. 
+         * @summary Create third party creative(s).
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {Array<DspCreateThirdPartyCreativeRequestV1>} [dspCreateThirdPartyCreativeRequestV1] An array of creative objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createThirdPartyCreative: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dspCreateThirdPartyCreativeRequestV1?: Array<DspCreateThirdPartyCreativeRequestV1>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('createThirdPartyCreative', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('createThirdPartyCreative', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/creatives/thirdParty`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.dspcreatethirdpartycreatives.v1+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(dspCreateThirdPartyCreativeRequestV1, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get a third party creative matching criteria provided in request.  Note that a future update will add support to get multiple third party creatives at a time. 
+         * @summary Get third party creative(s).
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {string} creativeIdFilter The returned array is filtered to include only creatives with Ids matching those specified in the comma-delimited string.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getThirdPartyCreatives: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, creativeIdFilter: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getThirdPartyCreatives', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getThirdPartyCreatives', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'creativeIdFilter' is not null or undefined
+            assertParamExists('getThirdPartyCreatives', 'creativeIdFilter', creativeIdFilter)
+            const localVarPath = `/dsp/creatives/thirdParty`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (creativeIdFilter !== undefined) {
+                localVarQueryParameter['creativeIdFilter'] = creativeIdFilter;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Preview a third party creative. 
+         * @summary Preview third party creative.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {DspThirdPartyCreativePreviewRequestV1} [dspThirdPartyCreativePreviewRequestV1] A preview request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        previewThirdPartyCreative: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dspThirdPartyCreativePreviewRequestV1?: DspThirdPartyCreativePreviewRequestV1, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('previewThirdPartyCreative', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('previewThirdPartyCreative', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/creatives/thirdParty/preview`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.dsppreviewthirdpartycreatives.v1+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(dspThirdPartyCreativePreviewRequestV1, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update a third party creative.  Note that a future update will add support to update multiple third party creatives at a time. 
+         * @summary Update third party creative(s).
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {Array<DspUpdateThirdPartyCreativeRequestV1>} [dspUpdateThirdPartyCreativeRequestV1] An array of creative objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateThirdPartyCreative: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dspUpdateThirdPartyCreativeRequestV1?: Array<DspUpdateThirdPartyCreativeRequestV1>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('updateThirdPartyCreative', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('updateThirdPartyCreative', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/creatives/thirdParty`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.dspupdatethirdpartycreatives.v1+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(dspUpdateThirdPartyCreativeRequestV1, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ThirdPartyCreativeApi - functional programming interface
+ * @export
+ */
+export const ThirdPartyCreativeApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ThirdPartyCreativeApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Create a third party creative.  Note that a future update will add support to create multiple third party creatives at a time. 
+         * @summary Create third party creative(s).
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {Array<DspCreateThirdPartyCreativeRequestV1>} [dspCreateThirdPartyCreativeRequestV1] An array of creative objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createThirdPartyCreative(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dspCreateThirdPartyCreativeRequestV1?: Array<DspCreateThirdPartyCreativeRequestV1>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DspCreativeResponseV1>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createThirdPartyCreative(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, dspCreateThirdPartyCreativeRequestV1, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get a third party creative matching criteria provided in request.  Note that a future update will add support to get multiple third party creatives at a time. 
+         * @summary Get third party creative(s).
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {string} creativeIdFilter The returned array is filtered to include only creatives with Ids matching those specified in the comma-delimited string.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getThirdPartyCreatives(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, creativeIdFilter: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DspReadThirdPartyCreativesResponseV1>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getThirdPartyCreatives(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, creativeIdFilter, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Preview a third party creative. 
+         * @summary Preview third party creative.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {DspThirdPartyCreativePreviewRequestV1} [dspThirdPartyCreativePreviewRequestV1] A preview request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async previewThirdPartyCreative(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dspThirdPartyCreativePreviewRequestV1?: DspThirdPartyCreativePreviewRequestV1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DspCreativePreviewResponseV1>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.previewThirdPartyCreative(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, dspThirdPartyCreativePreviewRequestV1, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Update a third party creative.  Note that a future update will add support to update multiple third party creatives at a time. 
+         * @summary Update third party creative(s).
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {Array<DspUpdateThirdPartyCreativeRequestV1>} [dspUpdateThirdPartyCreativeRequestV1] An array of creative objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateThirdPartyCreative(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dspUpdateThirdPartyCreativeRequestV1?: Array<DspUpdateThirdPartyCreativeRequestV1>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DspCreativeResponseV1>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateThirdPartyCreative(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, dspUpdateThirdPartyCreativeRequestV1, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ThirdPartyCreativeApi - factory interface
+ * @export
+ */
+export const ThirdPartyCreativeApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ThirdPartyCreativeApiFp(configuration)
+    return {
+        /**
+         * Create a third party creative.  Note that a future update will add support to create multiple third party creatives at a time. 
+         * @summary Create third party creative(s).
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {Array<DspCreateThirdPartyCreativeRequestV1>} [dspCreateThirdPartyCreativeRequestV1] An array of creative objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createThirdPartyCreative(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dspCreateThirdPartyCreativeRequestV1?: Array<DspCreateThirdPartyCreativeRequestV1>, options?: any): AxiosPromise<Array<DspCreativeResponseV1>> {
+            return localVarFp.createThirdPartyCreative(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, dspCreateThirdPartyCreativeRequestV1, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get a third party creative matching criteria provided in request.  Note that a future update will add support to get multiple third party creatives at a time. 
+         * @summary Get third party creative(s).
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {string} creativeIdFilter The returned array is filtered to include only creatives with Ids matching those specified in the comma-delimited string.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getThirdPartyCreatives(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, creativeIdFilter: string, options?: any): AxiosPromise<DspReadThirdPartyCreativesResponseV1> {
+            return localVarFp.getThirdPartyCreatives(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, creativeIdFilter, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Preview a third party creative. 
+         * @summary Preview third party creative.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {DspThirdPartyCreativePreviewRequestV1} [dspThirdPartyCreativePreviewRequestV1] A preview request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        previewThirdPartyCreative(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dspThirdPartyCreativePreviewRequestV1?: DspThirdPartyCreativePreviewRequestV1, options?: any): AxiosPromise<DspCreativePreviewResponseV1> {
+            return localVarFp.previewThirdPartyCreative(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, dspThirdPartyCreativePreviewRequestV1, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Update a third party creative.  Note that a future update will add support to update multiple third party creatives at a time. 
+         * @summary Update third party creative(s).
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {Array<DspUpdateThirdPartyCreativeRequestV1>} [dspUpdateThirdPartyCreativeRequestV1] An array of creative objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateThirdPartyCreative(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dspUpdateThirdPartyCreativeRequestV1?: Array<DspUpdateThirdPartyCreativeRequestV1>, options?: any): AxiosPromise<Array<DspCreativeResponseV1>> {
+            return localVarFp.updateThirdPartyCreative(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, dspUpdateThirdPartyCreativeRequestV1, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for createThirdPartyCreative operation in ThirdPartyCreativeApi.
+ * @export
+ * @interface ThirdPartyCreativeApiCreateThirdPartyCreativeRequest
+ */
+export interface ThirdPartyCreativeApiCreateThirdPartyCreativeRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof ThirdPartyCreativeApiCreateThirdPartyCreative
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+     * @type {string}
+     * @memberof ThirdPartyCreativeApiCreateThirdPartyCreative
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * An array of creative objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+     * @type {Array<DspCreateThirdPartyCreativeRequestV1>}
+     * @memberof ThirdPartyCreativeApiCreateThirdPartyCreative
+     */
+    readonly dspCreateThirdPartyCreativeRequestV1?: Array<DspCreateThirdPartyCreativeRequestV1>
+}
+
+/**
+ * Request parameters for getThirdPartyCreatives operation in ThirdPartyCreativeApi.
+ * @export
+ * @interface ThirdPartyCreativeApiGetThirdPartyCreativesRequest
+ */
+export interface ThirdPartyCreativeApiGetThirdPartyCreativesRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof ThirdPartyCreativeApiGetThirdPartyCreatives
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+     * @type {string}
+     * @memberof ThirdPartyCreativeApiGetThirdPartyCreatives
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The returned array is filtered to include only creatives with Ids matching those specified in the comma-delimited string.
+     * @type {string}
+     * @memberof ThirdPartyCreativeApiGetThirdPartyCreatives
+     */
+    readonly creativeIdFilter: string
+}
+
+/**
+ * Request parameters for previewThirdPartyCreative operation in ThirdPartyCreativeApi.
+ * @export
+ * @interface ThirdPartyCreativeApiPreviewThirdPartyCreativeRequest
+ */
+export interface ThirdPartyCreativeApiPreviewThirdPartyCreativeRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof ThirdPartyCreativeApiPreviewThirdPartyCreative
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+     * @type {string}
+     * @memberof ThirdPartyCreativeApiPreviewThirdPartyCreative
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * A preview request.
+     * @type {DspThirdPartyCreativePreviewRequestV1}
+     * @memberof ThirdPartyCreativeApiPreviewThirdPartyCreative
+     */
+    readonly dspThirdPartyCreativePreviewRequestV1?: DspThirdPartyCreativePreviewRequestV1
+}
+
+/**
+ * Request parameters for updateThirdPartyCreative operation in ThirdPartyCreativeApi.
+ * @export
+ * @interface ThirdPartyCreativeApiUpdateThirdPartyCreativeRequest
+ */
+export interface ThirdPartyCreativeApiUpdateThirdPartyCreativeRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof ThirdPartyCreativeApiUpdateThirdPartyCreative
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+     * @type {string}
+     * @memberof ThirdPartyCreativeApiUpdateThirdPartyCreative
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * An array of creative objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+     * @type {Array<DspUpdateThirdPartyCreativeRequestV1>}
+     * @memberof ThirdPartyCreativeApiUpdateThirdPartyCreative
+     */
+    readonly dspUpdateThirdPartyCreativeRequestV1?: Array<DspUpdateThirdPartyCreativeRequestV1>
+}
+
+/**
+ * ThirdPartyCreativeApi - object-oriented interface
+ * @export
+ * @class ThirdPartyCreativeApi
+ * @extends {BaseAPI}
+ */
+export class ThirdPartyCreativeApi extends BaseAPI {
+    /**
+     * Create a third party creative.  Note that a future update will add support to create multiple third party creatives at a time. 
+     * @summary Create third party creative(s).
+     * @param {ThirdPartyCreativeApiCreateThirdPartyCreativeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ThirdPartyCreativeApi
+     */
+    public createThirdPartyCreative(requestParameters: ThirdPartyCreativeApiCreateThirdPartyCreativeRequest, options?: any) {
+        return ThirdPartyCreativeApiFp(this.configuration).createThirdPartyCreative(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.dspCreateThirdPartyCreativeRequestV1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get a third party creative matching criteria provided in request.  Note that a future update will add support to get multiple third party creatives at a time. 
+     * @summary Get third party creative(s).
+     * @param {ThirdPartyCreativeApiGetThirdPartyCreativesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ThirdPartyCreativeApi
+     */
+    public getThirdPartyCreatives(requestParameters: ThirdPartyCreativeApiGetThirdPartyCreativesRequest, options?: any) {
+        return ThirdPartyCreativeApiFp(this.configuration).getThirdPartyCreatives(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.creativeIdFilter, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Preview a third party creative. 
+     * @summary Preview third party creative.
+     * @param {ThirdPartyCreativeApiPreviewThirdPartyCreativeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ThirdPartyCreativeApi
+     */
+    public previewThirdPartyCreative(requestParameters: ThirdPartyCreativeApiPreviewThirdPartyCreativeRequest, options?: any) {
+        return ThirdPartyCreativeApiFp(this.configuration).previewThirdPartyCreative(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.dspThirdPartyCreativePreviewRequestV1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Update a third party creative.  Note that a future update will add support to update multiple third party creatives at a time. 
+     * @summary Update third party creative(s).
+     * @param {ThirdPartyCreativeApiUpdateThirdPartyCreativeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ThirdPartyCreativeApi
+     */
+    public updateThirdPartyCreative(requestParameters: ThirdPartyCreativeApiUpdateThirdPartyCreativeRequest, options?: any) {
+        return ThirdPartyCreativeApiFp(this.configuration).updateThirdPartyCreative(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.dspUpdateThirdPartyCreativeRequestV1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -893,7 +893,7 @@ export interface CreateCampaign {
      */
     portfolioId?: number;
     /**
-     * A name for the campaign.
+     * A name for the campaign. Note that idempotency for this field works different for sellers and vendors. Sellers aren\'t allowed to have duplicate campaign names, but vendors can have duplicate campaign names.
      * @type {string}
      * @memberof CreateCampaign
      */
@@ -2341,13 +2341,13 @@ export interface Report {
      */
     segment?: ReportSegmentEnum;
     /**
-     * The date for which to retrieve the performance report in YYYYMMDD format. The time zone is specified by the profile used to request the report. If this date is today, then the performance report may contain partial information. Reports are not available for data older than 60 days. For details on data latency, see the Service Guarantees in the [developer notes](https://advertising.amazon.com/API/docs/en-us/get-started/developer-notes) section.
+     * The date for which to retrieve the performance report in YYYYMMDD format. The time zone is specified by the profile used to request the report. If this date is today, then the performance report may contain partial information. Reports are not available for data older than 60 days. For details on data latency, see the service guarantees in the [developer notes](https://advertising.amazon.com/API/docs/en-us/get-started/developer-notes) section.
      * @type {string}
      * @memberof Report
      */
     reportDate?: string;
     /**
-     * A comma-separated list of the metrics to be included in the report.  The following tables summarize report metrics which can be requested via the reports interface. Different report types can use different metrics. Note that ASIN reports only return data for either keywords or targets, but not both. |Report Type | Metric | Details | | --- | --- | --- | | campaigns | bidPlus | A dimensional metric. See the [premium bid adjustment](get-started/developer-notes) section in the developer notes. | | campaigns | `campaignName` | Unique name of the campaign | | campaigns | `campaignId` | Unique numerical ID of the campaign | | campaigns | `campaignStatus` | Status of the campaign | | campaigns | `campaignBudget` | Total budget allotted to the campaign | | campaigns | `campaignRuleBasedBudget` | The value of the rule-based budget. | | campaigns | `applicableBudgetRuleId` | The identifier of the active rule. | | campaigns | `applicableBudgetRuleName` | The name of the active rule. | | campaigns | `impressions` | Total ad impressions. | | campaigns | `clicks` | Total ad clicks. | | campaigns | `cost` | Total cost of all clicks. Can be divided by clicks to obtain average CPC. | | campaigns | `attributedConversions1d` | Number of attributed conversion events occurring within 1 day of click on ad. | | campaigns | `attributedConversions7d` | Number of attributed conversion events occurring within 7 days of click on ad. | | campaigns | `attributedConversions14d` | Number of attributed conversion events occurring within 14 days of click on ad. | | campaigns | `attributedConversions30d` | Number of attributed conversion events occurring within 30 days of click on ad. | | campaigns | `attributedConversions1dSameSKU` | Number of attributed conversion events occurring within 1 day of click on ad where the purchased SKU was the same as the one advertised. | | campaigns | `attributedConversions7dSameSKU` | Number of attributed conversion events occurring within 7 days of click on ad where the purchased SKU was the same as the one advertised. | | campaigns | `attributedConversions14dSameSKU` | Number of attributed conversion events occurring within 14 days of click on ad where the purchased SKU was the same as the one advertised. | | campaigns | `attributedConversions30dSameSKU` | Number of attributed conversion events occurring within 30 days of click on ad where the purchased SKU was the same as the one advertised. | | campaigns | `attributedUnitsOrdered1d` | Number of attributed units ordered within 1 day of click on ad. | | campaigns | `attributedUnitsOrdered7d` | Number of attributed units ordered within 7 days of click on ad. | | campaigns | `attributedUnitsOrdered14d` | Number of attributed units ordered within 14 days of click on ad. | | campaigns | `attributedUnitsOrdered30d` | Number of attributed units ordered within 30 days of click on ad. | | campaigns | `attributedSales1d` | Number of attributed sales occurring within 1 day of click on ad. | | campaigns | `attributedSales7d` | Number of attributed sales occurring within 7 days of click on ad. | | campaigns | `attributedSales14d` | Number of attributed sales occurring within 14 days of click on ad. | | campaigns | `attributedSales30d` | Number of attributed sales occurring within 30 days of click on ad. | | campaigns | `attributedSales1dSameSKU` | Aggregate value of attributed sales occurring within 1 day of click on ad where the purchased SKU was the same as the one advertised. | | campaigns | `attributedSales7dSameSKU` | Aggregate value of attributed sales occurring within 7 days of click on ad where the purchased SKU was the same as the one advertised. | | campaigns | `attributedSales14dSameSKU` | Aggregate value of attributed sales occurring within 14 days of click on ad where the purchased SKU was the same as the one advertised. | | campaigns | `attributedSales30dSameSKU` | Aggregate value of attributed sales occurring within 30 days of click on ad where the purchased SKU was the same as the one advertised. | | campaigns | `attributedUnitsOrdered1dSameSKU` | Number of attributed units ordered within 1 day of click on ad where the purchased SKU was the same as the one advertised. | | campaigns | `attributedUnitsOrdered7dSameSKU` | Number of attributed units ordered within 7 days of click on ad where the purchased SKU was the same as the one advertised. | | campaigns | `attributedUnitsOrdered14dSameSKU` | Number of attributed units ordered within 14 days of click on ad where the purchased SKU was the same as the one advertised. | | campaigns | `attributedUnitsOrdered30dSameSKU` | Number of attributed units ordered within 30 days of click on ad where the purchased SKU was the same as the one advertised. | | campaigns | `attributedKindleEditionNormalizedPagesRead14d` | Number of attributed kindle edition normalized pages read within 14 days of click on ad. | | campaigns | `attributedKindleEditionNormalizedPagesRoyalties14d` | The estimated Royalties of attributed estimated kindle edition normalized pages with in 14 days of click on ad.| |          |                           |               | | adGroups | `campaignName` | Unique name of the campaign | | adGroups | `campaignId` | Unique numerical ID of the campaign | | adGroups | `adGroupName` | Unique name of the ad group | | adGroups | `adGroupId` | Unique numerical ID of the ad group | | adGroups | `impressions` | Total ad impressions. | | adGroups | `clicks` | Total ad clicks. | | adGroups | `cost` | Total cost of all clicks. Can be divided by clicks to obtain average CPC. |        |          |                           |               | | adGroups | `attributedConversions1d` | Number of attributed conversion events occurring within 1 day of click on ad. | | adGroups | `attributedConversions7d` | Number of attributed conversion events occurring within 7 days of click on ad. | | adGroups | `attributedConversions14d` | Number of attributed conversion events occurring within 14 days of click on ad. | | adGroups | `attributedConversions30d` | Number of attributed conversion events occurring within 30 days of click on ad. | | adGroups | `attributedConversions1dSameSKU` | Number of attributed conversion events occurring within 1 day of click on ad where the purchased SKU was the same as the one advertised. | | adGroups | `attributedConversions7dSameSKU` | Number of attributed conversion events occurring within 7 days of click on ad where the purchased SKU was the same as the one advertised. | | adGroups | `attributedConversions14dSameSKU` | Number of attributed conversion events occurring within 14 days of click on ad where the purchased SKU was the same as the one advertised. | | adGroups | `attributedConversions30dSameSKU` | Number of attributed conversion events occurring within 30 days of click on ad where the purchased SKU was the same as the one advertised. | | adGroups | `attributedUnitsOrdered1d` | Number of attributed units ordered within 1 day of click on ad. | | adGroups | `attributedUnitsOrdered7d` | Number of attributed units ordered within 7 days of click on ad. | | adGroups | `attributedUnitsOrdered14d` | Number of attributed units ordered within 14 days of click on ad. | | adGroups | `attributedUnitsOrdered30d` | Number of attributed units ordered within 30 days of click on ad. | | adGroups | `attributedSales1d` | Number of attributed sales occurring within 1 day of click on ad. | | adGroups | `attributedSales7d` | Number of attributed sales occurring within 7 days of click on ad. | | adGroups | `attributedSales14d` | Number of attributed sales occurring within 14 days of click on ad. | | adGroups | `attributedSales30d` | Number of attributed sales occurring within 30 days of click on ad. | | adGroups | `attributedSales1dSameSKU` | Aggregate value of attributed sales occurring within 1 day of click on ad where the purchased SKU was the same as the one advertised. | | adGroups | `attributedSales7dSameSKU` | Aggregate value of attributed sales occurring within 7 days of click on ad where the purchased SKU was the same as the one advertised. | | adGroups | `attributedSales14dSameSKU` | Aggregate value of attributed sales occurring within 14 days of click on ad where the purchased SKU was the same as the one advertised. | | adGroups | `attributedSales30dSameSKU` | Aggregate value of attributed sales occurring within 30 days of click on ad where the purchased SKU was the same as the one advertised. | | adGroups | `attributedUnitsOrdered1dSameSKU` | Number of attributed units ordered within 1 day of click on ad where the purchased SKU was the same as the one advertised. | | adGroups | `attributedUnitsOrdered7dSameSKU` | Number of attributed units ordered within 7 days of click on ad where the purchased SKU was the same as the one advertised. | | adGroups | `attributedUnitsOrdered14dSameSKU` | Number of attributed units ordered within 14 days of click on ad where the purchased SKU was the same as the one advertised. | | adGroups | `attributedUnitsOrdered30dSameSKU` | Number of attributed units ordered within 30 days of click on ad where the purchased SKU was the same as the one advertised. | | adGroups | `attributedKindleEditionNormalizedPagesRead14d` | Number of attributed kindle edition normalized pages read within 14 days of click on ad. | | adGroups | `attributedKindleEditionNormalizedPagesRoyalties14d` | The estimated Royalties of attributed estimated kindle edition normalized pages with in 14 days of click on ad.|         |           |              |              |  | keywords | `campaignName` | Unique name of the campaign | | keywords | `campaignId` | Unique numerical ID of the campaign | | keywords | `adGroupName` | Unique name of the ad group | | keywords | `adGroupId` | Unique numerical ID of the ad group | | keywords | `keywordId` | ID of the keyword used in bid | | keywords | `keywordText` | Text of the keyword or phrase used in bid | | keywords | `matchType` | Type of matching for the keyword or phrase used in bid. Must be one of: broad, phrase, or exact | | keywords | `impressions` | Total ad impressions. | | keywords | `clicks` | Total ad clicks. | | keywords | `cost` | Total cost of all clicks. Can be divided by clicks to obtain average CPC. | | keywords | `attributedConversions1d` | Number of attributed conversion events occurring within 1 day of click on ad. | | keywords | `attributedConversions7d` | Number of attributed conversion events occurring within 7 days of click on ad. | | keywords | `attributedConversions14d` | Number of attributed conversion events occurring within 14 days of click on ad. | | keywords | `attributedConversions30d` | Number of attributed conversion events occurring within 30 days of click on ad. | | keywords | `attributedConversions1dSameSKU` | Number of attributed conversion events occurring within 1 day of click on ad where the purchased SKU was the same as the one advertised. | | keywords | `attributedConversions7dSameSKU` | Number of attributed conversion events occurring within 7 days of click on ad where the purchased SKU was the same as the one advertised. | | keywords | `attributedConversions14dSameSKU` | Number of attributed conversion events occurring within 14 days of click on ad where the purchased SKU was the same as the one advertised. | | keywords | `attributedConversions30dSameSKU` | Number of attributed conversion events occurring within 30 days of click on ad where the purchased SKU was the same as the one advertised. | | keywords | `attributedUnitsOrdered1d` | Number of attributed units ordered within 1 day of click on ad. | | keywords | `attributedUnitsOrdered7d` | Number of attributed units ordered within 7 days of click on ad. | | keywords | `attributedUnitsOrdered14d` | Number of attributed units ordered within 14 days of click on ad. | | keywords | `attributedUnitsOrdered30d` | Number of attributed units ordered within 30 days of click on ad. | | keywords | `attributedSales1d` | Number of attributed sales occurring within 1 day of click on ad. | | keywords | `attributedSales7d` | Number of attributed sales occurring within 7 days of click on ad. | | keywords | `attributedSales14d` | Number of attributed sales occurring within 14 days of click on ad. | | keywords | `attributedSales30d` | Number of attributed sales occurring within 30 days of click on ad. | | keywords | `attributedSales1dSameSKU` | Aggregate value of attributed sales occurring within 1 day of click on ad where the purchased SKU was the same as the one advertised. | | keywords | `attributedSales7dSameSKU` | Aggregate value of attributed sales occurring within 7 days of click on ad where the purchased SKU was the same as the one advertised. | | keywords | `attributedSales14dSameSKU` | Aggregate value of attributed sales occurring within 14 days of click on ad where the purchased SKU was the same as the one advertised. | | keywords | `attributedSales30dSameSKU` | Aggregate value of attributed sales occurring within 30 days of click on ad where the purchased SKU was the same as the one advertised. | | keywords | `attributedUnitsOrdered1dSameSKU` | Number of attributed units ordered within 1 day of click on ad where the purchased SKU was the same as the one advertised. | | keywords | `attributedUnitsOrdered7dSameSKU` | Number of attributed units ordered within 7 day of click on ad where the purchased SKU was the same as the one advertised. | | keywords | `attributedUnitsOrdered14dSameSKU` | Number of attributed units ordered within 14 day of click on ad where the purchased SKU was the same as the one advertised. | | keywords | `attributedUnitsOrdered30dSameSKU` | Number of attributed units ordered within 30 day of click on ad where the purchased SKU was the same as the one advertised. | | keywords | `attributedKindleEditionNormalizedPagesRead14d` | Number of attributed kindle edition normalized pages read within 14 days of click on ad. | | keywords | `attributedKindleEditionNormalizedPagesRoyalties14d` | The estimated Royalties of attributed estimated kindle edition normalized pages with in 14 days of click on ad.|         |                |             |               |  | productAds | `campaignName` | Unique name of the campaign | | productAds | `campaignId` | Unique numerical ID of the campaign | | productAds | `adGroupName` | Unique name of the ad group | | productAds | `adGroupId` | Unique numerical ID of the ad group | | productAds | `impressions` | Total ad impressions. | | productAds | `clicks` | Total ad clicks. | | productAds | `cost` | Total cost of all clicks. Can be divided by clicks to obtain average CPC. | | productAds | `currency` | A dimensional metric | | productAds | `asin` | The ASIN that is being advertised. | | productAds | `sku` | The SKU that is being advertised. Not available for vendors. | | productAds | `attributedConversions1d` | Number of attributed conversion events occurring within 1 day of click on ad. | | productAds | `attributedConversions7d` | Number of attributed conversion events occurring within 7 days of click on ad. | | productAds | `attributedConversions14d` | Number of attributed conversion events occurring within 14 days of click on ad. | | productAds | `attributedConversions30d` | Number of attributed conversion events occurring within 30 days of click on ad. | | productAds | `attributedConversions1dSameSKU` | Number of attributed conversion events occurring within 1 day of click on ad where the purchased SKU was the same as the one advertised. | | productAds | `attributedConversions7dSameSKU` | Number of attributed conversion events occurring within 7 days of click on ad where the purchased SKU was the same as the one advertised. | | productAds | `attributedConversions14dSameSKU` | Number of attributed conversion events occurring within 14 days of click on ad where the purchased SKU was the same as the one advertised. | | productAds | `attributedConversions30dSameSKU` | Number of attributed conversion events occurring within 30 days of click on ad where the purchased SKU was the same as the one advertised. | | productAds | `attributedUnitsOrdered1d` | Number of attributed units ordered within 1 day of click on ad. | | productAds | `attributedUnitsOrdered7d` | Number of attributed units ordered within 7 days of click on ad. | | productAds | `attributedUnitsOrdered14d` | Number of attributed units ordered within 14 days of click on ad. | | productAds | `attributedUnitsOrdered30d` | Number of attributed units ordered within 30 days of click on ad. | | productAds | `attributedSales1d` | Number of attributed sales occurring within 1 day of click on ad. | | productAds | `attributedSales7d` | Number of attributed sales occurring within 7 days of click on ad. | | productAds | `attributedSales14d` | Number of attributed sales occurring within 14 days of click on ad. | | productAds | `attributedSales30d` | Number of attributed sales occurring within 30 days of click on ad. | | productAds | `attributedSales1dSameSKU` | Aggregate value of attributed sales occurring within 1 day of click on ad where the purchased SKU was the same as the one advertised. | | productAds | `attributedSales7dSameSKU` | Aggregate value of attributed sales occurring within 7 days of click on ad where the purchased SKU was the same as the one advertised. | | productAds | `attributedSales14dSameSKU` | Aggregate value of attributed sales occurring within 14 days of click on ad where the purchased SKU was the same as the one advertised. | | productAds | `attributedSales30dSameSKU` | Aggregate value of attributed sales occurring within 30 days of click on ad where the purchased SKU was the same as the one advertised. | | productAds | `attributedUnitsOrdered1dSameSKU` | Number of attributed units ordered within 1 day of click on ad where the purchased SKU was the same as the one advertised. | | productAds | `attributedUnitsOrdered7dSameSKU` | Number of attributed units ordered within 7 days of click on ad where the purchased SKU was the same as the one advertised. | | productAds | `attributedUnitsOrdered14dSameSKU` | Number of attributed units ordered within 14 days of click on ad where the purchased SKU was the same as the one advertised. | | productAds | `attributedUnitsOrdered30dSameSKU` | Number of attributed units ordered within 30 days of click on ad where the purchased SKU was the same as the one advertised. | | productAds | `attributedKindleEditionNormalizedPagesRead14d` | Number of attributed kindle edition normalized pages read within 14 days of click on ad. | | productAds | `attributedKindleEditionNormalizedPagesRoyalties14d` | The estimated Royalties of attributed estimated kindle edition normalized pages with in 14 days of click on ad.|         |              |               |              | | asins | `campaignName` | Unique name of the campaign | | asins | `campaignId` | Unique numerical ID of the campaign | | asins | `adGroupName` | Unique name of the ad group | | asins | `adGroupId` | Unique numerical ID of the ad group | | asins | `keywordId` | Unique numerical ID of the keyword | | asins | `keywordText` | Keyword or phrase used in bid | | asins | `asin` | Unique ASIN advertised | | asins | `otherAsin` | A non-dimensional metric for ASINs other than the one advertised | | asins | `sku` | Unique SKU advertised. Not available for vendors. | | asins | `currency` | A dimensional metric | | asins | `matchType` | One of: broad, phrase, or exact | | asins | `attributedUnitsOrdered1d` | Number of ASIN (SKU) units sold. 1 day.| | asins | `attributedUnitsOrdered7d` | Number of ASIN (SKU) units sold. 7 days.| | asins | `attributedUnitsOrdered14d` | Number of ASIN (SKU) units sold. 14 days.| | asins | `attributedUnitsOrdered30d` | Number of ASIN (SKU) units sold. 30 days.| | asins | `attributedUnitsOrdered1dOtherSKU` | Number of other ASIN (SKU) units sold. 1 day. | | asins | `attributedUnitsOrdered7dOtherSKU` | Number of other ASIN (SKU) units sold. 7 days. | | asins | `attributedUnitsOrdered14dOtherSKU` | Number of other ASIN (SKU) units sold. 14 days. | | asins | `attributedUnitsOrdered30dOtherSKU` | Number of other ASIN (SKU) units sold. 30 days. | | asins | `attributedSales1dOtherSKU` | Sales for another ASIN (SKU). 1 day. | | asins | `attributedSales7dOtherSKU` | Sales for another ASIN (SKU). 7 days. | | asins | `attributedSales14dOtherSKU` | Sales for another ASIN (sku). 14 days. | | asins | `attributedSales30dOtherSKU` | Sales for another ASIN (sku). 30 days. | | asins | `targetId` | The target identifier. | | asins | `targetingText` | The targeting text. | | asins | `targetingType` | The targeting type. | | asins | `attributedKindleEditionNormalizedPagesRead14d` | Number of attributed kindle edition normalized pages read within 14 days of click on ad. | | asins | `attributedKindleEditionNormalizedPagesRoyalties14d` | The estimated Royalties of attributed estimated kindle edition normalized pages with in 14 days of click on ad.|         |                      |              |              | | targets | `campaignName` | Unique name of the campaign | | targets | `campaignId` | Unique numerical ID of the campaign | | targets | `adGroupName` | Unique name of the ad group | | targets | `adGroupId` | Unique numerical ID of the ad group | | targets | `targetId` | ID of the targeting expression used in a bid | | targets | `targetingExpression` | A string representation of your expression object in targeting clauses | | targets | `targetingText` | A resolved string representation of your expression object in targeting clauses | | targets | `targetingType` | Type of matching for the targeting expression used in bid. For manually created expressions this value is: `TARGETING_EXPRESSION`. For auto-targeting expressions this value is: `TARGETING_EXPRESSION_PREDEFINED` | | targets | `impressions` | Total ad impressions | | targets | `clicks` | Total ad clicks | | targets | `cost` | Total cost of all clicks. Can be divided by clicks to obtain average CPC | | targets | `attributedConversions1d` | Number of attributed conversion events occurring within 1 day of click on ad | | targets | `attributedConversions7d` | Number of attributed conversion events occurring within 7 days of click on ad | | targets | `attributedConversions14d` | Number of attributed conversion events occurring within 14 days of click on ad | | targets | `attributedConversions30d` | Number of attributed conversion events occurring within 30 days of click on ad | | targets | `attributedConversions1dSameSKU` | Number of attributed conversion events occurring within 1 day of click on ad where the purchased SKU was the same as the one advertised | | targets | `attributedConversions7dSameSKU` | Number of attributed conversion events occurring within 7 days of click on ad where the purchased SKU was the same as the one advertised | | targets | `attributedConversions14dSameSKU` | Number of attributed conversion events occurring within 14 days of click on ad where the purchased SKU was the same as the one advertised | | targets | `attributedConversions30dSameSKU` | Number of attributed conversion events occurring within 30 days of click on ad where the purchased SKU was the same as the one advertised | | targets | `attributedUnitsOrdered1d` | Number of attributed units ordered within 1 day of click on ad | | targets | `attributedUnitsOrdered7d` | Number of attributed units ordered within 7 days of click on ad | | targets | `attributedUnitsOrdered14d` | Number of attributed units ordered within 14 days of click on ad | | targets | `attributedUnitsOrdered30d` | Number of attributed units ordered within 30 days of click on ad | | targets | `attributedSales1d` | Number of attributed sales occurring within 1 day of click on ad | | targets | `attributedSales7d` | Number of attributed sales occurring within 7 days of click on ad | | targets | `attributedSales14d` | Number of attributed sales occurring within 14 days of click on ad | | targets | `attributedSales30d` | Number of attributed sales occurring within 30 days of click on ad | | targets | `attributedSales1dSameSKU` | Aggregate value of attributed sales occurring within 1 day of click on ad where the purchased SKU was the same as the one advertised | | targets | `attributedSales7dSameSKU` | Aggregate value of attributed sales occurring within 7 days of click on ad where the purchased SKU was the same as the one advertised | | targets | `attributedSales14dSameSKU` | Aggregate value of attributed sales occurring within 14 days of click on ad where the purchased SKU was the same as the one advertised | | targets | `attributedSales30dSameSKU` | Aggregate value of attributed sales occurring within 30 days of click on ad where the purchased SKU was the same as the one advertised | | targets | `attributedUnitsOrdered1dSameSKU` | Number of attributed units ordered within 1 day of click on ad where the purchased SKU was the same as the one advertised. | | targets | `attributedUnitsOrdered7dSameSKU` | Number of attributed units ordered within 7 days of click on ad where the purchased SKU was the same as the one advertised. | | targets | `attributedUnitsOrdered14dSameSKU` | Number of attributed units ordered within 14 days of click on ad where the purchased SKU was the same as the one advertised. | | targets | `attributedUnitsOrdered30dSameSKU` | Number of attributed units ordered within 30 days of click on ad where the purchased SKU was the same as the one advertised. | | targets | `attributedKindleEditionNormalizedPagesRead14d` | Number of attributed kindle edition normalized pages read within 14 days of click on ad. | | targets | `attributedKindleEditionNormalizedPagesRoyalties14d` | The estimated Royalties of attributed estimated kindle edition normalized pages with in 14 days of click on ad.|        
+     * A comma-separated list of the metrics to be included in the report.  Each report type supports different metrics. To understand supported metrics for each report type, see [Report types](/API/docs/en-us/concepts/reporting/report-types).
      * @type {string}
      * @memberof Report
      */
@@ -11924,7 +11924,7 @@ export class ProductTargetingApi extends BaseAPI {
 export const ReportsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**
          * @summary Downloads a previously requested report identified by report ID.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -11976,15 +11976,15 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * 
+         * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).
          * @summary Gets a previously requested report specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {number} reportId The report identifier.
+         * @param {string} reportId The report identifier.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getReport: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: number, options: any = {}): Promise<RequestArgs> => {
+        getReport: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: string, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('getReport', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
@@ -12028,7 +12028,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Request the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`. **Note** that for `asin` reports, the report currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
+         * Requests the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  **Note**: `asins` reports currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
          * @summary Requests a Sponsored Products report.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12094,7 +12094,7 @@ export const ReportsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ReportsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**
          * @summary Downloads a previously requested report identified by report ID.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12107,20 +12107,20 @@ export const ReportsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
+         * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).
          * @summary Gets a previously requested report specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {number} reportId The report identifier.
+         * @param {string} reportId The report identifier.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2002>> {
+        async getReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2002>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getReport(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Request the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`. **Note** that for `asin` reports, the report currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
+         * Requests the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  **Note**: `asins` reports currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
          * @summary Requests a Sponsored Products report.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12144,7 +12144,7 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = ReportsApiFp(configuration)
     return {
         /**
-         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**
          * @summary Downloads a previously requested report identified by report ID.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12156,19 +12156,19 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.downloadReport(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
+         * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).
          * @summary Gets a previously requested report specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {number} reportId The report identifier.
+         * @param {string} reportId The report identifier.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: number, options?: any): AxiosPromise<InlineResponse2002> {
+        getReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: string, options?: any): AxiosPromise<InlineResponse2002> {
             return localVarFp.getReport(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Request the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`. **Note** that for `asin` reports, the report currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
+         * Requests the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  **Note**: `asins` reports currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
          * @summary Requests a Sponsored Products report.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12233,10 +12233,10 @@ export interface ReportsApiGetReportRequest {
 
     /**
      * The report identifier.
-     * @type {number}
+     * @type {string}
      * @memberof ReportsApiGetReport
      */
-    readonly reportId: number
+    readonly reportId: string
 }
 
 /**
@@ -12282,7 +12282,7 @@ export interface ReportsApiRequestReportRequest {
  */
 export class ReportsApi extends BaseAPI {
     /**
-     * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```
+     * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**
      * @summary Downloads a previously requested report identified by report ID.
      * @param {ReportsApiDownloadReportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12294,7 +12294,7 @@ export class ReportsApi extends BaseAPI {
     }
 
     /**
-     * 
+     * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).
      * @summary Gets a previously requested report specified by identifier.
      * @param {ReportsApiGetReportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12306,7 +12306,7 @@ export class ReportsApi extends BaseAPI {
     }
 
     /**
-     * Request the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`. **Note** that for `asin` reports, the report currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
+     * Requests the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  **Note**: `asins` reports currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
      * @summary Requests a Sponsored Products report.
      * @param {ReportsApiRequestReportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12326,7 +12326,59 @@ export class ReportsApi extends BaseAPI {
 export const SnapshotsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
+         * @summary Downloads a previously requested snapshot.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} snapshotId The snapshot identifier.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadSnapshot: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, snapshotId: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('downloadSnapshot', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('downloadSnapshot', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'snapshotId' is not null or undefined
+            assertParamExists('downloadSnapshot', 'snapshotId', snapshotId)
+            const localVarPath = `/v2/sp/snapshots/{snapshotId}/download`
+                .replace(`{${"snapshotId"}}`, encodeURIComponent(String(snapshotId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
          * @summary Gets the status of a requested snapshot.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12378,7 +12430,7 @@ export const SnapshotsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Request a file-based snapshot of all entities of the specified type in the account satisfying the filtering criteria.
+         * Request a file-based snapshot of all entities of the specified type in the account satisfying the filtering criteria.  **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
          * @summary Request a file-based snapshot of all entities of the specified type.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12446,7 +12498,20 @@ export const SnapshotsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SnapshotsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
+         * @summary Downloads a previously requested snapshot.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} snapshotId The snapshot identifier.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async downloadSnapshot(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, snapshotId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.downloadSnapshot(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, snapshotId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
          * @summary Gets the status of a requested snapshot.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12459,7 +12524,7 @@ export const SnapshotsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Request a file-based snapshot of all entities of the specified type in the account satisfying the filtering criteria.
+         * Request a file-based snapshot of all entities of the specified type in the account satisfying the filtering criteria.  **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
          * @summary Request a file-based snapshot of all entities of the specified type.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12483,7 +12548,19 @@ export const SnapshotsApiFactory = function (configuration?: Configuration, base
     const localVarFp = SnapshotsApiFp(configuration)
     return {
         /**
-         * 
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
+         * @summary Downloads a previously requested snapshot.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} snapshotId The snapshot identifier.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadSnapshot(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, snapshotId: number, options?: any): AxiosPromise<void> {
+            return localVarFp.downloadSnapshot(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, snapshotId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
          * @summary Gets the status of a requested snapshot.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12495,7 +12572,7 @@ export const SnapshotsApiFactory = function (configuration?: Configuration, base
             return localVarFp.getSnapshotStatus(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, snapshotId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Request a file-based snapshot of all entities of the specified type in the account satisfying the filtering criteria.
+         * Request a file-based snapshot of all entities of the specified type in the account satisfying the filtering criteria.  **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
          * @summary Request a file-based snapshot of all entities of the specified type.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12509,6 +12586,34 @@ export const SnapshotsApiFactory = function (configuration?: Configuration, base
         },
     };
 };
+
+/**
+ * Request parameters for downloadSnapshot operation in SnapshotsApi.
+ * @export
+ * @interface SnapshotsApiDownloadSnapshotRequest
+ */
+export interface SnapshotsApiDownloadSnapshotRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
+     * @type {string}
+     * @memberof SnapshotsApiDownloadSnapshot
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof SnapshotsApiDownloadSnapshot
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The snapshot identifier.
+     * @type {number}
+     * @memberof SnapshotsApiDownloadSnapshot
+     */
+    readonly snapshotId: number
+}
 
 /**
  * Request parameters for getSnapshotStatus operation in SnapshotsApi.
@@ -12581,7 +12686,19 @@ export interface SnapshotsApiRequestSnapshotRequest {
  */
 export class SnapshotsApi extends BaseAPI {
     /**
-     * 
+     * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
+     * @summary Downloads a previously requested snapshot.
+     * @param {SnapshotsApiDownloadSnapshotRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SnapshotsApi
+     */
+    public downloadSnapshot(requestParameters: SnapshotsApiDownloadSnapshotRequest, options?: any) {
+        return SnapshotsApiFp(this.configuration).downloadSnapshot(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.snapshotId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
      * @summary Gets the status of a requested snapshot.
      * @param {SnapshotsApiGetSnapshotStatusRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12593,7 +12710,7 @@ export class SnapshotsApi extends BaseAPI {
     }
 
     /**
-     * Request a file-based snapshot of all entities of the specified type in the account satisfying the filtering criteria.
+     * Request a file-based snapshot of all entities of the specified type in the account satisfying the filtering criteria.  **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
      * @summary Request a file-based snapshot of all entities of the specified type.
      * @param {SnapshotsApiRequestSnapshotRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

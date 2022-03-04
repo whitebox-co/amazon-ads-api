@@ -7,11 +7,16 @@
   "paths": {
     "/currencies/localize": {
       "post": {
-        "summary": "Gets an array of localized currencies in their target marketplaces, with the advertiser ID and source marketplace ID passed in through the header and body ",
+        "summary": "Gets an array of localized currencies in their target marketplaces using advertiser identifier in header, and source marketplace ID (via marketplaceId or countryCode) in the body",
         "requestBody": {
-          "description": "Contains a list of amounts and a list of target marketplace IDs, to convert the passed values into the respective marketplace currency.",
+          "description": "Contains a list of amounts and a list of target marketplace IDs (via marketplaceId or countryCode), to convert the passed values into the respective marketplace currency.",
           "content": {
             "application/vnd.currencylocalization.v1+json": {
+              "schema": {
+                "$ref": "#/components/schemas/currencyLocalizationRequest"
+              }
+            },
+            "application/vnd.currencylocalization.v2+json": {
               "schema": {
                 "$ref": "#/components/schemas/currencyLocalizationRequest"
               }
@@ -29,6 +34,46 @@
                 "schema": {
                   "$ref": "#/components/schemas/currencyLocalizationResponse"
                 }
+              },
+              "application/vnd.currencylocalization.v2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/currencyLocalizationResponseV2"
+                },
+                "example": {
+                  "localizedCurrencyResponses": [
+                    {
+                      "errorCode": "MULTIPLE_REASONS",
+                      "sourceCurrency": {
+                        "amount": "1"
+                      },
+                      "localizedCurrencyResults": {
+                        "KR": {
+                          "localizedCurrency": {},
+                          "messages": [
+                            "Currency conversion failed due to an unsupported marketplace arc. Please consult the documentation for supported marketplace arcs."
+                          ],
+                          "errorCode": "UNSUPPORTED_MARKETPLACE_ARC",
+                          "status": "FAILURE"
+                        },
+                        "MX": {
+                          "localizedCurrency": {
+                            "amount": "1"
+                          },
+                          "status": "SUCCESS"
+                        },
+                        "CA": {
+                          "localizedCurrency": {},
+                          "messages": [
+                            "Currency conversion failed due to a dependency error. Please try again later."
+                          ],
+                          "errorCode": "DEPENDENCY_ERROR",
+                          "status": "ERROR"
+                        }
+                      },
+                      "status": "PARTIAL_SUCCESS"
+                    }
+                  ]
+                }
               }
             }
           },
@@ -36,6 +81,11 @@
             "description": "Bad Request",
             "content": {
               "application/vnd.currencylocalization.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/currencyLocalizationError"
+                }
+              },
+              "application/vnd.currencylocalization.v2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/currencyLocalizationError"
                 }
@@ -49,6 +99,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/currencyLocalizationError"
                 }
+              },
+              "application/vnd.currencylocalization.v2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/currencyLocalizationError"
+                }
               }
             }
           },
@@ -59,6 +114,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/currencyLocalizationError"
                 }
+              },
+              "application/vnd.currencylocalization.v2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/currencyLocalizationError"
+                }
               }
             }
           },
@@ -66,6 +126,11 @@
             "description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
             "content": {
               "application/vnd.currencylocalization.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/currencyLocalizationError"
+                }
+              },
+              "application/vnd.currencylocalization.v2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/currencyLocalizationError"
                 }
@@ -80,7 +145,8 @@
             },
             "in": "header",
             "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API."
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
           },
           {
             "schema": {
@@ -88,7 +154,8 @@
             },
             "in": "header",
             "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API."
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
           }
         ],
         "tags": [
@@ -106,6 +173,11 @@
               "schema": {
                 "$ref": "#/components/schemas/productLocalizationRequest"
               }
+            },
+            "application/vnd.productlocalization.v2+json": {
+              "schema": {
+                "$ref": "#/components/schemas/productLocalizationRequest"
+              }
             }
           },
           "required": true
@@ -120,6 +192,46 @@
                 "schema": {
                   "$ref": "#/components/schemas/productLocalizationResponse"
                 }
+              },
+              "application/vnd.productlocalization.v2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/productLocalizationResponseV2"
+                },
+                "example": {
+                  "localizedProductResponses": [
+                    {
+                      "sourceProduct": {
+                        "sku": "sku1"
+                      },
+                      "localizedProductResults": {
+                        "EU": {
+                          "localizedProduct": {},
+                          "messages": [
+                            "Error occurred during localization due to a dependency. Please try again later."
+                          ],
+                          "errorCode": "DEPENDENCY_ERROR",
+                          "status": "ERROR"
+                        },
+                        "KR": {
+                          "localizedProduct": {},
+                          "messages": [
+                            "A failure occurred due to an unsupported marketplace arc. Please consult the documentation for supported arcs."
+                          ],
+                          "errorCode": "UNSUPPORTED_MARKETPLACE_ARC",
+                          "status": "FAILURE"
+                        },
+                        "US": {
+                          "localizedProduct": {
+                            "sku": "sku1"
+                          },
+                          "status": "SUCCESS"
+                        }
+                      },
+                      "errorCode": "MULTIPLE_REASONS",
+                      "status": "PARTIAL_SUCCESS"
+                    }
+                  ]
+                }
               }
             }
           },
@@ -127,6 +239,11 @@
             "description": "Bad request.",
             "content": {
               "application/vnd.productlocalization.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/productLocalizationError"
+                }
+              },
+              "application/vnd.productlocalization.v2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/productLocalizationError"
                 }
@@ -140,6 +257,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/productLocalizationError"
                 }
+              },
+              "application/vnd.productlocalization.v2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/productLocalizationError"
+                }
               }
             }
           },
@@ -150,6 +272,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/productLocalizationError"
                 }
+              },
+              "application/vnd.productlocalization.v2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/productLocalizationError"
+                }
               }
             }
           },
@@ -157,6 +284,11 @@
             "description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
             "content": {
               "application/vnd.productlocalization.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/productLocalizationError"
+                }
+              },
+              "application/vnd.productlocalization.v2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/productLocalizationError"
                 }
@@ -171,7 +303,8 @@
             },
             "in": "header",
             "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API."
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
           },
           {
             "schema": {
@@ -179,7 +312,8 @@
             },
             "in": "header",
             "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use the `GET` method on the Profiles resource to list profiles associated with the access token provided in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API."
+            "description": "The identifier of a profile associated with the advertiser account. Use the `GET` method on the Profiles resource to list profiles associated with the access token provided in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
           }
         ],
         "tags": [
@@ -197,6 +331,11 @@
               "schema": {
                 "$ref": "#/components/schemas/keywordsLocalizationRequest"
               }
+            },
+            "application/vnd.keywordlocalization.v2+json": {
+              "schema": {
+                "$ref": "#/components/schemas/keywordsLocalizationRequest"
+              }
             }
           },
           "required": true
@@ -211,6 +350,50 @@
                 "schema": {
                   "$ref": "#/components/schemas/keywordsLocalizationResponse"
                 }
+              },
+              "application/vnd.keywordlocalization.v2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/keywordsLocalizationResponseV2"
+                },
+                "example": {
+                  "localizedKeywordResponses": [
+                    {
+                      "localizedKeywordResults": {
+                        "ko_KR": {
+                          "localizedKeyword": {},
+                          "messages": [
+                            "This language arc is not supported. Please consult the documentation for the supported language arcs."
+                          ],
+                          "errorCode": "UNSUPPORTED_LANGUAGE_ARC",
+                          "status": "FAILURE"
+                        },
+                        "es_MX": {
+                          "localizedKeyword": {
+                            "keyword": "hola"
+                          },
+                          "status": "SUCCESS"
+                        },
+                        "fr_FR": {
+                          "localizedKeyword": {
+                            "keyword": "bonjour"
+                          },
+                          "status": "SUCCESS"
+                        },
+                        "en_UK": {
+                          "localizedKeyword": {
+                            "keyword": "hello"
+                          },
+                          "status": "SUCCESS"
+                        }
+                      },
+                      "sourceKeyword": {
+                        "keyword": "hello"
+                      },
+                      "errorCode": "MULTIPLE_REASONS",
+                      "status": "PARTIAL_SUCCESS"
+                    }
+                  ]
+                }
               }
             }
           },
@@ -218,6 +401,11 @@
             "description": "Bad request.",
             "content": {
               "application/vnd.keywordlocalization.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/keywordsLocalizationError"
+                }
+              },
+              "application/vnd.keywordlocalization.v2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/keywordsLocalizationError"
                 }
@@ -231,6 +419,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/keywordsLocalizationError"
                 }
+              },
+              "application/vnd.keywordlocalization.v2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/keywordsLocalizationError"
+                }
               }
             }
           },
@@ -241,6 +434,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/keywordsLocalizationError"
                 }
+              },
+              "application/vnd.keywordlocalization.v2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/keywordsLocalizationError"
+                }
               }
             }
           },
@@ -248,6 +446,11 @@
             "description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
             "content": {
               "application/vnd.keywordlocalization.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/keywordsLocalizationError"
+                }
+              },
+              "application/vnd.keywordlocalization.v2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/keywordsLocalizationError"
                 }
@@ -262,7 +465,8 @@
             },
             "in": "header",
             "name": "Amazon-Advertising-API-ClientId",
-            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API."
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
           },
           {
             "schema": {
@@ -270,7 +474,8 @@
             },
             "in": "header",
             "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API."
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
           }
         ],
         "tags": [
@@ -288,6 +493,11 @@
               "schema": {
                 "$ref": "#/components/schemas/targetingExpressionLocalizationRequest"
               }
+            },
+            "application/vnd.targetingexpressionlocalization.v2+json": {
+              "schema": {
+                "$ref": "#/components/schemas/targetingExpressionLocalizationRequest"
+              }
             }
           },
           "required": true
@@ -302,6 +512,58 @@
                 "schema": {
                   "$ref": "#/components/schemas/targetingExpressionLocalizationResponse"
                 }
+              },
+              "application/vnd.targetingexpressionlocalization.v2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/targetingExpressionLocalizationResponseV2"
+                },
+                "example": {
+                  "responses": [
+                    {
+                      "localizedTargetingExpressionResults": {
+                        "KR": {
+                          "errorCode": "UNSUPPORTED_MARKETPLACE_ARC",
+                          "messages": [
+                            "This marketplace arc is not supported. Please consult the documentation for supported marketplace arcs."
+                          ],
+                          "localizedTargetingExpression": {},
+                          "status": "FAILURE"
+                        },
+                        "US": {
+                          "localizedTargetingExpression": {
+                            "isForNegativeTargeting": "false",
+                            "expression": [
+                              {
+                                "type": "asinCategorySameAs",
+                                "value": "5939473"
+                              }
+                            ]
+                          },
+                          "status": "SUCCESS"
+                        },
+                        "CA": {
+                          "errorCode": "DEPENDENCY_ERROR",
+                          "messages": [
+                            "A dependency error occurred. Please try again later."
+                          ],
+                          "localizedTargetingExpression": {},
+                          "status": "ERROR"
+                        }
+                      },
+                      "errorCode": "MULTIPLE_REASONS",
+                      "sourceTargetingExpression": {
+                        "isForNegativeTargeting": "false",
+                        "expression": [
+                          {
+                            "type": "asinCategorySameAs",
+                            "value": "3547823"
+                          }
+                        ]
+                      },
+                      "status": "PARTIAL_SUCCESS"
+                    }
+                  ]
+                }
               }
             }
           },
@@ -309,6 +571,11 @@
             "description": "Bad request.",
             "content": {
               "application/vnd.targetingexpressionlocalization.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/targetingExpressionLocalizationError"
+                }
+              },
+              "application/vnd.targetingexpressionlocalization.v2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/targetingExpressionLocalizationError"
                 }
@@ -322,6 +589,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/targetingExpressionLocalizationError"
                 }
+              },
+              "application/vnd.targetingexpressionlocalization.v2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/targetingExpressionLocalizationError"
+                }
               }
             }
           },
@@ -332,6 +604,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/targetingExpressionLocalizationError"
                 }
+              },
+              "application/vnd.targetingexpressionlocalization.v2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/targetingExpressionLocalizationError"
+                }
               }
             }
           },
@@ -339,6 +616,11 @@
             "description": "Internal Server Error: Something went wrong on the server. Retry later and report an error if the issue persists.",
             "content": {
               "application/vnd.targetingexpressionlocalization.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/targetingExpressionLocalizationError"
+                }
+              },
+              "application/vnd.targetingexpressionlocalization.v2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/targetingExpressionLocalizationError"
                 }
@@ -402,6 +684,21 @@
           "localizationKeyword"
         ]
       },
+      "productLocalizationResponseV2": {
+        "type": "object",
+        "properties": {
+          "localizedProductResponses": {
+            "description": "List of product localization map objects. The order matches that of the localizeProductRequests field in the request.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LocalizationProductResponseV2"
+            }
+          }
+        },
+        "required": [
+          "localizedProductResponses"
+        ]
+      },
       "targetingExpressionLocalizationError": {
         "type": "object",
         "properties": {
@@ -415,12 +712,50 @@
           }
         }
       },
+      "LocalizationProductResponseV2": {
+        "type": "object",
+        "properties": {
+          "sourceProduct": {
+            "$ref": "#/components/schemas/LocalizationProduct"
+          },
+          "localizedProductResults": {
+            "description": "Key (string): target marketplace ID. Value (LocalizationProductResult): localized product results. Information regarding how a product was localized, or how a product was not localized in this particular marketplace.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/LocalizationProductResult"
+            },
+            "type": "object"
+          },
+          "errorCode": {
+            "description": "If the status is ERROR, the error code. Not present if the status is SUCCESS.",
+            "type": "string"
+          },
+          "status": {
+            "description": "If SUCCESS, PARTIAL_SUCCESS or FAILURE, do not retry. If ERROR, may retry.",
+            "type": "string",
+            "enum": [
+              "SUCCESS",
+              "FAILURE",
+              "PARTIAL_SUCCESS",
+              "ERROR"
+            ]
+          }
+        },
+        "required": [
+          "sourceProduct",
+          "localizedProductResults",
+          "status"
+        ]
+      },
       "LocalizationKeywordSourceDetails": {
-        "description": "The source details for the LocalizationKeywordRequests. One of locale or marketplaceId has to be present. If both are present, marketplaceId is ignored.",
+        "description": "The source details for the LocalizationKeywordRequests. One of locale, marketplaceId, or countryCode has to be present. If locale is present, the content of marketplaceIds or countryCode is ignored.",
         "type": "object",
         "properties": {
           "marketplaceId": {
             "description": "The ID of the source marketplace. For example, if the caller is an advertiser based in the UK (marketplace ID A1F83G8C2ARO7P) and wishes to localize keywords to Germany (marketplace ID A1PA6795UKMFR9), the source marketplace ID is that of the UK, i.e., A1F83G8C2ARO7P. This marketplace ID is converted into a default locale for that marketplace. The supported locale arcs are outlined in the targetDetails documentation. The following marketplaces are supported for conversion to default locales:\n|Region|Country Code|Default Locale|Name|Marketplace ID|\n|-|-|-|-|-|\n|EU|AE|en_AE|United Arab Emirates|A2VIGQ35RCS4UG|\n|EU|DE|de_DE|Germany|A1PA6795UKMFR9|\n|EU|EG|ar_EG|Egypt|ARBP9OOSHTCHU|\n|EU|ES|es_ES|Spain|A1RKKUPIHCS9HS|\n|EU|FR|fr_FR|France|A13V1IB3VIYZZH|\n|EU|GB|en_GB|United Kingdom|A1F83G8C2ARO7P|\n|EU|IT|it_IT|Italy|APJ6JRA9NG5V4|\n|EU|NL|nl_NL|Netherlands|A1805IZSGTT6HS|\n|EU|PL|pl_PL|Poland|A1C3SOZRARQ6R3|\n|EU|SA|en_SA|Saudi Arabia|A17E79C6D8DWNP|\n|EU|SE|sv_SE|Sweden|A2NODRKZP88ZB9|\n|EU|TR|tr_TR|Turkey|A33AVAJ2PDY3EV|\n|FE|AU|en_AU|Australia|A39IBJ37TRP1C6|\n|FE|IN|en_IN|India|A21TJRUUN4KGV|\n|FE|JP|ja_JP|Japan|A1VC38T7YXB528|\n|FE|SG|en_SG|Singapore|A19VAU5U5O7RUS|\n|NA|BR|pt_BR|Brazil|A2Q3Y263D00KWC|\n|NA|CA|en_CA|Canada|A2EUQ1WTGCTBG2|\n|NA|MX|es_MX|Mexico|A1AM78C64UM0Y8|\n|NA|US|en_US|United States|ATVPDKIKX0DER|",
+            "type": "string"
+          },
+          "sourceCountryCode": {
+            "description": "A two-letter country code. When locale or marketplaceId is present, countryCode is ignored. Please refer to the table above for a list of supported country codes.",
             "type": "string"
           },
           "locale": {
@@ -495,6 +830,10 @@
               "SPONSORED_PRODUCTS"
             ]
           },
+          "sourceCountryCode": {
+            "description": "A two-letter country code. When both marketplaceId and countryCode are present, countryCode is ignored. Please refer to the table above for a list of supported country codes.",
+            "type": "string"
+          },
           "entityType": {
             "description": "The type of the advertiser accounts for which IDs are specified elsewhere in the request.",
             "type": "string",
@@ -508,7 +847,7 @@
             "type": "string"
           },
           "sourceAdvertiserId": {
-            "description": "The ID of the source advertiser account. This may be either a marketplace-specific ID or a global account ID.",
+            "description": "The ID of the source advertiser account. This may be either a marketplace-specific obfuscated ID (AD9EUOBWMS33M), an entity ID (ENTITYYXZDK86N86HG), or a global account ID (amzn1.ads-account.g.e0kbzpoe2gkpai1pqeaca59k8).",
             "type": "string"
           },
           "targetDetails": {
@@ -523,7 +862,6 @@
           "adType",
           "entityType",
           "sourceAdvertiserId",
-          "sourceMarketplaceId",
           "targetDetails",
           "localizeProductRequests"
         ]
@@ -544,6 +882,21 @@
           "asinIsPrimeShippingEligible",
           "asinAgeRangeSameAs",
           "asinGenreSameAs"
+        ]
+      },
+      "keywordsLocalizationResponseV2": {
+        "type": "object",
+        "properties": {
+          "localizedKeywordResponses": {
+            "description": "List of LocalizationKeywordResponses. The order matches that of the LocalizationKeywordRequests list in the request.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LocalizationKeywordResponseV2"
+            }
+          }
+        },
+        "required": [
+          "localizedKeywordResponses"
         ]
       },
       "keywordsLocalizationRequest": {
@@ -622,6 +975,21 @@
           "responses"
         ]
       },
+      "targetingExpressionLocalizationResponseV2": {
+        "type": "object",
+        "properties": {
+          "responses": {
+            "description": "A list of responses containing localized targeting expressions. Its order matches that of `requests` in the corresponding `targetingExpressionLocalizationRequest` object.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LocalizationTargetingExpressionResponseV2"
+            }
+          }
+        },
+        "required": [
+          "responses"
+        ]
+      },
       "LocalizationProductTargetDetails": {
         "description": "The target details for the LocalizationProductRequests. There must be only one target details object per marketplace ID. The advertiser ID may be repeated across target details objects. The order of target details objects is irrelevant. The following marketplaces are supported for product localization:\n|Region|Country Code|Name|Marketplace ID|\n|-|-|-|-|\n|EU|AE|United Arab Emirates|A2VIGQ35RCS4UG|\n|EU|DE|Germany|A1PA6795UKMFR9|\n|EU|EG|Egypt|ARBP9OOSHTCHU|\n|EU|ES|Spain|A1RKKUPIHCS9HS|\n|EU|FR|France|A13V1IB3VIYZZH|\n|EU|GB|United Kingdom|A1F83G8C2ARO7P|\n|EU|IT|Italy|APJ6JRA9NG5V4|\n|EU|NL|Netherlands|A1805IZSGTT6HS|\n|EU|PL|Poland|A1C3SOZRARQ6R3|\n|EU|SA|Saudi Arabia|A17E79C6D8DWNP|\n|EU|SE|Sweden|A2NODRKZP88ZB9|\n|EU|TR|Turkey|A33AVAJ2PDY3EV|\n|FE|AU|Australia|A39IBJ37TRP1C6|\n|FE|IN|India|A21TJRUUN4KGV|\n|FE|JP|Japan|A1VC38T7YXB528|\n|FE|SG|Singapore|A19VAU5U5O7RUS|\n|NA|BR|Brazil|A2Q3Y263D00KWC|\n|NA|CA|Canada|A2EUQ1WTGCTBG2|\n|NA|MX|Mexico|A1AM78C64UM0Y8|\n|NA|US|United States|ATVPDKIKX0DER|",
         "type": "object",
@@ -630,13 +998,16 @@
             "description": "The ID of a target marketplace (a marketplace in which the caller wishes to localize the specified products). For example, if the caller is an advertiser based in the UK (marketplace ID A1F83G8C2ARO7P) and wishes to localize a product to Germany (marketplace ID A1PA6795UKMFR9), the target marketplace ID is that of Germany, i.e., A1PA6795UKMFR9. The following marketplaces are supported for product localization:\n|Region|Country Code|Name|Marketplace ID|\n|-|-|-|-|\n|EU|AE|United Arab Emirates|A2VIGQ35RCS4UG|\n|EU|DE|Germany|A1PA6795UKMFR9|\n|EU|EG|Egypt|ARBP9OOSHTCHU|\n|EU|ES|Spain|A1RKKUPIHCS9HS|\n|EU|FR|France|A13V1IB3VIYZZH|\n|EU|GB|United Kingdom|A1F83G8C2ARO7P|\n|EU|IT|Italy|APJ6JRA9NG5V4|\n|EU|NL|Netherlands|A1805IZSGTT6HS|\n|EU|PL|Poland|A1C3SOZRARQ6R3|\n|EU|SA|Saudi Arabia|A17E79C6D8DWNP|\n|EU|SE|Sweden|A2NODRKZP88ZB9|\n|EU|TR|Turkey|A33AVAJ2PDY3EV|\n|FE|AU|Australia|A39IBJ37TRP1C6|\n|FE|IN|India|A21TJRUUN4KGV|\n|FE|JP|Japan|A1VC38T7YXB528|\n|FE|SG|Singapore|A19VAU5U5O7RUS|\n|NA|BR|Brazil|A2Q3Y263D00KWC|\n|NA|CA|Canada|A2EUQ1WTGCTBG2|\n|NA|MX|Mexico|A1AM78C64UM0Y8|\n|NA|US|United States|ATVPDKIKX0DER|",
             "type": "string"
           },
+          "countryCode": {
+            "description": "A two-letter country code. When both marketplaceId and countryCode are present, countryCode is ignored. Please refer to the table above for a list of supported country codes.",
+            "type": "string"
+          },
           "advertiserId": {
-            "description": "The advertiser ID of the caller in the associated target marketplace. This may be either a marketplace-specific ID or a global account ID. For example, if an advertiser is localizing a product from the UK (where their ID is A123) to Germany (where their ID is A456), this advertiser ID should be set to A456. This is the advertiser ID returned by the Profiles API. An entity ID (one starting with \"ENTITY\") may be provided instead.",
+            "description": "The advertiser ID of the caller in the associated target marketplace. The ID of the source advertiser account. This may be either a marketplace-specific obfuscated ID (AD9EUOBWMS33M), an entity ID (ENTITYYXZDK86N86HG), or a global account ID (amzn1.ads-account.g.e0kbzpoe2gkpai1pqeaca59k8). This is the advertiser ID returned by the Profiles API. An entity ID (one starting with \"ENTITY\"), or a global account advertiser ID may be provided instead.",
             "type": "string"
           }
         },
         "required": [
-          "marketplaceId",
           "advertiserId"
         ]
       },
@@ -707,6 +1078,18 @@
           "localizedProductResponses"
         ]
       },
+      "LocalizationCurrencyRequest": {
+        "description": "LocalizationCurrencyRequest Object.",
+        "type": "object",
+        "properties": {
+          "currency": {
+            "$ref": "#/components/schemas/LocalizationCurrency"
+          }
+        },
+        "required": [
+          "currency"
+        ]
+      },
       "LocalizationCurrencyResponse": {
         "description": "LocalizationCurrencyResponse Object.",
         "type": "object",
@@ -734,18 +1117,6 @@
         "required": [
           "localizedCurrencies",
           "status"
-        ]
-      },
-      "LocalizationCurrencyRequest": {
-        "description": "LocalizationCurrencyRequest Object.",
-        "type": "object",
-        "properties": {
-          "currency": {
-            "$ref": "#/components/schemas/LocalizationCurrency"
-          }
-        },
-        "required": [
-          "currency"
         ]
       },
       "currencyLocalizationResponse": {
@@ -779,10 +1150,51 @@
           "localizedKeywordResponses"
         ]
       },
-      "LocalizationKeywordTargetDetails": {
-        "description": "The target details for the LocalizationKeywordRequests. One of locales or marketplaceIds must be present. If both are present, the content of marketplaceIds is ignored. Each marketplace ID or locale across the array must be unique. The following locale pairs are supported. ?? signifies wildcard. For example if en_?? is specified, locales that are supported would include but not be limited to en_US or en_GB:\n* ar_?? to en_??\n* de_?? to en_??\n* de_?? to es_??\n* de_?? to fr_??\n* de_?? to it_??\n* de_?? to nl_??\n* de_?? to zh_??\n* en_?? to ar_??\n* en_?? to de_??\n* en_?? to es_??\n* en_?? to es_MX\n* en_?? to fr_??\n* en_?? to it_??\n* en_?? to ja_??\n* en_?? to nl_??\n* en_?? to pt_??\n* es_?? to de_??\n* es_?? to en_??\n* es_?? to fr_??\n* es_?? to it_??\n* es_?? to nl_??\n* es_?? to zh_??\n* es_MX to en_??\n* fr_?? to de_??\n* fr_?? to en_??\n* fr_?? to es_??\n* fr_?? to it_??\n* fr_?? to nl_??\n* fr_?? to zh_??\n* it_?? to de_??\n* it_?? to en_??\n* it_?? to es_??\n* it_?? to fr_??\n* it_?? to nl_??\n* it_?? to zh_??\n* ja_?? to en_??\n* ja_?? to zh_??\n* nl_?? to de_??\n* nl_?? to en_??\n* nl_?? to es_??\n* nl_?? to fr_??\n* nl_?? to it_??\n* nl_?? to zh_??\n* pt_?? to en_??\n* zh_?? to de_??\n* zh_?? to es_??\n* zh_?? to es_MX\n* zh_?? to fr_??\n* zh_?? to it_??\n* zh_?? to ja_??\n* zh_?? to nl_??\n* zh_?? to pt_??",
+      "LocalizationKeywordResult": {
+        "description": "LocalizationKeywordResult Object.",
         "type": "object",
         "properties": {
+          "localizedKeyword": {
+            "$ref": "#/components/schemas/LocalizationKeyword"
+          },
+          "messages": {
+            "description": "If present, contains one or more strings describing why products could not be localized. For manual diagnostic use.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "errorCode": {
+            "description": "If status is ERROR or FAILURE, the error code.",
+            "type": "string"
+          },
+          "status": {
+            "description": "If SUCCESS, FAILURE, do not retry. If ERROR, may retry.",
+            "type": "string",
+            "enum": [
+              "SUCCESS",
+              "ERROR",
+              "FAILURE"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "localizedKeyword"
+        ]
+      },
+      "LocalizationKeywordTargetDetails": {
+        "description": "The target details for the LocalizationKeywordRequests. One of locales, countryCode, or marketplaceIds must be present. If locale is present, the content of marketplaceIds and countryCodes is ignored. Each locale / marketplace ID / countryCode across the array must be unique. The following locale pairs are supported. ?? signifies wildcard. For example if en_?? is specified, locales that are supported would include but not be limited to en_US or en_GB:\n* ar_?? to en_??\n* de_?? to en_??\n* de_?? to es_??\n* de_?? to fr_??\n* de_?? to it_??\n* de_?? to nl_??\n* de_?? to zh_??\n* en_?? to ar_??\n* en_?? to de_??\n* en_?? to es_??\n* en_?? to es_MX\n* en_?? to fr_??\n* en_?? to it_??\n* en_?? to ja_??\n* en_?? to nl_??\n* en_?? to pt_??\n* es_?? to de_??\n* es_?? to en_??\n* es_?? to fr_??\n* es_?? to it_??\n* es_?? to nl_??\n* es_?? to zh_??\n* es_MX to en_??\n* fr_?? to de_??\n* fr_?? to en_??\n* fr_?? to es_??\n* fr_?? to it_??\n* fr_?? to nl_??\n* fr_?? to zh_??\n* it_?? to de_??\n* it_?? to en_??\n* it_?? to es_??\n* it_?? to fr_??\n* it_?? to nl_??\n* it_?? to zh_??\n* ja_?? to en_??\n* ja_?? to zh_??\n* nl_?? to de_??\n* nl_?? to en_??\n* nl_?? to es_??\n* nl_?? to fr_??\n* nl_?? to it_??\n* nl_?? to zh_??\n* pt_?? to en_??\n* zh_?? to de_??\n* zh_?? to es_??\n* zh_?? to es_MX\n* zh_?? to fr_??\n* zh_?? to it_??\n* zh_?? to ja_??\n* zh_?? to nl_??\n* zh_?? to pt_??",
+        "type": "object",
+        "properties": {
+          "targetCountryCodes": {
+            "maxItems": 10,
+            "description": "A list of two-letter country codes. When another form of locale (marketplaceId or locale) is present, countryCode is ignored. Please refer to the table above for a list of supported country codes.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "marketplaceIds": {
             "maxItems": 10,
             "description": "The IDs of target marketplaces (marketplaces in which the caller wishes to localize the specified keywords). For example, if the caller is an advertiser based in the UK (marketplace ID A1F83G8C2ARO7P) and wishes to localize keywords to Germany (marketplace ID A1PA6795UKMFR9), the target marketplace ID is that of Germany, i.e., A1PA6795UKMFR9. **Please note:** if locales are provided, any provided marketplace IDs will be ignored. The marketplace IDs are converted into default locales. The supported locale arcs are outlined in the targetDetails locales section. The following marketplaces are supported for conversion to default locales:\n|Region|Country Code|Default Locale|Name|Marketplace ID|\n|-|-|-|-|-|\n|EU|AE|en_AE|United Arab Emirates|A2VIGQ35RCS4UG|\n|EU|DE|de_DE|Germany|A1PA6795UKMFR9|\n|EU|EG|ar_EG|Egypt|ARBP9OOSHTCHU|\n|EU|ES|es_ES|Spain|A1RKKUPIHCS9HS|\n|EU|FR|fr_FR|France|A13V1IB3VIYZZH|\n|EU|GB|en_GB|United Kingdom|A1F83G8C2ARO7P|\n|EU|IT|it_IT|Italy|APJ6JRA9NG5V4|\n|EU|NL|nl_NL|Netherlands|A1805IZSGTT6HS|\n|EU|PL|pl_PL|Poland|A1C3SOZRARQ6R3|\n|EU|SA|en_SA|Saudi Arabia|A17E79C6D8DWNP|\n|EU|SE|sv_SE|Sweden|A2NODRKZP88ZB9|\n|EU|TR|tr_TR|Turkey|A33AVAJ2PDY3EV|\n|FE|AU|en_AU|Australia|A39IBJ37TRP1C6|\n|FE|IN|en_IN|India|A21TJRUUN4KGV|\n|FE|JP|ja_JP|Japan|A1VC38T7YXB528|\n|FE|SG|en_SG|Singapore|A19VAU5U5O7RUS|\n|NA|BR|pt_BR|Brazil|A2Q3Y263D00KWC|\n|NA|CA|en_CA|Canada|A2EUQ1WTGCTBG2|\n|NA|MX|es_MX|Mexico|A1AM78C64UM0Y8|\n|NA|US|en_US|United States|ATVPDKIKX0DER|",
@@ -801,6 +1213,22 @@
           }
         }
       },
+      "currencyLocalizationResponseV2": {
+        "description": "CurrencyLocalizationResponse Object",
+        "type": "object",
+        "properties": {
+          "localizedCurrencyResponses": {
+            "description": "An array of LocalizationCurrencyResponseV2 objects. The order matches that of the input LocalizationCurrencyRequest object array.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LocalizationCurrencyResponseV2"
+            }
+          }
+        },
+        "required": [
+          "localizedCurrencyResponses"
+        ]
+      },
       "LocalizationCurrency": {
         "description": "A currency to be localized.",
         "type": "object",
@@ -811,6 +1239,39 @@
         },
         "required": [
           "amount"
+        ]
+      },
+      "LocalizationProductResult": {
+        "description": "Information regarding how a product was localized, or how a product was not localized in this particular marketplace.",
+        "type": "object",
+        "properties": {
+          "localizedProduct": {
+            "$ref": "#/components/schemas/LocalizationProduct"
+          },
+          "messages": {
+            "description": "If present, contains one or more strings describing why products could not be localized. For manual diagnostic use.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "errorCode": {
+            "description": "If the status is ERROR, the error code. Not present if the status is SUCCESS.",
+            "type": "string"
+          },
+          "status": {
+            "description": "The status of the localization operation. \nSUCCESS: The product was localized successfully for this marketplace.\nFAILURE: The product could not be localized and retrying later will not change the result.\nERROR: The product could not be localized an error occurred. Retry later.",
+            "type": "string",
+            "enum": [
+              "SUCCESS",
+              "FAILURE",
+              "ERROR"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "localizedProduct"
         ]
       },
       "currencyLocalizationError": {
@@ -842,6 +1303,17 @@
               "$ref": "#/components/schemas/LocalizationCurrencyRequest"
             }
           },
+          "targetCountryCodes": {
+            "description": "A list of two-letter country codes. When both marketplaceId and countryCode are present, countryCode is ignored. Please refer to the table above for a list of supported country codes.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sourceCountryCode": {
+            "description": "A two-letter country code. When both marketplaceId and countryCode are present, countryCode is ignored. Please refer to the table above for a list of supported country codes.",
+            "type": "string"
+          },
           "sourceMarketplaceId": {
             "description": "The source marketplace ID. Please see the table in the description of `targetMarketplaces` for supported values.",
             "type": "string"
@@ -855,9 +1327,7 @@
           }
         },
         "required": [
-          "localizeCurrencyRequests",
-          "sourceMarketplaceId",
-          "targetMarketplaces"
+          "localizeCurrencyRequests"
         ]
       },
       "LocalizationKeywordResponse": {
@@ -934,6 +1404,10 @@
         "description": "Information regarding how and to what extent a targeting expression was localized.",
         "type": "object",
         "properties": {
+          "errorCode": {
+            "description": "If status is ERROR or FAILURE, the error code.",
+            "type": "string"
+          },
           "messages": {
             "description": "If present, contains one or more strings describing why predicates could not be localized. For manual diagnostic use.",
             "type": "array",
@@ -942,14 +1416,16 @@
             }
           },
           "status": {
-            "description": "The status of the localization operation. Note that if the source targeting expression contains an age range predicate that cannot be localized, localization of the entire expression will fail.\nSUCCESS: All predicates within the expression were localized.\nPARTIAL_SUCCESS: Only some of the predicates within the expression were localized.\nFAILURE: The expression could not be localized.\nERROR: The expression could not be localized because one or more errors occurred.",
+            "description": "The status of the localization operation. Note that if the source targeting expression contains an age range predicate that cannot be localized, localization of the entire expression will fail.\nSUCCESS: All predicates within the expression were localized.\nFAILURE: The expression could not be localized.\nERROR: The expression could not be localized because one or more errors occurred.",
             "type": "string",
             "enum": [
               "SUCCESS",
-              "PARTIAL_SUCCESS",
               "FAILURE",
               "ERROR"
             ]
+          },
+          "localizedTargetingExpression": {
+            "$ref": "#/components/schemas/LocalizationTargetingExpression"
           }
         },
         "required": [
@@ -968,22 +1444,159 @@
           "targetingExpression"
         ]
       },
+      "LocalizationCurrencyResponseV2": {
+        "description": "LocalizationCurrencyResponse Object.",
+        "type": "object",
+        "properties": {
+          "errorCode": {
+            "description": "If status is ERROR, the error code. Not present if status is SUCCESS",
+            "type": "string"
+          },
+          "sourceCurrency": {
+            "$ref": "#/components/schemas/LocalizationCurrency"
+          },
+          "localizedCurrencyResults": {
+            "description": "A map from target marketplace ID (country code) (string) to details regarding the localization status and messages.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/LocalizationCurrencyResult"
+            },
+            "type": "object"
+          },
+          "status": {
+            "description": "If SUCCESS, PARTIAL_SUCCESS, or FAILURE, do not retry. If ERROR, may retry.",
+            "type": "string",
+            "enum": [
+              "SUCCESS",
+              "ERROR",
+              "PARTIAL_SUCCESS",
+              "FAILURE"
+            ]
+          }
+        },
+        "required": [
+          "localizedCurrencyResults",
+          "status",
+          "sourceCurrency"
+        ]
+      },
+      "LocalizationCurrencyResult": {
+        "description": "LocalizationCurrencyResult Object.",
+        "type": "object",
+        "properties": {
+          "localizedCurrency": {
+            "$ref": "#/components/schemas/LocalizationCurrency"
+          },
+          "messages": {
+            "description": "If present, contains one or more strings describing why products could not be localized. For manual diagnostic use.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "errorCode": {
+            "description": "If status is ERROR, the error code. Not present if status is SUCCESS.",
+            "type": "string"
+          },
+          "status": {
+            "description": "If SUCCESS, FAILURE, do not retry. If ERROR, may retry.",
+            "type": "string",
+            "enum": [
+              "SUCCESS",
+              "ERROR",
+              "FAILURE"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "localizedCurrency"
+        ]
+      },
+      "LocalizationKeywordResponseV2": {
+        "description": "A LocalizationKeywordResponse object. Contains localized keywords in the various target marketplaces/locales.",
+        "type": "object",
+        "properties": {
+          "localizedKeywordResults": {
+            "description": "A map from target marketplace ID / locale / countryCode to details regarding the localization status and messages.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/LocalizationKeywordResult"
+            },
+            "type": "object"
+          },
+          "sourceKeyword": {
+            "description": "Source keyword that was localized",
+            "$ref": "#/components/schemas/LocalizationKeyword"
+          },
+          "errorCode": {
+            "description": "If status is ERROR, the error code. Not present if status is SUCCESS.",
+            "type": "string"
+          },
+          "status": {
+            "description": "If SUCCESS, PARTIAL_SUCCESS or FAILURE, do not retry. If ERROR, may retry.",
+            "type": "string",
+            "enum": [
+              "SUCCESS",
+              "PARTIAL_SUCCESS",
+              "FAILURE",
+              "ERROR"
+            ]
+          }
+        },
+        "required": [
+          "localizedKeywordResults",
+          "status"
+        ]
+      },
+      "LocalizationTargetingExpressionResponseV2": {
+        "description": "A response to a request to localize a targeting expression from a source marketplace to one or more target marketplaces.",
+        "type": "object",
+        "properties": {
+          "localizedTargetingExpressionResults": {
+            "description": "A map from target marketplace ID (string) to the localization result (`LocalizationTargetingExpressionResult`). All target marketplaces present in the request will have an entry in this map.",
+            "type": "object",
+            "$ref": "#/components/schemas/LocalizationTargetingExpressionResult"
+          },
+          "sourceTargetingExpressions": {
+            "description": "Source targeting expression for this result set.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/LocalizationTargetingExpression"
+            },
+            "type": "object"
+          },
+          "errorCode": {
+            "description": "If status is ERROR, the error code. Not present if status is SUCCESS.",
+            "type": "string"
+          },
+          "status": {
+            "description": "If SUCCESS, PARTIAL_SUCCESS or FAILURE, do not retry. If ERROR, may retry.",
+            "type": "string",
+            "enum": [
+              "SUCCESS",
+              "PARTIAL_SUCCESS",
+              "FAILURE",
+              "ERROR"
+            ]
+          }
+        },
+        "required": [
+          "sourceTargetingExpression",
+          "localizedTargetingExpressionResults",
+          "status"
+        ]
+      },
       "LocalizationProduct": {
         "description": "A product to be localized.",
         "type": "object",
         "properties": {
           "asin": {
-            "description": "The product's Amazon Standard Identification Number.",
+            "description": "The product's Amazon Standard Identification Number. Required for entityType=VENDOR. If caller's entityType is SELLER, this field is optional and can yield better localization results if included.",
             "type": "string"
           },
           "sku": {
-            "description": "The product's Stock Keeping Unit. Conditional: if the caller is a seller, include the SKU for all products. Otherwise, this field should be omitted.",
+            "description": "The product's Stock Keeping Unit. Required for entityType=SELLER. If caller's entityType is VENDOR, this field is ignored.",
             "type": "string"
           }
-        },
-        "required": [
-          "asin"
-        ]
+        }
       }
     },
     "requestBodies": {},

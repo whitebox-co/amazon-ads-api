@@ -4090,6 +4090,21 @@
           }
         }
       },
+      "DSPOmnichannelMetricsStudyV1M3": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseStudyV1M1"
+          },
+          {
+            "$ref": "#/components/schemas/DSPCampaignMeasurementMetadataV1M1"
+          },
+          {
+            "$ref": "#/components/schemas/DSPOmnichannelMetricsMetadataV1M2"
+          }
+        ],
+        "description": "DSP OMNICHANNEL_METRICS study object.",
+        "type": "object"
+      },
       "PaginatedSurveysV1": {
         "description": "A list of study surveys.",
         "type": "object",
@@ -4445,6 +4460,21 @@
           }
         }
       },
+      "DSPOmnichannelMetricsMetadataV1M2": {
+        "description": "The basic model for all DSP OMNICHANNEL_METRICS objective studies.",
+        "type": "object",
+        "properties": {
+          "brandIds": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "A list of canonical brand ids to be tracked for off-Amazon conversions.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "VendorProductRequestV1": {
         "description": "The request object to fetch measurement vendor products.",
         "type": "object",
@@ -4504,6 +4534,21 @@
             }
           }
         }
+      },
+      "DSPOmnichannelMetricsStudyV1M2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseStudyV1"
+          },
+          {
+            "$ref": "#/components/schemas/DSPCampaignMeasurementMetadataV1"
+          },
+          {
+            "$ref": "#/components/schemas/DSPOmnichannelMetricsMetadataV1M2"
+          }
+        ],
+        "description": "DSP OMNICHANNEL_METRICS study object.",
+        "type": "object"
       },
       "StudyReviewStatusV1": {
         "description": "The study review status. APPROVED studies will start delivering once reach the startDate.",
