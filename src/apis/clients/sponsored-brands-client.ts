@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-import { AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,StoresApi,TargetingRecommendationsApi } from '../models/sponsored-brands';
+import { AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,ReportsApi,StoresApi,TargetingRecommendationsApi } from '../models/sponsored-brands';
 import { Configuration } from '../models/configuration';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
 import { getAxiosInstance, applyMixins } from '../../helpers';
@@ -22,6 +22,6 @@ export class SponsoredBrandsClient extends AdGroupsApi {
 }
 
 
-    export interface SponsoredBrandsClient extends AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,StoresApi,TargetingRecommendationsApi {}
-    applyMixins(SponsoredBrandsClient, [AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,StoresApi,TargetingRecommendationsApi])
+    export interface SponsoredBrandsClient extends AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,ReportsApi,StoresApi,TargetingRecommendationsApi {}
+    applyMixins(SponsoredBrandsClient, [AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,ReportsApi,StoresApi,TargetingRecommendationsApi])
     

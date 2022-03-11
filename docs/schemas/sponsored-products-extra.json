@@ -3530,7 +3530,12 @@
           }
         },
         "required": [
-          "campaignOptimizationId"
+          "campaignOptimizationId",
+          "campaignIds",
+          "ruleType",
+          "recurrence",
+          "ruleCondition",
+          "ruleAction"
         ],
         "example": {
           "recurrence": "DAILY",
@@ -3594,7 +3599,10 @@
               "$ref": "#/components/schemas/RuleCampaignId"
             }
           }
-        }
+        },
+        "required": [
+          "campaignIds"
+        ]
       },
       "state": {
         "description": "The budget rule state.",
@@ -4647,10 +4655,11 @@
           }
         },
         "required": [
-          "ruleName",
           "ruleType",
           "recurrence",
-          "ruleCondition"
+          "ruleCondition",
+          "ruleAction",
+          "campaignIds"
         ],
         "example": {
           "recurrence": "DAILY",
@@ -5630,7 +5639,10 @@
               "$ref": "#/components/schemas/RuleCampaignId"
             }
           }
-        }
+        },
+        "required": [
+          "campaignIds"
+        ]
       },
       "GetSBBudgetRuleResponse": {
         "type": "object",

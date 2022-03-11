@@ -960,7 +960,7 @@ export interface CreateSPCampaignOptimizationRulesRequest {
      * @type {RuleAction}
      * @memberof CreateSPCampaignOptimizationRulesRequest
      */
-    ruleAction?: RuleAction;
+    ruleAction: RuleAction;
     /**
      * 
      * @type {Array<RuleCondition>}
@@ -978,13 +978,13 @@ export interface CreateSPCampaignOptimizationRulesRequest {
      * @type {string}
      * @memberof CreateSPCampaignOptimizationRulesRequest
      */
-    ruleName: string;
+    ruleName?: string;
     /**
      * A list of campaign ids
      * @type {Array<string>}
      * @memberof CreateSPCampaignOptimizationRulesRequest
      */
-    campaignIds?: Array<string>;
+    campaignIds: Array<string>;
 }
 /**
  * 
@@ -3079,7 +3079,7 @@ export interface SPCampaignOptimizationNotificationAPIRequest {
      * @type {Array<string>}
      * @memberof SPCampaignOptimizationNotificationAPIRequest
      */
-    campaignIds?: Array<string>;
+    campaignIds: Array<string>;
 }
 /**
  * 
@@ -3130,7 +3130,7 @@ export interface SPCampaignOptimizationRecommendationsAPIRequest {
      * @type {Array<string>}
      * @memberof SPCampaignOptimizationRecommendationsAPIRequest
      */
-    campaignIds?: Array<string>;
+    campaignIds: Array<string>;
 }
 /**
  * 
@@ -4065,13 +4065,13 @@ export interface UpdateSPCampaignOptimizationRulesRequest {
      * @type {RecurrenceType}
      * @memberof UpdateSPCampaignOptimizationRulesRequest
      */
-    recurrence?: RecurrenceType;
+    recurrence: RecurrenceType;
     /**
      * 
      * @type {RuleAction}
      * @memberof UpdateSPCampaignOptimizationRulesRequest
      */
-    ruleAction?: RuleAction;
+    ruleAction: RuleAction;
     /**
      * The persistent rule identifier.
      * @type {string}
@@ -4083,13 +4083,13 @@ export interface UpdateSPCampaignOptimizationRulesRequest {
      * @type {Array<RuleCondition>}
      * @memberof UpdateSPCampaignOptimizationRulesRequest
      */
-    ruleCondition?: Array<RuleCondition>;
+    ruleCondition: Array<RuleCondition>;
     /**
      * 
      * @type {RuleType}
      * @memberof UpdateSPCampaignOptimizationRulesRequest
      */
-    ruleType?: RuleType;
+    ruleType: RuleType;
     /**
      * The campaign optimization rule name.
      * @type {string}
@@ -4101,7 +4101,7 @@ export interface UpdateSPCampaignOptimizationRulesRequest {
      * @type {Array<string>}
      * @memberof UpdateSPCampaignOptimizationRulesRequest
      */
-    campaignIds?: Array<string>;
+    campaignIds: Array<string>;
 }
 /**
  * 

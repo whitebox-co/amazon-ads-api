@@ -88,7 +88,7 @@ export enum AccountType {
 }
 
 /**
- * The countryCode for a given country |Region|`countryCode`|Country Name| |------|-----|-------| |NA|US|United States| |NA|CA|Canada| |NA|MX|Mexico| |NA|BR|Brazil| |EU|UK|United Kingdom| |EU|DE|Germany| |EU|FR|France| |EU|ES|Spain| |EU|IT|Italy| |EU|NL|The Netherlands| |EU|AE|United Arab Emirates| |EU|SE|Sweden| |EU|SE|Sweden| |EU|PL|Poland|         |FE|JP|Japan| |FE|AU|Australia| |FE|SG|Singapore|
+ * The countryCode for a given country |Region|`countryCode`|Country Name| |------|-----|-------| |NA|US|United States| |NA|CA|Canada| |NA|MX|Mexico| |NA|BR|Brazil| |EU|UK|United Kingdom| |EU|DE|Germany| |EU|FR|France| |EU|ES|Spain| |EU|IT|Italy| |EU|NL|The Netherlands| |EU|AE|United Arab Emirates| |EU|SE|Sweden| |EU|SE|Sweden| |EU|PL|Poland| |EU|TR|Turkey|         |FE|JP|Japan| |FE|AU|Australia| |FE|SG|Singapore|
  * @export
  * @enum {string}
  */
@@ -109,7 +109,8 @@ export enum CountryCode {
     Ae = 'AE',
     Sg = 'SG',
     Se = 'SE',
-    Pl = 'PL'
+    Pl = 'PL',
+    Tr = 'TR'
 }
 
 /**
@@ -131,7 +132,7 @@ export interface Profile {
      */
     countryCode?: CountryCode;
     /**
-     * The currency used for all monetary values for entities under this profile. |Region|`countryCode`|Country Name|`currencyCode`| |-----|------|------|------| |NA|US|United States|USD| |NA|CA|Canada|CAD| |NA|MX|Mexico|MXN| |NA|BR|Brazil|BRL| |EU|UK|United Kingdom|GBP| |EU|DE|Germany|EUR| |EU|FR|France|EUR| |EU|ES|Spain|EUR| |EU|IT|Italy|EUR| |EU|NL|The Netherlands|EUR| |EU|SE|Sweden|SEK| |EU|PL|Poland|PLN| |EU|AE|United Arab Emirates|AED| |FE|JP|Japan|JPY| |FE|AU|Australia|AUD| |FE|SG|Singapore|SGD|
+     * The currency used for all monetary values for entities under this profile. |Region|`countryCode`|Country Name|`currencyCode`| |-----|------|------|------| |NA|US|United States|USD| |NA|CA|Canada|CAD| |NA|MX|Mexico|MXN| |NA|BR|Brazil|BRL| |EU|UK|United Kingdom|GBP| |EU|DE|Germany|EUR| |EU|FR|France|EUR| |EU|ES|Spain|EUR| |EU|IT|Italy|EUR| |EU|NL|The Netherlands|EUR| |EU|SE|Sweden|SEK| |EU|PL|Poland|PLN| |EU|AE|United Arab Emirates|AED| |EU|TR|Turkey|TRY| |FE|JP|Japan|JPY| |FE|AU|Australia|AUD| |FE|SG|Singapore|SGD|
      * @type {string}
      * @memberof Profile
      */
@@ -143,7 +144,7 @@ export interface Profile {
      */
     dailyBudget?: number;
     /**
-     * The time zone used for all date-based campaign management and reporting. |Region|`countryCode`|Country Name|`timezone`| |------|-----|-----|------| |NA|US|United States|America/Los_Angeles| |NA|CA|Canada|America/Los_Angeles| |NA|MX|Mexico|America/Los_Angeles| |NA|BR|Brazil|America/Sao_Paulo| |EU|UK|United Kingdom|Europe/London| |EU|DE|Germany|Europe/Paris| |EU|FR|France|Europe/Paris| |EU|ES|Spain|Europe/Paris| |EU|IT|Italy|Europe/Paris| |EU|NL|The Netherlands|Europe/Paris| |EU|SE|Sweden|Europe/Stockholm| |EU|PL|Poland|Europe/Warsaw| |EU|AE|United Arab Emirates|Asia/Dubai| |FE|JP|Japan|Asia/Tokyo| |FE|AU|Australia|Australia/Sydney| |FE|SG|Singapore|Asia/Singapore|
+     * The time zone used for all date-based campaign management and reporting. |Region|`countryCode`|Country Name|`timezone`| |------|-----|-----|------| |NA|US|United States|America/Los_Angeles| |NA|CA|Canada|America/Los_Angeles| |NA|MX|Mexico|America/Los_Angeles| |NA|BR|Brazil|America/Sao_Paulo| |EU|UK|United Kingdom|Europe/London| |EU|DE|Germany|Europe/Paris| |EU|FR|France|Europe/Paris| |EU|ES|Spain|Europe/Paris| |EU|IT|Italy|Europe/Paris| |EU|NL|The Netherlands|Europe/Paris| |EU|SE|Sweden|Europe/Stockholm| |EU|PL|Poland|Europe/Warsaw| |EU|AE|United Arab Emirates|Asia/Dubai| |EU|TR|Turkey|Europe/Istanbul| |FE|JP|Japan|Asia/Tokyo| |FE|AU|Australia|Australia/Sydney| |FE|SG|Singapore|Asia/Singapore|
      * @type {string}
      * @memberof Profile
      */
@@ -172,7 +173,8 @@ export enum ProfileCurrencyCodeEnum {
     Aed = 'AED',
     Sek = 'SEK',
     Pln = 'PLN',
-    Sgd = 'SGD'
+    Sgd = 'SGD',
+    Try = 'TRY'
 }
 /**
     * @export
@@ -185,6 +187,7 @@ export enum ProfileTimezoneEnum {
     EuropeStockholm = 'Europe/Stockholm',
     EuropeParis = 'Europe/Paris',
     EuropeWarsaw = 'Europe/Warsaw',
+    EuropeIstanbul = 'Europe/Istanbul',
     AsiaTokyo = 'Asia/Tokyo',
     AustraliaSydney = 'Australia/Sydney',
     AsiaDubai = 'Asia/Dubai',
@@ -299,7 +302,7 @@ export interface RegisterVendorProfileResponse {
     profileId?: number;
 }
 /**
- * The countryCode for a given country |Region|`countryCode`|Country Name| |------|-----|-------| |NA|US|United States| |NA|CA|Canada| |NA|MX|Mexico| |EU|UK|United Kingdom| |EU|DE|Germany| |EU|FR|France| |EU|ES|Spain| |EU|IT|Italy| |EU|NL|The Netherlands| |EU|AE|United Arab Emirates| |EU|SE|Sweden| |EU|PL|Poland| |FE|JP|Japan| |FE|AU|Australia|
+ * The countryCode for a given country |Region|`countryCode`|Country Name| |------|-----|-------| |NA|US|United States| |NA|CA|Canada| |NA|MX|Mexico| |EU|UK|United Kingdom| |EU|DE|Germany| |EU|FR|France| |EU|ES|Spain| |EU|IT|Italy| |EU|NL|The Netherlands| |EU|AE|United Arab Emirates| |EU|SE|Sweden| |EU|PL|Poland| |EU|TR|Turkey| |FE|JP|Japan| |FE|AU|Australia|
  * @export
  * @enum {string}
  */
@@ -318,7 +321,8 @@ export enum SandboxCountryCode {
     Au = 'AU',
     Ae = 'AE',
     Se = 'SE',
-    Pl = 'PL'
+    Pl = 'PL',
+    Tr = 'TR'
 }
 
 
