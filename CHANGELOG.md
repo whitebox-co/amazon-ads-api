@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://github.com/whitebox-co/amazon-ads-api/compare/v1.4.1...v1.4.2) (2022-03-14)
+
+### Bug Fixes
+
+-   retry refresh token logic was not properly awaited resulting in unhandled exceptions ([c33d31a](https://github.com/whitebox-co/amazon-ads-api/commit/c33d31a48df67c0223e9642b52e7a97ad98e8d05))
+
 ## [1.4.1](https://github.com/whitebox-co/amazon-ads-api/compare/v1.4.0...v1.4.1) (2022-03-14)
 
 ### Bug Fixes
