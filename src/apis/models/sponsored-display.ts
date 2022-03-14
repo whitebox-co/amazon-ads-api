@@ -303,7 +303,7 @@ export enum BaseAdGroupStateEnum {
  */
 export interface BaseCampaign {
     /**
-     * The name of the campaign. Note that idempotency for this field works different for sellers and vendors. Sellers aren\'t allowed to have duplicate campaign names, but vendors can have duplicate campaign names.
+     * The name of the campaign.
      * @type {string}
      * @memberof BaseCampaign
      */
@@ -739,7 +739,7 @@ export interface BrandSafetyUpdateResponse {
  */
 export interface Campaign {
     /**
-     * The name of the campaign. Note that idempotency for this field works different for sellers and vendors. Sellers aren\'t allowed to have duplicate campaign names, but vendors can have duplicate campaign names.
+     * The name of the campaign.
      * @type {string}
      * @memberof Campaign
      */
@@ -1094,7 +1094,7 @@ export enum CreateAdGroupStateEnum {
  */
 export interface CreateCampaign {
     /**
-     * The name of the campaign. Note that idempotency for this field works different for sellers and vendors. Sellers aren\'t allowed to have duplicate campaign names, but vendors can have duplicate campaign names.
+     * The name of the campaign.
      * @type {string}
      * @memberof CreateCampaign
      */
@@ -2640,7 +2640,13 @@ export interface ReportRequest {
      */
     tactic?: TacticReport;
     /**
-     * A comma-separated list of the metrics to be included in the report.   Each report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/concepts/reporting/report-types).**               **Note**: Detail page view metrics (attributedDetailPageView14d, viewAttributedDetailPageView14d) have an SLA of 3 days.  **Tip**: Use new-to-brand (NTB) metrics to calculate how efficient your campaigns are at driving new shoppers:    1. Percentage of NTB orders = attributedOrdersNewToBrand14d / attributedConversions14d    2. Percentage NTB sales = attributedSalesNewToBrand14d / attributedSales14d    3. Percentage NTB units = attributedUnitsOrderedNewToBrand14d / attributedUnitsOrdered14d    4. NTB order rate = attributedOrdersNewToBrand14 / impressions 
+     * 
+     * @type {Segment}
+     * @memberof ReportRequest
+     */
+    segment?: Segment;
+    /**
+     * A comma-separated list of the metrics to be included in the report.   Each report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/concepts/reporting/report-types).**  **Note**: Campaigns with vCPM costType should use view+click based metrics (viewAttributedConversions14d, viewAttributedDetailPageView14d, viewAttributedSales14d, viewAttributedUnitsOrdered14d, viewImpressions).  **Note**: Detail page view metrics (attributedDetailPageView14d, viewAttributedDetailPageView14d) have an SLA of 3 days.  **Tip**: Use new-to-brand (NTB) metrics to calculate how efficient your campaigns are at driving new shoppers:    1. Percentage of NTB orders = attributedOrdersNewToBrand14d / attributedConversions14d    2. Percentage NTB sales = attributedSalesNewToBrand14d / attributedSales14d    3. Percentage NTB units = attributedUnitsOrderedNewToBrand14d / attributedUnitsOrdered14d    4. NTB order rate = attributedOrdersNewToBrand14 / impressions 
      * @type {string}
      * @memberof ReportRequest
      */
@@ -3350,6 +3356,16 @@ export interface SDTargetingRecommendationsV31AllOf {
     categories?: Array<SDCategoryRecommendation>;
 }
 /**
+ * Optional. A dimension used to further segment certain types of reports.  Note: matchedTarget reports only return targets that have generated at least one click. | Dimension | Report types | Tactics | Metrics | Description | |---------|------------------|-------------|-------------|------------| | matchedTarget | campaigns, adGroups, targets | T00020, T00030 | Existing metrics for each report type are accepted. |  Segments a report based on the ASIN of the product page where the ad appeared.|
+ * @export
+ * @enum {string}
+ */
+
+export enum Segment {
+    MatchedTarget = 'matchedTarget'
+}
+
+/**
  * 
  * @export
  * @interface SnapshotRequest
@@ -4032,7 +4048,7 @@ export interface UpdateAdGroupAllOf {
  */
 export interface UpdateCampaign {
     /**
-     * The name of the campaign. Note that idempotency for this field works different for sellers and vendors. Sellers aren\'t allowed to have duplicate campaign names, but vendors can have duplicate campaign names.
+     * The name of the campaign.
      * @type {string}
      * @memberof UpdateCampaign
      */

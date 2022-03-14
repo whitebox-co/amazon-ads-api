@@ -1625,6 +1625,74 @@ export interface MeasurementMarketplaceV1 {
     minimumBudget?: number;
 }
 /**
+ * The request object to fetch brands to be used in the OMNICHANNEL_METRICS vendor product.
+ * @export
+ * @interface OmnichannelMetricsBrandSearchRequestV1M2
+ */
+export interface OmnichannelMetricsBrandSearchRequestV1M2 {
+    /**
+     * List of brandIds in the omnichannel metrics brand catalog. Either one of brandIdFilter or brandNameSearch should be provided.
+     * @type {Array<string>}
+     * @memberof OmnichannelMetricsBrandSearchRequestV1M2
+     */
+    brandIdFilter?: Array<string>;
+    /**
+     * Text to search for eligible brands in the omnichannel metrics brand catalog. Either one of brandIdFilter or brandNameSearch should be provided.
+     * @type {string}
+     * @memberof OmnichannelMetricsBrandSearchRequestV1M2
+     */
+    brandNameSearch?: string;
+}
+/**
+ * 
+ * @export
+ * @interface OmnichannelMetricsBrandV1M2
+ */
+export interface OmnichannelMetricsBrandV1M2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof OmnichannelMetricsBrandV1M2
+     */
+    company?: string;
+    /**
+     * The brand canonical Id
+     * @type {string}
+     * @memberof OmnichannelMetricsBrandV1M2
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OmnichannelMetricsBrandV1M2
+     */
+    category?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OmnichannelMetricsBrandV1M2
+     */
+    subcategory?: string;
+    /**
+     * The brand name.
+     * @type {string}
+     * @memberof OmnichannelMetricsBrandV1M2
+     */
+    brand?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OmnichannelMetricsBrandV1M2
+     */
+    majorBrand?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof OmnichannelMetricsBrandV1M2
+     */
+    manufacturer?: string;
+}
+/**
  * A list of studies.
  * @export
  * @interface PaginatedDSPBrandLiftStudiesV1
@@ -1661,6 +1729,69 @@ export interface PaginatedDSPBrandLiftStudiesV1M1 {
      * @memberof PaginatedDSPBrandLiftStudiesV1M1
      */
     measurements?: Array<DSPBrandLiftStudyV1M1>;
+}
+/**
+ * A list of studies.
+ * @export
+ * @interface PaginatedDSPOmnichannelMetricsStudiesV1M2
+ */
+export interface PaginatedDSPOmnichannelMetricsStudiesV1M2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedDSPOmnichannelMetricsStudiesV1M2
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<DSPOmnichannelMetricsStudyV1M2>}
+     * @memberof PaginatedDSPOmnichannelMetricsStudiesV1M2
+     */
+    measurements?: Array<DSPOmnichannelMetricsStudyV1M2>;
+}
+/**
+ * A list of studies.
+ * @export
+ * @interface PaginatedDSPOmnichannelMetricsStudiesV1M3
+ */
+export interface PaginatedDSPOmnichannelMetricsStudiesV1M3 {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedDSPOmnichannelMetricsStudiesV1M3
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<DSPOmnichannelMetricsStudyV1M3>}
+     * @memberof PaginatedDSPOmnichannelMetricsStudiesV1M3
+     */
+    measurements?: Array<DSPOmnichannelMetricsStudyV1M3>;
+}
+/**
+ * 
+ * @export
+ * @interface PaginatedOmnichannelMetricsBrandsV1M2
+ */
+export interface PaginatedOmnichannelMetricsBrandsV1M2 {
+    /**
+     * The total number of matched brands.
+     * @type {number}
+     * @memberof PaginatedOmnichannelMetricsBrandsV1M2
+     */
+    totalResults?: number;
+    /**
+     * 
+     * @type {Array<OmnichannelMetricsBrandV1M2>}
+     * @memberof PaginatedOmnichannelMetricsBrandsV1M2
+     */
+    brands?: Array<OmnichannelMetricsBrandV1M2>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedOmnichannelMetricsBrandsV1M2
+     */
+    nextToken?: string;
 }
 /**
  * 

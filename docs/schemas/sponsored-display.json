@@ -6155,6 +6155,14 @@
           "T00030"
         ]
       },
+      "Segment": {
+        "type": "string",
+        "description": "Optional. A dimension used to further segment certain types of reports.\n\nNote: matchedTarget reports only return targets that have generated at least one click.\n| Dimension | Report types | Tactics | Metrics | Description |\n|---------|------------------|-------------|-------------|------------|\n| matchedTarget | campaigns, adGroups, targets | T00020, T00030 | Existing metrics for each report type are accepted. |  Segments a report based on the ASIN of the product page where the ad appeared.|",
+        "example": "matchedTarget",
+        "enum": [
+          "matchedTarget"
+        ]
+      },
       "Tactic": {
         "type": "string",
         "description": "The advertising tactic associated with the campaign. The following table lists available tactic names:\n|Tactic Name|Type|Description|\n|-----------|-----|-----------|\n|T00020     |Product| Choose individual products to show your ads in placements related to those products.<br>[Categories] Categories: Choose individual categories to show your ads in placements related to those categories.|\n|T00030     |Audiences| Select individual audiences to show your ads.|",
@@ -6169,7 +6177,7 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "The name of the campaign. Note that idempotency for this field works different for sellers and vendors. Sellers aren't allowed to have duplicate campaign names, but vendors can have duplicate campaign names."
+            "description": "The name of the campaign."
           },
           "budgetType": {
             "type": "string",
@@ -7403,9 +7411,12 @@
           "tactic": {
             "$ref": "#/components/schemas/TacticReport"
           },
+          "segment": {
+            "$ref": "#/components/schemas/Segment"
+          },
           "metrics": {
             "type": "string",
-            "description": "A comma-separated list of the metrics to be included in the report. \n\nEach report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/concepts/reporting/report-types).** \n            \n**Note**: Detail page view metrics (attributedDetailPageView14d, viewAttributedDetailPageView14d) have an SLA of 3 days.\n\n**Tip**: Use new-to-brand (NTB) metrics to calculate how efficient your campaigns are at driving new shoppers:\n\n  1. Percentage of NTB orders = attributedOrdersNewToBrand14d / attributedConversions14d \n  2. Percentage NTB sales = attributedSalesNewToBrand14d / attributedSales14d \n  3. Percentage NTB units = attributedUnitsOrderedNewToBrand14d / attributedUnitsOrdered14d \n  4. NTB order rate = attributedOrdersNewToBrand14 / impressions ",
+            "description": "A comma-separated list of the metrics to be included in the report. \n\nEach report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/concepts/reporting/report-types).**\n\n**Note**: Campaigns with vCPM costType should use view+click based metrics (viewAttributedConversions14d, viewAttributedDetailPageView14d, viewAttributedSales14d, viewAttributedUnitsOrdered14d, viewImpressions).\n\n**Note**: Detail page view metrics (attributedDetailPageView14d, viewAttributedDetailPageView14d) have an SLA of 3 days.\n\n**Tip**: Use new-to-brand (NTB) metrics to calculate how efficient your campaigns are at driving new shoppers:\n\n  1. Percentage of NTB orders = attributedOrdersNewToBrand14d / attributedConversions14d \n  2. Percentage NTB sales = attributedSalesNewToBrand14d / attributedSales14d \n  3. Percentage NTB units = attributedUnitsOrderedNewToBrand14d / attributedUnitsOrdered14d \n  4. NTB order rate = attributedOrdersNewToBrand14 / impressions ",
             "example": "campaignName,campaignId,impressions,clicks,cost,attributedSales14d"
           }
         }

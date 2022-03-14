@@ -8,20 +8,19 @@
  * Do not edit the class manually.
  */
 
-import { AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,StoresApi,TargetingRecommendationsApi } from '../models/sponsored-brands';
-import { Configuration } from '../models/configuration';
+import { AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,ReportsApi,StoresApi,TargetingRecommendationsApi } from '../models/sponsored-brands';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
-import { getAxiosInstance, applyMixins } from '../../helpers';
+import { getAxiosInstance, applyMixins, AdsConfiguration } from '../../helpers';
 
 export class SponsoredBrandsClient extends AdGroupsApi {
   constructor(parameters: APIConfigurationParameters) {
     const axios = getAxiosInstance(parameters)
-    const configuration = new Configuration(parameters)
+    const configuration = new AdsConfiguration(parameters)
     super(configuration, DEFAULT_API_BASE_PATH, axios)
   }
 }
 
 
-    export interface SponsoredBrandsClient extends AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,StoresApi,TargetingRecommendationsApi {}
-    applyMixins(SponsoredBrandsClient, [AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,StoresApi,TargetingRecommendationsApi])
+    export interface SponsoredBrandsClient extends AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,ReportsApi,StoresApi,TargetingRecommendationsApi {}
+    applyMixins(SponsoredBrandsClient, [AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,ReportsApi,StoresApi,TargetingRecommendationsApi])
     

@@ -262,6 +262,16 @@
                   "$ref": "#/components/schemas/StudyResponsesV1"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyResponsesV1"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyResponsesV1"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/StudyResponsesV1"
@@ -273,6 +283,24 @@
             "description": "Bad Request or request body is not matching with input model.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -304,6 +332,24 @@
                   "message": "Unauthenticated Request"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -319,6 +365,36 @@
             "description": "Forbidden - Request failed because user is not authorized to access a resource.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -362,6 +438,24 @@
                   "message": "Resource Not Found"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -377,6 +471,24 @@
             "description": "Unsupported Media Type - Version not supported.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -408,6 +520,24 @@
                   "message": "Too Many Requests"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -423,6 +553,24 @@
             "description": "Internal Server Error.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -994,6 +1142,26 @@
                 }
               }
             },
+            "application/vnd.studymanagement.v1.2+json": {
+              "schema": {
+                "minItems": 1,
+                "maxItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DSPBrandLiftStudyV1"
+                }
+              }
+            },
+            "application/vnd.studymanagement.v1.3+json": {
+              "schema": {
+                "minItems": 1,
+                "maxItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DSPBrandLiftStudyV1M1"
+                }
+              }
+            },
             "application/vnd.studymanagement.v1+json": {
               "schema": {
                 "minItems": 1,
@@ -1017,6 +1185,16 @@
                   "$ref": "#/components/schemas/StudyResponsesV1"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyResponsesV1"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyResponsesV1"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/StudyResponsesV1"
@@ -1028,6 +1206,24 @@
             "description": "Unauthenticated request.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -1051,6 +1247,36 @@
             "description": "Forbidden - Request failed because user is not authorized to access a resource.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -1094,6 +1320,24 @@
                   "message": "Resource Not Found"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -1109,6 +1353,24 @@
             "description": "Unsupported Media Type - Version not supported.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -1140,6 +1402,24 @@
                   "message": "Too Many Requests"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -1147,6 +1427,47 @@
                 "example": {
                   "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
                   "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
                 }
               }
             }
@@ -1177,6 +1498,16 @@
                   "$ref": "#/components/schemas/PaginatedDSPBrandLiftStudiesV1M1"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedDSPBrandLiftStudiesV1"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedDSPBrandLiftStudiesV1M1"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/PaginatedDSPBrandLiftStudiesV1"
@@ -1188,6 +1519,24 @@
             "description": "Bad Request or request body is not matching with input model.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -1219,6 +1568,24 @@
                   "message": "Unauthenticated Request"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -1234,6 +1601,36 @@
             "description": "Forbidden - Request failed because user is not authorized to access a resource.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -1277,6 +1674,24 @@
                   "message": "Resource Not Found"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -1292,6 +1707,24 @@
             "description": "Unsupported Media Type - Version not supported.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -1323,6 +1756,24 @@
                   "message": "Too Many Requests"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -1338,6 +1789,24 @@
             "description": "Internal Server Error.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -1431,6 +1900,26 @@
                 }
               }
             },
+            "application/vnd.studymanagement.v1.2+json": {
+              "schema": {
+                "minItems": 1,
+                "maxItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DSPBrandLiftStudyV1"
+                }
+              }
+            },
+            "application/vnd.studymanagement.v1.3+json": {
+              "schema": {
+                "minItems": 1,
+                "maxItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DSPBrandLiftStudyV1M1"
+                }
+              }
+            },
             "application/vnd.studymanagement.v1+json": {
               "schema": {
                 "minItems": 1,
@@ -1454,6 +1943,16 @@
                   "$ref": "#/components/schemas/StudyResponsesV1"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyResponsesV1"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyResponsesV1"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/StudyResponsesV1"
@@ -1465,6 +1964,24 @@
             "description": "Unauthenticated request.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -1488,6 +2005,36 @@
             "description": "Forbidden - Request failed because user is not authorized to access a resource.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -1531,6 +2078,24 @@
                   "message": "Resource Not Found"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -1546,6 +2111,24 @@
             "description": "Unsupported Media Type - Version not supported.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -1577,6 +2160,24 @@
                   "message": "Too Many Requests"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -1584,6 +2185,47 @@
                 "example": {
                   "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
                   "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
                 }
               }
             }
@@ -1862,6 +2504,26 @@
                 }
               }
             },
+            "application/vnd.studymanagement.v1.2+json": {
+              "schema": {
+                "minItems": 1,
+                "maxItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SurveyV1"
+                }
+              }
+            },
+            "application/vnd.studymanagement.v1.3+json": {
+              "schema": {
+                "minItems": 1,
+                "maxItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SurveyV1M1"
+                }
+              }
+            },
             "application/vnd.studymanagement.v1+json": {
               "schema": {
                 "minItems": 1,
@@ -1885,6 +2547,16 @@
                   "$ref": "#/components/schemas/SurveyResponsesV1"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SurveyResponsesV1"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SurveyResponsesV1"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/SurveyResponsesV1"
@@ -1896,6 +2568,24 @@
             "description": "Unauthenticated request.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -1919,6 +2609,36 @@
             "description": "Forbidden - Request failed because user is not authorized to access a resource.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -1962,6 +2682,24 @@
                   "message": "Resource Not Found"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -1977,6 +2715,24 @@
             "description": "Unsupported Media Type - Version not supported.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -2008,6 +2764,24 @@
                   "message": "Too Many Requests"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -2015,6 +2789,47 @@
                 "example": {
                   "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
                   "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
                 }
               }
             }
@@ -2045,6 +2860,16 @@
                   "$ref": "#/components/schemas/PaginatedSurveysV1M1"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedSurveysV1"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedSurveysV1M1"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/PaginatedSurveysV1"
@@ -2056,6 +2881,24 @@
             "description": "Bad Request or request body is not matching with input model.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -2087,6 +2930,24 @@
                   "message": "Unauthenticated Request"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -2102,6 +2963,36 @@
             "description": "Forbidden - Request failed because user is not authorized to access a resource.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -2145,6 +3036,24 @@
                   "message": "Resource Not Found"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -2160,6 +3069,24 @@
             "description": "Unsupported Media Type - Version not supported.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -2191,6 +3118,24 @@
                   "message": "Too Many Requests"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -2206,6 +3151,24 @@
             "description": "Internal Server Error.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -2299,6 +3262,26 @@
                 }
               }
             },
+            "application/vnd.studymanagement.v1.2+json": {
+              "schema": {
+                "minItems": 1,
+                "maxItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SurveyV1"
+                }
+              }
+            },
+            "application/vnd.studymanagement.v1.3+json": {
+              "schema": {
+                "minItems": 1,
+                "maxItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SurveyV1M1"
+                }
+              }
+            },
             "application/vnd.studymanagement.v1+json": {
               "schema": {
                 "minItems": 1,
@@ -2322,6 +3305,16 @@
                   "$ref": "#/components/schemas/SurveyResponsesV1"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SurveyResponsesV1"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SurveyResponsesV1"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/SurveyResponsesV1"
@@ -2333,6 +3326,24 @@
             "description": "Unauthenticated request.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -2356,6 +3367,36 @@
             "description": "Forbidden - Request failed because user is not authorized to access a resource.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -2399,6 +3440,24 @@
                   "message": "Resource Not Found"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -2414,6 +3473,24 @@
             "description": "Unsupported Media Type - Version not supported.",
             "content": {
               "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -2445,6 +3522,24 @@
                   "message": "Too Many Requests"
                 }
               },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
               "application/vnd.studymanagement.v1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
@@ -2452,6 +3547,47 @@
                 "example": {
                   "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
                   "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
                 }
               }
             }
@@ -2712,66 +3848,6 @@
     "headers": {},
     "examples": {},
     "schemas": {
-      "VendorProductRequestV1M1": {
-        "description": "The request object to fetch measurement vendor products.",
-        "type": "object",
-        "properties": {
-          "fundingTypeFilters": {
-            "minItems": 1,
-            "maxItems": 100,
-            "description": "FundingType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FundingTypeV1M1"
-            }
-          },
-          "objectiveTypeFilters": {
-            "minItems": 1,
-            "maxItems": 100,
-            "description": "StudyObjective filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/StudyObjectiveV1"
-            }
-          },
-          "vendorProductIdFilters": {
-            "minItems": 1,
-            "maxItems": 100,
-            "description": "VendorProduct identifier filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "adTypeFilters": {
-            "minItems": 1,
-            "maxItems": 100,
-            "description": "AdType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AdTypeV1"
-            }
-          },
-          "vendorTypeFilters": {
-            "minItems": 1,
-            "maxItems": 100,
-            "description": "VendorType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/VendorTypeV1M1"
-            }
-          },
-          "studyTypeFilters": {
-            "minItems": 1,
-            "maxItems": 100,
-            "description": "StudyType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/StudyTypeV1"
-            }
-          }
-        }
-      },
       "DSPBrandLiftEligibilityRequestV1M1": {
         "allOf": [
           {
@@ -2790,26 +3866,6 @@
         "enum": [
           "STRING",
           "INTEGER"
-        ]
-      },
-      "DSPBrandLiftEligibilityRequestV1": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/BaseEligibilityRequestV1"
-          },
-          {
-            "$ref": "#/components/schemas/DSPBrandLiftEligibilityDataV1"
-          }
-        ],
-        "description": "The request object of DSP brand lift eligibility check.",
-        "type": "object"
-      },
-      "EligibilityIssueSeverityV1": {
-        "description": "Supported values are WARNING, ERROR. ERROR severity issues need to be resolved while WARNING severity issues can be ignored.",
-        "type": "string",
-        "enum": [
-          "WARNING",
-          "ERROR"
         ]
       },
       "BaseStudyV1M1": {
@@ -2970,96 +4026,6 @@
           }
         }
       },
-      "EligibilityIssueV1": {
-        "description": "The list of eligibility issues.",
-        "type": "object",
-        "properties": {
-          "severity": {
-            "$ref": "#/components/schemas/EligibilityIssueSeverityV1"
-          },
-          "code": {
-            "description": "An enumerated issue code for machine use.",
-            "type": "string"
-          },
-          "field": {
-            "$ref": "#/components/schemas/EligibilityFieldV1"
-          },
-          "message": {
-            "description": "A human-readable description of the issue with suggestions on how to resolve the issue.",
-            "type": "string"
-          }
-        }
-      },
-      "BrandLiftSummaryV1": {
-        "description": "Summary of Brand Lift achieved for an objective.",
-        "properties": {
-          "qualifyingResponses": {
-            "minItems": 0,
-            "maxItems": 10,
-            "description": "Qualifying responses aggregated to measure the Brand Lift.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "statisticalSignificance": {
-            "format": "double",
-            "description": "The significance percentage of achieved Brand Lift.",
-            "type": "number"
-          },
-          "controlGroupRate": {
-            "format": "double",
-            "description": "Control group response rate.",
-            "type": "number"
-          },
-          "questionObjective": {
-            "$ref": "#/components/schemas/SurveyQuestionObjectiveTypeV1"
-          },
-          "adExposedGroupRate": {
-            "format": "double",
-            "description": "Ad exposed group response rate.",
-            "type": "number"
-          },
-          "benchmarkLiftRate": {
-            "format": "double",
-            "description": "The benchmark lift rate for the selected product category in the Survey.",
-            "type": "number"
-          },
-          "questionText": {
-            "description": "Text of the Survey question.",
-            "type": "string"
-          }
-        }
-      },
-      "TemplatedSurveyQuestionV1": {
-        "description": "The templated measurement survey question.",
-        "type": "object",
-        "properties": {
-          "placeholders": {
-            "minItems": 0,
-            "maxItems": 100,
-            "description": "List of question placeholders",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SurveyQuestionPlaceholderV1"
-            }
-          },
-          "id": {
-            "description": "The survey question template canonical identifier.",
-            "type": "string"
-          }
-        }
-      },
-      "SurveyQuestionSubCategoryV1M1": {
-        "description": "The survey question sub-category. Only applicable to certain categories",
-        "readOnly": true,
-        "type": "string",
-        "enum": [
-          "DEMOGRAPHIC",
-          "BEHAVIOR",
-          "PURCHASE_HISTORY"
-        ]
-      },
       "SurveyQuestionPlaceholderCandidateV1": {
         "description": "The placeholder candidate in Survey question.",
         "type": "object",
@@ -3121,24 +4087,23 @@
           }
         }
       },
-      "TemplatedSurveyQuestionV1M1": {
-        "description": "The templated measurement survey question.",
+      "PaginatedOmnichannelMetricsBrandsV1M2": {
         "type": "object",
         "properties": {
-          "gridQuestionResponse": {
-            "$ref": "#/components/schemas/GridQuestionResponsesV1M1"
+          "totalResults": {
+            "format": "int32",
+            "description": "The total number of matched brands.",
+            "type": "integer"
           },
-          "placeholders": {
+          "brands": {
             "minItems": 0,
             "maxItems": 100,
-            "description": "List of question placeholders",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SurveyQuestionPlaceholderV1"
+              "$ref": "#/components/schemas/OmnichannelMetricsBrandV1M2"
             }
           },
-          "id": {
-            "description": "The survey question template canonical identifier.",
+          "nextToken": {
             "type": "string"
           }
         }
@@ -3162,42 +4127,6 @@
             "items": {
               "$ref": "#/components/schemas/VendorProductPolicyV1M1"
             }
-          }
-        }
-      },
-      "ErrorV1": {
-        "description": "The error response object.",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "description": "Request Id that uniquely identifies your request.",
-            "type": "string"
-          },
-          "message": {
-            "description": "A human-readable description of the response.",
-            "type": "string"
-          },
-          "errors": {
-            "minItems": 0,
-            "maxItems": 100,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SubErrorV1"
-            }
-          }
-        }
-      },
-      "ResourceLinkV1M1": {
-        "description": "The link that can be used to access corresponding resources in advertising portal.",
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The resource name.",
-            "type": "string"
-          },
-          "url": {
-            "description": "The resource url.",
-            "type": "string"
           }
         }
       },
@@ -3245,95 +4174,6 @@
           }
         }
       },
-      "DSPCampaignMeasurementMetadataV1": {
-        "description": "The basic model for all DSP CAMPAIGN_MEASUREMENT objective studies.",
-        "type": "object",
-        "properties": {
-          "excludedLineItemIds": {
-            "minItems": 0,
-            "maxItems": 100,
-            "description": "A list of canonical lineItem identifiers that are excluded from the study.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "orderIds": {
-            "minItems": 1,
-            "maxItems": 100,
-            "description": "A list of canonical order identifiers that are associated with the study. By default all lineItems in those orders will be included.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "advertiserId": {
-            "description": "The associated advertiser identifier. Immutable field.",
-            "type": "string"
-          }
-        }
-      },
-      "VendorTypeV1M1": {
-        "description": "The measurement vendor type, each study type will have different supported vendors.",
-        "readOnly": true,
-        "type": "string",
-        "enum": [
-          "AMAZON",
-          "KANTAR",
-          "UPWAVE",
-          "NIELSEN",
-          "MACROMILL",
-          "DYNATA",
-          "LUCID"
-        ]
-      },
-      "SurveyQuestionPlaceholderV1": {
-        "description": "The object specifying a placeholder in Survey question.",
-        "type": "object",
-        "properties": {
-          "fieldName": {
-            "description": "The survey question placeholder field name.",
-            "type": "string"
-          },
-          "fieldValues": {
-            "minItems": 0,
-            "maxItems": 100,
-            "description": "The survey question placeholder field values.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SurveyQuestionPlaceholderFieldValueV1"
-            }
-          }
-        }
-      },
-      "DSPCampaignMeasurementMetadataV1M1": {
-        "description": "The basic model for all DSP CAMPAIGN_MEASUREMENT objective studies.",
-        "type": "object",
-        "properties": {
-          "excludedLineItemIds": {
-            "minItems": 0,
-            "maxItems": 100,
-            "description": "A list of canonical lineItem identifiers that are excluded from the study.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "orderIds": {
-            "minItems": 1,
-            "maxItems": 100,
-            "description": "A list of canonical order identifiers that are associated with the study. By default all lineItems in those orders will be included.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "advertiserId": {
-            "description": "The associated advertiser identifier. Immutable field.",
-            "type": "string"
-          }
-        }
-      },
       "VendorProductEligibilityV1": {
         "description": "The measurement eligibility details for a certain vendor product.",
         "type": "object",
@@ -3355,18 +4195,6 @@
             "$ref": "#/components/schemas/EligibilityStatusV1"
           }
         }
-      },
-      "SurveyQuestionTypeV1M1": {
-        "description": "The survey question type. SINGLE_SELECT question will allow customers to choose only one response, MULTI_SELECT question will allow customers to choose multiple responses, RATING will allow customers to choose a rating on a scale (e.g. 1 to 5), FREE_TEXT will allow customers to provide a free formed question text.",
-        "readOnly": true,
-        "type": "string",
-        "enum": [
-          "SINGLE_SELECT",
-          "SINGLE_SELECT_GRID",
-          "MULTI_SELECT",
-          "RATING",
-          "FREE_TEXT"
-        ]
       },
       "VendorProductPolicyV1": {
         "description": "The policy rules will be enforced at vendor product level.",
@@ -3472,32 +4300,6 @@
           }
         }
       },
-      "DSPBrandLiftMetadataV1": {
-        "description": "The basic model for all DSP BRAND_LIFT objective studies.",
-        "type": "object",
-        "properties": {
-          "brandName": {
-            "description": "The study brand name.",
-            "type": "string"
-          },
-          "peerNames": {
-            "minItems": 0,
-            "maxItems": 100,
-            "description": "A list of peer names for the study brand.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "benchmarkCategory": {
-            "$ref": "#/components/schemas/BenchmarkCategoryV1"
-          },
-          "productCategory": {
-            "description": "The study product category.",
-            "type": "string"
-          }
-        }
-      },
       "SurveyQuestionCategoryV1M1": {
         "description": "The survey question category.",
         "readOnly": true,
@@ -3521,33 +4323,6 @@
           }
         }
       },
-      "MeasurementMarketplaceV1": {
-        "description": "The marketplace with corresponding rules.",
-        "type": "object",
-        "properties": {
-          "country": {
-            "$ref": "#/components/schemas/MeasurementCountryV1"
-          },
-          "supportedLocales": {
-            "minItems": 0,
-            "maxItems": 100,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MeasurementLocaleV1"
-            }
-          },
-          "minimumImpressions": {
-            "format": "int64",
-            "description": "The minimum impressions.",
-            "type": "integer"
-          },
-          "minimumBudget": {
-            "format": "double",
-            "description": "The minimum budget. Expressed in dollars.",
-            "type": "number"
-          }
-        }
-      },
       "AdTypeV1": {
         "description": "Supported values are DSP(Demand Side Platform).",
         "readOnly": true,
@@ -3568,25 +4343,6 @@
           "CANCELLED",
           "DRAFT",
           "INFEASIBLE"
-        ]
-      },
-      "MeasurementCountryV1": {
-        "description": "The measurement country.",
-        "type": "string",
-        "enum": [
-          "US",
-          "CA",
-          "UK",
-          "DE",
-          "IT",
-          "ES",
-          "FR",
-          "JP",
-          "MX",
-          "AE",
-          "AU",
-          "NL",
-          "BR"
         ]
       },
       "SurveyResponseResultV1M1": {
@@ -3646,75 +4402,6 @@
           }
         }
       },
-      "SurveyQuestionTemplateV1": {
-        "description": "Survey question template for vendor product.",
-        "type": "object",
-        "properties": {
-          "minimumQualifyingResponses": {
-            "description": "The minimum number of qualifying responses required for the question. This will be available if the qualifying responses are not pre-defined/inferred.",
-            "type": "integer"
-          },
-          "maximumQualifyingResponses": {
-            "description": "The maximum number of qualifying responses allowed for the question. This will be available if the qualifying responses are not pre-defined/inferred.",
-            "type": "integer"
-          },
-          "qualifyingResponses": {
-            "minItems": 0,
-            "maxItems": 100,
-            "description": "The pre-defined qualifying survey question responses with placeholders, this will help to define which responses will be counted as positive ones in the study report.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "questionResponses": {
-            "minItems": 0,
-            "maxItems": 100,
-            "description": "The pre-defined survey question responses with placeholders.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "locale": {
-            "$ref": "#/components/schemas/MeasurementLocaleV1"
-          },
-          "type": {
-            "$ref": "#/components/schemas/SurveyQuestionTypeV1"
-          },
-          "objectiveType": {
-            "$ref": "#/components/schemas/SurveyQuestionObjectiveTypeV1"
-          },
-          "questionText": {
-            "description": "The survey question text with placeholders.",
-            "type": "string"
-          },
-          "vendorProductId": {
-            "description": "The associated vendor product id.",
-            "type": "string"
-          },
-          "placeholderCandidates": {
-            "minItems": 0,
-            "maxItems": 100,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SurveyQuestionPlaceholderCandidateV1"
-            }
-          },
-          "minimumQuestionResponses": {
-            "description": "The minimum number of responses required for the question. This will be available if the question responses are not pre-defined/inferred.",
-            "type": "integer"
-          },
-          "id": {
-            "description": "The survey question template canonical Id.",
-            "type": "string"
-          },
-          "maximumQuestionResponses": {
-            "description": "The maximum number of responses allowed for the question. This will be available if the question responses are not pre-defined/inferred.",
-            "type": "integer"
-          }
-        }
-      },
       "VendorProductTypeV1M1": {
         "description": "The measurement vendor product type.",
         "readOnly": true,
@@ -3730,28 +4417,6 @@
           "DYNATA",
           "LUCID"
         ]
-      },
-      "CustomSurveyQuestionV1": {
-        "deprecated": true,
-        "description": "The templated measurement survey question.",
-        "type": "object",
-        "properties": {
-          "responses": {
-            "minItems": 0,
-            "maxItems": 100,
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "type": {
-            "$ref": "#/components/schemas/SurveyQuestionTypeV1"
-          },
-          "questionText": {
-            "description": "The survey question text.",
-            "type": "string"
-          }
-        }
       },
       "SurveyQuestionTypeV1": {
         "description": "The survey question type. SINGLE_SELECT question will allow customers to choose only one response, MULTI_SELECT question will allow customers to choose multiple responses, RATING will allow customers to choose a rating on a scale (e.g. 1 to 5), FREE_TEXT will allow customers to provide a free formed question text.",
@@ -3772,115 +4437,11 @@
           "COMPLIMENTARY"
         ]
       },
-      "BaseEligibilityRequestV1": {
-        "description": "The request object of measurement eligibility check.",
-        "type": "object",
-        "properties": {
-          "fundingTypeFilters": {
-            "minItems": 1,
-            "maxItems": 100,
-            "description": "FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FundingTypeV1"
-            }
-          },
-          "vendorProductIdFilters": {
-            "minItems": 1,
-            "maxItems": 100,
-            "description": "VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "vendorTypeFilters": {
-            "minItems": 1,
-            "maxItems": 100,
-            "description": "VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/VendorTypeV1"
-            }
-          }
-        }
-      },
-      "SurveyStatusV1": {
-        "description": "The survey status. Only required if the survey is in DRAFT. Created survey will be in AVAILABLE status by default and will only be in IN_USE status if it's associated with a study.",
-        "type": "string",
-        "enum": [
-          "IN_USE",
-          "AVAILABLE",
-          "DRAFT"
-        ]
-      },
-      "VendorProductV1M1": {
-        "description": "The measurement vendor product.",
-        "type": "object",
-        "properties": {
-          "vendorType": {
-            "$ref": "#/components/schemas/VendorTypeV1M1"
-          },
-          "vendorProductType": {
-            "$ref": "#/components/schemas/VendorProductTypeV1M1"
-          },
-          "adType": {
-            "$ref": "#/components/schemas/AdTypeV1"
-          },
-          "fundingType": {
-            "$ref": "#/components/schemas/FundingTypeV1M1"
-          },
-          "displayName": {
-            "description": "The vendor product display name.",
-            "readOnly": true,
-            "type": "string"
-          },
-          "studyType": {
-            "$ref": "#/components/schemas/StudyTypeV1"
-          },
-          "id": {
-            "description": "The vendor product identifier.",
-            "readOnly": true,
-            "type": "string"
-          },
-          "objective": {
-            "$ref": "#/components/schemas/StudyObjectiveV1"
-          }
-        }
-      },
       "MeasurementLocaleV1": {
         "description": "The measurement locale.",
         "type": "string",
         "enum": [
           "EN_US"
-        ]
-      },
-      "SurveyQuestionObjectiveTypeV1M1": {
-        "description": "The survey objective.",
-        "readOnly": true,
-        "type": "string",
-        "enum": [
-          "AWARENESS",
-          "PREFERENCE",
-          "FAVORABILITY",
-          "AD_RECALL",
-          "INTENT",
-          "ATTITUDES",
-          "UNAIDED_AWARENESS",
-          "CONSIDERATION",
-          "AGE",
-          "GENDER",
-          "HOUSEHOLD_INCOME",
-          "HOUSEHOLD_SIZE",
-          "CHILDREN_IN_HOUSEHOLD",
-          "EDUCATION",
-          "ETHNICITY",
-          "TIME_ONLINE",
-          "TV_MEDIA_CONSUMPTION",
-          "IN_MARKET_STATUS",
-          "PURCHASE_FREQUENCY",
-          "PURCHASE_HISTORY",
-          "PURCHASE_LOCATION"
         ]
       },
       "BenchmarkCategoryV1": {
@@ -4090,6 +4651,25 @@
           }
         }
       },
+      "OmnichannelMetricsBrandSearchRequestV1M2": {
+        "description": "The request object to fetch brands to be used in the OMNICHANNEL_METRICS vendor product.",
+        "type": "object",
+        "properties": {
+          "brandIdFilter": {
+            "minItems": 1,
+            "maxItems": 50,
+            "description": "List of brandIds in the omnichannel metrics brand catalog. Either one of brandIdFilter or brandNameSearch should be provided.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "brandNameSearch": {
+            "description": "Text to search for eligible brands in the omnichannel metrics brand catalog. Either one of brandIdFilter or brandNameSearch should be provided.",
+            "type": "string"
+          }
+        }
+      },
       "DSPOmnichannelMetricsStudyV1M3": {
         "allOf": [
           {
@@ -4118,96 +4698,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SurveyV1"
-            }
-          }
-        }
-      },
-      "MeasurementGoalV1": {
-        "description": "The measurement budget optimization goal type goal.",
-        "type": "string",
-        "enum": [
-          "ENGAGEMENT_WITH_MY_AD",
-          "CONSIDERATIONS_ON_AMAZON",
-          "CONVERSIONS_OFF_AMAZON",
-          "PURCHASES_ON_AMAZON",
-          "MOBILE_APP_INSTALLS",
-          "AWARENESS"
-        ]
-      },
-      "VendorProductV1": {
-        "description": "The measurement vendor product.",
-        "type": "object",
-        "properties": {
-          "vendorType": {
-            "$ref": "#/components/schemas/VendorTypeV1"
-          },
-          "vendorProductType": {
-            "$ref": "#/components/schemas/VendorProductTypeV1"
-          },
-          "adType": {
-            "$ref": "#/components/schemas/AdTypeV1"
-          },
-          "fundingType": {
-            "$ref": "#/components/schemas/FundingTypeV1"
-          },
-          "studyType": {
-            "$ref": "#/components/schemas/StudyTypeV1"
-          },
-          "id": {
-            "description": "The vendor product identifier.",
-            "readOnly": true,
-            "type": "string"
-          },
-          "objective": {
-            "$ref": "#/components/schemas/StudyObjectiveV1"
-          }
-        }
-      },
-      "StudyResponsesV1": {
-        "description": "Studies response.",
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "description": "Request Id that uniquely identifies your request.",
-            "type": "string"
-          },
-          "responses": {
-            "minItems": 0,
-            "maxItems": 100,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/StudyResponseV1"
-            }
-          }
-        }
-      },
-      "BrandLiftStudyResultV1": {
-        "description": "The result of Brand Lift study.",
-        "properties": {
-          "totalResponses": {
-            "description": "Total number of responses received in the Survey.",
-            "type": "number"
-          },
-          "brandLiftSummary": {
-            "minItems": 1,
-            "maxItems": 50,
-            "description": "Summary of Brand Lift achieved for each objective.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BrandLiftSummaryV1"
-            }
-          },
-          "studyId": {
-            "description": "The canonical Id of Study.",
-            "type": "string"
-          },
-          "surveyResponses": {
-            "minItems": 1,
-            "maxItems": 2000,
-            "description": "Detailed response rate for each response in Survey question aggregated by different segments.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SurveyResponseResultV1"
             }
           }
         }
@@ -4261,51 +4751,6 @@
           }
         }
       },
-      "PaginatedSurveyQuestionTemplatesV1M1": {
-        "type": "object",
-        "properties": {
-          "surveyQuestionTemplates": {
-            "minItems": 0,
-            "maxItems": 100,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SurveyQuestionTemplateV1M1"
-            }
-          },
-          "totalResults": {
-            "format": "int32",
-            "description": "The total number of templates.",
-            "type": "integer"
-          },
-          "nextToken": {
-            "type": "string"
-          }
-        }
-      },
-      "DSPBrandLiftStudyV1M1": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/BaseStudyV1M1"
-          },
-          {
-            "$ref": "#/components/schemas/DSPCampaignMeasurementMetadataV1M1"
-          },
-          {
-            "$ref": "#/components/schemas/DSPBrandLiftMetadataV1M1"
-          }
-        ],
-        "description": "DSP BRAND_LIFT study object.",
-        "type": "object"
-      },
-      "EligibilityStatusV1": {
-        "description": "Supported values are ELIGIBLE, INELIGIBLE and ELIGIBLE_WITH_WARNING. INELIGIBLE status indicates the study can not be created.",
-        "type": "string",
-        "enum": [
-          "ELIGIBLE",
-          "INELIGIBLE",
-          "ELIGIBLE_WITH_WARNING"
-        ]
-      },
       "BaseEligibilityRequestV1M1": {
         "description": "The request object of measurement eligibility check.",
         "type": "object",
@@ -4339,36 +4784,6 @@
           }
         }
       },
-      "DSPBrandLiftMetadataV1M1": {
-        "description": "The basic model for all DSP BRAND_LIFT objective studies.",
-        "type": "object",
-        "properties": {
-          "brandName": {
-            "description": "The study brand name.",
-            "type": "string"
-          },
-          "peerNames": {
-            "minItems": 0,
-            "maxItems": 100,
-            "description": "A list of peer names for the study brand.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "verb": {
-            "description": "The verb that will be used in the applicable survey questions to construct the question text.",
-            "type": "string"
-          },
-          "benchmarkCategory": {
-            "$ref": "#/components/schemas/BenchmarkCategoryV1"
-          },
-          "productCategory": {
-            "description": "The study product category.",
-            "type": "string"
-          }
-        }
-      },
       "VendorTypeV1": {
         "description": "The measurement vendor type, each study type will have different supported vendors.",
         "readOnly": true,
@@ -4376,104 +4791,6 @@
         "enum": [
           "AMAZON"
         ]
-      },
-      "PaginatedVendorProductsV1": {
-        "description": "A list of measurement vendor products.",
-        "type": "object",
-        "properties": {
-          "totalResults": {
-            "format": "int32",
-            "description": "The total number of vendor products.",
-            "type": "integer"
-          },
-          "vendorProducts": {
-            "minItems": 0,
-            "maxItems": 100,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/VendorProductV1"
-            }
-          },
-          "nextToken": {
-            "type": "string"
-          }
-        }
-      },
-      "StudyReviewRequestV1": {
-        "description": "Review an study.",
-        "type": "object",
-        "properties": {
-          "statusReasons": {
-            "minItems": 0,
-            "maxItems": 100,
-            "description": "List of reasons for study status. For example, when study is marked REJECTED or INELIGIBLE, this field would be available.",
-            "readOnly": true,
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "rejectionReasons": {
-            "minItems": 0,
-            "maxItems": 100,
-            "deprecated": true,
-            "description": "List of reasons for rejection, this will only be required if the status is REJECTED. This field is deprecated, use statusReasons instead.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "studyId": {
-            "description": "The study canonical identifier.",
-            "type": "string"
-          },
-          "comment": {
-            "description": "The approver's comment on why the study is approved/rejected.",
-            "type": "string"
-          },
-          "status": {
-            "$ref": "#/components/schemas/StudyReviewStatusV1"
-          }
-        }
-      },
-      "SurveyQuestionPlaceholderAllowedRangeV1": {
-        "description": "Allowed value range for placeholder.",
-        "type": "object",
-        "properties": {
-          "minimumValue": {
-            "format": "int32",
-            "description": "The minimum allowed value.",
-            "type": "integer"
-          },
-          "parentValue": {
-            "description": "The field value that this range depends on. Will be empty if this range is the default range.",
-            "type": "string"
-          },
-          "maximumValue": {
-            "format": "int32",
-            "description": "The maximum allowed value.",
-            "type": "integer"
-          },
-          "parentField": {
-            "description": "The field name that this range depends on. Will be empty if this range is the default range.",
-            "type": "string"
-          }
-        }
-      },
-      "DSPOmnichannelMetricsMetadataV1M2": {
-        "description": "The basic model for all DSP OMNICHANNEL_METRICS objective studies.",
-        "type": "object",
-        "properties": {
-          "brandIds": {
-            "minItems": 0,
-            "maxItems": 100,
-            "description": "A list of canonical brand ids to be tracked for off-Amazon conversions.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
       },
       "VendorProductRequestV1": {
         "description": "The request object to fetch measurement vendor products.",
@@ -4549,15 +4866,6 @@
         ],
         "description": "DSP OMNICHANNEL_METRICS study object.",
         "type": "object"
-      },
-      "StudyReviewStatusV1": {
-        "description": "The study review status. APPROVED studies will start delivering once reach the startDate.",
-        "type": "string",
-        "enum": [
-          "APPROVED",
-          "REJECTED",
-          "INFEASIBLE"
-        ]
       },
       "EligibilityMetadataV1": {
         "description": "The eligibility metadata.",
@@ -4717,47 +5025,6 @@
         "description": "DSP BRAND_LIFT study object.",
         "type": "object"
       },
-      "SurveyV1": {
-        "description": "The measurement survey.",
-        "type": "object",
-        "properties": {
-          "vendorProductId": {
-            "description": "The vendor product canonical identifier.",
-            "type": "string"
-          },
-          "templatedQuestions": {
-            "minItems": 1,
-            "maxItems": 100,
-            "description": "A list of templated survey questions.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TemplatedSurveyQuestionV1"
-            }
-          },
-          "customQuestions": {
-            "minItems": 1,
-            "maxItems": 100,
-            "deprecated": true,
-            "description": "A list of custom survey questions.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CustomSurveyQuestionV1"
-            }
-          },
-          "studyId": {
-            "description": "The associated study identifier. Survey needs to be created prior to the study creation.",
-            "readOnly": true,
-            "type": "string"
-          },
-          "id": {
-            "description": "The survey canonical identifier. Immutable field. This is required for update.",
-            "type": "string"
-          },
-          "status": {
-            "$ref": "#/components/schemas/SurveyStatusV1"
-          }
-        }
-      },
       "BrandLiftSummaryV1M1": {
         "description": "Summary of Brand Lift achieved for an objective.",
         "properties": {
@@ -4792,23 +5059,6 @@
           "questionText": {
             "description": "Text of the Survey question.",
             "type": "string"
-          }
-        }
-      },
-      "PaginatedSurveysV1M1": {
-        "description": "A list of study surveys.",
-        "type": "object",
-        "properties": {
-          "nextToken": {
-            "type": "string"
-          },
-          "surveys": {
-            "minItems": 0,
-            "maxItems": 100,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SurveyV1M1"
-            }
           }
         }
       },
@@ -4965,21 +5215,6 @@
           }
         }
       },
-      "EligibilityFieldV1": {
-        "description": "Fields that will be checked as part of eligibility API call.",
-        "type": "string",
-        "enum": [
-          "LOCALE",
-          "BUDGET",
-          "GOAL",
-          "START_TIME",
-          "END_TIME",
-          "FLIGHT_LENGTH",
-          "LEAD_TIME",
-          "IMPRESSIONS",
-          "ORDER"
-        ]
-      },
       "SurveyQuestionPlaceholderAllowedValueV1": {
         "description": "Allowed values for placeholder.",
         "type": "object",
@@ -5003,48 +5238,6 @@
           }
         }
       },
-      "FundingTypeV1M1": {
-        "description": "The measurement funding type. For COMPLIMENTARY studies the cost will be covered by Amazon.",
-        "readOnly": true,
-        "type": "string",
-        "enum": [
-          "COMPLIMENTARY",
-          "THIRD_PARTY_PAYMENT"
-        ]
-      },
-      "StudyTypeV1": {
-        "description": "The study type.",
-        "readOnly": true,
-        "type": "string",
-        "enum": [
-          "BRAND_LIFT"
-        ]
-      },
-      "VendorProductTypeV1": {
-        "description": "The measurement vendor product type.",
-        "readOnly": true,
-        "type": "string",
-        "enum": [
-          "SHOPPER_PANEL"
-        ]
-      },
-      "SurveyQuestionCategoryRequirementV1M1": {
-        "description": "The requirement for specific survey question category.",
-        "type": "object",
-        "properties": {
-          "minimumQuestions": {
-            "description": "The minimum number of questions required for the question category.",
-            "type": "integer"
-          },
-          "maximumQuestions": {
-            "description": "The maximum number of questions required for the question category.",
-            "type": "integer"
-          },
-          "category": {
-            "$ref": "#/components/schemas/SurveyQuestionCategoryV1M1"
-          }
-        }
-      },
       "PaginatedDSPBrandLiftStudiesV1M1": {
         "description": "A list of studies.",
         "type": "object",
@@ -5059,18 +5252,6 @@
             "items": {
               "$ref": "#/components/schemas/DSPBrandLiftStudyV1M1"
             }
-          }
-        }
-      },
-      "SurveyQuestionGridQuestionResponseV1M1": {
-        "description": "The grid question response object. Only applicable for SINGLE_SELECT_GRID type question.",
-        "type": "object",
-        "properties": {
-          "columns": {
-            "$ref": "#/components/schemas/SurveyQuestionPlaceholderCandidateV1"
-          },
-          "rows": {
-            "$ref": "#/components/schemas/SurveyQuestionPlaceholderCandidateV1"
           }
         }
       },
@@ -5091,27 +5272,6 @@
             "items": {
               "$ref": "#/components/schemas/VendorProductEligibilityV1"
             }
-          }
-        }
-      },
-      "PaginatedSurveyQuestionTemplatesV1": {
-        "type": "object",
-        "properties": {
-          "surveyQuestionTemplates": {
-            "minItems": 0,
-            "maxItems": 100,
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SurveyQuestionTemplateV1"
-            }
-          },
-          "totalResults": {
-            "format": "int32",
-            "description": "The total number of templates.",
-            "type": "integer"
-          },
-          "nextToken": {
-            "type": "string"
           }
         }
       },
@@ -5181,6 +5341,1084 @@
           },
           "status": {
             "$ref": "#/components/schemas/SurveyStatusV1"
+          }
+        }
+      },
+      "VendorProductRequestV1M1": {
+        "description": "The request object to fetch measurement vendor products.",
+        "type": "object",
+        "properties": {
+          "fundingTypeFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "FundingType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FundingTypeV1M1"
+            }
+          },
+          "objectiveTypeFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "StudyObjective filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudyObjectiveV1"
+            }
+          },
+          "vendorProductIdFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "VendorProduct identifier filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "adTypeFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "AdType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdTypeV1"
+            }
+          },
+          "vendorTypeFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "VendorType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VendorTypeV1M1"
+            }
+          },
+          "studyTypeFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "StudyType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudyTypeV1"
+            }
+          }
+        }
+      },
+      "DSPBrandLiftEligibilityRequestV1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseEligibilityRequestV1"
+          },
+          {
+            "$ref": "#/components/schemas/DSPBrandLiftEligibilityDataV1"
+          }
+        ],
+        "description": "The request object of DSP brand lift eligibility check.",
+        "type": "object"
+      },
+      "EligibilityIssueSeverityV1": {
+        "description": "Supported values are WARNING, ERROR. ERROR severity issues need to be resolved while WARNING severity issues can be ignored.",
+        "type": "string",
+        "enum": [
+          "WARNING",
+          "ERROR"
+        ]
+      },
+      "EligibilityIssueV1": {
+        "description": "The list of eligibility issues.",
+        "type": "object",
+        "properties": {
+          "severity": {
+            "$ref": "#/components/schemas/EligibilityIssueSeverityV1"
+          },
+          "code": {
+            "description": "An enumerated issue code for machine use.",
+            "type": "string"
+          },
+          "field": {
+            "$ref": "#/components/schemas/EligibilityFieldV1"
+          },
+          "message": {
+            "description": "A human-readable description of the issue with suggestions on how to resolve the issue.",
+            "type": "string"
+          }
+        }
+      },
+      "BrandLiftSummaryV1": {
+        "description": "Summary of Brand Lift achieved for an objective.",
+        "properties": {
+          "qualifyingResponses": {
+            "minItems": 0,
+            "maxItems": 10,
+            "description": "Qualifying responses aggregated to measure the Brand Lift.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "statisticalSignificance": {
+            "format": "double",
+            "description": "The significance percentage of achieved Brand Lift.",
+            "type": "number"
+          },
+          "controlGroupRate": {
+            "format": "double",
+            "description": "Control group response rate.",
+            "type": "number"
+          },
+          "questionObjective": {
+            "$ref": "#/components/schemas/SurveyQuestionObjectiveTypeV1"
+          },
+          "adExposedGroupRate": {
+            "format": "double",
+            "description": "Ad exposed group response rate.",
+            "type": "number"
+          },
+          "benchmarkLiftRate": {
+            "format": "double",
+            "description": "The benchmark lift rate for the selected product category in the Survey.",
+            "type": "number"
+          },
+          "questionText": {
+            "description": "Text of the Survey question.",
+            "type": "string"
+          }
+        }
+      },
+      "TemplatedSurveyQuestionV1": {
+        "description": "The templated measurement survey question.",
+        "type": "object",
+        "properties": {
+          "placeholders": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "List of question placeholders",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyQuestionPlaceholderV1"
+            }
+          },
+          "id": {
+            "description": "The survey question template canonical identifier.",
+            "type": "string"
+          }
+        }
+      },
+      "SurveyQuestionSubCategoryV1M1": {
+        "description": "The survey question sub-category. Only applicable to certain categories",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "DEMOGRAPHIC",
+          "BEHAVIOR",
+          "PURCHASE_HISTORY"
+        ]
+      },
+      "PaginatedDSPOmnichannelMetricsStudiesV1M3": {
+        "description": "A list of studies.",
+        "type": "object",
+        "properties": {
+          "nextToken": {
+            "type": "string"
+          },
+          "measurements": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DSPOmnichannelMetricsStudyV1M3"
+            }
+          }
+        }
+      },
+      "PaginatedDSPOmnichannelMetricsStudiesV1M2": {
+        "description": "A list of studies.",
+        "type": "object",
+        "properties": {
+          "nextToken": {
+            "type": "string"
+          },
+          "measurements": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DSPOmnichannelMetricsStudyV1M2"
+            }
+          }
+        }
+      },
+      "TemplatedSurveyQuestionV1M1": {
+        "description": "The templated measurement survey question.",
+        "type": "object",
+        "properties": {
+          "gridQuestionResponse": {
+            "$ref": "#/components/schemas/GridQuestionResponsesV1M1"
+          },
+          "placeholders": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "List of question placeholders",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyQuestionPlaceholderV1"
+            }
+          },
+          "id": {
+            "description": "The survey question template canonical identifier.",
+            "type": "string"
+          }
+        }
+      },
+      "ErrorV1": {
+        "description": "The error response object.",
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "description": "Request Id that uniquely identifies your request.",
+            "type": "string"
+          },
+          "message": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          },
+          "errors": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SubErrorV1"
+            }
+          }
+        }
+      },
+      "ResourceLinkV1M1": {
+        "description": "The link that can be used to access corresponding resources in advertising portal.",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The resource name.",
+            "type": "string"
+          },
+          "url": {
+            "description": "The resource url.",
+            "type": "string"
+          }
+        }
+      },
+      "DSPCampaignMeasurementMetadataV1": {
+        "description": "The basic model for all DSP CAMPAIGN_MEASUREMENT objective studies.",
+        "type": "object",
+        "properties": {
+          "excludedLineItemIds": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "A list of canonical lineItem identifiers that are excluded from the study.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "orderIds": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "A list of canonical order identifiers that are associated with the study. By default all lineItems in those orders will be included.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "advertiserId": {
+            "description": "The associated advertiser identifier. Immutable field.",
+            "type": "string"
+          }
+        }
+      },
+      "VendorTypeV1M1": {
+        "description": "The measurement vendor type, each study type will have different supported vendors.",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "AMAZON",
+          "KANTAR",
+          "UPWAVE",
+          "NIELSEN",
+          "MACROMILL",
+          "DYNATA",
+          "LUCID"
+        ]
+      },
+      "SurveyQuestionPlaceholderV1": {
+        "description": "The object specifying a placeholder in Survey question.",
+        "type": "object",
+        "properties": {
+          "fieldName": {
+            "description": "The survey question placeholder field name.",
+            "type": "string"
+          },
+          "fieldValues": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "The survey question placeholder field values.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyQuestionPlaceholderFieldValueV1"
+            }
+          }
+        }
+      },
+      "DSPCampaignMeasurementMetadataV1M1": {
+        "description": "The basic model for all DSP CAMPAIGN_MEASUREMENT objective studies.",
+        "type": "object",
+        "properties": {
+          "excludedLineItemIds": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "A list of canonical lineItem identifiers that are excluded from the study.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "orderIds": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "A list of canonical order identifiers that are associated with the study. By default all lineItems in those orders will be included.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "advertiserId": {
+            "description": "The associated advertiser identifier. Immutable field.",
+            "type": "string"
+          }
+        }
+      },
+      "SurveyQuestionTypeV1M1": {
+        "description": "The survey question type. SINGLE_SELECT question will allow customers to choose only one response, MULTI_SELECT question will allow customers to choose multiple responses, RATING will allow customers to choose a rating on a scale (e.g. 1 to 5), FREE_TEXT will allow customers to provide a free formed question text.",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "SINGLE_SELECT",
+          "SINGLE_SELECT_GRID",
+          "MULTI_SELECT",
+          "RATING",
+          "FREE_TEXT"
+        ]
+      },
+      "DSPBrandLiftMetadataV1": {
+        "description": "The basic model for all DSP BRAND_LIFT objective studies.",
+        "type": "object",
+        "properties": {
+          "brandName": {
+            "description": "The study brand name.",
+            "type": "string"
+          },
+          "peerNames": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "A list of peer names for the study brand.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "benchmarkCategory": {
+            "$ref": "#/components/schemas/BenchmarkCategoryV1"
+          },
+          "productCategory": {
+            "description": "The study product category.",
+            "type": "string"
+          }
+        }
+      },
+      "MeasurementMarketplaceV1": {
+        "description": "The marketplace with corresponding rules.",
+        "type": "object",
+        "properties": {
+          "country": {
+            "$ref": "#/components/schemas/MeasurementCountryV1"
+          },
+          "supportedLocales": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MeasurementLocaleV1"
+            }
+          },
+          "minimumImpressions": {
+            "format": "int64",
+            "description": "The minimum impressions.",
+            "type": "integer"
+          },
+          "minimumBudget": {
+            "format": "double",
+            "description": "The minimum budget. Expressed in dollars.",
+            "type": "number"
+          }
+        }
+      },
+      "MeasurementCountryV1": {
+        "description": "The measurement country.",
+        "type": "string",
+        "enum": [
+          "US",
+          "CA",
+          "UK",
+          "DE",
+          "IT",
+          "ES",
+          "FR",
+          "JP",
+          "MX",
+          "AE",
+          "AU",
+          "NL",
+          "BR"
+        ]
+      },
+      "SurveyQuestionTemplateV1": {
+        "description": "Survey question template for vendor product.",
+        "type": "object",
+        "properties": {
+          "minimumQualifyingResponses": {
+            "description": "The minimum number of qualifying responses required for the question. This will be available if the qualifying responses are not pre-defined/inferred.",
+            "type": "integer"
+          },
+          "maximumQualifyingResponses": {
+            "description": "The maximum number of qualifying responses allowed for the question. This will be available if the qualifying responses are not pre-defined/inferred.",
+            "type": "integer"
+          },
+          "qualifyingResponses": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "The pre-defined qualifying survey question responses with placeholders, this will help to define which responses will be counted as positive ones in the study report.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "questionResponses": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "The pre-defined survey question responses with placeholders.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "locale": {
+            "$ref": "#/components/schemas/MeasurementLocaleV1"
+          },
+          "type": {
+            "$ref": "#/components/schemas/SurveyQuestionTypeV1"
+          },
+          "objectiveType": {
+            "$ref": "#/components/schemas/SurveyQuestionObjectiveTypeV1"
+          },
+          "questionText": {
+            "description": "The survey question text with placeholders.",
+            "type": "string"
+          },
+          "vendorProductId": {
+            "description": "The associated vendor product id.",
+            "type": "string"
+          },
+          "placeholderCandidates": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyQuestionPlaceholderCandidateV1"
+            }
+          },
+          "minimumQuestionResponses": {
+            "description": "The minimum number of responses required for the question. This will be available if the question responses are not pre-defined/inferred.",
+            "type": "integer"
+          },
+          "id": {
+            "description": "The survey question template canonical Id.",
+            "type": "string"
+          },
+          "maximumQuestionResponses": {
+            "description": "The maximum number of responses allowed for the question. This will be available if the question responses are not pre-defined/inferred.",
+            "type": "integer"
+          }
+        }
+      },
+      "CustomSurveyQuestionV1": {
+        "deprecated": true,
+        "description": "The templated measurement survey question.",
+        "type": "object",
+        "properties": {
+          "responses": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "type": {
+            "$ref": "#/components/schemas/SurveyQuestionTypeV1"
+          },
+          "questionText": {
+            "description": "The survey question text.",
+            "type": "string"
+          }
+        }
+      },
+      "BaseEligibilityRequestV1": {
+        "description": "The request object of measurement eligibility check.",
+        "type": "object",
+        "properties": {
+          "fundingTypeFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FundingTypeV1"
+            }
+          },
+          "vendorProductIdFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "vendorTypeFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VendorTypeV1"
+            }
+          }
+        }
+      },
+      "SurveyStatusV1": {
+        "description": "The survey status. Only required if the survey is in DRAFT. Created survey will be in AVAILABLE status by default and will only be in IN_USE status if it's associated with a study.",
+        "type": "string",
+        "enum": [
+          "IN_USE",
+          "AVAILABLE",
+          "DRAFT"
+        ]
+      },
+      "VendorProductV1M1": {
+        "description": "The measurement vendor product.",
+        "type": "object",
+        "properties": {
+          "vendorType": {
+            "$ref": "#/components/schemas/VendorTypeV1M1"
+          },
+          "vendorProductType": {
+            "$ref": "#/components/schemas/VendorProductTypeV1M1"
+          },
+          "adType": {
+            "$ref": "#/components/schemas/AdTypeV1"
+          },
+          "fundingType": {
+            "$ref": "#/components/schemas/FundingTypeV1M1"
+          },
+          "displayName": {
+            "description": "The vendor product display name.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "studyType": {
+            "$ref": "#/components/schemas/StudyTypeV1"
+          },
+          "id": {
+            "description": "The vendor product identifier.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "objective": {
+            "$ref": "#/components/schemas/StudyObjectiveV1"
+          }
+        }
+      },
+      "SurveyQuestionObjectiveTypeV1M1": {
+        "description": "The survey objective.",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "AWARENESS",
+          "PREFERENCE",
+          "FAVORABILITY",
+          "AD_RECALL",
+          "INTENT",
+          "ATTITUDES",
+          "UNAIDED_AWARENESS",
+          "CONSIDERATION",
+          "AGE",
+          "GENDER",
+          "HOUSEHOLD_INCOME",
+          "HOUSEHOLD_SIZE",
+          "CHILDREN_IN_HOUSEHOLD",
+          "EDUCATION",
+          "ETHNICITY",
+          "TIME_ONLINE",
+          "TV_MEDIA_CONSUMPTION",
+          "IN_MARKET_STATUS",
+          "PURCHASE_FREQUENCY",
+          "PURCHASE_HISTORY",
+          "PURCHASE_LOCATION"
+        ]
+      },
+      "MeasurementGoalV1": {
+        "description": "The measurement budget optimization goal type goal.",
+        "type": "string",
+        "enum": [
+          "ENGAGEMENT_WITH_MY_AD",
+          "CONSIDERATIONS_ON_AMAZON",
+          "CONVERSIONS_OFF_AMAZON",
+          "PURCHASES_ON_AMAZON",
+          "MOBILE_APP_INSTALLS",
+          "AWARENESS"
+        ]
+      },
+      "VendorProductV1": {
+        "description": "The measurement vendor product.",
+        "type": "object",
+        "properties": {
+          "vendorType": {
+            "$ref": "#/components/schemas/VendorTypeV1"
+          },
+          "vendorProductType": {
+            "$ref": "#/components/schemas/VendorProductTypeV1"
+          },
+          "adType": {
+            "$ref": "#/components/schemas/AdTypeV1"
+          },
+          "fundingType": {
+            "$ref": "#/components/schemas/FundingTypeV1"
+          },
+          "studyType": {
+            "$ref": "#/components/schemas/StudyTypeV1"
+          },
+          "id": {
+            "description": "The vendor product identifier.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "objective": {
+            "$ref": "#/components/schemas/StudyObjectiveV1"
+          }
+        }
+      },
+      "StudyResponsesV1": {
+        "description": "Studies response.",
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "description": "Request Id that uniquely identifies your request.",
+            "type": "string"
+          },
+          "responses": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StudyResponseV1"
+            }
+          }
+        }
+      },
+      "BrandLiftStudyResultV1": {
+        "description": "The result of Brand Lift study.",
+        "properties": {
+          "totalResponses": {
+            "description": "Total number of responses received in the Survey.",
+            "type": "number"
+          },
+          "brandLiftSummary": {
+            "minItems": 1,
+            "maxItems": 50,
+            "description": "Summary of Brand Lift achieved for each objective.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BrandLiftSummaryV1"
+            }
+          },
+          "studyId": {
+            "description": "The canonical Id of Study.",
+            "type": "string"
+          },
+          "surveyResponses": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "description": "Detailed response rate for each response in Survey question aggregated by different segments.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyResponseResultV1"
+            }
+          }
+        }
+      },
+      "PaginatedSurveyQuestionTemplatesV1M1": {
+        "type": "object",
+        "properties": {
+          "surveyQuestionTemplates": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyQuestionTemplateV1M1"
+            }
+          },
+          "totalResults": {
+            "format": "int32",
+            "description": "The total number of templates.",
+            "type": "integer"
+          },
+          "nextToken": {
+            "type": "string"
+          }
+        }
+      },
+      "DSPBrandLiftStudyV1M1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseStudyV1M1"
+          },
+          {
+            "$ref": "#/components/schemas/DSPCampaignMeasurementMetadataV1M1"
+          },
+          {
+            "$ref": "#/components/schemas/DSPBrandLiftMetadataV1M1"
+          }
+        ],
+        "description": "DSP BRAND_LIFT study object.",
+        "type": "object"
+      },
+      "EligibilityStatusV1": {
+        "description": "Supported values are ELIGIBLE, INELIGIBLE and ELIGIBLE_WITH_WARNING. INELIGIBLE status indicates the study can not be created.",
+        "type": "string",
+        "enum": [
+          "ELIGIBLE",
+          "INELIGIBLE",
+          "ELIGIBLE_WITH_WARNING"
+        ]
+      },
+      "DSPBrandLiftMetadataV1M1": {
+        "description": "The basic model for all DSP BRAND_LIFT objective studies.",
+        "type": "object",
+        "properties": {
+          "brandName": {
+            "description": "The study brand name.",
+            "type": "string"
+          },
+          "peerNames": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "A list of peer names for the study brand.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "verb": {
+            "description": "The verb that will be used in the applicable survey questions to construct the question text.",
+            "type": "string"
+          },
+          "benchmarkCategory": {
+            "$ref": "#/components/schemas/BenchmarkCategoryV1"
+          },
+          "productCategory": {
+            "description": "The study product category.",
+            "type": "string"
+          }
+        }
+      },
+      "PaginatedVendorProductsV1": {
+        "description": "A list of measurement vendor products.",
+        "type": "object",
+        "properties": {
+          "totalResults": {
+            "format": "int32",
+            "description": "The total number of vendor products.",
+            "type": "integer"
+          },
+          "vendorProducts": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VendorProductV1"
+            }
+          },
+          "nextToken": {
+            "type": "string"
+          }
+        }
+      },
+      "OmnichannelMetricsBrandV1M2": {
+        "type": "object",
+        "properties": {
+          "company": {
+            "type": "string"
+          },
+          "id": {
+            "description": "The brand canonical Id",
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "subcategory": {
+            "type": "string"
+          },
+          "brand": {
+            "description": "The brand name.",
+            "type": "string"
+          },
+          "majorBrand": {
+            "type": "string"
+          },
+          "manufacturer": {
+            "type": "string"
+          }
+        }
+      },
+      "StudyReviewRequestV1": {
+        "description": "Review an study.",
+        "type": "object",
+        "properties": {
+          "statusReasons": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "List of reasons for study status. For example, when study is marked REJECTED or INELIGIBLE, this field would be available.",
+            "readOnly": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rejectionReasons": {
+            "minItems": 0,
+            "maxItems": 100,
+            "deprecated": true,
+            "description": "List of reasons for rejection, this will only be required if the status is REJECTED. This field is deprecated, use statusReasons instead.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "studyId": {
+            "description": "The study canonical identifier.",
+            "type": "string"
+          },
+          "comment": {
+            "description": "The approver's comment on why the study is approved/rejected.",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StudyReviewStatusV1"
+          }
+        }
+      },
+      "SurveyQuestionPlaceholderAllowedRangeV1": {
+        "description": "Allowed value range for placeholder.",
+        "type": "object",
+        "properties": {
+          "minimumValue": {
+            "format": "int32",
+            "description": "The minimum allowed value.",
+            "type": "integer"
+          },
+          "parentValue": {
+            "description": "The field value that this range depends on. Will be empty if this range is the default range.",
+            "type": "string"
+          },
+          "maximumValue": {
+            "format": "int32",
+            "description": "The maximum allowed value.",
+            "type": "integer"
+          },
+          "parentField": {
+            "description": "The field name that this range depends on. Will be empty if this range is the default range.",
+            "type": "string"
+          }
+        }
+      },
+      "DSPOmnichannelMetricsMetadataV1M2": {
+        "description": "The basic model for all DSP OMNICHANNEL_METRICS objective studies.",
+        "type": "object",
+        "properties": {
+          "brandIds": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "A list of canonical brand ids to be tracked for off-Amazon conversions.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "StudyReviewStatusV1": {
+        "description": "The study review status. APPROVED studies will start delivering once reach the startDate.",
+        "type": "string",
+        "enum": [
+          "APPROVED",
+          "REJECTED",
+          "INFEASIBLE"
+        ]
+      },
+      "SurveyV1": {
+        "description": "The measurement survey.",
+        "type": "object",
+        "properties": {
+          "vendorProductId": {
+            "description": "The vendor product canonical identifier.",
+            "type": "string"
+          },
+          "templatedQuestions": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "A list of templated survey questions.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TemplatedSurveyQuestionV1"
+            }
+          },
+          "customQuestions": {
+            "minItems": 1,
+            "maxItems": 100,
+            "deprecated": true,
+            "description": "A list of custom survey questions.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomSurveyQuestionV1"
+            }
+          },
+          "studyId": {
+            "description": "The associated study identifier. Survey needs to be created prior to the study creation.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "id": {
+            "description": "The survey canonical identifier. Immutable field. This is required for update.",
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SurveyStatusV1"
+          }
+        }
+      },
+      "PaginatedSurveysV1M1": {
+        "description": "A list of study surveys.",
+        "type": "object",
+        "properties": {
+          "nextToken": {
+            "type": "string"
+          },
+          "surveys": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyV1M1"
+            }
+          }
+        }
+      },
+      "EligibilityFieldV1": {
+        "description": "Fields that will be checked as part of eligibility API call.",
+        "type": "string",
+        "enum": [
+          "LOCALE",
+          "BUDGET",
+          "GOAL",
+          "START_TIME",
+          "END_TIME",
+          "FLIGHT_LENGTH",
+          "LEAD_TIME",
+          "IMPRESSIONS",
+          "ORDER"
+        ]
+      },
+      "FundingTypeV1M1": {
+        "description": "The measurement funding type. For COMPLIMENTARY studies the cost will be covered by Amazon.",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "COMPLIMENTARY",
+          "THIRD_PARTY_PAYMENT"
+        ]
+      },
+      "StudyTypeV1": {
+        "description": "The study type.",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "BRAND_LIFT"
+        ]
+      },
+      "VendorProductTypeV1": {
+        "description": "The measurement vendor product type.",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "SHOPPER_PANEL"
+        ]
+      },
+      "SurveyQuestionCategoryRequirementV1M1": {
+        "description": "The requirement for specific survey question category.",
+        "type": "object",
+        "properties": {
+          "minimumQuestions": {
+            "description": "The minimum number of questions required for the question category.",
+            "type": "integer"
+          },
+          "maximumQuestions": {
+            "description": "The maximum number of questions required for the question category.",
+            "type": "integer"
+          },
+          "category": {
+            "$ref": "#/components/schemas/SurveyQuestionCategoryV1M1"
+          }
+        }
+      },
+      "SurveyQuestionGridQuestionResponseV1M1": {
+        "description": "The grid question response object. Only applicable for SINGLE_SELECT_GRID type question.",
+        "type": "object",
+        "properties": {
+          "columns": {
+            "$ref": "#/components/schemas/SurveyQuestionPlaceholderCandidateV1"
+          },
+          "rows": {
+            "$ref": "#/components/schemas/SurveyQuestionPlaceholderCandidateV1"
+          }
+        }
+      },
+      "PaginatedSurveyQuestionTemplatesV1": {
+        "type": "object",
+        "properties": {
+          "surveyQuestionTemplates": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyQuestionTemplateV1"
+            }
+          },
+          "totalResults": {
+            "format": "int32",
+            "description": "The total number of templates.",
+            "type": "integer"
+          },
+          "nextToken": {
+            "type": "string"
           }
         }
       }

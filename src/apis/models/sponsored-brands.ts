@@ -455,6 +455,55 @@ export interface InlineObject7 {
 /**
  * 
  * @export
+ * @interface InlineObject8
+ */
+export interface InlineObject8 {
+    /**
+     * Date in YYYYMMDD format. The report only contains performance data for the specified date. The time zone is specified by the profile used to request the report. If this date is today, then the performance report may contain partial information. Reports are not available for data older than 60 days. For details on data latency, see [Service Guarantees](../../get-started/developer-notes).
+     * @type {string}
+     * @memberof InlineObject8
+     */
+    reportDate: string;
+    /**
+     * Optional. Allows you to run a report based on secondary dimensions. Use `placement` to segment a `campaigns` report by the location on a page where your ad appears. Use `query` to segment a `keywords` report and create a search terms report.
+     * @type {string}
+     * @memberof InlineObject8
+     */
+    segment?: InlineObject8SegmentEnum;
+    /**
+     * Optional. Supported values are `video` (for video campaigns) and `all` (for both non-video and video campaigns). If not specified, the report will contain data for non-video campaigns. For `ads` report types only, `creativeType` is required and must be set to `all` (`video` is not allowed).
+     * @type {string}
+     * @memberof InlineObject8
+     */
+    creativeType?: InlineObject8CreativeTypeEnum;
+    /**
+     * Each report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/concepts/reporting/report-types).** 
+     * @type {string}
+     * @memberof InlineObject8
+     */
+    metrics: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum InlineObject8SegmentEnum {
+    Placement = 'placement',
+    Query = 'query'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum InlineObject8CreativeTypeEnum {
+    Video = 'video',
+    All = 'all'
+}
+
+/**
+ * 
+ * @export
  * @interface InlineResponse200
  */
 export interface InlineResponse200 {
@@ -914,6 +963,62 @@ export interface InlineResponse2007ViolatingTextPosition {
      * @memberof InlineResponse2007ViolatingTextPosition
      */
     end?: number;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2008
+ */
+export interface InlineResponse2008 {
+    /**
+     * The unique ID for your requested report.
+     * @type {string}
+     * @memberof InlineResponse2008
+     */
+    reportId?: string;
+    /**
+     * The record type of the report. It can be `campaign`, `adGroup`, `keyword`, or `targets`.
+     * @type {string}
+     * @memberof InlineResponse2008
+     */
+    recordType?: string;
+    /**
+     * The status of the report. Status is one of `IN_PROGRESS`, `SUCCESS`, or `FAILURE`.
+     * @type {string}
+     * @memberof InlineResponse2008
+     */
+    status?: string;
+    /**
+     * Description of the status.
+     * @type {string}
+     * @memberof InlineResponse2008
+     */
+    statusDetails?: string;
+}
+/**
+ * 
+ * @export
+ * @interface InlineResponse2009
+ */
+export interface InlineResponse2009 {
+    /**
+     * The unique ID for your requested report.
+     * @type {string}
+     * @memberof InlineResponse2009
+     */
+    reportId?: string;
+    /**
+     * The status of the report. Status is one of `IN_PROGRESS`, `SUCCESS`, or `FAILURE`.
+     * @type {string}
+     * @memberof InlineResponse2009
+     */
+    status?: string;
+    /**
+     * Description of the status.
+     * @type {string}
+     * @memberof InlineResponse2009
+     */
+    statusDetails?: string;
 }
 /**
  * 
@@ -8209,7 +8314,7 @@ export const AdGroupsApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Gets an ad group specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
          * @param {*} [options] Override http request option.
@@ -8261,7 +8366,7 @@ export const AdGroupsApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Gets an array of ad groups associated with the client identifier passed in the authorization header, filtered by specified criteria.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of ad groups. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of ad groups in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten ad groups set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten ad groups, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -8349,7 +8454,7 @@ export const AdGroupsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Gets an ad group specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
          * @param {*} [options] Override http request option.
@@ -8362,7 +8467,7 @@ export const AdGroupsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Gets an array of ad groups associated with the client identifier passed in the authorization header, filtered by specified criteria.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of ad groups. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of ad groups in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten ad groups set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten ad groups, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -8390,7 +8495,7 @@ export const AdGroupsApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @summary Gets an ad group specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
          * @param {*} [options] Override http request option.
@@ -8402,7 +8507,7 @@ export const AdGroupsApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @summary Gets an array of ad groups associated with the client identifier passed in the authorization header, filtered by specified criteria.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of ad groups. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of ad groups in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten ad groups set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten ad groups, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -8426,7 +8531,7 @@ export const AdGroupsApiFactory = function (configuration?: Configuration, baseP
  */
 export interface AdGroupsApiGetAdGroupRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof AdGroupsApiGetAdGroup
      */
@@ -8454,7 +8559,7 @@ export interface AdGroupsApiGetAdGroupRequest {
  */
 export interface AdGroupsApiListAdGroupsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof AdGroupsApiListAdGroups
      */
@@ -8671,7 +8776,7 @@ export const BrandsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Gets an array of Brand data objects for the Brand associated with the profile ID passed in the header. For more information about Brands, see [Brand Services](https://brandservices.amazon.com/).
          * @summary getBrands
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {BrandType} [brandTypeFilter] The returned array is filtered to include only brands with brand type set to one of the values in the specified comma-delimited list. Returns all brands if not specified.
          * @param {*} [options] Override http request option.
@@ -8734,7 +8839,7 @@ export const BrandsApiFp = function(configuration?: Configuration) {
         /**
          * Gets an array of Brand data objects for the Brand associated with the profile ID passed in the header. For more information about Brands, see [Brand Services](https://brandservices.amazon.com/).
          * @summary getBrands
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {BrandType} [brandTypeFilter] The returned array is filtered to include only brands with brand type set to one of the values in the specified comma-delimited list. Returns all brands if not specified.
          * @param {*} [options] Override http request option.
@@ -8757,7 +8862,7 @@ export const BrandsApiFactory = function (configuration?: Configuration, basePat
         /**
          * Gets an array of Brand data objects for the Brand associated with the profile ID passed in the header. For more information about Brands, see [Brand Services](https://brandservices.amazon.com/).
          * @summary getBrands
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {BrandType} [brandTypeFilter] The returned array is filtered to include only brands with brand type set to one of the values in the specified comma-delimited list. Returns all brands if not specified.
          * @param {*} [options] Override http request option.
@@ -8776,7 +8881,7 @@ export const BrandsApiFactory = function (configuration?: Configuration, basePat
  */
 export interface BrandsApiGetBrandsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof BrandsApiGetBrands
      */
@@ -8827,7 +8932,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
          * @summary Archives a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
          * @param {*} [options] Override http request option.
@@ -8879,7 +8984,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * See the [create a Sponsored Brands campaign](https://advertising.amazon.com/help#GQFZA83P55P747BZ) topic in the Amazon Ads Support Center for more information about the campaign review process. **Note** to retrieve the state of a campaign submitted for creation, use the listCampaign operation and the campaign identifier from this operation. On SB creation, the state field is read-only.  <br>**To create a video campaign specify adFormat as \'video\'. If adFormat is not specified a Product Collection campaign will be created. Only a single video campaign can be created at a time.** <br>**Note** each campaign in campaign creation operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords). <br>**Note** each campaign in campaign creation operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting). <br>**Note** that keywords or expressions *can not* be recreated for a campaign if the keyword or expression has previously been associated with a campaign and subsequently archived. 
          * @summary Creates one or more new Campaigns.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<SBCreateCampaignRequest>} [sBCreateCampaignRequest] An array of campaigns.
          * @param {*} [options] Override http request option.
@@ -8931,7 +9036,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * 
          * @summary Gets a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
          * @param {string} [locale] The returned array includes only keywords associated with locale matching those specified by identifier.
@@ -8988,7 +9093,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. Returns both productCollection and video campaigns. Use either `adFormatFilter` or `creativeType` to filter campaigns by ad formats such as `productCollection` or `video`. <br>**Note:** An advertiser that has lost brand eligibility will not be able to use any write operations such as `POST`, `PUT`, and `DELETE`. This includes the `GET` operation `/pageAsins`. However, the rest of the `GET` operations such as `/sb/campaigns` will be usable regardless of advertiser\'s eligibility status.
          * @summary Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of campaigns. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of campaigns in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten campaigns set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten campaigns, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -9076,7 +9181,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Mutable fields: * `name`  * `state` * `portfolioId` * `budget` * `bidOptimization` * `bidMultiplier` * `bidAdjustments` * `endDate`
          * @summary Updates one or more campaigns.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of campaigns with updated field values.
          * @param {*} [options] Override http request option.
@@ -9138,7 +9243,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
         /**
          * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
          * @summary Archives a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
          * @param {*} [options] Override http request option.
@@ -9151,7 +9256,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
         /**
          * See the [create a Sponsored Brands campaign](https://advertising.amazon.com/help#GQFZA83P55P747BZ) topic in the Amazon Ads Support Center for more information about the campaign review process. **Note** to retrieve the state of a campaign submitted for creation, use the listCampaign operation and the campaign identifier from this operation. On SB creation, the state field is read-only.  <br>**To create a video campaign specify adFormat as \'video\'. If adFormat is not specified a Product Collection campaign will be created. Only a single video campaign can be created at a time.** <br>**Note** each campaign in campaign creation operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords). <br>**Note** each campaign in campaign creation operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting). <br>**Note** that keywords or expressions *can not* be recreated for a campaign if the keyword or expression has previously been associated with a campaign and subsequently archived. 
          * @summary Creates one or more new Campaigns.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<SBCreateCampaignRequest>} [sBCreateCampaignRequest] An array of campaigns.
          * @param {*} [options] Override http request option.
@@ -9164,7 +9269,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Gets a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
          * @param {string} [locale] The returned array includes only keywords associated with locale matching those specified by identifier.
@@ -9178,7 +9283,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
         /**
          * Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. Returns both productCollection and video campaigns. Use either `adFormatFilter` or `creativeType` to filter campaigns by ad formats such as `productCollection` or `video`. <br>**Note:** An advertiser that has lost brand eligibility will not be able to use any write operations such as `POST`, `PUT`, and `DELETE`. This includes the `GET` operation `/pageAsins`. However, the rest of the `GET` operations such as `/sb/campaigns` will be usable regardless of advertiser\'s eligibility status.
          * @summary Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of campaigns. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of campaigns in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten campaigns set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten campaigns, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -9198,7 +9303,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
         /**
          * Mutable fields: * `name`  * `state` * `portfolioId` * `budget` * `bidOptimization` * `bidMultiplier` * `bidAdjustments` * `endDate`
          * @summary Updates one or more campaigns.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of campaigns with updated field values.
          * @param {*} [options] Override http request option.
@@ -9221,7 +9326,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
         /**
          * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
          * @summary Archives a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
          * @param {*} [options] Override http request option.
@@ -9233,7 +9338,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
         /**
          * See the [create a Sponsored Brands campaign](https://advertising.amazon.com/help#GQFZA83P55P747BZ) topic in the Amazon Ads Support Center for more information about the campaign review process. **Note** to retrieve the state of a campaign submitted for creation, use the listCampaign operation and the campaign identifier from this operation. On SB creation, the state field is read-only.  <br>**To create a video campaign specify adFormat as \'video\'. If adFormat is not specified a Product Collection campaign will be created. Only a single video campaign can be created at a time.** <br>**Note** each campaign in campaign creation operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords). <br>**Note** each campaign in campaign creation operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting). <br>**Note** that keywords or expressions *can not* be recreated for a campaign if the keyword or expression has previously been associated with a campaign and subsequently archived. 
          * @summary Creates one or more new Campaigns.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<SBCreateCampaignRequest>} [sBCreateCampaignRequest] An array of campaigns.
          * @param {*} [options] Override http request option.
@@ -9245,7 +9350,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
         /**
          * 
          * @summary Gets a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
          * @param {string} [locale] The returned array includes only keywords associated with locale matching those specified by identifier.
@@ -9258,7 +9363,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
         /**
          * Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. Returns both productCollection and video campaigns. Use either `adFormatFilter` or `creativeType` to filter campaigns by ad formats such as `productCollection` or `video`. <br>**Note:** An advertiser that has lost brand eligibility will not be able to use any write operations such as `POST`, `PUT`, and `DELETE`. This includes the `GET` operation `/pageAsins`. However, the rest of the `GET` operations such as `/sb/campaigns` will be usable regardless of advertiser\'s eligibility status.
          * @summary Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of campaigns. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of campaigns in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten campaigns set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten campaigns, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -9277,7 +9382,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
         /**
          * Mutable fields: * `name`  * `state` * `portfolioId` * `budget` * `bidOptimization` * `bidMultiplier` * `bidAdjustments` * `endDate`
          * @summary Updates one or more campaigns.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of campaigns with updated field values.
          * @param {*} [options] Override http request option.
@@ -9296,7 +9401,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
  */
 export interface CampaignsApiArchiveCampaignRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof CampaignsApiArchiveCampaign
      */
@@ -9324,7 +9429,7 @@ export interface CampaignsApiArchiveCampaignRequest {
  */
 export interface CampaignsApiCreateCampaignsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof CampaignsApiCreateCampaigns
      */
@@ -9352,7 +9457,7 @@ export interface CampaignsApiCreateCampaignsRequest {
  */
 export interface CampaignsApiGetCampaignRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof CampaignsApiGetCampaign
      */
@@ -9387,7 +9492,7 @@ export interface CampaignsApiGetCampaignRequest {
  */
 export interface CampaignsApiListCampaignsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof CampaignsApiListCampaigns
      */
@@ -9464,7 +9569,7 @@ export interface CampaignsApiListCampaignsRequest {
  */
 export interface CampaignsApiUpdateCampaignsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof CampaignsApiUpdateCampaigns
      */
@@ -9563,7 +9668,7 @@ export const DraftsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Creates sponsored brands draft campaigns. <br>**To create a video campaign specify adFormat as \'video\'. If adFormat is not specified then a product collection draft is created.** <br>Note each draft campaign can have keywords, negative keywords, targets and negative targets with batch size of upto 100. <br>**Note** each draft campaign in this operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords). <br>**Note** each draft campaign in this operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting).
          * @summary Creates one or more new draft campaigns.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<SBCreateDraftCampaignRequest>} [sBCreateDraftCampaignRequest] An array of draft campaigns.
          * @param {*} [options] Override http request option.
@@ -9615,7 +9720,7 @@ export const DraftsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
          * @summary Archives a draft campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} draftCampaignId The identifier of an existing draft campaign.
          * @param {*} [options] Override http request option.
@@ -9667,7 +9772,7 @@ export const DraftsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * 
          * @summary Gets a draft campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} draftCampaignId The identifier of an existing draft campaign.
          * @param {*} [options] Override http request option.
@@ -9719,7 +9824,7 @@ export const DraftsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Gets an array of all draft campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. <br>**Returns both productCollection and video draft campaigns by default. Use adFormatFilter to filter drafts by ad formats.**
          * @summary Gets an array of draft campaign objects.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of draft campaigns. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of draft campaigns in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten ad groups set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten ad groups, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -9797,7 +9902,7 @@ export const DraftsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * On successful submission, a campaign is created with an identifier that could be different from the original draft campaign identifier. The new identifier is returned in the response. Note that when a draft campaign is approved, the \'status\' and \'servingStatus\' fields are changed to values associated with an active campaign.
          * @summary Submits one or more existing draft campaigns to the moderation approval queue.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<number>} [requestBody] A comma-delimited list of draft campaign identifiers. Maximum length is 10 draft campaign identifiers.
          * @param {*} [options] Override http request option.
@@ -9849,7 +9954,7 @@ export const DraftsApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * 
          * @summary Updates one or more draft campaigns.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<SBUpdateDraftCampaignRequest>} [sBUpdateDraftCampaignRequest] An array of draft campaign objects with updated values.
          * @param {*} [options] Override http request option.
@@ -9911,7 +10016,7 @@ export const DraftsApiFp = function(configuration?: Configuration) {
         /**
          * Creates sponsored brands draft campaigns. <br>**To create a video campaign specify adFormat as \'video\'. If adFormat is not specified then a product collection draft is created.** <br>Note each draft campaign can have keywords, negative keywords, targets and negative targets with batch size of upto 100. <br>**Note** each draft campaign in this operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords). <br>**Note** each draft campaign in this operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting).
          * @summary Creates one or more new draft campaigns.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<SBCreateDraftCampaignRequest>} [sBCreateDraftCampaignRequest] An array of draft campaigns.
          * @param {*} [options] Override http request option.
@@ -9924,7 +10029,7 @@ export const DraftsApiFp = function(configuration?: Configuration) {
         /**
          * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
          * @summary Archives a draft campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} draftCampaignId The identifier of an existing draft campaign.
          * @param {*} [options] Override http request option.
@@ -9937,7 +10042,7 @@ export const DraftsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Gets a draft campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} draftCampaignId The identifier of an existing draft campaign.
          * @param {*} [options] Override http request option.
@@ -9950,7 +10055,7 @@ export const DraftsApiFp = function(configuration?: Configuration) {
         /**
          * Gets an array of all draft campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. <br>**Returns both productCollection and video draft campaigns by default. Use adFormatFilter to filter drafts by ad formats.**
          * @summary Gets an array of draft campaign objects.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of draft campaigns. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of draft campaigns in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten ad groups set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten ad groups, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -9968,7 +10073,7 @@ export const DraftsApiFp = function(configuration?: Configuration) {
         /**
          * On successful submission, a campaign is created with an identifier that could be different from the original draft campaign identifier. The new identifier is returned in the response. Note that when a draft campaign is approved, the \'status\' and \'servingStatus\' fields are changed to values associated with an active campaign.
          * @summary Submits one or more existing draft campaigns to the moderation approval queue.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<number>} [requestBody] A comma-delimited list of draft campaign identifiers. Maximum length is 10 draft campaign identifiers.
          * @param {*} [options] Override http request option.
@@ -9981,7 +10086,7 @@ export const DraftsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Updates one or more draft campaigns.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<SBUpdateDraftCampaignRequest>} [sBUpdateDraftCampaignRequest] An array of draft campaign objects with updated values.
          * @param {*} [options] Override http request option.
@@ -10004,7 +10109,7 @@ export const DraftsApiFactory = function (configuration?: Configuration, basePat
         /**
          * Creates sponsored brands draft campaigns. <br>**To create a video campaign specify adFormat as \'video\'. If adFormat is not specified then a product collection draft is created.** <br>Note each draft campaign can have keywords, negative keywords, targets and negative targets with batch size of upto 100. <br>**Note** each draft campaign in this operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords). <br>**Note** each draft campaign in this operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting).
          * @summary Creates one or more new draft campaigns.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<SBCreateDraftCampaignRequest>} [sBCreateDraftCampaignRequest] An array of draft campaigns.
          * @param {*} [options] Override http request option.
@@ -10016,7 +10121,7 @@ export const DraftsApiFactory = function (configuration?: Configuration, basePat
         /**
          * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
          * @summary Archives a draft campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} draftCampaignId The identifier of an existing draft campaign.
          * @param {*} [options] Override http request option.
@@ -10028,7 +10133,7 @@ export const DraftsApiFactory = function (configuration?: Configuration, basePat
         /**
          * 
          * @summary Gets a draft campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} draftCampaignId The identifier of an existing draft campaign.
          * @param {*} [options] Override http request option.
@@ -10040,7 +10145,7 @@ export const DraftsApiFactory = function (configuration?: Configuration, basePat
         /**
          * Gets an array of all draft campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. <br>**Returns both productCollection and video draft campaigns by default. Use adFormatFilter to filter drafts by ad formats.**
          * @summary Gets an array of draft campaign objects.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of draft campaigns. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of draft campaigns in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten ad groups set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten ad groups, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -10057,7 +10162,7 @@ export const DraftsApiFactory = function (configuration?: Configuration, basePat
         /**
          * On successful submission, a campaign is created with an identifier that could be different from the original draft campaign identifier. The new identifier is returned in the response. Note that when a draft campaign is approved, the \'status\' and \'servingStatus\' fields are changed to values associated with an active campaign.
          * @summary Submits one or more existing draft campaigns to the moderation approval queue.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<number>} [requestBody] A comma-delimited list of draft campaign identifiers. Maximum length is 10 draft campaign identifiers.
          * @param {*} [options] Override http request option.
@@ -10069,7 +10174,7 @@ export const DraftsApiFactory = function (configuration?: Configuration, basePat
         /**
          * 
          * @summary Updates one or more draft campaigns.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<SBUpdateDraftCampaignRequest>} [sBUpdateDraftCampaignRequest] An array of draft campaign objects with updated values.
          * @param {*} [options] Override http request option.
@@ -10088,7 +10193,7 @@ export const DraftsApiFactory = function (configuration?: Configuration, basePat
  */
 export interface DraftsApiCreateDraftCampaignsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof DraftsApiCreateDraftCampaigns
      */
@@ -10116,7 +10221,7 @@ export interface DraftsApiCreateDraftCampaignsRequest {
  */
 export interface DraftsApiDeleteDraftCampaignRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof DraftsApiDeleteDraftCampaign
      */
@@ -10144,7 +10249,7 @@ export interface DraftsApiDeleteDraftCampaignRequest {
  */
 export interface DraftsApiGetDraftCampaignRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof DraftsApiGetDraftCampaign
      */
@@ -10172,7 +10277,7 @@ export interface DraftsApiGetDraftCampaignRequest {
  */
 export interface DraftsApiListDraftCampaignsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof DraftsApiListDraftCampaigns
      */
@@ -10235,7 +10340,7 @@ export interface DraftsApiListDraftCampaignsRequest {
  */
 export interface DraftsApiSubmitDraftCampaignRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof DraftsApiSubmitDraftCampaign
      */
@@ -10263,7 +10368,7 @@ export interface DraftsApiSubmitDraftCampaignRequest {
  */
 export interface DraftsApiUpdateDraftCampaignsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof DraftsApiUpdateDraftCampaigns
      */
@@ -10374,7 +10479,7 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
          * @summary Archives a keyword specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId 
          * @param {*} [options] Override http request option.
@@ -10426,7 +10531,7 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Note that `state` can\'t be set at keyword creation. Keywords submitted for creation have state set to `pending` while under moderation review. Moderation review may take up to 72 hours. <br/>Note that keywords can be created on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 keywords.
          * @summary Creates one or more keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of keywords.
          * @param {*} [options] Override http request option.
@@ -10478,7 +10583,7 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Gets a keyword specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
          * @param {string} [locale] The returned array includes only keywords associated with locale matching those specified by identifier.
@@ -10535,7 +10640,7 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Gets an array of keywords, filtered by optional criteria.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of keywords. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of keywords in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten keywords set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten keywords, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -10633,7 +10738,7 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * Keywords submitted for update may have state set to `pending` for moderation review. Moderation may take up to 72 hours. <br/>Note that keywords can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 keywords.
          * @summary Updates one or more keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of keywords.
          * @param {*} [options] Override http request option.
@@ -10695,7 +10800,7 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
         /**
          * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
          * @summary Archives a keyword specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId 
          * @param {*} [options] Override http request option.
@@ -10708,7 +10813,7 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
         /**
          * Note that `state` can\'t be set at keyword creation. Keywords submitted for creation have state set to `pending` while under moderation review. Moderation review may take up to 72 hours. <br/>Note that keywords can be created on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 keywords.
          * @summary Creates one or more keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of keywords.
          * @param {*} [options] Override http request option.
@@ -10721,7 +10826,7 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Gets a keyword specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
          * @param {string} [locale] The returned array includes only keywords associated with locale matching those specified by identifier.
@@ -10735,7 +10840,7 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Gets an array of keywords, filtered by optional criteria.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of keywords. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of keywords in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten keywords set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten keywords, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -10757,7 +10862,7 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
         /**
          * Keywords submitted for update may have state set to `pending` for moderation review. Moderation may take up to 72 hours. <br/>Note that keywords can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 keywords.
          * @summary Updates one or more keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of keywords.
          * @param {*} [options] Override http request option.
@@ -10780,7 +10885,7 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
         /**
          * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
          * @summary Archives a keyword specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId 
          * @param {*} [options] Override http request option.
@@ -10792,7 +10897,7 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
         /**
          * Note that `state` can\'t be set at keyword creation. Keywords submitted for creation have state set to `pending` while under moderation review. Moderation review may take up to 72 hours. <br/>Note that keywords can be created on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 keywords.
          * @summary Creates one or more keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of keywords.
          * @param {*} [options] Override http request option.
@@ -10804,7 +10909,7 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @summary Gets a keyword specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
          * @param {string} [locale] The returned array includes only keywords associated with locale matching those specified by identifier.
@@ -10817,7 +10922,7 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @summary Gets an array of keywords, filtered by optional criteria.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of keywords. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of keywords in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten keywords set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten keywords, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -10838,7 +10943,7 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
         /**
          * Keywords submitted for update may have state set to `pending` for moderation review. Moderation may take up to 72 hours. <br/>Note that keywords can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 keywords.
          * @summary Updates one or more keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of keywords.
          * @param {*} [options] Override http request option.
@@ -10857,7 +10962,7 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
  */
 export interface KeywordsApiArchiveKeywordRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof KeywordsApiArchiveKeyword
      */
@@ -10885,7 +10990,7 @@ export interface KeywordsApiArchiveKeywordRequest {
  */
 export interface KeywordsApiCreateKeywordsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof KeywordsApiCreateKeywords
      */
@@ -10913,7 +11018,7 @@ export interface KeywordsApiCreateKeywordsRequest {
  */
 export interface KeywordsApiGetKeywordRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof KeywordsApiGetKeyword
      */
@@ -10948,7 +11053,7 @@ export interface KeywordsApiGetKeywordRequest {
  */
 export interface KeywordsApiListKeywordsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof KeywordsApiListKeywords
      */
@@ -11039,7 +11144,7 @@ export interface KeywordsApiListKeywordsRequest {
  */
 export interface KeywordsApiUpdateKeywordsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof KeywordsApiUpdateKeywords
      */
@@ -11138,7 +11243,7 @@ export const LandingPageAsinsApiAxiosParamCreator = function (configuration?: Co
         /**
          * Note that for sellers, the addresss must be a Store page. Vendors may also specify a custom landing page address.
          * @summary Gets ASIN information for a specified address.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} pageUrl For sellers, the address of a Store page. Vendors may also specify the address of a custom landing page. For more information, see the [Stores section](https://advertising.amazon.com/help#GPRM3ZHEXEY5RBFZ) of the Amazon Ads support center.
          * @param {*} [options] Override http request option.
@@ -11203,7 +11308,7 @@ export const LandingPageAsinsApiFp = function(configuration?: Configuration) {
         /**
          * Note that for sellers, the addresss must be a Store page. Vendors may also specify a custom landing page address.
          * @summary Gets ASIN information for a specified address.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} pageUrl For sellers, the address of a Store page. Vendors may also specify the address of a custom landing page. For more information, see the [Stores section](https://advertising.amazon.com/help#GPRM3ZHEXEY5RBFZ) of the Amazon Ads support center.
          * @param {*} [options] Override http request option.
@@ -11226,7 +11331,7 @@ export const LandingPageAsinsApiFactory = function (configuration?: Configuratio
         /**
          * Note that for sellers, the addresss must be a Store page. Vendors may also specify a custom landing page address.
          * @summary Gets ASIN information for a specified address.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} pageUrl For sellers, the address of a Store page. Vendors may also specify the address of a custom landing page. For more information, see the [Stores section](https://advertising.amazon.com/help#GPRM3ZHEXEY5RBFZ) of the Amazon Ads support center.
          * @param {*} [options] Override http request option.
@@ -11245,7 +11350,7 @@ export const LandingPageAsinsApiFactory = function (configuration?: Configuratio
  */
 export interface LandingPageAsinsApiListAsinsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof LandingPageAsinsApiListAsins
      */
@@ -11692,7 +11797,7 @@ export const ModerationApiAxiosParamCreator = function (configuration?: Configur
         /**
          * Note that this resource is only available for campaigns in the US marketplace.
          * @summary Gets the moderation result for a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The campaign identifier.
          * @param {*} [options] Override http request option.
@@ -11754,7 +11859,7 @@ export const ModerationApiFp = function(configuration?: Configuration) {
         /**
          * Note that this resource is only available for campaigns in the US marketplace.
          * @summary Gets the moderation result for a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The campaign identifier.
          * @param {*} [options] Override http request option.
@@ -11777,7 +11882,7 @@ export const ModerationApiFactory = function (configuration?: Configuration, bas
         /**
          * Note that this resource is only available for campaigns in the US marketplace.
          * @summary Gets the moderation result for a campaign specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The campaign identifier.
          * @param {*} [options] Override http request option.
@@ -11796,7 +11901,7 @@ export const ModerationApiFactory = function (configuration?: Configuration, bas
  */
 export interface ModerationApiSbModerationCampaignsCampaignIdGetRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof ModerationApiSbModerationCampaignsCampaignIdGet
      */
@@ -11847,7 +11952,7 @@ export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Co
         /**
          * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
          * @summary Archives a negative keyword specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing campaign.
          * @param {*} [options] Override http request option.
@@ -11899,7 +12004,7 @@ export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Co
         /**
          * Note that `bid` and `state` can\'t be set at negative keyword creation. <br/>Note that Negative keywords submitted for creation have state set to `pending` while under moderation review. Moderation review may take up to 72 hours. <br/>Note that negative keywords can be created on campaigns one where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative keywords. <br>**Note** that negative keywords *can not* be recreated for a campaign if the negative keyword has previously been associated with a campaign and subsequently archived. 
          * @summary Creates one or more negative keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of negative keywords.
          * @param {*} [options] Override http request option.
@@ -11951,7 +12056,7 @@ export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Co
         /**
          * 
          * @summary Gets a negative keyword specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing negative keyword.
          * @param {*} [options] Override http request option.
@@ -12003,7 +12108,7 @@ export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Co
         /**
          * 
          * @summary Gets an array of negative keywords, filtered by optional criteria.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of negative keywords. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of negative keywords in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten negative keywords set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten negative keywords, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -12096,7 +12201,7 @@ export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Co
         /**
          * Negative keywords submitted for update may have state set to `pending` for moderation review. Moderation may take up to 72 hours. <br/>Note that negative keywords can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative keywords.
          * @summary Updates one or more negative keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of negative keywords.
          * @param {*} [options] Override http request option.
@@ -12158,7 +12263,7 @@ export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
         /**
          * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
          * @summary Archives a negative keyword specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing campaign.
          * @param {*} [options] Override http request option.
@@ -12171,7 +12276,7 @@ export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
         /**
          * Note that `bid` and `state` can\'t be set at negative keyword creation. <br/>Note that Negative keywords submitted for creation have state set to `pending` while under moderation review. Moderation review may take up to 72 hours. <br/>Note that negative keywords can be created on campaigns one where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative keywords. <br>**Note** that negative keywords *can not* be recreated for a campaign if the negative keyword has previously been associated with a campaign and subsequently archived. 
          * @summary Creates one or more negative keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of negative keywords.
          * @param {*} [options] Override http request option.
@@ -12184,7 +12289,7 @@ export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Gets a negative keyword specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing negative keyword.
          * @param {*} [options] Override http request option.
@@ -12197,7 +12302,7 @@ export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Gets an array of negative keywords, filtered by optional criteria.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of negative keywords. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of negative keywords in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten negative keywords set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten negative keywords, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -12218,7 +12323,7 @@ export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
         /**
          * Negative keywords submitted for update may have state set to `pending` for moderation review. Moderation may take up to 72 hours. <br/>Note that negative keywords can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative keywords.
          * @summary Updates one or more negative keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of negative keywords.
          * @param {*} [options] Override http request option.
@@ -12241,7 +12346,7 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
         /**
          * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
          * @summary Archives a negative keyword specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing campaign.
          * @param {*} [options] Override http request option.
@@ -12253,7 +12358,7 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
         /**
          * Note that `bid` and `state` can\'t be set at negative keyword creation. <br/>Note that Negative keywords submitted for creation have state set to `pending` while under moderation review. Moderation review may take up to 72 hours. <br/>Note that negative keywords can be created on campaigns one where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative keywords. <br>**Note** that negative keywords *can not* be recreated for a campaign if the negative keyword has previously been associated with a campaign and subsequently archived. 
          * @summary Creates one or more negative keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of negative keywords.
          * @param {*} [options] Override http request option.
@@ -12265,7 +12370,7 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
         /**
          * 
          * @summary Gets a negative keyword specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing negative keyword.
          * @param {*} [options] Override http request option.
@@ -12277,7 +12382,7 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
         /**
          * 
          * @summary Gets an array of negative keywords, filtered by optional criteria.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] Sets a zero-based offset into the requested set of negative keywords. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array.
          * @param {number} [count] Sets the number of negative keywords in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten negative keywords set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten negative keywords, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on.
@@ -12297,7 +12402,7 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
         /**
          * Negative keywords submitted for update may have state set to `pending` for moderation review. Moderation may take up to 72 hours. <br/>Note that negative keywords can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative keywords.
          * @summary Updates one or more negative keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<object>} [requestBody] An array of negative keywords.
          * @param {*} [options] Override http request option.
@@ -12316,7 +12421,7 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
  */
 export interface NegativeKeywordsApiArchiveNegativeKeywordRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof NegativeKeywordsApiArchiveNegativeKeyword
      */
@@ -12344,7 +12449,7 @@ export interface NegativeKeywordsApiArchiveNegativeKeywordRequest {
  */
 export interface NegativeKeywordsApiCreateNegativeKeywordsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof NegativeKeywordsApiCreateNegativeKeywords
      */
@@ -12372,7 +12477,7 @@ export interface NegativeKeywordsApiCreateNegativeKeywordsRequest {
  */
 export interface NegativeKeywordsApiGetNegativeKeywordRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof NegativeKeywordsApiGetNegativeKeyword
      */
@@ -12400,7 +12505,7 @@ export interface NegativeKeywordsApiGetNegativeKeywordRequest {
  */
 export interface NegativeKeywordsApiListNegativeKeywordsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof NegativeKeywordsApiListNegativeKeywords
      */
@@ -12484,7 +12589,7 @@ export interface NegativeKeywordsApiListNegativeKeywordsRequest {
  */
 export interface NegativeKeywordsApiUpdateNegativeKeywordsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof NegativeKeywordsApiUpdateNegativeKeywords
      */
@@ -13122,7 +13227,7 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
         /**
          * 
          * @summary Gets a target specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The identifier of an existing target.
          * @param {*} [options] Override http request option.
@@ -13281,7 +13386,7 @@ export const ProductTargetingApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Gets a target specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The identifier of an existing target.
          * @param {*} [options] Override http request option.
@@ -13345,7 +13450,7 @@ export const ProductTargetingApiFactory = function (configuration?: Configuratio
         /**
          * 
          * @summary Gets a target specified by identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The identifier of an existing target.
          * @param {*} [options] Override http request option.
@@ -13411,7 +13516,7 @@ export interface ProductTargetingApiCreateTargetsRequest {
  */
 export interface ProductTargetingApiGetTargetRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof ProductTargetingApiGetTarget
      */
@@ -13529,6 +13634,410 @@ export class ProductTargetingApi extends BaseAPI {
 
 
 /**
+ * ReportsApi - axios parameter creator
+ * @export
+ */
+export const ReportsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  `$ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.580149D6.c7aa92c1-ca5b-435d-bb8b-51cb26ad5731?AWSAccessKeyId=AKIAIKLHNT32USZOWVRA&amp;Expires=1476479900&amp;Signature=I%2F2Gd%2B8TbcPbXbBUM6ix%2BSVP3qA%3D\"`
+         * @summary Downloads a previously requested report identified by `reportId`.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} reportId The identifier of the requested report.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadReport: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('downloadReport', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('downloadReport', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'reportId' is not null or undefined
+            assertParamExists('downloadReport', 'reportId', reportId)
+            const localVarPath = `/v2/reports/{reportId}/download`
+                .replace(`{${"reportId"}}`, encodeURIComponent(String(reportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Use this interface to request and retrieve performance reports. **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  **Reports vs. snapshots**  If you need to download a snapshot of your campaign records, consider requesting a [snapshot](/API/docs/en-us/concepts/snapshots/overview) to minimize report size and timeouts. You can then use the record ID to join snapshot dimensional data and report performance data.  **Constraints of Sponsored Brands reporting**  Sponsored Brands reporting data cannot be combined with Sponsored Products data into one report. Only 14-day data is available for Sponsored Brands. Attribution windows of 1, 7, and 30-day intervals are not available.  **New-to-brand performance metrics**  With new-to-brand metrics, advertisers can measure and optimize campaigns, as well as plan future marketing strategies to grow their customer base on Amazon. New-to-brand metrics determine whether an ad-attributed purchase was made by an existing customer or one buying a brand’s product on Amazon for the first time over the prior year. With new-to-brand metrics, advertisers receive campaign performance metrics such as total new-to-brand purchases and sales, new-to-brand purchase rate, and cost per new-to-brand customer. Advertisers now have the tools they need to estimate the cost of acquiring new customers on Amazon and identify the most efficient channels and tactics to achieve their campaign goals.
+         * @summary Requests the creation of a report containing performance data related to Sponsored Brands campaigns.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} recordType The type of report. Valid types are &#x60;campaigns&#x60;, &#x60;adGroups&#x60;, &#x60;ads&#x60;, &#x60;targets&#x60;, and &#x60;keywords&#x60;.
+         * @param {InlineObject8} inlineObject8 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        v2HsaRecordTypeReportPost: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, recordType: string, inlineObject8: InlineObject8, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('v2HsaRecordTypeReportPost', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('v2HsaRecordTypeReportPost', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'recordType' is not null or undefined
+            assertParamExists('v2HsaRecordTypeReportPost', 'recordType', recordType)
+            // verify required parameter 'inlineObject8' is not null or undefined
+            assertParamExists('v2HsaRecordTypeReportPost', 'inlineObject8', inlineObject8)
+            const localVarPath = `/v2/hsa/{recordType}/report`
+                .replace(`{${"recordType"}}`, encodeURIComponent(String(recordType)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(inlineObject8, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).
+         * @summary Returns the status of a previously requested report.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} reportId Report ID returned by POST report method.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        v2ReportsReportIdGet: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('v2ReportsReportIdGet', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('v2ReportsReportIdGet', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'reportId' is not null or undefined
+            assertParamExists('v2ReportsReportIdGet', 'reportId', reportId)
+            const localVarPath = `/v2/reports/{reportId}`
+                .replace(`{${"reportId"}}`, encodeURIComponent(String(reportId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ReportsApi - functional programming interface
+ * @export
+ */
+export const ReportsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ReportsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  `$ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.580149D6.c7aa92c1-ca5b-435d-bb8b-51cb26ad5731?AWSAccessKeyId=AKIAIKLHNT32USZOWVRA&amp;Expires=1476479900&amp;Signature=I%2F2Gd%2B8TbcPbXbBUM6ix%2BSVP3qA%3D\"`
+         * @summary Downloads a previously requested report identified by `reportId`.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} reportId The identifier of the requested report.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async downloadReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.downloadReport(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Use this interface to request and retrieve performance reports. **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  **Reports vs. snapshots**  If you need to download a snapshot of your campaign records, consider requesting a [snapshot](/API/docs/en-us/concepts/snapshots/overview) to minimize report size and timeouts. You can then use the record ID to join snapshot dimensional data and report performance data.  **Constraints of Sponsored Brands reporting**  Sponsored Brands reporting data cannot be combined with Sponsored Products data into one report. Only 14-day data is available for Sponsored Brands. Attribution windows of 1, 7, and 30-day intervals are not available.  **New-to-brand performance metrics**  With new-to-brand metrics, advertisers can measure and optimize campaigns, as well as plan future marketing strategies to grow their customer base on Amazon. New-to-brand metrics determine whether an ad-attributed purchase was made by an existing customer or one buying a brand’s product on Amazon for the first time over the prior year. With new-to-brand metrics, advertisers receive campaign performance metrics such as total new-to-brand purchases and sales, new-to-brand purchase rate, and cost per new-to-brand customer. Advertisers now have the tools they need to estimate the cost of acquiring new customers on Amazon and identify the most efficient channels and tactics to achieve their campaign goals.
+         * @summary Requests the creation of a report containing performance data related to Sponsored Brands campaigns.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} recordType The type of report. Valid types are &#x60;campaigns&#x60;, &#x60;adGroups&#x60;, &#x60;ads&#x60;, &#x60;targets&#x60;, and &#x60;keywords&#x60;.
+         * @param {InlineObject8} inlineObject8 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async v2HsaRecordTypeReportPost(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, recordType: string, inlineObject8: InlineObject8, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2008>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.v2HsaRecordTypeReportPost(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, recordType, inlineObject8, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).
+         * @summary Returns the status of a previously requested report.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} reportId Report ID returned by POST report method.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async v2ReportsReportIdGet(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InlineResponse2009>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.v2ReportsReportIdGet(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ReportsApi - factory interface
+ * @export
+ */
+export const ReportsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ReportsApiFp(configuration)
+    return {
+        /**
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  `$ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.580149D6.c7aa92c1-ca5b-435d-bb8b-51cb26ad5731?AWSAccessKeyId=AKIAIKLHNT32USZOWVRA&amp;Expires=1476479900&amp;Signature=I%2F2Gd%2B8TbcPbXbBUM6ix%2BSVP3qA%3D\"`
+         * @summary Downloads a previously requested report identified by `reportId`.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} reportId The identifier of the requested report.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        downloadReport(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.downloadReport(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Use this interface to request and retrieve performance reports. **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  **Reports vs. snapshots**  If you need to download a snapshot of your campaign records, consider requesting a [snapshot](/API/docs/en-us/concepts/snapshots/overview) to minimize report size and timeouts. You can then use the record ID to join snapshot dimensional data and report performance data.  **Constraints of Sponsored Brands reporting**  Sponsored Brands reporting data cannot be combined with Sponsored Products data into one report. Only 14-day data is available for Sponsored Brands. Attribution windows of 1, 7, and 30-day intervals are not available.  **New-to-brand performance metrics**  With new-to-brand metrics, advertisers can measure and optimize campaigns, as well as plan future marketing strategies to grow their customer base on Amazon. New-to-brand metrics determine whether an ad-attributed purchase was made by an existing customer or one buying a brand’s product on Amazon for the first time over the prior year. With new-to-brand metrics, advertisers receive campaign performance metrics such as total new-to-brand purchases and sales, new-to-brand purchase rate, and cost per new-to-brand customer. Advertisers now have the tools they need to estimate the cost of acquiring new customers on Amazon and identify the most efficient channels and tactics to achieve their campaign goals.
+         * @summary Requests the creation of a report containing performance data related to Sponsored Brands campaigns.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} recordType The type of report. Valid types are &#x60;campaigns&#x60;, &#x60;adGroups&#x60;, &#x60;ads&#x60;, &#x60;targets&#x60;, and &#x60;keywords&#x60;.
+         * @param {InlineObject8} inlineObject8 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        v2HsaRecordTypeReportPost(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, recordType: string, inlineObject8: InlineObject8, options?: any): AxiosPromise<InlineResponse2008> {
+            return localVarFp.v2HsaRecordTypeReportPost(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, recordType, inlineObject8, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).
+         * @summary Returns the status of a previously requested report.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} reportId Report ID returned by POST report method.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        v2ReportsReportIdGet(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, reportId: string, options?: any): AxiosPromise<InlineResponse2009> {
+            return localVarFp.v2ReportsReportIdGet(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for downloadReport operation in ReportsApi.
+ * @export
+ * @interface ReportsApiDownloadReportRequest
+ */
+export interface ReportsApiDownloadReportRequest {
+    /**
+     * The identifier of a client associated with a **Login with Amazon** account.
+     * @type {string}
+     * @memberof ReportsApiDownloadReport
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof ReportsApiDownloadReport
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The identifier of the requested report.
+     * @type {string}
+     * @memberof ReportsApiDownloadReport
+     */
+    readonly reportId: string
+}
+
+/**
+ * Request parameters for v2HsaRecordTypeReportPost operation in ReportsApi.
+ * @export
+ * @interface ReportsApiV2HsaRecordTypeReportPostRequest
+ */
+export interface ReportsApiV2HsaRecordTypeReportPostRequest {
+    /**
+     * The identifier of a client associated with a **Login with Amazon** account.
+     * @type {string}
+     * @memberof ReportsApiV2HsaRecordTypeReportPost
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof ReportsApiV2HsaRecordTypeReportPost
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The type of report. Valid types are &#x60;campaigns&#x60;, &#x60;adGroups&#x60;, &#x60;ads&#x60;, &#x60;targets&#x60;, and &#x60;keywords&#x60;.
+     * @type {string}
+     * @memberof ReportsApiV2HsaRecordTypeReportPost
+     */
+    readonly recordType: string
+
+    /**
+     * 
+     * @type {InlineObject8}
+     * @memberof ReportsApiV2HsaRecordTypeReportPost
+     */
+    readonly inlineObject8: InlineObject8
+}
+
+/**
+ * Request parameters for v2ReportsReportIdGet operation in ReportsApi.
+ * @export
+ * @interface ReportsApiV2ReportsReportIdGetRequest
+ */
+export interface ReportsApiV2ReportsReportIdGetRequest {
+    /**
+     * The identifier of a client associated with a **Login with Amazon** account.
+     * @type {string}
+     * @memberof ReportsApiV2ReportsReportIdGet
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof ReportsApiV2ReportsReportIdGet
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Report ID returned by POST report method.
+     * @type {string}
+     * @memberof ReportsApiV2ReportsReportIdGet
+     */
+    readonly reportId: string
+}
+
+/**
+ * ReportsApi - object-oriented interface
+ * @export
+ * @class ReportsApi
+ * @extends {BaseAPI}
+ */
+export class ReportsApi extends BaseAPI {
+    /**
+     * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  `$ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.580149D6.c7aa92c1-ca5b-435d-bb8b-51cb26ad5731?AWSAccessKeyId=AKIAIKLHNT32USZOWVRA&amp;Expires=1476479900&amp;Signature=I%2F2Gd%2B8TbcPbXbBUM6ix%2BSVP3qA%3D\"`
+     * @summary Downloads a previously requested report identified by `reportId`.
+     * @param {ReportsApiDownloadReportRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public downloadReport(requestParameters: ReportsApiDownloadReportRequest, options?: any) {
+        return ReportsApiFp(this.configuration).downloadReport(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.reportId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Use this interface to request and retrieve performance reports. **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  **Reports vs. snapshots**  If you need to download a snapshot of your campaign records, consider requesting a [snapshot](/API/docs/en-us/concepts/snapshots/overview) to minimize report size and timeouts. You can then use the record ID to join snapshot dimensional data and report performance data.  **Constraints of Sponsored Brands reporting**  Sponsored Brands reporting data cannot be combined with Sponsored Products data into one report. Only 14-day data is available for Sponsored Brands. Attribution windows of 1, 7, and 30-day intervals are not available.  **New-to-brand performance metrics**  With new-to-brand metrics, advertisers can measure and optimize campaigns, as well as plan future marketing strategies to grow their customer base on Amazon. New-to-brand metrics determine whether an ad-attributed purchase was made by an existing customer or one buying a brand’s product on Amazon for the first time over the prior year. With new-to-brand metrics, advertisers receive campaign performance metrics such as total new-to-brand purchases and sales, new-to-brand purchase rate, and cost per new-to-brand customer. Advertisers now have the tools they need to estimate the cost of acquiring new customers on Amazon and identify the most efficient channels and tactics to achieve their campaign goals.
+     * @summary Requests the creation of a report containing performance data related to Sponsored Brands campaigns.
+     * @param {ReportsApiV2HsaRecordTypeReportPostRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public v2HsaRecordTypeReportPost(requestParameters: ReportsApiV2HsaRecordTypeReportPostRequest, options?: any) {
+        return ReportsApiFp(this.configuration).v2HsaRecordTypeReportPost(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.recordType, requestParameters.inlineObject8, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).
+     * @summary Returns the status of a previously requested report.
+     * @param {ReportsApiV2ReportsReportIdGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ReportsApi
+     */
+    public v2ReportsReportIdGet(requestParameters: ReportsApiV2ReportsReportIdGetRequest, options?: any) {
+        return ReportsApiFp(this.configuration).v2ReportsReportIdGet(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.reportId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * StoresApi - axios parameter creator
  * @export
  */
@@ -13537,7 +14046,7 @@ export const StoresApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Image assets are stored in the Store Assets Library. Note that there may be a delay before the image is displayed in the console.
          * @summary Creates a new image asset.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} contentDisposition The name of the image file.
          * @param {string} contentType The image format type. The following table lists the valid image types: |Image Type|Description| |----------|-----------| |PNG|[Portable network graphics](https://en.wikipedia.org/wiki/Portable_Network_Graphics)| |JPEG|[JPEG](https://en.wikipedia.org/wiki/JPEG)| |GIF|[Graphics interchange format](https://en.wikipedia.org/wiki/GIF)|
@@ -13613,7 +14122,7 @@ export const StoresApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * For sellers or vendors, gets an array of assets associated with the specified brand entity identifier. Vendors are not required to specify a brand entity identifier, and in this case all assets associated with the vendor are returned.
          * @summary Gets a list of assets associated with a specified brand entity identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} [brandEntityId] For sellers, this field is required. It is the Brand entity identifier of the Brand for which assets are returned. This identifier is retrieved using the [getBrands operation](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/brands). For vendors, this field is optional. If a vendor does not specify this field, all assets associated with the vendor are returned. For more information about the [difference between a seller and a vendor](https://advertising.amazon.com/resources/faq#advertising-basics), see the Amazon Ads FAQ.
          * @param {MediaType} [mediaType] Specifies the media types used to filter the returned array. Currently, only the &#x60;brandLogo&#x60; type is supported. If not specified, all media types are returned.
@@ -13681,7 +14190,7 @@ export const StoresApiFp = function(configuration?: Configuration) {
         /**
          * Image assets are stored in the Store Assets Library. Note that there may be a delay before the image is displayed in the console.
          * @summary Creates a new image asset.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} contentDisposition The name of the image file.
          * @param {string} contentType The image format type. The following table lists the valid image types: |Image Type|Description| |----------|-----------| |PNG|[Portable network graphics](https://en.wikipedia.org/wiki/Portable_Network_Graphics)| |JPEG|[JPEG](https://en.wikipedia.org/wiki/JPEG)| |GIF|[Graphics interchange format](https://en.wikipedia.org/wiki/GIF)|
@@ -13697,7 +14206,7 @@ export const StoresApiFp = function(configuration?: Configuration) {
         /**
          * For sellers or vendors, gets an array of assets associated with the specified brand entity identifier. Vendors are not required to specify a brand entity identifier, and in this case all assets associated with the vendor are returned.
          * @summary Gets a list of assets associated with a specified brand entity identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} [brandEntityId] For sellers, this field is required. It is the Brand entity identifier of the Brand for which assets are returned. This identifier is retrieved using the [getBrands operation](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/brands). For vendors, this field is optional. If a vendor does not specify this field, all assets associated with the vendor are returned. For more information about the [difference between a seller and a vendor](https://advertising.amazon.com/resources/faq#advertising-basics), see the Amazon Ads FAQ.
          * @param {MediaType} [mediaType] Specifies the media types used to filter the returned array. Currently, only the &#x60;brandLogo&#x60; type is supported. If not specified, all media types are returned.
@@ -13721,7 +14230,7 @@ export const StoresApiFactory = function (configuration?: Configuration, basePat
         /**
          * Image assets are stored in the Store Assets Library. Note that there may be a delay before the image is displayed in the console.
          * @summary Creates a new image asset.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} contentDisposition The name of the image file.
          * @param {string} contentType The image format type. The following table lists the valid image types: |Image Type|Description| |----------|-----------| |PNG|[Portable network graphics](https://en.wikipedia.org/wiki/Portable_Network_Graphics)| |JPEG|[JPEG](https://en.wikipedia.org/wiki/JPEG)| |GIF|[Graphics interchange format](https://en.wikipedia.org/wiki/GIF)|
@@ -13736,7 +14245,7 @@ export const StoresApiFactory = function (configuration?: Configuration, basePat
         /**
          * For sellers or vendors, gets an array of assets associated with the specified brand entity identifier. Vendors are not required to specify a brand entity identifier, and in this case all assets associated with the vendor are returned.
          * @summary Gets a list of assets associated with a specified brand entity identifier.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a **Login with Amazon** account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} [brandEntityId] For sellers, this field is required. It is the Brand entity identifier of the Brand for which assets are returned. This identifier is retrieved using the [getBrands operation](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/brands). For vendors, this field is optional. If a vendor does not specify this field, all assets associated with the vendor are returned. For more information about the [difference between a seller and a vendor](https://advertising.amazon.com/resources/faq#advertising-basics), see the Amazon Ads FAQ.
          * @param {MediaType} [mediaType] Specifies the media types used to filter the returned array. Currently, only the &#x60;brandLogo&#x60; type is supported. If not specified, all media types are returned.
@@ -13756,7 +14265,7 @@ export const StoresApiFactory = function (configuration?: Configuration, basePat
  */
 export interface StoresApiCreateAssetRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof StoresApiCreateAsset
      */
@@ -13805,7 +14314,7 @@ export interface StoresApiCreateAssetRequest {
  */
 export interface StoresApiListAssetsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * The identifier of a client associated with a **Login with Amazon** account.
      * @type {string}
      * @memberof StoresApiListAssets
      */
