@@ -103,7 +103,7 @@ export const createRequestFunction = (
 		}
 
 		// return the rate limited or normal request.
-		return request(axiosRequestArgs);
+		return request({ ...axiosRequestArgs, credentials });
 	};
 };
 

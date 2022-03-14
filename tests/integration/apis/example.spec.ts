@@ -89,8 +89,8 @@ describe(`${AttributionClient.name}`, () => {
 
 		it('should retry up to n times (based on configuration)', async () => {
 			let retryCount = 0;
-			const retryCallback = (job: any) => {
-				retryCount = job.retryCount;
+			const retryCallback = () => {
+				retryCount++;
 			};
 
 			const configuration = {
@@ -108,16 +108,14 @@ describe(`${AttributionClient.name}`, () => {
 
 			setConfiguration(configuration);
 
-			try {
+			await expect(async () => {
 				await attributionClient.getAdvertisersByProfile({
 					amazonAdvertisingAPIClientId: '',
 					amazonAdvertisingAPIScope: env.AMAZON_ADS_PROFILE_ID,
 				});
-			} catch (err) {
-				return;
-			}
+			}).rejects.toThrow();
 
-			expect(retryCount).toEqual(3);
+			expect(retryCount).toEqual(6);
 		}, 20000);
 	});
 });
