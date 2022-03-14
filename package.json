@@ -60,7 +60,7 @@
   },
   "types": "lib/src/index.d.ts",
   "dependencies": {
-    "axios": "^0.25.0",
+    "axios": "^0.26.1",
     "bottleneck": "^2.19.5"
   },
   "devDependencies": {
