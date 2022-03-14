@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0](https://github.com/whitebox-co/amazon-ads-api/compare/v1.3.0...v1.4.0) (2022-03-14)
+
+### Bug Fixes
+
+-   **deps:** bump axios from 0.25.0 to 0.26.1 ([#87](https://github.com/whitebox-co/amazon-ads-api/issues/87)) ([86694da](https://github.com/whitebox-co/amazon-ads-api/commit/86694da162795f9a9dcd9a57d5b5316be34087dd))
+
+### Features
+
+-   auto generated updates based on latest amazon schema changes ([2477264](https://github.com/whitebox-co/amazon-ads-api/commit/24772642a69d92595ad7587e5601e54c9eec9691))
+-   configuration and adsapi constructor now take a bottleneck limiter as an optional param ([9a2f127](https://github.com/whitebox-co/amazon-ads-api/commit/9a2f127b7ad66bd5ac454030ea6e2c1222d7c32c))
+-   integrating latest amazon schema changes, adding ability for retries to refresh tokens on 401 ([60751a0](https://github.com/whitebox-co/amazon-ads-api/commit/60751a01b202f2e88c7610c1dc90208f111502fa))
+
 # [1.3.0](https://github.com/whitebox-co/amazon-ads-api/compare/v1.2.0...v1.3.0) (2022-03-04)
 
 ### Features
