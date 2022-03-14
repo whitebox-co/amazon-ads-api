@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/whitebox-co/amazon-ads-api/compare/v1.4.0...v1.4.1) (2022-03-14)
+
+### Bug Fixes
+
+-   removing limiter id to avoid id collisions, limiter will assign its own ids ([0828bc5](https://github.com/whitebox-co/amazon-ads-api/commit/0828bc5ef2ade3e7b093a7bbc3d7d3054947359e))
+
 # [1.4.0](https://github.com/whitebox-co/amazon-ads-api/compare/v1.3.0...v1.4.0) (2022-03-14)
 
 ### Bug Fixes
