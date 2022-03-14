@@ -97,7 +97,6 @@ export const createRequestFunction = (
 			request.withOptions(
 				{
 					expiration: config.jobOptions?.expiration || 3600 * 1000,
-					id: endpoint,
 				},
 				{ ...axiosRequestArgs, credentials }
 			);
