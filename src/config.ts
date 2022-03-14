@@ -1,4 +1,5 @@
 import Bottleneck from 'bottleneck';
+import { authorize } from './auth';
 
 export interface AmazonAdsApiConfiguration {
 	throttling?: Bottleneck.ConstructorOptions;
@@ -9,6 +10,9 @@ export interface AmazonAdsApiConfiguration {
 		retryCallback?: any;
 	};
 	envoyProxyRateLimitUrl?: string;
+	jobOptions?: {
+		expiration: number;
+	};
 }
 
 let configuration: AmazonAdsApiConfiguration = {};
@@ -16,8 +20,17 @@ let adsLimiter: Bottleneck;
 
 // retry on failures (up to configuration retry count)
 const retryCallbackListener = (error, jobInfo) => {
+	// handle configurable retries.
 	if (jobInfo.retryCount < configuration.retries?.count) {
-		if (configuration.retries.retryCallback) configuration.retries.retryCallback(jobInfo);
+		const credentials = jobInfo.args[0].credentials || jobInfo.args[0];
+		// let's handle the case where the bottleneck has executed after the access token has expired.
+		// which is possible when the job expiration is higher than the 1hr token expiration
+		if (error.isAxiosError && error.response?.status === 401) authorize(credentials);
+
+		// call user supplied callback
+		if (configuration.retries.retryCallback) configuration.retries.retryCallback(error, jobInfo);
+
+		// the amount of time for the next retry
 		return configuration.retries.refreshTime || 100;
 	}
 };

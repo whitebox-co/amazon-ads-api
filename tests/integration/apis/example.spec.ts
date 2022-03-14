@@ -1,8 +1,10 @@
 import * as env from '../../environment';
-import amazonApi, { AttributionClient, setConfiguration } from '../../../src/index';
+import amazonApi, { AttributionClient, AuthorizationProfilesClient, setConfiguration } from '../../../src/index';
+import { ProfilesApi } from '../../../src/apis/models/authorization-profiles';
 
 describe(`${AttributionClient.name}`, () => {
 	let attributionClient: AttributionClient;
+	let profilesClient: ProfilesApi;
 
 	beforeAll(async () => {
 		attributionClient = await amazonApi.getConfiguredApi(AttributionClient, {
@@ -11,19 +13,24 @@ describe(`${AttributionClient.name}`, () => {
 			profileId: env.AMAZON_ADS_PROFILE_ID,
 			refreshToken: env.AMAZON_ADS_REFRESH_TOKEN,
 		});
+
+		profilesClient = await amazonApi.getConfiguredApi(AuthorizationProfilesClient, {
+			clientId: env.AMAZON_ADS_CLIENT_ID,
+			clientSecret: env.AMAZON_ADS_CLIENT_SECRET,
+			profileId: env.AMAZON_ADS_PROFILE_ID,
+			refreshToken: env.AMAZON_ADS_REFRESH_TOKEN,
+		});
 	});
 
 	describe('#getAdvertisersByProfile', () => {
-		it('should return a list of advertisers associated with an Amazon Attribution account.', async () => {
-			const advertisers = await attributionClient.getAdvertisersByProfile({
+		it('should return a list of advertisers associated with a Auth Profile account.', async () => {
+			// get a list of all US profiles to run reports against.
+			const profilesResponse = await profilesClient.listProfiles({
 				amazonAdvertisingAPIClientId: env.AMAZON_ADS_CLIENT_ID,
-				amazonAdvertisingAPIScope: env.AMAZON_ADS_PROFILE_ID,
+				apiProgram: 'report',
 			});
 
-			expect(advertisers).toBeDefined();
-			expect(advertisers.data).toBeDefined();
-			expect(advertisers.data).toBeDefined();
-			expect(advertisers.data.advertisers).toBeDefined();
+			expect(profilesResponse).toBeDefined();
 		});
 	});
 
@@ -59,26 +66,26 @@ describe(`${AttributionClient.name}`, () => {
 
 			setConfiguration(configuration);
 
-			await attributionClient.getAdvertisersByProfile({
+			await profilesClient.listProfiles({
 				amazonAdvertisingAPIClientId: env.AMAZON_ADS_CLIENT_ID,
-				amazonAdvertisingAPIScope: env.AMAZON_ADS_PROFILE_ID,
+				apiProgram: 'report',
 			});
 
-			await attributionClient.getAdvertisersByProfile({
+			await profilesClient.listProfiles({
 				amazonAdvertisingAPIClientId: env.AMAZON_ADS_CLIENT_ID,
-				amazonAdvertisingAPIScope: env.AMAZON_ADS_PROFILE_ID,
+				apiProgram: 'report',
 			});
 
-			await attributionClient.getAdvertisersByProfile({
+			await profilesClient.listProfiles({
 				amazonAdvertisingAPIClientId: env.AMAZON_ADS_CLIENT_ID,
-				amazonAdvertisingAPIScope: env.AMAZON_ADS_PROFILE_ID,
+				apiProgram: 'report',
 			});
 
 			const endTime = Date.now();
 			const elapsedTime = (endTime - startTime) / 1000; // in seconds
 
 			expect(elapsedTime).toBeGreaterThan(4);
-		});
+		}, 60000);
 
 		it('should retry up to n times (based on configuration)', async () => {
 			let retryCount = 0;
@@ -111,6 +118,6 @@ describe(`${AttributionClient.name}`, () => {
 			}
 
 			expect(retryCount).toEqual(3);
-		}, 10000);
+		}, 20000);
 	});
 });

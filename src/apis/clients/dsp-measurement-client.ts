@@ -9,14 +9,13 @@
  */
 
 import { MeasurementApi } from '../models/dsp-measurement';
-import { Configuration } from '../models/configuration';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
-import { getAxiosInstance, applyMixins } from '../../helpers';
+import { getAxiosInstance, applyMixins, AdsConfiguration } from '../../helpers';
 
 export class DspMeasurementClient extends MeasurementApi {
   constructor(parameters: APIConfigurationParameters) {
     const axios = getAxiosInstance(parameters)
-    const configuration = new Configuration(parameters)
+    const configuration = new AdsConfiguration(parameters)
     super(configuration, DEFAULT_API_BASE_PATH, axios)
   }
 }

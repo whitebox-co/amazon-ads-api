@@ -4559,6 +4559,264 @@
           }
         }
       }
+    },
+    "/v2/hsa/{recordType}/report": {
+      "post": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Requests the creation of a report containing performance data related to Sponsored Brands campaigns.",
+        "description": "Use this interface to request and retrieve performance reports. **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**\n\n**Reports vs. snapshots**\n\nIf you need to download a snapshot of your campaign records, consider requesting a [snapshot](/API/docs/en-us/concepts/snapshots/overview) to minimize report size and timeouts. You can then use the record ID to join snapshot dimensional data and report performance data.\n\n**Constraints of Sponsored Brands reporting**\n\nSponsored Brands reporting data cannot be combined with Sponsored Products data into one report. Only 14-day data is available for Sponsored Brands. Attribution windows of 1, 7, and 30-day intervals are not available.\n\n**New-to-brand performance metrics**\n\nWith new-to-brand metrics, advertisers can measure and optimize campaigns, as well as plan future marketing strategies to grow their customer base on Amazon. New-to-brand metrics determine whether an ad-attributed purchase was made by an existing customer or one buying a brand’s product on Amazon for the first time over the prior year. With new-to-brand metrics, advertisers receive campaign performance metrics such as total new-to-brand purchases and sales, new-to-brand purchase rate, and cost per new-to-brand customer. Advertisers now have the tools they need to estimate the cost of acquiring new customers on Amazon and identify the most efficient channels and tactics to achieve their campaign goals.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "name": "recordType",
+            "in": "path",
+            "description": "The type of report. Valid types are `campaigns`, `adGroups`, `ads`, `targets`, and `keywords`.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "reportDate",
+                  "metrics"
+                ],
+                "properties": {
+                  "reportDate": {
+                    "type": "string",
+                    "description": "Date in YYYYMMDD format. The report only contains performance data for the specified date. The time zone is specified by the profile used to request the report. If this date is today, then the performance report may contain partial information. Reports are not available for data older than 60 days. For details on data latency, see [Service Guarantees](../../get-started/developer-notes)."
+                  },
+                  "segment": {
+                    "type": "string",
+                    "description": "Optional. Allows you to run a report based on secondary dimensions. Use `placement` to segment a `campaigns` report by the location on a page where your ad appears. Use `query` to segment a `keywords` report and create a search terms report.",
+                    "enum": [
+                      "placement",
+                      "query"
+                    ]
+                  },
+                  "creativeType": {
+                    "type": "string",
+                    "description": "Optional. Supported values are `video` (for video campaigns) and `all` (for both non-video and video campaigns). If not specified, the report will contain data for non-video campaigns. For `ads` report types only, `creativeType` is required and must be set to `all` (`video` is not allowed).",
+                    "enum": [
+                      "video",
+                      "all"
+                    ]
+                  },
+                  "metrics": {
+                    "type": "string",
+                    "description": "Each report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/concepts/reporting/report-types).** "
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "reportId": {
+                      "type": "string",
+                      "description": "The unique ID for your requested report."
+                    },
+                    "recordType": {
+                      "type": "string",
+                      "description": "The record type of the report. It can be `campaign`, `adGroup`, `keyword`, or `targets`."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the report. Status is one of `IN_PROGRESS`, `SUCCESS`, or `FAILURE`."
+                    },
+                    "statusDetails": {
+                      "type": "string",
+                      "description": "Description of the status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Failed due to report date being too far in the past. Reports are not available for data older than 60 days.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Report formed incorrectly. Report requests return a 422 status code if the parameters specified are unrecognized or if the combination of parameters is not supported. In particular, the choice of `recordType` may restrict the use of certain segments. Query segmentation can only be used in combination with keyword and product ad reports.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/reports/{reportId}": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Returns the status of a previously requested report.",
+        "description": "To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "name": "reportId",
+            "in": "path",
+            "description": "Report ID returned by POST report method.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "reportId": {
+                      "type": "string",
+                      "description": "The unique ID for your requested report."
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "The status of the report. Status is one of `IN_PROGRESS`, `SUCCESS`, or `FAILURE`."
+                    },
+                    "statusDetails": {
+                      "type": "string",
+                      "description": "Description of the status."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Report not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/reports/{reportId}/download": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Downloads a previously requested report identified by `reportId`.",
+        "description": "Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created. \n\n**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**\n\nThe report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.\n\n**Note**: The report files in S3 are gzipped.\n\n*Example report download*\n\n`$ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.580149D6.c7aa92c1-ca5b-435d-bb8b-51cb26ad5731?AWSAccessKeyId=AKIAIKLHNT32USZOWVRA&amp;Expires=1476479900&amp;Signature=I%2F2Gd%2B8TbcPbXbBUM6ix%2BSVP3qA%3D\"`",
+        "operationId": "downloadReport",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "name": "reportId",
+            "in": "path",
+            "description": "The identifier of the requested report.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "307": {
+            "description": "Successful operation.",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Redirect URI with S3 file location containing report data"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found - requested resource does not exist or is not visible for the authenticated user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests - request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error - something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "servers": [
@@ -8777,7 +9035,7 @@
       "clientHeader": {
         "name": "Amazon-Advertising-API-ClientId",
         "in": "header",
-        "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+        "description": "The identifier of a client associated with a **Login with Amazon** account.",
         "required": true,
         "schema": {
           "type": "string"

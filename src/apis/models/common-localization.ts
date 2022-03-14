@@ -483,7 +483,7 @@ export interface LocalizationKeywordSourceDetails {
      * @type {string}
      * @memberof LocalizationKeywordSourceDetails
      */
-    sourceCountryCode?: string;
+    countryCode?: string;
     /**
      * The source locale. For example, if the caller is localizing keywords from British English (en_GB) to Simplified Chinese (zh_CN), the source locale is en_GB. Please see the table within the description of the targetDetails object for supported source to target Locale values.
      * @type {string}
@@ -498,17 +498,17 @@ export interface LocalizationKeywordSourceDetails {
  */
 export interface LocalizationKeywordTargetDetails {
     /**
-     * A list of two-letter country codes. When another form of locale (marketplaceId or locale) is present, countryCode is ignored. Please refer to the table above for a list of supported country codes.
-     * @type {Array<string>}
-     * @memberof LocalizationKeywordTargetDetails
-     */
-    targetCountryCodes?: Array<string>;
-    /**
      * The IDs of target marketplaces (marketplaces in which the caller wishes to localize the specified keywords). For example, if the caller is an advertiser based in the UK (marketplace ID A1F83G8C2ARO7P) and wishes to localize keywords to Germany (marketplace ID A1PA6795UKMFR9), the target marketplace ID is that of Germany, i.e., A1PA6795UKMFR9. **Please note:** if locales are provided, any provided marketplace IDs will be ignored. The marketplace IDs are converted into default locales. The supported locale arcs are outlined in the targetDetails locales section. The following marketplaces are supported for conversion to default locales: |Region|Country Code|Default Locale|Name|Marketplace ID| |-|-|-|-|-| |EU|AE|en_AE|United Arab Emirates|A2VIGQ35RCS4UG| |EU|DE|de_DE|Germany|A1PA6795UKMFR9| |EU|EG|ar_EG|Egypt|ARBP9OOSHTCHU| |EU|ES|es_ES|Spain|A1RKKUPIHCS9HS| |EU|FR|fr_FR|France|A13V1IB3VIYZZH| |EU|GB|en_GB|United Kingdom|A1F83G8C2ARO7P| |EU|IT|it_IT|Italy|APJ6JRA9NG5V4| |EU|NL|nl_NL|Netherlands|A1805IZSGTT6HS| |EU|PL|pl_PL|Poland|A1C3SOZRARQ6R3| |EU|SA|en_SA|Saudi Arabia|A17E79C6D8DWNP| |EU|SE|sv_SE|Sweden|A2NODRKZP88ZB9| |EU|TR|tr_TR|Turkey|A33AVAJ2PDY3EV| |FE|AU|en_AU|Australia|A39IBJ37TRP1C6| |FE|IN|en_IN|India|A21TJRUUN4KGV| |FE|JP|ja_JP|Japan|A1VC38T7YXB528| |FE|SG|en_SG|Singapore|A19VAU5U5O7RUS| |NA|BR|pt_BR|Brazil|A2Q3Y263D00KWC| |NA|CA|en_CA|Canada|A2EUQ1WTGCTBG2| |NA|MX|es_MX|Mexico|A1AM78C64UM0Y8| |NA|US|en_US|United States|ATVPDKIKX0DER|
      * @type {Array<string>}
      * @memberof LocalizationKeywordTargetDetails
      */
     marketplaceIds?: Array<string>;
+    /**
+     * A list of two-letter country codes. When another form of locale (marketplaceId or locale) is present, countryCode is ignored. Please refer to the table above for a list of supported country codes.
+     * @type {Array<string>}
+     * @memberof LocalizationKeywordTargetDetails
+     */
+    countryCodes?: Array<string>;
     /**
      * The target locales (locales to which the caller wishes to localize the specified keywords). For example, if the caller is localizing keywords from British English (en_GB) to Simplified Chinese (zh_CN), the target locale is zh_CN.
      * @type {Array<string>}

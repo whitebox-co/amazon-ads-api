@@ -30,7 +30,7 @@
 			"name": "Debug Integration Tests",
 			"type": "node",
 			"request": "launch",
-			"args": ["tests/integration", "--setupFiles", "dotenv/config", "--runInBand", "--no-cache"],
+			"args": ["tests/integration/apis/example", "--setupFiles", "dotenv/config", "--runInBand", "--no-cache"],
 			"env": {
 				"CI": "true"
 			},

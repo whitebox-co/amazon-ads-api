@@ -9,14 +9,13 @@
  */
 
 import { AddOrRemoveRecordsApi,MetadataApi,UserDeletionApi } from '../models/data-provider';
-import { Configuration } from '../models/configuration';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
-import { getAxiosInstance, applyMixins } from '../../helpers';
+import { getAxiosInstance, applyMixins, AdsConfiguration } from '../../helpers';
 
 export class DataProviderClient extends AddOrRemoveRecordsApi {
   constructor(parameters: APIConfigurationParameters) {
     const axios = getAxiosInstance(parameters)
-    const configuration = new Configuration(parameters)
+    const configuration = new AdsConfiguration(parameters)
     super(configuration, DEFAULT_API_BASE_PATH, axios)
   }
 }

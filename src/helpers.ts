@@ -1,7 +1,7 @@
 import globalAxios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { RequestArgs } from './apis/models/base';
-import { Configuration } from './apis/models/configuration';
-import { APIConfigurationParameters } from './constants';
+import { Configuration, ConfigurationParameters } from './apis/models/configuration';
+import { AmazonAdvertisingAPICredentials, APIConfigurationParameters } from './constants';
 import envoyRateLimit, { RateLimitResponseCode } from './connectors/envoy-rate-limit';
 import { getConfiguration, getLimiter } from './config';
 
@@ -64,9 +64,10 @@ export const createRequestFunction = (
 	axiosArgs: RequestArgs,
 	globalAxios: AxiosInstance,
 	BASE_PATH: string,
-	configuration?: Configuration
+	configuration?: any
 ) => {
 	return async (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+		const credentials = configuration?.credentials || {};
 		const config = getConfiguration();
 		const limiter = getLimiter();
 		const axiosRequestArgs = { ...axiosArgs.options, url: (configuration?.basePath || basePath) + axiosArgs.url };
@@ -90,9 +91,31 @@ export const createRequestFunction = (
 		}
 
 		// wrap the axios request in the limiter if configuration enables throttling
-		const request = limiter ? limiter.wrap(axios.request) : axios.request;
+		let request: any = axios.request;
+		if (limiter) {
+			request = limiter.wrap(axios.request);
+			request.withOptions(
+				{
+					expiration: config.jobOptions?.expiration || 3600 * 1000,
+					id: endpoint,
+				},
+				{ ...axiosRequestArgs, credentials }
+			);
+		}
 
 		// return the rate limited or normal request.
 		return request(axiosRequestArgs);
 	};
 };
+
+export interface AdsConfigurationParameters extends ConfigurationParameters {
+	credentials?: AmazonAdvertisingAPICredentials;
+}
+
+export class AdsConfiguration extends Configuration {
+	credentials: AmazonAdvertisingAPICredentials;
+	constructor(param: AdsConfigurationParameters = {}) {
+		super(param);
+		this.credentials = param.credentials;
+	}
+}

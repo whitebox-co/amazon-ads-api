@@ -87,6 +87,9 @@ const configuration: AmazonAdsApiConfiguration = {
         maxWaitTime: 5000, // in ms. defaults to 5000
 		retryCallback?: (jobId: string) => { console.log(`Retrying job ${jobId}`); }  // optional
 	},
+    jobOptions: {
+        expiration: 3600 * 1000,
+    },
 	envoyProxyRateLimitUrl: 'http://localhost:8080' // optional (see https://github.com/envoyproxy/ratelimit)
 };
 
@@ -139,6 +142,9 @@ const configuration: AmazonAdsApiConfiguration = {
         maxWaitTime: 5000, // in ms. defaults to 5000
 		retryCallback?: (jobId: string) => { console.log(`Retrying job ${jobId}`); }  // optional
 	},
+    jobOptions: {
+        expiration: 3600 * 1000,
+    },
 	envoyProxyRateLimitUrl: 'localhost:8080' // optional (see https://github.com/envoyproxy/ratelimit)
 };
 
