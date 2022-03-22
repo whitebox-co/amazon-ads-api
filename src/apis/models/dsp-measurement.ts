@@ -1695,6 +1695,44 @@ export interface OmnichannelMetricsBrandV1M2 {
 /**
  * A list of studies.
  * @export
+ * @interface PaginatedBaseStudiesV1
+ */
+export interface PaginatedBaseStudiesV1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedBaseStudiesV1
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<BaseStudyV1>}
+     * @memberof PaginatedBaseStudiesV1
+     */
+    measurements?: Array<BaseStudyV1>;
+}
+/**
+ * A list of studies.
+ * @export
+ * @interface PaginatedBaseStudiesV1M1
+ */
+export interface PaginatedBaseStudiesV1M1 {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedBaseStudiesV1M1
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<BaseStudyV1M1>}
+     * @memberof PaginatedBaseStudiesV1M1
+     */
+    measurements?: Array<BaseStudyV1M1>;
+}
+/**
+ * A list of studies.
+ * @export
  * @interface PaginatedDSPBrandLiftStudiesV1
  */
 export interface PaginatedDSPBrandLiftStudiesV1 {
@@ -3910,6 +3948,70 @@ export const MeasurementApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * Gets base study objects given a list of studyIds or a list of advertiserIds.  **Requires one of these permissions**: []
+         * @summary Gets base study objects given a list of studyIds or a list of advertiserIds.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<string>} [studyIds] Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [advertiserId] The advertiser canonical identifier. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getStudies: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, advertiserId?: string, nextToken?: string, maxResults?: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getStudies', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getStudies', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/measurement/studies`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (studyIds) {
+                localVarQueryParameter['studyIds'] = studyIds.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (advertiserId !== undefined) {
+                localVarQueryParameter['advertiserId'] = advertiserId;
+            }
+
+            if (nextToken !== undefined) {
+                localVarQueryParameter['nextToken'] = nextToken;
+            }
+
+            if (maxResults !== undefined) {
+                localVarQueryParameter['maxResults'] = maxResults;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Gets one or more study surveys with requested survey identifiers or a study identifier.  **Requires one of these permissions**: []
          * @summary Gets one or more study surveys with requested survey identifiers or a study identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -4345,6 +4447,22 @@ export const MeasurementApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Gets base study objects given a list of studyIds or a list of advertiserIds.  **Requires one of these permissions**: []
+         * @summary Gets base study objects given a list of studyIds or a list of advertiserIds.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<string>} [studyIds] Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [advertiserId] The advertiser canonical identifier. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, advertiserId?: string, nextToken?: string, maxResults?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedBaseStudiesV1M1>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyIds, advertiserId, nextToken, maxResults, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Gets one or more study surveys with requested survey identifiers or a study identifier.  **Requires one of these permissions**: []
          * @summary Gets one or more study surveys with requested survey identifiers or a study identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -4519,6 +4637,21 @@ export const MeasurementApiFactory = function (configuration?: Configuration, ba
          */
         getDSPBrandLiftStudyResult(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options?: any): AxiosPromise<BrandLiftStudyResultV1M1> {
             return localVarFp.getDSPBrandLiftStudyResult(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, accept, studyId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Gets base study objects given a list of studyIds or a list of advertiserIds.  **Requires one of these permissions**: []
+         * @summary Gets base study objects given a list of studyIds or a list of advertiserIds.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<string>} [studyIds] Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [advertiserId] The advertiser canonical identifier. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, advertiserId?: string, nextToken?: string, maxResults?: number, options?: any): AxiosPromise<PaginatedBaseStudiesV1M1> {
+            return localVarFp.getStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyIds, advertiserId, nextToken, maxResults, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets one or more study surveys with requested survey identifiers or a study identifier.  **Requires one of these permissions**: []
@@ -4813,6 +4946,55 @@ export interface MeasurementApiGetDSPBrandLiftStudyResultRequest {
      * @memberof MeasurementApiGetDSPBrandLiftStudyResult
      */
     readonly studyId: string
+}
+
+/**
+ * Request parameters for getStudies operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiGetStudiesRequest
+ */
+export interface MeasurementApiGetStudiesRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiGetStudies
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiGetStudies
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+     * @type {Array<string>}
+     * @memberof MeasurementApiGetStudies
+     */
+    readonly studyIds?: Array<string>
+
+    /**
+     * The advertiser canonical identifier. Either one of studyIds or advertiserId should be provided.
+     * @type {string}
+     * @memberof MeasurementApiGetStudies
+     */
+    readonly advertiserId?: string
+
+    /**
+     * Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+     * @type {string}
+     * @memberof MeasurementApiGetStudies
+     */
+    readonly nextToken?: string
+
+    /**
+     * Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+     * @type {number}
+     * @memberof MeasurementApiGetStudies
+     */
+    readonly maxResults?: number
 }
 
 /**
@@ -5130,6 +5312,18 @@ export class MeasurementApi extends BaseAPI {
      */
     public getDSPBrandLiftStudyResult(requestParameters: MeasurementApiGetDSPBrandLiftStudyResultRequest, options?: any) {
         return MeasurementApiFp(this.configuration).getDSPBrandLiftStudyResult(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.accept, requestParameters.studyId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gets base study objects given a list of studyIds or a list of advertiserIds.  **Requires one of these permissions**: []
+     * @summary Gets base study objects given a list of studyIds or a list of advertiserIds.
+     * @param {MeasurementApiGetStudiesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public getStudies(requestParameters: MeasurementApiGetStudiesRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).getStudies(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.studyIds, requestParameters.advertiserId, requestParameters.nextToken, requestParameters.maxResults, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
