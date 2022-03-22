@@ -60,6 +60,7 @@
   },
   "types": "lib/src/index.d.ts",
   "dependencies": {
+    "agentkeepalive": "^4.2.1",
     "axios": "^0.26.1",
     "bottleneck": "^2.19.5"
   },
