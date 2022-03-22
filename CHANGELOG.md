@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/whitebox-co/amazon-ads-api/compare/v1.5.0...v1.5.1) (2022-03-22)
+
+### Bug Fixes
+
+-   make axiosInstance configurable and increase defaults ([5eefdfa](https://github.com/whitebox-co/amazon-ads-api/commit/5eefdfaf29fa054b406d0d59078299bb3c97169d))
+
 # [1.5.0](https://github.com/whitebox-co/amazon-ads-api/compare/v1.4.2...v1.5.0) (2022-03-22)
 
 ### Features
