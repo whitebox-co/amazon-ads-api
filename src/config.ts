@@ -1,3 +1,4 @@
+import { AxiosInstance } from 'axios';
 import Bottleneck from 'bottleneck';
 import { authorize } from './auth';
 
@@ -13,6 +14,7 @@ export interface AmazonAdsApiConfiguration {
 	jobOptions?: {
 		expiration: number;
 	};
+	axiosInstance?: AxiosInstance;
 }
 
 let configuration: AmazonAdsApiConfiguration = {};

@@ -8,17 +8,15 @@ import envoyRateLimit, { RateLimitResponseCode } from './connectors/envoy-rate-l
 import { getConfiguration, getLimiter } from './config';
 
 const httpAgent = new Agent({
-	maxSockets: 100,
-	maxFreeSockets: 10,
-	timeout: 60000, // active socket keepalive for 60 seconds
-	freeSocketTimeout: 30000, // free socket keepalive for 30 seconds
+	maxSockets: 500,
+	timeout: 60 * 1000 * 10, // active socket keepalive for 10 mins
+	freeSocketTimeout: 4000, // free socket keepalive for 4 seconds
 });
 
 const httpsAgent = new Agent.HttpsAgent({
-	maxSockets: 100,
-	maxFreeSockets: 10,
-	timeout: 60000, // active socket keepalive for 60 seconds
-	freeSocketTimeout: 30000, // free socket keepalive for 30 seconds
+	maxSockets: 500,
+	timeout: 60 * 1000 * 10, // active socket keepalive for 10 mins
+	freeSocketTimeout: 4000, // free socket keepalive for 4 seconds
 });
 
 /**
@@ -46,18 +44,22 @@ export const applyMixins = (derivedCtor: any, baseCtors: any[]): void => {
  */
 export const getAxiosInstance = (parameters: APIConfigurationParameters): AxiosInstance => {
 	let axiosInstance: AxiosInstance;
+	const config = getConfiguration();
 	const { axios } = parameters;
+	const { accessToken, credentials } = parameters;
 
-	if (axios) {
-		axiosInstance = axios;
+	const commonHeaders = {
+		'Amazon-Advertising-API-ClientId': credentials?.clientId ?? '',
+		'Amazon-Advertising-API-Scope': credentials?.profileId ?? '',
+		Authorization: `Bearer ${accessToken ?? ''}`,
+	};
+
+	if (axios || config.axiosInstance) {
+		axiosInstance = config.axiosInstance || axios;
+		axiosInstance.defaults.headers.common = commonHeaders;
 	} else {
-		const { accessToken, credentials } = parameters;
 		axiosInstance = globalAxios.create({
-			headers: {
-				'Amazon-Advertising-API-ClientId': credentials?.clientId ?? '',
-				'Amazon-Advertising-API-Scope': credentials?.profileId ?? '',
-				Authorization: `Bearer ${accessToken ?? ''}`,
-			},
+			headers: commonHeaders,
 
 			// 60 sec timeout
 			timeout: 60000,
@@ -69,14 +71,15 @@ export const getAxiosInstance = (parameters: APIConfigurationParameters): AxiosI
 			// follow up to 10 HTTP 3xx redirects
 			maxRedirects: 3,
 		});
-
-		axiosInstance.interceptors.response.use(
-			(response: AxiosResponse) => response,
-			(error: AxiosError) => {
-				throw error;
-			}
-		);
 	}
+
+	axiosInstance.interceptors.response.use(
+		(response: AxiosResponse) => response,
+		(error: AxiosError) => {
+			throw error;
+		}
+	);
+
 	return axiosInstance;
 };
 
