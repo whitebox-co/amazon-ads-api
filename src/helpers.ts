@@ -61,8 +61,8 @@ export const getAxiosInstance = (parameters: APIConfigurationParameters): AxiosI
 		axiosInstance = globalAxios.create({
 			headers: commonHeaders,
 
-			// 60 sec timeout
-			timeout: 60000,
+			// 10 min timeout
+			timeout: 60 * 1000 * 10,
 
 			// keepAlive pools and reuses TCP connections, so it's faster
 			httpAgent,
