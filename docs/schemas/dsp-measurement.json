@@ -249,6 +249,406 @@
       }
     },
     "/measurement/studies": {
+      "get": {
+        "summary": "Gets base study objects given a list of studyIds or a list of advertiserIds.",
+        "description": "Gets base study objects given a list of studyIds or a list of advertiserIds.\n\n**Requires one of these permissions**:\n[]",
+        "operationId": "GetStudies",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedBaseStudiesV1M1"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedBaseStudiesV1"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedBaseStudiesV1M1"
+                }
+              },
+              "application/vnd.studymanagement.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedBaseStudiesV1"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request or request body is not matching with input model.",
+            "content": {
+              "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              },
+              "application/vnd.studymanagement.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated request.",
+            "content": {
+              "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user is not authorized to access a resource.",
+            "content": {
+              "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Requested resource does not exist or is not visible for the authenticated user.",
+            "content": {
+              "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.studymanagement.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type - Version not supported.",
+            "content": {
+              "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
+              "application/vnd.studymanagement.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/vnd.studymanagement.v1.1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "schema": {
+              "minItems": 1,
+              "maxItems": 50,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "explode": false,
+            "name": "studyIds",
+            "description": "Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.",
+            "style": "form",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "advertiserId",
+            "description": "The advertiser canonical identifier. Either one of studyIds or advertiserId should be provided.",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "nextToken",
+            "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": 10,
+              "maximum": 100,
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "maxResults",
+            "description": "Sets the maximum number of studies in the returned array. Use in conjunction with the `nextToken` parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults=20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.",
+            "required": false
+          }
+        ],
+        "tags": [
+          "Measurement"
+        ]
+      },
       "delete": {
         "summary": "Cancel existing studies. Once a study is cancelled it can not be resumed again.",
         "description": "Cancel existing studies.\n\n**Requires one of these permissions**:\n[]",
@@ -5251,6 +5651,40 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DSPBrandLiftStudyV1M1"
+            }
+          }
+        }
+      },
+      "PaginatedBaseStudiesV1": {
+        "description": "A list of studies.",
+        "type": "object",
+        "properties": {
+          "nextToken": {
+            "type": "string"
+          },
+          "measurements": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BaseStudyV1"
+            }
+          }
+        }
+      },
+      "PaginatedBaseStudiesV1M1": {
+        "description": "A list of studies.",
+        "type": "object",
+        "properties": {
+          "nextToken": {
+            "type": "string"
+          },
+          "measurements": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BaseStudyV1M1"
             }
           }
         }

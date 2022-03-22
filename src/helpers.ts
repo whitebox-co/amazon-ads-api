@@ -1,9 +1,25 @@
 import globalAxios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import Agent from 'agentkeepalive';
+
 import { RequestArgs } from './apis/models/base';
 import { Configuration, ConfigurationParameters } from './apis/models/configuration';
 import { AmazonAdvertisingAPICredentials, APIConfigurationParameters } from './constants';
 import envoyRateLimit, { RateLimitResponseCode } from './connectors/envoy-rate-limit';
 import { getConfiguration, getLimiter } from './config';
+
+const httpAgent = new Agent({
+	maxSockets: 100,
+	maxFreeSockets: 10,
+	timeout: 60000, // active socket keepalive for 60 seconds
+	freeSocketTimeout: 30000, // free socket keepalive for 30 seconds
+});
+
+const httpsAgent = new Agent.HttpsAgent({
+	maxSockets: 100,
+	maxFreeSockets: 10,
+	timeout: 60000, // active socket keepalive for 60 seconds
+	freeSocketTimeout: 30000, // free socket keepalive for 30 seconds
+});
 
 /**
  * Adds functions from each individual API class into the main Client Class
@@ -42,6 +58,16 @@ export const getAxiosInstance = (parameters: APIConfigurationParameters): AxiosI
 				'Amazon-Advertising-API-Scope': credentials?.profileId ?? '',
 				Authorization: `Bearer ${accessToken ?? ''}`,
 			},
+
+			// 60 sec timeout
+			timeout: 60000,
+
+			// keepAlive pools and reuses TCP connections, so it's faster
+			httpAgent,
+			httpsAgent,
+
+			// follow up to 10 HTTP 3xx redirects
+			maxRedirects: 3,
 		});
 
 		axiosInstance.interceptors.response.use(

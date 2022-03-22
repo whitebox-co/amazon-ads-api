@@ -299,7 +299,17 @@
               },
               "application/vnd.batchgetcampaignsresponse.v3.3+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SBListCampaignsResponseV3_3"
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/SBCampaignResponseCommonV3_3"
+                      },
+                      {
+                        "$ref": "#/components/schemas/SBVideoCampaignResponseCommon"
+                      }
+                    ]
+                  }
                 },
                 "examples": {
                   "StoreSpotlightCampaignListExample": {
@@ -555,23 +565,18 @@
             "application/vnd.createcampaignsresponse.v3.2+json": {
               "schema": {
                 "type": "array",
+                "maximum": 10,
                 "items": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/SBCampaignResponseCommon32"
-                    },
-                    {
-                      "$ref": "#/components/schemas/SBVideoCampaignResponseCommon"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/SBCreateCampaignRequestV3_2"
                 }
               }
             },
             "application/vnd.createcampaignsresponse.v3.3+json": {
               "schema": {
                 "type": "array",
+                "maximum": 10,
                 "items": {
-                  "$ref": "#/components/schemas/SBCreateCampaignResponseV3_3"
+                  "$ref": "#/components/schemas/SBCreateCampaignRequestV3_3"
                 }
               }
             }
@@ -635,11 +640,111 @@
                   }
                 }
               },
+              "application/vnd.createcampaignsresponse.v3.2+json": {
+                "schema": {
+                  "properties": {
+                    "campaignId": {
+                      "description": "The campaign identifier.",
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "adGroupResponses": {
+                      "description": "An array of ad groups associated with the campaign.",
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "adGroupId": {
+                            "description": "The ad group identifier.",
+                            "type": "integer",
+                            "format": "int64"
+                          },
+                          "code": {
+                            "description": "An enumerated response code.",
+                            "type": "string"
+                          },
+                          "details": {
+                            "description": "A human-readable description of the enumerated response code in the `code` field.",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "keywordResponses": {
+                      "description": "An array of keywords associated with the campaign.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SBKeywordResponse"
+                      }
+                    },
+                    "negativeKeywordResponses": {
+                      "description": "An array of negative keywords associated with the campaign.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SBKeywordResponse"
+                      }
+                    },
+                    "code": {
+                      "description": "An enumerated response code.",
+                      "type": "string"
+                    },
+                    "details": {
+                      "description": "A human-readable description of the enumerated response code in the `code` field.",
+                      "type": "string"
+                    }
+                  }
+                }
+              },
               "application/vnd.createcampaignsresponse.v3.3+json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/SBCreateCampaignResponseV3_3"
+                  "properties": {
+                    "campaignId": {
+                      "description": "The campaign identifier.",
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "adGroupResponses": {
+                      "description": "An array of ad groups associated with the campaign.",
+                      "type": "array",
+                      "items": {
+                        "properties": {
+                          "adGroupId": {
+                            "description": "The ad group identifier.",
+                            "type": "integer",
+                            "format": "int64"
+                          },
+                          "code": {
+                            "description": "An enumerated response code.",
+                            "type": "string"
+                          },
+                          "details": {
+                            "description": "A human-readable description of the enumerated response code in the `code` field.",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "keywordResponses": {
+                      "description": "An array of keywords associated with the campaign.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SBKeywordResponse"
+                      }
+                    },
+                    "negativeKeywordResponses": {
+                      "description": "An array of negative keywords associated with the campaign.",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SBKeywordResponse"
+                      }
+                    },
+                    "code": {
+                      "description": "An enumerated response code.",
+                      "type": "string"
+                    },
+                    "details": {
+                      "description": "A human-readable description of the enumerated response code in the `code` field.",
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -714,7 +819,60 @@
                     },
                     "bidAdjustments": {
                       "type": "array",
-                      "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.",
+                      "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
+                      "items": {
+                        "$ref": "#/components/schemas/BidAdjustment"
+                      }
+                    },
+                    "portfolioId": {
+                      "description": "The identifier of the portfolio to which the campaign is associated.",
+                      "type": "integer",
+                      "format": "int64"
+                    }
+                  }
+                }
+              }
+            },
+            "application/vnd.updatecampaignsresponse.v3.2+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "campaignId": {
+                      "description": "The identifier of an existing campaign.",
+                      "type": "integer"
+                    },
+                    "name": {
+                      "description": "The name of the campaign.",
+                      "type": "string"
+                    },
+                    "tags": {
+                      "$ref": "#/components/schemas/CampaignTags"
+                    },
+                    "budget": {
+                      "description": "The budget associated with the campaign.",
+                      "type": "number"
+                    },
+                    "endDate": {
+                      "type": "string",
+                      "description": "The YYYYMMDD end date for the campaign. Note that a value must be specified if the `budgetType` for the campaign is set to `lifetime`."
+                    },
+                    "state": {
+                      "$ref": "#/components/schemas/State"
+                    },
+                    "bidOptimization": {
+                      "type": "boolean",
+                      "description": "Set to true to allow Amazon to automatically optimize bids for placements below top of search. `Not supported for video campaigns`"
+                    },
+                    "bidMultiplier": {
+                      "type": "number",
+                      "description": "A bid multiplier. Note that this field can only be set when 'bidOptimization' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.\n`Not supported for video campaigns`",
+                      "minimum": -99,
+                      "maximum": 99
+                    },
+                    "bidAdjustments": {
+                      "type": "array",
+                      "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
                       "items": {
                         "$ref": "#/components/schemas/BidAdjustment"
                       }
@@ -732,7 +890,53 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/SBUpdateCampaignResponseItemV3_3"
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "campaignId": {
+                          "description": "The identifier of an existing campaign.",
+                          "type": "integer"
+                        },
+                        "name": {
+                          "description": "The name of the campaign.",
+                          "type": "string"
+                        },
+                        "tags": {
+                          "$ref": "#/components/schemas/CampaignTags"
+                        },
+                        "budget": {
+                          "description": "The budget associated with the campaign.",
+                          "type": "number"
+                        },
+                        "endDate": {
+                          "type": "string",
+                          "description": "The YYYYMMDD end date for the campaign. Note that a value must be specified if the `budgetType` for the campaign is set to `lifetime`."
+                        },
+                        "state": {
+                          "$ref": "#/components/schemas/State"
+                        },
+                        "bidOptimization": {
+                          "type": "boolean",
+                          "description": "Set to true to allow Amazon to automatically optimize bids for placements below top of search. `Not supported for video campaigns`"
+                        },
+                        "bidMultiplier": {
+                          "type": "number",
+                          "description": "A bid multiplier. Note that this field can only be set when 'bidOptimization' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.\n`Not supported for video campaigns`",
+                          "minimum": -99,
+                          "maximum": 99
+                        },
+                        "portfolioId": {
+                          "description": "The identifier of the portfolio to which the campaign is associated.",
+                          "type": "integer",
+                          "format": "int64"
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/ShopperSegmentBiddingControls"
+                    }
+                  ]
                 }
               }
             }
@@ -750,11 +954,19 @@
                   }
                 }
               },
+              "application/vnd.updatecampaignsresponse.v3.2+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SBUpdateCampaignResponse"
+                  }
+                }
+              },
               "application/vnd.updatecampaignsresponse.v3.3+json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SBUpdateCampaignResponseItemV3_3"
+                    "$ref": "#/components/schemas/SBUpdateCampaignResponse"
                   }
                 }
               }
@@ -1910,14 +2122,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "oneOf": [
-                      {
-                        "$ref": "#/components/schemas/SBCampaignResponseCommon32"
-                      },
-                      {
-                        "$ref": "#/components/schemas/SBVideoCampaignResponseCommon"
-                      }
-                    ]
+                    "$ref": "#/components/schemas/SBGetDraftCampaignResponseV3_2"
                   }
                 }
               },
@@ -1925,7 +2130,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SBListDraftCampaignsResponseV3_3"
+                    "$ref": "#/components/schemas/SBGetDraftCampaignResponseV3_3"
                   }
                 },
                 "examples": {
@@ -1961,11 +2166,7 @@
                 "type": "array",
                 "maximum": 10,
                 "items": {
-                  "allOf": [
-                    {
-                      "$ref": "#/components/schemas/SBCreateDraftCampaignRequest"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/SBCreateDraftCampaignRequest"
                 }
               },
               "examples": {
@@ -2178,23 +2379,18 @@
             "application/vnd.createdraftcampaignsresponse.v3.2+json": {
               "schema": {
                 "type": "array",
+                "maximum": 10,
                 "items": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/SBCampaignResponseCommon32"
-                    },
-                    {
-                      "$ref": "#/components/schemas/SBVideoCampaignResponseCommon"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/SBCreateDraftCampaignRequestV3_2"
                 }
               }
             },
             "application/vnd.createdraftcampaignsresponse.v3.3+json": {
               "schema": {
                 "type": "array",
+                "maximum": 10,
                 "items": {
-                  "$ref": "#/components/schemas/SBDraftCampaignV3_3"
+                  "$ref": "#/components/schemas/SBCreateDraftCampaignRequestV3_3"
                 }
               }
             }
@@ -2206,7 +2402,10 @@
             "content": {
               "application/vnd.sbdraftcampaignresponse.v3+json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SBDraftCampaignResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SBDraftCampaignResponse"
+                  }
                 },
                 "examples": {
                   "keywords": {
@@ -2229,6 +2428,14 @@
                       ],
                       "details": "string"
                     }
+                  }
+                }
+              },
+              "application/vnd.createdraftcampaignsresponse.v3.2+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SBDraftCampaignResponse"
                   }
                 }
               },
@@ -2286,6 +2493,21 @@
                 }
               }
             },
+            "application/vnd.updatedraftcampaignsresponse.v3.2+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "required": [
+                    "draftCampaignId"
+                  ],
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SBUpdateDraftCampaignRequestV3_2"
+                    }
+                  ]
+                }
+              }
+            },
             "application/vnd.updatedraftcampaignsresponse.v3.3+json": {
               "schema": {
                 "type": "array",
@@ -2308,6 +2530,14 @@
             "description": "Multi-status. Note that the order of the returned array matches the order of the array passed in the request.",
             "content": {
               "application/vnd.sbdraftcampaignresponse.v3+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SBDraftCampaignResponse"
+                  }
+                }
+              },
+              "application/vnd.updatedraftcampaignsresponse.v3.2+json": {
                 "schema": {
                   "type": "array",
                   "items": {
@@ -2487,14 +2717,7 @@
               },
               "application/vnd.sbdraftcampaign.v3.2+json": {
                 "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/SBCampaignResponseCommon32"
-                    },
-                    {
-                      "$ref": "#/components/schemas/SBVideoCampaignResponseCommon"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/SBDraftCampaignV3_2"
                 }
               },
               "application/vnd.sbdraftcampaign.v3.3+json": {
@@ -5088,6 +5311,15 @@
         ],
         "description": "The type of ad format."
       },
+      "AdFormatV3_2": {
+        "type": "string",
+        "enum": [
+          "productCollection",
+          "storeSpotlight",
+          "video"
+        ],
+        "description": "The type of ad format."
+      },
       "CreativeType": {
         "type": "string",
         "enum": [
@@ -5299,7 +5531,7 @@
           },
           "bidAdjustments": {
             "type": "array",
-            "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.",
+            "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
             "items": {
               "$ref": "#/components/schemas/BidAdjustment"
             }
@@ -5426,7 +5658,7 @@
                   },
                   "bidAdjustments": {
                     "type": "array",
-                    "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.",
+                    "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
                     "items": {
                       "$ref": "#/components/schemas/BidAdjustment"
                     }
@@ -5507,7 +5739,7 @@
           },
           "bidAdjustments": {
             "type": "array",
-            "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.",
+            "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
             "items": {
               "$ref": "#/components/schemas/BidAdjustment"
             }
@@ -5522,6 +5754,90 @@
           },
           "creative": {
             "$ref": "#/components/schemas/SBCreative"
+          },
+          "landingPage": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SBProductListLandingPage"
+              },
+              {
+                "$ref": "#/components/schemas/SBStoreLandingPage"
+              },
+              {
+                "$ref": "#/components/schemas/SBCustomUrlLandingPage"
+              }
+            ]
+          }
+        }
+      },
+      "SBDraftCampaignBaseV3_2": {
+        "properties": {
+          "draftCampaignId": {
+            "type": "integer",
+            "description": "The identifier of the draft campaign."
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the draft campaign. Maximum 128 characters. Duplicate campaign names are not allowed."
+          },
+          "tags": {
+            "$ref": "#/components/schemas/CampaignTags"
+          },
+          "budget": {
+            "type": "number",
+            "description": "The budget associated with the draft campaign."
+          },
+          "budgetType": {
+            "$ref": "#/components/schemas/BudgetType"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The YYYYMMDD start date for the campaign. If this field is not set to a value, the current date is used."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The YYYYMMDD end date for the campaign. Must be greater than the value for `startDate`. If not specified, the campaign has no end date and runs continuously."
+          },
+          "brandEntityId": {
+            "writeOnly": true,
+            "type": "string",
+            "description": "The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands)."
+          },
+          "bidOptimization": {
+            "type": "boolean",
+            "description": "Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.",
+            "default": true
+          },
+          "bidMultiplier": {
+            "type": "number",
+            "description": "A bid multiplier. Note that this field can only be set when 'bidOptimization' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.",
+            "minimum": -99,
+            "maximum": 99
+          },
+          "bidAdjustments": {
+            "type": "array",
+            "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
+            "items": {
+              "$ref": "#/components/schemas/BidAdjustment"
+            }
+          },
+          "portfolioId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The identifier of the Portfolio to which the draft campaign is associated."
+          },
+          "adFormat": {
+            "$ref": "#/components/schemas/AdFormatV3_2"
+          },
+          "creative": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SBProductCollectionCreative"
+              },
+              {
+                "$ref": "#/components/schemas/SBStoreSpotlightCreative"
+              }
+            ]
           },
           "landingPage": {
             "oneOf": [
@@ -5663,6 +5979,248 @@
                 }
               }
             ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SBVideoDraftCampaignBase"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "targets": {
+                    "type": "array",
+                    "description": "An array of targets associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftTargetingClause"
+                    }
+                  },
+                  "negativeTargets": {
+                    "type": "array",
+                    "description": "An array of negative targets associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftNegativeTargetingClause"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "SBDraftCampaignV3_2": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SBDraftCampaignBaseV3_2"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "keywords": {
+                    "type": "array",
+                    "description": "An array of keywords associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftKeyword"
+                    }
+                  },
+                  "negativeKeywords": {
+                    "type": "array",
+                    "description": "An array of negative keywords associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftNegativeKeyword"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SBDraftCampaignBaseV3_2"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "targets": {
+                    "type": "array",
+                    "description": "An array of targets associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftTargetingClause"
+                    }
+                  },
+                  "negativeTargets": {
+                    "type": "array",
+                    "description": "An array of negative targets associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftNegativeTargetingClause"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SBVideoDraftCampaignBase"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "keywords": {
+                    "type": "array",
+                    "description": "An array of keywords associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftKeyword"
+                    }
+                  },
+                  "negativeKeywords": {
+                    "type": "array",
+                    "description": "An array of negative keywords associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftNegativeKeyword"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SBVideoDraftCampaignBase"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "targets": {
+                    "type": "array",
+                    "description": "An array of targets associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftTargetingClause"
+                    }
+                  },
+                  "negativeTargets": {
+                    "type": "array",
+                    "description": "An array of negative targets associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftNegativeTargetingClause"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "SBDraftCampaignV3_3": {
+        "oneOf": [
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SBDraftCampaignBaseV3_3"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "keywords": {
+                    "type": "array",
+                    "description": "An array of keywords associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftKeyword"
+                    }
+                  },
+                  "negativeKeywords": {
+                    "type": "array",
+                    "description": "An array of negative keywords associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftNegativeKeyword"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SBDraftCampaignBaseV3_3"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "targets": {
+                    "type": "array",
+                    "description": "An array of targets associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftTargetingClause"
+                    }
+                  },
+                  "negativeTargets": {
+                    "type": "array",
+                    "description": "An array of negative targets associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftNegativeTargetingClause"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SBVideoDraftCampaignBase"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "keywords": {
+                    "type": "array",
+                    "description": "An array of keywords associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftKeyword"
+                    }
+                  },
+                  "negativeKeywords": {
+                    "type": "array",
+                    "description": "An array of negative keywords associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftNegativeKeyword"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SBVideoDraftCampaignBase"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "targets": {
+                    "type": "array",
+                    "description": "An array of targets associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftTargetingClause"
+                    }
+                  },
+                  "negativeTargets": {
+                    "type": "array",
+                    "description": "An array of negative targets associated with the draft campaign.",
+                    "items": {
+                      "$ref": "#/components/schemas/SBDraftNegativeTargetingClause"
+                    }
+                  }
+                }
+              }
+            ]
           }
         ]
       },
@@ -5676,6 +6234,26 @@
           }
         ]
       },
+      "SBGetDraftCampaignResponseV3_2": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SBDraftCampaignBaseV3_2"
+          },
+          {
+            "$ref": "#/components/schemas/SBVideoDraftCampaignBase"
+          }
+        ]
+      },
+      "SBGetDraftCampaignResponseV3_3": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SBDraftCampaignBaseV3_3"
+          },
+          {
+            "$ref": "#/components/schemas/SBVideoDraftCampaignBase"
+          }
+        ]
+      },
       "SBCreateDraftCampaignRequest": {
         "oneOf": [
           {
@@ -5683,6 +6261,38 @@
           },
           {
             "$ref": "#/components/schemas/SBCreateDraftCampaignWithProductTargets"
+          },
+          {
+            "$ref": "#/components/schemas/SBVideoCreateDraftCampaignWithKeywords"
+          },
+          {
+            "$ref": "#/components/schemas/SBVideoCreateDraftCampaignWithProductTargets"
+          }
+        ]
+      },
+      "SBCreateDraftCampaignRequestV3_2": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SBCreateDraftCampaignWithKeywordsV3_2"
+          },
+          {
+            "$ref": "#/components/schemas/SBCreateDraftCampaignWithProductTargetsV3_2"
+          },
+          {
+            "$ref": "#/components/schemas/SBVideoCreateDraftCampaignWithKeywords"
+          },
+          {
+            "$ref": "#/components/schemas/SBVideoCreateDraftCampaignWithProductTargets"
+          }
+        ]
+      },
+      "SBCreateDraftCampaignRequestV3_3": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SBCreateDraftCampaignWithKeywordsV3_3"
+          },
+          {
+            "$ref": "#/components/schemas/SBCreateDraftCampaignWithProductTargetsV3_3"
           },
           {
             "$ref": "#/components/schemas/SBVideoCreateDraftCampaignWithKeywords"
@@ -5736,7 +6346,7 @@
           },
           "bidAdjustments": {
             "type": "array",
-            "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.",
+            "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
             "items": {
               "$ref": "#/components/schemas/BidAdjustment"
             }
@@ -5748,6 +6358,78 @@
           },
           "creative": {
             "$ref": "#/components/schemas/SBCreative"
+          },
+          "landingPage": {
+            "$ref": "#/components/schemas/SBLandingPage"
+          }
+        }
+      },
+      "SBCreateDraftCampaignRequestCommonV3_2": {
+        "required": [
+          "name",
+          "budget",
+          "budgetType"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated."
+          },
+          "budget": {
+            "type": "number",
+            "description": "The budget associated with the draft campaign."
+          },
+          "budgetType": {
+            "$ref": "#/components/schemas/BudgetType"
+          },
+          "startDate": {
+            "type": "string",
+            "description": "The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously."
+          },
+          "adFormat": {
+            "$ref": "#/components/schemas/AdFormatV3_2"
+          },
+          "brandEntityId": {
+            "writeOnly": true,
+            "type": "string",
+            "description": "The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource."
+          },
+          "bidOptimization": {
+            "type": "boolean",
+            "description": "Set to `true` to have Amazon automatically optimize bids for placements below top of search.",
+            "default": true
+          },
+          "bidMultiplier": {
+            "type": "number",
+            "description": "A bid multiplier. Note that this field can only be set when 'bidOptimization' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.",
+            "minimum": -99,
+            "maximum": 99
+          },
+          "bidAdjustments": {
+            "type": "array",
+            "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
+            "items": {
+              "$ref": "#/components/schemas/BidAdjustment"
+            }
+          },
+          "portfolioId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "The identifier of the Portfolio to which the draft campaign is associated."
+          },
+          "creative": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SBProductCollectionCreative"
+              },
+              {
+                "$ref": "#/components/schemas/SBStoreSpotlightCreative"
+              }
+            ]
           },
           "landingPage": {
             "$ref": "#/components/schemas/SBLandingPage"
@@ -5838,6 +6520,26 @@
           }
         ]
       },
+      "SBCreateDraftCampaignWithKeywordsV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SBCreateDraftCampaignRequestCommonV3_2"
+          },
+          {
+            "$ref": "#/components/schemas/SBCommonKeywords"
+          }
+        ]
+      },
+      "SBCreateDraftCampaignWithProductTargetsV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SBCreateDraftCampaignRequestCommonV3_2"
+          },
+          {
+            "$ref": "#/components/schemas/SBCommonTargets"
+          }
+        ]
+      },
       "SBUpdateDraftCampaignRequest": {
         "oneOf": [
           {
@@ -5848,6 +6550,25 @@
           },
           {
             "$ref": "#/components/schemas/SBVideoUpdateDraftCampaignRequestWithKeywords"
+          },
+          {
+            "$ref": "#/components/schemas/SBVideoUpdateDraftCampaignRequestWithProductTargets"
+          }
+        ]
+      },
+      "SBUpdateDraftCampaignRequestV3_2": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SBUpdateDraftCampaignRequestWithKeywordsV3_2"
+          },
+          {
+            "$ref": "#/components/schemas/SBUpdateDraftCampaignRequestWithProductTargetsV3_2"
+          },
+          {
+            "$ref": "#/components/schemas/SBVideoUpdateDraftCampaignRequestWithKeywords"
+          },
+          {
+            "$ref": "#/components/schemas/SBVideoUpdateDraftCampaignRequestWithProductTargets"
           }
         ]
       },
@@ -5902,7 +6623,7 @@
               },
               "bidAdjustments": {
                 "type": "array",
-                "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.",
+                "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
                 "items": {
                   "$ref": "#/components/schemas/BidAdjustment"
                 }
@@ -5914,6 +6635,81 @@
               },
               "creative": {
                 "$ref": "#/components/schemas/SBCreative"
+              }
+            }
+          }
+        ]
+      },
+      "SBUpdateDraftCampaignRequestCommonV3_2": {
+        "allOf": [
+          {
+            "type": "object",
+            "required": [
+              "name",
+              "budget",
+              "budgetType"
+            ],
+            "properties": {
+              "draftCampaignId": {
+                "type": "integer",
+                "description": "The identifier of the draft campaign."
+              },
+              "name": {
+                "type": "string",
+                "description": "The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated."
+              },
+              "budget": {
+                "type": "number",
+                "description": "The budget associated with the draft campaign."
+              },
+              "budgetType": {
+                "$ref": "#/components/schemas/BudgetType"
+              },
+              "startDate": {
+                "type": "string",
+                "description": "The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default."
+              },
+              "endDate": {
+                "type": "string",
+                "description": "The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously."
+              },
+              "brandEntityId": {
+                "writeOnly": true,
+                "type": "string",
+                "description": "The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource."
+              },
+              "bidOptimization": {
+                "type": "boolean",
+                "description": "Set to `true` to have Amazon automatically optimize bids for placements below top of search.",
+                "default": true
+              },
+              "bidMultiplier": {
+                "type": "number",
+                "description": "A bid multiplier. Note that this field can only be set when 'bidOptimization' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.",
+                "minimum": -99,
+                "maximum": 99
+              },
+              "bidAdjustments": {
+                "type": "array",
+                "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
+                "items": {
+                  "$ref": "#/components/schemas/BidAdjustment"
+                }
+              },
+              "portfolioId": {
+                "type": "integer",
+                "format": "int64",
+                "description": "The identifier of the Portfolio to which the draft campaign is associated."
+              },
+              "creative": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/SBProductCollectionCreative"
+                  },
+                  {
+                    "$ref": "#/components/schemas/SBStoreSpotlightCreative"
+                  }
+                ]
               }
             }
           }
@@ -6028,6 +6824,106 @@
         "allOf": [
           {
             "$ref": "#/components/schemas/SBUpdateDraftCampaignRequestCommon"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "targets": {
+                "type": "array",
+                "writeOnly": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "expressions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SBExpression"
+                      }
+                    },
+                    "bid": {
+                      "$ref": "#/components/schemas/Bid"
+                    }
+                  }
+                }
+              },
+              "negativeTargets": {
+                "type": "array",
+                "writeOnly": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "expressions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SBExpression"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "SBUpdateDraftCampaignRequestWithKeywordsV3_2": {
+        "required": [
+          "draftCampaignId"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SBUpdateDraftCampaignRequestCommonV3_2"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "keywords": {
+                "description": "An array of keywords associated with the campaign.",
+                "writeOnly": true,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "keywordText": {
+                      "type": "string",
+                      "description": "The keyword text. Maximum of 10 words."
+                    },
+                    "matchType": {
+                      "$ref": "#/components/schemas/MatchType"
+                    },
+                    "bid": {
+                      "$ref": "#/components/schemas/Bid"
+                    }
+                  }
+                }
+              },
+              "negativeKeywords": {
+                "description": "An array of negative keywords associated with the campaign.",
+                "writeOnly": true,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "keywordText": {
+                      "description": "The keyword text. Maximum of 10 words.",
+                      "type": "string"
+                    },
+                    "matchType": {
+                      "$ref": "#/components/schemas/NegativeMatchType"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "SBUpdateDraftCampaignRequestWithProductTargetsV3_2": {
+        "required": [
+          "draftCampaignId"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SBUpdateDraftCampaignRequestCommonV3_2"
           },
           {
             "type": "object",
@@ -6388,68 +7284,10 @@
       "SBCampaignResponse": {
         "oneOf": [
           {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/SBCampaignResponseCommon"
-              }
-            ]
+            "$ref": "#/components/schemas/SBCampaignResponseCommon"
           },
           {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/SBCampaignResponseCommon"
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "expressions": {
-                    "description": "An array of targets associated with the campaign.",
-                    "writeOnly": true,
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "expression": {
-                          "$ref": "#/components/schemas/SBExpression"
-                        },
-                        "matchType": {
-                          "$ref": "#/components/schemas/MatchType"
-                        },
-                        "bid": {
-                          "$ref": "#/components/schemas/Bid"
-                        }
-                      }
-                    }
-                  },
-                  "negativeExpressions": {
-                    "description": "An array of negative targets associated with the campaign.",
-                    "writeOnly": true,
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "expression": {
-                          "$ref": "#/components/schemas/SBNegativeTargetingExpressions"
-                        },
-                        "matchType": {
-                          "$ref": "#/components/schemas/NegativeMatchType"
-                        },
-                        "bid": {
-                          "$ref": "#/components/schemas/Bid"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          },
-          {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/SBVideoCampaignResponseCommon"
-              }
-            ]
+            "$ref": "#/components/schemas/SBVideoCampaignResponseCommon"
           }
         ]
       },
@@ -6541,7 +7379,7 @@
               },
               "bidAdjustments": {
                 "type": "array",
-                "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.",
+                "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
                 "items": {
                   "$ref": "#/components/schemas/BidAdjustment"
                 }
@@ -6566,13 +7404,6 @@
           }
         ]
       },
-      "SBCampaignResponseCommon33": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/SBCampaignResponseCommon32"
-          }
-        ]
-      },
       "SBCampaignResponseCommon32": {
         "allOf": [
           {
@@ -6590,6 +7421,13 @@
                 "description": "A bid multiplier. Note that this field can only be set when 'bidOptimization' is set to false. Value is a percentage to two decimal places. For example, if set to -40.00 for a $5.00 bid, the resulting bid is $3.00.",
                 "minimum": -99,
                 "maximum": 99
+              },
+              "bidAdjustments": {
+                "type": "array",
+                "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
+                "items": {
+                  "$ref": "#/components/schemas/BidAdjustment"
+                }
               },
               "creative": {
                 "oneOf": [
@@ -6682,7 +7520,7 @@
             "format": "int64"
           },
           "adFormat": {
-            "$ref": "#/components/schemas/AdFormat"
+            "$ref": "#/components/schemas/AdFormatV3_2"
           }
         }
       },
@@ -6889,7 +7727,7 @@
           },
           "bidAdjustments": {
             "type": "array",
-            "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.",
+            "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
             "items": {
               "$ref": "#/components/schemas/BidAdjustment"
             }
@@ -6906,6 +7744,87 @@
             "$ref": "#/components/schemas/SBLandingPage"
           }
         }
+      },
+      "SBCreateCampaignRequestCommonV3_2": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters. Note that idempotency for this field works different for sellers and vendors. Sellers aren't allowed to have duplicate campaign names, but vendors can have duplicate campaign names."
+          },
+          "tags": {
+            "$ref": "#/components/schemas/CampaignTags"
+          },
+          "budget": {
+            "description": "The budget amount associated with the campaign.",
+            "type": "number"
+          },
+          "budgetType": {
+            "$ref": "#/components/schemas/BudgetType"
+          },
+          "startDate": {
+            "$ref": "#/components/schemas/StartDate"
+          },
+          "endDate": {
+            "$ref": "#/components/schemas/EndDate"
+          },
+          "adFormat": {
+            "$ref": "#/components/schemas/AdFormatV3_2"
+          },
+          "state": {
+            "$ref": "#/components/schemas/State"
+          },
+          "brandEntityId": {
+            "writeOnly": true,
+            "type": "string",
+            "description": "The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands)."
+          },
+          "bidOptimization": {
+            "type": "boolean",
+            "description": "Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.",
+            "default": true
+          },
+          "bidMultiplier": {
+            "type": "number",
+            "description": "A bid multiplier. Note that this field can only be set when 'bidOptimization' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.",
+            "minimum": -99,
+            "maximum": 99
+          },
+          "bidAdjustments": {
+            "type": "array",
+            "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
+            "items": {
+              "$ref": "#/components/schemas/BidAdjustment"
+            }
+          },
+          "portfolioId": {
+            "description": "The identifier of the portfolio to which the campaign is associated.",
+            "type": "integer",
+            "format": "int64"
+          },
+          "creative": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SBProductCollectionCreative"
+              },
+              {
+                "$ref": "#/components/schemas/SBStoreSpotlightCreative"
+              }
+            ]
+          },
+          "landingPage": {
+            "$ref": "#/components/schemas/SBLandingPage"
+          }
+        }
+      },
+      "SBCreateCampaignRequestCommonV3_3": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SBCreateCampaignRequestCommonV3_2"
+          },
+          {
+            "$ref": "#/components/schemas/ShopperSegmentBiddingControls"
+          }
+        ]
       },
       "SBVideoCreateCampaignRequestCommon": {
         "properties": {
@@ -6963,6 +7882,38 @@
           }
         ]
       },
+      "SBCreateCampaignRequestV3_2": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SBCreateCampaignWithKeywordsV3_2"
+          },
+          {
+            "$ref": "#/components/schemas/SBCreateCampaignWithExpressionsV3_2"
+          },
+          {
+            "$ref": "#/components/schemas/SBVideoCreateCampaignWithKeywords"
+          },
+          {
+            "$ref": "#/components/schemas/SBVideoCreateCampaignWithExpressions"
+          }
+        ]
+      },
+      "SBCreateCampaignRequestV3_3": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SBCreateCampaignWithKeywordsV3_3"
+          },
+          {
+            "$ref": "#/components/schemas/SBCreateCampaignWithExpressionsV3_3"
+          },
+          {
+            "$ref": "#/components/schemas/SBVideoCreateCampaignWithKeywords"
+          },
+          {
+            "$ref": "#/components/schemas/SBVideoCreateCampaignWithExpressions"
+          }
+        ]
+      },
       "SBCreateCampaignWithKeywords": {
         "allOf": [
           {
@@ -6997,6 +7948,46 @@
         "allOf": [
           {
             "$ref": "#/components/schemas/SBVideoCreateCampaignRequestCommon"
+          },
+          {
+            "$ref": "#/components/schemas/SBCommonTargets"
+          }
+        ]
+      },
+      "SBCreateCampaignWithKeywordsV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SBCreateCampaignRequestCommonV3_2"
+          },
+          {
+            "$ref": "#/components/schemas/SBCommonKeywords"
+          }
+        ]
+      },
+      "SBCreateCampaignWithExpressionsV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SBCreateCampaignRequestCommonV3_2"
+          },
+          {
+            "$ref": "#/components/schemas/SBCommonTargets"
+          }
+        ]
+      },
+      "SBCreateCampaignWithKeywordsV3_3": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SBCreateCampaignRequestCommonV3_3"
+          },
+          {
+            "$ref": "#/components/schemas/SBCommonKeywords"
+          }
+        ]
+      },
+      "SBCreateCampaignWithExpressionsV3_3": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SBCreateCampaignRequestCommonV3_3"
           },
           {
             "$ref": "#/components/schemas/SBCommonTargets"
@@ -7722,10 +8713,9 @@
         }
       },
       "SBCampaignResponseCommonV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
         "allOf": [
           {
-            "$ref": "#/components/schemas/SBCampaignResponseCommon"
+            "$ref": "#/components/schemas/SBCampaignResponseCommon32"
           },
           {
             "$ref": "#/components/schemas/ShopperSegmentBiddingControls"
@@ -7733,14 +8723,13 @@
         ]
       },
       "ShopperSegmentBiddingControls": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
         "properties": {
           "bidOptimizationStrategy": {
             "$ref": "#/components/schemas/BidOptimizationStrategy"
           },
           "bidAdjustments": {
             "type": "array",
-            "description": "List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.",
+            "description": "List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`",
             "items": {
               "$ref": "#/components/schemas/BidAdjustmentV3_3"
             },
@@ -7750,10 +8739,9 @@
         }
       },
       "BidAdjustmentV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
         "properties": {
           "bidAdjustmentPredicate": {
-            "description": "|-\n            Determines the predicate (placement groups and shopper segments) that the bid adjustment will be made for.\n            |BidAdjustmentPredicate|Description|\n            |------|-----------|\n            |PLACEMENT_GROUP_DETAIL_PAGE|Predicate for adjusting bids at detail page placement.|\n            |PLACEMENT_GROUP_HOME|Predicate for adjusting bids at home page placement.|\n            |PLACEMENT_GROUP_OTHER|Predicate for adjusting bids at pages other than detail and home pages placement.|\n            |SHOPPER_SEGMENT_NEW_TO_BRAND_PURCHASE|Predicate for adjusting bids for new-to-brand purchase shopper segment.|",
+            "description": "Determines the predicate (placement groups and shopper segments) that the bid adjustment will be made for.\n|BidAdjustmentPredicate|Description|\n|------|-----------|\n|PLACEMENT_GROUP_DETAIL_PAGE|Predicate for adjusting bids at detail page placement.|\n|PLACEMENT_GROUP_HOME|Predicate for adjusting bids at home page placement.|\n|PLACEMENT_GROUP_OTHER|Predicate for adjusting bids at pages other than detail and home pages placement.|\n|SHOPPER_SEGMENT_NEW_TO_BRAND_PURCHASE|Predicate for adjusting bids for new-to-brand purchase shopper segment.|",
             "type": "string",
             "enum": [
               "placementGroupDetailPage",
@@ -7763,7 +8751,7 @@
             ]
           },
           "bidAdjustmentPercent": {
-            "description": "|-\n            Bid adjustment for placement groups and shopper segments. Value is a percentage to two decimal places. For bid adjustments in placement groups, min is -99.00 and max is 900.00. For bid adjustments in shopper segments, min is 0.00 and max is 900.00. For example: If -40.00 is set for a $5.00 bid, the resulting bid is $3.00.",
+            "description": "Bid adjustment for placement groups and shopper segments. Value is a percentage to two decimal places. For bid adjustments in placement groups, min is -99.00 and max is 900.00. For bid adjustments in shopper segments, min is 0.00 and max is 900.00. For example: If -40.00 is set for a $5.00 bid, the resulting bid is $3.00.",
             "type": "number",
             "minimum": -99,
             "maximum": 900
@@ -7771,41 +8759,11 @@
         }
       },
       "BidOptimizationStrategy": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
         "type": "string",
-        "description": "|-\n        Automated bid optimization strategy.\n        |Bid optimization strategy|Description|\n        |------|-----------|\n        |MAXIMIZE_IMMEDIATE_SALES|Bid optimization strategy for maximizing immediate sales.|\n        |MAXIMIZE_NEW_TO_BRAND_CUSTOMERS|Bid optimization strategy for maximizing new to brand customers.|",
+        "description": "Automated bid optimization strategy.\n|Bid optimization strategy|Description|\n|------|-----------|\n|MAXIMIZE_IMMEDIATE_SALES|Bid optimization strategy for maximizing immediate sales.|\n|MAXIMIZE_NEW_TO_BRAND_CUSTOMERS|Bid optimization strategy for maximizing new to brand customers.|\n`Not supported for video campaigns`",
         "enum": [
           "MAXIMIZE_IMMEDIATE_SALES",
           "MAXIMIZE_NEW_TO_BRAND_CUSTOMERS"
-        ]
-      },
-      "SBCreateCampaignWithKeywordsV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/SBCreateCampaignRequestCommonV3_3"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "keywords": {
-                "description": "An array of keywords associated with the campaign.",
-                "writeOnly": true,
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Keyword"
-                }
-              },
-              "negativeKeywords": {
-                "description": "An array of negative keywords associated with the campaign.",
-                "writeOnly": true,
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/NegativeKeyword"
-                }
-              }
-            }
-          }
         ]
       },
       "Keyword": {
@@ -7913,32 +8871,6 @@
           "asinSameAs"
         ]
       },
-      "SBCreateCampaignRequestCommonV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/SBCreateCampaignRequestCommon"
-          },
-          {
-            "$ref": "#/components/schemas/ShopperSegmentBiddingControls"
-          }
-        ]
-      },
-      "SBListCampaignsResponseV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
-        "description": "List of campaigns",
-        "type": "array",
-        "items": {
-          "oneOf": [
-            {
-              "$ref": "#/components/schemas/SBListCampaignItemV3_3"
-            },
-            {
-              "$ref": "#/components/schemas/SBVideoListCampaignItem"
-            }
-          ]
-        }
-      },
       "SBVideoListCampaignItem": {
         "allOf": [
           {
@@ -7970,13 +8902,22 @@
         ]
       },
       "SBCreateDraftCampaignWithKeywordsV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
         "allOf": [
           {
             "$ref": "#/components/schemas/SBCreateDraftCampaignRequestCommonV3_3"
           },
           {
-            "$ref": "#/components/schemas/SBKeywordsNegativeKeywords"
+            "$ref": "#/components/schemas/SBCommonKeywords"
+          }
+        ]
+      },
+      "SBCreateDraftCampaignWithProductTargetsV3_3": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SBCreateDraftCampaignRequestCommonV3_3"
+          },
+          {
+            "$ref": "#/components/schemas/SBCommonTargets"
           }
         ]
       },
@@ -8003,10 +8944,9 @@
         }
       },
       "SBCreateDraftCampaignRequestCommonV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
         "allOf": [
           {
-            "$ref": "#/components/schemas/SBCreateDraftCampaignRequestCommon"
+            "$ref": "#/components/schemas/SBCreateDraftCampaignRequestCommonV3_2"
           },
           {
             "$ref": "#/components/schemas/ShopperSegmentBiddingControls"
@@ -8014,7 +8954,6 @@
         ]
       },
       "SBUpdateDraftCampaignRequestV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
         "oneOf": [
           {
             "$ref": "#/components/schemas/SBUpdateDraftCampaignRequestWithKeywordsV3_3"
@@ -8084,21 +9023,9 @@
         }
       },
       "SBUpdateDraftCampaignRequestWithKeywordsV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
         "allOf": [
           {
-            "$ref": "#/components/schemas/SBUpdateDraftCampaignRequestCommonV3_3"
-          },
-          {
-            "$ref": "#/components/schemas/SBKeywordsNegativeKeywords"
-          }
-        ]
-      },
-      "SBUpdateDraftCampaignRequestCommonV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/SBUpdateDraftCampaignRequestCommon"
+            "$ref": "#/components/schemas/SBUpdateDraftCampaignRequestWithKeywordsV3_2"
           },
           {
             "$ref": "#/components/schemas/ShopperSegmentBiddingControls"
@@ -8109,10 +9036,10 @@
         "x-amazon-advertising-package": "SBPublicAPISwagger",
         "allOf": [
           {
-            "$ref": "#/components/schemas/SBUpdateDraftCampaignRequestCommonV3_3"
+            "$ref": "#/components/schemas/SBUpdateDraftCampaignRequestWithProductTargetsV3_2"
           },
           {
-            "$ref": "#/components/schemas/SBTargetsNegativeTargets"
+            "$ref": "#/components/schemas/ShopperSegmentBiddingControls"
           }
         ]
       },
@@ -8161,7 +9088,7 @@
               },
               "bidAdjustments": {
                 "type": "array",
-                "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.",
+                "description": "List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`",
                 "items": {
                   "$ref": "#/components/schemas/BidAdjustment"
                 }
@@ -8189,18 +9116,6 @@
             "maximum": 900
           }
         }
-      },
-      "SBCreateCampaignResponseV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
-        "description": "SB create campaign",
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/SBCreateCampaignsResponseDefault"
-          },
-          {
-            "$ref": "#/components/schemas/SBCreateCampaignsResponseFullV3_3"
-          }
-        ]
       },
       "SBCreateCampaignsResponseFullV3_3": {
         "x-amazon-advertising-package": "SBPublicAPISwagger",
@@ -8285,24 +9200,7 @@
           }
         }
       },
-      "SBUpdateCampaignResponseItemV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/SBUpdateCampaignResponseDefault"
-          },
-          {
-            "type": "object",
-            "properties": {
-              "campaign": {
-                "$ref": "#/components/schemas/SBCampaignResponseV3_3"
-              }
-            }
-          }
-        ]
-      },
       "SBCampaignResponseV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
         "description": "SB campaign",
         "oneOf": [
           {
@@ -8902,42 +9800,13 @@
           }
         }
       },
-      "SBListDraftCampaignsResponseV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/SBDraftCampaignBaseV3_3"
-          },
-          {
-            "$ref": "#/components/schemas/SBVideoDraftCampaignBase"
-          }
-        ]
-      },
       "SBDraftCampaignBaseV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
         "allOf": [
           {
-            "$ref": "#/components/schemas/SBDraftCampaignBase"
+            "$ref": "#/components/schemas/SBDraftCampaignBaseV3_2"
           },
           {
             "$ref": "#/components/schemas/ShopperSegmentBiddingControls"
-          }
-        ]
-      },
-      "SBDraftCampaignV3_3": {
-        "x-amazon-advertising-package": "SBPublicAPISwagger",
-        "oneOf": [
-          {
-            "$ref": "#/components/schemas/SBDraftCampaignWithKeywordsV3_3"
-          },
-          {
-            "$ref": "#/components/schemas/SBDraftCampaignWithTargetsV3_3"
-          },
-          {
-            "$ref": "#/components/schemas/SBVideoDraftCampaignWithKeywords"
-          },
-          {
-            "$ref": "#/components/schemas/SBVideoDraftCampaignWithTargets"
           }
         ]
       },

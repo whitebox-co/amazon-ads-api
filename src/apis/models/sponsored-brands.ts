@@ -47,6 +47,18 @@ export interface AdFormatError {
     AdFormatError?: BasicErrorObject;
 }
 /**
+ * The type of ad format.
+ * @export
+ * @enum {string}
+ */
+
+export enum AdFormatV32 {
+    ProductCollection = 'productCollection',
+    StoreSpotlight = 'storeSpotlight',
+    Video = 'video'
+}
+
+/**
  * 
  * @export
  * @interface AdGroupError
@@ -153,13 +165,13 @@ export enum BidAdjustmentBidAdjustmentPredicateEnum {
  */
 export interface BidAdjustmentV33 {
     /**
-     * |-             Determines the predicate (placement groups and shopper segments) that the bid adjustment will be made for.             |BidAdjustmentPredicate|Description|             |------|-----------|             |PLACEMENT_GROUP_DETAIL_PAGE|Predicate for adjusting bids at detail page placement.|             |PLACEMENT_GROUP_HOME|Predicate for adjusting bids at home page placement.|             |PLACEMENT_GROUP_OTHER|Predicate for adjusting bids at pages other than detail and home pages placement.|             |SHOPPER_SEGMENT_NEW_TO_BRAND_PURCHASE|Predicate for adjusting bids for new-to-brand purchase shopper segment.|
+     * Determines the predicate (placement groups and shopper segments) that the bid adjustment will be made for. |BidAdjustmentPredicate|Description| |------|-----------| |PLACEMENT_GROUP_DETAIL_PAGE|Predicate for adjusting bids at detail page placement.| |PLACEMENT_GROUP_HOME|Predicate for adjusting bids at home page placement.| |PLACEMENT_GROUP_OTHER|Predicate for adjusting bids at pages other than detail and home pages placement.| |SHOPPER_SEGMENT_NEW_TO_BRAND_PURCHASE|Predicate for adjusting bids for new-to-brand purchase shopper segment.|
      * @type {string}
      * @memberof BidAdjustmentV33
      */
     bidAdjustmentPredicate?: BidAdjustmentV33BidAdjustmentPredicateEnum;
     /**
-     * |-             Bid adjustment for placement groups and shopper segments. Value is a percentage to two decimal places. For bid adjustments in placement groups, min is -99.00 and max is 900.00. For bid adjustments in shopper segments, min is 0.00 and max is 900.00. For example: If -40.00 is set for a $5.00 bid, the resulting bid is $3.00.
+     * Bid adjustment for placement groups and shopper segments. Value is a percentage to two decimal places. For bid adjustments in placement groups, min is -99.00 and max is 900.00. For bid adjustments in shopper segments, min is 0.00 and max is 900.00. For example: If -40.00 is set for a $5.00 bid, the resulting bid is $3.00.
      * @type {number}
      * @memberof BidAdjustmentV33
      */
@@ -191,7 +203,7 @@ export interface BidError {
     BidError?: BasicErrorObject & object;
 }
 /**
- * |-         Automated bid optimization strategy.         |Bid optimization strategy|Description|         |------|-----------|         |MAXIMIZE_IMMEDIATE_SALES|Bid optimization strategy for maximizing immediate sales.|         |MAXIMIZE_NEW_TO_BRAND_CUSTOMERS|Bid optimization strategy for maximizing new to brand customers.|
+ * Automated bid optimization strategy. |Bid optimization strategy|Description| |------|-----------| |MAXIMIZE_IMMEDIATE_SALES|Bid optimization strategy for maximizing immediate sales.| |MAXIMIZE_NEW_TO_BRAND_CUSTOMERS|Bid optimization strategy for maximizing new to brand customers.| `Not supported for video campaigns`
  * @export
  * @enum {string}
  */
@@ -1617,7 +1629,7 @@ export interface SBCampaign {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBCampaign
      */
@@ -1846,10 +1858,10 @@ export interface SBCampaignBase32 {
     portfolioId?: number;
     /**
      * 
-     * @type {AdFormat}
+     * @type {AdFormatV32}
      * @memberof SBCampaignBase32
      */
-    adFormat?: AdFormat;
+    adFormat?: AdFormatV32;
 }
 
 /**
@@ -1875,7 +1887,7 @@ export enum SBCampaignBase32ServingStatusEnum {
  * @type SBCampaignResponse
  * @export
  */
-export type SBCampaignResponse = SBCampaignResponseCommon | SBCampaignResponseCommon & object | SBVideoCampaignResponseCommon;
+export type SBCampaignResponse = SBCampaignResponseCommon | SBVideoCampaignResponseCommon;
 
 /**
  * 
@@ -1968,7 +1980,7 @@ export interface SBCampaignResponseCommon {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBCampaignResponseCommon
      */
@@ -2080,10 +2092,10 @@ export interface SBCampaignResponseCommon32 {
     portfolioId?: number;
     /**
      * 
-     * @type {AdFormat}
+     * @type {AdFormatV32}
      * @memberof SBCampaignResponseCommon32
      */
-    adFormat?: AdFormat;
+    adFormat?: AdFormatV32;
     /**
      * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
      * @type {boolean}
@@ -2096,6 +2108,12 @@ export interface SBCampaignResponseCommon32 {
      * @memberof SBCampaignResponseCommon32
      */
     bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCampaignResponseCommon32
+     */
+    bidAdjustments?: Array<BidAdjustment>;
     /**
      * 
      * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
@@ -2148,6 +2166,12 @@ export interface SBCampaignResponseCommon32AllOf {
      */
     bidMultiplier?: number;
     /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCampaignResponseCommon32AllOf
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
      * 
      * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
      * @memberof SBCampaignResponseCommon32AllOf
@@ -2160,129 +2184,6 @@ export interface SBCampaignResponseCommon32AllOf {
      */
     landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
 }
-/**
- * 
- * @export
- * @interface SBCampaignResponseCommon33
- */
-export interface SBCampaignResponseCommon33 {
-    /**
-     * The campaign identifier.
-     * @type {number}
-     * @memberof SBCampaignResponseCommon33
-     */
-    campaignId?: number;
-    /**
-     * The campaign name.
-     * @type {string}
-     * @memberof SBCampaignResponseCommon33
-     */
-    name?: string;
-    /**
-     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
-     * @type {{ [key: string]: string; }}
-     * @memberof SBCampaignResponseCommon33
-     */
-    tags?: { [key: string]: string; };
-    /**
-     * 
-     * @type {number}
-     * @memberof SBCampaignResponseCommon33
-     */
-    budget?: number;
-    /**
-     * 
-     * @type {BudgetType}
-     * @memberof SBCampaignResponseCommon33
-     */
-    budgetType?: BudgetType;
-    /**
-     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
-     * @type {string}
-     * @memberof SBCampaignResponseCommon33
-     */
-    startDate?: string | null;
-    /**
-     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
-     * @type {string}
-     * @memberof SBCampaignResponseCommon33
-     */
-    endDate?: string | null;
-    /**
-     * 
-     * @type {State}
-     * @memberof SBCampaignResponseCommon33
-     */
-    state?: State;
-    /**
-     * |Status|Description| |------|-----------| |ASIN_NOT_BUYABLE| The ASIN can\'t be purchased due to eligibility or availability.| |BILLING_ERROR| Billing information requires correction.| |ENDED| THe `endDate` specified in the campaign object occurs in the past.| |LANDING_PAGE_NOT_AVAILABLE| The specified landing page is not available. This may be caused by an incorrect address or a landing page with less than three ASINs.| |OUT_OF_BUDGET| The campaign has run out of budget.| |PAUSED| The campaign state set to `paused`.| |PENDING_REVIEW|: A newly created campaign that has not passed moderation review. Note that moderation review may take up to 72 hours.| |READY| The campaign is scheduled for a future date.| |REJECTED| The campaign failed moderation review.| |RUNNING| The campaign is enabled and serving.| |SCHEDULED| A transitive state between `ready` and `running`, as child entities associated with the campaign move to a running state.| |TERMINATED|The state of the campaign is set to `archived`.|
-     * @type {string}
-     * @memberof SBCampaignResponseCommon33
-     */
-    servingStatus?: SBCampaignResponseCommon33ServingStatusEnum;
-    /**
-     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
-     * @type {string}
-     * @memberof SBCampaignResponseCommon33
-     */
-    brandEntityId?: string;
-    /**
-     * The identifier of the portfolio to which the campaign is associated.
-     * @type {number}
-     * @memberof SBCampaignResponseCommon33
-     */
-    portfolioId?: number;
-    /**
-     * 
-     * @type {AdFormat}
-     * @memberof SBCampaignResponseCommon33
-     */
-    adFormat?: AdFormat;
-    /**
-     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
-     * @type {boolean}
-     * @memberof SBCampaignResponseCommon33
-     */
-    bidOptimization?: boolean;
-    /**
-     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. For example, if set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
-     * @type {number}
-     * @memberof SBCampaignResponseCommon33
-     */
-    bidMultiplier?: number;
-    /**
-     * 
-     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
-     * @memberof SBCampaignResponseCommon33
-     */
-    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
-    /**
-     * 
-     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
-     * @memberof SBCampaignResponseCommon33
-     */
-    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
-}
-
-/**
-    * @export
-    * @enum {string}
-    */
-export enum SBCampaignResponseCommon33ServingStatusEnum {
-    AsinNotBuyable = 'ASIN_NOT_BUYABLE',
-    BillingError = 'BILLING_ERROR',
-    Ended = 'ENDED',
-    LandingPageNotAvailable = 'LANDING_PAGE_NOT_AVAILABLE',
-    OutOfBudget = 'OUT_OF_BUDGET',
-    Paused = 'PAUSED',
-    PendingReview = 'PENDING_REVIEW',
-    Ready = 'READY',
-    Rejected = 'REJECTED',
-    Running = 'RUNNING',
-    Scheduled = 'SCHEDULED',
-    Terminated = 'TERMINATED'
-}
-
 /**
  * 
  * @export
@@ -2302,7 +2203,7 @@ export interface SBCampaignResponseCommonAllOf {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBCampaignResponseCommonAllOf
      */
@@ -2394,10 +2295,10 @@ export interface SBCampaignResponseCommonV33 {
     portfolioId?: number;
     /**
      * 
-     * @type {AdFormat}
+     * @type {AdFormatV32}
      * @memberof SBCampaignResponseCommonV33
      */
-    adFormat?: AdFormat;
+    adFormat?: AdFormatV32;
     /**
      * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
      * @type {boolean}
@@ -2411,17 +2312,17 @@ export interface SBCampaignResponseCommonV33 {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`
      * @type {Array<BidAdjustmentV33>}
      * @memberof SBCampaignResponseCommonV33
      */
     bidAdjustments?: Array<BidAdjustmentV33>;
     /**
      * 
-     * @type {SBCollectionCreative}
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
      * @memberof SBCampaignResponseCommonV33
      */
-    creative?: SBCollectionCreative;
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
     /**
      * 
      * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
@@ -2771,7 +2672,7 @@ export interface SBCreateCampaignRequestCommon {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBCreateCampaignRequestCommon
      */
@@ -2792,6 +2693,103 @@ export interface SBCreateCampaignRequestCommon {
      * 
      * @type {SBLandingPage}
      * @memberof SBCreateCampaignRequestCommon
+     */
+    landingPage?: SBLandingPage;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateCampaignRequestCommonV32
+ */
+export interface SBCreateCampaignRequestCommonV32 {
+    /**
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters. Note that idempotency for this field works different for sellers and vendors. Sellers aren\'t allowed to have duplicate campaign names, but vendors can have duplicate campaign names.
+     * @type {string}
+     * @memberof SBCreateCampaignRequestCommonV32
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCreateCampaignRequestCommonV32
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget amount associated with the campaign.
+     * @type {number}
+     * @memberof SBCreateCampaignRequestCommonV32
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateCampaignRequestCommonV32
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCreateCampaignRequestCommonV32
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCreateCampaignRequestCommonV32
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {AdFormatV32}
+     * @memberof SBCreateCampaignRequestCommonV32
+     */
+    adFormat?: AdFormatV32;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBCreateCampaignRequestCommonV32
+     */
+    state?: State;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCreateCampaignRequestCommonV32
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateCampaignRequestCommonV32
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateCampaignRequestCommonV32
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCreateCampaignRequestCommonV32
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCreateCampaignRequestCommonV32
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBCreateCampaignRequestCommonV32
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateCampaignRequestCommonV32
      */
     landingPage?: SBLandingPage;
 }
@@ -2839,10 +2837,10 @@ export interface SBCreateCampaignRequestCommonV33 {
     endDate?: string | null;
     /**
      * 
-     * @type {AdFormat}
+     * @type {AdFormatV32}
      * @memberof SBCreateCampaignRequestCommonV33
      */
-    adFormat?: AdFormat;
+    adFormat?: AdFormatV32;
     /**
      * 
      * @type {State}
@@ -2868,7 +2866,7 @@ export interface SBCreateCampaignRequestCommonV33 {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`
      * @type {Array<BidAdjustmentV33>}
      * @memberof SBCreateCampaignRequestCommonV33
      */
@@ -2881,10 +2879,10 @@ export interface SBCreateCampaignRequestCommonV33 {
     portfolioId?: number;
     /**
      * 
-     * @type {SBCreative}
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
      * @memberof SBCreateCampaignRequestCommonV33
      */
-    creative?: SBCreative;
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
     /**
      * 
      * @type {SBLandingPage}
@@ -2899,11 +2897,16 @@ export interface SBCreateCampaignRequestCommonV33 {
     bidOptimizationStrategy?: BidOptimizationStrategy;
 }
 /**
- * @type SBCreateCampaignResponseV33
- * SB create campaign
+ * @type SBCreateCampaignRequestV32
  * @export
  */
-export type SBCreateCampaignResponseV33 = SBCreateCampaignsResponseDefault | SBCreateCampaignsResponseFullV33;
+export type SBCreateCampaignRequestV32 = SBCreateCampaignWithExpressionsV32 | SBCreateCampaignWithKeywordsV32 | SBVideoCreateCampaignWithExpressions | SBVideoCreateCampaignWithKeywords;
+
+/**
+ * @type SBCreateCampaignRequestV33
+ * @export
+ */
+export type SBCreateCampaignRequestV33 = SBCreateCampaignWithExpressionsV33 | SBCreateCampaignWithKeywordsV33 | SBVideoCreateCampaignWithExpressions | SBVideoCreateCampaignWithKeywords;
 
 /**
  * 
@@ -2978,7 +2981,7 @@ export interface SBCreateCampaignWithExpressions {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBCreateCampaignWithExpressions
      */
@@ -3011,6 +3014,230 @@ export interface SBCreateCampaignWithExpressions {
      * 
      * @type {Array<SBCommonTargetsNegativeTargets>}
      * @memberof SBCreateCampaignWithExpressions
+     */
+    negativeTargets?: Array<SBCommonTargetsNegativeTargets>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateCampaignWithExpressionsV32
+ */
+export interface SBCreateCampaignWithExpressionsV32 {
+    /**
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters. Note that idempotency for this field works different for sellers and vendors. Sellers aren\'t allowed to have duplicate campaign names, but vendors can have duplicate campaign names.
+     * @type {string}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget amount associated with the campaign.
+     * @type {number}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {AdFormatV32}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    adFormat?: AdFormatV32;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    state?: State;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsTargets>}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    targets?: Array<SBCommonTargetsTargets>;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsNegativeTargets>}
+     * @memberof SBCreateCampaignWithExpressionsV32
+     */
+    negativeTargets?: Array<SBCommonTargetsNegativeTargets>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateCampaignWithExpressionsV33
+ */
+export interface SBCreateCampaignWithExpressionsV33 {
+    /**
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters. Note that idempotency for this field works different for sellers and vendors. Sellers aren\'t allowed to have duplicate campaign names, but vendors can have duplicate campaign names.
+     * @type {string}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget amount associated with the campaign.
+     * @type {number}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {AdFormatV32}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    adFormat?: AdFormatV32;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    state?: State;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    bidOptimizationStrategy?: BidOptimizationStrategy;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsTargets>}
+     * @memberof SBCreateCampaignWithExpressionsV33
+     */
+    targets?: Array<SBCommonTargetsTargets>;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsNegativeTargets>}
+     * @memberof SBCreateCampaignWithExpressionsV33
      */
     negativeTargets?: Array<SBCommonTargetsNegativeTargets>;
 }
@@ -3087,7 +3314,7 @@ export interface SBCreateCampaignWithKeywords {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBCreateCampaignWithKeywords
      */
@@ -3120,6 +3347,115 @@ export interface SBCreateCampaignWithKeywords {
      * An array of negative keywords associated with the campaign.
      * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
      * @memberof SBCreateCampaignWithKeywords
+     */
+    negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateCampaignWithKeywordsV32
+ */
+export interface SBCreateCampaignWithKeywordsV32 {
+    /**
+     * The name of the campaign. This name must be unique to the Amazon Ads account to which the campaign is associated. Maximum length of the string is 128 characters. Note that idempotency for this field works different for sellers and vendors. Sellers aren\'t allowed to have duplicate campaign names, but vendors can have duplicate campaign names.
+     * @type {string}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget amount associated with the campaign.
+     * @type {number}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If this property is not included in the request, the startDate value is not updated. If set to null, `startDate` is set to the current date.
+     * @type {string}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    startDate?: string | null;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If this property is not included in the request, the `endDate` value is not updated. If set to null, `endDate` is deleted from the draft campaign.
+     * @type {string}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    endDate?: string | null;
+    /**
+     * 
+     * @type {AdFormatV32}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    adFormat?: AdFormatV32;
+    /**
+     * 
+     * @type {State}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    state?: State;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the portfolio to which the campaign is associated.
+     * @type {number}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<SBCommonKeywordsKeywords>}
+     * @memberof SBCreateCampaignWithKeywordsV32
+     */
+    keywords?: Array<SBCommonKeywordsKeywords>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
+     * @memberof SBCreateCampaignWithKeywordsV32
      */
     negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
 }
@@ -3167,10 +3503,10 @@ export interface SBCreateCampaignWithKeywordsV33 {
     endDate?: string | null;
     /**
      * 
-     * @type {AdFormat}
+     * @type {AdFormatV32}
      * @memberof SBCreateCampaignWithKeywordsV33
      */
-    adFormat?: AdFormat;
+    adFormat?: AdFormatV32;
     /**
      * 
      * @type {State}
@@ -3196,7 +3532,7 @@ export interface SBCreateCampaignWithKeywordsV33 {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`
      * @type {Array<BidAdjustmentV33>}
      * @memberof SBCreateCampaignWithKeywordsV33
      */
@@ -3209,10 +3545,10 @@ export interface SBCreateCampaignWithKeywordsV33 {
     portfolioId?: number;
     /**
      * 
-     * @type {SBCreative}
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
      * @memberof SBCreateCampaignWithKeywordsV33
      */
-    creative?: SBCreative;
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
     /**
      * 
      * @type {SBLandingPage}
@@ -3227,35 +3563,16 @@ export interface SBCreateCampaignWithKeywordsV33 {
     bidOptimizationStrategy?: BidOptimizationStrategy;
     /**
      * An array of keywords associated with the campaign.
-     * @type {Array<Keyword>}
+     * @type {Array<SBCommonKeywordsKeywords>}
      * @memberof SBCreateCampaignWithKeywordsV33
      */
-    keywords?: Array<Keyword>;
+    keywords?: Array<SBCommonKeywordsKeywords>;
     /**
      * An array of negative keywords associated with the campaign.
-     * @type {Array<NegativeKeyword>}
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
      * @memberof SBCreateCampaignWithKeywordsV33
      */
-    negativeKeywords?: Array<NegativeKeyword>;
-}
-/**
- * 
- * @export
- * @interface SBCreateCampaignWithKeywordsV33AllOf
- */
-export interface SBCreateCampaignWithKeywordsV33AllOf {
-    /**
-     * An array of keywords associated with the campaign.
-     * @type {Array<Keyword>}
-     * @memberof SBCreateCampaignWithKeywordsV33AllOf
-     */
-    keywords?: Array<Keyword>;
-    /**
-     * An array of negative keywords associated with the campaign.
-     * @type {Array<NegativeKeyword>}
-     * @memberof SBCreateCampaignWithKeywordsV33AllOf
-     */
-    negativeKeywords?: Array<NegativeKeyword>;
+    negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
 }
 /**
  * |-         Applies to:         | Operation | Path |         |-----------| -----|         |[createCampaigns](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Campaigns)| POST /sb/campaigns|         <br/>
@@ -3461,7 +3778,7 @@ export interface SBCreateDraftCampaignRequestCommon {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBCreateDraftCampaignRequestCommon
      */
@@ -3482,6 +3799,91 @@ export interface SBCreateDraftCampaignRequestCommon {
      * 
      * @type {SBLandingPage}
      * @memberof SBCreateDraftCampaignRequestCommon
+     */
+    landingPage?: SBLandingPage;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateDraftCampaignRequestCommonV32
+ */
+export interface SBCreateDraftCampaignRequestCommonV32 {
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignRequestCommonV32
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignRequestCommonV32
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateDraftCampaignRequestCommonV32
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignRequestCommonV32
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignRequestCommonV32
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {AdFormatV32}
+     * @memberof SBCreateDraftCampaignRequestCommonV32
+     */
+    adFormat?: AdFormatV32;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignRequestCommonV32
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateDraftCampaignRequestCommonV32
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignRequestCommonV32
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCreateDraftCampaignRequestCommonV32
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignRequestCommonV32
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBCreateDraftCampaignRequestCommonV32
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateDraftCampaignRequestCommonV32
      */
     landingPage?: SBLandingPage;
 }
@@ -3522,6 +3924,12 @@ export interface SBCreateDraftCampaignRequestCommonV33 {
      */
     endDate?: string;
     /**
+     * 
+     * @type {AdFormatV32}
+     * @memberof SBCreateDraftCampaignRequestCommonV33
+     */
+    adFormat?: AdFormatV32;
+    /**
      * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
      * @type {string}
      * @memberof SBCreateDraftCampaignRequestCommonV33
@@ -3540,7 +3948,7 @@ export interface SBCreateDraftCampaignRequestCommonV33 {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`
      * @type {Array<BidAdjustmentV33>}
      * @memberof SBCreateDraftCampaignRequestCommonV33
      */
@@ -3553,10 +3961,10 @@ export interface SBCreateDraftCampaignRequestCommonV33 {
     portfolioId?: number;
     /**
      * 
-     * @type {SBCreative}
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
      * @memberof SBCreateDraftCampaignRequestCommonV33
      */
-    creative?: SBCreative;
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
     /**
      * 
      * @type {SBLandingPage}
@@ -3570,6 +3978,18 @@ export interface SBCreateDraftCampaignRequestCommonV33 {
      */
     bidOptimizationStrategy?: BidOptimizationStrategy;
 }
+/**
+ * @type SBCreateDraftCampaignRequestV32
+ * @export
+ */
+export type SBCreateDraftCampaignRequestV32 = SBCreateDraftCampaignWithKeywordsV32 | SBCreateDraftCampaignWithProductTargetsV32 | SBVideoCreateDraftCampaignWithKeywords | SBVideoCreateDraftCampaignWithProductTargets;
+
+/**
+ * @type SBCreateDraftCampaignRequestV33
+ * @export
+ */
+export type SBCreateDraftCampaignRequestV33 = SBCreateDraftCampaignWithKeywordsV33 | SBCreateDraftCampaignWithProductTargetsV33 | SBVideoCreateDraftCampaignWithKeywords | SBVideoCreateDraftCampaignWithProductTargets;
+
 /**
  * 
  * @export
@@ -3625,7 +4045,7 @@ export interface SBCreateDraftCampaignWithKeywords {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBCreateDraftCampaignWithKeywords
      */
@@ -3658,6 +4078,103 @@ export interface SBCreateDraftCampaignWithKeywords {
      * An array of negative keywords associated with the campaign.
      * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
      * @memberof SBCreateDraftCampaignWithKeywords
+     */
+    negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateDraftCampaignWithKeywordsV32
+ */
+export interface SBCreateDraftCampaignWithKeywordsV32 {
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {AdFormatV32}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
+     */
+    adFormat?: AdFormatV32;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<SBCommonKeywordsKeywords>}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
+     */
+    keywords?: Array<SBCommonKeywordsKeywords>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
+     * @memberof SBCreateDraftCampaignWithKeywordsV32
      */
     negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
 }
@@ -3698,6 +4215,12 @@ export interface SBCreateDraftCampaignWithKeywordsV33 {
      */
     endDate?: string;
     /**
+     * 
+     * @type {AdFormatV32}
+     * @memberof SBCreateDraftCampaignWithKeywordsV33
+     */
+    adFormat?: AdFormatV32;
+    /**
      * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
      * @type {string}
      * @memberof SBCreateDraftCampaignWithKeywordsV33
@@ -3716,7 +4239,7 @@ export interface SBCreateDraftCampaignWithKeywordsV33 {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`
      * @type {Array<BidAdjustmentV33>}
      * @memberof SBCreateDraftCampaignWithKeywordsV33
      */
@@ -3729,10 +4252,10 @@ export interface SBCreateDraftCampaignWithKeywordsV33 {
     portfolioId?: number;
     /**
      * 
-     * @type {SBCreative}
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
      * @memberof SBCreateDraftCampaignWithKeywordsV33
      */
-    creative?: SBCreative;
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
     /**
      * 
      * @type {SBLandingPage}
@@ -3747,16 +4270,16 @@ export interface SBCreateDraftCampaignWithKeywordsV33 {
     bidOptimizationStrategy?: BidOptimizationStrategy;
     /**
      * An array of keywords associated with the campaign.
-     * @type {Array<Keyword>}
+     * @type {Array<SBCommonKeywordsKeywords>}
      * @memberof SBCreateDraftCampaignWithKeywordsV33
      */
-    keywords?: Array<Keyword>;
+    keywords?: Array<SBCommonKeywordsKeywords>;
     /**
      * An array of negative keywords associated with the campaign.
-     * @type {Array<NegativeKeyword>}
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
      * @memberof SBCreateDraftCampaignWithKeywordsV33
      */
-    negativeKeywords?: Array<NegativeKeyword>;
+    negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
 }
 /**
  * 
@@ -3813,7 +4336,7 @@ export interface SBCreateDraftCampaignWithProductTargets {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBCreateDraftCampaignWithProductTargets
      */
@@ -3846,6 +4369,206 @@ export interface SBCreateDraftCampaignWithProductTargets {
      * 
      * @type {Array<SBCommonTargetsNegativeTargets>}
      * @memberof SBCreateDraftCampaignWithProductTargets
+     */
+    negativeTargets?: Array<SBCommonTargetsNegativeTargets>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateDraftCampaignWithProductTargetsV32
+ */
+export interface SBCreateDraftCampaignWithProductTargetsV32 {
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {AdFormatV32}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    adFormat?: AdFormatV32;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
+     * @type {Array<BidAdjustment>}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsTargets>}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    targets?: Array<SBCommonTargetsTargets>;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsNegativeTargets>}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV32
+     */
+    negativeTargets?: Array<SBCommonTargetsNegativeTargets>;
+}
+/**
+ * 
+ * @export
+ * @interface SBCreateDraftCampaignWithProductTargetsV33
+ */
+export interface SBCreateDraftCampaignWithProductTargetsV33 {
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {AdFormatV32}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    adFormat?: AdFormatV32;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`
+     * @type {Array<BidAdjustmentV33>}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    bidAdjustments?: Array<BidAdjustmentV33>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * 
+     * @type {SBLandingPage}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    landingPage?: SBLandingPage;
+    /**
+     * 
+     * @type {BidOptimizationStrategy}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    bidOptimizationStrategy?: BidOptimizationStrategy;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsTargets>}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
+     */
+    targets?: Array<SBCommonTargetsTargets>;
+    /**
+     * 
+     * @type {Array<SBCommonTargetsNegativeTargets>}
+     * @memberof SBCreateDraftCampaignWithProductTargetsV33
      */
     negativeTargets?: Array<SBCommonTargetsNegativeTargets>;
 }
@@ -4147,7 +4870,7 @@ export interface SBDraftCampaignBase {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBDraftCampaignBase
      */
@@ -4174,6 +4897,103 @@ export interface SBDraftCampaignBase {
      * 
      * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
      * @memberof SBDraftCampaignBase
+     */
+    landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
+}
+/**
+ * 
+ * @export
+ * @interface SBDraftCampaignBaseV32
+ */
+export interface SBDraftCampaignBaseV32 {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBDraftCampaignBaseV32
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Duplicate campaign names are not allowed.
+     * @type {string}
+     * @memberof SBDraftCampaignBaseV32
+     */
+    name?: string;
+    /**
+     * A list of advertiser-specified custom identifiers for the campaign. Each customer identifier is a key-value pair. You can specify a maximum of 50 identifiers.
+     * @type {{ [key: string]: string; }}
+     * @memberof SBDraftCampaignBaseV32
+     */
+    tags?: { [key: string]: string; };
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBDraftCampaignBaseV32
+     */
+    budget?: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBDraftCampaignBaseV32
+     */
+    budgetType?: BudgetType;
+    /**
+     * The YYYYMMDD start date for the campaign. If this field is not set to a value, the current date is used.
+     * @type {string}
+     * @memberof SBDraftCampaignBaseV32
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date for the campaign. Must be greater than the value for `startDate`. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBDraftCampaignBaseV32
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier. Note that this field is required for sellers. For more information, see the [Stores reference](https://advertising.amazon.com/API/docs/v2/reference/stores) or [Brands reference](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Brands).
+     * @type {string}
+     * @memberof SBDraftCampaignBaseV32
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to allow Amazon to automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBDraftCampaignBaseV32
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBDraftCampaignBaseV32
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
+     * @type {Array<BidAdjustment>}
+     * @memberof SBDraftCampaignBaseV32
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBDraftCampaignBaseV32
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {AdFormatV32}
+     * @memberof SBDraftCampaignBaseV32
+     */
+    adFormat?: AdFormatV32;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBDraftCampaignBaseV32
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * 
+     * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
+     * @memberof SBDraftCampaignBaseV32
      */
     landingPage?: SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage;
 }
@@ -4244,7 +5064,7 @@ export interface SBDraftCampaignBaseV33 {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`
      * @type {Array<BidAdjustmentV33>}
      * @memberof SBDraftCampaignBaseV33
      */
@@ -4257,16 +5077,16 @@ export interface SBDraftCampaignBaseV33 {
     portfolioId?: number;
     /**
      * 
-     * @type {AdFormat}
+     * @type {AdFormatV32}
      * @memberof SBDraftCampaignBaseV33
      */
-    adFormat?: AdFormat;
+    adFormat?: AdFormatV32;
     /**
      * 
-     * @type {SBCreative}
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
      * @memberof SBDraftCampaignBaseV33
      */
-    creative?: SBCreative;
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
     /**
      * 
      * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
@@ -4438,10 +5258,16 @@ export interface SBDraftCampaignResponseWithKeywordsAllOf {
     details?: string;
 }
 /**
+ * @type SBDraftCampaignV32
+ * @export
+ */
+export type SBDraftCampaignV32 = SBDraftCampaignBaseV32 & object | SBVideoDraftCampaignBase & object;
+
+/**
  * @type SBDraftCampaignV33
  * @export
  */
-export type SBDraftCampaignV33 = SBDraftCampaignWithKeywordsV33 | SBDraftCampaignWithTargetsV33 | SBVideoDraftCampaignWithKeywords | SBVideoDraftCampaignWithTargets;
+export type SBDraftCampaignV33 = SBDraftCampaignBaseV33 & object | SBVideoDraftCampaignBase & object;
 
 /**
  * SB create campaign with keywords
@@ -4510,7 +5336,7 @@ export interface SBDraftCampaignWithKeywordsV33 {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`
      * @type {Array<BidAdjustmentV33>}
      * @memberof SBDraftCampaignWithKeywordsV33
      */
@@ -4523,16 +5349,16 @@ export interface SBDraftCampaignWithKeywordsV33 {
     portfolioId?: number;
     /**
      * 
-     * @type {AdFormat}
+     * @type {AdFormatV32}
      * @memberof SBDraftCampaignWithKeywordsV33
      */
-    adFormat?: AdFormat;
+    adFormat?: AdFormatV32;
     /**
      * 
-     * @type {SBCreative}
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
      * @memberof SBDraftCampaignWithKeywordsV33
      */
-    creative?: SBCreative;
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
     /**
      * 
      * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
@@ -4625,7 +5451,7 @@ export interface SBDraftCampaignWithTargetsV33 {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`
      * @type {Array<BidAdjustmentV33>}
      * @memberof SBDraftCampaignWithTargetsV33
      */
@@ -4638,16 +5464,16 @@ export interface SBDraftCampaignWithTargetsV33 {
     portfolioId?: number;
     /**
      * 
-     * @type {AdFormat}
+     * @type {AdFormatV32}
      * @memberof SBDraftCampaignWithTargetsV33
      */
-    adFormat?: AdFormat;
+    adFormat?: AdFormatV32;
     /**
      * 
-     * @type {SBCreative}
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
      * @memberof SBDraftCampaignWithTargetsV33
      */
-    creative?: SBCreative;
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
     /**
      * 
      * @type {SBProductListLandingPage | SBStoreLandingPage | SBCustomUrlLandingPage}
@@ -4929,6 +5755,18 @@ export interface SBExpressionResponse {
 export type SBGetDraftCampaignResponse = SBDraftCampaignBase | SBVideoDraftCampaignBase;
 
 /**
+ * @type SBGetDraftCampaignResponseV32
+ * @export
+ */
+export type SBGetDraftCampaignResponseV32 = SBDraftCampaignBaseV32 | SBVideoDraftCampaignBase;
+
+/**
+ * @type SBGetDraftCampaignResponseV33
+ * @export
+ */
+export type SBGetDraftCampaignResponseV33 = SBDraftCampaignBaseV33 | SBVideoDraftCampaignBase;
+
+/**
  * Applies to: | Operation | Path | |-----------| -----| |[listKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords)| GET /sb/keywords| |[getKeyword](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords)| GET /sb/keywords/{keywordId}| <br/>
  * @export
  * @interface SBKeyword
@@ -5182,7 +6020,7 @@ export interface SBListCampaignItem {
      */
     creative?: SBCreative;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBListCampaignItem
      */
@@ -5239,7 +6077,7 @@ export interface SBListCampaignItemAllOf {
      */
     creative?: SBCreative;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBListCampaignItemAllOf
      */
@@ -5348,7 +6186,7 @@ export interface SBListCampaignItemV33 {
      */
     creative?: SBCreative;
     /**
-     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`
      * @type {Array<BidAdjustmentV33>}
      * @memberof SBListCampaignItemV33
      */
@@ -5485,12 +6323,6 @@ export enum SBListCampaignsResponseCommonServingStatusEnum {
     Scheduled = 'scheduled',
     Terminated = 'terminated'
 }
-
-/**
- * @type SBListDraftCampaignsResponseV33
- * @export
- */
-export type SBListDraftCampaignsResponseV33 = SBDraftCampaignBaseV33 | SBVideoDraftCampaignBase;
 
 /**
  * The match type. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
@@ -6091,60 +6923,10 @@ export interface SBUpdateCampaignResponseDefault {
     errors?: Array<ErrorEntry>;
 }
 /**
- * 
- * @export
- * @interface SBUpdateCampaignResponseItemV33
- */
-export interface SBUpdateCampaignResponseItemV33 {
-    /**
-     * The campaign identifier.
-     * @type {number}
-     * @memberof SBUpdateCampaignResponseItemV33
-     */
-    campaignId?: number;
-    /**
-     * An enumerated response code.
-     * @type {string}
-     * @memberof SBUpdateCampaignResponseItemV33
-     */
-    code?: string;
-    /**
-     * A human-readable description of the enumerated response code in the `code` field.
-     * @type {string}
-     * @memberof SBUpdateCampaignResponseItemV33
-     */
-    description?: string;
-    /**
-     * 
-     * @type {Array<ErrorEntry>}
-     * @memberof SBUpdateCampaignResponseItemV33
-     */
-    errors?: Array<ErrorEntry>;
-    /**
-     * 
-     * @type {SBCampaignResponseV33}
-     * @memberof SBUpdateCampaignResponseItemV33
-     */
-    campaign?: SBCampaignResponseV33;
-}
-/**
- * 
- * @export
- * @interface SBUpdateCampaignResponseItemV33AllOf
- */
-export interface SBUpdateCampaignResponseItemV33AllOf {
-    /**
-     * 
-     * @type {SBCampaignResponseV33}
-     * @memberof SBUpdateCampaignResponseItemV33AllOf
-     */
-    campaign?: SBCampaignResponseV33;
-}
-/**
  * @type SBUpdateDraftCampaignRequest
  * @export
  */
-export type SBUpdateDraftCampaignRequest = SBUpdateDraftCampaignRequestWithKeywords | SBUpdateDraftCampaignRequestWithProductTargets | SBVideoUpdateDraftCampaignRequestWithKeywords;
+export type SBUpdateDraftCampaignRequest = SBUpdateDraftCampaignRequestWithKeywords | SBUpdateDraftCampaignRequestWithProductTargets | SBVideoUpdateDraftCampaignRequestWithKeywords | SBVideoUpdateDraftCampaignRequestWithProductTargets;
 
 /**
  * 
@@ -6207,7 +6989,7 @@ export interface SBUpdateDraftCampaignRequestCommon {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBUpdateDraftCampaignRequestCommon
      */
@@ -6286,7 +7068,7 @@ export interface SBUpdateDraftCampaignRequestCommonAllOf {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBUpdateDraftCampaignRequestCommonAllOf
      */
@@ -6307,88 +7089,167 @@ export interface SBUpdateDraftCampaignRequestCommonAllOf {
 /**
  * 
  * @export
- * @interface SBUpdateDraftCampaignRequestCommonV33
+ * @interface SBUpdateDraftCampaignRequestCommonV32
  */
-export interface SBUpdateDraftCampaignRequestCommonV33 {
+export interface SBUpdateDraftCampaignRequestCommonV32 {
     /**
      * The identifier of the draft campaign.
      * @type {number}
-     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     * @memberof SBUpdateDraftCampaignRequestCommonV32
      */
     draftCampaignId?: number;
     /**
      * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
      * @type {string}
-     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     * @memberof SBUpdateDraftCampaignRequestCommonV32
      */
     name: string;
     /**
      * The budget associated with the draft campaign.
      * @type {number}
-     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     * @memberof SBUpdateDraftCampaignRequestCommonV32
      */
     budget: number;
     /**
      * 
      * @type {BudgetType}
-     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     * @memberof SBUpdateDraftCampaignRequestCommonV32
      */
     budgetType: BudgetType;
     /**
      * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
      * @type {string}
-     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     * @memberof SBUpdateDraftCampaignRequestCommonV32
      */
     startDate?: string;
     /**
      * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
      * @type {string}
-     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     * @memberof SBUpdateDraftCampaignRequestCommonV32
      */
     endDate?: string;
     /**
      * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
      * @type {string}
-     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     * @memberof SBUpdateDraftCampaignRequestCommonV32
      */
     brandEntityId?: string;
     /**
      * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
      * @type {boolean}
-     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     * @memberof SBUpdateDraftCampaignRequestCommonV32
      */
     bidOptimization?: boolean;
     /**
      * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
      * @type {number}
-     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     * @memberof SBUpdateDraftCampaignRequestCommonV32
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
-     * @type {Array<BidAdjustmentV33>}
-     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
+     * @type {Array<BidAdjustment>}
+     * @memberof SBUpdateDraftCampaignRequestCommonV32
      */
-    bidAdjustments?: Array<BidAdjustmentV33>;
+    bidAdjustments?: Array<BidAdjustment>;
     /**
      * The identifier of the Portfolio to which the draft campaign is associated.
      * @type {number}
-     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     * @memberof SBUpdateDraftCampaignRequestCommonV32
      */
     portfolioId?: number;
     /**
      * 
-     * @type {SBCreative}
-     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBUpdateDraftCampaignRequestCommonV32
      */
-    creative?: SBCreative;
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+}
+/**
+ * 
+ * @export
+ * @interface SBUpdateDraftCampaignRequestCommonV32AllOf
+ */
+export interface SBUpdateDraftCampaignRequestCommonV32AllOf {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommonV32AllOf
+     */
+    draftCampaignId?: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommonV32AllOf
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommonV32AllOf
+     */
+    budget: number;
     /**
      * 
-     * @type {BidOptimizationStrategy}
-     * @memberof SBUpdateDraftCampaignRequestCommonV33
+     * @type {BudgetType}
+     * @memberof SBUpdateDraftCampaignRequestCommonV32AllOf
      */
-    bidOptimizationStrategy?: BidOptimizationStrategy;
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommonV32AllOf
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommonV32AllOf
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestCommonV32AllOf
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBUpdateDraftCampaignRequestCommonV32AllOf
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommonV32AllOf
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
+     * @type {Array<BidAdjustment>}
+     * @memberof SBUpdateDraftCampaignRequestCommonV32AllOf
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestCommonV32AllOf
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBUpdateDraftCampaignRequestCommonV32AllOf
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
 }
+/**
+ * @type SBUpdateDraftCampaignRequestV32
+ * @export
+ */
+export type SBUpdateDraftCampaignRequestV32 = SBUpdateDraftCampaignRequestWithKeywordsV32 | SBUpdateDraftCampaignRequestWithProductTargetsV32 | SBVideoUpdateDraftCampaignRequestWithKeywords | SBVideoUpdateDraftCampaignRequestWithProductTargets;
+
 /**
  * @type SBUpdateDraftCampaignRequestV33
  * @export
@@ -6456,7 +7317,7 @@ export interface SBUpdateDraftCampaignRequestWithKeywords {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBUpdateDraftCampaignRequestWithKeywords
      */
@@ -6552,6 +7413,97 @@ export interface SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords {
 /**
  * 
  * @export
+ * @interface SBUpdateDraftCampaignRequestWithKeywordsV32
+ */
+export interface SBUpdateDraftCampaignRequestWithKeywordsV32 {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV32
+     */
+    draftCampaignId: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV32
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV32
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV32
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV32
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV32
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV32
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV32
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV32
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
+     * @type {Array<BidAdjustment>}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV32
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV32
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV32
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords>}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV32
+     */
+    keywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV32
+     */
+    negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
+}
+/**
+ * 
+ * @export
  * @interface SBUpdateDraftCampaignRequestWithKeywordsV33
  */
 export interface SBUpdateDraftCampaignRequestWithKeywordsV33 {
@@ -6560,7 +7512,7 @@ export interface SBUpdateDraftCampaignRequestWithKeywordsV33 {
      * @type {number}
      * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
      */
-    draftCampaignId?: number;
+    draftCampaignId: number;
     /**
      * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
      * @type {string}
@@ -6610,7 +7562,7 @@ export interface SBUpdateDraftCampaignRequestWithKeywordsV33 {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`
      * @type {Array<BidAdjustmentV33>}
      * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
      */
@@ -6623,28 +7575,28 @@ export interface SBUpdateDraftCampaignRequestWithKeywordsV33 {
     portfolioId?: number;
     /**
      * 
-     * @type {SBCreative}
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
      * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
      */
-    creative?: SBCreative;
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * An array of keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords>}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    keywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfKeywords>;
+    /**
+     * An array of negative keywords associated with the campaign.
+     * @type {Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>}
+     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
+     */
+    negativeKeywords?: Array<SBUpdateDraftCampaignRequestWithKeywordsAllOfNegativeKeywords>;
     /**
      * 
      * @type {BidOptimizationStrategy}
      * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
      */
     bidOptimizationStrategy?: BidOptimizationStrategy;
-    /**
-     * An array of keywords associated with the campaign.
-     * @type {Array<Keyword>}
-     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
-     */
-    keywords?: Array<Keyword>;
-    /**
-     * An array of negative keywords associated with the campaign.
-     * @type {Array<NegativeKeyword>}
-     * @memberof SBUpdateDraftCampaignRequestWithKeywordsV33
-     */
-    negativeKeywords?: Array<NegativeKeyword>;
 }
 /**
  * 
@@ -6707,7 +7659,7 @@ export interface SBUpdateDraftCampaignRequestWithProductTargets {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents.
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
      * @type {Array<BidAdjustment>}
      * @memberof SBUpdateDraftCampaignRequestWithProductTargets
      */
@@ -6791,6 +7743,97 @@ export interface SBUpdateDraftCampaignRequestWithProductTargetsAllOfTargets {
 /**
  * 
  * @export
+ * @interface SBUpdateDraftCampaignRequestWithProductTargetsV32
+ */
+export interface SBUpdateDraftCampaignRequestWithProductTargetsV32 {
+    /**
+     * The identifier of the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV32
+     */
+    draftCampaignId: number;
+    /**
+     * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV32
+     */
+    name: string;
+    /**
+     * The budget associated with the draft campaign.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV32
+     */
+    budget: number;
+    /**
+     * 
+     * @type {BudgetType}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV32
+     */
+    budgetType: BudgetType;
+    /**
+     * The YYYYMMDD start date of the campaign. Must be equal to or greater than the current date. If not specified, is set to current date by default.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV32
+     */
+    startDate?: string;
+    /**
+     * The YYYYMMDD end date of the campaign. Must be greater than the value specified in the `startDate` field. If not specified, the campaign has no end date and runs continuously.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV32
+     */
+    endDate?: string;
+    /**
+     * The brand entity identifier to which the draft campaign is associated. Note that this field is required for sellers. Retrieve using the getBrands or getStores operations in the /v2/stores resource.
+     * @type {string}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV32
+     */
+    brandEntityId?: string;
+    /**
+     * Set to `true` to have Amazon automatically optimize bids for placements below top of search.
+     * @type {boolean}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV32
+     */
+    bidOptimization?: boolean;
+    /**
+     * A bid multiplier. Note that this field can only be set when \'bidOptimization\' is set to false. Value is a percentage to two decimal places. Example: If set to -40.00 for a $5.00 bid, the resulting bid is $3.00.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV32
+     */
+    bidMultiplier?: number;
+    /**
+     * List of bid adjustment for each placement group. BidMultiplier cannot be specified when bidAdjustments presents. `Not supported for video campaigns`
+     * @type {Array<BidAdjustment>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV32
+     */
+    bidAdjustments?: Array<BidAdjustment>;
+    /**
+     * The identifier of the Portfolio to which the draft campaign is associated.
+     * @type {number}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV32
+     */
+    portfolioId?: number;
+    /**
+     * 
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV32
+     */
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * 
+     * @type {Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfTargets>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV32
+     */
+    targets?: Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfTargets>;
+    /**
+     * 
+     * @type {Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfNegativeTargets>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV32
+     */
+    negativeTargets?: Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfNegativeTargets>;
+}
+/**
+ * 
+ * @export
  * @interface SBUpdateDraftCampaignRequestWithProductTargetsV33
  */
 export interface SBUpdateDraftCampaignRequestWithProductTargetsV33 {
@@ -6799,7 +7842,7 @@ export interface SBUpdateDraftCampaignRequestWithProductTargetsV33 {
      * @type {number}
      * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
      */
-    draftCampaignId?: number;
+    draftCampaignId: number;
     /**
      * The name of the draft campaign. Maximum 128 characters. Names must be unique to the Amazon Ads account to which they are associated.
      * @type {string}
@@ -6849,7 +7892,7 @@ export interface SBUpdateDraftCampaignRequestWithProductTargetsV33 {
      */
     bidMultiplier?: number;
     /**
-     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`
      * @type {Array<BidAdjustmentV33>}
      * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
      */
@@ -6862,28 +7905,28 @@ export interface SBUpdateDraftCampaignRequestWithProductTargetsV33 {
     portfolioId?: number;
     /**
      * 
-     * @type {SBCreative}
+     * @type {SBProductCollectionCreative | SBStoreSpotlightCreative}
      * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
      */
-    creative?: SBCreative;
+    creative?: SBProductCollectionCreative | SBStoreSpotlightCreative;
+    /**
+     * 
+     * @type {Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfTargets>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    targets?: Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfTargets>;
+    /**
+     * 
+     * @type {Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfNegativeTargets>}
+     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
+     */
+    negativeTargets?: Array<SBUpdateDraftCampaignRequestWithProductTargetsAllOfNegativeTargets>;
     /**
      * 
      * @type {BidOptimizationStrategy}
      * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
      */
     bidOptimizationStrategy?: BidOptimizationStrategy;
-    /**
-     * 
-     * @type {Array<SBTarget>}
-     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
-     */
-    targets?: Array<SBTarget>;
-    /**
-     * 
-     * @type {Array<SBNegativeTarget>}
-     * @memberof SBUpdateDraftCampaignRequestWithProductTargetsV33
-     */
-    negativeTargets?: Array<SBNegativeTarget>;
 }
 /**
  * 
@@ -8249,7 +9292,7 @@ export interface ShopperSegmentBiddingControls {
      */
     bidOptimizationStrategy?: BidOptimizationStrategy;
     /**
-     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present.
+     * List of bid adjustments for placement group and shopper segments. BidMultiplier cannot be specified when bidAdjustments are present. `Not supported for video campaigns`
      * @type {Array<BidAdjustmentV33>}
      * @memberof ShopperSegmentBiddingControls
      */
@@ -10022,7 +11065,7 @@ export const DraftsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createDraftCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBCreateDraftCampaignRequest?: Array<SBCreateDraftCampaignRequest>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SBDraftCampaignResponse>> {
+        async createDraftCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBCreateDraftCampaignRequest?: Array<SBCreateDraftCampaignRequest>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SBDraftCampaignResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createDraftCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sBCreateDraftCampaignRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -10115,7 +11158,7 @@ export const DraftsApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createDraftCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBCreateDraftCampaignRequest?: Array<SBCreateDraftCampaignRequest>, options?: any): AxiosPromise<SBDraftCampaignResponse> {
+        createDraftCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sBCreateDraftCampaignRequest?: Array<SBCreateDraftCampaignRequest>, options?: any): AxiosPromise<Array<SBDraftCampaignResponse>> {
             return localVarFp.createDraftCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sBCreateDraftCampaignRequest, options).then((request) => request(axios, basePath));
         },
         /**
