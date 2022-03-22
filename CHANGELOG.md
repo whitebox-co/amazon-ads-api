@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.2](https://github.com/whitebox-co/amazon-ads-api/compare/v1.5.1...v1.5.2) (2022-03-22)
+
+### Bug Fixes
+
+-   increasing timeouts as large report transfers exceed the 60s threshold ([4ecb0b6](https://github.com/whitebox-co/amazon-ads-api/commit/4ecb0b694afbdfb5f6a939a6148bd8531daabfc6))
+
 ## [1.5.1](https://github.com/whitebox-co/amazon-ads-api/compare/v1.5.0...v1.5.1) (2022-03-22)
 
 ### Bug Fixes
