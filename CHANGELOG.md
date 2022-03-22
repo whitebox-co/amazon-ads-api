@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0](https://github.com/whitebox-co/amazon-ads-api/compare/v1.4.2...v1.5.0) (2022-03-22)
+
+### Features
+
+-   adding agentkeepalive for req agents, adding timeouts and maxRedirects to axios instance ([def7eff](https://github.com/whitebox-co/amazon-ads-api/commit/def7effeb0d4fb2c0280ef59092c1a1e234b0971))
+-   integration of latest amazon updates ([0fb0482](https://github.com/whitebox-co/amazon-ads-api/commit/0fb04826600d6ccabcd01df6f59b241e5dfe6862))
+
 ## [1.4.2](https://github.com/whitebox-co/amazon-ads-api/compare/v1.4.1...v1.4.2) (2022-03-14)
 
 ### Bug Fixes
