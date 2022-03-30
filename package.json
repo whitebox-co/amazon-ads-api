@@ -65,7 +65,7 @@
     "bottleneck": "^2.19.5"
   },
   "devDependencies": {
-    "@commitlint/cli": "^13.1.0",
+    "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.0.0",
     "@openapitools/openapi-generator-cli": "^2.4.18",
     "@semantic-release/changelog": "^6.0.1",
