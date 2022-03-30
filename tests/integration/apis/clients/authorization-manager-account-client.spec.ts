@@ -16,4 +16,11 @@ describe('AuthorizationManagerAccountClient', () => {
 	it('should instantiate the api', () => {
 		expect(authorizationManagerAccountClient).toBeDefined();
 	});
+
+	it('should get a listing of manager accounts', async () => {
+		const response = await authorizationManagerAccountClient.getManagerAccountsForUser({
+			amazonAdvertisingAPIClientId: env.AMAZON_ADS_CLIENT_ID,
+		});
+		expect(response.data).toEqual({});
+	});
 });

@@ -4242,6 +4242,159 @@
           "Measurement"
         ]
       }
+    },
+    "/dsp/measurement/studies/omnichannelMetrics/{studyId}/result": {
+      "get": {
+        "summary": "Get result of a DSP OMNICHANNEL_METRICS study.",
+        "description": "Get result of a DSP OMNICHANNEL_METRICS study. Returns a 307 Temporary Redirect response if any of the file types is requested and response includes a location header with the value set to an AWS S3 path where the result is located. The path expires after 60 seconds. Accept header does not support json for OMNICHANNEL_METRICS study type.\n\n**Requires one of these permissions**:\n[]",
+        "operationId": "GetDSPOmnichannelMetricsStudyResult",
+        "responses": {
+          "307": {
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "Redirect URI with S3 file location containing result data."
+              }
+            },
+            "description": "Successful operation for downloading result file."
+          },
+          "400": {
+            "description": "Bad Request or request body is not matching with input model.",
+            "content": {
+              "application/vnd.measurementresult.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated request.",
+            "content": {
+              "application/vnd.measurementresult.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user is not authorized to access a resource.",
+            "content": {
+              "application/vnd.measurementresult.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Requested resource does not exist or is not visible for the authenticated user.",
+            "content": {
+              "application/vnd.measurementresult.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type - Version not supported.",
+            "content": {
+              "application/vnd.measurementresult.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/vnd.measurementresult.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/vnd.measurementresult.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Accept",
+            "description": "The version(s) of the requested resource. Available version(s) - `text/vnd.measurementresult.v1+xlsx`",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "studyId",
+            "description": "The canonical identifier that represents a unique study.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Measurement"
+        ]
+      }
     }
   },
   "components": {
@@ -4745,6 +4898,15 @@
           "INFEASIBLE"
         ]
       },
+      "VendorProductTypeV1M2": {
+        "description": "The measurement vendor product type.",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "SHOPPER_PANEL",
+          "OMNICHANNEL_METRICS"
+        ]
+      },
       "SurveyResponseResultV1M1": {
         "description": "The rate of response for each response in Survey question.",
         "properties": {
@@ -4816,6 +4978,23 @@
           "MACROMILL",
           "DYNATA",
           "LUCID"
+        ]
+      },
+      "VendorProductTypeV1M3": {
+        "description": "The measurement vendor product type.",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "SHOPPER_PANEL",
+          "BRAND_LIFT_INSIGHTS",
+          "DASH",
+          "UPWAVE",
+          "DIGITAL_BRAND_EFFECT",
+          "EXPANDED_VIEW_LITE",
+          "MACROMILL",
+          "DYNATA",
+          "LUCID",
+          "OMNICHANNEL_METRICS"
         ]
       },
       "SurveyQuestionTypeV1": {
@@ -5192,6 +5371,70 @@
           "AMAZON"
         ]
       },
+      "BaseEligibilityRequestV1M2": {
+        "description": "The request object of measurement eligibility check.",
+        "properties": {
+          "fundingTypeFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FundingTypeV1M2"
+            }
+          },
+          "vendorProductIdFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "vendorTypeFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VendorTypeV1M2"
+            }
+          }
+        }
+      },
+      "BaseEligibilityRequestV1M3": {
+        "description": "The request object of measurement eligibility check.",
+        "properties": {
+          "fundingTypeFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FundingTypeV1M3"
+            }
+          },
+          "vendorProductIdFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "vendorTypeFilters": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VendorTypeV1M3"
+            }
+          }
+        }
+      },
       "VendorProductRequestV1": {
         "description": "The request object to fetch measurement vendor products.",
         "type": "object",
@@ -5407,6 +5650,28 @@
           "minimumSurveyQuestions": {
             "description": "The minimum number of survey questions required for the product.",
             "type": "integer"
+          }
+        }
+      },
+      "VendorProductEligibilityV1M2": {
+        "description": "The measurement eligibility details for a certain vendor product.",
+        "type": "object",
+        "properties": {
+          "vendorProductId": {
+            "description": "vendor product canonical identifier.",
+            "type": "string"
+          },
+          "issues": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "A list of issues will be provided if the status is INELIGIBLE or ELIGIBLE_WITH_WARNING.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EligibilityIssueV1M2"
+            }
+          },
+          "status": {
+            "$ref": "#/components/schemas/EligibilityStatusV1"
           }
         }
       },
@@ -5637,6 +5902,15 @@
             "type": "string"
           }
         }
+      },
+      "StudyTypeV1M2": {
+        "description": "The study type.",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "BRAND_LIFT",
+          "OMNICHANNEL_METRICS"
+        ]
       },
       "PaginatedDSPBrandLiftStudiesV1M1": {
         "description": "A list of studies.",
@@ -6040,6 +6314,30 @@
           }
         }
       },
+      "VendorTypeV1M2": {
+        "description": "The measurement vendor type, each study type will have different supported vendors.",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "AMAZON",
+          "OMNICHANNEL_METRICS"
+        ]
+      },
+      "VendorTypeV1M3": {
+        "description": "The measurement vendor type, each study type will have different supported vendors.",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "AMAZON",
+          "KANTAR",
+          "UPWAVE",
+          "NIELSEN",
+          "MACROMILL",
+          "DYNATA",
+          "LUCID",
+          "OMNICHANNEL_METRICS"
+        ]
+      },
       "DSPCampaignMeasurementMetadataV1": {
         "description": "The basic model for all DSP CAMPAIGN_MEASUREMENT objective studies.",
         "type": "object",
@@ -6141,6 +6439,59 @@
           "FREE_TEXT"
         ]
       },
+      "DSPOmnichannelMetricsEligibilityDataV1M2": {
+        "description": "The campaign study eligibility data.",
+        "type": "object",
+        "properties": {
+          "currentStudyId": {
+            "description": "Optional current study identifier. If provided orders are expected to be added into this study and the orders already associated with this study will be excluded from certain eligibility checks.",
+            "type": "string"
+          },
+          "excludedLineItemIds": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "A list of canonical lineItem identifiers that are excluded from the eligibility check.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "orderIds": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "A list of canonical order identifiers. By default all lineItems in those orders will be included.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "brandIds": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "A list of canonical brand identifiers.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "EligibilityFieldV1M2": {
+        "description": "Fields that will be checked as part of eligibility API call.",
+        "type": "string",
+        "enum": [
+          "LOCALE",
+          "BUDGET",
+          "GOAL",
+          "START_TIME",
+          "END_TIME",
+          "FLIGHT_LENGTH",
+          "LEAD_TIME",
+          "IMPRESSIONS",
+          "ORDER",
+          "BUYER_COUNT"
+        ]
+      },
       "DSPBrandLiftMetadataV1": {
         "description": "The basic model for all DSP BRAND_LIFT objective studies.",
         "type": "object",
@@ -6163,6 +6514,25 @@
           },
           "productCategory": {
             "description": "The study product category.",
+            "type": "string"
+          }
+        }
+      },
+      "EligibilityIssueV1M2": {
+        "description": "The list of eligibility issues.",
+        "properties": {
+          "severity": {
+            "$ref": "#/components/schemas/EligibilityIssueSeverityV1"
+          },
+          "code": {
+            "description": "An enumerated issue code for machine use.",
+            "type": "string"
+          },
+          "field": {
+            "$ref": "#/components/schemas/EligibilityFieldV1M2"
+          },
+          "message": {
+            "description": "A human-readable description of the issue with suggestions on how to resolve the issue.",
             "type": "string"
           }
         }
@@ -6407,6 +6777,47 @@
           "PURCHASE_HISTORY",
           "PURCHASE_LOCATION"
         ]
+      },
+      "EligibilityResponseV1M2": {
+        "description": "The eligibility check response object.",
+        "properties": {
+          "metadata": {
+            "$ref": "#/components/schemas/EligibilityMetadataV1"
+          },
+          "nextToken": {
+            "type": "string"
+          },
+          "vendorProductEligibilities": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VendorProductEligibilityV1M2"
+            }
+          }
+        }
+      },
+      "DSPOmnichannelMetricsEligibilityRequestV1M3": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseEligibilityRequestV1M3"
+          },
+          {
+            "$ref": "#/components/schemas/DSPOmnichannelMetricsEligibilityDataV1M2"
+          }
+        ],
+        "description": "The request object of DSP omnichannel metrics eligibility check."
+      },
+      "DSPOmnichannelMetricsEligibilityRequestV1M2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseEligibilityRequestV1M2"
+          },
+          {
+            "$ref": "#/components/schemas/DSPOmnichannelMetricsEligibilityDataV1M2"
+          }
+        ],
+        "description": "The request object of DSP omnichannel metrics eligibility check."
       },
       "MeasurementGoalV1": {
         "description": "The measurement budget optimization goal type goal.",
@@ -6708,6 +7119,16 @@
           "INFEASIBLE"
         ]
       },
+      "FundingTypeV1M3": {
+        "description": "The measurement funding type. For COMPLIMENTARY studies the cost will be covered by Amazon.",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "COMPLIMENTARY",
+          "THIRD_PARTY_PAYMENT",
+          "CPM"
+        ]
+      },
       "SurveyV1": {
         "description": "The measurement survey.",
         "type": "object",
@@ -6788,6 +7209,15 @@
         "enum": [
           "COMPLIMENTARY",
           "THIRD_PARTY_PAYMENT"
+        ]
+      },
+      "FundingTypeV1M2": {
+        "description": "The measurement funding type. For COMPLIMENTARY studies the cost will be covered by Amazon.",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "COMPLIMENTARY",
+          "CPM"
         ]
       },
       "StudyTypeV1": {

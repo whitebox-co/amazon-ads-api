@@ -12,6 +12,10 @@ const schemas = [
     "url": "./schemas/common-billing.json"
   },
   {
+    "name": "Common - Portfolios",
+    "url": "./custom-schemas/common-portfolios.json"
+  },
+  {
     "name": "Common - Audiences",
     "url": "./schemas/common-audiences.json"
   },

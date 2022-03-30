@@ -16,4 +16,12 @@ describe('AuthorizationProfilesClient', () => {
 	it('should instantiate the api', () => {
 		expect(authorizationProfilesClient).toBeDefined();
 	});
+
+	it('should get a listing of profiles', async () => {
+		const response = await authorizationProfilesClient.listProfiles({
+			amazonAdvertisingAPIClientId: env.AMAZON_ADS_CLIENT_ID,
+		});
+
+		expect(response.data).toEqual({});
+	});
 });

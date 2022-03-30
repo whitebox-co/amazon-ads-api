@@ -106,7 +106,7 @@ describe('schema-downloader', () => {
 		it('should generate a schemas.js json file', async () => {
 			await downloadSchemas();
 
-			expect(fs.writeFileSync).nthCalledWith(37, PATHS.SCHEMAS_DOCS, expect.anything(), 'utf8');
+			expect(fs.writeFileSync).nthCalledWith(38, PATHS.SCHEMAS_DOCS, expect.anything(), 'utf8');
 		});
 	});
 
@@ -120,7 +120,7 @@ describe('schema-downloader', () => {
 			await downloadSchemas();
 
 			// 37 times includes json, yaml, and schema.js writes.
-			expect(fs.writeFileSync).toBeCalledTimes(37);
+			expect(fs.writeFileSync).toBeCalledTimes(38);
 		});
 	});
 });

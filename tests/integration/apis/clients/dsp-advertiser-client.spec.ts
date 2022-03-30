@@ -16,4 +16,12 @@ describe('DspAdvertiserClient', () => {
 	it('should instantiate the api', () => {
 		expect(dspAdvertiserClient).toBeDefined();
 	});
+
+	it('should get a listing of advertisers', async () => {
+		const response = await dspAdvertiserClient.dspAdvertisersGet({
+			amazonAdvertisingAPIClientId: env.AMAZON_ADS_CLIENT_ID,
+			amazonAdvertisingAPIScope: env.AMAZON_ADS_PROFILE_ID,
+		});
+		expect(response.data).toEqual({});
+	});
 });

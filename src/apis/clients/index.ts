@@ -1,6 +1,7 @@
 export * from './authorization-profiles-client';
 export * from './authorization-manager-account-client';
 export * from './common-billing-client';
+export * from './common-portfolios-client';
 export * from './common-audiences-client';
 export * from './common-creative-assets-client';
 export * from './common-change-history-client';

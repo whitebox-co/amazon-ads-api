@@ -1,0 +1,281 @@
+{
+	"openapi": "3.0.2",
+	"info": {
+		"title": "Amazon Common Portfolios",
+		"description": "Portfolios consist of campaigns that are grouped together and linked to a distinct Advertiser Account. The term 'advertiser' refers to a brand, entity, account ID, or claim ID. An integrator can create multiple portfolios within an Advertiser Account.",
+		"contact": {
+			"name": "Amazon Ads API Support",
+			"url": "https://amzn-clicks.atlassian.net/servicedesk/customer/portals"
+		},
+		"license": {
+			"name": "Amazon Ads API License Agreement",
+			"url": "https://advertising.amazon.com/API/docs/license_agreement"
+		},
+		"version": "3.0"
+	},
+	"servers": [
+		{
+			"url": "https://advertising-api-test.amazon.com",
+			"description": "Sandbox endpoint. Use for testing in all Amazon marketplaces."
+		},
+		{
+			"url": "https://advertising-api.amazon.com",
+			"description": "Production endpoint for North America, which includes US and CA Amazon marketplaces."
+		},
+		{
+			"url": "https://advertising-api-eu.amazon.com",
+			"description": "Production endpoint for Europe, which includes UK, FR, IT, ES, DE, plus IN Amazon marketplaces."
+		},
+		{
+			"url": "https://advertising-api-fe.amazon.com",
+			"description": "Production endpoint for Far East, which includes JP Amazon marketplaces."
+		}
+	],
+	"tags": [],
+	"paths": {
+		"/v2/portfolios": {
+			"get": {
+				"tags": ["Portfolios"],
+				"summary": "Retrieve a list of up to 100 portfolios using the specified filters.",
+				"description": "Retrieve a list of up to 100 portfolios using the specified filters.",
+				"operationId": "listPortfolios",
+				"parameters": [
+					{
+						"in": "header",
+						"name": "Amazon-Advertising-API-ClientId",
+						"description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+						"schema": {
+							"type": "string"
+						},
+						"required": true
+					},
+					{
+						"name": "Amazon-Advertising-API-Scope",
+						"in": "header",
+						"description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "portfolioIdFilter",
+						"in": "query",
+						"description": "The portfolio id to filter on.",
+						"required": false,
+						"schema": {
+							"type": "number",
+							"format": "int64"
+						}
+					},
+					{
+						"name": "portfolioNameFilter",
+						"in": "query",
+						"description": "The portfolio name to filter on.",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "portfolioStateFilter",
+						"in": "query",
+						"description": "The portfolio state to filter on.",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful operation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"maxItems": 100,
+									"items": {
+										"$ref": "#/components/schemas/ListPortfolioResponse"
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"403": {
+						"description": "Forbidden - Request failed because user does not have access to a specified resource",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found - Requested resource does not exist or is not visible for the authenticated user.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"429": {
+						"description": "Too Many Requests - Request was rate-limited. Retry later.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"ListPortfolioResponse": {
+				"type": "object",
+				"properties": {
+					"portfolioId": {
+						"type": "number",
+						"description": "The identifier of the report."
+					},
+					"name": {
+						"type": "string",
+						"description": "The name of the portfolio."
+					},
+					"budget": {
+						"type": "object",
+						"properties": {
+							"amount": {
+								"type": "number",
+								"description": "The build status of the report."
+							},
+							"currencyCode": {
+								"type": "string",
+								"description": "The portfolios currency code."
+							},
+							"policy": {
+								"type": "string",
+								"description": "The portfolios policy name"
+							},
+							"startDate": {
+								"type": "string",
+								"description": "The start date of the portfolio."
+							},
+							"endDate": {
+								"type": "string",
+								"description": "The end date of the portfolio."
+							}
+						}
+					},
+					"inBudget": {
+						"description": "Determines if the portfolio is in budget",
+						"type": "boolean"
+					},
+					"state": {
+						"type": "string",
+						"description": "The state of the portfolio.",
+						"enum": ["enabled", "disabled"]
+					}
+				}
+			},
+			"Error": {
+				"type": "object",
+				"description": "The error response object.",
+				"properties": {
+					"code": {
+						"type": "string",
+						"description": "The HTTP status code of the response."
+					},
+					"details": {
+						"type": "string",
+						"description": "A human-readable description of the response."
+					}
+				}
+			}
+		},
+		"parameters": {
+			"clientHeader": {
+				"name": "Amazon-Advertising-API-ClientId",
+				"in": "header",
+				"description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+				"required": true,
+				"schema": {
+					"type": "string"
+				}
+			},
+			"profileHeader": {
+				"name": "Amazon-Advertising-API-Scope",
+				"in": "header",
+				"description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
+				"required": true,
+				"schema": {
+					"type": "string"
+				}
+			}
+		},
+		"securitySchemes": {
+			"oauth2AuthorizationCode": {
+				"type": "oauth2",
+				"description": "Login with Amazon. For more information see [Login with Amazon authorization code grant](https://developer.amazon.com/docs/login-with-amazon/authorization-code-grant.html).",
+				"flows": {
+					"authorizationCode": {
+						"authorizationUrl": "https://www.amazon.com/ap/oa",
+						"tokenUrl": "https://api.amazon.com/auth/o2/token",
+						"scopes": {
+							"cpc_advertising:campaign_management": "Modify your advertising campaigns and access performance data"
+						}
+					}
+				}
+			},
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer"
+			}
+		}
+	},
+	"security": [
+		{
+			"oauth2AuthorizationCode": ["cpc_advertising:campaign_management"]
+		},
+		{
+			"bearerAuth": []
+		}
+	]
+}

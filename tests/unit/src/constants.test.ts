@@ -37,6 +37,11 @@ describe('constants', () => {
 				version: '3.0',
 			},
 			{
+				name: 'Common - Portfolios',
+				schemaUrl: 'http://localhost/custom-schemas/sponsored-brands-snapshots',
+				version: '',
+			},
+			{
 				name: 'Common - Audiences',
 				schemaUrl: 'https://dtrnk0o2zy01c.cloudfront.net/openapi/en-us/dest/Audiences_prod_3p.json',
 				version: '3.0',

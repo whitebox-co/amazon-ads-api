@@ -83,6 +83,56 @@ export interface BaseEligibilityRequestV1M1 {
     vendorTypeFilters?: Array<VendorTypeV1M1>;
 }
 /**
+ * The request object of measurement eligibility check.
+ * @export
+ * @interface BaseEligibilityRequestV1M2
+ */
+export interface BaseEligibilityRequestV1M2 {
+    /**
+     * FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<FundingTypeV1M2>}
+     * @memberof BaseEligibilityRequestV1M2
+     */
+    fundingTypeFilters?: Array<FundingTypeV1M2>;
+    /**
+     * VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<string>}
+     * @memberof BaseEligibilityRequestV1M2
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<VendorTypeV1M2>}
+     * @memberof BaseEligibilityRequestV1M2
+     */
+    vendorTypeFilters?: Array<VendorTypeV1M2>;
+}
+/**
+ * The request object of measurement eligibility check.
+ * @export
+ * @interface BaseEligibilityRequestV1M3
+ */
+export interface BaseEligibilityRequestV1M3 {
+    /**
+     * FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<FundingTypeV1M3>}
+     * @memberof BaseEligibilityRequestV1M3
+     */
+    fundingTypeFilters?: Array<FundingTypeV1M3>;
+    /**
+     * VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<string>}
+     * @memberof BaseEligibilityRequestV1M3
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<VendorTypeV1M3>}
+     * @memberof BaseEligibilityRequestV1M3
+     */
+    vendorTypeFilters?: Array<VendorTypeV1M3>;
+}
+/**
  * The base study object.
  * @export
  * @interface BaseStudyV1
@@ -1067,6 +1117,135 @@ export interface DSPCampaignMeasurementMetadataV1M1 {
     advertiserId?: string;
 }
 /**
+ * The campaign study eligibility data.
+ * @export
+ * @interface DSPOmnichannelMetricsEligibilityDataV1M2
+ */
+export interface DSPOmnichannelMetricsEligibilityDataV1M2 {
+    /**
+     * Optional current study identifier. If provided orders are expected to be added into this study and the orders already associated with this study will be excluded from certain eligibility checks.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsEligibilityDataV1M2
+     */
+    currentStudyId?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the eligibility check.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsEligibilityDataV1M2
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of canonical order identifiers. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsEligibilityDataV1M2
+     */
+    orderIds?: Array<string>;
+    /**
+     * A list of canonical brand identifiers.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsEligibilityDataV1M2
+     */
+    brandIds?: Array<string>;
+}
+/**
+ * The request object of DSP omnichannel metrics eligibility check.
+ * @export
+ * @interface DSPOmnichannelMetricsEligibilityRequestV1M2
+ */
+export interface DSPOmnichannelMetricsEligibilityRequestV1M2 {
+    /**
+     * FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<FundingTypeV1M2>}
+     * @memberof DSPOmnichannelMetricsEligibilityRequestV1M2
+     */
+    fundingTypeFilters?: Array<FundingTypeV1M2>;
+    /**
+     * VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsEligibilityRequestV1M2
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<VendorTypeV1M2>}
+     * @memberof DSPOmnichannelMetricsEligibilityRequestV1M2
+     */
+    vendorTypeFilters?: Array<VendorTypeV1M2>;
+    /**
+     * Optional current study identifier. If provided orders are expected to be added into this study and the orders already associated with this study will be excluded from certain eligibility checks.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsEligibilityRequestV1M2
+     */
+    currentStudyId?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the eligibility check.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsEligibilityRequestV1M2
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of canonical order identifiers. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsEligibilityRequestV1M2
+     */
+    orderIds?: Array<string>;
+    /**
+     * A list of canonical brand identifiers.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsEligibilityRequestV1M2
+     */
+    brandIds?: Array<string>;
+}
+/**
+ * The request object of DSP omnichannel metrics eligibility check.
+ * @export
+ * @interface DSPOmnichannelMetricsEligibilityRequestV1M3
+ */
+export interface DSPOmnichannelMetricsEligibilityRequestV1M3 {
+    /**
+     * FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<FundingTypeV1M3>}
+     * @memberof DSPOmnichannelMetricsEligibilityRequestV1M3
+     */
+    fundingTypeFilters?: Array<FundingTypeV1M3>;
+    /**
+     * VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsEligibilityRequestV1M3
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<VendorTypeV1M3>}
+     * @memberof DSPOmnichannelMetricsEligibilityRequestV1M3
+     */
+    vendorTypeFilters?: Array<VendorTypeV1M3>;
+    /**
+     * Optional current study identifier. If provided orders are expected to be added into this study and the orders already associated with this study will be excluded from certain eligibility checks.
+     * @type {string}
+     * @memberof DSPOmnichannelMetricsEligibilityRequestV1M3
+     */
+    currentStudyId?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the eligibility check.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsEligibilityRequestV1M3
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of canonical order identifiers. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsEligibilityRequestV1M3
+     */
+    orderIds?: Array<string>;
+    /**
+     * A list of canonical brand identifiers.
+     * @type {Array<string>}
+     * @memberof DSPOmnichannelMetricsEligibilityRequestV1M3
+     */
+    brandIds?: Array<string>;
+}
+/**
  * The basic model for all DSP OMNICHANNEL_METRICS objective studies.
  * @export
  * @interface DSPOmnichannelMetricsMetadataV1M2
@@ -1366,6 +1545,25 @@ export enum EligibilityFieldV1 {
 }
 
 /**
+ * Fields that will be checked as part of eligibility API call.
+ * @export
+ * @enum {string}
+ */
+
+export enum EligibilityFieldV1M2 {
+    Locale = 'LOCALE',
+    Budget = 'BUDGET',
+    Goal = 'GOAL',
+    StartTime = 'START_TIME',
+    EndTime = 'END_TIME',
+    FlightLength = 'FLIGHT_LENGTH',
+    LeadTime = 'LEAD_TIME',
+    Impressions = 'IMPRESSIONS',
+    Order = 'ORDER',
+    BuyerCount = 'BUYER_COUNT'
+}
+
+/**
  * Supported values are WARNING, ERROR. ERROR severity issues need to be resolved while WARNING severity issues can be ignored.
  * @export
  * @enum {string}
@@ -1404,6 +1602,37 @@ export interface EligibilityIssueV1 {
      * A human-readable description of the issue with suggestions on how to resolve the issue.
      * @type {string}
      * @memberof EligibilityIssueV1
+     */
+    message?: string;
+}
+/**
+ * The list of eligibility issues.
+ * @export
+ * @interface EligibilityIssueV1M2
+ */
+export interface EligibilityIssueV1M2 {
+    /**
+     * 
+     * @type {EligibilityIssueSeverityV1}
+     * @memberof EligibilityIssueV1M2
+     */
+    severity?: EligibilityIssueSeverityV1;
+    /**
+     * An enumerated issue code for machine use.
+     * @type {string}
+     * @memberof EligibilityIssueV1M2
+     */
+    code?: string;
+    /**
+     * 
+     * @type {EligibilityFieldV1M2}
+     * @memberof EligibilityIssueV1M2
+     */
+    field?: EligibilityFieldV1M2;
+    /**
+     * A human-readable description of the issue with suggestions on how to resolve the issue.
+     * @type {string}
+     * @memberof EligibilityIssueV1M2
      */
     message?: string;
 }
@@ -1470,6 +1699,31 @@ export interface EligibilityResponseV1 {
     vendorProductEligibilities?: Array<VendorProductEligibilityV1>;
 }
 /**
+ * The eligibility check response object.
+ * @export
+ * @interface EligibilityResponseV1M2
+ */
+export interface EligibilityResponseV1M2 {
+    /**
+     * 
+     * @type {EligibilityMetadataV1}
+     * @memberof EligibilityResponseV1M2
+     */
+    metadata?: EligibilityMetadataV1;
+    /**
+     * 
+     * @type {string}
+     * @memberof EligibilityResponseV1M2
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<VendorProductEligibilityV1M2>}
+     * @memberof EligibilityResponseV1M2
+     */
+    vendorProductEligibilities?: Array<VendorProductEligibilityV1M2>;
+}
+/**
  * Supported values are ELIGIBLE, INELIGIBLE and ELIGIBLE_WITH_WARNING. INELIGIBLE status indicates the study can not be created.
  * @export
  * @enum {string}
@@ -1525,6 +1779,29 @@ export enum FundingTypeV1 {
 export enum FundingTypeV1M1 {
     Complimentary = 'COMPLIMENTARY',
     ThirdPartyPayment = 'THIRD_PARTY_PAYMENT'
+}
+
+/**
+ * The measurement funding type. For COMPLIMENTARY studies the cost will be covered by Amazon.
+ * @export
+ * @enum {string}
+ */
+
+export enum FundingTypeV1M2 {
+    Complimentary = 'COMPLIMENTARY',
+    Cpm = 'CPM'
+}
+
+/**
+ * The measurement funding type. For COMPLIMENTARY studies the cost will be covered by Amazon.
+ * @export
+ * @enum {string}
+ */
+
+export enum FundingTypeV1M3 {
+    Complimentary = 'COMPLIMENTARY',
+    ThirdPartyPayment = 'THIRD_PARTY_PAYMENT',
+    Cpm = 'CPM'
 }
 
 /**
@@ -2190,6 +2467,17 @@ export enum StudyStatusV1 {
 
 export enum StudyTypeV1 {
     BrandLift = 'BRAND_LIFT'
+}
+
+/**
+ * The study type.
+ * @export
+ * @enum {string}
+ */
+
+export enum StudyTypeV1M2 {
+    BrandLift = 'BRAND_LIFT',
+    OmnichannelMetrics = 'OMNICHANNEL_METRICS'
 }
 
 /**
@@ -3139,6 +3427,31 @@ export interface VendorProductEligibilityV1 {
     status?: EligibilityStatusV1;
 }
 /**
+ * The measurement eligibility details for a certain vendor product.
+ * @export
+ * @interface VendorProductEligibilityV1M2
+ */
+export interface VendorProductEligibilityV1M2 {
+    /**
+     * vendor product canonical identifier.
+     * @type {string}
+     * @memberof VendorProductEligibilityV1M2
+     */
+    vendorProductId?: string;
+    /**
+     * A list of issues will be provided if the status is INELIGIBLE or ELIGIBLE_WITH_WARNING.
+     * @type {Array<EligibilityIssueV1M2>}
+     * @memberof VendorProductEligibilityV1M2
+     */
+    issues?: Array<EligibilityIssueV1M2>;
+    /**
+     * 
+     * @type {EligibilityStatusV1}
+     * @memberof VendorProductEligibilityV1M2
+     */
+    status?: EligibilityStatusV1;
+}
+/**
  * The policy rules will be enforced at vendor product level.
  * @export
  * @interface VendorProductPolicyV1
@@ -3489,6 +3802,36 @@ export enum VendorProductTypeV1M1 {
 }
 
 /**
+ * The measurement vendor product type.
+ * @export
+ * @enum {string}
+ */
+
+export enum VendorProductTypeV1M2 {
+    ShopperPanel = 'SHOPPER_PANEL',
+    OmnichannelMetrics = 'OMNICHANNEL_METRICS'
+}
+
+/**
+ * The measurement vendor product type.
+ * @export
+ * @enum {string}
+ */
+
+export enum VendorProductTypeV1M3 {
+    ShopperPanel = 'SHOPPER_PANEL',
+    BrandLiftInsights = 'BRAND_LIFT_INSIGHTS',
+    Dash = 'DASH',
+    Upwave = 'UPWAVE',
+    DigitalBrandEffect = 'DIGITAL_BRAND_EFFECT',
+    ExpandedViewLite = 'EXPANDED_VIEW_LITE',
+    Macromill = 'MACROMILL',
+    Dynata = 'DYNATA',
+    Lucid = 'LUCID',
+    OmnichannelMetrics = 'OMNICHANNEL_METRICS'
+}
+
+/**
  * The measurement vendor product.
  * @export
  * @interface VendorProductV1
@@ -3616,6 +3959,34 @@ export enum VendorTypeV1M1 {
     Macromill = 'MACROMILL',
     Dynata = 'DYNATA',
     Lucid = 'LUCID'
+}
+
+/**
+ * The measurement vendor type, each study type will have different supported vendors.
+ * @export
+ * @enum {string}
+ */
+
+export enum VendorTypeV1M2 {
+    Amazon = 'AMAZON',
+    OmnichannelMetrics = 'OMNICHANNEL_METRICS'
+}
+
+/**
+ * The measurement vendor type, each study type will have different supported vendors.
+ * @export
+ * @enum {string}
+ */
+
+export enum VendorTypeV1M3 {
+    Amazon = 'AMAZON',
+    Kantar = 'KANTAR',
+    Upwave = 'UPWAVE',
+    Nielsen = 'NIELSEN',
+    Macromill = 'MACROMILL',
+    Dynata = 'DYNATA',
+    Lucid = 'LUCID',
+    OmnichannelMetrics = 'OMNICHANNEL_METRICS'
 }
 
 
@@ -3912,6 +4283,61 @@ export const MeasurementApiAxiosParamCreator = function (configuration?: Configu
             // verify required parameter 'studyId' is not null or undefined
             assertParamExists('getDSPBrandLiftStudyResult', 'studyId', studyId)
             const localVarPath = `/measurement/studies/brandLift/{studyId}/result`
+                .replace(`{${"studyId"}}`, encodeURIComponent(String(studyId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+            if (accept !== undefined && accept !== null) {
+                localVarHeaderParameter['Accept'] = String(accept);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get result of a DSP OMNICHANNEL_METRICS study. Returns a 307 Temporary Redirect response if any of the file types is requested and response includes a location header with the value set to an AWS S3 path where the result is located. The path expires after 60 seconds. Accept header does not support json for OMNICHANNEL_METRICS study type.  **Requires one of these permissions**: []
+         * @summary Get result of a DSP OMNICHANNEL_METRICS study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} accept The version(s) of the requested resource. Available version(s) - &#x60;text/vnd.measurementresult.v1+xlsx&#x60;
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDSPOmnichannelMetricsStudyResult: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getDSPOmnichannelMetricsStudyResult', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getDSPOmnichannelMetricsStudyResult', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'accept' is not null or undefined
+            assertParamExists('getDSPOmnichannelMetricsStudyResult', 'accept', accept)
+            // verify required parameter 'studyId' is not null or undefined
+            assertParamExists('getDSPOmnichannelMetricsStudyResult', 'studyId', studyId)
+            const localVarPath = `/dsp/measurement/studies/omnichannelMetrics/{studyId}/result`
                 .replace(`{${"studyId"}}`, encodeURIComponent(String(studyId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -4447,6 +4873,20 @@ export const MeasurementApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Get result of a DSP OMNICHANNEL_METRICS study. Returns a 307 Temporary Redirect response if any of the file types is requested and response includes a location header with the value set to an AWS S3 path where the result is located. The path expires after 60 seconds. Accept header does not support json for OMNICHANNEL_METRICS study type.  **Requires one of these permissions**: []
+         * @summary Get result of a DSP OMNICHANNEL_METRICS study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} accept The version(s) of the requested resource. Available version(s) - &#x60;text/vnd.measurementresult.v1+xlsx&#x60;
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDSPOmnichannelMetricsStudyResult(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDSPOmnichannelMetricsStudyResult(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, accept, studyId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Gets base study objects given a list of studyIds or a list of advertiserIds.  **Requires one of these permissions**: []
          * @summary Gets base study objects given a list of studyIds or a list of advertiserIds.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -4637,6 +5077,19 @@ export const MeasurementApiFactory = function (configuration?: Configuration, ba
          */
         getDSPBrandLiftStudyResult(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options?: any): AxiosPromise<BrandLiftStudyResultV1M1> {
             return localVarFp.getDSPBrandLiftStudyResult(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, accept, studyId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get result of a DSP OMNICHANNEL_METRICS study. Returns a 307 Temporary Redirect response if any of the file types is requested and response includes a location header with the value set to an AWS S3 path where the result is located. The path expires after 60 seconds. Accept header does not support json for OMNICHANNEL_METRICS study type.  **Requires one of these permissions**: []
+         * @summary Get result of a DSP OMNICHANNEL_METRICS study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} accept The version(s) of the requested resource. Available version(s) - &#x60;text/vnd.measurementresult.v1+xlsx&#x60;
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDSPOmnichannelMetricsStudyResult(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options?: any): AxiosPromise<void> {
+            return localVarFp.getDSPOmnichannelMetricsStudyResult(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, accept, studyId, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets base study objects given a list of studyIds or a list of advertiserIds.  **Requires one of these permissions**: []
@@ -4944,6 +5397,41 @@ export interface MeasurementApiGetDSPBrandLiftStudyResultRequest {
      * The canonical identifier that represents a unique study.
      * @type {string}
      * @memberof MeasurementApiGetDSPBrandLiftStudyResult
+     */
+    readonly studyId: string
+}
+
+/**
+ * Request parameters for getDSPOmnichannelMetricsStudyResult operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiGetDSPOmnichannelMetricsStudyResultRequest
+ */
+export interface MeasurementApiGetDSPOmnichannelMetricsStudyResultRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPOmnichannelMetricsStudyResult
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPOmnichannelMetricsStudyResult
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The version(s) of the requested resource. Available version(s) - &#x60;text/vnd.measurementresult.v1+xlsx&#x60;
+     * @type {string}
+     * @memberof MeasurementApiGetDSPOmnichannelMetricsStudyResult
+     */
+    readonly accept: string
+
+    /**
+     * The canonical identifier that represents a unique study.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPOmnichannelMetricsStudyResult
      */
     readonly studyId: string
 }
@@ -5312,6 +5800,18 @@ export class MeasurementApi extends BaseAPI {
      */
     public getDSPBrandLiftStudyResult(requestParameters: MeasurementApiGetDSPBrandLiftStudyResultRequest, options?: any) {
         return MeasurementApiFp(this.configuration).getDSPBrandLiftStudyResult(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.accept, requestParameters.studyId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get result of a DSP OMNICHANNEL_METRICS study. Returns a 307 Temporary Redirect response if any of the file types is requested and response includes a location header with the value set to an AWS S3 path where the result is located. The path expires after 60 seconds. Accept header does not support json for OMNICHANNEL_METRICS study type.  **Requires one of these permissions**: []
+     * @summary Get result of a DSP OMNICHANNEL_METRICS study.
+     * @param {MeasurementApiGetDSPOmnichannelMetricsStudyResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public getDSPOmnichannelMetricsStudyResult(requestParameters: MeasurementApiGetDSPOmnichannelMetricsStudyResultRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).getDSPOmnichannelMetricsStudyResult(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.accept, requestParameters.studyId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
