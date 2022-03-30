@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0](https://github.com/whitebox-co/amazon-ads-api/compare/v1.5.2...v1.6.0) (2022-03-30)
+
+### Features
+
+-   adding portfolios api and integrating new amazon changes ([24fb1d7](https://github.com/whitebox-co/amazon-ads-api/commit/24fb1d71600fa0e657ab0ba512cd30ff92952a37))
+
 ## [1.5.2](https://github.com/whitebox-co/amazon-ads-api/compare/v1.5.1...v1.5.2) (2022-03-22)
 
 ### Bug Fixes
