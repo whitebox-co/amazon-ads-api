@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-import { ProductEligibilityApi } from '../models/common-eligibility';
+import { ProductEligibilityApi,ProgramEligibilityApi } from '../models/common-eligibility';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
 import { getAxiosInstance, applyMixins, AdsConfiguration } from '../../helpers';
 
@@ -21,3 +21,6 @@ export class CommonEligibilityClient extends ProductEligibilityApi {
 }
 
 
+    export interface CommonEligibilityClient extends ProductEligibilityApi,ProgramEligibilityApi {}
+    applyMixins(CommonEligibilityClient, [ProductEligibilityApi,ProgramEligibilityApi])
+    

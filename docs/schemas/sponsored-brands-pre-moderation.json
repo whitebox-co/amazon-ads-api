@@ -145,6 +145,22 @@
           }
         }
       },
+      "SDHeadlineRecommendationSchemaValidationException": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "InvalidArgumentErrorCode.",
+            "type": "string",
+            "enum": [
+              "INVALID_ARGUMENT"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "HeadlineSuggestionRequest": {
         "description": "Request structure of headline suggestion API.",
         "type": "object",
@@ -194,6 +210,54 @@
             "description": "String that contains suggested headline.",
             "type": "string",
             "example": "This is a suggested headline."
+          }
+        }
+      },
+      "CreativeRecommendationsNotFoundError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Not found error code.",
+            "type": "string",
+            "enum": [
+              "NOT_FOUND"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
+      "CreativeRecommendationsInternalServerError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Internal error code.",
+            "type": "string",
+            "enum": [
+              "INTERNAL_ERROR"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
+      "SDHeadlineRecommendationMarsThrottlingException": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "ThrottledErrorCode.",
+            "type": "string",
+            "enum": [
+              "THROTTLED"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
           }
         }
       },
@@ -271,6 +335,22 @@
           }
         }
       },
+      "SDHeadlineRecommendationAccessDeniedException": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "AccessDeniedErrorCode.",
+            "type": "string",
+            "enum": [
+              "ACCESS_DENIED"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "ModerationResultsRequest": {
         "type": "object",
         "required": [
@@ -318,6 +398,33 @@
           },
           "id": {
             "$ref": "#/components/schemas/Id"
+          }
+        }
+      },
+      "SDHeadlineRecommendationRequest": {
+        "description": "Request structure of SD headline recommendation API.",
+        "type": "object",
+        "properties": {
+          "asins": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "An array of ASINs associated with the creative.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "maxNumRecommendations": {
+            "description": "Maximum number of recommendations that API should return. Response will [0, maxNumRecommendations] recommendations (recommendations are not guaranteed as there can be instances where the ML model can not generate policy compliant headlines for the given set of asins).",
+            "maximum": 10,
+            "type": "number",
+            "minimum": 1
+          },
+          "adFormat": {
+            "type": "string",
+            "enum": [
+              "SPONSORED_DISPLAY"
+            ]
           }
         }
       },
@@ -421,7 +528,8 @@
               "SPONSORED_BRANDS_VIDEO",
               "STORES",
               "SPONSORED_DISPLAY",
-              "DSP"
+              "DSP",
+              "DSP_REC"
             ]
           },
           "locale": {
@@ -753,9 +861,38 @@
           }
         }
       },
+      "TextRecommendation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique ID for generated recommendation.",
+            "type": "string"
+          },
+          "value": {
+            "description": "Recommendation value.",
+            "type": "string"
+          }
+        }
+      },
       "NextToken": {
         "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the `NextToken` field is empty, there are no further results.",
         "type": "string"
+      },
+      "SDHeadlineRecommendationIdentifierNotfoundException": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "IdentiferNotFoundErrorCode.",
+            "type": "string",
+            "enum": [
+              "IDENTIFIER_NOT_FOUND"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
       },
       "VideoComponentResponse": {
         "description": "Pre moderation result for a video component",
@@ -793,6 +930,42 @@
           "url": {
             "description": "Publicly accessible url of the video that got pre moderated.",
             "type": "string"
+          }
+        }
+      },
+      "SDHeadlineRecommendationResponse": {
+        "description": "Response structure of SD headline recommendation API.",
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "description": "An identifier for request made which is generated by server.",
+            "type": "string"
+          },
+          "recommendations": {
+            "minItems": 1,
+            "maxItems": 10,
+            "description": "Recommendations are sorted, i.e., more suitable headline has lesser array index value.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecommendedHeadline"
+            }
+          }
+        }
+      },
+      "RecommendedHeadline": {
+        "description": "Recommended Headline in response object. Recommended headline will be locale specific, i.e. for an asin input in ES, Recommended headline will be in ES.",
+        "type": "object",
+        "properties": {
+          "headlineId": {
+            "description": "Unique Id of Recommended headline.",
+            "type": "string",
+            "example": "e991e32c-0136-427a-843b-ff04162f2f91"
+          },
+          "headline": {
+            "description": "String that contains Recommended headline.",
+            "type": "string",
+            "maxLength": 50,
+            "example": "This is a Recommended headline."
           }
         }
       },
@@ -925,6 +1098,15 @@
           }
         }
       },
+      "TextRecommendations": {
+        "minItems": 0,
+        "maxItems": 5,
+        "description": "Ordered list of recommendations in each group.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/TextRecommendation"
+        }
+      },
       "VideoComponent": {
         "description": "Video component which needs to be pre moderated. A publicly accessible videoUrl must be sent.",
         "type": "object",
@@ -1010,7 +1192,8 @@
               "SPONSORED_BRANDS_VIDEO",
               "STORES",
               "SPONSORED_DISPLAY",
-              "DSP"
+              "DSP",
+              "DSP_REC"
             ]
           },
           "locale": {
@@ -1111,6 +1294,22 @@
           }
         }
       },
+      "CreativeRecommendationsThrottlingError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Throttled error code.",
+            "type": "string",
+            "enum": [
+              "THROTTLED"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "ModerationError": {
         "description": "The Error Response Object.",
         "type": "object",
@@ -1175,6 +1374,31 @@
           "SB_VIDEO"
         ]
       },
+      "SecondaryHeadlineRecommendationGroups": {
+        "minItems": 0,
+        "maxItems": 5,
+        "description": "Ordered list of Secondary Headline recommendation groups.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/TextRecommendations"
+        }
+      },
+      "CreativeRecommendationsBadRequestError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Bad request error code.",
+            "type": "string",
+            "enum": [
+              "BAD_REQUEST"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "ViolatingTextEvidence": {
         "type": "object",
         "properties": {
@@ -1228,6 +1452,17 @@
           }
         }
       },
+      "CreativeRecommendationsResponse": {
+        "type": "object",
+        "properties": {
+          "primaryHeadlines": {
+            "$ref": "#/components/schemas/PrimaryHeadlineRecommendationGroups"
+          },
+          "secondaryHeadlines": {
+            "$ref": "#/components/schemas/SecondaryHeadlineRecommendationGroups"
+          }
+        }
+      },
       "DateComponent": {
         "description": "Date component which needs to be pre moderated. Either startDate or endDate must be populated, or both can be populated.",
         "type": "object",
@@ -1269,6 +1504,42 @@
             "format": "int64",
             "description": "Zero-based index into the text in reviewedText where the text specified in violatingText ends.",
             "type": "integer"
+          }
+        }
+      },
+      "CreativeRecommendationsRequest": {
+        "description": "Request structure of creative recommendations API.",
+        "type": "object",
+        "required": [
+          "asins",
+          "requiredRecommendations",
+          "adFormat"
+        ],
+        "properties": {
+          "asins": {
+            "minItems": 1,
+            "maxItems": 3,
+            "description": "An array of ASINs associated with the creative. Note, do not pass an empty array, this results in an error.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "adFormat": {
+            "description": "Ad format of the creative.",
+            "type": "string",
+            "enum": [
+              "SPONSORED_BRANDS_VIDEO"
+            ]
+          },
+          "requiredRecommendations": {
+            "minItems": 1,
+            "maxItems": 2,
+            "description": "Required recommendations details.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RequiredRecommendations"
+            }
           }
         }
       },
@@ -1314,6 +1585,45 @@
             "items": {
               "$ref": "#/components/schemas/ViolatingAsinContent"
             }
+          }
+        }
+      },
+      "RequiredRecommendations": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "maxRecommendationGroups": {
+            "format": "int32",
+            "description": "Maximum number of recommendations groups that API should return for given type. (recommendations are not guaranteed).",
+            "maximum": 5,
+            "type": "integer",
+            "minimum": 1
+          },
+          "type": {
+            "description": "Type of recommendations.",
+            "type": "string",
+            "enum": [
+              "PRIMARY_HEADLINE",
+              "SECONDARY_HEADLINE"
+            ]
+          }
+        }
+      },
+      "CreativeRecommendationsAccessDeniedError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Access denied error code.",
+            "type": "string",
+            "enum": [
+              "ACCESS_DENIED"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
           }
         }
       },
@@ -1376,6 +1686,31 @@
             "type": "string",
             "example": "https://advertising.amazon.com/resources/ad-policy/en/creative-acceptance#alcohol"
           }
+        }
+      },
+      "SDHeadlineRecommendationInternalServerException": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "InternalErrorCode.",
+            "type": "string",
+            "enum": [
+              "INTERNAL_ERROR"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
+      "PrimaryHeadlineRecommendationGroups": {
+        "minItems": 0,
+        "maxItems": 5,
+        "description": "Ordered list of Primary Headline recommendation groups.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/TextRecommendations"
         }
       }
     },

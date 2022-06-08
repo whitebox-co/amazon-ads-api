@@ -1128,6 +1128,114 @@
         ]
       }
     },
+    "/sb/campaigns/budget/usage": {
+      "post": {
+        "summary": "Budget usage API for SB campaigns",
+        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "tags": [
+          "Budget Usage"
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.sbcampaignbudgetusage.v1+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BudgetUsageCampaignRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "operationId": "sbCampaignsBudgetUsage",
+        "responses": {
+          "207": {
+            "description": "Multi-status. An object containing a list of budget usage response objects reflecting the same order as the input.",
+            "content": {
+              "application/vnd.sbcampaignbudgetusage.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageCampaignResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server BudgetUsageError - Something went wrong on the server. Retry later and report an BudgetUsageError if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {},
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {},
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          }
+        ]
+      }
+    },
     "/sb/campaigns/{campaignId}/budgetRules": {
       "post": {
         "summary": "Associates one or more budget rules to a campaign specified by identifer.",
@@ -1467,6 +1575,22 @@
     "headers": {},
     "examples": {},
     "schemas": {
+      "SDHeadlineRecommendationSchemaValidationException": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "InvalidArgumentErrorCode.",
+            "type": "string",
+            "enum": [
+              "INVALID_ARGUMENT"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "GetCampaignShopperSegmentForecastResponseContent": {
         "description": "Response structure for shopper segment bidding campaign performance forecasts.",
         "type": "object",
@@ -1527,6 +1651,22 @@
           }
         }
       },
+      "CreativeRecommendationsNotFoundError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Not found error code.",
+            "type": "string",
+            "enum": [
+              "NOT_FOUND"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "GetSPBudgetRulesForAdvertiserResponse": {
         "type": "object",
         "properties": {
@@ -1561,6 +1701,22 @@
           "message"
         ]
       },
+      "CreativeRecommendationsInternalServerError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Internal error code.",
+            "type": "string",
+            "enum": [
+              "INTERNAL_ERROR"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "ProductExpression": {
         "description": "Expression settings for the target.",
         "type": "object",
@@ -1575,10 +1731,11 @@
         }
       },
       "SBRuleType": {
-        "description": "The type of budget rule. SCHEDULE: A budget rule based on a start and end date.",
+        "description": "The type of budget rule. SCHEDULE: A budget rule based on a start and end date. PERFORMANCE: A budget rule based on advertising performance criteria.",
         "type": "string",
         "enum": [
-          "SCHEDULE"
+          "SCHEDULE",
+          "PERFORMANCE"
         ]
       },
       "HeadlineSuggestionResponse": {
@@ -1630,6 +1787,13 @@
           }
         }
       },
+      "PerformanceMetricForSB": {
+        "description": "The advertising performance metric.",
+        "type": "string",
+        "enum": [
+          "ROAS"
+        ]
+      },
       "ThrottledErrorCode": {
         "type": "string",
         "enum": [
@@ -1667,6 +1831,27 @@
           "code",
           "message"
         ]
+      },
+      "BudgetUsageCampaignBatchError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "An enumerated error code for machine use.",
+            "type": "string"
+          },
+          "campaignId": {
+            "description": "ID of requested resource",
+            "type": "string"
+          },
+          "index": {
+            "description": "An index to maintain order of the campaignIds",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
       },
       "SBGetAssociatedCampaignsResponse": {
         "type": "object",
@@ -1724,6 +1909,22 @@
           }
         }
       },
+      "SDHeadlineRecommendationAccessDeniedException": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "AccessDeniedErrorCode.",
+            "type": "string",
+            "enum": [
+              "ACCESS_DENIED"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "RecurrenceType": {
         "description": "depicts the type of recurrence",
         "type": "string",
@@ -1731,6 +1932,54 @@
           "DAILY",
           "WEEKLY"
         ]
+      },
+      "SDHeadlineRecommendationRequest": {
+        "description": "Request structure of SD headline recommendation API.",
+        "type": "object",
+        "properties": {
+          "asins": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "An array of ASINs associated with the creative.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "maxNumRecommendations": {
+            "description": "Maximum number of recommendations that API should return. Response will [0, maxNumRecommendations] recommendations (recommendations are not guaranteed as there can be instances where the ML model can not generate policy compliant headlines for the given set of asins).",
+            "maximum": 10,
+            "type": "number",
+            "minimum": 1
+          },
+          "adFormat": {
+            "type": "string",
+            "enum": [
+              "SPONSORED_DISPLAY"
+            ]
+          }
+        }
+      },
+      "BudgetUsagePortfolioBatchError": {
+        "type": "object",
+        "properties": {
+          "portfolioId": {
+            "description": "ID of requested resource",
+            "type": "string"
+          },
+          "code": {
+            "description": "An enumerated error code for machine use.",
+            "type": "string"
+          },
+          "index": {
+            "description": "An index to maintain order of the portfolioIds",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
       },
       "SPRuleBasedBudget": {
         "type": "object",
@@ -1770,6 +2019,20 @@
           "moderatedComponent": {
             "description": "Moderation component which marked the policy violation.",
             "type": "string"
+          }
+        }
+      },
+      "BudgetUsagePortfolioRequest": {
+        "type": "object",
+        "properties": {
+          "portfolioIds": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "A list of portfolio IDs.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -1952,6 +2215,20 @@
           }
         }
       },
+      "BudgetUsageCampaignRequest": {
+        "type": "object",
+        "properties": {
+          "campaignIds": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "A list of campaign IDs",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "TextPolicyViolation": {
         "description": "Structure of policy violation for a text component",
         "type": "object",
@@ -2083,14 +2360,6 @@
           "asinSameAs"
         ]
       },
-      "GetSDBudgetRuleResponse": {
-        "type": "object",
-        "properties": {
-          "budgetRule": {
-            "$ref": "#/components/schemas/SDBudgetRule"
-          }
-        }
-      },
       "SPBudgetRuleDetails": {
         "description": "Object representing details of a budget rule for SP campaign",
         "type": "object",
@@ -2114,6 +2383,14 @@
           },
           "performanceMeasureCondition": {
             "$ref": "#/components/schemas/PerformanceMeasureCondition"
+          }
+        }
+      },
+      "GetSDBudgetRuleResponse": {
+        "type": "object",
+        "properties": {
+          "budgetRule": {
+            "$ref": "#/components/schemas/SDBudgetRule"
           }
         }
       },
@@ -2154,6 +2431,22 @@
           },
           "startDate": {
             "description": "The start date in YYYYMMDD format.",
+            "type": "string"
+          }
+        }
+      },
+      "SDHeadlineRecommendationIdentifierNotfoundException": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "IdentiferNotFoundErrorCode.",
+            "type": "string",
+            "enum": [
+              "IDENTIFIER_NOT_FOUND"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
             "type": "string"
           }
         }
@@ -2203,6 +2496,56 @@
           "url": {
             "description": "Publicly accessible url of the video that got pre moderated.",
             "type": "string"
+          }
+        }
+      },
+      "RecommendedHeadline": {
+        "description": "Recommended Headline in response object. Recommended headline will be locale specific, i.e. for an asin input in ES, Recommended headline will be in ES.",
+        "type": "object",
+        "properties": {
+          "headlineId": {
+            "description": "Unique Id of Recommended headline.",
+            "type": "string",
+            "example": "e991e32c-0136-427a-843b-ff04162f2f91"
+          },
+          "headline": {
+            "description": "String that contains Recommended headline.",
+            "type": "string",
+            "maxLength": 50,
+            "example": "This is a Recommended headline."
+          }
+        }
+      },
+      "BudgetUsageError": {
+        "description": "The Error Response Object.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "An enumerated error code for machine use.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "BudgetUsagePortfolioResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "description": "List of budget usage percentages that were successfully pulled",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetUsagePortfolio"
+            }
+          },
+          "error": {
+            "description": "List of budget usage percentages that failed to pull",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetUsagePortfolioBatchError"
+            }
           }
         }
       },
@@ -2547,6 +2890,15 @@
           }
         }
       },
+      "SecondaryHeadlineRecommendationGroups": {
+        "minItems": 0,
+        "maxItems": 5,
+        "description": "Ordered list of Secondary Headline recommendation groups.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/TextRecommendations"
+        }
+      },
       "ViolatingTextEvidence": {
         "type": "object",
         "properties": {
@@ -2556,6 +2908,32 @@
           "violatingText": {
             "description": "The specific text determined to violate the specified policy in reviewedText.",
             "type": "string"
+          }
+        }
+      },
+      "BudgetUsagePortfolio": {
+        "type": "object",
+        "properties": {
+          "budgetUsagePercent": {
+            "description": "Budget usage percentage (spend / available budget) for the given budget policy.",
+            "type": "number"
+          },
+          "portfolioId": {
+            "description": "ID of requested resource",
+            "type": "string"
+          },
+          "usageUpdatedTimestamp": {
+            "format": "date-time",
+            "description": "Last evaluation time for budget usage",
+            "type": "string"
+          },
+          "index": {
+            "description": "An index to maintain order of the portfolioIds",
+            "type": "number"
+          },
+          "budget": {
+            "description": "Budget amount of resource requested",
+            "type": "number"
           }
         }
       },
@@ -2774,6 +3152,15 @@
           }
         }
       },
+      "PrimaryHeadlineRecommendationGroups": {
+        "minItems": 0,
+        "maxItems": 5,
+        "description": "Ordered list of Primary Headline recommendation groups.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/TextRecommendations"
+        }
+      },
       "SBCampaignBudgetRule": {
         "type": "object",
         "required": [
@@ -2988,6 +3375,41 @@
           }
         }
       },
+      "BudgetUsageCampaignResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "description": "List of budget usage percentages that were successfully pulled",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetUsageCampaign"
+            }
+          },
+          "error": {
+            "description": "List of budget usage percentages that failed to pull",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetUsageCampaignBatchError"
+            }
+          }
+        }
+      },
+      "SDHeadlineRecommendationMarsThrottlingException": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "ThrottledErrorCode.",
+            "type": "string",
+            "enum": [
+              "THROTTLED"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "InternalServerExceptionResponseContent": {
         "type": "object",
         "properties": {
@@ -3025,7 +3447,7 @@
             "maxLength": 355
           },
           "performanceMeasureCondition": {
-            "$ref": "#/components/schemas/PerformanceMeasureCondition"
+            "$ref": "#/components/schemas/PerformanceMeasureConditionForSB"
           }
         }
       },
@@ -3246,7 +3668,8 @@
               "SPONSORED_BRANDS_VIDEO",
               "STORES",
               "SPONSORED_DISPLAY",
-              "DSP"
+              "DSP",
+              "DSP_REC"
             ]
           },
           "locale": {
@@ -3531,6 +3954,27 @@
           "GREATER_THAN_OR_EQUAL_TO"
         ]
       },
+      "PerformanceMeasureConditionForSB": {
+        "type": "object",
+        "required": [
+          "comparisonOperator",
+          "metricName",
+          "threshold"
+        ],
+        "properties": {
+          "metricName": {
+            "$ref": "#/components/schemas/PerformanceMetricForSB"
+          },
+          "comparisonOperator": {
+            "$ref": "#/components/schemas/ComparisonOperator"
+          },
+          "threshold": {
+            "format": "double",
+            "description": "The performance threshold value.",
+            "type": "number"
+          }
+        }
+      },
       "UpdateSDBudgetRulesRequest": {
         "description": "Request object for updating budget rule for SD campaign",
         "type": "object",
@@ -3542,6 +3986,19 @@
             "items": {
               "$ref": "#/components/schemas/SDBudgetRule"
             }
+          }
+        }
+      },
+      "TextRecommendation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique ID for generated recommendation.",
+            "type": "string"
+          },
+          "value": {
+            "description": "Recommendation value.",
+            "type": "string"
           }
         }
       },
@@ -3587,6 +4044,25 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SPCampaignBudgetRule"
+            }
+          }
+        }
+      },
+      "SDHeadlineRecommendationResponse": {
+        "description": "Response structure of SD headline recommendation API.",
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "description": "An identifier for request made which is generated by server.",
+            "type": "string"
+          },
+          "recommendations": {
+            "minItems": 1,
+            "maxItems": 10,
+            "description": "Recommendations are sorted, i.e., more suitable headline has lesser array index value.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RecommendedHeadline"
             }
           }
         }
@@ -3759,6 +4235,41 @@
           }
         }
       },
+      "TextRecommendations": {
+        "minItems": 0,
+        "maxItems": 5,
+        "description": "Ordered list of recommendations in each group.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/TextRecommendation"
+        }
+      },
+      "BudgetUsageCampaign": {
+        "type": "object",
+        "properties": {
+          "budgetUsagePercent": {
+            "description": "Budget usage percentage (spend / available budget) for the given budget policy.",
+            "type": "number"
+          },
+          "campaignId": {
+            "description": "ID of requested resource",
+            "type": "string"
+          },
+          "usageUpdatedTimestamp": {
+            "format": "date-time",
+            "description": "Last evaluation time for budget usage",
+            "type": "string"
+          },
+          "index": {
+            "description": "An index to maintain order of the campaignIds",
+            "type": "number"
+          },
+          "budget": {
+            "description": "Budget amount of resource requested",
+            "type": "number"
+          }
+        }
+      },
       "SDBudgetHistory": {
         "type": "object",
         "properties": {
@@ -3816,7 +4327,8 @@
               "SPONSORED_BRANDS_VIDEO",
               "STORES",
               "SPONSORED_DISPLAY",
-              "DSP"
+              "DSP",
+              "DSP_REC"
             ]
           },
           "locale": {
@@ -3990,6 +4502,22 @@
           }
         }
       },
+      "CreativeRecommendationsThrottlingError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Throttled error code.",
+            "type": "string",
+            "enum": [
+              "THROTTLED"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "UpdateBudgetRulesResponse": {
         "type": "object",
         "properties": {
@@ -4023,14 +4551,19 @@
           }
         }
       },
-      "CreateAssociatedBudgetRulesResponse": {
+      "CreativeRecommendationsBadRequestError": {
         "type": "object",
         "properties": {
-          "responses": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AssociatedBudgetRuleResponse"
-            }
+          "code": {
+            "description": "Bad request error code.",
+            "type": "string",
+            "enum": [
+              "BAD_REQUEST"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
           }
         }
       },
@@ -4043,6 +4576,17 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SBBudgetRule"
+            }
+          }
+        }
+      },
+      "CreateAssociatedBudgetRulesResponse": {
+        "type": "object",
+        "properties": {
+          "responses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssociatedBudgetRuleResponse"
             }
           }
         }
@@ -4126,6 +4670,17 @@
           }
         }
       },
+      "CreativeRecommendationsResponse": {
+        "type": "object",
+        "properties": {
+          "primaryHeadlines": {
+            "$ref": "#/components/schemas/PrimaryHeadlineRecommendationGroups"
+          },
+          "secondaryHeadlines": {
+            "$ref": "#/components/schemas/SecondaryHeadlineRecommendationGroups"
+          }
+        }
+      },
       "TextPosition": {
         "type": "object",
         "properties": {
@@ -4138,6 +4693,42 @@
             "format": "int64",
             "description": "Zero-based index into the text in reviewedText where the text specified in violatingText ends.",
             "type": "integer"
+          }
+        }
+      },
+      "CreativeRecommendationsRequest": {
+        "description": "Request structure of creative recommendations API.",
+        "type": "object",
+        "required": [
+          "asins",
+          "requiredRecommendations",
+          "adFormat"
+        ],
+        "properties": {
+          "asins": {
+            "minItems": 1,
+            "maxItems": 3,
+            "description": "An array of ASINs associated with the creative. Note, do not pass an empty array, this results in an error.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "adFormat": {
+            "description": "Ad format of the creative.",
+            "type": "string",
+            "enum": [
+              "SPONSORED_BRANDS_VIDEO"
+            ]
+          },
+          "requiredRecommendations": {
+            "minItems": 1,
+            "maxItems": 2,
+            "description": "Required recommendations details.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RequiredRecommendations"
+            }
           }
         }
       },
@@ -4208,6 +4799,45 @@
           }
         }
       },
+      "RequiredRecommendations": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "maxRecommendationGroups": {
+            "format": "int32",
+            "description": "Maximum number of recommendations groups that API should return for given type. (recommendations are not guaranteed).",
+            "maximum": 5,
+            "type": "integer",
+            "minimum": 1
+          },
+          "type": {
+            "description": "Type of recommendations.",
+            "type": "string",
+            "enum": [
+              "PRIMARY_HEADLINE",
+              "SECONDARY_HEADLINE"
+            ]
+          }
+        }
+      },
+      "CreativeRecommendationsAccessDeniedError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Access denied error code.",
+            "type": "string",
+            "enum": [
+              "ACCESS_DENIED"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "SBKeywordRecommendationType": {
         "description": "A recommendation identifier that describes the suggested action for the recommendation.\n|Identifier|Description|\n|----------|-----------|\n|addKeyword|The suggested action is to add the keyword.|\n<br/>",
         "type": "string",
@@ -4215,15 +4845,15 @@
           "addKeyword"
         ]
       },
-      "DisassociateAssociatedBudgetRuleResponse": {
-        "type": "object"
-      },
       "BudgetChangeType": {
         "description": "The value by which to update the budget of the budget rule.",
         "type": "string",
         "enum": [
           "PERCENT"
         ]
+      },
+      "DisassociateAssociatedBudgetRuleResponse": {
+        "type": "object"
       },
       "SDBudgetRuleDetails": {
         "description": "Object representing details of a budget rule for SD campaign",
@@ -4248,6 +4878,22 @@
           },
           "performanceMeasureCondition": {
             "$ref": "#/components/schemas/PerformanceMeasureCondition"
+          }
+        }
+      },
+      "SDHeadlineRecommendationInternalServerException": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "InternalErrorCode.",
+            "type": "string",
+            "enum": [
+              "INTERNAL_ERROR"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
           }
         }
       },

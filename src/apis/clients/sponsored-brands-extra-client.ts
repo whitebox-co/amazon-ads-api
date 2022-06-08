@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-import { BudgetRulesApi,BudgetRulesRecommendationApi,DefaultApi,KeywordRecommendationsApi,RecommendationsApi,SuggestionsApi } from '../models/sponsored-brands-extra';
+import { BudgetRulesApi,BudgetRulesRecommendationApi,BudgetUsageApi,DefaultApi,KeywordRecommendationsApi,RecommendationsApi,SuggestionsApi } from '../models/sponsored-brands-extra';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
 import { getAxiosInstance, applyMixins, AdsConfiguration } from '../../helpers';
 
@@ -21,6 +21,6 @@ export class SponsoredBrandsExtraClient extends BudgetRulesApi {
 }
 
 
-    export interface SponsoredBrandsExtraClient extends BudgetRulesApi,BudgetRulesRecommendationApi,DefaultApi,KeywordRecommendationsApi,RecommendationsApi,SuggestionsApi {}
-    applyMixins(SponsoredBrandsExtraClient, [BudgetRulesApi,BudgetRulesRecommendationApi,DefaultApi,KeywordRecommendationsApi,RecommendationsApi,SuggestionsApi])
+    export interface SponsoredBrandsExtraClient extends BudgetRulesApi,BudgetRulesRecommendationApi,BudgetUsageApi,DefaultApi,KeywordRecommendationsApi,RecommendationsApi,SuggestionsApi {}
+    applyMixins(SponsoredBrandsExtraClient, [BudgetRulesApi,BudgetRulesRecommendationApi,BudgetUsageApi,DefaultApi,KeywordRecommendationsApi,RecommendationsApi,SuggestionsApi])
     

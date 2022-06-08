@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-import { AdGroupsApi,BidRecommendationsApi,BrandSafetyListOpenBetaApi,CampaignsApi,CreativesApi,NegativeTargetingApi,ProductAdsApi,ReportsApi,SnapshotsApi,TargetingApi,TargetingRecommendationsApi } from '../models/sponsored-display';
+import { AdGroupsApi,BidRecommendationsApi,BidRulesPreviewOnlyApi,BrandSafetyListOpenBetaApi,CampaignsApi,CreativesApi,NegativeTargetingApi,ProductAdsApi,ReportsApi,SnapshotsApi,TargetingApi,TargetingRecommendationsApi } from '../models/sponsored-display';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
 import { getAxiosInstance, applyMixins, AdsConfiguration } from '../../helpers';
 
@@ -21,6 +21,6 @@ export class SponsoredDisplayClient extends AdGroupsApi {
 }
 
 
-    export interface SponsoredDisplayClient extends AdGroupsApi,BidRecommendationsApi,BrandSafetyListOpenBetaApi,CampaignsApi,CreativesApi,NegativeTargetingApi,ProductAdsApi,ReportsApi,SnapshotsApi,TargetingApi,TargetingRecommendationsApi {}
-    applyMixins(SponsoredDisplayClient, [AdGroupsApi,BidRecommendationsApi,BrandSafetyListOpenBetaApi,CampaignsApi,CreativesApi,NegativeTargetingApi,ProductAdsApi,ReportsApi,SnapshotsApi,TargetingApi,TargetingRecommendationsApi])
+    export interface SponsoredDisplayClient extends AdGroupsApi,BidRecommendationsApi,BidRulesPreviewOnlyApi,BrandSafetyListOpenBetaApi,CampaignsApi,CreativesApi,NegativeTargetingApi,ProductAdsApi,ReportsApi,SnapshotsApi,TargetingApi,TargetingRecommendationsApi {}
+    applyMixins(SponsoredDisplayClient, [AdGroupsApi,BidRecommendationsApi,BidRulesPreviewOnlyApi,BrandSafetyListOpenBetaApi,CampaignsApi,CreativesApi,NegativeTargetingApi,ProductAdsApi,ReportsApi,SnapshotsApi,TargetingApi,TargetingRecommendationsApi])
     

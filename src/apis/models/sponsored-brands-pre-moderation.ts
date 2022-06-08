@@ -156,6 +156,199 @@ export enum AsinPolicyViolationTypeEnum {
 }
 
 /**
+ * 
+ * @export
+ * @interface CreativeRecommendationsAccessDeniedError
+ */
+export interface CreativeRecommendationsAccessDeniedError {
+    /**
+     * Access denied error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsAccessDeniedError
+     */
+    code?: CreativeRecommendationsAccessDeniedErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsAccessDeniedError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsAccessDeniedErrorCodeEnum {
+    AccessDenied = 'ACCESS_DENIED'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsBadRequestError
+ */
+export interface CreativeRecommendationsBadRequestError {
+    /**
+     * Bad request error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsBadRequestError
+     */
+    code?: CreativeRecommendationsBadRequestErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsBadRequestError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsBadRequestErrorCodeEnum {
+    BadRequest = 'BAD_REQUEST'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsInternalServerError
+ */
+export interface CreativeRecommendationsInternalServerError {
+    /**
+     * Internal error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsInternalServerError
+     */
+    code?: CreativeRecommendationsInternalServerErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsInternalServerError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsInternalServerErrorCodeEnum {
+    InternalError = 'INTERNAL_ERROR'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsNotFoundError
+ */
+export interface CreativeRecommendationsNotFoundError {
+    /**
+     * Not found error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsNotFoundError
+     */
+    code?: CreativeRecommendationsNotFoundErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsNotFoundError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsNotFoundErrorCodeEnum {
+    NotFound = 'NOT_FOUND'
+}
+
+/**
+ * Request structure of creative recommendations API.
+ * @export
+ * @interface CreativeRecommendationsRequest
+ */
+export interface CreativeRecommendationsRequest {
+    /**
+     * An array of ASINs associated with the creative. Note, do not pass an empty array, this results in an error.
+     * @type {Array<string>}
+     * @memberof CreativeRecommendationsRequest
+     */
+    asins: Array<string>;
+    /**
+     * Ad format of the creative.
+     * @type {string}
+     * @memberof CreativeRecommendationsRequest
+     */
+    adFormat: CreativeRecommendationsRequestAdFormatEnum;
+    /**
+     * Required recommendations details.
+     * @type {Array<RequiredRecommendations>}
+     * @memberof CreativeRecommendationsRequest
+     */
+    requiredRecommendations: Array<RequiredRecommendations>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsRequestAdFormatEnum {
+    SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsResponse
+ */
+export interface CreativeRecommendationsResponse {
+    /**
+     * Ordered list of Primary Headline recommendation groups.
+     * @type {Array<Array<TextRecommendation>>}
+     * @memberof CreativeRecommendationsResponse
+     */
+    primaryHeadlines?: Array<Array<TextRecommendation>>;
+    /**
+     * Ordered list of Secondary Headline recommendation groups.
+     * @type {Array<Array<TextRecommendation>>}
+     * @memberof CreativeRecommendationsResponse
+     */
+    secondaryHeadlines?: Array<Array<TextRecommendation>>;
+}
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsThrottlingError
+ */
+export interface CreativeRecommendationsThrottlingError {
+    /**
+     * Throttled error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsThrottlingError
+     */
+    code?: CreativeRecommendationsThrottlingErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsThrottlingError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsThrottlingErrorCodeEnum {
+    Throttled = 'THROTTLED'
+}
+
+/**
  * Date component which needs to be pre moderated. Either startDate or endDate must be populated, or both can be populated.
  * @export
  * @interface DateComponent
@@ -975,7 +1168,8 @@ export enum PreModerationRequestAdProgramEnum {
     SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO',
     Stores = 'STORES',
     SponsoredDisplay = 'SPONSORED_DISPLAY',
-    Dsp = 'DSP'
+    Dsp = 'DSP',
+    DspRec = 'DSP_REC'
 }
 /**
     * @export
@@ -1075,7 +1269,8 @@ export enum PreModerationResponseAdProgramEnum {
     SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO',
     Stores = 'STORES',
     SponsoredDisplay = 'SPONSORED_DISPLAY',
-    Dsp = 'DSP'
+    Dsp = 'DSP',
+    DspRec = 'DSP_REC'
 }
 /**
     * @export
@@ -1101,6 +1296,247 @@ export enum PreModerationResponseLocaleEnum {
     EsUs = 'es-US',
     EsMx = 'es-MX',
     TrTr = 'tr-TR'
+}
+
+/**
+ * Recommended Headline in response object. Recommended headline will be locale specific, i.e. for an asin input in ES, Recommended headline will be in ES.
+ * @export
+ * @interface RecommendedHeadline
+ */
+export interface RecommendedHeadline {
+    /**
+     * Unique Id of Recommended headline.
+     * @type {string}
+     * @memberof RecommendedHeadline
+     */
+    headlineId?: string;
+    /**
+     * String that contains Recommended headline.
+     * @type {string}
+     * @memberof RecommendedHeadline
+     */
+    headline?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RequiredRecommendations
+ */
+export interface RequiredRecommendations {
+    /**
+     * Maximum number of recommendations groups that API should return for given type. (recommendations are not guaranteed).
+     * @type {number}
+     * @memberof RequiredRecommendations
+     */
+    maxRecommendationGroups?: number;
+    /**
+     * Type of recommendations.
+     * @type {string}
+     * @memberof RequiredRecommendations
+     */
+    type: RequiredRecommendationsTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RequiredRecommendationsTypeEnum {
+    PrimaryHeadline = 'PRIMARY_HEADLINE',
+    SecondaryHeadline = 'SECONDARY_HEADLINE'
+}
+
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationAccessDeniedException
+ */
+export interface SDHeadlineRecommendationAccessDeniedException {
+    /**
+     * AccessDeniedErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationAccessDeniedException
+     */
+    code?: SDHeadlineRecommendationAccessDeniedExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationAccessDeniedException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationAccessDeniedExceptionCodeEnum {
+    AccessDenied = 'ACCESS_DENIED'
+}
+
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationIdentifierNotfoundException
+ */
+export interface SDHeadlineRecommendationIdentifierNotfoundException {
+    /**
+     * IdentiferNotFoundErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationIdentifierNotfoundException
+     */
+    code?: SDHeadlineRecommendationIdentifierNotfoundExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationIdentifierNotfoundException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationIdentifierNotfoundExceptionCodeEnum {
+    IdentifierNotFound = 'IDENTIFIER_NOT_FOUND'
+}
+
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationInternalServerException
+ */
+export interface SDHeadlineRecommendationInternalServerException {
+    /**
+     * InternalErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationInternalServerException
+     */
+    code?: SDHeadlineRecommendationInternalServerExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationInternalServerException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationInternalServerExceptionCodeEnum {
+    InternalError = 'INTERNAL_ERROR'
+}
+
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationMarsThrottlingException
+ */
+export interface SDHeadlineRecommendationMarsThrottlingException {
+    /**
+     * ThrottledErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationMarsThrottlingException
+     */
+    code?: SDHeadlineRecommendationMarsThrottlingExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationMarsThrottlingException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationMarsThrottlingExceptionCodeEnum {
+    Throttled = 'THROTTLED'
+}
+
+/**
+ * Request structure of SD headline recommendation API.
+ * @export
+ * @interface SDHeadlineRecommendationRequest
+ */
+export interface SDHeadlineRecommendationRequest {
+    /**
+     * An array of ASINs associated with the creative.
+     * @type {Array<string>}
+     * @memberof SDHeadlineRecommendationRequest
+     */
+    asins?: Array<string>;
+    /**
+     * Maximum number of recommendations that API should return. Response will [0, maxNumRecommendations] recommendations (recommendations are not guaranteed as there can be instances where the ML model can not generate policy compliant headlines for the given set of asins).
+     * @type {number}
+     * @memberof SDHeadlineRecommendationRequest
+     */
+    maxNumRecommendations?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SDHeadlineRecommendationRequest
+     */
+    adFormat?: SDHeadlineRecommendationRequestAdFormatEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationRequestAdFormatEnum {
+    SponsoredDisplay = 'SPONSORED_DISPLAY'
+}
+
+/**
+ * Response structure of SD headline recommendation API.
+ * @export
+ * @interface SDHeadlineRecommendationResponse
+ */
+export interface SDHeadlineRecommendationResponse {
+    /**
+     * An identifier for request made which is generated by server.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationResponse
+     */
+    requestId?: string;
+    /**
+     * Recommendations are sorted, i.e., more suitable headline has lesser array index value.
+     * @type {Array<RecommendedHeadline>}
+     * @memberof SDHeadlineRecommendationResponse
+     */
+    recommendations?: Array<RecommendedHeadline>;
+}
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationSchemaValidationException
+ */
+export interface SDHeadlineRecommendationSchemaValidationException {
+    /**
+     * InvalidArgumentErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationSchemaValidationException
+     */
+    code?: SDHeadlineRecommendationSchemaValidationExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationSchemaValidationException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationSchemaValidationExceptionCodeEnum {
+    InvalidArgument = 'INVALID_ARGUMENT'
 }
 
 /**
@@ -1325,6 +1761,25 @@ export interface TextPosition {
      * @memberof TextPosition
      */
     end?: number;
+}
+/**
+ * 
+ * @export
+ * @interface TextRecommendation
+ */
+export interface TextRecommendation {
+    /**
+     * Unique ID for generated recommendation.
+     * @type {string}
+     * @memberof TextRecommendation
+     */
+    id?: string;
+    /**
+     * Recommendation value.
+     * @type {string}
+     * @memberof TextRecommendation
+     */
+    value?: string;
 }
 /**
  * Video component which needs to be pre moderated. A publicly accessible videoUrl must be sent.

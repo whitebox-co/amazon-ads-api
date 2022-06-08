@@ -47,7 +47,7 @@ export interface AdGroup {
      */
     defaultBid?: number;
     /**
-     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks.  |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks |cpc|T00020 T00030|[Default] Optimize for page visits| |conversions |cpc|T00020 T00030|Optimize for conversion| |reach |vcpm|T00020 T00030|Optimize for viewable impressions. We recommend starting with $5 USD bids for each target to begin testing with this awareness strategy. $1 is the minimum bid for vCPM.|
+     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks.  |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks |cpc|T00020 T00030|[Default] Optimize for page visits| |conversions |cpc|T00020 T00030|Optimize for conversion| |reach |vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|
      * @type {string}
      * @memberof AdGroup
      */
@@ -70,6 +70,12 @@ export interface AdGroup {
      * @memberof AdGroup
      */
     tactic?: Tactic;
+    /**
+     * 
+     * @type {CreativeType}
+     * @memberof AdGroup
+     */
+    creativeType?: CreativeType | null;
 }
 
 /**
@@ -109,6 +115,12 @@ export interface AdGroupAllOf {
      * @memberof AdGroupAllOf
      */
     tactic?: Tactic;
+    /**
+     * 
+     * @type {CreativeType}
+     * @memberof AdGroupAllOf
+     */
+    creativeType?: CreativeType | null;
 }
 /**
  * 
@@ -178,7 +190,7 @@ export interface AdGroupResponseEx {
      */
     servingStatus?: AdGroupResponseExServingStatusEnum;
     /**
-     * Bid optimization type for the Adgroup. Default behavior is to optimize for clicks.   |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks [Default]|cpc|T00020 T00030|Optimize for page visits| |conversions|cpc|T00020 T00030|Optimize for conversion| |reach|vcpm|T00020 T00030|Optimize for viewable impressions. We recommend starting with $5 USD bids for each target to begin testing with this awareness strategy. $1 is the minimum bid for vCPM.|
+     * Bid optimization type for the Adgroup. Default behavior is to optimize for clicks.   |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks [Default]|cpc|T00020 T00030|Optimize for page visits| |conversions|cpc|T00020 T00030|Optimize for conversion| |reach|vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|
      * @type {string}
      * @memberof AdGroupResponseEx
      */
@@ -264,7 +276,7 @@ export interface BaseAdGroup {
      */
     defaultBid?: number;
     /**
-     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks.  |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks |cpc|T00020 T00030|[Default] Optimize for page visits| |conversions |cpc|T00020 T00030|Optimize for conversion| |reach |vcpm|T00020 T00030|Optimize for viewable impressions. We recommend starting with $5 USD bids for each target to begin testing with this awareness strategy. $1 is the minimum bid for vCPM.|
+     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks.  |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks |cpc|T00020 T00030|[Default] Optimize for page visits| |conversions |cpc|T00020 T00030|Optimize for conversion| |reach |vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|
      * @type {string}
      * @memberof BaseAdGroup
      */
@@ -291,6 +303,42 @@ export enum BaseAdGroupBidOptimizationEnum {
     * @enum {string}
     */
 export enum BaseAdGroupStateEnum {
+    Enabled = 'enabled',
+    Paused = 'paused',
+    Archived = 'archived'
+}
+
+/**
+ * 
+ * @export
+ * @interface BaseBidRule
+ */
+export interface BaseBidRule {
+    /**
+     * The state of the bid rule.
+     * @type {string}
+     * @memberof BaseBidRule
+     */
+    state?: BaseBidRuleStateEnum;
+    /**
+     * The name of the bid rule.
+     * @type {string}
+     * @memberof BaseBidRule
+     */
+    ruleName?: string;
+    /**
+     * A list of rule conditions that define the advertiser\'s intent for the outcome of the rule. The rule uses \'AND\' logic to combine every condition in this list, and will validate the combination when the rule is created or updated.
+     * @type {Array<RuleCondition>}
+     * @memberof BaseBidRule
+     */
+    ruleConditions?: Array<RuleCondition>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum BaseBidRuleStateEnum {
     Enabled = 'enabled',
     Paused = 'paused',
     Archived = 'archived'
@@ -333,7 +381,7 @@ export interface BaseCampaign {
      */
     endDate?: string | null;
     /**
-     * Determines how the campaign will bid and charge. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. We recommend starting with $5 USD bids for each target to begin testing with this awareness strategy. $1 is the minimum bid for vCPM.|
+     * Determines how the campaign will bid and charge. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|
      * @type {string}
      * @memberof BaseCampaign
      */
@@ -455,6 +503,122 @@ export enum BaseTargetingClauseStateEnum {
     Archived = 'archived'
 }
 
+/**
+ * 
+ * @export
+ * @interface BidRule
+ */
+export interface BidRule {
+    /**
+     * The state of the bid rule.
+     * @type {string}
+     * @memberof BidRule
+     */
+    state?: BidRuleStateEnum;
+    /**
+     * The name of the bid rule.
+     * @type {string}
+     * @memberof BidRule
+     */
+    ruleName?: string;
+    /**
+     * A list of rule conditions that define the advertiser\'s intent for the outcome of the rule. The rule uses \'AND\' logic to combine every condition in this list, and will validate the combination when the rule is created or updated.
+     * @type {Array<RuleCondition>}
+     * @memberof BidRule
+     */
+    ruleConditions?: Array<RuleCondition>;
+    /**
+     * The identifier of the bid rule.
+     * @type {string}
+     * @memberof BidRule
+     */
+    ruleId?: string;
+    /**
+     * The identifier of the campaign.
+     * @type {number}
+     * @memberof BidRule
+     */
+    campaignId?: number;
+    /**
+     * The identifier of the ad group.
+     * @type {number}
+     * @memberof BidRule
+     */
+    adGroupId?: number;
+    /**
+     * 
+     * @type {PlacementType}
+     * @memberof BidRule
+     */
+    placementType?: PlacementType;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum BidRuleStateEnum {
+    Enabled = 'enabled',
+    Paused = 'paused',
+    Archived = 'archived'
+}
+
+/**
+ * 
+ * @export
+ * @interface BidRuleAllOf
+ */
+export interface BidRuleAllOf {
+    /**
+     * The identifier of the bid rule.
+     * @type {string}
+     * @memberof BidRuleAllOf
+     */
+    ruleId?: string;
+    /**
+     * The identifier of the campaign.
+     * @type {number}
+     * @memberof BidRuleAllOf
+     */
+    campaignId?: number;
+    /**
+     * The identifier of the ad group.
+     * @type {number}
+     * @memberof BidRuleAllOf
+     */
+    adGroupId?: number;
+    /**
+     * 
+     * @type {PlacementType}
+     * @memberof BidRuleAllOf
+     */
+    placementType?: PlacementType;
+}
+/**
+ * 
+ * @export
+ * @interface BidRuleResponse
+ */
+export interface BidRuleResponse {
+    /**
+     * The HTTP status code of the response.
+     * @type {string}
+     * @memberof BidRuleResponse
+     */
+    code?: string;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof BidRuleResponse
+     */
+    description?: string;
+    /**
+     * The identifier of the bid rule.
+     * @type {string}
+     * @memberof BidRuleResponse
+     */
+    ruleId?: string;
+}
 /**
  * 
  * @export
@@ -769,7 +933,7 @@ export interface Campaign {
      */
     endDate?: string | null;
     /**
-     * Determines how the campaign will bid and charge. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. We recommend starting with $5 USD bids for each target to begin testing with this awareness strategy. $1 is the minimum bid for vCPM.|
+     * Determines how the campaign will bid and charge. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|
      * @type {string}
      * @memberof Campaign
      */
@@ -964,7 +1128,7 @@ export interface CampaignResponseEx {
      */
     servingStatus?: CampaignResponseExServingStatusEnum;
     /**
-     * Determines how the campaign will bid and charge. **Note that some cost types are not currently supported. This note will be removed when this operation is available.** |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm|T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. We recommend starting with $5 USD bids for each target to begin testing with this awareness strategy. $1 is the minimum bid for vCPM.|
+     * Determines how the campaign will bid and charge. **Note that some cost types are not currently supported. This note will be removed when this operation is available.** |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm|T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|
      * @type {string}
      * @memberof CampaignResponseEx
      */
@@ -1049,7 +1213,7 @@ export interface CreateAdGroup {
      */
     defaultBid?: number;
     /**
-     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks.  |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks |cpc|T00020 T00030|[Default] Optimize for page visits| |conversions |cpc|T00020 T00030|Optimize for conversion| |reach |vcpm|T00020 T00030|Optimize for viewable impressions. We recommend starting with $5 USD bids for each target to begin testing with this awareness strategy. $1 is the minimum bid for vCPM.|
+     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks.  |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks |cpc|T00020 T00030|[Default] Optimize for page visits| |conversions |cpc|T00020 T00030|Optimize for conversion| |reach |vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|
      * @type {string}
      * @memberof CreateAdGroup
      */
@@ -1062,10 +1226,10 @@ export interface CreateAdGroup {
     state: CreateAdGroupStateEnum;
     /**
      * 
-     * @type {Tactic}
+     * @type {CreativeType}
      * @memberof CreateAdGroup
      */
-    tactic?: Tactic;
+    creativeType?: CreativeType | null;
 }
 
 /**
@@ -1087,6 +1251,98 @@ export enum CreateAdGroupStateEnum {
     Archived = 'archived'
 }
 
+/**
+ * 
+ * @export
+ * @interface CreateAdGroupAllOf
+ */
+export interface CreateAdGroupAllOf {
+    /**
+     * 
+     * @type {CreativeType}
+     * @memberof CreateAdGroupAllOf
+     */
+    creativeType?: CreativeType | null;
+}
+/**
+ * 
+ * @export
+ * @interface CreateBidRule
+ */
+export interface CreateBidRule {
+    /**
+     * The state of the bid rule.
+     * @type {string}
+     * @memberof CreateBidRule
+     */
+    state: CreateBidRuleStateEnum;
+    /**
+     * The name of the bid rule.
+     * @type {string}
+     * @memberof CreateBidRule
+     */
+    ruleName?: string;
+    /**
+     * A list of rule conditions that define the advertiser\'s intent for the outcome of the rule. The rule uses \'AND\' logic to combine every condition in this list, and will validate the combination when the rule is created or updated.
+     * @type {Array<RuleCondition>}
+     * @memberof CreateBidRule
+     */
+    ruleConditions: Array<RuleCondition>;
+    /**
+     * The identifier of the campaign.
+     * @type {number}
+     * @memberof CreateBidRule
+     */
+    campaignId: number;
+    /**
+     * The identifier of the ad group.
+     * @type {number}
+     * @memberof CreateBidRule
+     */
+    adGroupId: number;
+    /**
+     * 
+     * @type {PlacementType}
+     * @memberof CreateBidRule
+     */
+    placementType?: PlacementType;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreateBidRuleStateEnum {
+    Enabled = 'enabled',
+    Paused = 'paused',
+    Archived = 'archived'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreateBidRuleAllOf
+ */
+export interface CreateBidRuleAllOf {
+    /**
+     * The identifier of the campaign.
+     * @type {number}
+     * @memberof CreateBidRuleAllOf
+     */
+    campaignId?: number;
+    /**
+     * The identifier of the ad group.
+     * @type {number}
+     * @memberof CreateBidRuleAllOf
+     */
+    adGroupId?: number;
+    /**
+     * 
+     * @type {PlacementType}
+     * @memberof CreateBidRuleAllOf
+     */
+    placementType?: PlacementType;
+}
 /**
  * 
  * @export
@@ -1124,7 +1380,7 @@ export interface CreateCampaign {
      */
     endDate?: string | null;
     /**
-     * Determines how the campaign will bid and charge. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. We recommend starting with $5 USD bids for each target to begin testing with this awareness strategy. $1 is the minimum bid for vCPM.|
+     * Determines how the campaign will bid and charge. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|
      * @type {string}
      * @memberof CreateCampaign
      */
@@ -1199,6 +1455,12 @@ export interface CreateCreative {
      * @memberof CreateCreative
      */
     adGroupId: number;
+    /**
+     * 
+     * @type {CreativeTypeInCreativeRequest}
+     * @memberof CreateCreative
+     */
+    creativeType?: CreativeTypeInCreativeRequest | null;
     /**
      * 
      * @type {CreativeProperties}
@@ -1475,6 +1737,12 @@ export interface Creative {
     creativeId: number;
     /**
      * 
+     * @type {CreativeTypeInCreativeResponse}
+     * @memberof Creative
+     */
+    creativeType: CreativeTypeInCreativeResponse;
+    /**
+     * 
      * @type {CreativeProperties}
      * @memberof Creative
      */
@@ -1509,6 +1777,12 @@ export interface CreativeModeration {
      * @memberof CreativeModeration
      */
     creativeId: number;
+    /**
+     * 
+     * @type {CreativeTypeInCreativeResponse}
+     * @memberof CreativeModeration
+     */
+    creativeType: CreativeTypeInCreativeResponse;
     /**
      * The moderation status of the creative. |Status|Description| |------|-----------| |APPROVED|Moderation for the creative is complete.| |IN_PROGRESS|Moderation for the creative is in progress. The expected date and time for completion are specfied in the `etaForModeration` field.| |REJECTED|The creative has failed moderation. Specific information about the content that violated policy is available in `policyViolations`.|
      * @type {string}
@@ -1602,6 +1876,12 @@ export interface CreativeModerationPolicyViolations {
      * @memberof CreativeModerationPolicyViolations
      */
     violatingCustomImageContents?: Array<CreativeModerationViolatingBrandLogoContents>;
+    /**
+     * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. Information about the video that violates the specified policy.
+     * @type {Array<CreativeModerationViolatingVideoContents>}
+     * @memberof CreativeModerationPolicyViolations
+     */
+    violatingVideoContents?: Array<CreativeModerationViolatingVideoContents>;
 }
 /**
  * 
@@ -1621,6 +1901,19 @@ export interface CreativeModerationTextEvidence {
      * @memberof CreativeModerationTextEvidence
      */
     violatingTextPosition?: CreativeModerationViolatingTextPosition;
+}
+/**
+ * 
+ * @export
+ * @interface CreativeModerationVideoEvidences
+ */
+export interface CreativeModerationVideoEvidences {
+    /**
+     * 
+     * @type {CreativeModerationViolatingVideoPosition}
+     * @memberof CreativeModerationVideoEvidences
+     */
+    violatingVideoPosition?: CreativeModerationViolatingVideoPosition;
 }
 /**
  * 
@@ -1707,6 +2000,44 @@ export interface CreativeModerationViolatingTextPosition {
      * Zero-based index into the text in reviewedText where the text specified in violatingText ends
      * @type {number}
      * @memberof CreativeModerationViolatingTextPosition
+     */
+    end?: number;
+}
+/**
+ * 
+ * @export
+ * @interface CreativeModerationViolatingVideoContents
+ */
+export interface CreativeModerationViolatingVideoContents {
+    /**
+     * Address of the video reviewed during moderation.
+     * @type {string}
+     * @memberof CreativeModerationViolatingVideoContents
+     */
+    reviewedVideoUrl?: string;
+    /**
+     * 
+     * @type {Array<CreativeModerationVideoEvidences>}
+     * @memberof CreativeModerationViolatingVideoContents
+     */
+    videoEvidences?: Array<CreativeModerationVideoEvidences>;
+}
+/**
+ * 
+ * @export
+ * @interface CreativeModerationViolatingVideoPosition
+ */
+export interface CreativeModerationViolatingVideoPosition {
+    /**
+     * Time at which policy violation within video asset starts.
+     * @type {number}
+     * @memberof CreativeModerationViolatingVideoPosition
+     */
+    start?: number;
+    /**
+     * Time at which policy violation within the video asset ends.
+     * @type {number}
+     * @memberof CreativeModerationViolatingVideoPosition
      */
     end?: number;
 }
@@ -1809,7 +2140,7 @@ export interface CreativePreviewResponse {
  * @type CreativeProperties
  * @export
  */
-export type CreativeProperties = CustomImageCreativeProperties | HeadlineLogoCreativeProperties;
+export type CreativeProperties = CustomImageCreativeProperties | HeadlineLogoCreativeProperties | VideoCreativeProperties;
 
 /**
  * 
@@ -1837,6 +2168,39 @@ export interface CreativeResponse {
     creativeId?: number;
 }
 /**
+ * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.   The type of the associated creative. If the field is empty or null, a default value of IMAGE will be used. One ad group only supports one type (VIDEO or IMAGE) of creativeType at a time. |Name|Description| |----|-----------| |IMAGE |The creative will display static assets (e.g. headline, brandLogo or custom image).| |VIDEO |The creative will display video assets. This type of creative must have video assets provided.|
+ * @export
+ * @enum {string}
+ */
+
+export enum CreativeType {
+    Image = 'IMAGE',
+    Video = 'VIDEO'
+}
+
+/**
+ * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.  The type of the creative. |Name|Description| |----|-----------| |IMAGE |The creative will display static assets (e.g. headline, brandLogo or custom image).| |VIDEO |The creative will display video assets. This type of creative must have video assets provided.|
+ * @export
+ * @enum {string}
+ */
+
+export enum CreativeTypeInCreativeRequest {
+    Image = 'IMAGE',
+    Video = 'VIDEO'
+}
+
+/**
+ * This field is a PREVIEW ONLY. This note will be removed once this functionality becomes available.  The type of the creative. |Name|Description| |----|-----------| |IMAGE |The creative will display static assets (e.g. headline, brandLogo or custom image).| |VIDEO |The creative will display video assets. This type of creative must have video assets provided.|
+ * @export
+ * @enum {string}
+ */
+
+export enum CreativeTypeInCreativeResponse {
+    Image = 'IMAGE',
+    Video = 'VIDEO'
+}
+
+/**
  * Creative update model.
  * @export
  * @interface CreativeUpdate
@@ -1848,6 +2212,12 @@ export interface CreativeUpdate {
      * @memberof CreativeUpdate
      */
     creativeId: number;
+    /**
+     * 
+     * @type {CreativeTypeInCreativeRequest}
+     * @memberof CreativeUpdate
+     */
+    creativeType?: CreativeTypeInCreativeRequest | null;
     /**
      * 
      * @type {CreativeProperties}
@@ -1943,7 +2313,7 @@ export enum HeadlineLogoCreativePropertiesContentTypeEnum {
  */
 export interface Image {
     /**
-     * The unique identifier of the image asset.
+     * The unique identifier of the image asset. This assetId comes from the Creative Asset Library.
      * @type {string}
      * @memberof Image
      */
@@ -2362,11 +2732,27 @@ export interface PatchRequest {
     request: Array<PatchDocument>;
 }
 /**
+ * Placement type where the rule should be applied, defaults to `ALL`(including home page, detail page, twitch and offsite).  **Future** More available placemenTypes will be supported.
+ * @export
+ * @enum {string}
+ */
+
+export enum PlacementType {
+    All = 'ALL'
+}
+
+/**
  * Creative model for preview.
  * @export
  * @interface PreviewCreativeModel
  */
 export interface PreviewCreativeModel {
+    /**
+     * 
+     * @type {CreativeTypeInCreativeRequest}
+     * @memberof PreviewCreativeModel
+     */
+    creativeType?: CreativeTypeInCreativeRequest | null;
     /**
      * 
      * @type {CreativeProperties}
@@ -2722,7 +3108,57 @@ export enum ReportResponseStatusEnum {
 }
 
 /**
- * Determines what the recommended bids will be optimized for.   |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks|cpc|T00020 T00030|Optimize for page visits| |conversions|cpc|T00020 T00030|Optimize for conversion| |reach|vcpm|T00020 T00030|Optimize for viewable impressions. We recommend starting with $5 USD bids for each target to begin testing with this awareness strategy. $1 is the minimum bid for vCPM.|
+ * A rule condition that defines the advertiser\'s intent for the outcome of the rule. Certain actions are performed by the product to achieve and maintain the rule condition.
+ * @export
+ * @interface RuleCondition
+ */
+export interface RuleCondition {
+    /**
+     * The name of the metric. Supported rule metrics:  |      Metric      |Operator        |Description| |------------------|----------------|-------------------| |VCPM              |EQUAL_TO        |Maximize viewable impressions while cost per 1000 views = `threshold`| |IMPRESSION_SHARE  |GREATER_THAN    |Get at least `threshold%` impressions(percentage range 0-100) from a specific placement| |COST_PER_DPV      |EQUAL_TO        |Maximize viewable impressions while cost per detail page view = `threshold`| |COST_PER_ORDER    |EQUAL_TO        |Maximize viewable impressions/page visits/conversion while cost per order = `threshold`| |COST_PER_CLICK    |EQUAL_TO        |Maximize page visits while cost per click = `threshold`| |ROAS              |EQUAL_TO        |Maximize conversion while ROAS = `threshold`|
+     * @type {string}
+     * @memberof RuleCondition
+     */
+    metricName?: RuleConditionMetricNameEnum;
+    /**
+     * The camparison operator.
+     * @type {string}
+     * @memberof RuleCondition
+     */
+    comparisonOperator?: RuleConditionComparisonOperatorEnum;
+    /**
+     * The value of the threshold associated with the metric.
+     * @type {number}
+     * @memberof RuleCondition
+     */
+    threshold?: number;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RuleConditionMetricNameEnum {
+    Vcpm = 'VCPM',
+    ImpressionShare = 'IMPRESSION_SHARE',
+    CostPerDpv = 'COST_PER_DPV',
+    CostPerOrder = 'COST_PER_ORDER',
+    CostPerClick = 'COST_PER_CLICK',
+    Roas = 'ROAS'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RuleConditionComparisonOperatorEnum {
+    EqualTo = 'EQUAL_TO',
+    LessThan = 'LESS_THAN',
+    GreaterThan = 'GREATER_THAN',
+    LessThanOrEqualTo = 'LESS_THAN_OR_EQUAL_TO',
+    GreaterThanOrEqualTo = 'GREATER_THAN_OR_EQUAL_TO'
+}
+
+/**
+ * Determines what the recommended bids will be optimized for.   |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks|cpc|T00020 T00030|Optimize for page visits| |conversions|cpc|T00020 T00030|Optimize for conversion| |reach|vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|
  * @export
  * @enum {string}
  */
@@ -2815,7 +3251,20 @@ export interface SDCategoryRecommendationTargetableAsinCountRange {
     rangeUpper?: number;
 }
 /**
- * Determines what performance metric the bid recommendations will be optimized for. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc|T00020 T00030|The bid recommendations will be optimized for clicks triggered by the ad.| |vcpm|T00020 T00030|The bid recommendations will be optimized for viewed impressions triggered by the ad. We recommend starting with $5 USD bids for each target to begin testing with this awareness strategy. $1 is the minimum bid for vCPM.|
+ * 
+ * @export
+ * @interface SDCategoryRecommendations
+ */
+export interface SDCategoryRecommendations {
+    /**
+     * List of recommended category targets
+     * @type {Array<SDCategoryRecommendation>}
+     * @memberof SDCategoryRecommendations
+     */
+    categories?: Array<SDCategoryRecommendation>;
+}
+/**
+ * Determines what performance metric the bid recommendations will be optimized for. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc|T00020 T00030|The bid recommendations will be optimized for clicks triggered by the ad.| |vcpm|T00020 T00030|The bid recommendations will be optimized for viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|
  * @export
  * @enum {string}
  */
@@ -2876,6 +3325,133 @@ export interface SDProductRecommendation {
      */
     rank?: number;
 }
+/**
+ * A recommended product to target ads on
+ * @export
+ * @interface SDProductRecommendationV32
+ */
+export interface SDProductRecommendationV32 {
+    /**
+     * Amazon Standard Identification Number
+     * @type {string}
+     * @memberof SDProductRecommendationV32
+     */
+    asin?: string;
+    /**
+     * A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation
+     * @type {number}
+     * @memberof SDProductRecommendationV32
+     */
+    rank?: number;
+    /**
+     * The top advertised products this recommendation is made for.
+     * @type {Array<string>}
+     * @memberof SDProductRecommendationV32
+     */
+    advertisedAsins?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface SDProductRecommendationsV31
+ */
+export interface SDProductRecommendationsV31 {
+    /**
+     * List of recommended product targets
+     * @type {Array<SDProductRecommendation>}
+     * @memberof SDProductRecommendationsV31
+     */
+    products?: Array<SDProductRecommendation>;
+}
+/**
+ * 
+ * @export
+ * @interface SDProductRecommendationsV32
+ */
+export interface SDProductRecommendationsV32 {
+    /**
+     * List of recommended product targets
+     * @type {Array<SDProductRecommendationV32>}
+     * @memberof SDProductRecommendationsV32
+     */
+    products?: Array<SDProductRecommendationV32>;
+}
+/**
+ * Recommendation results for product targeting.
+ * @export
+ * @interface SDProductTargetingRecommendationsSuccess
+ */
+export interface SDProductTargetingRecommendationsSuccess {
+    /**
+     * HTTP status code 200 indicating a successful response for product recomendations.
+     * @type {string}
+     * @memberof SDProductTargetingRecommendationsSuccess
+     */
+    code?: string;
+    /**
+     * The theme name specified in the request.
+     * @type {string}
+     * @memberof SDProductTargetingRecommendationsSuccess
+     */
+    name?: string;
+    /**
+     * A list of recommended products.
+     * @type {Array<SDProductRecommendationV32>}
+     * @memberof SDProductTargetingRecommendationsSuccess
+     */
+    recommendations?: Array<SDProductRecommendationV32>;
+}
+/**
+ * Product targeting theme definitions.
+ * @export
+ * @interface SDProductTargetingTheme
+ */
+export interface SDProductTargetingTheme {
+    /**
+     * This is the meaningful theme name which will be used as a unique identifier across various themes in the same request. This identifier will also be used to map the recommendations back to the theme in the response body. Note: the value for this field cannot be \"default\" as that\'s a reserved keyword in the system.
+     * @type {string}
+     * @memberof SDProductTargetingTheme
+     */
+    name: string;
+    /**
+     * A list of expressions defining the product targeting theme. The list will define an AND operator on different expressions. For example, asinPriceGreaterThan and asinReviewRatingLessThan can be used to request product recommendations which are both with greater price and less review rating compared to the goal products. Note: there cannot be multiple expressions for the same variable in the same theme.
+     * @type {Array<SDProductTargetingThemeExpression>}
+     * @memberof SDProductTargetingTheme
+     */
+    expression: Array<SDProductTargetingThemeExpression>;
+}
+/**
+ * The expression used to define the product targeting theme.
+ * @export
+ * @interface SDProductTargetingThemeExpression
+ */
+export interface SDProductTargetingThemeExpression {
+    /**
+     * The product targeting grammar used to define the targeting theme. Note asinAsBestSeller is currently not supported.
+     * @type {string}
+     * @memberof SDProductTargetingThemeExpression
+     */
+    type: SDProductTargetingThemeExpressionTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDProductTargetingThemeExpressionTypeEnum {
+    AsinPriceSimilarTo = 'asinPriceSimilarTo',
+    AsinPriceGreaterThan = 'asinPriceGreaterThan',
+    AsinPriceLessThan = 'asinPriceLessThan',
+    AsinReviewRatingSimilarTo = 'asinReviewRatingSimilarTo',
+    AsinReviewRatingGreaterThan = 'asinReviewRatingGreaterThan',
+    AsinReviewRatingLessThan = 'asinReviewRatingLessThan',
+    AsinGlanceViewsSimilarTo = 'asinGlanceViewsSimilarTo',
+    AsinGlanceViewsGreaterThan = 'asinGlanceViewsGreaterThan',
+    AsinGlanceViewsLessThan = 'asinGlanceViewsLessThan',
+    AsinBrandSameAs = 'asinBrandSameAs',
+    AsinAsBestSeller = 'asinAsBestSeller'
+}
+
 /**
  * Signifies a type of recommendation
  * @export
@@ -3248,6 +3824,31 @@ export interface SDTargetingRecommendations {
     products?: Array<SDProductRecommendation>;
 }
 /**
+ * A targeting recommendation failure record.
+ * @export
+ * @interface SDTargetingRecommendationsFailure
+ */
+export interface SDTargetingRecommendationsFailure {
+    /**
+     * HTTP status code indicating a failure response for targeting recomendations.
+     * @type {string}
+     * @memberof SDTargetingRecommendationsFailure
+     */
+    code?: string;
+    /**
+     * The theme name specified in the request. If the themes field is not provided in the request, the value of this field will be set to default.
+     * @type {string}
+     * @memberof SDTargetingRecommendationsFailure
+     */
+    name?: string;
+    /**
+     * A human friendly error message indicating the failure reasons.
+     * @type {string}
+     * @memberof SDTargetingRecommendationsFailure
+     */
+    errorMessage?: string;
+}
+/**
  * Request for targeting recommendations
  * @export
  * @interface SDTargetingRecommendationsRequest
@@ -3298,6 +3899,37 @@ export interface SDTargetingRecommendationsRequestV31 {
     typeFilter: Array<SDRecommendationTypeV31>;
 }
 /**
+ * Request for targeting recommendations for API version 3.2.
+ * @export
+ * @interface SDTargetingRecommendationsRequestV32
+ */
+export interface SDTargetingRecommendationsRequestV32 {
+    /**
+     * 
+     * @type {SDTacticV31}
+     * @memberof SDTargetingRecommendationsRequestV32
+     */
+    tactic: SDTacticV31;
+    /**
+     * A list of products for which to get targeting recommendations
+     * @type {Array<SDGoalProduct>}
+     * @memberof SDTargetingRecommendationsRequestV32
+     */
+    products: Array<SDGoalProduct>;
+    /**
+     * A filter to indicate which types of recommendations to request.
+     * @type {Array<SDRecommendationTypeV31>}
+     * @memberof SDTargetingRecommendationsRequestV32
+     */
+    typeFilter: Array<SDRecommendationTypeV31>;
+    /**
+     * 
+     * @type {SDTargetingRecommendationsThemes}
+     * @memberof SDTargetingRecommendationsRequestV32
+     */
+    themes?: SDTargetingRecommendationsThemes;
+}
+/**
  * Response to a request for targeting recommendations
  * @export
  * @interface SDTargetingRecommendationsResponse
@@ -3324,6 +3956,32 @@ export interface SDTargetingRecommendationsResponseV31 {
     recommendations?: SDTargetingRecommendationsV31;
 }
 /**
+ * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. Response body for targeting recommendations v3.2.
+ * @export
+ * @interface SDTargetingRecommendationsResponseV32
+ */
+export interface SDTargetingRecommendationsResponseV32 {
+    /**
+     * 
+     * @type {SDTargetingRecommendationsV32}
+     * @memberof SDTargetingRecommendationsResponseV32
+     */
+    recommendations?: SDTargetingRecommendationsV32;
+}
+/**
+ * The themes used to refine the recommendations. Currently only product targeting themes are supported.
+ * @export
+ * @interface SDTargetingRecommendationsThemes
+ */
+export interface SDTargetingRecommendationsThemes {
+    /**
+     * A list of themes for product targeting recommendations. Recommendations will be returned for each theme.
+     * @type {Array<SDProductTargetingTheme>}
+     * @memberof SDTargetingRecommendationsThemes
+     */
+    product?: Array<SDProductTargetingTheme>;
+}
+/**
  * 
  * @export
  * @interface SDTargetingRecommendationsV31
@@ -3343,17 +4001,42 @@ export interface SDTargetingRecommendationsV31 {
     categories?: Array<SDCategoryRecommendation>;
 }
 /**
- * 
+ * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. For v3.2 the service will continue to return the recommendations returned for v3.1 in products field, and return recommendations for product targeting themes in themes field.
  * @export
- * @interface SDTargetingRecommendationsV31AllOf
+ * @interface SDTargetingRecommendationsV32
  */
-export interface SDTargetingRecommendationsV31AllOf {
+export interface SDTargetingRecommendationsV32 {
+    /**
+     * List of recommended product targets
+     * @type {Array<SDProductRecommendationV32>}
+     * @memberof SDTargetingRecommendationsV32
+     */
+    products?: Array<SDProductRecommendationV32>;
     /**
      * List of recommended category targets
      * @type {Array<SDCategoryRecommendation>}
-     * @memberof SDTargetingRecommendationsV31AllOf
+     * @memberof SDTargetingRecommendationsV32
      */
     categories?: Array<SDCategoryRecommendation>;
+    /**
+     * 
+     * @type {object}
+     * @memberof SDTargetingRecommendationsV32
+     */
+    themes?: object;
+}
+/**
+ * 
+ * @export
+ * @interface SDThemeRecommendations
+ */
+export interface SDThemeRecommendations {
+    /**
+     * 
+     * @type {object}
+     * @memberof SDThemeRecommendations
+     */
+    themes?: object;
 }
 /**
  * Optional. A dimension used to further segment certain types of reports.  Note: matchedTarget reports only return targets that have generated at least one click. | Dimension | Report types | Tactics | Metrics | Description | |---------|------------------|-------------|-------------|------------| | matchedTarget | campaigns, adGroups, targets | T00020, T00030 | Existing metrics for each report type are accepted. |  Segments a report based on the ASIN of the product page where the ad appeared.|
@@ -3372,7 +4055,7 @@ export enum Segment {
  */
 export interface SnapshotRequest {
     /**
-     * Optional. Restricts results to entities with state within the specified comma-separated list. Default behavior is to include enabled and paused.
+     * Optional. Restricts results to entities with state within the specified comma-separated list. Default behavior is to include \'enabled\' and \'paused\'. You can include \'enabled\', \'paused\', and \'archived\' or any combination. 
      * @type {string}
      * @memberof SnapshotRequest
      */
@@ -3392,10 +4075,7 @@ export interface SnapshotRequest {
 export enum SnapshotRequestStateFilterEnum {
     Enabled = 'enabled',
     Paused = 'paused',
-    Archived = 'archived',
-    Enabledpaused = 'enabled,paused',
-    Enabledarchived = 'enabled,archived',
-    Enabledpausedarchived = 'enabled,paused,archived'
+    Archived = 'archived'
 }
 
 /**
@@ -3673,7 +4353,7 @@ export interface TargetingClauseEx {
      */
     expressionType?: TargetingClauseExExpressionTypeEnum;
     /**
-     * If a value for `bid` is specified, it overrides the current adGroup bid. When using vcpm costType, we recommend starting with $5 USD bids for target to begin testing with this awareness strategy. $1 is the minimum bid for vCPM. Note that this field is ignored for negative targeting clauses.
+     * If a value for `bid` is specified, it overrides the current adGroup bid. When using vcpm costType. $1 is the minimum bid for vCPM. Note that this field is ignored for negative targeting clauses.
      * @type {number}
      * @memberof TargetingClauseEx
      */
@@ -3990,7 +4670,7 @@ export interface UpdateAdGroup {
      */
     defaultBid?: number;
     /**
-     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks.  |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks |cpc|T00020 T00030|[Default] Optimize for page visits| |conversions |cpc|T00020 T00030|Optimize for conversion| |reach |vcpm|T00020 T00030|Optimize for viewable impressions. We recommend starting with $5 USD bids for each target to begin testing with this awareness strategy. $1 is the minimum bid for vCPM.|
+     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks.  |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks |cpc|T00020 T00030|[Default] Optimize for page visits| |conversions |cpc|T00020 T00030|Optimize for conversion| |reach |vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|
      * @type {string}
      * @memberof UpdateAdGroup
      */
@@ -4044,6 +4724,61 @@ export interface UpdateAdGroupAllOf {
 /**
  * 
  * @export
+ * @interface UpdateBidRule
+ */
+export interface UpdateBidRule {
+    /**
+     * The state of the bid rule.
+     * @type {string}
+     * @memberof UpdateBidRule
+     */
+    state?: UpdateBidRuleStateEnum;
+    /**
+     * The name of the bid rule.
+     * @type {string}
+     * @memberof UpdateBidRule
+     */
+    ruleName?: string;
+    /**
+     * A list of rule conditions that define the advertiser\'s intent for the outcome of the rule. The rule uses \'AND\' logic to combine every condition in this list, and will validate the combination when the rule is created or updated.
+     * @type {Array<RuleCondition>}
+     * @memberof UpdateBidRule
+     */
+    ruleConditions?: Array<RuleCondition>;
+    /**
+     * The identifier of the bid rule.
+     * @type {string}
+     * @memberof UpdateBidRule
+     */
+    ruleId: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum UpdateBidRuleStateEnum {
+    Enabled = 'enabled',
+    Paused = 'paused',
+    Archived = 'archived'
+}
+
+/**
+ * 
+ * @export
+ * @interface UpdateBidRuleAllOf
+ */
+export interface UpdateBidRuleAllOf {
+    /**
+     * The identifier of the bid rule.
+     * @type {string}
+     * @memberof UpdateBidRuleAllOf
+     */
+    ruleId?: string;
+}
+/**
+ * 
+ * @export
  * @interface UpdateCampaign
  */
 export interface UpdateCampaign {
@@ -4078,7 +4813,7 @@ export interface UpdateCampaign {
      */
     endDate?: string | null;
     /**
-     * Determines how the campaign will bid and charge. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. We recommend starting with $5 USD bids for each target to begin testing with this awareness strategy. $1 is the minimum bid for vCPM.|
+     * Determines how the campaign will bid and charge. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|
      * @type {string}
      * @memberof UpdateCampaign
      */
@@ -4263,6 +4998,38 @@ export interface UpdateTargetingClauseAllOf {
      */
     targetId?: number;
 }
+/**
+ * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. This field denotes video which is displayed on the ad. This field is optional and mutable. A video asset must be provided for a VIDEO creative. Specific restrictions based on the video are listed in the following table. ||Specifications| |------------------|------------------| |Maximum file size|500MB| |Aspect ratio|16:9| |Minimum duration|6s| |Maximum duration|45s| |Minimum frame size|1920x1080| |Minimum video bitrate|4mbps| |Video frame rate(fps)|23.976(recommended), 24, 25, or 29.97| |Video frame rate mode|Constant| |Minimum audio bitrate|192kbps| |Audio sample rate|44.1kHz or 48kHz| |Supported Formats|Video: H.264, MPEG-2, or MPEG-4; Audio: PCM or AAC| |Audio Channel|Audio format needs to be stereo or mono.| |Recommended video bitrate|8mbps| |Recommended duration|A duration of exactly 6s, 15s, 20s, or 30s is recommended. Use of videos outside of these durations may negatively impact your campaign performance. Shorter lengths will drive higher VCR (although scale on 6s may be limited).|
+ * @export
+ * @interface Video
+ */
+export interface Video {
+    /**
+     * The unique identifier of the video asset. This assetId comes from the Creative Asset Library.
+     * @type {string}
+     * @memberof Video
+     */
+    assetId: string;
+    /**
+     * The identifier of the particular video assetversion.
+     * @type {string}
+     * @memberof Video
+     */
+    assetVersion: string;
+}
+/**
+ * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. User customizable properties of a video creative.
+ * @export
+ * @interface VideoCreativeProperties
+ */
+export interface VideoCreativeProperties {
+    /**
+     * 
+     * @type {Video}
+     * @memberof VideoCreativeProperties
+     */
+    video?: Video;
+}
 
 /**
  * AdGroupsApi - axios parameter creator
@@ -4271,7 +5038,7 @@ export interface UpdateTargetingClauseAllOf {
 export const AdGroupsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
          * @summary Sets the ad group status to archived.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -4725,7 +5492,7 @@ export const AdGroupsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AdGroupsApiAxiosParamCreator(configuration)
     return {
         /**
-         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
          * @summary Sets the ad group status to archived.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -4836,7 +5603,7 @@ export const AdGroupsApiFactory = function (configuration?: Configuration, baseP
     const localVarFp = AdGroupsApiFp(configuration)
     return {
         /**
-         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
          * @summary Sets the ad group status to archived.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -5206,7 +5973,7 @@ export interface AdGroupsApiUpdateAdGroupsRequest {
  */
 export class AdGroupsApi extends BaseAPI {
     /**
-     * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+     * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
      * @summary Sets the ad group status to archived.
      * @param {AdGroupsApiArchiveAdGroupRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -5446,6 +6213,734 @@ export class BidRecommendationsApi extends BaseAPI {
      */
     public getTargetBidRecommendations(requestParameters: BidRecommendationsApiGetTargetBidRecommendationsRequest, options?: any) {
         return BidRecommendationsApiFp(this.configuration).getTargetBidRecommendations(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.sDTargetingBidRecommendationsRequestV32, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * BidRulesPreviewOnlyApi - axios parameter creator
+ * @export
+ */
+export const BidRulesPreviewOnlyApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. This operation is equivalent to an update operation that sets the state field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
+         * @summary Sets the status of a bid rule to archived.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} ruleId The identifier of the bid rule.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        archiveBidRule: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, ruleId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('archiveBidRule', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('archiveBidRule', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'ruleId' is not null or undefined
+            assertParamExists('archiveBidRule', 'ruleId', ruleId)
+            const localVarPath = `/sd/bidRules/{ruleId}`
+                .replace(`{${"ruleId"}}`, encodeURIComponent(String(ruleId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            // authentication oauth2AuthorizationCode required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+         * @summary Creates one or more bid rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<CreateBidRule>} [createBidRule] An array of BidRule objects. For each object, specify required fields and their values. Required fields are &#x60;campaignId&#x60;, &#x60;adGroupId&#x60;, &#x60;state&#x60; and &#x60;ruleConditions&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createBidRules: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createBidRule?: Array<CreateBidRule>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('createBidRules', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('createBidRules', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sd/bidRules`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            // authentication oauth2AuthorizationCode required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createBidRule, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. Gets an array of BidRule objects for a requested set of Sponsored Display bid rules.
+         * @summary Gets a list of bid rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Optional. Sets a cursor into the requested set of bid rules. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array. 0-indexed record offset for the result set, defaults to 0.
+         * @param {number} [count] Optional. Sets the number of BidRule objects in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten bid rules set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten bid rules, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on. Defaults to max page size.
+         * @param {string} [stateFilter] Optional. The returned array is filtered to include only bid rules with state set to one of the values in the specified comma-delimited list. Available values:   - enabled   - paused   - archived   - enabled, paused   - enabled, archived   - paused, archived   - enabled, paused, archived
+         * @param {string} [name] Optional. The returned array includes only bid rules with the specified name using an exact string match.
+         * @param {string} [ruleIdFilter] Optional. The returned array is filtered to include only bid rules associated with the bid rule identifiers in the specified comma-delimited list.
+         * @param {string} [campaignIdFilter] Optional. The returned array is filtered to include only bid rules associated with the campaign identifiers in the specified comma-delimited list.
+         * @param {string} [adGroupIdFilter] Optional. The returned array is filtered to include only bid rules associated with the ad group identifiers in the comma-delimited list.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listBidRules: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, stateFilter?: string, name?: string, ruleIdFilter?: string, campaignIdFilter?: string, adGroupIdFilter?: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('listBidRules', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('listBidRules', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sd/bidRules`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            // authentication oauth2AuthorizationCode required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
+
+            if (startIndex !== undefined) {
+                localVarQueryParameter['startIndex'] = startIndex;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (stateFilter !== undefined) {
+                localVarQueryParameter['stateFilter'] = stateFilter;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (ruleIdFilter !== undefined) {
+                localVarQueryParameter['ruleIdFilter'] = ruleIdFilter;
+            }
+
+            if (campaignIdFilter !== undefined) {
+                localVarQueryParameter['campaignIdFilter'] = campaignIdFilter;
+            }
+
+            if (adGroupIdFilter !== undefined) {
+                localVarQueryParameter['adGroupIdFilter'] = adGroupIdFilter;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. Gets a BidRule object for a requested Sponsored Display bid rule.
+         * @summary Gets a requested bid rule.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} ruleId The identifier of the requested bid rule.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sdBidRulesRuleIdGet: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, ruleId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('sdBidRulesRuleIdGet', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('sdBidRulesRuleIdGet', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'ruleId' is not null or undefined
+            assertParamExists('sdBidRulesRuleIdGet', 'ruleId', ruleId)
+            const localVarPath = `/sd/bidRules/{ruleId}`
+                .replace(`{${"ruleId"}}`, encodeURIComponent(String(ruleId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            // authentication oauth2AuthorizationCode required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+         * @summary Updates one or more bid rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<UpdateBidRule>} [updateBidRule] An array of BidRule objects. For each object, specify a bid rule identifier and mutable fields with their updated values. The mutable fields are &#x60;ruleName&#x60;, &#x60;state&#x60;, and &#x60;ruleConditions&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateBidRules: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, updateBidRule?: Array<UpdateBidRule>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('updateBidRules', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('updateBidRules', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sd/bidRules`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            // authentication oauth2AuthorizationCode required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateBidRule, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BidRulesPreviewOnlyApi - functional programming interface
+ * @export
+ */
+export const BidRulesPreviewOnlyApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BidRulesPreviewOnlyApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. This operation is equivalent to an update operation that sets the state field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
+         * @summary Sets the status of a bid rule to archived.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} ruleId The identifier of the bid rule.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async archiveBidRule(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, ruleId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BidRuleResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.archiveBidRule(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, ruleId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+         * @summary Creates one or more bid rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<CreateBidRule>} [createBidRule] An array of BidRule objects. For each object, specify required fields and their values. Required fields are &#x60;campaignId&#x60;, &#x60;adGroupId&#x60;, &#x60;state&#x60; and &#x60;ruleConditions&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createBidRules(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createBidRule?: Array<CreateBidRule>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BidRuleResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createBidRules(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, createBidRule, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. Gets an array of BidRule objects for a requested set of Sponsored Display bid rules.
+         * @summary Gets a list of bid rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Optional. Sets a cursor into the requested set of bid rules. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array. 0-indexed record offset for the result set, defaults to 0.
+         * @param {number} [count] Optional. Sets the number of BidRule objects in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten bid rules set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten bid rules, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on. Defaults to max page size.
+         * @param {string} [stateFilter] Optional. The returned array is filtered to include only bid rules with state set to one of the values in the specified comma-delimited list. Available values:   - enabled   - paused   - archived   - enabled, paused   - enabled, archived   - paused, archived   - enabled, paused, archived
+         * @param {string} [name] Optional. The returned array includes only bid rules with the specified name using an exact string match.
+         * @param {string} [ruleIdFilter] Optional. The returned array is filtered to include only bid rules associated with the bid rule identifiers in the specified comma-delimited list.
+         * @param {string} [campaignIdFilter] Optional. The returned array is filtered to include only bid rules associated with the campaign identifiers in the specified comma-delimited list.
+         * @param {string} [adGroupIdFilter] Optional. The returned array is filtered to include only bid rules associated with the ad group identifiers in the comma-delimited list.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listBidRules(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, stateFilter?: string, name?: string, ruleIdFilter?: string, campaignIdFilter?: string, adGroupIdFilter?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BidRule>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listBidRules(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, stateFilter, name, ruleIdFilter, campaignIdFilter, adGroupIdFilter, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. Gets a BidRule object for a requested Sponsored Display bid rule.
+         * @summary Gets a requested bid rule.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} ruleId The identifier of the requested bid rule.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sdBidRulesRuleIdGet(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, ruleId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BidRule>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sdBidRulesRuleIdGet(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, ruleId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+         * @summary Updates one or more bid rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<UpdateBidRule>} [updateBidRule] An array of BidRule objects. For each object, specify a bid rule identifier and mutable fields with their updated values. The mutable fields are &#x60;ruleName&#x60;, &#x60;state&#x60;, and &#x60;ruleConditions&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateBidRules(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, updateBidRule?: Array<UpdateBidRule>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BidRuleResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateBidRules(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, updateBidRule, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BidRulesPreviewOnlyApi - factory interface
+ * @export
+ */
+export const BidRulesPreviewOnlyApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BidRulesPreviewOnlyApiFp(configuration)
+    return {
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. This operation is equivalent to an update operation that sets the state field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
+         * @summary Sets the status of a bid rule to archived.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} ruleId The identifier of the bid rule.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        archiveBidRule(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, ruleId: string, options?: any): AxiosPromise<BidRuleResponse> {
+            return localVarFp.archiveBidRule(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, ruleId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+         * @summary Creates one or more bid rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<CreateBidRule>} [createBidRule] An array of BidRule objects. For each object, specify required fields and their values. Required fields are &#x60;campaignId&#x60;, &#x60;adGroupId&#x60;, &#x60;state&#x60; and &#x60;ruleConditions&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createBidRules(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createBidRule?: Array<CreateBidRule>, options?: any): AxiosPromise<Array<BidRuleResponse>> {
+            return localVarFp.createBidRules(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, createBidRule, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. Gets an array of BidRule objects for a requested set of Sponsored Display bid rules.
+         * @summary Gets a list of bid rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Optional. Sets a cursor into the requested set of bid rules. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array. 0-indexed record offset for the result set, defaults to 0.
+         * @param {number} [count] Optional. Sets the number of BidRule objects in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten bid rules set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten bid rules, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on. Defaults to max page size.
+         * @param {string} [stateFilter] Optional. The returned array is filtered to include only bid rules with state set to one of the values in the specified comma-delimited list. Available values:   - enabled   - paused   - archived   - enabled, paused   - enabled, archived   - paused, archived   - enabled, paused, archived
+         * @param {string} [name] Optional. The returned array includes only bid rules with the specified name using an exact string match.
+         * @param {string} [ruleIdFilter] Optional. The returned array is filtered to include only bid rules associated with the bid rule identifiers in the specified comma-delimited list.
+         * @param {string} [campaignIdFilter] Optional. The returned array is filtered to include only bid rules associated with the campaign identifiers in the specified comma-delimited list.
+         * @param {string} [adGroupIdFilter] Optional. The returned array is filtered to include only bid rules associated with the ad group identifiers in the comma-delimited list.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listBidRules(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, stateFilter?: string, name?: string, ruleIdFilter?: string, campaignIdFilter?: string, adGroupIdFilter?: string, options?: any): AxiosPromise<Array<BidRule>> {
+            return localVarFp.listBidRules(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, stateFilter, name, ruleIdFilter, campaignIdFilter, adGroupIdFilter, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. Gets a BidRule object for a requested Sponsored Display bid rule.
+         * @summary Gets a requested bid rule.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {string} ruleId The identifier of the requested bid rule.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sdBidRulesRuleIdGet(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, ruleId: string, options?: any): AxiosPromise<BidRule> {
+            return localVarFp.sdBidRulesRuleIdGet(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, ruleId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+         * @summary Updates one or more bid rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<UpdateBidRule>} [updateBidRule] An array of BidRule objects. For each object, specify a bid rule identifier and mutable fields with their updated values. The mutable fields are &#x60;ruleName&#x60;, &#x60;state&#x60;, and &#x60;ruleConditions&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateBidRules(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, updateBidRule?: Array<UpdateBidRule>, options?: any): AxiosPromise<Array<BidRuleResponse>> {
+            return localVarFp.updateBidRules(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, updateBidRule, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for archiveBidRule operation in BidRulesPreviewOnlyApi.
+ * @export
+ * @interface BidRulesPreviewOnlyApiArchiveBidRuleRequest
+ */
+export interface BidRulesPreviewOnlyApiArchiveBidRuleRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiArchiveBidRule
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiArchiveBidRule
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The identifier of the bid rule.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiArchiveBidRule
+     */
+    readonly ruleId: string
+}
+
+/**
+ * Request parameters for createBidRules operation in BidRulesPreviewOnlyApi.
+ * @export
+ * @interface BidRulesPreviewOnlyApiCreateBidRulesRequest
+ */
+export interface BidRulesPreviewOnlyApiCreateBidRulesRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiCreateBidRules
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiCreateBidRules
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * An array of BidRule objects. For each object, specify required fields and their values. Required fields are &#x60;campaignId&#x60;, &#x60;adGroupId&#x60;, &#x60;state&#x60; and &#x60;ruleConditions&#x60;.
+     * @type {Array<CreateBidRule>}
+     * @memberof BidRulesPreviewOnlyApiCreateBidRules
+     */
+    readonly createBidRule?: Array<CreateBidRule>
+}
+
+/**
+ * Request parameters for listBidRules operation in BidRulesPreviewOnlyApi.
+ * @export
+ * @interface BidRulesPreviewOnlyApiListBidRulesRequest
+ */
+export interface BidRulesPreviewOnlyApiListBidRulesRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiListBidRules
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiListBidRules
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Optional. Sets a cursor into the requested set of bid rules. Use in conjunction with the &#x60;count&#x60; parameter to control pagination of the returned array. 0-indexed record offset for the result set, defaults to 0.
+     * @type {number}
+     * @memberof BidRulesPreviewOnlyApiListBidRules
+     */
+    readonly startIndex?: number
+
+    /**
+     * Optional. Sets the number of BidRule objects in the returned array. Use in conjunction with the &#x60;startIndex&#x60; parameter to control pagination. For example, to return the first ten bid rules set &#x60;startIndex&#x3D;0&#x60; and &#x60;count&#x3D;10&#x60;. To return the next ten bid rules, set &#x60;startIndex&#x3D;10&#x60; and &#x60;count&#x3D;10&#x60;, and so on. Defaults to max page size.
+     * @type {number}
+     * @memberof BidRulesPreviewOnlyApiListBidRules
+     */
+    readonly count?: number
+
+    /**
+     * Optional. The returned array is filtered to include only bid rules with state set to one of the values in the specified comma-delimited list. Available values:   - enabled   - paused   - archived   - enabled, paused   - enabled, archived   - paused, archived   - enabled, paused, archived
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiListBidRules
+     */
+    readonly stateFilter?: string
+
+    /**
+     * Optional. The returned array includes only bid rules with the specified name using an exact string match.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiListBidRules
+     */
+    readonly name?: string
+
+    /**
+     * Optional. The returned array is filtered to include only bid rules associated with the bid rule identifiers in the specified comma-delimited list.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiListBidRules
+     */
+    readonly ruleIdFilter?: string
+
+    /**
+     * Optional. The returned array is filtered to include only bid rules associated with the campaign identifiers in the specified comma-delimited list.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiListBidRules
+     */
+    readonly campaignIdFilter?: string
+
+    /**
+     * Optional. The returned array is filtered to include only bid rules associated with the ad group identifiers in the comma-delimited list.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiListBidRules
+     */
+    readonly adGroupIdFilter?: string
+}
+
+/**
+ * Request parameters for sdBidRulesRuleIdGet operation in BidRulesPreviewOnlyApi.
+ * @export
+ * @interface BidRulesPreviewOnlyApiSdBidRulesRuleIdGetRequest
+ */
+export interface BidRulesPreviewOnlyApiSdBidRulesRuleIdGetRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiSdBidRulesRuleIdGet
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiSdBidRulesRuleIdGet
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The identifier of the requested bid rule.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiSdBidRulesRuleIdGet
+     */
+    readonly ruleId: string
+}
+
+/**
+ * Request parameters for updateBidRules operation in BidRulesPreviewOnlyApi.
+ * @export
+ * @interface BidRulesPreviewOnlyApiUpdateBidRulesRequest
+ */
+export interface BidRulesPreviewOnlyApiUpdateBidRulesRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiUpdateBidRules
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof BidRulesPreviewOnlyApiUpdateBidRules
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * An array of BidRule objects. For each object, specify a bid rule identifier and mutable fields with their updated values. The mutable fields are &#x60;ruleName&#x60;, &#x60;state&#x60;, and &#x60;ruleConditions&#x60;.
+     * @type {Array<UpdateBidRule>}
+     * @memberof BidRulesPreviewOnlyApiUpdateBidRules
+     */
+    readonly updateBidRule?: Array<UpdateBidRule>
+}
+
+/**
+ * BidRulesPreviewOnlyApi - object-oriented interface
+ * @export
+ * @class BidRulesPreviewOnlyApi
+ * @extends {BaseAPI}
+ */
+export class BidRulesPreviewOnlyApi extends BaseAPI {
+    /**
+     * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. This operation is equivalent to an update operation that sets the state field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
+     * @summary Sets the status of a bid rule to archived.
+     * @param {BidRulesPreviewOnlyApiArchiveBidRuleRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BidRulesPreviewOnlyApi
+     */
+    public archiveBidRule(requestParameters: BidRulesPreviewOnlyApiArchiveBidRuleRequest, options?: any) {
+        return BidRulesPreviewOnlyApiFp(this.configuration).archiveBidRule(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.ruleId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+     * @summary Creates one or more bid rules.
+     * @param {BidRulesPreviewOnlyApiCreateBidRulesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BidRulesPreviewOnlyApi
+     */
+    public createBidRules(requestParameters: BidRulesPreviewOnlyApiCreateBidRulesRequest, options?: any) {
+        return BidRulesPreviewOnlyApiFp(this.configuration).createBidRules(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.createBidRule, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. Gets an array of BidRule objects for a requested set of Sponsored Display bid rules.
+     * @summary Gets a list of bid rules.
+     * @param {BidRulesPreviewOnlyApiListBidRulesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BidRulesPreviewOnlyApi
+     */
+    public listBidRules(requestParameters: BidRulesPreviewOnlyApiListBidRulesRequest, options?: any) {
+        return BidRulesPreviewOnlyApiFp(this.configuration).listBidRules(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.startIndex, requestParameters.count, requestParameters.stateFilter, requestParameters.name, requestParameters.ruleIdFilter, requestParameters.campaignIdFilter, requestParameters.adGroupIdFilter, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. Gets a BidRule object for a requested Sponsored Display bid rule.
+     * @summary Gets a requested bid rule.
+     * @param {BidRulesPreviewOnlyApiSdBidRulesRuleIdGetRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BidRulesPreviewOnlyApi
+     */
+    public sdBidRulesRuleIdGet(requestParameters: BidRulesPreviewOnlyApiSdBidRulesRuleIdGetRequest, options?: any) {
+        return BidRulesPreviewOnlyApiFp(this.configuration).sdBidRulesRuleIdGet(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.ruleId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+     * @summary Updates one or more bid rules.
+     * @param {BidRulesPreviewOnlyApiUpdateBidRulesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BidRulesPreviewOnlyApi
+     */
+    public updateBidRules(requestParameters: BidRulesPreviewOnlyApiUpdateBidRulesRequest, options?: any) {
+        return BidRulesPreviewOnlyApiFp(this.configuration).updateBidRules(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.updateBidRule, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -6240,7 +7735,7 @@ export class BrandSafetyListOpenBetaApi extends BaseAPI {
 export const CampaignsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
          * @summary Sets the campaign status to archived.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -6694,7 +8189,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CampaignsApiAxiosParamCreator(configuration)
     return {
         /**
-         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
          * @summary Sets the campaign status to archived.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -6805,7 +8300,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
     const localVarFp = CampaignsApiFp(configuration)
     return {
         /**
-         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
          * @summary Sets the campaign status to archived.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -7175,7 +8670,7 @@ export interface CampaignsApiUpdateCampaignsRequest {
  */
 export class CampaignsApi extends BaseAPI {
     /**
-     * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+     * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
      * @summary Sets the campaign status to archived.
      * @param {CampaignsApiArchiveCampaignRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -9025,7 +10520,7 @@ export class NegativeTargetingApi extends BaseAPI {
 export const ProductAdsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
          * @summary Sets the status of a sproduct ad to archived.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -9479,7 +10974,7 @@ export const ProductAdsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProductAdsApiAxiosParamCreator(configuration)
     return {
         /**
-         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
          * @summary Sets the status of a sproduct ad to archived.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -9590,7 +11085,7 @@ export const ProductAdsApiFactory = function (configuration?: Configuration, bas
     const localVarFp = ProductAdsApiFp(configuration)
     return {
         /**
-         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+         * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
          * @summary Sets the status of a sproduct ad to archived.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -9960,7 +11455,7 @@ export interface ProductAdsApiUpdateProductAdsRequest {
  */
 export class ProductAdsApi extends BaseAPI {
     /**
-     * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.
+     * This operation is equivalent to an update operation that sets the status field to \'archived\'. Note that setting the status field to \'archived\' is permanent and can\'t be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.
      * @summary Sets the status of a sproduct ad to archived.
      * @param {ProductAdsApiArchiveProductAdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -11893,7 +13388,7 @@ export class TargetingApi extends BaseAPI {
 export const TargetingRecommendationsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * **Note that version `application/vnd.sdtargetingrecommendations.v3.1+json` is now supported.**          Provides a list of products to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service.   Currently the API will return up to 100 recommended products and categories.   The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Product Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|        
+         * This API provides product and category recommendations to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service.  For API v3.0, the API returns up to 100 recommendations for product targeting.  For API v3.1, the API returns up to 100 recommendations for both product and category targeting.  For API v3.2 the API introduces product targeting themes in the request and returns product recommendations based on different targeting themes. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.   The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Product Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|        
          * @summary Returns a set of recommended products and categories to target
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -11959,7 +13454,7 @@ export const TargetingRecommendationsApiFp = function(configuration?: Configurat
     const localVarAxiosParamCreator = TargetingRecommendationsApiAxiosParamCreator(configuration)
     return {
         /**
-         * **Note that version `application/vnd.sdtargetingrecommendations.v3.1+json` is now supported.**          Provides a list of products to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service.   Currently the API will return up to 100 recommended products and categories.   The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Product Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|        
+         * This API provides product and category recommendations to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service.  For API v3.0, the API returns up to 100 recommendations for product targeting.  For API v3.1, the API returns up to 100 recommendations for both product and category targeting.  For API v3.2 the API introduces product targeting themes in the request and returns product recommendations based on different targeting themes. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.   The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Product Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|        
          * @summary Returns a set of recommended products and categories to target
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -11967,7 +13462,7 @@ export const TargetingRecommendationsApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTargetRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDTargetingRecommendationsRequestV31?: SDTargetingRecommendationsRequestV31, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SDTargetingRecommendationsResponseV31>> {
+        async getTargetRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDTargetingRecommendationsRequestV31?: SDTargetingRecommendationsRequestV31, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SDTargetingRecommendationsResponseV32>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTargetRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sDTargetingRecommendationsRequestV31, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -11982,7 +13477,7 @@ export const TargetingRecommendationsApiFactory = function (configuration?: Conf
     const localVarFp = TargetingRecommendationsApiFp(configuration)
     return {
         /**
-         * **Note that version `application/vnd.sdtargetingrecommendations.v3.1+json` is now supported.**          Provides a list of products to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service.   Currently the API will return up to 100 recommended products and categories.   The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Product Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|        
+         * This API provides product and category recommendations to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service.  For API v3.0, the API returns up to 100 recommendations for product targeting.  For API v3.1, the API returns up to 100 recommendations for both product and category targeting.  For API v3.2 the API introduces product targeting themes in the request and returns product recommendations based on different targeting themes. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.   The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Product Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|        
          * @summary Returns a set of recommended products and categories to target
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -11990,7 +13485,7 @@ export const TargetingRecommendationsApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTargetRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDTargetingRecommendationsRequestV31?: SDTargetingRecommendationsRequestV31, options?: any): AxiosPromise<SDTargetingRecommendationsResponseV31> {
+        getTargetRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDTargetingRecommendationsRequestV31?: SDTargetingRecommendationsRequestV31, options?: any): AxiosPromise<SDTargetingRecommendationsResponseV32> {
             return localVarFp.getTargetRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sDTargetingRecommendationsRequestV31, options).then((request) => request(axios, basePath));
         },
     };
@@ -12032,7 +13527,7 @@ export interface TargetingRecommendationsApiGetTargetRecommendationsRequest {
  */
 export class TargetingRecommendationsApi extends BaseAPI {
     /**
-     * **Note that version `application/vnd.sdtargetingrecommendations.v3.1+json` is now supported.**          Provides a list of products to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service.   Currently the API will return up to 100 recommended products and categories.   The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Product Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|        
+     * This API provides product and category recommendations to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service.  For API v3.0, the API returns up to 100 recommendations for product targeting.  For API v3.1, the API returns up to 100 recommendations for both product and category targeting.  For API v3.2 the API introduces product targeting themes in the request and returns product recommendations based on different targeting themes. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.   The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Product Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|        
      * @summary Returns a set of recommended products and categories to target
      * @param {TargetingRecommendationsApiGetTargetRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

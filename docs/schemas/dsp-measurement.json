@@ -1020,6 +1020,653 @@
         ]
       }
     },
+    "/dsp/measurement/studies/omnichannelMetrics": {
+      "post": {
+        "summary": "Create new DSP OMNICHANNEL_METRICS studies.",
+        "requestBody": {
+          "description": "An array of study objects. For each object, specify required fields and their values. Maximum length of the array is 1.",
+          "content": {
+            "application/vnd.studymanagement.v1.2+json": {
+              "schema": {
+                "minItems": 1,
+                "maxItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DSPOmnichannelMetricsStudyV1M2"
+                }
+              }
+            },
+            "application/vnd.studymanagement.v1.3+json": {
+              "schema": {
+                "minItems": 1,
+                "maxItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DSPOmnichannelMetricsStudyV1M3"
+                }
+              }
+            }
+          }
+        },
+        "description": "Create new DSP OMNICHANNEL_METRICS studies.\n\n**Requires one of these permissions**:\n[]",
+        "operationId": "CreateDSPOmnichannelMetricsStudies",
+        "responses": {
+          "207": {
+            "description": "Multi-status.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyResponsesV1"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyResponsesV1"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated request.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user is not authorized to access a resource.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Requested resource does not exist or is not visible for the authenticated user.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type - Version not supported.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          }
+        ],
+        "tags": [
+          "Measurement"
+        ]
+      },
+      "get": {
+        "summary": "Gets one or more DSP OMNICHANNEL_METRICS studies with requested study identifiers or an advertiser identifier.",
+        "description": "Gets one or more DSP OMNICHANNEL_METRICS studies with requested study identifiers or an advertiser identifier.\n\n**Requires one of these permissions**:\n[]",
+        "operationId": "GetDSPOmnichannelMetricsStudies",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedDSPOmnichannelMetricsStudiesV1M2"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedDSPOmnichannelMetricsStudiesV1M3"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request or request body is not matching with input model.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated request.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user is not authorized to access a resource.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Requested resource does not exist or is not visible for the authenticated user.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type - Version not supported.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "schema": {
+              "minItems": 1,
+              "maxItems": 50,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "explode": false,
+            "name": "studyIds",
+            "description": "Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.",
+            "style": "form",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "advertiserId",
+            "description": "The advertiser canonical identifier. Either one of studyIdFilters or advertiserId should be provided.",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "nextToken",
+            "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": 10,
+              "maximum": 100,
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "maxResults",
+            "description": "Sets the maximum number of studies in the returned array. Use in conjunction with the `nextToken` parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults=20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.",
+            "required": false
+          }
+        ],
+        "tags": [
+          "Measurement"
+        ]
+      },
+      "put": {
+        "summary": "Update DSP OMNICHANNEL_METRICS studies. This will be a full update.",
+        "requestBody": {
+          "description": "An array of measurement objects. For each object, specify required fields and their values. Maximum length of the array is 1.",
+          "content": {
+            "application/vnd.studymanagement.v1.2+json": {
+              "schema": {
+                "minItems": 1,
+                "maxItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DSPOmnichannelMetricsStudyV1M2"
+                }
+              }
+            },
+            "application/vnd.studymanagement.v1.3+json": {
+              "schema": {
+                "minItems": 1,
+                "maxItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DSPOmnichannelMetricsStudyV1M3"
+                }
+              }
+            }
+          }
+        },
+        "description": "Update DSP OMNICHANNEL_METRICS studies. This will be a full update.\n\n**Requires one of these permissions**:\n[]",
+        "operationId": "UpdateDSPOmnichannelMetricsStudies",
+        "responses": {
+          "207": {
+            "description": "Multi-status.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyResponsesV1"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudyResponsesV1"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated request.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user is not authorized to access a resource.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Requested resource does not exist or is not visible for the authenticated user.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type - Version not supported.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/vnd.studymanagement.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.studymanagement.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          }
+        ],
+        "tags": [
+          "Measurement"
+        ]
+      }
+    },
     "/measurement/vendorProducts/surveyQuestionTemplates": {
       "get": {
         "summary": "Gets the survey question templates for the specific vendor product(s).",
@@ -4243,6 +4890,493 @@
         ]
       }
     },
+    "/dsp/measurement/eligibility/omnichannelMetrics": {
+      "post": {
+        "summary": "Checks the DSP OMNICHANNEL_METRICS study type eligibility against vendor products.",
+        "requestBody": {
+          "description": "The DSP omnichannel metrics eligibility request object.",
+          "content": {
+            "application/vnd.measurementeligibility.v1.2+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DSPOmnichannelMetricsEligibilityRequestV1M2"
+              }
+            },
+            "application/vnd.measurementeligibility.v1.3+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DSPOmnichannelMetricsEligibilityRequestV1M3"
+              }
+            }
+          }
+        },
+        "description": "Checks the DSP OMNICHANNEL_METRICS study type eligibility status against vendor products.\n\n**Requires one of these permissions**:\n[]",
+        "operationId": "CheckDSPOmnichannelMetricsEligibility",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/vnd.measurementeligibility.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EligibilityResponseV1M2"
+                }
+              },
+              "application/vnd.measurementeligibility.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EligibilityResponseV1M2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request or request body is not matching with input model.",
+            "content": {
+              "application/vnd.measurementeligibility.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              },
+              "application/vnd.measurementeligibility.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated request.",
+            "content": {
+              "application/vnd.measurementeligibility.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.measurementeligibility.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user is not authorized to access a resource.",
+            "content": {
+              "application/vnd.measurementeligibility.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              },
+              "application/vnd.measurementeligibility.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Requested resource does not exist or is not visible for the authenticated user.",
+            "content": {
+              "application/vnd.measurementeligibility.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.measurementeligibility.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type - Version not supported.",
+            "content": {
+              "application/vnd.measurementeligibility.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.measurementeligibility.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/vnd.measurementeligibility.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              },
+              "application/vnd.measurementeligibility.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/vnd.measurementeligibility.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41s",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.measurementeligibility.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41s",
+                  "message": "Internal Server Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "nextToken",
+            "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array.",
+            "required": false
+          },
+          {
+            "schema": {
+              "default": 10,
+              "maximum": 100,
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "maxResults",
+            "description": "Sets the maximum number of studies in the returned array. Use in conjunction with the `nextToken` parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults=20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.",
+            "required": false
+          }
+        ],
+        "tags": [
+          "Measurement"
+        ]
+      }
+    },
+    "/measurement/vendorProducts/omnichannelMetrics/brands/list": {
+      "post": {
+        "summary": "Search for brands to be used in the OMNICHANNEL_METRICS vendor product.",
+        "requestBody": {
+          "description": "Fetch measurement vendor products request object.",
+          "content": {
+            "application/vnd.ocmbrands.v1.3+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OmnichannelMetricsBrandSearchRequestV1M2"
+              }
+            },
+            "application/vnd.ocmbrands.v1.2+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OmnichannelMetricsBrandSearchRequestV1M2"
+              }
+            }
+          }
+        },
+        "description": "Search for brands to be used in the OMNICHANNEL_METRICS vendor product.\n\n**Requires one of these permissions**:\n[]",
+        "operationId": "omnichannelMetricsBrandSearch",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/vnd.ocmbrands.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedOmnichannelMetricsBrandsV1M2"
+                }
+              },
+              "application/vnd.ocmbrands.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedOmnichannelMetricsBrandsV1M2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request or request body is not matching with input model.",
+            "content": {
+              "application/vnd.ocmbrands.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              },
+              "application/vnd.ocmbrands.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated request.",
+            "content": {
+              "application/vnd.ocmbrands.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request."
+                }
+              },
+              "application/vnd.ocmbrands.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request."
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user is not authorized to access a resource.",
+            "content": {
+              "application/vnd.ocmbrands.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access.",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed."
+                    }
+                  ]
+                }
+              },
+              "application/vnd.ocmbrands.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access.",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed."
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Requested resource does not exist or is not visible for the authenticated user.",
+            "content": {
+              "application/vnd.ocmbrands.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found."
+                }
+              },
+              "application/vnd.ocmbrands.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found."
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type - Version not supported.",
+            "content": {
+              "application/vnd.ocmbrands.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              },
+              "application/vnd.ocmbrands.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/vnd.ocmbrands.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests."
+                }
+              },
+              "application/vnd.ocmbrands.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests."
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error.",
+            "content": {
+              "application/vnd.ocmbrands.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.ocmbrands.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "nextToken",
+            "description": "Token from a previous request. Use in conjunction with the `maxResults` parameter to control pagination of the returned array."
+          },
+          {
+            "schema": {
+              "default": 10,
+              "maximum": 100,
+              "type": "integer",
+              "minimum": 1
+            },
+            "in": "query",
+            "name": "maxResults",
+            "description": "Sets the maximum number of brands in the returned array. Use in conjunction with the `nextToken` parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults=20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.",
+            "required": false
+          }
+        ],
+        "tags": [
+          "Measurement"
+        ]
+      }
+    },
     "/dsp/measurement/studies/omnichannelMetrics/{studyId}/result": {
       "get": {
         "summary": "Get result of a DSP OMNICHANNEL_METRICS study.",
@@ -4271,6 +5405,15 @@
                   "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
                   "message": "Malformed JSON."
                 }
+              },
+              "application/vnd.measurementresult.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Malformed JSON."
+                }
               }
             }
           },
@@ -4278,6 +5421,15 @@
             "description": "Unauthenticated request.",
             "content": {
               "application/vnd.measurementresult.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthenticated Request"
+                }
+              },
+              "application/vnd.measurementresult.v1.2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -4305,6 +5457,21 @@
                     }
                   ]
                 }
+              },
+              "application/vnd.measurementresult.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Unauthorized Access",
+                  "errors": [
+                    {
+                      "errorType": "ENTITY_NOT_ALLOWED",
+                      "message": "Given entity is not allowed"
+                    }
+                  ]
+                }
               }
             }
           },
@@ -4312,6 +5479,15 @@
             "description": "Not Found - Requested resource does not exist or is not visible for the authenticated user.",
             "content": {
               "application/vnd.measurementresult.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Resource Not Found"
+                }
+              },
+              "application/vnd.measurementresult.v1.2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -4333,6 +5509,15 @@
                   "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
                   "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
                 }
+              },
+              "application/vnd.measurementresult.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "07939123-b8aa-466a-a991-8ab45b3a2f8e",
+                  "message": "Invalid `accept` header provided. Please ensure you are specifying supported version for the requested resource."
+                }
               }
             }
           },
@@ -4347,6 +5532,15 @@
                   "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
                   "message": "Too Many Requests"
                 }
+              },
+              "application/vnd.measurementresult.v1.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Too Many Requests"
+                }
               }
             }
           },
@@ -4354,6 +5548,15 @@
             "description": "Internal Server Error.",
             "content": {
               "application/vnd.measurementresult.v1.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorV1"
+                },
+                "example": {
+                  "requestId": "ad165994-489a-4fcf-a175-7a846c899b41",
+                  "message": "Internal Server Error"
+                }
+              },
+              "application/vnd.measurementresult.v1.2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorV1"
                 },
@@ -4557,6 +5760,18 @@
           }
         }
       },
+      "DSPAudienceResearchCostEstimationResponseV1M2": {
+        "description": "The response object of DSP Audience Research study cost estimation.",
+        "properties": {
+          "cost": {
+            "description": "The estimated cost for the Study.",
+            "type": "number"
+          },
+          "currencyCode": {
+            "$ref": "#/components/schemas/CurrencyCodeV1M2"
+          }
+        }
+      },
       "PaginatedVendorProductPoliciesV1": {
         "description": "A list of measurement vendor products policies.",
         "type": "object",
@@ -4640,6 +5855,83 @@
           }
         }
       },
+      "BaseStudyV1M2": {
+        "description": "The base study object.",
+        "type": "object",
+        "properties": {
+          "statusReasons": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.",
+            "readOnly": true,
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "surveyId": {
+            "description": "The study survey canonical identifier.",
+            "type": "string"
+          },
+          "endDate": {
+            "format": "date-time",
+            "description": "The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "externalReferenceId": {
+            "description": "Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.",
+            "type": "string"
+          },
+          "vendorProductId": {
+            "description": "Associated vendor product canonical identifier.",
+            "type": "string"
+          },
+          "lastUpdatedDate": {
+            "format": "date-time",
+            "description": "The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "studyResultStatus": {
+            "description": "The status of result of the study.",
+            "type": "string",
+            "enum": [
+              "AVAILABLE"
+            ]
+          },
+          "reviewDate": {
+            "format": "date-time",
+            "description": "The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "name": {
+            "description": "The study name.",
+            "type": "string"
+          },
+          "comment": {
+            "description": "The approver's comment on why the study is approved/rejected.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "startDate": {
+            "format": "date-time",
+            "description": "The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.",
+            "readOnly": true,
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StudyStatusV1"
+          },
+          "createDate": {
+            "format": "date-time",
+            "description": "The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.",
+            "readOnly": true,
+            "type": "string"
+          }
+        }
+      },
       "PaginatedOmnichannelMetricsBrandsV1M2": {
         "type": "object",
         "properties": {
@@ -4680,6 +5972,16 @@
             "items": {
               "$ref": "#/components/schemas/VendorProductPolicyV1M1"
             }
+          }
+        }
+      },
+      "AudienceSegmentV1M2": {
+        "description": "The model for holding an Audience Segment.",
+        "type": "object",
+        "properties": {
+          "segmentId": {
+            "description": "ID for the audience segment. This ID can be fetched from these APIs- https://advertising.amazon.com/API/docs/en-us/audiences/#/Discovery",
+            "type": "string"
           }
         }
       },
@@ -4746,6 +6048,32 @@
           },
           "status": {
             "$ref": "#/components/schemas/EligibilityStatusV1"
+          }
+        }
+      },
+      "DSPAudienceResearchMetadataV1M2": {
+        "description": "The basic model for all DSP AUDIENCE_RESEARCH objective studies.",
+        "type": "object",
+        "properties": {
+          "brandName": {
+            "description": "The study brand name.",
+            "type": "string"
+          },
+          "audienceTargetingGroup": {
+            "$ref": "#/components/schemas/AudienceTargetingGroupV1M2"
+          },
+          "peerNames": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "A list of peer names for the study brand.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "productCategory": {
+            "description": "The study product category.",
+            "type": "string"
           }
         }
       },
@@ -5145,7 +6473,8 @@
         "description": "Measurement category based on the purpose of the measurement.",
         "type": "string",
         "enum": [
-          "CAMPAIGN_MEASUREMENT"
+          "CAMPAIGN_MEASUREMENT",
+          "CAMPAIGN_PLANNING"
         ]
       },
       "SurveyQuestionTemplateV1M1": {
@@ -5249,6 +6578,30 @@
           }
         }
       },
+      "DSPAudienceResearchStudyV1M2": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "description": "The study canonical identifier. Immutable field.",
+                "type": "string"
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/BaseStudyV1M2"
+          },
+          {
+            "$ref": "#/components/schemas/DSPCampaignPlanningMetadataV1M2"
+          },
+          {
+            "$ref": "#/components/schemas/DSPAudienceResearchMetadataV1M2"
+          }
+        ],
+        "description": "DSP AUDIENCE_RESEARCH study object.",
+        "type": "object"
+      },
       "DSPOmnichannelMetricsStudyV1M3": {
         "allOf": [
           {
@@ -5263,6 +6616,16 @@
         ],
         "description": "DSP OMNICHANNEL_METRICS study object.",
         "type": "object"
+      },
+      "DSPCampaignPlanningMetadataV1M2": {
+        "description": "The basic model for all DSP CAMPAIGN_PLANNING objective studies.",
+        "type": "object",
+        "properties": {
+          "advertiserId": {
+            "description": "The associated advertiser identifier. Immutable field.",
+            "type": "string"
+          }
+        }
       },
       "PaginatedSurveysV1": {
         "description": "A list of study surveys.",
@@ -5675,6 +7038,30 @@
           }
         }
       },
+      "AudienceTargetingGroupV1M2": {
+        "description": "The model for holding Audiece targeting group. The includedAudienceGroups and excludedAudienceGroups are always joined with AND operator.",
+        "type": "object",
+        "properties": {
+          "includedAudienceGroups": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "List of audience groups to be included in the targeted audience.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AudienceGroupV1M2"
+            }
+          },
+          "excludedAudienceGroups": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "List of audience groups to be excluded from the targeted audience.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AudienceGroupV1M2"
+            }
+          }
+        }
+      },
       "DSPBrandLiftStudyV1": {
         "allOf": [
           {
@@ -5877,6 +7264,10 @@
               "FREQUENCY",
               "CHANNEL"
             ]
+          },
+          "marginOfError": {
+            "description": "The percentage of margin of error for this response.",
+            "type": "number"
           }
         }
       },
@@ -5903,14 +7294,53 @@
           }
         }
       },
+      "AudienceGroupV1M2": {
+        "description": "The model for holding Audiece selection within a group. The expression within an audience group will be evaluated using the IntraGroupOperator. The InterGroupOperator will be applied on the output of one audience group with another audience group.",
+        "type": "object",
+        "properties": {
+          "interGroupOperator": {
+            "$ref": "#/components/schemas/AudienceSelectionOperatorV1M2"
+          },
+          "intraGroupOperator": {
+            "$ref": "#/components/schemas/AudienceSelectionOperatorV1M2"
+          },
+          "audienceSegments": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "List of audience segments in this group.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AudienceSegmentV1M2"
+            }
+          }
+        }
+      },
       "StudyTypeV1M2": {
         "description": "The study type.",
         "readOnly": true,
         "type": "string",
         "enum": [
           "BRAND_LIFT",
-          "OMNICHANNEL_METRICS"
+          "OMNICHANNEL_METRICS",
+          "AUDIENCE_RESEARCH"
         ]
+      },
+      "PaginatedDSPAudienceResearchStudiesV1M2": {
+        "description": "A list of audience research studies.",
+        "type": "object",
+        "properties": {
+          "nextToken": {
+            "type": "string"
+          },
+          "measurements": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DSPAudienceResearchStudyV1M2"
+            }
+          }
+        }
       },
       "PaginatedDSPBrandLiftStudiesV1M1": {
         "description": "A list of studies.",
@@ -6131,6 +7561,21 @@
           "WARNING",
           "ERROR"
         ]
+      },
+      "UpdateDSPAudienceResearchStudyV1M2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseStudyV1M2"
+          },
+          {
+            "$ref": "#/components/schemas/DSPCampaignPlanningMetadataV1M2"
+          },
+          {
+            "$ref": "#/components/schemas/DSPAudienceResearchMetadataV1M2"
+          }
+        ],
+        "description": "Update DSP AUDIENCE_RESEARCH study object.",
+        "type": "object"
       },
       "EligibilityIssueV1": {
         "description": "The list of eligibility issues.",
@@ -6427,6 +7872,15 @@
           }
         }
       },
+      "DSPAudienceResearchEligibilityDataV1M2": {
+        "description": "The audience research study eligibility data.",
+        "type": "object",
+        "properties": {
+          "audienceTargetingGroup": {
+            "$ref": "#/components/schemas/AudienceTargetingGroupV1M2"
+          }
+        }
+      },
       "SurveyQuestionTypeV1M1": {
         "description": "The survey question type. SINGLE_SELECT question will allow customers to choose only one response, MULTI_SELECT question will allow customers to choose multiple responses, RATING will allow customers to choose a rating on a scale (e.g. 1 to 5), FREE_TEXT will allow customers to provide a free formed question text.",
         "readOnly": true,
@@ -6517,6 +7971,17 @@
             "type": "string"
           }
         }
+      },
+      "DSPAudienceResearchEligibilityRequestV1M2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseEligibilityRequestV1M2"
+          },
+          {
+            "$ref": "#/components/schemas/DSPAudienceResearchEligibilityDataV1M2"
+          }
+        ],
+        "description": "The request object of DSP Audience Research study eligibility check."
       },
       "EligibilityIssueV1M2": {
         "description": "The list of eligibility issues.",
@@ -6797,6 +8262,21 @@
           }
         }
       },
+      "CreateDSPAudienceResearchStudyV1M2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseStudyV1M2"
+          },
+          {
+            "$ref": "#/components/schemas/DSPCampaignPlanningMetadataV1M2"
+          },
+          {
+            "$ref": "#/components/schemas/DSPAudienceResearchMetadataV1M2"
+          }
+        ],
+        "description": "Create DSP AUDIENCE_RESEARCH study object.",
+        "type": "object"
+      },
       "DSPOmnichannelMetricsEligibilityRequestV1M3": {
         "allOf": [
           {
@@ -6893,6 +8373,28 @@
             "items": {
               "$ref": "#/components/schemas/BrandLiftSummaryV1"
             }
+          },
+          "studyId": {
+            "description": "The canonical Id of Study.",
+            "type": "string"
+          },
+          "surveyResponses": {
+            "minItems": 1,
+            "maxItems": 2000,
+            "description": "Detailed response rate for each response in Survey question aggregated by different segments.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurveyResponseResultV1"
+            }
+          }
+        }
+      },
+      "AudienceResearchStudyResultV1M2": {
+        "description": "The result of Audience Research study.",
+        "properties": {
+          "totalResponses": {
+            "description": "Total number of responses received in the Survey.",
+            "type": "number"
           },
           "studyId": {
             "description": "The canonical Id of Study.",
@@ -7071,6 +8573,37 @@
           }
         }
       },
+      "AudienceSelectionOperatorV1M2": {
+        "description": "The operator used in Audience Segment Selection to determine which operation needs to be applied across selected segments. AND operator takes priority over OR operator.",
+        "readOnly": true,
+        "type": "string",
+        "enum": [
+          "OR",
+          "AND"
+        ]
+      },
+      "CurrencyCodeV1M2": {
+        "description": "Currency Code.",
+        "type": "string",
+        "enum": [
+          "USD",
+          "CAD",
+          "MXN",
+          "BRL",
+          "GBP",
+          "EUR",
+          "AED",
+          "SAR",
+          "INR",
+          "JPY",
+          "AUD",
+          "SGD",
+          "TRY",
+          "SEK",
+          "EGP",
+          "PLN"
+        ]
+      },
       "SurveyQuestionPlaceholderAllowedRangeV1": {
         "description": "Allowed value range for placeholder.",
         "type": "object",
@@ -7217,7 +8750,8 @@
         "type": "string",
         "enum": [
           "COMPLIMENTARY",
-          "CPM"
+          "CPM",
+          "FLAT_RATE"
         ]
       },
       "StudyTypeV1": {
@@ -7262,6 +8796,40 @@
           },
           "rows": {
             "$ref": "#/components/schemas/SurveyQuestionPlaceholderCandidateV1"
+          }
+        }
+      },
+      "DSPAudienceResearchCostEstimationRequestV1M2": {
+        "description": "The request object of DSP Audience Research study cost estimation.",
+        "properties": {
+          "vendorProductId": {
+            "description": "vendor product canonical identifier.",
+            "type": "string"
+          },
+          "templatedQuestions": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "A list of templated survey questions.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TemplatedSurveyQuestionV1"
+            }
+          },
+          "customQuestions": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "A list of custom survey questions.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomSurveyQuestionV1"
+            }
+          },
+          "locale": {
+            "$ref": "#/components/schemas/MeasurementLocaleV1"
+          },
+          "advertiserId": {
+            "description": "The associated advertiser identifier.",
+            "type": "string"
           }
         }
       },

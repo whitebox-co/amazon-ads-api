@@ -23,6 +23,139 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 import { createRequestFunction } from "../../helpers";
 
 /**
+ * Asin component which needs to be pre moderated.
+ * @export
+ * @interface AsinComponent
+ */
+export interface AsinComponent {
+    /**
+     * Type of the asin component.
+     * @type {string}
+     * @memberof AsinComponent
+     */
+    componentType: AsinComponentComponentTypeEnum;
+    /**
+     * Asin id to be pre moderated.
+     * @type {string}
+     * @memberof AsinComponent
+     */
+    asin: string;
+    /**
+     * Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.
+     * @type {string}
+     * @memberof AsinComponent
+     */
+    id: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AsinComponentComponentTypeEnum {
+    LandingAsin = 'LANDING_ASIN',
+    ProductAsin = 'PRODUCT_ASIN'
+}
+
+/**
+ * Pre-moderation result for an Asin component
+ * @export
+ * @interface AsinComponentResponse
+ */
+export interface AsinComponentResponse {
+    /**
+     * The pre-moderation status of the component.
+     * @type {string}
+     * @memberof AsinComponentResponse
+     */
+    preModerationStatus?: AsinComponentResponsePreModerationStatusEnum;
+    /**
+     * Type of Asin component.
+     * @type {string}
+     * @memberof AsinComponentResponse
+     */
+    componentType?: AsinComponentResponseComponentTypeEnum;
+    /**
+     * A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.
+     * @type {Array<AsinPolicyViolation>}
+     * @memberof AsinComponentResponse
+     */
+    policyViolations?: Array<AsinPolicyViolation>;
+    /**
+     * Pre-moderated Asin Id.
+     * @type {string}
+     * @memberof AsinComponentResponse
+     */
+    asin?: string;
+    /**
+     * Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.
+     * @type {string}
+     * @memberof AsinComponentResponse
+     */
+    id?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AsinComponentResponsePreModerationStatusEnum {
+    Rejected = 'REJECTED',
+    Approved = 'APPROVED',
+    Failed = 'FAILED',
+    RetryableFailure = 'RETRYABLE_FAILURE'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AsinComponentResponseComponentTypeEnum {
+    LandingAsin = 'LANDING_ASIN',
+    ProductAsin = 'PRODUCT_ASIN'
+}
+
+/**
+ * 
+ * @export
+ * @interface AsinPolicyViolation
+ */
+export interface AsinPolicyViolation {
+    /**
+     * A human-readable description of the policy.
+     * @type {string}
+     * @memberof AsinPolicyViolation
+     */
+    policyDescription?: string;
+    /**
+     * A policy violation code.
+     * @type {string}
+     * @memberof AsinPolicyViolation
+     */
+    name?: string;
+    /**
+     * Type of policy violation.
+     * @type {string}
+     * @memberof AsinPolicyViolation
+     */
+    type?: AsinPolicyViolationTypeEnum;
+    /**
+     * Address of the policy documentation. Follow the link to learn more about the specified policy.
+     * @type {string}
+     * @memberof AsinPolicyViolation
+     */
+    policyLinkUrl?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum AsinPolicyViolationTypeEnum {
+    Warning = 'WARNING',
+    Rejected = 'REJECTED'
+}
+
+/**
  * 
  * @export
  * @interface AssociatedBudgetRuleResponse
@@ -152,6 +285,225 @@ export interface BudgetRuleResponse {
     associatedCampaignIds?: Array<string>;
 }
 /**
+ * 
+ * @export
+ * @interface BudgetUsageCampaign
+ */
+export interface BudgetUsageCampaign {
+    /**
+     * Budget usage percentage (spend / available budget) for the given budget policy.
+     * @type {number}
+     * @memberof BudgetUsageCampaign
+     */
+    budgetUsagePercent?: number;
+    /**
+     * ID of requested resource
+     * @type {string}
+     * @memberof BudgetUsageCampaign
+     */
+    campaignId?: string;
+    /**
+     * Last evaluation time for budget usage
+     * @type {string}
+     * @memberof BudgetUsageCampaign
+     */
+    usageUpdatedTimestamp?: string;
+    /**
+     * An index to maintain order of the campaignIds
+     * @type {number}
+     * @memberof BudgetUsageCampaign
+     */
+    index?: number;
+    /**
+     * Budget amount of resource requested
+     * @type {number}
+     * @memberof BudgetUsageCampaign
+     */
+    budget?: number;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsageCampaignBatchError
+ */
+export interface BudgetUsageCampaignBatchError {
+    /**
+     * An enumerated error code for machine use.
+     * @type {string}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    code?: string;
+    /**
+     * ID of requested resource
+     * @type {string}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    campaignId?: string;
+    /**
+     * An index to maintain order of the campaignIds
+     * @type {number}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    index?: number;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsageCampaignRequest
+ */
+export interface BudgetUsageCampaignRequest {
+    /**
+     * A list of campaign IDs
+     * @type {Array<string>}
+     * @memberof BudgetUsageCampaignRequest
+     */
+    campaignIds?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsageCampaignResponse
+ */
+export interface BudgetUsageCampaignResponse {
+    /**
+     * List of budget usage percentages that were successfully pulled
+     * @type {Array<BudgetUsageCampaign>}
+     * @memberof BudgetUsageCampaignResponse
+     */
+    success?: Array<BudgetUsageCampaign>;
+    /**
+     * List of budget usage percentages that failed to pull
+     * @type {Array<BudgetUsageCampaignBatchError>}
+     * @memberof BudgetUsageCampaignResponse
+     */
+    error?: Array<BudgetUsageCampaignBatchError>;
+}
+/**
+ * The Error Response Object.
+ * @export
+ * @interface BudgetUsageError
+ */
+export interface BudgetUsageError {
+    /**
+     * An enumerated error code for machine use.
+     * @type {string}
+     * @memberof BudgetUsageError
+     */
+    code?: string;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof BudgetUsageError
+     */
+    details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsagePortfolio
+ */
+export interface BudgetUsagePortfolio {
+    /**
+     * Budget usage percentage (spend / available budget) for the given budget policy.
+     * @type {number}
+     * @memberof BudgetUsagePortfolio
+     */
+    budgetUsagePercent?: number;
+    /**
+     * ID of requested resource
+     * @type {string}
+     * @memberof BudgetUsagePortfolio
+     */
+    portfolioId?: string;
+    /**
+     * Last evaluation time for budget usage
+     * @type {string}
+     * @memberof BudgetUsagePortfolio
+     */
+    usageUpdatedTimestamp?: string;
+    /**
+     * An index to maintain order of the portfolioIds
+     * @type {number}
+     * @memberof BudgetUsagePortfolio
+     */
+    index?: number;
+    /**
+     * Budget amount of resource requested
+     * @type {number}
+     * @memberof BudgetUsagePortfolio
+     */
+    budget?: number;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsagePortfolioBatchError
+ */
+export interface BudgetUsagePortfolioBatchError {
+    /**
+     * ID of requested resource
+     * @type {string}
+     * @memberof BudgetUsagePortfolioBatchError
+     */
+    portfolioId?: string;
+    /**
+     * An enumerated error code for machine use.
+     * @type {string}
+     * @memberof BudgetUsagePortfolioBatchError
+     */
+    code?: string;
+    /**
+     * An index to maintain order of the portfolioIds
+     * @type {number}
+     * @memberof BudgetUsagePortfolioBatchError
+     */
+    index?: number;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof BudgetUsagePortfolioBatchError
+     */
+    details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsagePortfolioRequest
+ */
+export interface BudgetUsagePortfolioRequest {
+    /**
+     * A list of portfolio IDs.
+     * @type {Array<string>}
+     * @memberof BudgetUsagePortfolioRequest
+     */
+    portfolioIds?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsagePortfolioResponse
+ */
+export interface BudgetUsagePortfolioResponse {
+    /**
+     * List of budget usage percentages that were successfully pulled
+     * @type {Array<BudgetUsagePortfolio>}
+     * @memberof BudgetUsagePortfolioResponse
+     */
+    success?: Array<BudgetUsagePortfolio>;
+    /**
+     * List of budget usage percentages that failed to pull
+     * @type {Array<BudgetUsagePortfolioBatchError>}
+     * @memberof BudgetUsagePortfolioResponse
+     */
+    error?: Array<BudgetUsagePortfolioBatchError>;
+}
+/**
  * The comparison operator.
  * @export
  * @enum {string}
@@ -242,6 +594,342 @@ export interface CreateSPBudgetRulesRequest {
      */
     budgetRulesDetails?: Array<SPBudgetRuleDetails>;
 }
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsAccessDeniedError
+ */
+export interface CreativeRecommendationsAccessDeniedError {
+    /**
+     * Access denied error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsAccessDeniedError
+     */
+    code?: CreativeRecommendationsAccessDeniedErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsAccessDeniedError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsAccessDeniedErrorCodeEnum {
+    AccessDenied = 'ACCESS_DENIED'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsBadRequestError
+ */
+export interface CreativeRecommendationsBadRequestError {
+    /**
+     * Bad request error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsBadRequestError
+     */
+    code?: CreativeRecommendationsBadRequestErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsBadRequestError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsBadRequestErrorCodeEnum {
+    BadRequest = 'BAD_REQUEST'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsInternalServerError
+ */
+export interface CreativeRecommendationsInternalServerError {
+    /**
+     * Internal error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsInternalServerError
+     */
+    code?: CreativeRecommendationsInternalServerErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsInternalServerError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsInternalServerErrorCodeEnum {
+    InternalError = 'INTERNAL_ERROR'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsNotFoundError
+ */
+export interface CreativeRecommendationsNotFoundError {
+    /**
+     * Not found error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsNotFoundError
+     */
+    code?: CreativeRecommendationsNotFoundErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsNotFoundError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsNotFoundErrorCodeEnum {
+    NotFound = 'NOT_FOUND'
+}
+
+/**
+ * Request structure of creative recommendations API.
+ * @export
+ * @interface CreativeRecommendationsRequest
+ */
+export interface CreativeRecommendationsRequest {
+    /**
+     * An array of ASINs associated with the creative. Note, do not pass an empty array, this results in an error.
+     * @type {Array<string>}
+     * @memberof CreativeRecommendationsRequest
+     */
+    asins: Array<string>;
+    /**
+     * Ad format of the creative.
+     * @type {string}
+     * @memberof CreativeRecommendationsRequest
+     */
+    adFormat: CreativeRecommendationsRequestAdFormatEnum;
+    /**
+     * Required recommendations details.
+     * @type {Array<RequiredRecommendations>}
+     * @memberof CreativeRecommendationsRequest
+     */
+    requiredRecommendations: Array<RequiredRecommendations>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsRequestAdFormatEnum {
+    SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsResponse
+ */
+export interface CreativeRecommendationsResponse {
+    /**
+     * Ordered list of Primary Headline recommendation groups.
+     * @type {Array<Array<TextRecommendation>>}
+     * @memberof CreativeRecommendationsResponse
+     */
+    primaryHeadlines?: Array<Array<TextRecommendation>>;
+    /**
+     * Ordered list of Secondary Headline recommendation groups.
+     * @type {Array<Array<TextRecommendation>>}
+     * @memberof CreativeRecommendationsResponse
+     */
+    secondaryHeadlines?: Array<Array<TextRecommendation>>;
+}
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsThrottlingError
+ */
+export interface CreativeRecommendationsThrottlingError {
+    /**
+     * Throttled error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsThrottlingError
+     */
+    code?: CreativeRecommendationsThrottlingErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsThrottlingError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsThrottlingErrorCodeEnum {
+    Throttled = 'THROTTLED'
+}
+
+/**
+ * Date component which needs to be pre moderated. Either startDate or endDate must be populated, or both can be populated.
+ * @export
+ * @interface DateComponent
+ */
+export interface DateComponent {
+    /**
+     * Type of the date component.
+     * @type {string}
+     * @memberof DateComponent
+     */
+    componentType: DateComponentComponentTypeEnum;
+    /**
+     * End date of the component in yyyy-MM-dd HH:mm:ss format
+     * @type {string}
+     * @memberof DateComponent
+     */
+    endDate?: string;
+    /**
+     * Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.
+     * @type {string}
+     * @memberof DateComponent
+     */
+    id: string;
+    /**
+     * Start date of the component in yyyy-MM-dd HH:mm:ss format
+     * @type {string}
+     * @memberof DateComponent
+     */
+    startDate?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DateComponentComponentTypeEnum {
+    CampaignDate = 'CAMPAIGN_DATE'
+}
+
+/**
+ * Pre-moderation result for a date component
+ * @export
+ * @interface DateComponentResponse
+ */
+export interface DateComponentResponse {
+    /**
+     * The pre-moderation status of the component.
+     * @type {string}
+     * @memberof DateComponentResponse
+     */
+    preModerationStatus?: DateComponentResponsePreModerationStatusEnum;
+    /**
+     * Type of the date component.
+     * @type {string}
+     * @memberof DateComponentResponse
+     */
+    componentType?: DateComponentResponseComponentTypeEnum;
+    /**
+     * End date of the component.
+     * @type {string}
+     * @memberof DateComponentResponse
+     */
+    endDate?: string;
+    /**
+     * A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.
+     * @type {Array<DatePolicyViolation>}
+     * @memberof DateComponentResponse
+     */
+    policyViolations?: Array<DatePolicyViolation>;
+    /**
+     * Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.
+     * @type {string}
+     * @memberof DateComponentResponse
+     */
+    id?: string;
+    /**
+     * Start date of the component.
+     * @type {string}
+     * @memberof DateComponentResponse
+     */
+    startDate?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DateComponentResponsePreModerationStatusEnum {
+    Rejected = 'REJECTED',
+    Approved = 'APPROVED',
+    Failed = 'FAILED',
+    RetryableFailure = 'RETRYABLE_FAILURE'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DateComponentResponseComponentTypeEnum {
+    CampaignDates = 'CAMPAIGN_DATES'
+}
+
+/**
+ * 
+ * @export
+ * @interface DatePolicyViolation
+ */
+export interface DatePolicyViolation {
+    /**
+     * A human-readable description of the policy.
+     * @type {string}
+     * @memberof DatePolicyViolation
+     */
+    policyDescription?: string;
+    /**
+     * A policy violation code.
+     * @type {string}
+     * @memberof DatePolicyViolation
+     */
+    name?: string;
+    /**
+     * Type of policy violation.
+     * @type {string}
+     * @memberof DatePolicyViolation
+     */
+    type?: DatePolicyViolationTypeEnum;
+    /**
+     * Address of the policy documentation. Follow the link to learn more about the specified policy.
+     * @type {string}
+     * @memberof DatePolicyViolation
+     */
+    policyLinkUrl?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DatePolicyViolationTypeEnum {
+    Warning = 'WARNING',
+    Rejected = 'REJECTED'
+}
+
 /**
  * Object representing date range type rule duration.
  * @export
@@ -405,6 +1093,574 @@ export interface GetSPBudgetRulesForAdvertiserResponse {
     nextToken?: string;
 }
 /**
+ * Request structure of headline suggestion API.
+ * @export
+ * @interface HeadlineSuggestionRequest
+ */
+export interface HeadlineSuggestionRequest {
+    /**
+     * An array of ASINs associated with the creative. Note do not pass an empty array, this results in an error. 
+     * @type {Array<string>}
+     * @memberof HeadlineSuggestionRequest
+     */
+    asins?: Array<string>;
+    /**
+     * Maximum number of suggestions that API should return. Response will [0, maxNumSuggestions] suggestions (suggestions are not guaranteed).
+     * @type {number}
+     * @memberof HeadlineSuggestionRequest
+     */
+    maxNumSuggestions?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof HeadlineSuggestionRequest
+     */
+    adFormat?: HeadlineSuggestionRequestAdFormatEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum HeadlineSuggestionRequestAdFormatEnum {
+    Brands = 'SPONSORED_BRANDS',
+    BrandsSpotlight = 'SPONSORED_BRANDS_SPOTLIGHT'
+}
+
+/**
+ * Response structure of headline suggestion API.
+ * @export
+ * @interface HeadlineSuggestionResponse
+ */
+export interface HeadlineSuggestionResponse {
+    /**
+     * An identifier for request made which is generated by server.
+     * @type {string}
+     * @memberof HeadlineSuggestionResponse
+     */
+    requestId?: string;
+    /**
+     * Suggestions are sorted, i.e., more suitable headline has lesser array index value
+     * @type {Array<SuggestedHeadline>}
+     * @memberof HeadlineSuggestionResponse
+     */
+    suggestions?: Array<SuggestedHeadline>;
+}
+/**
+ * The unique identifiers type based on the adProgram of the ad.
+ * @export
+ * @enum {string}
+ */
+
+export enum IdType {
+    AdId = 'AD_ID'
+}
+
+/**
+ * Image component which needs to be pre moderated. A publicly accessible imageUrl must be sent.
+ * @export
+ * @interface ImageComponent
+ */
+export interface ImageComponent {
+    /**
+     * Type of the image component.
+     * @type {string}
+     * @memberof ImageComponent
+     */
+    componentType: ImageComponentComponentTypeEnum;
+    /**
+     * Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.
+     * @type {string}
+     * @memberof ImageComponent
+     */
+    id: string;
+    /**
+     * Url of the image to be pre moderated. The url must be publicly accessible.
+     * @type {string}
+     * @memberof ImageComponent
+     */
+    url: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ImageComponentComponentTypeEnum {
+    BrandLogo = 'BRAND_LOGO',
+    CustomImage = 'CUSTOM_IMAGE',
+    OtherImage = 'OTHER_IMAGE'
+}
+
+/**
+ * Pre moderation result for a image component
+ * @export
+ * @interface ImageComponentResponse
+ */
+export interface ImageComponentResponse {
+    /**
+     * The pre moderation status of the component.
+     * @type {string}
+     * @memberof ImageComponentResponse
+     */
+    preModerationStatus?: ImageComponentResponsePreModerationStatusEnum;
+    /**
+     * Type of the image component.
+     * @type {string}
+     * @memberof ImageComponentResponse
+     */
+    componentType?: ImageComponentResponseComponentTypeEnum;
+    /**
+     * A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.
+     * @type {Array<ImagePolicyViolation>}
+     * @memberof ImageComponentResponse
+     */
+    policyViolations?: Array<ImagePolicyViolation>;
+    /**
+     * Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.
+     * @type {string}
+     * @memberof ImageComponentResponse
+     */
+    id?: string;
+    /**
+     * Publicly accessible url of the image that got pre moderated.
+     * @type {string}
+     * @memberof ImageComponentResponse
+     */
+    url?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ImageComponentResponsePreModerationStatusEnum {
+    Rejected = 'REJECTED',
+    Approved = 'APPROVED',
+    Failed = 'FAILED',
+    RetryableFailure = 'RETRYABLE_FAILURE'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ImageComponentResponseComponentTypeEnum {
+    BrandLogo = 'BRAND_LOGO',
+    CustomImage = 'CUSTOM_IMAGE',
+    OtherImage = 'OTHER_IMAGE'
+}
+
+/**
+ * 
+ * @export
+ * @interface ImageCrop
+ */
+export interface ImageCrop {
+    /**
+     * Policy violated region\'s top left Y-axis pixel value.
+     * @type {number}
+     * @memberof ImageCrop
+     */
+    topLeftY?: number;
+    /**
+     * Policy violated region\'s top left X-axis pixel value.
+     * @type {number}
+     * @memberof ImageCrop
+     */
+    topLeftX?: number;
+    /**
+     * Policy violated region\'s width in pixel.
+     * @type {number}
+     * @memberof ImageCrop
+     */
+    width?: number;
+    /**
+     * Policy violated region\'s height in pixel.
+     * @type {number}
+     * @memberof ImageCrop
+     */
+    height?: number;
+}
+/**
+ * Structure of a image evidence
+ * @export
+ * @interface ImageEvidence
+ */
+export interface ImageEvidence {
+    /**
+     * The top left Y-coordinate of the content that violates the specfied policy within the image.
+     * @type {number}
+     * @memberof ImageEvidence
+     */
+    topLeftY?: number;
+    /**
+     * The top left X-coordinate of the content that violates the specfied policy within the image.
+     * @type {number}
+     * @memberof ImageEvidence
+     */
+    topLeftX?: number;
+    /**
+     * The width of the content that violates the specfied policy within the image.
+     * @type {number}
+     * @memberof ImageEvidence
+     */
+    width?: number;
+    /**
+     * The height of the content that violates the specfied policy within the image.
+     * @type {number}
+     * @memberof ImageEvidence
+     */
+    height?: number;
+}
+/**
+ * Structure of policy violation for a image component
+ * @export
+ * @interface ImagePolicyViolation
+ */
+export interface ImagePolicyViolation {
+    /**
+     * A human-readable description of the policy.
+     * @type {string}
+     * @memberof ImagePolicyViolation
+     */
+    policyDescription?: string;
+    /**
+     * List of evidences for the policy violations detected on the image component.
+     * @type {Array<ImageEvidence>}
+     * @memberof ImagePolicyViolation
+     */
+    imageEvidences?: Array<ImageEvidence>;
+    /**
+     * A policy violation code.
+     * @type {string}
+     * @memberof ImagePolicyViolation
+     */
+    name?: string;
+    /**
+     * Type of policy violation.
+     * @type {string}
+     * @memberof ImagePolicyViolation
+     */
+    type?: ImagePolicyViolationTypeEnum;
+    /**
+     * Address of the policy documentation. Follow the link to learn more about the specified policy.
+     * @type {string}
+     * @memberof ImagePolicyViolation
+     */
+    policyLinkUrl?: string;
+    /**
+     * Policy violation on an image can be detected on the ocr detected text on the image as well. This list of text evidences will have the policy violations detected on the text on top of the image.
+     * @type {Array<TextEvidence>}
+     * @memberof ImagePolicyViolation
+     */
+    textEvidences?: Array<TextEvidence>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ImagePolicyViolationTypeEnum {
+    Warning = 'WARNING',
+    Rejected = 'REJECTED'
+}
+
+/**
+ * The Error Response Object.
+ * @export
+ * @interface ModerationError
+ */
+export interface ModerationError {
+    /**
+     * The HTTP status code of the response.
+     * @type {string}
+     * @memberof ModerationError
+     */
+    code?: string;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof ModerationError
+     */
+    details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ModerationResult
+ */
+export interface ModerationResult {
+    /**
+     * The version identifier that helps to keep track of multiple versions of a submitted ad. In case of Sponsored Brands this is the creative version id.
+     * @type {string}
+     * @memberof ModerationResult
+     */
+    versionId?: string;
+    /**
+     * 
+     * @type {IdType}
+     * @memberof ModerationResult
+     */
+    idType?: IdType;
+    /**
+     * 
+     * @type {ModerationStatus}
+     * @memberof ModerationResult
+     */
+    moderationStatus?: ModerationStatus;
+    /**
+     * A list of policy violations for a campaign that has failed moderation. Note that this field is present in the response only when moderationStatus is set to REJECTED.
+     * @type {Array<PolicyViolation>}
+     * @memberof ModerationResult
+     */
+    policyViolations?: Array<PolicyViolation>;
+    /**
+     * Expected date and time by which moderation will be complete. The format is ISO 8601 in UTC time zone. Note that this field is present in the response only when moderationStatus is set to IN_PROGRESS.
+     * @type {string}
+     * @memberof ModerationResult
+     */
+    etaForModeration?: string;
+    /**
+     * The unique identifier of the ad which can be obtained after the ad is created using create APIs.
+     * @type {string}
+     * @memberof ModerationResult
+     */
+    id?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ModerationResultsAccessDeniedError
+ */
+export interface ModerationResultsAccessDeniedError {
+    /**
+     * Access denied error code.
+     * @type {string}
+     * @memberof ModerationResultsAccessDeniedError
+     */
+    code?: ModerationResultsAccessDeniedErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof ModerationResultsAccessDeniedError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ModerationResultsAccessDeniedErrorCodeEnum {
+    AccessDenied = 'ACCESS_DENIED'
+}
+
+/**
+ * The program type of the ad.
+ * @export
+ * @enum {string}
+ */
+
+export enum ModerationResultsAdProgramType {
+    ProductCollection = 'SB_PRODUCT_COLLECTION',
+    StoreSpotlight = 'SB_STORE_SPOTLIGHT',
+    Video = 'SB_VIDEO'
+}
+
+/**
+ * 
+ * @export
+ * @interface ModerationResultsBadRequestError
+ */
+export interface ModerationResultsBadRequestError {
+    /**
+     * Bad request error code.
+     * @type {string}
+     * @memberof ModerationResultsBadRequestError
+     */
+    code?: ModerationResultsBadRequestErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof ModerationResultsBadRequestError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ModerationResultsBadRequestErrorCodeEnum {
+    BadRequest = 'BAD_REQUEST'
+}
+
+/**
+ * 
+ * @export
+ * @interface ModerationResultsInternalServerError
+ */
+export interface ModerationResultsInternalServerError {
+    /**
+     * Internal error code.
+     * @type {string}
+     * @memberof ModerationResultsInternalServerError
+     */
+    code?: ModerationResultsInternalServerErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof ModerationResultsInternalServerError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ModerationResultsInternalServerErrorCodeEnum {
+    InternalError = 'INTERNAL_ERROR'
+}
+
+/**
+ * 
+ * @export
+ * @interface ModerationResultsNotFoundError
+ */
+export interface ModerationResultsNotFoundError {
+    /**
+     * Not found error code.
+     * @type {string}
+     * @memberof ModerationResultsNotFoundError
+     */
+    code?: ModerationResultsNotFoundErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof ModerationResultsNotFoundError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ModerationResultsNotFoundErrorCodeEnum {
+    NotFound = 'NOT_FOUND'
+}
+
+/**
+ * 
+ * @export
+ * @interface ModerationResultsRequest
+ */
+export interface ModerationResultsRequest {
+    /**
+     * Filter by specific version id of the ad. The API will return the ad\'s all versions moderation status if this field is empty.
+     * @type {Array<string>}
+     * @memberof ModerationResultsRequest
+     */
+    versionIdFilter?: Array<string>;
+    /**
+     * 
+     * @type {IdType}
+     * @memberof ModerationResultsRequest
+     */
+    idType: IdType;
+    /**
+     * 
+     * @type {ModerationResultsAdProgramType}
+     * @memberof ModerationResultsRequest
+     */
+    adProgramType: ModerationResultsAdProgramType;
+    /**
+     * Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the `NextToken` field is empty, there are no further results.
+     * @type {string}
+     * @memberof ModerationResultsRequest
+     */
+    nextToken?: string;
+    /**
+     * Sets a limit on the number of results returned by an operation.
+     * @type {number}
+     * @memberof ModerationResultsRequest
+     */
+    maxResults: number;
+    /**
+     * Filter by specific moderation status.
+     * @type {Array<ModerationStatus>}
+     * @memberof ModerationResultsRequest
+     */
+    moderationStatusFilter?: Array<ModerationStatus>;
+    /**
+     * The unique identifier of the ad which can be obtained after the ad is created using create APIs.
+     * @type {string}
+     * @memberof ModerationResultsRequest
+     */
+    id: string;
+}
+/**
+ * 
+ * @export
+ * @interface ModerationResultsResponse
+ */
+export interface ModerationResultsResponse {
+    /**
+     * 
+     * @type {Array<ModerationResult>}
+     * @memberof ModerationResultsResponse
+     */
+    moderationResults?: Array<ModerationResult>;
+    /**
+     * Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the `NextToken` field is empty, there are no further results.
+     * @type {string}
+     * @memberof ModerationResultsResponse
+     */
+    nextToken?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ModerationResultsThrottlingError
+ */
+export interface ModerationResultsThrottlingError {
+    /**
+     * Throttled error code.
+     * @type {string}
+     * @memberof ModerationResultsThrottlingError
+     */
+    code?: ModerationResultsThrottlingErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof ModerationResultsThrottlingError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ModerationResultsThrottlingErrorCodeEnum {
+    Throttled = 'THROTTLED'
+}
+
+/**
+ * The moderation status of the ad.
+ * @export
+ * @enum {string}
+ */
+
+export enum ModerationStatus {
+    Approved = 'APPROVED',
+    InProgress = 'IN_PROGRESS',
+    Rejected = 'REJECTED',
+    Failed = 'FAILED'
+}
+
+/**
  * 
  * @export
  * @interface PerformanceMeasureCondition
@@ -430,6 +1686,31 @@ export interface PerformanceMeasureCondition {
     threshold: number;
 }
 /**
+ * 
+ * @export
+ * @interface PerformanceMeasureConditionForSB
+ */
+export interface PerformanceMeasureConditionForSB {
+    /**
+     * 
+     * @type {PerformanceMetricForSB}
+     * @memberof PerformanceMeasureConditionForSB
+     */
+    metricName: PerformanceMetricForSB;
+    /**
+     * 
+     * @type {ComparisonOperator}
+     * @memberof PerformanceMeasureConditionForSB
+     */
+    comparisonOperator: ComparisonOperator;
+    /**
+     * The performance threshold value.
+     * @type {number}
+     * @memberof PerformanceMeasureConditionForSB
+     */
+    threshold: number;
+}
+/**
  * The advertising performance metric.
  * @export
  * @enum {string}
@@ -439,6 +1720,16 @@ export enum PerformanceMetric {
     Acos = 'ACOS',
     Ctr = 'CTR',
     Cvr = 'CVR',
+    Roas = 'ROAS'
+}
+
+/**
+ * The advertising performance metric.
+ * @export
+ * @enum {string}
+ */
+
+export enum PerformanceMetricForSB {
     Roas = 'ROAS'
 }
 
@@ -460,6 +1751,264 @@ export interface PerformanceMetricValue {
      * @memberof PerformanceMetricValue
      */
     value?: number;
+}
+/**
+ * 
+ * @export
+ * @interface PolicyViolation
+ */
+export interface PolicyViolation {
+    /**
+     * A human-readable description of the policy.
+     * @type {string}
+     * @memberof PolicyViolation
+     */
+    policyDescription?: string;
+    /**
+     * 
+     * @type {Array<ViolatingTextContent>}
+     * @memberof PolicyViolation
+     */
+    violatingTextContents?: Array<ViolatingTextContent>;
+    /**
+     * 
+     * @type {Array<ViolatingImageContent>}
+     * @memberof PolicyViolation
+     */
+    violatingImageContents?: Array<ViolatingImageContent>;
+    /**
+     * Address of the policy documentation. Follow the link to learn more about the specified policy.
+     * @type {string}
+     * @memberof PolicyViolation
+     */
+    policyLinkUrl?: string;
+    /**
+     * 
+     * @type {Array<ViolatingVideoContent>}
+     * @memberof PolicyViolation
+     */
+    violatingVideoContents?: Array<ViolatingVideoContent>;
+    /**
+     * 
+     * @type {Array<ViolatingAsinContent>}
+     * @memberof PolicyViolation
+     */
+    violatingAsinContents?: Array<ViolatingAsinContent>;
+}
+/**
+ * Components details that needs to be sent for pre moderation.
+ * @export
+ * @interface PreModerationRequest
+ */
+export interface PreModerationRequest {
+    /**
+     * Id of the brand/advertiser.
+     * @type {string}
+     * @memberof PreModerationRequest
+     */
+    recordId?: string;
+    /**
+     * Asin components which needs to be pre moderated.
+     * @type {Array<AsinComponent>}
+     * @memberof PreModerationRequest
+     */
+    asinComponents?: Array<AsinComponent>;
+    /**
+     * Type of Ad program to which this pre moderation components belong to.
+     * @type {string}
+     * @memberof PreModerationRequest
+     */
+    adProgram: PreModerationRequestAdProgramEnum;
+    /**
+     * Specifying locale will translate the premoderation message into that locale\'s associated language.     | Locale | Language (ISO 639) | Country (ISO 3166) |   |-----|-----|-------|   | ar-AE | Arabic (ar) | United Arab Emirates (AE) |   | zh-CN | Chinese (zh) | China (CN) |   | nl-NL | Dutch (nl) | Netherlands (NL) |   | en-AU | English (en) | Australia (AU) |   | en-CA | English (en) | Canada (CA) |   | en-IN | English (en) | India (IN) |   | en-GB | English (en) | United Kingdom (GB) |   | en-US | English (en) | United States (US) |   | fr-CA | French (fr) | Canada (CA) |   | fr-FR | French (fr) | France (FR) |   | de-DE | German (de) | Germany (DE) |   | it-IT | Italian (it) | Italy (IT) |   | ja-JP | Japanese (ja) | Japan (JP) |   | ko-KR | Korean (ko) | South Korea (KR) |   | pt-BR | Portuguese (pt) | Brazil (BR) |   | es-ES | Spanish (es) | Spain (ES) |   | es-US | Spanish (es) | United States (US) |   | es-MX | Spanish (es) | Mexico (MX) |   | tr-TR | Turkish (tr) | Turkey (TR) |   
+     * @type {string}
+     * @memberof PreModerationRequest
+     */
+    locale: PreModerationRequestLocaleEnum;
+    /**
+     * Image components which needs to be pre moderated.
+     * @type {Array<ImageComponent>}
+     * @memberof PreModerationRequest
+     */
+    imageComponents?: Array<ImageComponent>;
+    /**
+     * Date components which needs to be pre moderated.
+     * @type {Array<DateComponent>}
+     * @memberof PreModerationRequest
+     */
+    dateComponents?: Array<DateComponent>;
+    /**
+     * Text components which needs to be pre moderated.
+     * @type {Array<TextComponent>}
+     * @memberof PreModerationRequest
+     */
+    textComponents?: Array<TextComponent>;
+    /**
+     * Video components which needs to be pre moderated.
+     * @type {Array<VideoComponent>}
+     * @memberof PreModerationRequest
+     */
+    videoComponents?: Array<VideoComponent>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum PreModerationRequestAdProgramEnum {
+    SponsoredBrands = 'SPONSORED_BRANDS',
+    SponsoredBrandsSpotlight = 'SPONSORED_BRANDS_SPOTLIGHT',
+    SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO',
+    Stores = 'STORES',
+    SponsoredDisplay = 'SPONSORED_DISPLAY',
+    Dsp = 'DSP',
+    DspRec = 'DSP_REC'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum PreModerationRequestLocaleEnum {
+    ArAe = 'ar-AE',
+    ZhCn = 'zh-CN',
+    NlNl = 'nl-NL',
+    EnAu = 'en-AU',
+    EnCa = 'en-CA',
+    EnIn = 'en-IN',
+    EnGb = 'en-GB',
+    EnUs = 'en-US',
+    FrCa = 'fr-CA',
+    FrFr = 'fr-FR',
+    DeDe = 'de-DE',
+    ItIt = 'it-IT',
+    JaJp = 'ja-JP',
+    KoKr = 'ko-KR',
+    PtBr = 'pt-BR',
+    EsEs = 'es-ES',
+    EsUs = 'es-US',
+    EsMx = 'es-MX',
+    TrTr = 'tr-TR'
+}
+
+/**
+ * Information regarding the policy violations if present for the components, sent for pre moderation.
+ * @export
+ * @interface PreModerationResponse
+ */
+export interface PreModerationResponse {
+    /**
+     * Id of the brand/advertiser.
+     * @type {string}
+     * @memberof PreModerationResponse
+     */
+    recordId?: string;
+    /**
+     * Pre moderation result of the asin components. It will have information regarding the policy violations present if any.
+     * @type {Array<AsinComponentResponse>}
+     * @memberof PreModerationResponse
+     */
+    asinComponents?: Array<AsinComponentResponse>;
+    /**
+     * Unique Id for the moderation Request.
+     * @type {string}
+     * @memberof PreModerationResponse
+     */
+    preModerationId?: string;
+    /**
+     * Type of Ad program to which the pre moderation components belong to.
+     * @type {string}
+     * @memberof PreModerationResponse
+     */
+    adProgram?: PreModerationResponseAdProgramEnum;
+    /**
+     * Locale value that was passed in request.
+     * @type {string}
+     * @memberof PreModerationResponse
+     */
+    locale?: PreModerationResponseLocaleEnum;
+    /**
+     * Pre moderation result of the image components. It will have information regarding the policy violations present if any.
+     * @type {Array<ImageComponentResponse>}
+     * @memberof PreModerationResponse
+     */
+    imageComponents?: Array<ImageComponentResponse>;
+    /**
+     * Pre moderation result of the date components. It will have information regarding the policy violations present if any.
+     * @type {Array<DateComponentResponse>}
+     * @memberof PreModerationResponse
+     */
+    dateComponents?: Array<DateComponentResponse>;
+    /**
+     * Pre moderation result of the text components. It will have information regarding the policy violations present if any.
+     * @type {Array<TextComponentResponse>}
+     * @memberof PreModerationResponse
+     */
+    textComponents?: Array<TextComponentResponse>;
+    /**
+     * Pre moderation result of the video components. It will have information regarding the policy violations present if any.
+     * @type {Array<VideoComponentResponse>}
+     * @memberof PreModerationResponse
+     */
+    videoComponents?: Array<VideoComponentResponse>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum PreModerationResponseAdProgramEnum {
+    SponsoredBrands = 'SPONSORED_BRANDS',
+    SponsoredBrandsSpotlight = 'SPONSORED_BRANDS_SPOTLIGHT',
+    SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO',
+    Stores = 'STORES',
+    SponsoredDisplay = 'SPONSORED_DISPLAY',
+    Dsp = 'DSP',
+    DspRec = 'DSP_REC'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum PreModerationResponseLocaleEnum {
+    ArAe = 'ar-AE',
+    ZhCn = 'zh-CN',
+    NlNl = 'nl-NL',
+    EnAu = 'en-AU',
+    EnCa = 'en-CA',
+    EnIn = 'en-IN',
+    EnGb = 'en-GB',
+    EnUs = 'en-US',
+    FrCa = 'fr-CA',
+    FrFr = 'fr-FR',
+    DeDe = 'de-DE',
+    ItIt = 'it-IT',
+    JaJp = 'ja-JP',
+    KoKr = 'ko-KR',
+    PtBr = 'pt-BR',
+    EsEs = 'es-ES',
+    EsUs = 'es-US',
+    EsMx = 'es-MX',
+    TrTr = 'tr-TR'
+}
+
+/**
+ * Recommended Headline in response object. Recommended headline will be locale specific, i.e. for an asin input in ES, Recommended headline will be in ES.
+ * @export
+ * @interface RecommendedHeadline
+ */
+export interface RecommendedHeadline {
+    /**
+     * Unique Id of Recommended headline.
+     * @type {string}
+     * @memberof RecommendedHeadline
+     */
+    headlineId?: string;
+    /**
+     * String that contains Recommended headline.
+     * @type {string}
+     * @memberof RecommendedHeadline
+     */
+    headline?: string;
 }
 /**
  * 
@@ -489,6 +2038,35 @@ export interface Recurrence {
 export enum RecurrenceType {
     Daily = 'DAILY',
     Weekly = 'WEEKLY'
+}
+
+/**
+ * 
+ * @export
+ * @interface RequiredRecommendations
+ */
+export interface RequiredRecommendations {
+    /**
+     * Maximum number of recommendations groups that API should return for given type. (recommendations are not guaranteed).
+     * @type {number}
+     * @memberof RequiredRecommendations
+     */
+    maxRecommendationGroups?: number;
+    /**
+     * Type of recommendations.
+     * @type {string}
+     * @memberof RequiredRecommendations
+     */
+    type: RequiredRecommendationsTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RequiredRecommendationsTypeEnum {
+    PrimaryHeadline = 'PRIMARY_HEADLINE',
+    SecondaryHeadline = 'SECONDARY_HEADLINE'
 }
 
 /**
@@ -610,10 +2188,10 @@ export interface SBBudgetRuleDetails {
     name?: string;
     /**
      * 
-     * @type {PerformanceMeasureCondition}
+     * @type {PerformanceMeasureConditionForSB}
      * @memberof SBBudgetRuleDetails
      */
-    performanceMeasureCondition?: PerformanceMeasureCondition;
+    performanceMeasureCondition?: PerformanceMeasureConditionForSB;
 }
 /**
  * 
@@ -741,13 +2319,14 @@ export interface SBRuleDuration {
     dateRangeTypeRuleDuration: DateRangeTypeRuleDuration;
 }
 /**
- * The type of budget rule. SCHEDULE: A budget rule based on a start and end date.
+ * The type of budget rule. SCHEDULE: A budget rule based on a start and end date. PERFORMANCE: A budget rule based on advertising performance criteria.
  * @export
  * @enum {string}
  */
 
 export enum SBRuleType {
-    Schedule = 'SCHEDULE'
+    Schedule = 'SCHEDULE',
+    Performance = 'PERFORMANCE'
 }
 
 /**
@@ -1350,6 +2929,199 @@ export interface SDGoalProduct {
      */
     asin: string;
 }
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationAccessDeniedException
+ */
+export interface SDHeadlineRecommendationAccessDeniedException {
+    /**
+     * AccessDeniedErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationAccessDeniedException
+     */
+    code?: SDHeadlineRecommendationAccessDeniedExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationAccessDeniedException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationAccessDeniedExceptionCodeEnum {
+    AccessDenied = 'ACCESS_DENIED'
+}
+
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationIdentifierNotfoundException
+ */
+export interface SDHeadlineRecommendationIdentifierNotfoundException {
+    /**
+     * IdentiferNotFoundErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationIdentifierNotfoundException
+     */
+    code?: SDHeadlineRecommendationIdentifierNotfoundExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationIdentifierNotfoundException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationIdentifierNotfoundExceptionCodeEnum {
+    IdentifierNotFound = 'IDENTIFIER_NOT_FOUND'
+}
+
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationInternalServerException
+ */
+export interface SDHeadlineRecommendationInternalServerException {
+    /**
+     * InternalErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationInternalServerException
+     */
+    code?: SDHeadlineRecommendationInternalServerExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationInternalServerException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationInternalServerExceptionCodeEnum {
+    InternalError = 'INTERNAL_ERROR'
+}
+
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationMarsThrottlingException
+ */
+export interface SDHeadlineRecommendationMarsThrottlingException {
+    /**
+     * ThrottledErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationMarsThrottlingException
+     */
+    code?: SDHeadlineRecommendationMarsThrottlingExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationMarsThrottlingException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationMarsThrottlingExceptionCodeEnum {
+    Throttled = 'THROTTLED'
+}
+
+/**
+ * Request structure of SD headline recommendation API.
+ * @export
+ * @interface SDHeadlineRecommendationRequest
+ */
+export interface SDHeadlineRecommendationRequest {
+    /**
+     * An array of ASINs associated with the creative.
+     * @type {Array<string>}
+     * @memberof SDHeadlineRecommendationRequest
+     */
+    asins?: Array<string>;
+    /**
+     * Maximum number of recommendations that API should return. Response will [0, maxNumRecommendations] recommendations (recommendations are not guaranteed as there can be instances where the ML model can not generate policy compliant headlines for the given set of asins).
+     * @type {number}
+     * @memberof SDHeadlineRecommendationRequest
+     */
+    maxNumRecommendations?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SDHeadlineRecommendationRequest
+     */
+    adFormat?: SDHeadlineRecommendationRequestAdFormatEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationRequestAdFormatEnum {
+    SponsoredDisplay = 'SPONSORED_DISPLAY'
+}
+
+/**
+ * Response structure of SD headline recommendation API.
+ * @export
+ * @interface SDHeadlineRecommendationResponse
+ */
+export interface SDHeadlineRecommendationResponse {
+    /**
+     * An identifier for request made which is generated by server.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationResponse
+     */
+    requestId?: string;
+    /**
+     * Recommendations are sorted, i.e., more suitable headline has lesser array index value.
+     * @type {Array<RecommendedHeadline>}
+     * @memberof SDHeadlineRecommendationResponse
+     */
+    recommendations?: Array<RecommendedHeadline>;
+}
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationSchemaValidationException
+ */
+export interface SDHeadlineRecommendationSchemaValidationException {
+    /**
+     * InvalidArgumentErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationSchemaValidationException
+     */
+    code?: SDHeadlineRecommendationSchemaValidationExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationSchemaValidationException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationSchemaValidationExceptionCodeEnum {
+    InvalidArgument = 'INVALID_ARGUMENT'
+}
+
 /**
  * 
  * @export
@@ -2357,6 +4129,248 @@ export enum State {
 }
 
 /**
+ * Suggested Headline in response object.
+ * @export
+ * @interface SuggestedHeadline
+ */
+export interface SuggestedHeadline {
+    /**
+     * Unique Id of suggested headline.
+     * @type {string}
+     * @memberof SuggestedHeadline
+     */
+    headlineId?: string;
+    /**
+     * String that contains suggested headline.
+     * @type {string}
+     * @memberof SuggestedHeadline
+     */
+    headline?: string;
+}
+/**
+ * Text component which needs to be pre moderated
+ * @export
+ * @interface TextComponent
+ */
+export interface TextComponent {
+    /**
+     * Type of text component.
+     * @type {string}
+     * @memberof TextComponent
+     */
+    componentType: TextComponentComponentTypeEnum;
+    /**
+     * Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.
+     * @type {string}
+     * @memberof TextComponent
+     */
+    id: string;
+    /**
+     * Text which needs to be moderated.
+     * @type {string}
+     * @memberof TextComponent
+     */
+    text: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum TextComponentComponentTypeEnum {
+    Headline = 'HEADLINE',
+    BrandName = 'BRAND_NAME',
+    OtherText = 'OTHER_TEXT'
+}
+
+/**
+ * Pre moderation result for a text component
+ * @export
+ * @interface TextComponentResponse
+ */
+export interface TextComponentResponse {
+    /**
+     * The pre moderation status of the component.
+     * @type {string}
+     * @memberof TextComponentResponse
+     */
+    preModerationStatus?: TextComponentResponsePreModerationStatusEnum;
+    /**
+     * Type of the text component.
+     * @type {string}
+     * @memberof TextComponentResponse
+     */
+    componentType?: TextComponentResponseComponentTypeEnum;
+    /**
+     * A list of corrected text without any policy violation. You could consider replacing the component with one of the corrected texts
+     * @type {Array<string>}
+     * @memberof TextComponentResponse
+     */
+    corrections?: Array<string>;
+    /**
+     * A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.
+     * @type {Array<TextPolicyViolation>}
+     * @memberof TextComponentResponse
+     */
+    policyViolations?: Array<TextPolicyViolation>;
+    /**
+     * Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.
+     * @type {string}
+     * @memberof TextComponentResponse
+     */
+    id?: string;
+    /**
+     * Text which got pre moderated.
+     * @type {string}
+     * @memberof TextComponentResponse
+     */
+    text?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum TextComponentResponsePreModerationStatusEnum {
+    Rejected = 'REJECTED',
+    Approved = 'APPROVED',
+    Failed = 'FAILED',
+    RetryableFailure = 'RETRYABLE_FAILURE'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum TextComponentResponseComponentTypeEnum {
+    Headline = 'HEADLINE',
+    BrandName = 'BRAND_NAME',
+    OtherText = 'OTHER_TEXT'
+}
+
+/**
+ * Structure of a text evidence
+ * @export
+ * @interface TextEvidence
+ */
+export interface TextEvidence {
+    /**
+     * The specific text determined to violate the specified policy in reviewedText.
+     * @type {string}
+     * @memberof TextEvidence
+     */
+    violatingText?: string;
+    /**
+     * 
+     * @type {TextEvidencePosition}
+     * @memberof TextEvidence
+     */
+    position?: TextEvidencePosition;
+}
+/**
+ * Position in the textComponent where the policy violation is detected.
+ * @export
+ * @interface TextEvidencePosition
+ */
+export interface TextEvidencePosition {
+    /**
+     * Zero-based index into the text in textComponent where the text specified in violatingText starts.
+     * @type {number}
+     * @memberof TextEvidencePosition
+     */
+    start?: number;
+    /**
+     * Zero-based index into the text in textComponent where the text specified in violatingText ends.
+     * @type {number}
+     * @memberof TextEvidencePosition
+     */
+    end?: number;
+}
+/**
+ * Structure of policy violation for a text component
+ * @export
+ * @interface TextPolicyViolation
+ */
+export interface TextPolicyViolation {
+    /**
+     * A human-readable description of the policy.
+     * @type {string}
+     * @memberof TextPolicyViolation
+     */
+    policyDescription?: string;
+    /**
+     * A policy violation code.
+     * @type {string}
+     * @memberof TextPolicyViolation
+     */
+    name?: string;
+    /**
+     * Type of policy violation.
+     * @type {string}
+     * @memberof TextPolicyViolation
+     */
+    type?: TextPolicyViolationTypeEnum;
+    /**
+     * Address of the policy documentation. Follow the link to learn more about the specified policy.
+     * @type {string}
+     * @memberof TextPolicyViolation
+     */
+    policyLinkUrl?: string;
+    /**
+     * List of text evidences
+     * @type {Array<TextEvidence>}
+     * @memberof TextPolicyViolation
+     */
+    textEvidences?: Array<TextEvidence>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum TextPolicyViolationTypeEnum {
+    Warning = 'WARNING',
+    Rejected = 'REJECTED'
+}
+
+/**
+ * 
+ * @export
+ * @interface TextPosition
+ */
+export interface TextPosition {
+    /**
+     * Zero-based index into the text in reviewedText where the text specified in violatingText starts.
+     * @type {number}
+     * @memberof TextPosition
+     */
+    start?: number;
+    /**
+     * Zero-based index into the text in reviewedText where the text specified in violatingText ends.
+     * @type {number}
+     * @memberof TextPosition
+     */
+    end?: number;
+}
+/**
+ * 
+ * @export
+ * @interface TextRecommendation
+ */
+export interface TextRecommendation {
+    /**
+     * Unique ID for generated recommendation.
+     * @type {string}
+     * @memberof TextRecommendation
+     */
+    id?: string;
+    /**
+     * Recommendation value.
+     * @type {string}
+     * @memberof TextRecommendation
+     */
+    value?: string;
+}
+/**
  * 
  * @export
  * @interface UpdateBudgetRulesResponse
@@ -2407,6 +4421,335 @@ export interface UpdateSPBudgetRulesRequest {
      * @memberof UpdateSPBudgetRulesRequest
      */
     budgetRulesDetails?: Array<SPBudgetRule>;
+}
+/**
+ * Video component which needs to be pre moderated. A publicly accessible videoUrl must be sent.
+ * @export
+ * @interface VideoComponent
+ */
+export interface VideoComponent {
+    /**
+     * Type of the video component.
+     * @type {string}
+     * @memberof VideoComponent
+     */
+    componentType: VideoComponentComponentTypeEnum;
+    /**
+     * Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.
+     * @type {string}
+     * @memberof VideoComponent
+     */
+    id: string;
+    /**
+     * Url of the video to be pre moderated. The url must be publicly accessible.
+     * @type {string}
+     * @memberof VideoComponent
+     */
+    url: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum VideoComponentComponentTypeEnum {
+    SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO',
+    OtherVideo = 'OTHER_VIDEO'
+}
+
+/**
+ * Pre moderation result for a video component
+ * @export
+ * @interface VideoComponentResponse
+ */
+export interface VideoComponentResponse {
+    /**
+     * The pre moderation status of the component.
+     * @type {string}
+     * @memberof VideoComponentResponse
+     */
+    preModerationStatus?: VideoComponentResponsePreModerationStatusEnum;
+    /**
+     * Type of the video component.
+     * @type {string}
+     * @memberof VideoComponentResponse
+     */
+    componentType?: VideoComponentResponseComponentTypeEnum;
+    /**
+     * A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.
+     * @type {Array<VideoPolicyViolation>}
+     * @memberof VideoComponentResponse
+     */
+    policyViolations?: Array<VideoPolicyViolation>;
+    /**
+     * Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.
+     * @type {string}
+     * @memberof VideoComponentResponse
+     */
+    id?: string;
+    /**
+     * Publicly accessible url of the video that got pre moderated.
+     * @type {string}
+     * @memberof VideoComponentResponse
+     */
+    url?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum VideoComponentResponsePreModerationStatusEnum {
+    Rejected = 'REJECTED',
+    Approved = 'APPROVED',
+    Failed = 'FAILED',
+    RetryableFailure = 'RETRYABLE_FAILURE'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum VideoComponentResponseComponentTypeEnum {
+    SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO',
+    OtherVideo = 'OTHER_VIDEO'
+}
+
+/**
+ * Structure of a video evidence
+ * @export
+ * @interface VideoEvidence
+ */
+export interface VideoEvidence {
+    /**
+     * The start position (in seconds) of the content that violates the specified policy within the video.
+     * @type {number}
+     * @memberof VideoEvidence
+     */
+    start?: number;
+    /**
+     * The end position (in seconds) of the content that violates the specified policy within the video.
+     * @type {number}
+     * @memberof VideoEvidence
+     */
+    end?: number;
+}
+/**
+ * Structure of policy violation for a video component
+ * @export
+ * @interface VideoPolicyViolation
+ */
+export interface VideoPolicyViolation {
+    /**
+     * A human-readable description of the policy.
+     * @type {string}
+     * @memberof VideoPolicyViolation
+     */
+    policyDescription?: string;
+    /**
+     * List of evidences for the policy violations detected on the video component.
+     * @type {Array<VideoEvidence>}
+     * @memberof VideoPolicyViolation
+     */
+    videoEvidences?: Array<VideoEvidence>;
+    /**
+     * A policy violation code.
+     * @type {string}
+     * @memberof VideoPolicyViolation
+     */
+    name?: string;
+    /**
+     * Type of policy violation.
+     * @type {string}
+     * @memberof VideoPolicyViolation
+     */
+    type?: VideoPolicyViolationTypeEnum;
+    /**
+     * Address of the policy documentation. Follow the link to learn more about the specified policy.
+     * @type {string}
+     * @memberof VideoPolicyViolation
+     */
+    policyLinkUrl?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum VideoPolicyViolationTypeEnum {
+    Warning = 'WARNING',
+    Rejected = 'REJECTED'
+}
+
+/**
+ * 
+ * @export
+ * @interface VideoPosition
+ */
+export interface VideoPosition {
+    /**
+     * Start time of the video having the policy violation.
+     * @type {number}
+     * @memberof VideoPosition
+     */
+    start?: number;
+    /**
+     * End time of the video having the policy violation.
+     * @type {number}
+     * @memberof VideoPosition
+     */
+    end?: number;
+}
+/**
+ * 
+ * @export
+ * @interface ViolatingAsinContent
+ */
+export interface ViolatingAsinContent {
+    /**
+     * 
+     * @type {Array<ViolatingAsinEvidence>}
+     * @memberof ViolatingAsinContent
+     */
+    violatingAsinEvidences?: Array<ViolatingAsinEvidence>;
+    /**
+     * Moderation component which marked the policy violation.
+     * @type {string}
+     * @memberof ViolatingAsinContent
+     */
+    moderatedComponent?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ViolatingAsinEvidence
+ */
+export interface ViolatingAsinEvidence {
+    /**
+     * ASIN which has the ad policy violation.
+     * @type {string}
+     * @memberof ViolatingAsinEvidence
+     */
+    asin?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ViolatingImageContent
+ */
+export interface ViolatingImageContent {
+    /**
+     * 
+     * @type {Array<ViolatingImageEvidence>}
+     * @memberof ViolatingImageContent
+     */
+    violatingImageEvidences?: Array<ViolatingImageEvidence>;
+    /**
+     * Moderation component which marked the policy violation.
+     * @type {string}
+     * @memberof ViolatingImageContent
+     */
+    moderatedComponent?: string;
+    /**
+     * URL of the image which has the ad policy violation.
+     * @type {string}
+     * @memberof ViolatingImageContent
+     */
+    reviewedImageUrl?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ViolatingImageEvidence
+ */
+export interface ViolatingImageEvidence {
+    /**
+     * 
+     * @type {ImageCrop}
+     * @memberof ViolatingImageEvidence
+     */
+    violatingImageCrop?: ImageCrop;
+}
+/**
+ * Information about the specific text that violates the specified policy in the campaign.
+ * @export
+ * @interface ViolatingTextContent
+ */
+export interface ViolatingTextContent {
+    /**
+     * The actual text on which the moderation was done.
+     * @type {string}
+     * @memberof ViolatingTextContent
+     */
+    reviewedText?: string;
+    /**
+     * 
+     * @type {Array<ViolatingTextEvidence>}
+     * @memberof ViolatingTextContent
+     */
+    violatingTextEvidences?: Array<ViolatingTextEvidence>;
+    /**
+     * Moderation component which marked the policy violation.
+     * @type {string}
+     * @memberof ViolatingTextContent
+     */
+    moderatedComponent?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ViolatingTextEvidence
+ */
+export interface ViolatingTextEvidence {
+    /**
+     * 
+     * @type {TextPosition}
+     * @memberof ViolatingTextEvidence
+     */
+    violatingTextPosition?: TextPosition;
+    /**
+     * The specific text determined to violate the specified policy in reviewedText.
+     * @type {string}
+     * @memberof ViolatingTextEvidence
+     */
+    violatingText?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ViolatingVideoContent
+ */
+export interface ViolatingVideoContent {
+    /**
+     * 
+     * @type {Array<ViolatingVideoEvidence>}
+     * @memberof ViolatingVideoContent
+     */
+    violatingVideoEvidences?: Array<ViolatingVideoEvidence>;
+    /**
+     * Moderation component which marked the policy violation.
+     * @type {string}
+     * @memberof ViolatingVideoContent
+     */
+    moderatedComponent?: string;
+    /**
+     * URL of the video which has the ad policy violation.
+     * @type {string}
+     * @memberof ViolatingVideoContent
+     */
+    reviewedVideoUrl?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ViolatingVideoEvidence
+ */
+export interface ViolatingVideoEvidence {
+    /**
+     * 
+     * @type {VideoPosition}
+     * @memberof ViolatingVideoEvidence
+     */
+    violatingVideoPosition?: VideoPosition;
 }
 
 /**
@@ -4412,6 +6755,306 @@ export class BudgetRulesApi extends BaseAPI {
      */
     public updateBudgetRulesForSDCampaigns(requestParameters: BudgetRulesApiUpdateBudgetRulesForSDCampaignsRequest, options?: any) {
         return BudgetRulesApiFp(this.configuration).updateBudgetRulesForSDCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.updateSDBudgetRulesRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * BudgetUsageApi - axios parameter creator
+ * @export
+ */
+export const BudgetUsageApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Budget usage API for SD campaigns
+         * @param {any} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {any} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {BudgetUsageCampaignRequest} [budgetUsageCampaignRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sdCampaignsBudgetUsage: async (amazonAdvertisingAPIClientId: any, amazonAdvertisingAPIScope: any, budgetUsageCampaignRequest?: BudgetUsageCampaignRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('sdCampaignsBudgetUsage', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('sdCampaignsBudgetUsage', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sd/campaigns/budget/usage`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(JSON.stringify(amazonAdvertisingAPIClientId));
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(JSON.stringify(amazonAdvertisingAPIScope));
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sdcampaignbudgetusage.v1+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(budgetUsageCampaignRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BudgetUsageApi - functional programming interface
+ * @export
+ */
+export const BudgetUsageApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BudgetUsageApiAxiosParamCreator(configuration)
+    return {
+        /**
+         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Budget usage API for SD campaigns
+         * @param {any} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {any} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {BudgetUsageCampaignRequest} [budgetUsageCampaignRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sdCampaignsBudgetUsage(amazonAdvertisingAPIClientId: any, amazonAdvertisingAPIScope: any, budgetUsageCampaignRequest?: BudgetUsageCampaignRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BudgetUsageCampaignResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sdCampaignsBudgetUsage(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetUsageCampaignRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BudgetUsageApi - factory interface
+ * @export
+ */
+export const BudgetUsageApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BudgetUsageApiFp(configuration)
+    return {
+        /**
+         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Budget usage API for SD campaigns
+         * @param {any} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {any} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {BudgetUsageCampaignRequest} [budgetUsageCampaignRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sdCampaignsBudgetUsage(amazonAdvertisingAPIClientId: any, amazonAdvertisingAPIScope: any, budgetUsageCampaignRequest?: BudgetUsageCampaignRequest, options?: any): AxiosPromise<BudgetUsageCampaignResponse> {
+            return localVarFp.sdCampaignsBudgetUsage(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetUsageCampaignRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for sdCampaignsBudgetUsage operation in BudgetUsageApi.
+ * @export
+ * @interface BudgetUsageApiSdCampaignsBudgetUsageRequest
+ */
+export interface BudgetUsageApiSdCampaignsBudgetUsageRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {any}
+     * @memberof BudgetUsageApiSdCampaignsBudgetUsage
+     */
+    readonly amazonAdvertisingAPIClientId: any
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {any}
+     * @memberof BudgetUsageApiSdCampaignsBudgetUsage
+     */
+    readonly amazonAdvertisingAPIScope: any
+
+    /**
+     * 
+     * @type {BudgetUsageCampaignRequest}
+     * @memberof BudgetUsageApiSdCampaignsBudgetUsage
+     */
+    readonly budgetUsageCampaignRequest?: BudgetUsageCampaignRequest
+}
+
+/**
+ * BudgetUsageApi - object-oriented interface
+ * @export
+ * @class BudgetUsageApi
+ * @extends {BaseAPI}
+ */
+export class BudgetUsageApi extends BaseAPI {
+    /**
+     *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+     * @summary Budget usage API for SD campaigns
+     * @param {BudgetUsageApiSdCampaignsBudgetUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BudgetUsageApi
+     */
+    public sdCampaignsBudgetUsage(requestParameters: BudgetUsageApiSdCampaignsBudgetUsageRequest, options?: any) {
+        return BudgetUsageApiFp(this.configuration).sdCampaignsBudgetUsage(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.budgetUsageCampaignRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * RecommendationsApi - axios parameter creator
+ * @export
+ */
+export const RecommendationsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * You can use this Sponsored Display API to retrieve creative headline recommendations from an array of ASINs.  **Requires one of these permissions**: [\"advertiser_campaign_view\"]
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {SDHeadlineRecommendationRequest} sDHeadlineRecommendationRequest Request body for SD headline recommendations API.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHeadlineRecommendationsForSD: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDHeadlineRecommendationRequest: SDHeadlineRecommendationRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getHeadlineRecommendationsForSD', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getHeadlineRecommendationsForSD', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'sDHeadlineRecommendationRequest' is not null or undefined
+            assertParamExists('getHeadlineRecommendationsForSD', 'sDHeadlineRecommendationRequest', sDHeadlineRecommendationRequest)
+            const localVarPath = `/sd/recommendations/creative/headline`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sdheadlinerecommendationrequest.v4.0+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(sDHeadlineRecommendationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * RecommendationsApi - functional programming interface
+ * @export
+ */
+export const RecommendationsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = RecommendationsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * You can use this Sponsored Display API to retrieve creative headline recommendations from an array of ASINs.  **Requires one of these permissions**: [\"advertiser_campaign_view\"]
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {SDHeadlineRecommendationRequest} sDHeadlineRecommendationRequest Request body for SD headline recommendations API.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getHeadlineRecommendationsForSD(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDHeadlineRecommendationRequest: SDHeadlineRecommendationRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SDHeadlineRecommendationResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getHeadlineRecommendationsForSD(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sDHeadlineRecommendationRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * RecommendationsApi - factory interface
+ * @export
+ */
+export const RecommendationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = RecommendationsApiFp(configuration)
+    return {
+        /**
+         * You can use this Sponsored Display API to retrieve creative headline recommendations from an array of ASINs.  **Requires one of these permissions**: [\"advertiser_campaign_view\"]
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {SDHeadlineRecommendationRequest} sDHeadlineRecommendationRequest Request body for SD headline recommendations API.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getHeadlineRecommendationsForSD(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDHeadlineRecommendationRequest: SDHeadlineRecommendationRequest, options?: any): AxiosPromise<SDHeadlineRecommendationResponse> {
+            return localVarFp.getHeadlineRecommendationsForSD(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sDHeadlineRecommendationRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getHeadlineRecommendationsForSD operation in RecommendationsApi.
+ * @export
+ * @interface RecommendationsApiGetHeadlineRecommendationsForSDRequest
+ */
+export interface RecommendationsApiGetHeadlineRecommendationsForSDRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof RecommendationsApiGetHeadlineRecommendationsForSD
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof RecommendationsApiGetHeadlineRecommendationsForSD
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Request body for SD headline recommendations API.
+     * @type {SDHeadlineRecommendationRequest}
+     * @memberof RecommendationsApiGetHeadlineRecommendationsForSD
+     */
+    readonly sDHeadlineRecommendationRequest: SDHeadlineRecommendationRequest
+}
+
+/**
+ * RecommendationsApi - object-oriented interface
+ * @export
+ * @class RecommendationsApi
+ * @extends {BaseAPI}
+ */
+export class RecommendationsApi extends BaseAPI {
+    /**
+     * You can use this Sponsored Display API to retrieve creative headline recommendations from an array of ASINs.  **Requires one of these permissions**: [\"advertiser_campaign_view\"]
+     * @param {RecommendationsApiGetHeadlineRecommendationsForSDRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof RecommendationsApi
+     */
+    public getHeadlineRecommendationsForSD(requestParameters: RecommendationsApiGetHeadlineRecommendationsForSDRequest, options?: any) {
+        return RecommendationsApiFp(this.configuration).getHeadlineRecommendationsForSD(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.sDHeadlineRecommendationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
