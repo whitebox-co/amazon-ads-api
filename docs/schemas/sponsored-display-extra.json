@@ -2010,6 +2010,96 @@
         ]
       }
     },
+    "/sd/recommendations/creative/headline": {
+      "post": {
+        "requestBody": {
+          "description": "Request body for SD headline recommendations API.",
+          "content": {
+            "application/vnd.sdheadlinerecommendationrequest.v4.0+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SDHeadlineRecommendationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "description": "You can use this Sponsored Display API to retrieve creative headline recommendations from an array of ASINs.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_view\"]",
+        "operationId": "getHeadlineRecommendationsForSD",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/vnd.sdheadlinerecommendationresponse.v4.0+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDHeadlineRecommendationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "SchemaValidationException 400 response.",
+            "content": {
+              "application/vnd.sdheadlinerecommendationschemavalidationexception.v4.0+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDHeadlineRecommendationSchemaValidationException"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "AccessDeniedException 403 response.",
+            "content": {
+              "application/vnd.sdheadlinerecommendationaccessdeniedexception.v4.0+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDHeadlineRecommendationAccessDeniedException"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "IdentifierNotFoundException 404 response.",
+            "content": {
+              "application/vnd.sdheadlinerecommendationidentifiernotfoundexception.v4.0+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDHeadlineRecommendationIdentifierNotfoundException"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "ThrottlingException 429 response.",
+            "content": {
+              "application/vnd.sdheadlinerecommendationthrottlingexception.v4.0+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDHeadlineRecommendationMarsThrottlingException"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerException 500 response.",
+            "content": {
+              "application/vnd.sdheadlinerecommendationinternalserverexception.v4.0+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDHeadlineRecommendationInternalServerException"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          }
+        ],
+        "tags": [
+          "Recommendations"
+        ]
+      }
+    },
     "/sd/{recordType}/snapshot": {
       "post": {
         "requestBody": {
@@ -2224,6 +2314,113 @@
           "Snapshot APIs"
         ]
       }
+    },
+    "/sd/campaigns/budget/usage": {
+      "post": {
+        "summary": "Budget usage API for SD campaigns",
+        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "tags": [
+          "Budget Usage"
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.sdcampaignbudgetusage.v1+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BudgetUsageCampaignRequest"
+              }
+            }
+          }
+        },
+        "operationId": "sdCampaignsBudgetUsage",
+        "responses": {
+          "207": {
+            "description": "Multi-status. An object containing a list of budget usage response objects reflecting the same order as the input.",
+            "content": {
+              "application/vnd.sdcampaignbudgetusage.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageCampaignResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server BudgetUsageError - Something went wrong on the server. Retry later and report an BudgetUsageError if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {},
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {},
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -2238,6 +2435,22 @@
           }
         }
       },
+      "SDHeadlineRecommendationSchemaValidationException": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "InvalidArgumentErrorCode.",
+            "type": "string",
+            "enum": [
+              "INVALID_ARGUMENT"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
       "CreateBudgetRulesResponse": {
         "type": "object",
         "properties": {
@@ -2249,45 +2462,22 @@
           }
         }
       },
-      "GetSPBudgetRulesForAdvertiserResponse": {
+      "HeadlineSuggestionResponse": {
+        "description": "Response structure of headline suggestion API.",
         "type": "object",
         "properties": {
-          "budgetRulesForAdvertiserResponse": {
-            "minItems": 0,
-            "maxItems": 30,
-            "description": "A list of rules created by the advertiser.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SPBudgetRule"
-            }
-          },
-          "nextToken": {
-            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.",
+          "requestId": {
+            "description": "An identifier for request made which is generated by server.",
             "type": "string"
-          }
-        }
-      },
-      "SDBrandSafetyGetResponse": {
-        "description": "Response for Brand Safety Deny List GET requests",
-        "properties": {
-          "pagination": {
-            "$ref": "#/components/schemas/SDBrandSafetyGetResponsePagination"
           },
-          "domains": {
-            "description": "List of Brand Safety Deny List Domains",
+          "suggestions": {
+            "description": "Suggestions are sorted, i.e., more suitable headline has lesser array index value",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SDBrandSafetyDenyListProcessedDomain"
+              "$ref": "#/components/schemas/SuggestedHeadline"
             }
           }
         }
-      },
-      "SBRuleType": {
-        "description": "The type of budget rule. SCHEDULE: A budget rule based on a start and end date.",
-        "type": "string",
-        "enum": [
-          "SCHEDULE"
-        ]
       },
       "SDBudgetRule": {
         "type": "object",
@@ -2329,15 +2519,11 @@
           "PAUSED"
         ]
       },
-      "SDBrandSafetyRequestResultsResponse": {
+      "ViolatingImageEvidence": {
         "type": "object",
         "properties": {
-          "results": {
-            "description": "A list of results for the given requestId",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SDBrandSafetyRequestResult"
-            }
+          "violatingImageCrop": {
+            "$ref": "#/components/schemas/ImageCrop"
           }
         }
       },
@@ -2403,63 +2589,32 @@
           }
         }
       },
-      "SDCategoryRecommendation": {
-        "description": "A recommended category to target ads on",
+      "SDHeadlineRecommendationRequest": {
+        "description": "Request structure of SD headline recommendation API.",
+        "type": "object",
         "properties": {
-          "path": {
+          "asins": {
             "minItems": 1,
-            "description": "The path of the category within the category catalogue",
+            "maxItems": 100,
+            "description": "An array of ASINs associated with the creative.",
             "type": "array",
             "items": {
               "type": "string"
             }
           },
-          "name": {
-            "description": "The category name",
-            "type": "string"
-          },
-          "rank": {
-            "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation",
-            "type": "integer",
+          "maxNumRecommendations": {
+            "description": "Maximum number of recommendations that API should return. Response will [0, maxNumRecommendations] recommendations (recommendations are not guaranteed as there can be instances where the ML model can not generate policy compliant headlines for the given set of asins).",
+            "maximum": 10,
+            "type": "number",
             "minimum": 1
           },
-          "targetableAsinCountRange": {
-            "description": "The range of ASINs available within the category catalogue",
-            "type": "object",
-            "properties": {
-              "rangeUpper": {
-                "type": "integer"
-              },
-              "rangeLower": {
-                "type": "integer"
-              }
-            }
-          },
-          "category": {
-            "$ref": "#/components/schemas/SDCategory"
+          "adFormat": {
+            "type": "string",
+            "enum": [
+              "SPONSORED_DISPLAY"
+            ]
           }
         }
-      },
-      "CreateSDBudgetRulesRequest": {
-        "type": "object",
-        "properties": {
-          "budgetRulesDetails": {
-            "maxItems": 25,
-            "description": "A list of budget rule details.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SDBudgetRuleDetails"
-            }
-          }
-        }
-      },
-      "RecurrenceType": {
-        "description": "depicts the type of recurrence",
-        "type": "string",
-        "enum": [
-          "DAILY",
-          "WEEKLY"
-        ]
       },
       "SPRuleBasedBudget": {
         "type": "object",
@@ -2509,26 +2664,104 @@
           }
         }
       },
-      "BudgetRuleResponse": {
+      "AsinPolicyViolation": {
         "type": "object",
         "properties": {
-          "code": {
-            "description": "An enumerated success or error code for machine use.",
+          "policyDescription": {
+            "description": "A human-readable description of the policy.",
+            "type": "string",
+            "example": "example: Advertising alcohol is not allowed"
+          },
+          "name": {
+            "description": "A policy violation code.",
             "type": "string"
           },
-          "details": {
-            "description": "A human-readable description of the error, if unsuccessful",
-            "type": "string"
+          "type": {
+            "description": "Type of policy violation.",
+            "type": "string",
+            "enum": [
+              "WARNING",
+              "REJECTED"
+            ]
           },
-          "ruleId": {
-            "description": "The rule identifier.",
-            "type": "string"
+          "policyLinkUrl": {
+            "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+            "type": "string",
+            "example": "https://advertising.amazon.com/resources/ad-policy/en/creative-acceptance#alcohol"
+          }
+        }
+      },
+      "ImageComponentResponse": {
+        "description": "Pre moderation result for a image component",
+        "type": "object",
+        "properties": {
+          "preModerationStatus": {
+            "description": "The pre moderation status of the component.",
+            "type": "string",
+            "enum": [
+              "REJECTED",
+              "APPROVED",
+              "FAILED",
+              "RETRYABLE_FAILURE"
+            ]
           },
-          "associatedCampaignIds": {
+          "componentType": {
+            "description": "Type of the image component.",
+            "type": "string",
+            "enum": [
+              "BRAND_LOGO",
+              "CUSTOM_IMAGE",
+              "OTHER_IMAGE"
+            ]
+          },
+          "policyViolations": {
+            "description": "A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.",
             "type": "array",
             "items": {
-              "description": "The campaign identifier for which rule based budget may get updated",
-              "type": "string"
+              "$ref": "#/components/schemas/ImagePolicyViolation"
+            }
+          },
+          "id": {
+            "description": "Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.",
+            "type": "string"
+          },
+          "url": {
+            "description": "Publicly accessible url of the image that got pre moderated.",
+            "type": "string"
+          }
+        }
+      },
+      "TextPolicyViolation": {
+        "description": "Structure of policy violation for a text component",
+        "type": "object",
+        "properties": {
+          "policyDescription": {
+            "description": "A human-readable description of the policy.",
+            "type": "string"
+          },
+          "name": {
+            "description": "A policy violation code.",
+            "type": "string",
+            "example": "GRAMMATICAL_ERROR"
+          },
+          "type": {
+            "description": "Type of policy violation.",
+            "type": "string",
+            "enum": [
+              "WARNING",
+              "REJECTED"
+            ]
+          },
+          "policyLinkUrl": {
+            "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+            "type": "string",
+            "example": "https://advertising.amazon.com/resources/ad-policy/en/creative-acceptance#alcohol"
+          },
+          "textEvidences": {
+            "description": "List of text evidences",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TextEvidence"
             }
           }
         }
@@ -2546,82 +2779,50 @@
           }
         }
       },
-      "SDTargetingPredicateNestedV31": {
-        "description": "A behavioral event and list of targeting predicates that represents an Audience to target (only applicable to Audience targeting - T00030).\n\n* For auto ASIN-grain targeting, the value array must contain only 'exactProduct' and 'lookback' TargetingPredicateBase components.\n* For manual ASIN-grain targeting, the value array must contain only 'similarProduct' and 'lookback' TargetingPredicateBase components.\n* For manual Category-grain targeting, the value array must contain a 'lookback' and 'asinCategorySameAs' TargetingPredicateBase component, which can be further refined with optional brand, price, star-rating and shipping eligibility refinements.\n* For Amazon Audiences targeting, the TargetingPredicateNested type should be set to 'audience' and the value array should include one TargetingPredicateBase component with type set to 'audienceSameAs'.\n* **Future** For manual Category-grain targeting, adding a 'negative' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.",
+      "TextComponentResponse": {
+        "description": "Pre moderation result for a text component",
         "type": "object",
-        "required": [
-          "type",
-          "value"
-        ],
         "properties": {
-          "type": {
+          "preModerationStatus": {
+            "description": "The pre moderation status of the component.",
             "type": "string",
             "enum": [
-              "views",
-              "audience",
-              "purchases"
+              "REJECTED",
+              "APPROVED",
+              "FAILED",
+              "RETRYABLE_FAILURE"
             ]
           },
-          "value": {
+          "componentType": {
+            "description": "Type of the text component.",
+            "type": "string",
+            "enum": [
+              "HEADLINE",
+              "BRAND_NAME",
+              "OTHER_TEXT"
+            ]
+          },
+          "corrections": {
+            "description": "A list of corrected text without any policy violation. You could consider replacing the component with one of the corrected texts",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SDTargetingPredicateBaseV31"
+              "type": "string"
             }
-          }
-        }
-      },
-      "PerformanceMeasureCondition": {
-        "type": "object",
-        "required": [
-          "comparisonOperator",
-          "metricName",
-          "threshold"
-        ],
-        "properties": {
-          "metricName": {
-            "$ref": "#/components/schemas/PerformanceMetric"
           },
-          "comparisonOperator": {
-            "$ref": "#/components/schemas/ComparisonOperator"
+          "policyViolations": {
+            "description": "A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TextPolicyViolation"
+            }
           },
-          "threshold": {
-            "format": "double",
-            "description": "The performance threshold value.",
-            "type": "number"
-          }
-        }
-      },
-      "GetSDBudgetRuleResponse": {
-        "type": "object",
-        "properties": {
-          "budgetRule": {
-            "$ref": "#/components/schemas/SDBudgetRule"
-          }
-        }
-      },
-      "SPBudgetRuleDetails": {
-        "description": "Object representing details of a budget rule for SP campaign",
-        "type": "object",
-        "properties": {
-          "duration": {
-            "$ref": "#/components/schemas/RuleDuration"
+          "id": {
+            "description": "Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.",
+            "type": "string"
           },
-          "recurrence": {
-            "$ref": "#/components/schemas/Recurrence"
-          },
-          "ruleType": {
-            "$ref": "#/components/schemas/SPRuleType"
-          },
-          "budgetIncreaseBy": {
-            "$ref": "#/components/schemas/budgetIncreaseBy"
-          },
-          "name": {
-            "description": "The budget rule name. Required to be unique within a campaign.",
-            "type": "string",
-            "maxLength": 355
-          },
-          "performanceMeasureCondition": {
-            "$ref": "#/components/schemas/PerformanceMeasureCondition"
+          "text": {
+            "description": "Text which got pre moderated.",
+            "type": "string"
           }
         }
       },
@@ -2732,6 +2933,25 @@
           }
         }
       },
+      "BudgetUsagePortfolioResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "description": "List of budget usage percentages that were successfully pulled",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetUsagePortfolio"
+            }
+          },
+          "error": {
+            "description": "List of budget usage percentages that failed to pull",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetUsagePortfolioBatchError"
+            }
+          }
+        }
+      },
       "SDBrandSafetyDenyListDomainType": {
         "description": "The domain type.",
         "type": "string",
@@ -2745,6 +2965,1748 @@
         "properties": {
           "budgetRule": {
             "$ref": "#/components/schemas/SPBudgetRule"
+          }
+        }
+      },
+      "RuleDuration": {
+        "type": "object",
+        "properties": {
+          "eventTypeRuleDuration": {
+            "$ref": "#/components/schemas/EventTypeRuleDuration"
+          },
+          "dateRangeTypeRuleDuration": {
+            "$ref": "#/components/schemas/DateRangeTypeRuleDuration"
+          }
+        }
+      },
+      "VersionId": {
+        "description": "The version identifier that helps to keep track of multiple versions of a submitted ad. In case of Sponsored Brands this is the creative version id.",
+        "type": "string"
+      },
+      "ModerationError": {
+        "description": "The Error Response Object.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "The HTTP status code of the response.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "TextEvidence": {
+        "description": "Structure of a text evidence",
+        "type": "object",
+        "properties": {
+          "violatingText": {
+            "description": "The specific text determined to violate the specified policy in reviewedText.",
+            "type": "string",
+            "example": "alcohol"
+          },
+          "position": {
+            "description": "Position in the textComponent where the policy violation is detected.",
+            "type": "object",
+            "properties": {
+              "start": {
+                "description": "Zero-based index into the text in textComponent where the text specified in violatingText starts.",
+                "type": "integer"
+              },
+              "end": {
+                "description": "Zero-based index into the text in textComponent where the text specified in violatingText ends.",
+                "type": "integer"
+              }
+            }
+          }
+        }
+      },
+      "SecondaryHeadlineRecommendationGroups": {
+        "minItems": 0,
+        "maxItems": 5,
+        "description": "Ordered list of Secondary Headline recommendation groups.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/TextRecommendations"
+        }
+      },
+      "SDBrandSafetyRequestResult": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The website or app identifier.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          },
+          "domainId": {
+            "format": "int64",
+            "description": "The identifier of the Brand Safety Deny List Domain.",
+            "type": "integer"
+          },
+          "status": {
+            "$ref": "#/components/schemas/SDBrandSafetyDenyListDomainUpdateResultStatus"
+          }
+        }
+      },
+      "ViolatingTextEvidence": {
+        "type": "object",
+        "properties": {
+          "violatingTextPosition": {
+            "$ref": "#/components/schemas/TextPosition"
+          },
+          "violatingText": {
+            "description": "The specific text determined to violate the specified policy in reviewedText.",
+            "type": "string"
+          }
+        }
+      },
+      "BudgetUsagePortfolio": {
+        "type": "object",
+        "properties": {
+          "budgetUsagePercent": {
+            "description": "Budget usage percentage (spend / available budget) for the given budget policy.",
+            "type": "number"
+          },
+          "portfolioId": {
+            "description": "ID of requested resource",
+            "type": "string"
+          },
+          "usageUpdatedTimestamp": {
+            "format": "date-time",
+            "description": "Last evaluation time for budget usage",
+            "type": "string"
+          },
+          "index": {
+            "description": "An index to maintain order of the portfolioIds",
+            "type": "number"
+          },
+          "budget": {
+            "description": "Budget amount of resource requested",
+            "type": "number"
+          }
+        }
+      },
+      "SDBrandSafetyListRequestStatusResponse": {
+        "description": "List of all requests' status.",
+        "type": "object",
+        "properties": {
+          "requestStatusList": {
+            "description": "List of all requests' status.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDBrandSafetyRequestStatus"
+            }
+          }
+        }
+      },
+      "SDProductRecommendation": {
+        "description": "A recommended product to target ads on",
+        "properties": {
+          "rank": {
+            "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation",
+            "type": "integer",
+            "minimum": 1
+          },
+          "asin": {
+            "$ref": "#/components/schemas/SDASIN"
+          }
+        }
+      },
+      "SDTargetingExpressionV31": {
+        "minItems": 1,
+        "description": "The targeting expression to match against.\n\n------- Applicable to Product targeting (T00020) -------\n* A 'TargetingExpression' in a Product targeting Campaign can only contain 'TargetingPredicate' components.\n* Expressions must specify either a category predicate or an ASIN predicate, but never both.\n* Only one category may be specified per targeting expression.\n* Only one brand may be specified per targeting expression.\n* Only one asin may be specified per targeting expression.\n* To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.\n\n------- Applicable to Audience targeting (T00030) -------\n* A 'TargetingExpression' in an Audience Campaign can only contain 'TargetingPredicateNested' components.\n* Expressions must specify either auto ASIN-grain (exact products), manual ASIN-grain (similar products), or manual category-grain targeting.\n* **Future** To exclude parts of an audience, specify a TargetingPredicateNested component that contains a negative TargetingPredicate type.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/SDTargetExpressionV31"
+        }
+      },
+      "SBListAssociatedBudgetRulesResponse": {
+        "type": "object",
+        "properties": {
+          "associatedRules": {
+            "description": "A list of associated budget rules.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SBCampaignBudgetRule"
+            }
+          }
+        }
+      },
+      "DatePolicyViolation": {
+        "type": "object",
+        "properties": {
+          "policyDescription": {
+            "description": "A human-readable description of the policy.",
+            "type": "string",
+            "example": "example: Advertising alcohol is not allowed"
+          },
+          "name": {
+            "description": "A policy violation code.",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type of policy violation.",
+            "type": "string",
+            "enum": [
+              "WARNING",
+              "REJECTED"
+            ]
+          },
+          "policyLinkUrl": {
+            "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+            "type": "string",
+            "example": "https://advertising.amazon.com/resources/ad-policy/en/creative-acceptance#alcohol"
+          }
+        }
+      },
+      "PrimaryHeadlineRecommendationGroups": {
+        "minItems": 0,
+        "maxItems": 5,
+        "description": "Ordered list of Primary Headline recommendation groups.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/TextRecommendations"
+        }
+      },
+      "ViolatingTextContent": {
+        "description": "Information about the specific text that violates the specified policy in the campaign.",
+        "type": "object",
+        "properties": {
+          "reviewedText": {
+            "description": "The actual text on which the moderation was done.",
+            "type": "string"
+          },
+          "violatingTextEvidences": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingTextEvidence"
+            }
+          },
+          "moderatedComponent": {
+            "description": "Moderation component which marked the policy violation.",
+            "type": "string"
+          }
+        }
+      },
+      "SDAudience": {
+        "format": "int64",
+        "description": "The audience identifier",
+        "type": "integer",
+        "example": "417464173123977660"
+      },
+      "SDBrandSafetyUpdateResponse": {
+        "description": "Response for Brand Safety POST and DELETE requests",
+        "properties": {
+          "requestId": {
+            "description": "The identifier of the request",
+            "type": "string"
+          }
+        }
+      },
+      "SuggestedHeadline": {
+        "description": "Suggested Headline in response object.",
+        "type": "object",
+        "properties": {
+          "headlineId": {
+            "description": "Unique Id of suggested headline.",
+            "type": "string",
+            "example": "e991e32c-0136-427a-843b-ff04162f2f91"
+          },
+          "headline": {
+            "description": "String that contains suggested headline.",
+            "type": "string",
+            "example": "This is a suggested headline."
+          }
+        }
+      },
+      "SDGetAssociatedCampaignsResponse": {
+        "type": "object",
+        "properties": {
+          "associatedCampaigns": {
+            "minItems": 0,
+            "maxItems": 30,
+            "description": "A list of campaigns that are associated to this budget rule.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssociatedCampaign"
+            }
+          },
+          "nextToken": {
+            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.",
+            "type": "string"
+          }
+        }
+      },
+      "SDHeadlineRecommendationMarsThrottlingException": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "ThrottledErrorCode.",
+            "type": "string",
+            "enum": [
+              "THROTTLED"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
+      "SDRuleType": {
+        "description": "The type of budget rule. SCHEDULE: A budget rule based on a start and end date. PERFORMANCE: A budget rule based on advertising performance criteria.",
+        "type": "string",
+        "enum": [
+          "SCHEDULE",
+          "PERFORMANCE"
+        ]
+      },
+      "SDCostTypeV31": {
+        "description": "Determines what performance metric the bid recommendations will be optimized for.\n|Name|Supported Tactics|Description|\n|----|----------|-----------|\n|CPC|T00020 T00030|The bid recommendations will be optimized for clicks triggered by the ad.|\n|VCPM|T00020 T00030|The bid recommendations will be optimized for viewed impressions triggered by the ad.|",
+        "type": "string",
+        "enum": [
+          "cpc",
+          "vcpm"
+        ]
+      },
+      "TextComponent": {
+        "description": "Text component which needs to be pre moderated",
+        "type": "object",
+        "required": [
+          "componentType",
+          "id",
+          "text"
+        ],
+        "properties": {
+          "componentType": {
+            "description": "Type of text component.",
+            "type": "string",
+            "enum": [
+              "HEADLINE",
+              "BRAND_NAME",
+              "OTHER_TEXT"
+            ]
+          },
+          "id": {
+            "description": "Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.",
+            "type": "string"
+          },
+          "text": {
+            "description": "Text which needs to be moderated.",
+            "type": "string"
+          }
+        }
+      },
+      "AsinComponent": {
+        "description": "Asin component which needs to be pre moderated.",
+        "type": "object",
+        "required": [
+          "asin",
+          "componentType",
+          "id"
+        ],
+        "properties": {
+          "componentType": {
+            "description": "Type of the asin component.",
+            "type": "string",
+            "enum": [
+              "LANDING_ASIN",
+              "PRODUCT_ASIN"
+            ]
+          },
+          "asin": {
+            "description": "Asin id to be pre moderated.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.",
+            "type": "string"
+          }
+        }
+      },
+      "SDBrandSafetyDenyListDomain": {
+        "type": "object",
+        "required": [
+          "name",
+          "type"
+        ],
+        "properties": {
+          "name": {
+            "description": "The website or app identifier. This can be in the form of full domain (eg. 'example.com' or 'example.net'), or mobile app identifier (eg. 'com.example.app' for Android apps or '1234567890' for iOS apps)\n",
+            "type": "string",
+            "maxLength": 250
+          },
+          "type": {
+            "$ref": "#/components/schemas/SDBrandSafetyDenyListDomainType"
+          }
+        },
+        "example": {
+          "name": "example.com",
+          "type": "WEBSITE"
+        }
+      },
+      "SDErrorResponse": {
+        "properties": {
+          "code": {
+            "description": "The HTTP status code of the response",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "PreModerationRequest": {
+        "description": "Components details that needs to be sent for pre moderation.",
+        "type": "object",
+        "required": [
+          "adProgram",
+          "locale"
+        ],
+        "properties": {
+          "recordId": {
+            "description": "Id of the brand/advertiser.",
+            "type": "string"
+          },
+          "asinComponents": {
+            "maxItems": 10,
+            "description": "Asin components which needs to be pre moderated.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AsinComponent"
+            }
+          },
+          "adProgram": {
+            "description": "Type of Ad program to which this pre moderation components belong to.",
+            "type": "string",
+            "enum": [
+              "SPONSORED_BRANDS",
+              "SPONSORED_BRANDS_SPOTLIGHT",
+              "SPONSORED_BRANDS_VIDEO",
+              "STORES",
+              "SPONSORED_DISPLAY",
+              "DSP",
+              "DSP_REC"
+            ]
+          },
+          "locale": {
+            "description": "Specifying locale will translate the premoderation message into that locale's associated language. \n \n | Locale | Language (ISO 639) | Country (ISO 3166) | \n |-----|-----|-------| \n | ar-AE | Arabic (ar) | United Arab Emirates (AE) | \n | zh-CN | Chinese (zh) | China (CN) | \n | nl-NL | Dutch (nl) | Netherlands (NL) | \n | en-AU | English (en) | Australia (AU) | \n | en-CA | English (en) | Canada (CA) | \n | en-IN | English (en) | India (IN) | \n | en-GB | English (en) | United Kingdom (GB) | \n | en-US | English (en) | United States (US) | \n | fr-CA | French (fr) | Canada (CA) | \n | fr-FR | French (fr) | France (FR) | \n | de-DE | German (de) | Germany (DE) | \n | it-IT | Italian (it) | Italy (IT) | \n | ja-JP | Japanese (ja) | Japan (JP) | \n | ko-KR | Korean (ko) | South Korea (KR) | \n | pt-BR | Portuguese (pt) | Brazil (BR) | \n | es-ES | Spanish (es) | Spain (ES) | \n | es-US | Spanish (es) | United States (US) | \n | es-MX | Spanish (es) | Mexico (MX) | \n | tr-TR | Turkish (tr) | Turkey (TR) | \n ",
+            "type": "string",
+            "enum": [
+              "ar-AE",
+              "zh-CN",
+              "nl-NL",
+              "en-AU",
+              "en-CA",
+              "en-IN",
+              "en-GB",
+              "en-US",
+              "fr-CA",
+              "fr-FR",
+              "de-DE",
+              "it-IT",
+              "ja-JP",
+              "ko-KR",
+              "pt-BR",
+              "es-ES",
+              "es-US",
+              "es-MX",
+              "tr-TR"
+            ]
+          },
+          "imageComponents": {
+            "maxItems": 10,
+            "description": "Image components which needs to be pre moderated.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageComponent"
+            }
+          },
+          "dateComponents": {
+            "maxItems": 10,
+            "description": "Date components which needs to be pre moderated.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DateComponent"
+            }
+          },
+          "textComponents": {
+            "maxItems": 10,
+            "description": "Text components which needs to be pre moderated.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TextComponent"
+            }
+          },
+          "videoComponents": {
+            "maxItems": 1,
+            "description": "Video components which needs to be pre moderated.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoComponent"
+            }
+          }
+        }
+      },
+      "SDAudienceRecommendation": {
+        "description": "A recommended standard Amazon audience to target ads on",
+        "properties": {
+          "audience": {
+            "$ref": "#/components/schemas/SDAudience"
+          },
+          "estimatedAudienceReach": {
+            "description": "The range of estimated audience reach",
+            "type": "object",
+            "properties": {
+              "rangeUpper": {
+                "type": "integer"
+              },
+              "rangeLower": {
+                "type": "integer"
+              }
+            }
+          },
+          "name": {
+            "description": "The Amazon audience name",
+            "type": "string"
+          },
+          "rank": {
+            "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation",
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "SBBudgetRule": {
+        "type": "object",
+        "required": [
+          "ruleId"
+        ],
+        "properties": {
+          "ruleState": {
+            "$ref": "#/components/schemas/state"
+          },
+          "lastUpdatedDate": {
+            "format": "int64",
+            "description": "Epoch time of budget rule update. Read-only.",
+            "type": "number"
+          },
+          "createdDate": {
+            "format": "int64",
+            "description": "Epoch time of budget rule creation. Read-only.",
+            "type": "number"
+          },
+          "ruleDetails": {
+            "$ref": "#/components/schemas/SBBudgetRuleDetails"
+          },
+          "ruleId": {
+            "description": "The budget rule identifier.",
+            "type": "string"
+          },
+          "ruleStatus": {
+            "description": "The budget rule status. Read-only.",
+            "type": "string"
+          }
+        }
+      },
+      "SDCategory": {
+        "format": "int64",
+        "description": "The category identifier",
+        "type": "integer",
+        "example": "7352105011"
+      },
+      "ModerationResult": {
+        "type": "object",
+        "properties": {
+          "versionId": {
+            "$ref": "#/components/schemas/VersionId"
+          },
+          "idType": {
+            "$ref": "#/components/schemas/IdType"
+          },
+          "moderationStatus": {
+            "$ref": "#/components/schemas/ModerationStatus"
+          },
+          "policyViolations": {
+            "minItems": 0,
+            "maxItems": 200,
+            "description": "A list of policy violations for a campaign that has failed moderation. Note that this field is present in the response only when moderationStatus is set to REJECTED.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PolicyViolation"
+            }
+          },
+          "etaForModeration": {
+            "description": "Expected date and time by which moderation will be complete. The format is ISO 8601 in UTC time zone. Note that this field is present in the response only when moderationStatus is set to IN_PROGRESS.",
+            "type": "string"
+          },
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          }
+        }
+      },
+      "SDBrandSafetyRequestStatus": {
+        "type": "object",
+        "properties": {
+          "requestId": {
+            "description": "Request ID",
+            "type": "string"
+          },
+          "statusDetails": {
+            "description": "Details related to the request status",
+            "type": "string"
+          },
+          "timestamp": {
+            "description": "Request timestamp",
+            "type": "string"
+          },
+          "status": {
+            "description": "The status of the request",
+            "type": "string",
+            "enum": [
+              "IN_PROGRESS",
+              "COMPLETED",
+              "FAILURE"
+            ]
+          }
+        }
+      },
+      "UpdateSDBudgetRulesRequest": {
+        "description": "Request object for updating budget rule for SD campaign",
+        "type": "object",
+        "properties": {
+          "budgetRulesDetails": {
+            "maxItems": 25,
+            "description": "A list of budget rule details.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDBudgetRule"
+            }
+          }
+        }
+      },
+      "GetSBBudgetRulesForAdvertiserResponse": {
+        "type": "object",
+        "properties": {
+          "budgetRulesForAdvertiserResponse": {
+            "minItems": 0,
+            "maxItems": 30,
+            "description": "A list of rules created by the advertiser.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SBBudgetRule"
+            }
+          },
+          "nextToken": {
+            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.",
+            "type": "string"
+          }
+        }
+      },
+      "SDTargetingPredicateBaseV31": {
+        "description": "A predicate to match against inside the TargetingPredicateNested component (only applicable to Audience targeting - T00030).\n\n* All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Advertising browse system.\n* Brand, price, and review predicates are optional and may only be specified if category is also specified.\n* Review predicates accept numbers between 0 and 5 and are inclusive.\n* When using either of the â€˜betweenâ€™ strings to construct a targeting expression the format of the string is â€˜double-doubleâ€™ where the first double must be smaller than the second double. Prices are not inclusive.\n* The exactProduct, similarProduct, and negative types do not utilize the value field.\n* The only type currently applicable to Amazon Audiences targeting is 'audienceSameAs'.\n* **Future** A 'negative' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.",
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "asinCategorySameAs",
+              "asinBrandSameAs",
+              "asinPriceBetween",
+              "asinPriceGreaterThan",
+              "asinPriceLessThan",
+              "asinReviewRatingLessThan",
+              "asinReviewRatingGreaterThan",
+              "asinReviewRatingBetween",
+              "similarProduct",
+              "exactProduct",
+              "asinIsPrimeShippingEligible",
+              "asinAgeRangeSameAs",
+              "asinGenreSameAs",
+              "audienceSameAs",
+              "lookback",
+              "negative",
+              "relatedProduct"
+            ]
+          },
+          "value": {
+            "description": "The value to be targeted.",
+            "type": "string",
+            "example": "B0123456789"
+          }
+        }
+      },
+      "SPListAssociatedBudgetRulesResponse": {
+        "type": "object",
+        "properties": {
+          "associatedRules": {
+            "description": "A list of associated budget rules.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SPCampaignBudgetRule"
+            }
+          }
+        }
+      },
+      "SDRuleBasedBudget": {
+        "type": "object",
+        "properties": {
+          "executionTime": {
+            "format": "int64",
+            "description": "Epoch time of budget rule execution.",
+            "type": "number"
+          },
+          "appliedRule": {
+            "$ref": "#/components/schemas/SDBudgetRule"
+          },
+          "ruleBasedBudgetValue": {
+            "description": "The budget value.",
+            "type": "number"
+          },
+          "dailyBudgetValue": {
+            "description": "The daily budget value.",
+            "type": "number"
+          },
+          "performanceMetric": {
+            "$ref": "#/components/schemas/PerformanceMetricValue"
+          }
+        }
+      },
+      "SPGetAssociatedCampaignsResponse": {
+        "type": "object",
+        "properties": {
+          "associatedCampaigns": {
+            "minItems": 0,
+            "maxItems": 30,
+            "description": "A list of campaigns that are associated to this budget rule.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssociatedCampaign"
+            }
+          },
+          "nextToken": {
+            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.",
+            "type": "string"
+          }
+        }
+      },
+      "SDBrandSafetyGetResponsePagination": {
+        "description": "Response pagination info for Brand Safety Deny List GET requests",
+        "type": "object",
+        "properties": {
+          "total": {
+            "description": "The total number of deny list domains created by the advertiser.",
+            "type": "integer"
+          },
+          "offset": {
+            "description": "The number of deny list domains skipped.",
+            "type": "integer"
+          },
+          "limit": {
+            "description": "The maximum number of deny list domains returned from GET request.",
+            "type": "integer"
+          }
+        }
+      },
+      "PreModerationResponse": {
+        "description": "Information regarding the policy violations if present for the components, sent for pre moderation.",
+        "type": "object",
+        "properties": {
+          "recordId": {
+            "description": "Id of the brand/advertiser.",
+            "type": "string"
+          },
+          "asinComponents": {
+            "description": "Pre moderation result of the asin components. It will have information regarding the policy violations present if any.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AsinComponentResponse"
+            }
+          },
+          "preModerationId": {
+            "description": "Unique Id for the moderation Request.",
+            "type": "string"
+          },
+          "adProgram": {
+            "description": "Type of Ad program to which the pre moderation components belong to.",
+            "type": "string",
+            "enum": [
+              "SPONSORED_BRANDS",
+              "SPONSORED_BRANDS_SPOTLIGHT",
+              "SPONSORED_BRANDS_VIDEO",
+              "STORES",
+              "SPONSORED_DISPLAY",
+              "DSP",
+              "DSP_REC"
+            ]
+          },
+          "locale": {
+            "description": "Locale value that was passed in request.",
+            "type": "string",
+            "enum": [
+              "ar-AE",
+              "zh-CN",
+              "nl-NL",
+              "en-AU",
+              "en-CA",
+              "en-IN",
+              "en-GB",
+              "en-US",
+              "fr-CA",
+              "fr-FR",
+              "de-DE",
+              "it-IT",
+              "ja-JP",
+              "ko-KR",
+              "pt-BR",
+              "es-ES",
+              "es-US",
+              "es-MX",
+              "tr-TR"
+            ]
+          },
+          "imageComponents": {
+            "description": "Pre moderation result of the image components. It will have information regarding the policy violations present if any.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageComponentResponse"
+            }
+          },
+          "dateComponents": {
+            "description": "Pre moderation result of the date components. It will have information regarding the policy violations present if any.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DateComponentResponse"
+            }
+          },
+          "textComponents": {
+            "description": "Pre moderation result of the text components. It will have information regarding the policy violations present if any.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TextComponentResponse"
+            }
+          },
+          "videoComponents": {
+            "description": "Pre moderation result of the video components. It will have information regarding the policy violations present if any.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoComponentResponse"
+            }
+          }
+        }
+      },
+      "SDTargetingRecommendationsResponseV31": {
+        "description": "Response to a request for targeting recommendations",
+        "properties": {
+          "recommendations": {
+            "$ref": "#/components/schemas/SDTargetingRecommendationsV31"
+          }
+        }
+      },
+      "SDTargetingRecommendationsResponseV32": {
+        "description": "Response to a request for targeting recommendations",
+        "properties": {
+          "recommendations": {
+            "$ref": "#/components/schemas/SDTargetingRecommendationsV32"
+          }
+        }
+      },
+      "DayOfWeek": {
+        "description": "The day of the week.",
+        "type": "string",
+        "enum": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY",
+          "SUNDAY"
+        ]
+      },
+      "UpdateBudgetRulesResponse": {
+        "type": "object",
+        "properties": {
+          "responses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetRuleResponse"
+            }
+          }
+        }
+      },
+      "SDBrandSafetyDenyListDomainUpdateResultStatus": {
+        "default": "SUCCESS",
+        "description": "The state of the domain.",
+        "type": "string",
+        "enum": [
+          "SUCCESS",
+          "FAILURE"
+        ]
+      },
+      "ModerationResultsAdProgramType": {
+        "description": "The program type of the ad.",
+        "type": "string",
+        "enum": [
+          "SB_PRODUCT_COLLECTION",
+          "SB_STORE_SPOTLIGHT",
+          "SB_VIDEO"
+        ]
+      },
+      "CreativeRecommendationsBadRequestError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Bad request error code.",
+            "type": "string",
+            "enum": [
+              "BAD_REQUEST"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
+      "SdDefaultError": {
+        "description": "The error response object",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "The HTTP status code of the response.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "SDTargetingClauseV31": {
+        "description": "The targeting clause",
+        "type": "object",
+        "required": [
+          "expressionType",
+          "expression"
+        ],
+        "properties": {
+          "expression": {
+            "$ref": "#/components/schemas/SDTargetingExpressionV31"
+          },
+          "expressionType": {
+            "description": "Tactic T00020 ad groups only allow manual targeting.",
+            "type": "string",
+            "enum": [
+              "manual",
+              "auto"
+            ]
+          }
+        }
+      },
+      "VideoPosition": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "format": "int64",
+            "description": "Start time of the video having the policy violation.",
+            "type": "integer"
+          },
+          "end": {
+            "format": "int64",
+            "description": "End time of the video having the policy violation.",
+            "type": "integer"
+          }
+        }
+      },
+      "ModerationStatus": {
+        "description": "The moderation status of the ad.",
+        "type": "string",
+        "enum": [
+          "APPROVED",
+          "IN_PROGRESS",
+          "REJECTED",
+          "FAILED"
+        ]
+      },
+      "SDTactic": {
+        "description": "The advertising tactic associated with the campaign. The following table lists available tactic names:\n\n|Tactic Name|Type|Description|\n|-----------|-----|-----------|\n|T00001&nbsp;|&nbsp;|This tactic name is only applicable for the `requestReport` operation and does not apply to any other campaign management operations. Reach shoppers who showed interest in categories related to your promoted products, or target specific products or product categories on Amazon. This tactic is for use by only vendors. This tactic is used to retrieve metrics for Sponsored Display campaigns that use interest, product or category audiences, including Sponsored Display campaigns that were previously Product Display Ads campaigns.|\n|T00010&nbsp;|Views&nbsp;|**Note that this advertising tactic is not currently supported. This note will be removed when this advertising tactic is available.** This is the same tactic as 'remarketing'. Shoppers who viewed the detail pages of your advertised products or similar products.|\n|remarketing&nbsp;|Views&nbsp;|This is the same tactic as 'T00010'. Shoppers who viewed the detail pages of your advertised products or similar products.|\n|T00020&nbsp;|Products&nbsp;|Products: Choose individual products to show your ads in placements related to those products.<br>Categories: Choose individual categories to show your ads in placements related to those categories.|",
+        "type": "string",
+        "enum": [
+          "T00001",
+          "T00010",
+          "T00020",
+          "remarketing"
+        ]
+      },
+      "SDTacticV31": {
+        "description": "The advertising tactic associated with the campaign. The following table lists available tactic names:\n|Tactic Name|Type|Description|\n|-----------|-----|-----------|\n|T00001&nbsp;|&nbsp;|This tactic name is only applicable for the `requestReport` operation and does not apply to any other campaign management operations. Reach shoppers who showed interest in categories related to your promoted products, or target specific products or product categories on Amazon. This tactic is for use by only vendors. This tactic is used to retrieve metrics for Sponsored Display campaigns that use interest, product or category audiences, including Sponsored Display campaigns that were previously Product Display Ads campaigns.|\n|T00010&nbsp;|Views&nbsp;|**Note that this advertising tactic is not currently supported. This note will be removed when this advertising tactic is available.** This is the same tactic as 'remarketing'. Shoppers who viewed the detail pages of your advertised products or similar products.|\n|remarketing&nbsp;|Views&nbsp;|This is the same tactic as 'T00010'. Shoppers who viewed the detail pages of your advertised products or similar products.|\n|T00020&nbsp;|Products&nbsp;|Products: Choose individual products to show your ads in placements related to those products.<br>Categories: Choose individual categories to show your ads in placements related to those categories.|\n|T00030&nbsp;|Audiences&nbsp;|Select individual audiences to show your ads.|",
+        "type": "string",
+        "enum": [
+          "T00001",
+          "T00010",
+          "T00020",
+          "remarketing",
+          "T00030"
+        ],
+        "example": "T00030"
+      },
+      "CreativeRecommendationsRequest": {
+        "description": "Request structure of creative recommendations API.",
+        "type": "object",
+        "required": [
+          "asins",
+          "requiredRecommendations",
+          "adFormat"
+        ],
+        "properties": {
+          "asins": {
+            "minItems": 1,
+            "maxItems": 3,
+            "description": "An array of ASINs associated with the creative. Note, do not pass an empty array, this results in an error.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "adFormat": {
+            "description": "Ad format of the creative.",
+            "type": "string",
+            "enum": [
+              "SPONSORED_BRANDS_VIDEO"
+            ]
+          },
+          "requiredRecommendations": {
+            "minItems": 1,
+            "maxItems": 2,
+            "description": "Required recommendations details.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RequiredRecommendations"
+            }
+          }
+        }
+      },
+      "RequiredRecommendations": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "maxRecommendationGroups": {
+            "format": "int32",
+            "description": "Maximum number of recommendations groups that API should return for given type. (recommendations are not guaranteed).",
+            "maximum": 5,
+            "type": "integer",
+            "minimum": 1
+          },
+          "type": {
+            "description": "Type of recommendations.",
+            "type": "string",
+            "enum": [
+              "PRIMARY_HEADLINE",
+              "SECONDARY_HEADLINE"
+            ]
+          }
+        }
+      },
+      "CreativeRecommendationsAccessDeniedError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Access denied error code.",
+            "type": "string",
+            "enum": [
+              "ACCESS_DENIED"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
+      "SDBrandSafetyDenyListDomainState": {
+        "default": "ENABLED",
+        "description": "The state of the domain.",
+        "type": "string",
+        "enum": [
+          "ENABLED",
+          "ARCHIVED"
+        ]
+      },
+      "BudgetChangeType": {
+        "description": "The value by which to update the budget of the budget rule.",
+        "type": "string",
+        "enum": [
+          "PERCENT"
+        ]
+      },
+      "SDBudgetRuleDetails": {
+        "description": "Object representing details of a budget rule for SD campaign",
+        "type": "object",
+        "properties": {
+          "duration": {
+            "$ref": "#/components/schemas/RuleDuration"
+          },
+          "recurrence": {
+            "$ref": "#/components/schemas/Recurrence"
+          },
+          "ruleType": {
+            "$ref": "#/components/schemas/SDRuleType"
+          },
+          "budgetIncreaseBy": {
+            "$ref": "#/components/schemas/budgetIncreaseBy"
+          },
+          "name": {
+            "description": "The budget rule name. Required to be unique within a campaign.",
+            "type": "string",
+            "maxLength": 355
+          },
+          "performanceMeasureCondition": {
+            "$ref": "#/components/schemas/PerformanceMeasureCondition"
+          }
+        }
+      },
+      "HeadlineSuggestionRequest": {
+        "description": "Request structure of headline suggestion API.",
+        "type": "object",
+        "properties": {
+          "asins": {
+            "minItems": 1,
+            "maxItems": 3,
+            "description": "An array of ASINs associated with the creative. Note do not pass an empty array, this results in an error.\n",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "maxNumSuggestions": {
+            "description": "Maximum number of suggestions that API should return. Response will [0, maxNumSuggestions] suggestions (suggestions are not guaranteed).",
+            "maximum": 10,
+            "type": "number",
+            "minimum": 1
+          },
+          "adFormat": {
+            "type": "string",
+            "enum": [
+              "SPONSORED_BRANDS",
+              "SPONSORED_BRANDS_SPOTLIGHT"
+            ]
+          }
+        }
+      },
+      "CreativeRecommendationsNotFoundError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Not found error code.",
+            "type": "string",
+            "enum": [
+              "NOT_FOUND"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
+      "GetSPBudgetRulesForAdvertiserResponse": {
+        "type": "object",
+        "properties": {
+          "budgetRulesForAdvertiserResponse": {
+            "minItems": 0,
+            "maxItems": 30,
+            "description": "A list of rules created by the advertiser.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SPBudgetRule"
+            }
+          },
+          "nextToken": {
+            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.",
+            "type": "string"
+          }
+        }
+      },
+      "SDBrandSafetyGetResponse": {
+        "description": "Response for Brand Safety Deny List GET requests",
+        "properties": {
+          "pagination": {
+            "$ref": "#/components/schemas/SDBrandSafetyGetResponsePagination"
+          },
+          "domains": {
+            "description": "List of Brand Safety Deny List Domains",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDBrandSafetyDenyListProcessedDomain"
+            }
+          }
+        }
+      },
+      "CreativeRecommendationsInternalServerError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Internal error code.",
+            "type": "string",
+            "enum": [
+              "INTERNAL_ERROR"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
+      "SBRuleType": {
+        "description": "The type of budget rule. SCHEDULE: A budget rule based on a start and end date. PERFORMANCE: A budget rule based on advertising performance criteria.",
+        "type": "string",
+        "enum": [
+          "SCHEDULE",
+          "PERFORMANCE"
+        ]
+      },
+      "PerformanceMetricForSB": {
+        "description": "The advertising performance metric.",
+        "type": "string",
+        "enum": [
+          "ROAS"
+        ]
+      },
+      "BudgetUsageCampaignBatchError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "An enumerated error code for machine use.",
+            "type": "string"
+          },
+          "campaignId": {
+            "description": "ID of requested resource",
+            "type": "string"
+          },
+          "index": {
+            "description": "An index to maintain order of the campaignIds",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "SDBrandSafetyRequestResultsResponse": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "description": "A list of results for the given requestId",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDBrandSafetyRequestResult"
+            }
+          }
+        }
+      },
+      "SDCategoryRecommendation": {
+        "description": "A recommended category to target ads on",
+        "properties": {
+          "path": {
+            "minItems": 1,
+            "description": "The path of the category within the category catalogue",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "description": "The category name",
+            "type": "string"
+          },
+          "rank": {
+            "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation",
+            "type": "integer",
+            "minimum": 1
+          },
+          "targetableAsinCountRange": {
+            "description": "The range of ASINs available within the category catalogue",
+            "type": "object",
+            "properties": {
+              "rangeUpper": {
+                "type": "integer"
+              },
+              "rangeLower": {
+                "type": "integer"
+              }
+            }
+          },
+          "category": {
+            "$ref": "#/components/schemas/SDCategory"
+          }
+        }
+      },
+      "CreateSDBudgetRulesRequest": {
+        "type": "object",
+        "properties": {
+          "budgetRulesDetails": {
+            "maxItems": 25,
+            "description": "A list of budget rule details.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDBudgetRuleDetails"
+            }
+          }
+        }
+      },
+      "SDHeadlineRecommendationAccessDeniedException": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "AccessDeniedErrorCode.",
+            "type": "string",
+            "enum": [
+              "ACCESS_DENIED"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
+      "RecurrenceType": {
+        "description": "depicts the type of recurrence",
+        "type": "string",
+        "enum": [
+          "DAILY",
+          "WEEKLY"
+        ]
+      },
+      "BudgetUsagePortfolioBatchError": {
+        "type": "object",
+        "properties": {
+          "portfolioId": {
+            "description": "ID of requested resource",
+            "type": "string"
+          },
+          "code": {
+            "description": "An enumerated error code for machine use.",
+            "type": "string"
+          },
+          "index": {
+            "description": "An index to maintain order of the portfolioIds",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "ViolatingAsinContent": {
+        "type": "object",
+        "properties": {
+          "violatingAsinEvidences": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingAsinEvidence"
+            }
+          },
+          "moderatedComponent": {
+            "description": "Moderation component which marked the policy violation.",
+            "type": "string"
+          }
+        }
+      },
+      "BudgetUsagePortfolioRequest": {
+        "type": "object",
+        "properties": {
+          "portfolioIds": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "A list of portfolio IDs.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "IdType": {
+        "description": "The unique identifiers type based on the adProgram of the ad.",
+        "type": "string",
+        "enum": [
+          "AD_ID"
+        ]
+      },
+      "BudgetRuleResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "An enumerated success or error code for machine use.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the error, if unsuccessful",
+            "type": "string"
+          },
+          "ruleId": {
+            "description": "The rule identifier.",
+            "type": "string"
+          },
+          "associatedCampaignIds": {
+            "type": "array",
+            "items": {
+              "description": "The campaign identifier for which rule based budget may get updated",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ModerationResultsResponse": {
+        "type": "object",
+        "properties": {
+          "moderationResults": {
+            "minItems": 1,
+            "maxItems": 10,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModerationResult"
+            }
+          },
+          "nextToken": {
+            "$ref": "#/components/schemas/NextToken"
+          }
+        }
+      },
+      "Id": {
+        "description": "The unique identifier of the ad which can be obtained after the ad is created using create APIs.",
+        "type": "string"
+      },
+      "BudgetUsageCampaignRequest": {
+        "type": "object",
+        "properties": {
+          "campaignIds": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "A list of campaign IDs",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SDTargetingPredicateNestedV31": {
+        "description": "A behavioral event and list of targeting predicates that represents an Audience to target (only applicable to Audience targeting - T00030).\n\n* For auto ASIN-grain targeting, the value array must contain only 'exactProduct' and 'lookback' TargetingPredicateBase components.\n* For manual ASIN-grain targeting, the value array must contain only 'similarProduct' and 'lookback' TargetingPredicateBase components.\n* For manual Category-grain targeting, the value array must contain a 'lookback' and 'asinCategorySameAs' TargetingPredicateBase component, which can be further refined with optional brand, price, star-rating and shipping eligibility refinements.\n* For Amazon Audiences targeting, the TargetingPredicateNested type should be set to 'audience' and the value array should include one TargetingPredicateBase component with type set to 'audienceSameAs'.\n* **Future** For manual Category-grain targeting, adding a 'negative' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.",
+        "type": "object",
+        "required": [
+          "type",
+          "value"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "views",
+              "audience",
+              "purchases"
+            ]
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDTargetingPredicateBaseV31"
+            }
+          }
+        }
+      },
+      "PerformanceMeasureCondition": {
+        "type": "object",
+        "required": [
+          "comparisonOperator",
+          "metricName",
+          "threshold"
+        ],
+        "properties": {
+          "metricName": {
+            "$ref": "#/components/schemas/PerformanceMetric"
+          },
+          "comparisonOperator": {
+            "$ref": "#/components/schemas/ComparisonOperator"
+          },
+          "threshold": {
+            "format": "double",
+            "description": "The performance threshold value.",
+            "type": "number"
+          }
+        }
+      },
+      "SPBudgetRuleDetails": {
+        "description": "Object representing details of a budget rule for SP campaign",
+        "type": "object",
+        "properties": {
+          "duration": {
+            "$ref": "#/components/schemas/RuleDuration"
+          },
+          "recurrence": {
+            "$ref": "#/components/schemas/Recurrence"
+          },
+          "ruleType": {
+            "$ref": "#/components/schemas/SPRuleType"
+          },
+          "budgetIncreaseBy": {
+            "$ref": "#/components/schemas/budgetIncreaseBy"
+          },
+          "name": {
+            "description": "The budget rule name. Required to be unique within a campaign.",
+            "type": "string",
+            "maxLength": 355
+          },
+          "performanceMeasureCondition": {
+            "$ref": "#/components/schemas/PerformanceMeasureCondition"
+          }
+        }
+      },
+      "GetSDBudgetRuleResponse": {
+        "type": "object",
+        "properties": {
+          "budgetRule": {
+            "$ref": "#/components/schemas/SDBudgetRule"
+          }
+        }
+      },
+      "ModerationResultsAccessDeniedError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Access denied error code.",
+            "type": "string",
+            "enum": [
+              "ACCESS_DENIED"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
+      "SDHeadlineRecommendationIdentifierNotfoundException": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "IdentiferNotFoundErrorCode.",
+            "type": "string",
+            "enum": [
+              "IDENTIFIER_NOT_FOUND"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
+      "VideoComponentResponse": {
+        "description": "Pre moderation result for a video component",
+        "type": "object",
+        "properties": {
+          "preModerationStatus": {
+            "description": "The pre moderation status of the component.",
+            "type": "string",
+            "enum": [
+              "REJECTED",
+              "APPROVED",
+              "FAILED",
+              "RETRYABLE_FAILURE"
+            ]
+          },
+          "componentType": {
+            "description": "Type of the video component.",
+            "type": "string",
+            "enum": [
+              "SPONSORED_BRANDS_VIDEO",
+              "OTHER_VIDEO"
+            ]
+          },
+          "policyViolations": {
+            "description": "A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoPolicyViolation"
+            }
+          },
+          "id": {
+            "description": "Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.",
+            "type": "string"
+          },
+          "url": {
+            "description": "Publicly accessible url of the video that got pre moderated.",
+            "type": "string"
+          }
+        }
+      },
+      "RecommendedHeadline": {
+        "description": "Recommended Headline in response object. Recommended headline will be locale specific, i.e. for an asin input in ES, Recommended headline will be in ES.",
+        "type": "object",
+        "properties": {
+          "headlineId": {
+            "description": "Unique Id of Recommended headline.",
+            "type": "string",
+            "example": "e991e32c-0136-427a-843b-ff04162f2f91"
+          },
+          "headline": {
+            "description": "String that contains Recommended headline.",
+            "type": "string",
+            "maxLength": 50,
+            "example": "This is a Recommended headline."
+          }
+        }
+      },
+      "BudgetUsageError": {
+        "description": "The Error Response Object.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "An enumerated error code for machine use.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "ImageEvidence": {
+        "description": "Structure of a image evidence",
+        "type": "object",
+        "properties": {
+          "topLeftY": {
+            "description": "The top left Y-coordinate of the content that violates the specfied policy within the image.",
+            "type": "integer"
+          },
+          "topLeftX": {
+            "description": "The top left X-coordinate of the content that violates the specfied policy within the image.",
+            "type": "integer"
+          },
+          "width": {
+            "description": "The width of the content that violates the specfied policy within the image.",
+            "type": "integer"
+          },
+          "height": {
+            "description": "The height of the content that violates the specfied policy within the image.",
+            "type": "integer"
+          }
+        }
+      },
+      "DateComponentResponse": {
+        "description": "Pre-moderation result for a date component",
+        "type": "object",
+        "properties": {
+          "preModerationStatus": {
+            "description": "The pre-moderation status of the component.",
+            "type": "string",
+            "enum": [
+              "REJECTED",
+              "APPROVED",
+              "FAILED",
+              "RETRYABLE_FAILURE"
+            ]
+          },
+          "componentType": {
+            "description": "Type of the date component.",
+            "type": "string",
+            "enum": [
+              "CAMPAIGN_DATES"
+            ]
+          },
+          "endDate": {
+            "description": "End date of the component.",
+            "type": "string"
+          },
+          "policyViolations": {
+            "description": "A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DatePolicyViolation"
+            }
+          },
+          "id": {
+            "description": "Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.",
+            "type": "string"
+          },
+          "startDate": {
+            "description": "Start date of the component.",
+            "type": "string"
+          }
+        }
+      },
+      "ImageComponent": {
+        "description": "Image component which needs to be pre moderated. A publicly accessible imageUrl must be sent.",
+        "type": "object",
+        "required": [
+          "componentType",
+          "id",
+          "url"
+        ],
+        "properties": {
+          "componentType": {
+            "description": "Type of the image component.",
+            "type": "string",
+            "enum": [
+              "BRAND_LOGO",
+              "CUSTOM_IMAGE",
+              "OTHER_IMAGE"
+            ]
+          },
+          "id": {
+            "description": "Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.",
+            "type": "string"
+          },
+          "url": {
+            "description": "Url of the image to be pre moderated. The url must be publicly accessible.",
+            "type": "string"
+          }
+        }
+      },
+      "VideoComponent": {
+        "description": "Video component which needs to be pre moderated. A publicly accessible videoUrl must be sent.",
+        "type": "object",
+        "required": [
+          "componentType",
+          "id",
+          "url"
+        ],
+        "properties": {
+          "componentType": {
+            "description": "Type of the video component.",
+            "type": "string",
+            "enum": [
+              "SPONSORED_BRANDS_VIDEO",
+              "OTHER_VIDEO"
+            ]
+          },
+          "id": {
+            "description": "Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.",
+            "type": "string"
+          },
+          "url": {
+            "description": "Url of the video to be pre moderated. The url must be publicly accessible.",
+            "type": "string"
           }
         }
       },
@@ -2793,17 +4755,6 @@
           }
         }
       },
-      "RuleDuration": {
-        "type": "object",
-        "properties": {
-          "eventTypeRuleDuration": {
-            "$ref": "#/components/schemas/EventTypeRuleDuration"
-          },
-          "dateRangeTypeRuleDuration": {
-            "$ref": "#/components/schemas/DateRangeTypeRuleDuration"
-          }
-        }
-      },
       "budgetIncreaseBy": {
         "type": "object",
         "required": [
@@ -2818,6 +4769,36 @@
             "format": "double",
             "description": "The budget value.",
             "type": "number"
+          }
+        }
+      },
+      "VideoEvidence": {
+        "description": "Structure of a video evidence",
+        "type": "object",
+        "properties": {
+          "start": {
+            "description": "The start position (in seconds) of the content that violates the specified policy within the video.",
+            "type": "integer"
+          },
+          "end": {
+            "description": "The end position (in seconds) of the content that violates the specified policy within the video.",
+            "type": "integer"
+          }
+        }
+      },
+      "ModerationResultsNotFoundError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Not found error code.",
+            "type": "string",
+            "enum": [
+              "NOT_FOUND"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
           }
         }
       },
@@ -2842,24 +4823,19 @@
           }
         }
       },
-      "SDBrandSafetyRequestResult": {
+      "ModerationResultsThrottlingError": {
         "type": "object",
         "properties": {
-          "name": {
-            "description": "The website or app identifier.",
-            "type": "string"
+          "code": {
+            "description": "Throttled error code.",
+            "type": "string",
+            "enum": [
+              "THROTTLED"
+            ]
           },
           "details": {
-            "description": "A human-readable description of the response.",
+            "description": "A human-readable description of the error response.",
             "type": "string"
-          },
-          "domainId": {
-            "format": "int64",
-            "description": "The identifier of the Brand Safety Deny List Domain.",
-            "type": "integer"
-          },
-          "status": {
-            "$ref": "#/components/schemas/SDBrandSafetyDenyListDomainUpdateResultStatus"
           }
         }
       },
@@ -2904,49 +4880,82 @@
           }
         }
       },
-      "SDBrandSafetyListRequestStatusResponse": {
-        "description": "List of all requests' status.",
+      "ModerationResultsBadRequestError": {
         "type": "object",
         "properties": {
-          "requestStatusList": {
-            "description": "List of all requests' status.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SDBrandSafetyRequestStatus"
-            }
-          }
-        }
-      },
-      "SDProductRecommendation": {
-        "description": "A recommended product to target ads on",
-        "properties": {
-          "rank": {
-            "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation",
-            "type": "integer",
-            "minimum": 1
+          "code": {
+            "description": "Bad request error code.",
+            "type": "string",
+            "enum": [
+              "BAD_REQUEST"
+            ]
           },
-          "asin": {
-            "$ref": "#/components/schemas/SDASIN"
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
           }
         }
       },
-      "SDTargetingExpressionV31": {
-        "minItems": 1,
-        "description": "The targeting expression to match against.\n\n------- Applicable to Product targeting (T00020) -------\n* A 'TargetingExpression' in a Product targeting Campaign can only contain 'TargetingPredicate' components.\n* Expressions must specify either a category predicate or an ASIN predicate, but never both.\n* Only one category may be specified per targeting expression.\n* Only one brand may be specified per targeting expression.\n* Only one asin may be specified per targeting expression.\n* To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.\n\n------- Applicable to Audience targeting (T00030) -------\n* A 'TargetingExpression' in an Audience Campaign can only contain 'TargetingPredicateNested' components.\n* Expressions must specify either auto ASIN-grain (exact products), manual ASIN-grain (similar products), or manual category-grain targeting.\n* **Future** To exclude parts of an audience, specify a TargetingPredicateNested component that contains a negative TargetingPredicate type.",
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/SDTargetExpressionV31"
+      "DateComponent": {
+        "description": "Date component which needs to be pre moderated. Either startDate or endDate must be populated, or both can be populated.",
+        "type": "object",
+        "required": [
+          "componentType",
+          "id"
+        ],
+        "properties": {
+          "componentType": {
+            "description": "Type of the date component.",
+            "type": "string",
+            "enum": [
+              "CAMPAIGN_DATE"
+            ]
+          },
+          "endDate": {
+            "description": "End date of the component in yyyy-MM-dd HH:mm:ss format",
+            "type": "string"
+          },
+          "id": {
+            "description": "Id of the component. The same will be returned as part of the response as well. This can be used to uniquely identify the component from the pre moderation response.",
+            "type": "string"
+          },
+          "startDate": {
+            "description": "Start date of the component in yyyy-MM-dd HH:mm:ss format",
+            "type": "string"
+          }
         }
       },
-      "SBListAssociatedBudgetRulesResponse": {
+      "ImageCrop": {
         "type": "object",
         "properties": {
-          "associatedRules": {
-            "description": "A list of associated budget rules.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SBCampaignBudgetRule"
-            }
+          "topLeftY": {
+            "format": "int64",
+            "description": "Policy violated region's top left Y-axis pixel value.",
+            "type": "integer"
+          },
+          "topLeftX": {
+            "format": "int64",
+            "description": "Policy violated region's top left X-axis pixel value.",
+            "type": "integer"
+          },
+          "width": {
+            "format": "int64",
+            "description": "Policy violated region's width in pixel.",
+            "type": "integer"
+          },
+          "height": {
+            "format": "int64",
+            "description": "Policy violated region's height in pixel.",
+            "type": "integer"
+          }
+        }
+      },
+      "ViolatingAsinEvidence": {
+        "type": "object",
+        "properties": {
+          "asin": {
+            "description": "ASIN which has the ad policy violation.",
+            "type": "string"
           }
         }
       },
@@ -3075,18 +5084,11 @@
         ],
         "example": "PRODUCT"
       },
-      "SDAudience": {
-        "format": "int64",
-        "description": "The audience identifier",
-        "type": "integer",
-        "example": "417464173123977660"
-      },
-      "SDBrandSafetyUpdateResponse": {
-        "description": "Response for Brand Safety POST and DELETE requests",
+      "ViolatingVideoEvidence": {
+        "type": "object",
         "properties": {
-          "requestId": {
-            "description": "The identifier of the request",
-            "type": "string"
+          "violatingVideoPosition": {
+            "$ref": "#/components/schemas/VideoPosition"
           }
         }
       },
@@ -3103,24 +5105,6 @@
           },
           "startDate": {
             "description": "The start date of the budget rule in YYYYMMDD format. The start date is inclusive. Required to be greater than or equal to current date.",
-            "type": "string"
-          }
-        }
-      },
-      "SDGetAssociatedCampaignsResponse": {
-        "type": "object",
-        "properties": {
-          "associatedCampaigns": {
-            "minItems": 0,
-            "maxItems": 30,
-            "description": "A list of campaigns that are associated to this budget rule.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AssociatedCampaign"
-            }
-          },
-          "nextToken": {
-            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.",
             "type": "string"
           }
         }
@@ -3156,6 +5140,25 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SDGoalProduct"
+            }
+          }
+        }
+      },
+      "BudgetUsageCampaignResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "description": "List of budget usage percentages that were successfully pulled",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetUsageCampaign"
+            }
+          },
+          "error": {
+            "description": "List of budget usage percentages that failed to pull",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetUsageCampaignBatchError"
             }
           }
         }
@@ -3212,25 +5215,80 @@
             "maxLength": 355
           },
           "performanceMeasureCondition": {
-            "$ref": "#/components/schemas/PerformanceMeasureCondition"
+            "$ref": "#/components/schemas/PerformanceMeasureConditionForSB"
           }
         }
       },
-      "SDRuleType": {
-        "description": "The type of budget rule. SCHEDULE: A budget rule based on a start and end date. PERFORMANCE: A budget rule based on advertising performance criteria.",
-        "type": "string",
-        "enum": [
-          "SCHEDULE",
-          "PERFORMANCE"
-        ]
+      "ViolatingVideoContent": {
+        "type": "object",
+        "properties": {
+          "violatingVideoEvidences": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingVideoEvidence"
+            }
+          },
+          "moderatedComponent": {
+            "description": "Moderation component which marked the policy violation.",
+            "type": "string"
+          },
+          "reviewedVideoUrl": {
+            "description": "URL of the video which has the ad policy violation.",
+            "type": "string"
+          }
+        }
       },
-      "SDCostTypeV31": {
-        "description": "Determines what performance metric the bid recommendations will be optimized for.\n|Name|Supported Tactics|Description|\n|----|----------|-----------|\n|CPC|T00020 T00030|The bid recommendations will be optimized for clicks triggered by the ad.|\n|VCPM|T00020 T00030|The bid recommendations will be optimized for viewed impressions triggered by the ad.|",
-        "type": "string",
-        "enum": [
-          "cpc",
-          "vcpm"
-        ]
+      "ModerationResultsRequest": {
+        "type": "object",
+        "required": [
+          "id",
+          "idType",
+          "adProgramType",
+          "maxResults"
+        ],
+        "properties": {
+          "versionIdFilter": {
+            "minItems": 0,
+            "maxItems": 200,
+            "uniqueItems": true,
+            "description": "Filter by specific version id of the ad. The API will return the ad's all versions moderation status if this field is empty.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VersionId"
+            }
+          },
+          "idType": {
+            "$ref": "#/components/schemas/IdType"
+          },
+          "adProgramType": {
+            "$ref": "#/components/schemas/ModerationResultsAdProgramType"
+          },
+          "nextToken": {
+            "$ref": "#/components/schemas/NextToken"
+          },
+          "maxResults": {
+            "format": "int32",
+            "description": "Sets a limit on the number of results returned by an operation.",
+            "maximum": 10,
+            "type": "integer",
+            "minimum": 1
+          },
+          "moderationStatusFilter": {
+            "minItems": 0,
+            "maxItems": 20,
+            "uniqueItems": true,
+            "description": "Filter by specific moderation status.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ModerationStatus"
+            }
+          },
+          "id": {
+            "$ref": "#/components/schemas/Id"
+          }
+        }
       },
       "SBRuleDuration": {
         "type": "object",
@@ -3240,100 +5298,6 @@
         "properties": {
           "dateRangeTypeRuleDuration": {
             "$ref": "#/components/schemas/DateRangeTypeRuleDuration"
-          }
-        }
-      },
-      "SDBrandSafetyDenyListDomain": {
-        "type": "object",
-        "required": [
-          "name",
-          "type"
-        ],
-        "properties": {
-          "name": {
-            "description": "The website or app identifier. This can be in the form of full domain (eg. 'example.com' or 'example.net'), or mobile app identifier (eg. 'com.example.app' for Android apps or '1234567890' for iOS apps)\n",
-            "type": "string",
-            "maxLength": 250
-          },
-          "type": {
-            "$ref": "#/components/schemas/SDBrandSafetyDenyListDomainType"
-          }
-        },
-        "example": {
-          "name": "example.com",
-          "type": "WEBSITE"
-        }
-      },
-      "SDErrorResponse": {
-        "properties": {
-          "code": {
-            "description": "The HTTP status code of the response",
-            "type": "string"
-          },
-          "details": {
-            "description": "A human-readable description of the response.",
-            "type": "string"
-          }
-        }
-      },
-      "SDAudienceRecommendation": {
-        "description": "A recommended standard Amazon audience to target ads on",
-        "properties": {
-          "audience": {
-            "$ref": "#/components/schemas/SDAudience"
-          },
-          "estimatedAudienceReach": {
-            "description": "The range of estimated audience reach",
-            "type": "object",
-            "properties": {
-              "rangeUpper": {
-                "type": "integer"
-              },
-              "rangeLower": {
-                "type": "integer"
-              }
-            }
-          },
-          "name": {
-            "description": "The Amazon audience name",
-            "type": "string"
-          },
-          "rank": {
-            "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation",
-            "type": "integer",
-            "minimum": 1
-          }
-        }
-      },
-      "SBBudgetRule": {
-        "type": "object",
-        "required": [
-          "ruleId"
-        ],
-        "properties": {
-          "ruleState": {
-            "$ref": "#/components/schemas/state"
-          },
-          "lastUpdatedDate": {
-            "format": "int64",
-            "description": "Epoch time of budget rule update. Read-only.",
-            "type": "number"
-          },
-          "createdDate": {
-            "format": "int64",
-            "description": "Epoch time of budget rule creation. Read-only.",
-            "type": "number"
-          },
-          "ruleDetails": {
-            "$ref": "#/components/schemas/SBBudgetRuleDetails"
-          },
-          "ruleId": {
-            "description": "The budget rule identifier.",
-            "type": "string"
-          },
-          "ruleStatus": {
-            "description": "The budget rule status. Read-only.",
-            "type": "string"
           }
         }
       },
@@ -3347,6 +5311,47 @@
           "ROAS"
         ]
       },
+      "ImagePolicyViolation": {
+        "description": "Structure of policy violation for a image component",
+        "type": "object",
+        "properties": {
+          "policyDescription": {
+            "description": "A human-readable description of the policy.",
+            "type": "string"
+          },
+          "imageEvidences": {
+            "description": "List of evidences for the policy violations detected on the image component.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ImageEvidence"
+            }
+          },
+          "name": {
+            "description": "A policy violation code.",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type of policy violation.",
+            "type": "string",
+            "enum": [
+              "WARNING",
+              "REJECTED"
+            ]
+          },
+          "policyLinkUrl": {
+            "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+            "type": "string",
+            "example": "https://advertising.amazon.com/resources/ad-policy/en/creative-acceptance#alcohol"
+          },
+          "textEvidences": {
+            "description": "Policy violation on an image can be detected on the ocr detected text on the image as well. This list of text evidences will have the policy violations detected on the text on top of the image.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TextEvidence"
+            }
+          }
+        }
+      },
       "GetSBBudgetRuleResponse": {
         "type": "object",
         "properties": {
@@ -3355,11 +5360,39 @@
           }
         }
       },
-      "SDCategory": {
-        "format": "int64",
-        "description": "The category identifier",
-        "type": "integer",
-        "example": "7352105011"
+      "VideoPolicyViolation": {
+        "description": "Structure of policy violation for a video component",
+        "type": "object",
+        "properties": {
+          "policyDescription": {
+            "description": "A human-readable description of the policy.",
+            "type": "string"
+          },
+          "videoEvidences": {
+            "description": "List of evidences for the policy violations detected on the video component.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoEvidence"
+            }
+          },
+          "name": {
+            "description": "A policy violation code.",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type of policy violation.",
+            "type": "string",
+            "enum": [
+              "WARNING",
+              "REJECTED"
+            ]
+          },
+          "policyLinkUrl": {
+            "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+            "type": "string",
+            "example": "https://advertising.amazon.com/resources/ad-policy/en/creative-acceptance#alcohol"
+          }
+        }
       },
       "AssociatedBudgetRuleResponse": {
         "type": "object",
@@ -3410,32 +5443,6 @@
           }
         }
       },
-      "SDBrandSafetyRequestStatus": {
-        "type": "object",
-        "properties": {
-          "requestId": {
-            "description": "Request ID",
-            "type": "string"
-          },
-          "statusDetails": {
-            "description": "Details related to the request status",
-            "type": "string"
-          },
-          "timestamp": {
-            "description": "Request timestamp",
-            "type": "string"
-          },
-          "status": {
-            "description": "The status of the request",
-            "type": "string",
-            "enum": [
-              "IN_PROGRESS",
-              "COMPLETED",
-              "FAILURE"
-            ]
-          }
-        }
-      },
       "SDTargetingRecommendationsV31": {
         "description": "A collection of targeting recommendations. Results will be sorted with strongest recommendations in the beginning.",
         "properties": {
@@ -3469,73 +5476,43 @@
           "GREATER_THAN_OR_EQUAL_TO"
         ]
       },
-      "UpdateSDBudgetRulesRequest": {
-        "description": "Request object for updating budget rule for SD campaign",
+      "PerformanceMeasureConditionForSB": {
         "type": "object",
+        "required": [
+          "comparisonOperator",
+          "metricName",
+          "threshold"
+        ],
         "properties": {
-          "budgetRulesDetails": {
-            "maxItems": 25,
-            "description": "A list of budget rule details.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SDBudgetRule"
-            }
+          "metricName": {
+            "$ref": "#/components/schemas/PerformanceMetricForSB"
+          },
+          "comparisonOperator": {
+            "$ref": "#/components/schemas/ComparisonOperator"
+          },
+          "threshold": {
+            "format": "double",
+            "description": "The performance threshold value.",
+            "type": "number"
           }
         }
       },
-      "GetSBBudgetRulesForAdvertiserResponse": {
+      "TextRecommendation": {
         "type": "object",
         "properties": {
-          "budgetRulesForAdvertiserResponse": {
-            "minItems": 0,
-            "maxItems": 30,
-            "description": "A list of rules created by the advertiser.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SBBudgetRule"
-            }
+          "id": {
+            "description": "Unique ID for generated recommendation.",
+            "type": "string"
           },
-          "nextToken": {
-            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.",
+          "value": {
+            "description": "Recommendation value.",
             "type": "string"
           }
         }
       },
-      "SDTargetingPredicateBaseV31": {
-        "description": "A predicate to match against inside the TargetingPredicateNested component (only applicable to Audience targeting - T00030).\n\n* All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Advertising browse system.\n* Brand, price, and review predicates are optional and may only be specified if category is also specified.\n* Review predicates accept numbers between 0 and 5 and are inclusive.\n* When using either of the â€˜betweenâ€™ strings to construct a targeting expression the format of the string is â€˜double-doubleâ€™ where the first double must be smaller than the second double. Prices are not inclusive.\n* The exactProduct, similarProduct, and negative types do not utilize the value field.\n* The only type currently applicable to Amazon Audiences targeting is 'audienceSameAs'.\n* **Future** A 'negative' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.",
-        "type": "object",
-        "required": [
-          "type"
-        ],
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "asinCategorySameAs",
-              "asinBrandSameAs",
-              "asinPriceBetween",
-              "asinPriceGreaterThan",
-              "asinPriceLessThan",
-              "asinReviewRatingLessThan",
-              "asinReviewRatingGreaterThan",
-              "asinReviewRatingBetween",
-              "similarProduct",
-              "exactProduct",
-              "asinIsPrimeShippingEligible",
-              "asinAgeRangeSameAs",
-              "asinGenreSameAs",
-              "audienceSameAs",
-              "lookback",
-              "negative",
-              "relatedProduct"
-            ]
-          },
-          "value": {
-            "description": "The value to be targeted.",
-            "type": "string",
-            "example": "B0123456789"
-          }
-        }
+      "NextToken": {
+        "description": "Operations that return paginated results include a pagination token in this field. To retrieve the next page of results, call the same operation and specify this token in the request. If the `NextToken` field is empty, there are no further results.",
+        "type": "string"
       },
       "SDListAssociatedBudgetRulesResponse": {
         "type": "object",
@@ -3581,39 +5558,22 @@
           }
         }
       },
-      "SPListAssociatedBudgetRulesResponse": {
+      "SDHeadlineRecommendationResponse": {
+        "description": "Response structure of SD headline recommendation API.",
         "type": "object",
         "properties": {
-          "associatedRules": {
-            "description": "A list of associated budget rules.",
+          "requestId": {
+            "description": "An identifier for request made which is generated by server.",
+            "type": "string"
+          },
+          "recommendations": {
+            "minItems": 1,
+            "maxItems": 10,
+            "description": "Recommendations are sorted, i.e., more suitable headline has lesser array index value.",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SPCampaignBudgetRule"
+              "$ref": "#/components/schemas/RecommendedHeadline"
             }
-          }
-        }
-      },
-      "SDRuleBasedBudget": {
-        "type": "object",
-        "properties": {
-          "executionTime": {
-            "format": "int64",
-            "description": "Epoch time of budget rule execution.",
-            "type": "number"
-          },
-          "appliedRule": {
-            "$ref": "#/components/schemas/SDBudgetRule"
-          },
-          "ruleBasedBudgetValue": {
-            "description": "The budget value.",
-            "type": "number"
-          },
-          "dailyBudgetValue": {
-            "description": "The daily budget value.",
-            "type": "number"
-          },
-          "performanceMetric": {
-            "$ref": "#/components/schemas/PerformanceMetricValue"
           }
         }
       },
@@ -3673,6 +5633,27 @@
           }
         }
       },
+      "ViolatingImageContent": {
+        "type": "object",
+        "properties": {
+          "violatingImageEvidences": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingImageEvidence"
+            }
+          },
+          "moderatedComponent": {
+            "description": "Moderation component which marked the policy violation.",
+            "type": "string"
+          },
+          "reviewedImageUrl": {
+            "description": "URL of the image which has the ad policy violation.",
+            "type": "string"
+          }
+        }
+      },
       "SBRuleBasedBudget": {
         "type": "object",
         "properties": {
@@ -3724,6 +5705,57 @@
           }
         }
       },
+      "ModerationResultsInternalServerError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Internal error code.",
+            "type": "string",
+            "enum": [
+              "INTERNAL_ERROR"
+            ]
+          },
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
+          }
+        }
+      },
+      "TextRecommendations": {
+        "minItems": 0,
+        "maxItems": 5,
+        "description": "Ordered list of recommendations in each group.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/TextRecommendation"
+        }
+      },
+      "BudgetUsageCampaign": {
+        "type": "object",
+        "properties": {
+          "budgetUsagePercent": {
+            "description": "Budget usage percentage (spend / available budget) for the given budget policy.",
+            "type": "number"
+          },
+          "campaignId": {
+            "description": "ID of requested resource",
+            "type": "string"
+          },
+          "usageUpdatedTimestamp": {
+            "format": "date-time",
+            "description": "Last evaluation time for budget usage",
+            "type": "string"
+          },
+          "index": {
+            "description": "An index to maintain order of the campaignIds",
+            "type": "number"
+          },
+          "budget": {
+            "description": "Budget amount of resource requested",
+            "type": "number"
+          }
+        }
+      },
       "SDBudgetHistory": {
         "type": "object",
         "properties": {
@@ -3735,47 +5767,11 @@
           }
         }
       },
-      "SPGetAssociatedCampaignsResponse": {
-        "type": "object",
-        "properties": {
-          "associatedCampaigns": {
-            "minItems": 0,
-            "maxItems": 30,
-            "description": "A list of campaigns that are associated to this budget rule.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AssociatedCampaign"
-            }
-          },
-          "nextToken": {
-            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.",
-            "type": "string"
-          }
-        }
-      },
       "SDASIN": {
         "pattern": "[a-zA-Z0-9]{10}",
         "description": "Amazon Standard Identification Number",
         "type": "string",
         "example": "B00PN11UNW"
-      },
-      "SDBrandSafetyGetResponsePagination": {
-        "description": "Response pagination info for Brand Safety Deny List GET requests",
-        "type": "object",
-        "properties": {
-          "total": {
-            "description": "The total number of deny list domains created by the advertiser.",
-            "type": "integer"
-          },
-          "offset": {
-            "description": "The number of deny list domains skipped.",
-            "type": "integer"
-          },
-          "limit": {
-            "description": "The maximum number of deny list domains returned from GET request.",
-            "type": "integer"
-          }
-        }
       },
       "SPCampaignBudgetRule": {
         "type": "object",
@@ -3806,14 +5802,6 @@
           "ruleStatus": {
             "description": "The budget rule evaluation status. Read-only.",
             "type": "string"
-          }
-        }
-      },
-      "SDTargetingRecommendationsResponseV31": {
-        "description": "Response to a request for targeting recommendations",
-        "properties": {
-          "recommendations": {
-            "$ref": "#/components/schemas/SDTargetingRecommendationsV31"
           }
         }
       },
@@ -3849,14 +5837,6 @@
           }
         }
       },
-      "SDTargetingRecommendationsResponseV32": {
-        "description": "Response to a request for targeting recommendations",
-        "properties": {
-          "recommendations": {
-            "$ref": "#/components/schemas/SDTargetingRecommendationsV32"
-          }
-        }
-      },
       "SDTargetingBidRecommendationsResponseItemFailureV31": {
         "description": "Failed bid recommendation response.",
         "required": [
@@ -3876,61 +5856,58 @@
           }
         }
       },
-      "DayOfWeek": {
-        "description": "The day of the week.",
-        "type": "string",
-        "enum": [
-          "MONDAY",
-          "TUESDAY",
-          "WEDNESDAY",
-          "THURSDAY",
-          "FRIDAY",
-          "SATURDAY",
-          "SUNDAY"
-        ]
-      },
-      "UpdateBudgetRulesResponse": {
+      "AsinComponentResponse": {
+        "description": "Pre-moderation result for an Asin component",
         "type": "object",
         "properties": {
-          "responses": {
+          "preModerationStatus": {
+            "description": "The pre-moderation status of the component.",
+            "type": "string",
+            "enum": [
+              "REJECTED",
+              "APPROVED",
+              "FAILED",
+              "RETRYABLE_FAILURE"
+            ]
+          },
+          "componentType": {
+            "description": "Type of Asin component.",
+            "type": "string",
+            "enum": [
+              "LANDING_ASIN",
+              "PRODUCT_ASIN"
+            ]
+          },
+          "policyViolations": {
+            "description": "A list of policy violations for the component that were detected during pre moderation. Note that this field is present in the response only when preModerationStatus is set to REJECTED.",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/BudgetRuleResponse"
+              "$ref": "#/components/schemas/AsinPolicyViolation"
             }
+          },
+          "asin": {
+            "description": "Pre-moderated Asin Id.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Id of the component. This is the same id sent as part of the request. This can be used to uniquely identify the component.",
+            "type": "string"
           }
         }
       },
-      "SDBrandSafetyDenyListDomainUpdateResultStatus": {
-        "default": "SUCCESS",
-        "description": "The state of the domain.",
-        "type": "string",
-        "enum": [
-          "SUCCESS",
-          "FAILURE"
-        ]
-      },
-      "SdDefaultError": {
-        "description": "The error response object",
+      "CreativeRecommendationsThrottlingError": {
         "type": "object",
         "properties": {
           "code": {
-            "description": "The HTTP status code of the response.",
-            "type": "string"
+            "description": "Throttled error code.",
+            "type": "string",
+            "enum": [
+              "THROTTLED"
+            ]
           },
           "details": {
-            "description": "A human-readable description of the response.",
+            "description": "A human-readable description of the error response.",
             "type": "string"
-          }
-        }
-      },
-      "CreateAssociatedBudgetRulesResponse": {
-        "type": "object",
-        "properties": {
-          "responses": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AssociatedBudgetRuleResponse"
-            }
           }
         }
       },
@@ -3947,24 +5924,14 @@
           }
         }
       },
-      "SDTargetingClauseV31": {
-        "description": "The targeting clause",
+      "CreateAssociatedBudgetRulesResponse": {
         "type": "object",
-        "required": [
-          "expressionType",
-          "expression"
-        ],
         "properties": {
-          "expression": {
-            "$ref": "#/components/schemas/SDTargetingExpressionV31"
-          },
-          "expressionType": {
-            "description": "Tactic T00020 ad groups only allow manual targeting.",
-            "type": "string",
-            "enum": [
-              "manual",
-              "auto"
-            ]
+          "responses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AssociatedBudgetRuleResponse"
+            }
           }
         }
       },
@@ -4079,16 +6046,6 @@
           }
         }
       },
-      "SDTactic": {
-        "description": "The advertising tactic associated with the campaign. The following table lists available tactic names:\n\n|Tactic Name|Type|Description|\n|-----------|-----|-----------|\n|T00001&nbsp;|&nbsp;|This tactic name is only applicable for the `requestReport` operation and does not apply to any other campaign management operations. Reach shoppers who showed interest in categories related to your promoted products, or target specific products or product categories on Amazon. This tactic is for use by only vendors. This tactic is used to retrieve metrics for Sponsored Display campaigns that use interest, product or category audiences, including Sponsored Display campaigns that were previously Product Display Ads campaigns.|\n|T00010&nbsp;|Views&nbsp;|**Note that this advertising tactic is not currently supported. This note will be removed when this advertising tactic is available.** This is the same tactic as 'remarketing'. Shoppers who viewed the detail pages of your advertised products or similar products.|\n|remarketing&nbsp;|Views&nbsp;|This is the same tactic as 'T00010'. Shoppers who viewed the detail pages of your advertised products or similar products.|\n|T00020&nbsp;|Products&nbsp;|Products: Choose individual products to show your ads in placements related to those products.<br>Categories: Choose individual categories to show your ads in placements related to those categories.|",
-        "type": "string",
-        "enum": [
-          "T00001",
-          "T00010",
-          "T00020",
-          "remarketing"
-        ]
-      },
       "UpdateSPBudgetRulesRequest": {
         "description": "Request object for updating budget rule for SP campaign",
         "type": "object",
@@ -4103,17 +6060,31 @@
           }
         }
       },
-      "SDTacticV31": {
-        "description": "The advertising tactic associated with the campaign. The following table lists available tactic names:\n|Tactic Name|Type|Description|\n|-----------|-----|-----------|\n|T00001&nbsp;|&nbsp;|This tactic name is only applicable for the `requestReport` operation and does not apply to any other campaign management operations. Reach shoppers who showed interest in categories related to your promoted products, or target specific products or product categories on Amazon. This tactic is for use by only vendors. This tactic is used to retrieve metrics for Sponsored Display campaigns that use interest, product or category audiences, including Sponsored Display campaigns that were previously Product Display Ads campaigns.|\n|T00010&nbsp;|Views&nbsp;|**Note that this advertising tactic is not currently supported. This note will be removed when this advertising tactic is available.** This is the same tactic as 'remarketing'. Shoppers who viewed the detail pages of your advertised products or similar products.|\n|remarketing&nbsp;|Views&nbsp;|This is the same tactic as 'T00010'. Shoppers who viewed the detail pages of your advertised products or similar products.|\n|T00020&nbsp;|Products&nbsp;|Products: Choose individual products to show your ads in placements related to those products.<br>Categories: Choose individual categories to show your ads in placements related to those categories.|\n|T00030&nbsp;|Audiences&nbsp;|Select individual audiences to show your ads.|",
-        "type": "string",
-        "enum": [
-          "T00001",
-          "T00010",
-          "T00020",
-          "remarketing",
-          "T00030"
-        ],
-        "example": "T00030"
+      "CreativeRecommendationsResponse": {
+        "type": "object",
+        "properties": {
+          "primaryHeadlines": {
+            "$ref": "#/components/schemas/PrimaryHeadlineRecommendationGroups"
+          },
+          "secondaryHeadlines": {
+            "$ref": "#/components/schemas/SecondaryHeadlineRecommendationGroups"
+          }
+        }
+      },
+      "TextPosition": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "format": "int64",
+            "description": "Zero-based index into the text in reviewedText where the text specified in violatingText starts.",
+            "type": "integer"
+          },
+          "end": {
+            "format": "int64",
+            "description": "Zero-based index into the text in reviewedText where the text specified in violatingText ends.",
+            "type": "integer"
+          }
+        }
       },
       "AssociatedCampaign": {
         "type": "object",
@@ -4137,48 +6108,67 @@
           }
         }
       },
-      "SDBrandSafetyDenyListDomainState": {
-        "default": "ENABLED",
-        "description": "The state of the domain.",
-        "type": "string",
-        "enum": [
-          "ENABLED",
-          "ARCHIVED"
-        ]
+      "PolicyViolation": {
+        "type": "object",
+        "properties": {
+          "policyDescription": {
+            "description": "A human-readable description of the policy.",
+            "type": "string"
+          },
+          "violatingTextContents": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingTextContent"
+            }
+          },
+          "violatingImageContents": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingImageContent"
+            }
+          },
+          "policyLinkUrl": {
+            "description": "Address of the policy documentation. Follow the link to learn more about the specified policy.",
+            "type": "string"
+          },
+          "violatingVideoContents": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingVideoContent"
+            }
+          },
+          "violatingAsinContents": {
+            "minItems": 0,
+            "maxItems": 200,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ViolatingAsinContent"
+            }
+          }
+        }
       },
       "DisassociateAssociatedBudgetRuleResponse": {
         "type": "object"
       },
-      "BudgetChangeType": {
-        "description": "The value by which to update the budget of the budget rule.",
-        "type": "string",
-        "enum": [
-          "PERCENT"
-        ]
-      },
-      "SDBudgetRuleDetails": {
-        "description": "Object representing details of a budget rule for SD campaign",
+      "SDHeadlineRecommendationInternalServerException": {
         "type": "object",
         "properties": {
-          "duration": {
-            "$ref": "#/components/schemas/RuleDuration"
-          },
-          "recurrence": {
-            "$ref": "#/components/schemas/Recurrence"
-          },
-          "ruleType": {
-            "$ref": "#/components/schemas/SDRuleType"
-          },
-          "budgetIncreaseBy": {
-            "$ref": "#/components/schemas/budgetIncreaseBy"
-          },
-          "name": {
-            "description": "The budget rule name. Required to be unique within a campaign.",
+          "code": {
+            "description": "InternalErrorCode.",
             "type": "string",
-            "maxLength": 355
+            "enum": [
+              "INTERNAL_ERROR"
+            ]
           },
-          "performanceMeasureCondition": {
-            "$ref": "#/components/schemas/PerformanceMeasureCondition"
+          "details": {
+            "description": "A human-readable description of the error response.",
+            "type": "string"
           }
         }
       },
@@ -4213,6 +6203,15 @@
         "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.\n",
         "required": true
       },
+      "clientHeader": {
+        "schema": {
+          "type": "string"
+        },
+        "in": "header",
+        "name": "Amazon-Advertising-API-ClientId",
+        "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+        "required": true
+      },
       "SDBrandSafetyClientHeader": {
         "schema": {
           "type": "string"
@@ -4238,6 +6237,15 @@
         "in": "header",
         "name": "Amazon-Advertising-API-ClientId",
         "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+        "required": true
+      },
+      "profileHeader": {
+        "schema": {
+          "type": "string"
+        },
+        "in": "header",
+        "name": "Amazon-Advertising-API-Scope",
+        "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id `profileId` from the response to pass it as input.",
         "required": true
       }
     }

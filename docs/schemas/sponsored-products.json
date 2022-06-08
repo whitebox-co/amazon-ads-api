@@ -15,9 +15,6 @@
   },
   "servers": [
     {
-      "url": "https://advertising-api-test.amazon.com"
-    },
-    {
       "url": "https://advertising-api.amazon.com"
     },
     {

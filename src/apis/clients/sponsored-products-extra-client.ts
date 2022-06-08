@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-import { AdGroupsApi,BudgetRecommendationsAndMissedOpportunitiesApi,BudgetRulesApi,BudgetRulesRecommendationApi,CampaignOptimizationRulesApi,CampaignsApi,GetRankedKeywordsRecommendationsApi,ProductAdsApi,ProductRecommendationServiceApi,ProductTargetingApi,ThemeBasedBidRecommendationApi } from '../models/sponsored-products-extra';
+import { AdGroupsApi,BudgetRecommendationsAndMissedOpportunitiesApi,BudgetRulesApi,BudgetRulesRecommendationApi,BudgetUsageApi,CampaignOptimizationRulesApi,CampaignsApi,ConsolidatedRecommendationsApi,KeywordRecommendationsApi,ProductAdsApi,ProductRecommendationServiceApi,ProductTargetingApi,ThemeBasedBidRecommendationApi } from '../models/sponsored-products-extra';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
 import { getAxiosInstance, applyMixins, AdsConfiguration } from '../../helpers';
 
@@ -21,6 +21,6 @@ export class SponsoredProductsExtraClient extends AdGroupsApi {
 }
 
 
-    export interface SponsoredProductsExtraClient extends AdGroupsApi,BudgetRecommendationsAndMissedOpportunitiesApi,BudgetRulesApi,BudgetRulesRecommendationApi,CampaignOptimizationRulesApi,CampaignsApi,GetRankedKeywordsRecommendationsApi,ProductAdsApi,ProductRecommendationServiceApi,ProductTargetingApi,ThemeBasedBidRecommendationApi {}
-    applyMixins(SponsoredProductsExtraClient, [AdGroupsApi,BudgetRecommendationsAndMissedOpportunitiesApi,BudgetRulesApi,BudgetRulesRecommendationApi,CampaignOptimizationRulesApi,CampaignsApi,GetRankedKeywordsRecommendationsApi,ProductAdsApi,ProductRecommendationServiceApi,ProductTargetingApi,ThemeBasedBidRecommendationApi])
+    export interface SponsoredProductsExtraClient extends AdGroupsApi,BudgetRecommendationsAndMissedOpportunitiesApi,BudgetRulesApi,BudgetRulesRecommendationApi,BudgetUsageApi,CampaignOptimizationRulesApi,CampaignsApi,ConsolidatedRecommendationsApi,KeywordRecommendationsApi,ProductAdsApi,ProductRecommendationServiceApi,ProductTargetingApi,ThemeBasedBidRecommendationApi {}
+    applyMixins(SponsoredProductsExtraClient, [AdGroupsApi,BudgetRecommendationsAndMissedOpportunitiesApi,BudgetRulesApi,BudgetRulesRecommendationApi,BudgetUsageApi,CampaignOptimizationRulesApi,CampaignsApi,ConsolidatedRecommendationsApi,KeywordRecommendationsApi,ProductAdsApi,ProductRecommendationServiceApi,ProductTargetingApi,ThemeBasedBidRecommendationApi])
     

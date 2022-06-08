@@ -42,7 +42,7 @@ export interface AccessDeniedException {
     details?: string;
 }
 /**
- * request object to get rank recommendations for keywordTarget by adGroup
+ * This request type is used to retrieve recommended keyword targets for an existing ad group. Set the recommendationType to KEYWORD_FOR_ADGROUP to use this request type.
  * @export
  * @interface AdGroupKeywordTargetRankRecommendationRequest
  */
@@ -54,7 +54,7 @@ export interface AdGroupKeywordTargetRankRecommendationRequest {
      */
     campaignId: string;
     /**
-     * The recommendation type to get recommendations by adGroup
+     * The recommendationType to retrieve recommended keyword targets for an existing ad group.
      * @type {string}
      * @memberof AdGroupKeywordTargetRankRecommendationRequest
      */
@@ -78,7 +78,7 @@ export interface AdGroupKeywordTargetRankRecommendationRequest {
      */
     sortDimension?: AdGroupKeywordTargetRankRecommendationRequestSortDimensionEnum;
     /**
-     * Translations are for readability and do not affect the targeting of ads. zh_CN is supported in US, UK, CA. en_GB is supported in DE, FR, IT, ES. Note: Translations will be null if locale is unsupported
+     * Translations are for readability and do not affect the targeting of ads. Supported marketplace to locale mappings can be found at the <a href=\'https://advertising.amazon.com/API/docs/en-us/localization/#/Keyword%20Localization\'>POST /keywords/localize</a> endpoint. Note: Translations will be null if locale is unsupported.
      * @type {string}
      * @memberof AdGroupKeywordTargetRankRecommendationRequest
      */
@@ -106,8 +106,27 @@ export enum AdGroupKeywordTargetRankRecommendationRequestSortDimensionEnum {
     * @enum {string}
     */
 export enum AdGroupKeywordTargetRankRecommendationRequestLocaleEnum {
-    ZhCn = 'zh_CN',
-    EnGb = 'en_GB'
+    ArEg = 'ar_EG',
+    DeDe = 'de_DE',
+    EnAe = 'en_AE',
+    EnAu = 'en_AU',
+    EnCa = 'en_CA',
+    EnGb = 'en_GB',
+    EnIn = 'en_IN',
+    EnSa = 'en_SA',
+    EnSg = 'en_SG',
+    EnUs = 'en_US',
+    EsEs = 'es_ES',
+    EsMx = 'es_MX',
+    FrFr = 'fr_FR',
+    ItIt = 'it_IT',
+    JaJp = 'ja_JP',
+    NlNl = 'nl_NL',
+    PlPl = 'pl_PL',
+    PtBr = 'pt_BR',
+    SvSe = 'sv_SE',
+    TrTr = 'tr_TR',
+    ZhCn = 'zh_CN'
 }
 
 /**
@@ -170,7 +189,7 @@ export interface AgeRange {
     id?: string;
 }
 /**
- * request object to get rank recommendations for keywordTarget by Asin list
+ * This request type is used to retrieve recommended keyword targets for ASINs. Set the recommendationType to KEYWORD_FOR_ASINS to use this request type.
  * @export
  * @interface AsinsKeywordTargetRankRecommendationRequest
  */
@@ -182,7 +201,7 @@ export interface AsinsKeywordTargetRankRecommendationRequest {
      */
     asins: Array<string>;
     /**
-     * The recommendation type to get recommendations for Asin list
+     * The recommendationType to retrieve recommended keyword targets for a list of ASINs.
      * @type {string}
      * @memberof AsinsKeywordTargetRankRecommendationRequest
      */
@@ -200,7 +219,7 @@ export interface AsinsKeywordTargetRankRecommendationRequest {
      */
     sortDimension?: AsinsKeywordTargetRankRecommendationRequestSortDimensionEnum;
     /**
-     * Translations are for readability and do not affect the targeting of ads. zh_CN is supported in US, UK, CA. en_GB is supported in DE, FR, IT, ES. Note: Translations will be null if locale is unsupported
+     * Translations are for readability and do not affect the targeting of ads. Supported marketplace to locale mappings can be found at the <a href=\'https://advertising.amazon.com/API/docs/en-us/localization/#/Keyword%20Localization\'>POST /keywords/localize</a> endpoint. Note: Translations will be null if locale is unsupported.
      * @type {string}
      * @memberof AsinsKeywordTargetRankRecommendationRequest
      */
@@ -228,8 +247,27 @@ export enum AsinsKeywordTargetRankRecommendationRequestSortDimensionEnum {
     * @enum {string}
     */
 export enum AsinsKeywordTargetRankRecommendationRequestLocaleEnum {
-    ZhCn = 'zh_CN',
-    EnGb = 'en_GB'
+    ArEg = 'ar_EG',
+    DeDe = 'de_DE',
+    EnAe = 'en_AE',
+    EnAu = 'en_AU',
+    EnCa = 'en_CA',
+    EnGb = 'en_GB',
+    EnIn = 'en_IN',
+    EnSa = 'en_SA',
+    EnSg = 'en_SG',
+    EnUs = 'en_US',
+    EsEs = 'es_ES',
+    EsMx = 'es_MX',
+    FrFr = 'fr_FR',
+    ItIt = 'it_IT',
+    JaJp = 'ja_JP',
+    NlNl = 'nl_NL',
+    PlPl = 'pl_PL',
+    PtBr = 'pt_BR',
+    SvSe = 'sv_SE',
+    TrTr = 'tr_TR',
+    ZhCn = 'zh_CN'
 }
 
 /**
@@ -443,6 +481,31 @@ export interface BidValue {
     suggestedBid: number;
 }
 /**
+ * Suggested bid range
+ * @export
+ * @interface BidValues
+ */
+export interface BidValues {
+    /**
+     * The suggested bid
+     * @type {number}
+     * @memberof BidValues
+     */
+    suggested?: number;
+    /**
+     * The bid range start
+     * @type {number}
+     * @memberof BidValues
+     */
+    rangeStart?: number;
+    /**
+     * The bid range end
+     * @type {number}
+     * @memberof BidValues
+     */
+    rangeEnd?: number;
+}
+/**
  * The bidding strategy selected for the campaign. Use `LEGACY_FOR_SALES` to lower your bid in real time when your ad may be less likely to convert to a sale. Use `AUTO_FOR_SALES` to increase your bid in real time when your ad may be more likely to convert to a sale or lower your bid when less likely to convert to a sale. Use `MANUAL` to use your exact bid along with any manual adjustments.
  * @export
  * @enum {string}
@@ -452,6 +515,43 @@ export enum BiddingStrategy {
     LegacyForSales = 'LEGACY_FOR_SALES',
     AutoForSales = 'AUTO_FOR_SALES',
     Manual = 'MANUAL'
+}
+
+/**
+ * Contains suggested recommendation for the campaign bidding strategy.
+ * @export
+ * @interface BiddingStrategyRecommendation
+ */
+export interface BiddingStrategyRecommendation {
+    /**
+     * The suggested bidding strategy value for the campaign. | Value | Strategy name | Description | |----------------|---------------|-------------| | `LEGACY_FOR_SALES` | Dynamic bids - down only | Lowers your bids in real time when your ad may be less likely to convert to a sale. Campaigns created before the release of the bidding controls feature used this setting by default. | | `AUTO_FOR_SALES` | Dynamic bids - up and down | Increases or decreases your bids in real time by a maximum of 100%. With this setting bids increase when your ad is more likely to convert to a sale, and bids decrease when less likely to convert to a sale. | | `MANUAL` | Fixed bid | Uses your exact bid and any placement adjustments you set, and is not subject to dynamic bidding. |
+     * @type {string}
+     * @memberof BiddingStrategyRecommendation
+     */
+    suggestedBiddingStrategy?: BiddingStrategyRecommendationSuggestedBiddingStrategyEnum;
+    /**
+     * Type of suggested action.
+     * @type {string}
+     * @memberof BiddingStrategyRecommendation
+     */
+    action?: BiddingStrategyRecommendationActionEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum BiddingStrategyRecommendationSuggestedBiddingStrategyEnum {
+    LegacyForSales = 'LEGACY_FOR_SALES',
+    AutoForSales = 'AUTO_FOR_SALES',
+    Manual = 'MANUAL'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum BiddingStrategyRecommendationActionEnum {
+    Update = 'UPDATE'
 }
 
 /**
@@ -503,42 +603,34 @@ export interface BudgetIncreaseBy {
     value: number;
 }
 /**
- * 
+ * Contains suggested recommendation for the campaign budget.
  * @export
  * @interface BudgetRecommendation
  */
 export interface BudgetRecommendation {
     /**
-     * encrypted campaignId
+     * The suggested budget value for the campaign.
+     * @type {number}
+     * @memberof BudgetRecommendation
+     */
+    suggestedBudget?: number;
+    /**
+     * Type of suggested action.
      * @type {string}
      * @memberof BudgetRecommendation
      */
-    campaignId: string;
-    /**
-     * recommended budget for the campaign.
-     * @type {number}
-     * @memberof BudgetRecommendation
-     */
-    suggestedBudget: number;
-    /**
-     * Correlate the recommendation to the campaign index in the request. Zero-based
-     * @type {number}
-     * @memberof BudgetRecommendation
-     */
-    index: number;
-    /**
-     * 
-     * @type {SevenDaysMissedOpportunities}
-     * @memberof BudgetRecommendation
-     */
-    sevenDaysMissedOpportunities: SevenDaysMissedOpportunities;
-    /**
-     * 
-     * @type {BudgetRuleRecommendation}
-     * @memberof BudgetRecommendation
-     */
-    budgetRuleRecommendation: BudgetRuleRecommendation;
+    action?: BudgetRecommendationActionEnum;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum BudgetRecommendationActionEnum {
+    Increase = 'INCREASE',
+    Decrease = 'DECREASE'
+}
+
 /**
  * 
  * @export
@@ -674,6 +766,225 @@ export interface BudgetRuleResponse {
 /**
  * 
  * @export
+ * @interface BudgetUsageCampaign
+ */
+export interface BudgetUsageCampaign {
+    /**
+     * Budget usage percentage (spend / available budget) for the given budget policy.
+     * @type {number}
+     * @memberof BudgetUsageCampaign
+     */
+    budgetUsagePercent?: number;
+    /**
+     * ID of requested resource
+     * @type {string}
+     * @memberof BudgetUsageCampaign
+     */
+    campaignId?: string;
+    /**
+     * Last evaluation time for budget usage
+     * @type {string}
+     * @memberof BudgetUsageCampaign
+     */
+    usageUpdatedTimestamp?: string;
+    /**
+     * An index to maintain order of the campaignIds
+     * @type {number}
+     * @memberof BudgetUsageCampaign
+     */
+    index?: number;
+    /**
+     * Budget amount of resource requested
+     * @type {number}
+     * @memberof BudgetUsageCampaign
+     */
+    budget?: number;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsageCampaignBatchError
+ */
+export interface BudgetUsageCampaignBatchError {
+    /**
+     * An enumerated error code for machine use.
+     * @type {string}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    code?: string;
+    /**
+     * ID of requested resource
+     * @type {string}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    campaignId?: string;
+    /**
+     * An index to maintain order of the campaignIds
+     * @type {number}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    index?: number;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsageCampaignRequest
+ */
+export interface BudgetUsageCampaignRequest {
+    /**
+     * A list of campaign IDs
+     * @type {Array<string>}
+     * @memberof BudgetUsageCampaignRequest
+     */
+    campaignIds?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsageCampaignResponse
+ */
+export interface BudgetUsageCampaignResponse {
+    /**
+     * List of budget usage percentages that were successfully pulled
+     * @type {Array<BudgetUsageCampaign>}
+     * @memberof BudgetUsageCampaignResponse
+     */
+    success?: Array<BudgetUsageCampaign>;
+    /**
+     * List of budget usage percentages that failed to pull
+     * @type {Array<BudgetUsageCampaignBatchError>}
+     * @memberof BudgetUsageCampaignResponse
+     */
+    error?: Array<BudgetUsageCampaignBatchError>;
+}
+/**
+ * The Error Response Object.
+ * @export
+ * @interface BudgetUsageError
+ */
+export interface BudgetUsageError {
+    /**
+     * An enumerated error code for machine use.
+     * @type {string}
+     * @memberof BudgetUsageError
+     */
+    code?: string;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof BudgetUsageError
+     */
+    details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsagePortfolio
+ */
+export interface BudgetUsagePortfolio {
+    /**
+     * Budget usage percentage (spend / available budget) for the given budget policy.
+     * @type {number}
+     * @memberof BudgetUsagePortfolio
+     */
+    budgetUsagePercent?: number;
+    /**
+     * ID of requested resource
+     * @type {string}
+     * @memberof BudgetUsagePortfolio
+     */
+    portfolioId?: string;
+    /**
+     * Last evaluation time for budget usage
+     * @type {string}
+     * @memberof BudgetUsagePortfolio
+     */
+    usageUpdatedTimestamp?: string;
+    /**
+     * An index to maintain order of the portfolioIds
+     * @type {number}
+     * @memberof BudgetUsagePortfolio
+     */
+    index?: number;
+    /**
+     * Budget amount of resource requested
+     * @type {number}
+     * @memberof BudgetUsagePortfolio
+     */
+    budget?: number;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsagePortfolioBatchError
+ */
+export interface BudgetUsagePortfolioBatchError {
+    /**
+     * ID of requested resource
+     * @type {string}
+     * @memberof BudgetUsagePortfolioBatchError
+     */
+    portfolioId?: string;
+    /**
+     * An enumerated error code for machine use.
+     * @type {string}
+     * @memberof BudgetUsagePortfolioBatchError
+     */
+    code?: string;
+    /**
+     * An index to maintain order of the portfolioIds
+     * @type {number}
+     * @memberof BudgetUsagePortfolioBatchError
+     */
+    index?: number;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof BudgetUsagePortfolioBatchError
+     */
+    details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsagePortfolioRequest
+ */
+export interface BudgetUsagePortfolioRequest {
+    /**
+     * A list of portfolio IDs.
+     * @type {Array<string>}
+     * @memberof BudgetUsagePortfolioRequest
+     */
+    portfolioIds?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsagePortfolioResponse
+ */
+export interface BudgetUsagePortfolioResponse {
+    /**
+     * List of budget usage percentages that were successfully pulled
+     * @type {Array<BudgetUsagePortfolio>}
+     * @memberof BudgetUsagePortfolioResponse
+     */
+    success?: Array<BudgetUsagePortfolio>;
+    /**
+     * List of budget usage percentages that failed to pull
+     * @type {Array<BudgetUsagePortfolioBatchError>}
+     * @memberof BudgetUsagePortfolioResponse
+     */
+    error?: Array<BudgetUsagePortfolioBatchError>;
+}
+/**
+ * 
+ * @export
  * @interface CampaignOptimizationRule
  */
 export interface CampaignOptimizationRule {
@@ -750,6 +1061,49 @@ export interface CampaignOptimizationRuleError {
      * @memberof CampaignOptimizationRuleError
      */
     details?: string;
+}
+/**
+ * This object contains a set of recommendations for a campaign across bid, budget, targeting.
+ * @export
+ * @interface CampaignRecommendation
+ */
+export interface CampaignRecommendation {
+    /**
+     * 
+     * @type {SevenDaysEstimatedOpportunities}
+     * @memberof CampaignRecommendation
+     */
+    sevenDaysEstimatedOpportunities?: SevenDaysEstimatedOpportunities;
+    /**
+     * 
+     * @type {BiddingStrategyRecommendation}
+     * @memberof CampaignRecommendation
+     */
+    biddingStrategyRecommendation?: BiddingStrategyRecommendation;
+    /**
+     * The identifier of the campaign.
+     * @type {string}
+     * @memberof CampaignRecommendation
+     */
+    campaignId?: string;
+    /**
+     * 
+     * @type {Array<KeywordTargetingRecommendation>}
+     * @memberof CampaignRecommendation
+     */
+    keywordTargetingRecommendations?: Array<KeywordTargetingRecommendation>;
+    /**
+     * 
+     * @type {BudgetRecommendation}
+     * @memberof CampaignRecommendation
+     */
+    budgetRecommendation?: BudgetRecommendation;
+    /**
+     * 
+     * @type {Array<TargetingGroupBidRecommendation>}
+     * @memberof CampaignRecommendation
+     */
+    targetingGroupBidRecommendations?: Array<TargetingGroupBidRecommendation>;
 }
 /**
  * 
@@ -1165,6 +1519,25 @@ export interface Genre {
     id?: string;
 }
 /**
+ * 
+ * @export
+ * @interface GetCampaignRecommendationsResponse
+ */
+export interface GetCampaignRecommendationsResponse {
+    /**
+     * An identifier to fetch next set of campaign recommendations records in the result set if available. This will be null when at the end of result set.
+     * @type {string}
+     * @memberof GetCampaignRecommendationsResponse
+     */
+    nextToken?: string;
+    /**
+     * List of campaign recommendations.
+     * @type {Array<CampaignRecommendation>}
+     * @memberof GetCampaignRecommendationsResponse
+     */
+    recommendations: Array<CampaignRecommendation>;
+}
+/**
  * Request object to retrieve Category Recommendations based on the input ASINs.
  * @export
  * @interface GetCategoryRecommendationsForAsinsRequest
@@ -1424,7 +1797,7 @@ export interface IntegerRange {
     max?: number;
 }
 /**
- * Returns information about an InternalServerException
+ * Returns information about an InternalServerException.
  * @export
  * @interface InternalServerException
  */
@@ -1546,7 +1919,7 @@ export enum KeywordTargetMatchTypeEnum {
  */
 export interface KeywordTargetRankRecommendationRequest {
     /**
-     * User defined keyword targets list.
+     * A list of targets that need to be ranked
      * @type {Array<KeywordTarget>}
      * @memberof KeywordTargetRankRecommendationRequest
      */
@@ -1564,7 +1937,7 @@ export interface KeywordTargetRankRecommendationRequest {
      */
     sortDimension?: KeywordTargetRankRecommendationRequestSortDimensionEnum;
     /**
-     * Translations are for readability and do not affect the targeting of ads. zh_CN is supported in US, UK, CA. en_GB is supported in DE, FR, IT, ES. Note: Translations will be null if locale is unsupported
+     * Translations are for readability and do not affect the targeting of ads. Supported marketplace to locale mappings can be found at the <a href=\'https://advertising.amazon.com/API/docs/en-us/localization/#/Keyword%20Localization\'>POST /keywords/localize</a> endpoint. Note: Translations will be null if locale is unsupported.
      * @type {string}
      * @memberof KeywordTargetRankRecommendationRequest
      */
@@ -1585,8 +1958,27 @@ export enum KeywordTargetRankRecommendationRequestSortDimensionEnum {
     * @enum {string}
     */
 export enum KeywordTargetRankRecommendationRequestLocaleEnum {
-    ZhCn = 'zh_CN',
-    EnGb = 'en_GB'
+    ArEg = 'ar_EG',
+    DeDe = 'de_DE',
+    EnAe = 'en_AE',
+    EnAu = 'en_AU',
+    EnCa = 'en_CA',
+    EnGb = 'en_GB',
+    EnIn = 'en_IN',
+    EnSa = 'en_SA',
+    EnSg = 'en_SG',
+    EnUs = 'en_US',
+    EsEs = 'es_ES',
+    EsMx = 'es_MX',
+    FrFr = 'fr_FR',
+    ItIt = 'it_IT',
+    JaJp = 'ja_JP',
+    NlNl = 'nl_NL',
+    PlPl = 'pl_PL',
+    PtBr = 'pt_BR',
+    SvSe = 'sv_SE',
+    TrTr = 'tr_TR',
+    ZhCn = 'zh_CN'
 }
 
 /**
@@ -1650,6 +2042,71 @@ export enum KeywordTargetResponseMatchTypeEnum {
 }
 
 /**
+ * Contains suggested recommendation for the keyword targeting.
+ * @export
+ * @interface KeywordTargetingRecommendation
+ */
+export interface KeywordTargetingRecommendation {
+    /**
+     * The identifier of the keyword targeting.
+     * @type {string}
+     * @memberof KeywordTargetingRecommendation
+     */
+    keywordId?: string;
+    /**
+     * The suggested bid value associated with this keyword targeting clause.
+     * @type {number}
+     * @memberof KeywordTargetingRecommendation
+     */
+    suggestedBid?: number;
+    /**
+     * Keyword match type. | Value | Description | | --- | --- | | `BROAD` | Use BROAD to broadly match your keyword targeting ads with search queries.| | `EXACT` | Use EXACT to exactly match your keyword targeting ads with search queries.| | `PHRASE` | Use PHRASE to match your keyword targeting ads with search phrases.|
+     * @type {string}
+     * @memberof KeywordTargetingRecommendation
+     */
+    matchType?: KeywordTargetingRecommendationMatchTypeEnum;
+    /**
+     * Type of action for the keyword targeting.
+     * @type {string}
+     * @memberof KeywordTargetingRecommendation
+     */
+    action?: KeywordTargetingRecommendationActionEnum;
+    /**
+     * The ad group identifier.
+     * @type {string}
+     * @memberof KeywordTargetingRecommendation
+     */
+    adGroupId?: string;
+    /**
+     * The keyword text.
+     * @type {string}
+     * @memberof KeywordTargetingRecommendation
+     */
+    keywordText?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum KeywordTargetingRecommendationMatchTypeEnum {
+    Exact = 'EXACT',
+    Phrase = 'PHRASE',
+    Broad = 'BROAD'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum KeywordTargetingRecommendationActionEnum {
+    Add = 'ADD',
+    Remove = 'REMOVE',
+    Increase = 'INCREASE',
+    Decrease = 'DECREASE',
+    Update = 'UPDATE'
+}
+
+/**
  * 
  * @export
  * @interface ListBrandsResponseObject
@@ -1700,6 +2157,31 @@ export interface PerformanceMeasureCondition {
     threshold: number;
 }
 /**
+ * 
+ * @export
+ * @interface PerformanceMeasureConditionForSB
+ */
+export interface PerformanceMeasureConditionForSB {
+    /**
+     * 
+     * @type {PerformanceMetricForSB}
+     * @memberof PerformanceMeasureConditionForSB
+     */
+    metricName: PerformanceMetricForSB;
+    /**
+     * 
+     * @type {ComparisonOperator}
+     * @memberof PerformanceMeasureConditionForSB
+     */
+    comparisonOperator: ComparisonOperator;
+    /**
+     * The performance threshold value.
+     * @type {number}
+     * @memberof PerformanceMeasureConditionForSB
+     */
+    threshold: number;
+}
+/**
  * The advertising performance metric.
  * @export
  * @enum {string}
@@ -1709,6 +2191,16 @@ export enum PerformanceMetric {
     Acos = 'ACOS',
     Ctr = 'CTR',
     Cvr = 'CVR',
+    Roas = 'ROAS'
+}
+
+/**
+ * The advertising performance metric.
+ * @export
+ * @enum {string}
+ */
+
+export enum PerformanceMetricForSB {
     Roas = 'ROAS'
 }
 
@@ -2041,6 +2533,204 @@ export interface RangeMetricValue {
     upper?: number;
 }
 /**
+ * This request type is used to retrieve recommended keyword targets for an existing ad group. Set the recommendationType to KEYWORD_FOR_ADGROUP to use this request type.
+ * @export
+ * @interface RankedKeywordTargetsForAdGroupRequest
+ */
+export interface RankedKeywordTargetsForAdGroupRequest {
+    /**
+     * The identifier of the campaign
+     * @type {string}
+     * @memberof RankedKeywordTargetsForAdGroupRequest
+     */
+    campaignId: string;
+    /**
+     * The recommendationType to retrieve recommended keyword targets for an existing ad group.
+     * @type {string}
+     * @memberof RankedKeywordTargetsForAdGroupRequest
+     */
+    recommendationType: RankedKeywordTargetsForAdGroupRequestRecommendationTypeEnum;
+    /**
+     * Set this parameter to false if you do not want to retrieve bid suggestions for your keyword targets. Defaults to true.
+     * @type {boolean}
+     * @memberof RankedKeywordTargetsForAdGroupRequest
+     */
+    bidsEnabled?: boolean;
+    /**
+     * The identifier of the ad group
+     * @type {string}
+     * @memberof RankedKeywordTargetsForAdGroupRequest
+     */
+    adGroupId: string;
+    /**
+     * The max size of recommended target. Set it to 0 if you only want to rank user-defined keywords.
+     * @type {number}
+     * @memberof RankedKeywordTargetsForAdGroupRequest
+     */
+    maxRecommendations?: number;
+    /**
+     * The ranking metric value. Supported values: CLICKS, CONVERSIONS, DEFAULT. DEFAULT will be applied if no value passed in.
+     * @type {string}
+     * @memberof RankedKeywordTargetsForAdGroupRequest
+     */
+    sortDimension?: RankedKeywordTargetsForAdGroupRequestSortDimensionEnum;
+    /**
+     * Translations are for readability and do not affect the targeting of ads. Supported marketplace to locale mappings can be found at the <a href=\'https://advertising.amazon.com/API/docs/en-us/localization/#/Keyword%20Localization\'>POST /keywords/localize</a> endpoint. Note: Translations will be null if locale is unsupported.
+     * @type {string}
+     * @memberof RankedKeywordTargetsForAdGroupRequest
+     */
+    locale?: RankedKeywordTargetsForAdGroupRequestLocaleEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RankedKeywordTargetsForAdGroupRequestRecommendationTypeEnum {
+    KeywordsForAdgroup = 'KEYWORDS_FOR_ADGROUP'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RankedKeywordTargetsForAdGroupRequestSortDimensionEnum {
+    Clicks = 'CLICKS',
+    Conversions = 'CONVERSIONS',
+    Default = 'DEFAULT'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RankedKeywordTargetsForAdGroupRequestLocaleEnum {
+    ArEg = 'ar_EG',
+    DeDe = 'de_DE',
+    EnAe = 'en_AE',
+    EnAu = 'en_AU',
+    EnCa = 'en_CA',
+    EnGb = 'en_GB',
+    EnIn = 'en_IN',
+    EnSa = 'en_SA',
+    EnSg = 'en_SG',
+    EnUs = 'en_US',
+    EsEs = 'es_ES',
+    EsMx = 'es_MX',
+    FrFr = 'fr_FR',
+    ItIt = 'it_IT',
+    JaJp = 'ja_JP',
+    NlNl = 'nl_NL',
+    PlPl = 'pl_PL',
+    PtBr = 'pt_BR',
+    SvSe = 'sv_SE',
+    TrTr = 'tr_TR',
+    ZhCn = 'zh_CN'
+}
+
+/**
+ * This request type is used to retrieve recommended keyword targets for ASINs. Set the recommendationType to KEYWORD_FOR_ASINS to use this request type.
+ * @export
+ * @interface RankedKeywordTargetsForAsinsRequest
+ */
+export interface RankedKeywordTargetsForAsinsRequest {
+    /**
+     * An array list of Asins
+     * @type {Array<string>}
+     * @memberof RankedKeywordTargetsForAsinsRequest
+     */
+    asins: Array<string>;
+    /**
+     * The bid recommendations returned will depend on the bidding strategy. <br> LEGACY_FOR_SALES - Dynamic Bids (Down only) <br> AUTO_FOR_SALES - Dynamic Bids (Up or down) <br> MANUAL - Fixed Bids
+     * @type {string}
+     * @memberof RankedKeywordTargetsForAsinsRequest
+     */
+    biddingStrategy?: RankedKeywordTargetsForAsinsRequestBiddingStrategyEnum;
+    /**
+     * The recommendationType to retrieve recommended keyword targets for a list of ASINs.
+     * @type {string}
+     * @memberof RankedKeywordTargetsForAsinsRequest
+     */
+    recommendationType: RankedKeywordTargetsForAsinsRequestRecommendationTypeEnum;
+    /**
+     * Set this parameter to false if you do not want to retrieve bid suggestions for your keyword targets. Defaults to true.
+     * @type {boolean}
+     * @memberof RankedKeywordTargetsForAsinsRequest
+     */
+    bidsEnabled?: boolean;
+    /**
+     * The max size of recommended target. Set it to 0 if you only want to rank user-defined keywords.
+     * @type {number}
+     * @memberof RankedKeywordTargetsForAsinsRequest
+     */
+    maxRecommendations?: number;
+    /**
+     * The ranking metric value. Supported values: CLICKS, CONVERSIONS, DEFAULT. DEFAULT will be applied if no value passed in.
+     * @type {string}
+     * @memberof RankedKeywordTargetsForAsinsRequest
+     */
+    sortDimension?: RankedKeywordTargetsForAsinsRequestSortDimensionEnum;
+    /**
+     * Translations are for readability and do not affect the targeting of ads. Supported marketplace to locale mappings can be found at the <a href=\'https://advertising.amazon.com/API/docs/en-us/localization/#/Keyword%20Localization\'>POST /keywords/localize</a> endpoint. Note: Translations will be null if locale is unsupported.
+     * @type {string}
+     * @memberof RankedKeywordTargetsForAsinsRequest
+     */
+    locale?: RankedKeywordTargetsForAsinsRequestLocaleEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RankedKeywordTargetsForAsinsRequestBiddingStrategyEnum {
+    LegacyForSales = 'LEGACY_FOR_SALES',
+    AutoForSales = 'AUTO_FOR_SALES',
+    Manual = 'MANUAL',
+    RuleBased = 'RULE_BASED'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RankedKeywordTargetsForAsinsRequestRecommendationTypeEnum {
+    KeywordsForAsins = 'KEYWORDS_FOR_ASINS'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RankedKeywordTargetsForAsinsRequestSortDimensionEnum {
+    Clicks = 'CLICKS',
+    Conversions = 'CONVERSIONS',
+    Default = 'DEFAULT'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RankedKeywordTargetsForAsinsRequestLocaleEnum {
+    ArEg = 'ar_EG',
+    DeDe = 'de_DE',
+    EnAe = 'en_AE',
+    EnAu = 'en_AU',
+    EnCa = 'en_CA',
+    EnGb = 'en_GB',
+    EnIn = 'en_IN',
+    EnSa = 'en_SA',
+    EnSg = 'en_SG',
+    EnUs = 'en_US',
+    EsEs = 'es_ES',
+    EsMx = 'es_MX',
+    FrFr = 'fr_FR',
+    ItIt = 'it_IT',
+    JaJp = 'ja_JP',
+    NlNl = 'nl_NL',
+    PlPl = 'pl_PL',
+    PtBr = 'pt_BR',
+    SvSe = 'sv_SE',
+    TrTr = 'tr_TR',
+    ZhCn = 'zh_CN'
+}
+
+/**
  * 
  * @export
  * @interface RankedTargetResponse
@@ -2052,6 +2742,74 @@ export interface RankedTargetResponse {
      * @memberof RankedTargetResponse
      */
     keywordTargetList?: Array<RecKeywordTarget>;
+}
+/**
+ * 
+ * @export
+ * @interface RankedTargetWithThemedBids
+ */
+export interface RankedTargetWithThemedBids {
+    /**
+     * The account-level ad-attributed impression share for the search-term/keyword. Provides percentage share of all ad impressions the advertiser has for the keyword in the last 30 days. This metric helps advertisers identify potential opportunities based on their share on relevant keywords. This information is only available for keywords the advertiser targeted with ad impressions.
+     * @type {number}
+     * @memberof RankedTargetWithThemedBids
+     */
+    searchTermImpressionShare?: number;
+    /**
+     * The translation of keyword if a locale is passed in
+     * @type {string}
+     * @memberof RankedTargetWithThemedBids
+     */
+    translation?: string;
+    /**
+     * A list of keyword bid info
+     * @type {Array<ThemedBid>}
+     * @memberof RankedTargetWithThemedBids
+     */
+    bidInfo?: Array<ThemedBid>;
+    /**
+     * The account-level ad-attributed impression rank for the search-term/keyword. Provides [1:N] place the advertiser ranks among all advertisers for the keyword by ad impressions in a marketplace in the last 30 days. It tells an advertiser how many advertisers had higher share of ad impressions. This information is only available for keywords the advertiser targeted with ad impressions.
+     * @type {number}
+     * @memberof RankedTargetWithThemedBids
+     */
+    searchTermImpressionRank?: number;
+    /**
+     * The keyword value
+     * @type {string}
+     * @memberof RankedTargetWithThemedBids
+     */
+    keyword?: string;
+    /**
+     * Flag that tells if keyword was selected by the user or was recommended by KRS
+     * @type {boolean}
+     * @memberof RankedTargetWithThemedBids
+     */
+    userSelectedKeyword?: boolean;
+    /**
+     * The recommended keyword target id
+     * @type {string}
+     * @memberof RankedTargetWithThemedBids
+     */
+    recId?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RankedTargetWithThemedBidsResponse
+ */
+export interface RankedTargetWithThemedBidsResponse {
+    /**
+     * 
+     * @type {Array<RankedTargetWithThemedBids>}
+     * @memberof RankedTargetWithThemedBidsResponse
+     */
+    keywordTargetList?: Array<RankedTargetWithThemedBids>;
+    /**
+     * A list of impact metrics which anticipates the number of clicks and orders you will receive if you target all targeting expressions using the low, medium, and high suggested bid.
+     * @type {Array<ImpactMetrics>}
+     * @memberof RankedTargetWithThemedBidsResponse
+     */
+    impactMetrics?: Array<ImpactMetrics>;
 }
 /**
  * Rating range is restricted to integers between 0 and 5, inclusive. Min must be less than or equal to max. We use this to retrieve the number of targetable ASINs that falls within this rating range.
@@ -2140,7 +2898,7 @@ export interface RecommendationOptions {
      */
     sortDimension?: RecommendationOptionsSortDimensionEnum;
     /**
-     * Translations are for readability and do not affect the targeting of ads. zh_CN is supported in US, UK, CA. en_GB is supported in DE, FR, IT, ES. Note: Translations will be null if locale is unsupported
+     * Translations are for readability and do not affect the targeting of ads. Supported marketplace to locale mappings can be found at the <a href=\'https://advertising.amazon.com/API/docs/en-us/localization/#/Keyword%20Localization\'>POST /keywords/localize</a> endpoint. Note: Translations will be null if locale is unsupported.
      * @type {string}
      * @memberof RecommendationOptions
      */
@@ -2161,8 +2919,27 @@ export enum RecommendationOptionsSortDimensionEnum {
     * @enum {string}
     */
 export enum RecommendationOptionsLocaleEnum {
-    ZhCn = 'zh_CN',
-    EnGb = 'en_GB'
+    ArEg = 'ar_EG',
+    DeDe = 'de_DE',
+    EnAe = 'en_AE',
+    EnAu = 'en_AU',
+    EnCa = 'en_CA',
+    EnGb = 'en_GB',
+    EnIn = 'en_IN',
+    EnSa = 'en_SA',
+    EnSg = 'en_SG',
+    EnUs = 'en_US',
+    EsEs = 'es_ES',
+    EsMx = 'es_MX',
+    FrFr = 'fr_FR',
+    ItIt = 'it_IT',
+    JaJp = 'ja_JP',
+    NlNl = 'nl_NL',
+    PlPl = 'pl_PL',
+    PtBr = 'pt_BR',
+    SvSe = 'sv_SE',
+    TrTr = 'tr_TR',
+    ZhCn = 'zh_CN'
 }
 
 /**
@@ -2519,10 +3296,10 @@ export interface SBBudgetRuleDetails {
     name?: string;
     /**
      * 
-     * @type {PerformanceMeasureCondition}
+     * @type {PerformanceMeasureConditionForSB}
      * @memberof SBBudgetRuleDetails
      */
-    performanceMeasureCondition?: PerformanceMeasureCondition;
+    performanceMeasureCondition?: PerformanceMeasureConditionForSB;
 }
 /**
  * 
@@ -2650,13 +3427,14 @@ export interface SBRuleDuration {
     dateRangeTypeRuleDuration: DateRangeTypeRuleDuration;
 }
 /**
- * The type of budget rule. SCHEDULE: A budget rule based on a start and end date.
+ * The type of budget rule. SCHEDULE: A budget rule based on a start and end date. PERFORMANCE: A budget rule based on advertising performance criteria.
  * @export
  * @enum {string}
  */
 
 export enum SBRuleType {
-    Schedule = 'SCHEDULE'
+    Schedule = 'SCHEDULE',
+    Performance = 'PERFORMANCE'
 }
 
 /**
@@ -3719,6 +4497,37 @@ export interface SearchBrandsRequest {
 /**
  * 
  * @export
+ * @interface SevenDaysEstimatedOpportunities
+ */
+export interface SevenDaysEstimatedOpportunities {
+    /**
+     * Lower bound of the estimated incremental clicks that could be gained if all optimizations are made.
+     * @type {number}
+     * @memberof SevenDaysEstimatedOpportunities
+     */
+    estimatedIncrementalClicksLower?: number;
+    /**
+     * Upper bound of the estimated incremental clicks that could be gained if all optimizations are made.
+     * @type {number}
+     * @memberof SevenDaysEstimatedOpportunities
+     */
+    estimatedIncrementalClicksUpper?: number;
+    /**
+     * End date of the opportunities date range in YYYY-MM-DDTHH:mm:ssZ format.
+     * @type {string}
+     * @memberof SevenDaysEstimatedOpportunities
+     */
+    endDate?: string;
+    /**
+     * Start date of the opportunities date range in YYYY-MM-DDTHH:mm:ssZ format.
+     * @type {string}
+     * @memberof SevenDaysEstimatedOpportunities
+     */
+    startDate?: string;
+}
+/**
+ * 
+ * @export
  * @interface SevenDaysMissedOpportunities
  */
 export interface SevenDaysMissedOpportunities {
@@ -3849,6 +4658,65 @@ export enum TargetingExpressionTypeEnum {
 }
 
 /**
+ * Contains suggested recommendation for the auto targeting group.
+ * @export
+ * @interface TargetingGroupBidRecommendation
+ */
+export interface TargetingGroupBidRecommendation {
+    /**
+     * The suggested bid value associated with this targeting.
+     * @type {number}
+     * @memberof TargetingGroupBidRecommendation
+     */
+    suggestedBid?: number;
+    /**
+     * The target identifier.
+     * @type {string}
+     * @memberof TargetingGroupBidRecommendation
+     */
+    targetId?: string;
+    /**
+     * The type of targeting group expression. | Value | Description | | --- | --- | | `LOOSE_MATCH` | This will show your ad to shoppers who use search terms loosely related to your products.| | `CLOSE_MATCH` | This will show your ad to shoppers who use search terms closely related to your products.| | `COMPLEMENTS` | This will show your ad to shoppers who view the detail pages of products that complement your product.| | `SUBSTITUTES` | This will show your ad to shoppers who use detail pages of products similar to yours.|
+     * @type {string}
+     * @memberof TargetingGroupBidRecommendation
+     */
+    targetingGroupExpression?: TargetingGroupBidRecommendationTargetingGroupExpressionEnum;
+    /**
+     * Type of suggested action.
+     * @type {string}
+     * @memberof TargetingGroupBidRecommendation
+     */
+    action?: TargetingGroupBidRecommendationActionEnum;
+    /**
+     * The ad group identifier.
+     * @type {string}
+     * @memberof TargetingGroupBidRecommendation
+     */
+    adGroupId?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum TargetingGroupBidRecommendationTargetingGroupExpressionEnum {
+    CloseMatch = 'CLOSE_MATCH',
+    LooseMatch = 'LOOSE_MATCH',
+    Substitutes = 'SUBSTITUTES',
+    Complements = 'COMPLEMENTS'
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export enum TargetingGroupBidRecommendationActionEnum {
+    Add = 'ADD',
+    Remove = 'REMOVE',
+    Increase = 'INCREASE',
+    Decrease = 'DECREASE'
+}
+
+/**
  * 
  * @export
  * @interface ThemeBasedBidRecommendation
@@ -3920,6 +4788,54 @@ export interface ThemeRecommendation {
      */
     theme?: string;
 }
+/**
+ * 
+ * @export
+ * @interface ThemedBid
+ */
+export interface ThemedBid {
+    /**
+     * 
+     * @type {BidValues}
+     * @memberof ThemedBid
+     */
+    suggestedBid?: BidValues;
+    /**
+     * Keyword match type. The default value will be BROAD.
+     * @type {string}
+     * @memberof ThemedBid
+     */
+    matchType?: ThemedBidMatchTypeEnum;
+    /**
+     * The keyword target rank.
+     * @type {number}
+     * @memberof ThemedBid
+     */
+    rank?: number;
+    /**
+     * The theme of the bid recommendation. The default theme is CONVERSION_OPPORTUNITIES.
+     * @type {string}
+     * @memberof ThemedBid
+     */
+    theme?: string;
+    /**
+     * The bid value for the keyword. The default value will be the suggested bid.
+     * @type {number}
+     * @memberof ThemedBid
+     */
+    bid?: number;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum ThemedBidMatchTypeEnum {
+    Broad = 'BROAD',
+    Exact = 'EXACT',
+    Phrase = 'PHRASE'
+}
+
 /**
  * Returns information about a ThrottlingException.
  * @export
@@ -4390,6 +5306,25 @@ export enum V2SPProductAdStateEnum {
     Archived = 'archived'
 }
 
+/**
+ * Returns information about a ValidationException.
+ * @export
+ * @interface ValidationException
+ */
+export interface ValidationException {
+    /**
+     * The HTTP status code of the response.
+     * @type {string}
+     * @memberof ValidationException
+     */
+    code?: string;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof ValidationException
+     */
+    details?: string;
+}
 
 /**
  * AdGroupsApi - axios parameter creator
@@ -6096,6 +7031,159 @@ export class BudgetRulesRecommendationApi extends BaseAPI {
 
 
 /**
+ * BudgetUsageApi - axios parameter creator
+ * @export
+ */
+export const BudgetUsageApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Budget usage API for SP campaigns
+         * @param {any} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {any} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {BudgetUsageCampaignRequest} budgetUsageCampaignRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        spCampaignsBudgetUsage: async (amazonAdvertisingAPIClientId: any, amazonAdvertisingAPIScope: any, budgetUsageCampaignRequest: BudgetUsageCampaignRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('spCampaignsBudgetUsage', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('spCampaignsBudgetUsage', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'budgetUsageCampaignRequest' is not null or undefined
+            assertParamExists('spCampaignsBudgetUsage', 'budgetUsageCampaignRequest', budgetUsageCampaignRequest)
+            const localVarPath = `/sp/campaigns/budget/usage`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(JSON.stringify(amazonAdvertisingAPIClientId));
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(JSON.stringify(amazonAdvertisingAPIScope));
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.spcampaignbudgetusage.v1+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(budgetUsageCampaignRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BudgetUsageApi - functional programming interface
+ * @export
+ */
+export const BudgetUsageApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BudgetUsageApiAxiosParamCreator(configuration)
+    return {
+        /**
+         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Budget usage API for SP campaigns
+         * @param {any} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {any} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {BudgetUsageCampaignRequest} budgetUsageCampaignRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async spCampaignsBudgetUsage(amazonAdvertisingAPIClientId: any, amazonAdvertisingAPIScope: any, budgetUsageCampaignRequest: BudgetUsageCampaignRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BudgetUsageCampaignResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.spCampaignsBudgetUsage(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetUsageCampaignRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BudgetUsageApi - factory interface
+ * @export
+ */
+export const BudgetUsageApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BudgetUsageApiFp(configuration)
+    return {
+        /**
+         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Budget usage API for SP campaigns
+         * @param {any} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {any} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {BudgetUsageCampaignRequest} budgetUsageCampaignRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        spCampaignsBudgetUsage(amazonAdvertisingAPIClientId: any, amazonAdvertisingAPIScope: any, budgetUsageCampaignRequest: BudgetUsageCampaignRequest, options?: any): AxiosPromise<BudgetUsageCampaignResponse> {
+            return localVarFp.spCampaignsBudgetUsage(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetUsageCampaignRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for spCampaignsBudgetUsage operation in BudgetUsageApi.
+ * @export
+ * @interface BudgetUsageApiSpCampaignsBudgetUsageRequest
+ */
+export interface BudgetUsageApiSpCampaignsBudgetUsageRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {any}
+     * @memberof BudgetUsageApiSpCampaignsBudgetUsage
+     */
+    readonly amazonAdvertisingAPIClientId: any
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {any}
+     * @memberof BudgetUsageApiSpCampaignsBudgetUsage
+     */
+    readonly amazonAdvertisingAPIScope: any
+
+    /**
+     * 
+     * @type {BudgetUsageCampaignRequest}
+     * @memberof BudgetUsageApiSpCampaignsBudgetUsage
+     */
+    readonly budgetUsageCampaignRequest: BudgetUsageCampaignRequest
+}
+
+/**
+ * BudgetUsageApi - object-oriented interface
+ * @export
+ * @class BudgetUsageApi
+ * @extends {BaseAPI}
+ */
+export class BudgetUsageApi extends BaseAPI {
+    /**
+     *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+     * @summary Budget usage API for SP campaigns
+     * @param {BudgetUsageApiSpCampaignsBudgetUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BudgetUsageApi
+     */
+    public spCampaignsBudgetUsage(requestParameters: BudgetUsageApiSpCampaignsBudgetUsageRequest, options?: any) {
+        return BudgetUsageApiFp(this.configuration).spCampaignsBudgetUsage(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.budgetUsageCampaignRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * CampaignOptimizationRulesApi - axios parameter creator
  * @export
  */
@@ -7218,23 +8306,189 @@ export class CampaignsApi extends BaseAPI {
 
 
 /**
- * GetRankedKeywordsRecommendationsApi - axios parameter creator
+ * ConsolidatedRecommendationsApi - axios parameter creator
  * @export
  */
-export const GetRankedKeywordsRecommendationsApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ConsolidatedRecommendationsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Get keyword recommendations ranked by user-provided metric  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Get ranked keywords recommendations
+         * Gets the top consolidated recommendations across bid, budget, targeting for SP campaigns given an advertiser profile id. The recommendations are refreshed everyday.  **Requires one of these permissions**: [\"advertiser_campaign_view\",\"advertiser_campaign_edit\"]
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Optional. Token to retrieve subsequent page of results.
+         * @param {string} [maxResults] Optional. Limits the number of items to return in the response.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCampaignRecommendations: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getCampaignRecommendations', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getCampaignRecommendations', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sp/campaign/recommendations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (nextToken !== undefined) {
+                localVarQueryParameter['nextToken'] = nextToken;
+            }
+
+            if (maxResults !== undefined) {
+                localVarQueryParameter['maxResults'] = maxResults;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ConsolidatedRecommendationsApi - functional programming interface
+ * @export
+ */
+export const ConsolidatedRecommendationsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ConsolidatedRecommendationsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Gets the top consolidated recommendations across bid, budget, targeting for SP campaigns given an advertiser profile id. The recommendations are refreshed everyday.  **Requires one of these permissions**: [\"advertiser_campaign_view\",\"advertiser_campaign_edit\"]
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Optional. Token to retrieve subsequent page of results.
+         * @param {string} [maxResults] Optional. Limits the number of items to return in the response.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCampaignRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCampaignRecommendationsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCampaignRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * ConsolidatedRecommendationsApi - factory interface
+ * @export
+ */
+export const ConsolidatedRecommendationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ConsolidatedRecommendationsApiFp(configuration)
+    return {
+        /**
+         * Gets the top consolidated recommendations across bid, budget, targeting for SP campaigns given an advertiser profile id. The recommendations are refreshed everyday.  **Requires one of these permissions**: [\"advertiser_campaign_view\",\"advertiser_campaign_edit\"]
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Optional. Token to retrieve subsequent page of results.
+         * @param {string} [maxResults] Optional. Limits the number of items to return in the response.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCampaignRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: string, options?: any): AxiosPromise<GetCampaignRecommendationsResponse> {
+            return localVarFp.getCampaignRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getCampaignRecommendations operation in ConsolidatedRecommendationsApi.
+ * @export
+ * @interface ConsolidatedRecommendationsApiGetCampaignRecommendationsRequest
+ */
+export interface ConsolidatedRecommendationsApiGetCampaignRecommendationsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof ConsolidatedRecommendationsApiGetCampaignRecommendations
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof ConsolidatedRecommendationsApiGetCampaignRecommendations
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Optional. Token to retrieve subsequent page of results.
+     * @type {string}
+     * @memberof ConsolidatedRecommendationsApiGetCampaignRecommendations
+     */
+    readonly nextToken?: string
+
+    /**
+     * Optional. Limits the number of items to return in the response.
+     * @type {string}
+     * @memberof ConsolidatedRecommendationsApiGetCampaignRecommendations
+     */
+    readonly maxResults?: string
+}
+
+/**
+ * ConsolidatedRecommendationsApi - object-oriented interface
+ * @export
+ * @class ConsolidatedRecommendationsApi
+ * @extends {BaseAPI}
+ */
+export class ConsolidatedRecommendationsApi extends BaseAPI {
+    /**
+     * Gets the top consolidated recommendations across bid, budget, targeting for SP campaigns given an advertiser profile id. The recommendations are refreshed everyday.  **Requires one of these permissions**: [\"advertiser_campaign_view\",\"advertiser_campaign_edit\"]
+     * @param {ConsolidatedRecommendationsApiGetCampaignRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ConsolidatedRecommendationsApi
+     */
+    public getCampaignRecommendations(requestParameters: ConsolidatedRecommendationsApiGetCampaignRecommendationsRequest, options?: any) {
+        return ConsolidatedRecommendationsApiFp(this.configuration).getCampaignRecommendations(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.nextToken, requestParameters.maxResults, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * KeywordRecommendationsApi - axios parameter creator
+ * @export
+ */
+export const KeywordRecommendationsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * The <b> POST /sp/targets/keywords/recommendations </b> endpoint returns recommended keyword targets given either A) a list of ad ASINs or B) a campaign ID and ad group ID. Please use the recommendationType field to specify if you want to use option A or option B. This endpoint will also return recommended bids along with each recommendation keyword target.<br><br> <b> Ranking </b> <br> The keyword recommendations will be ranked in descending order of clicks or impressions, depending on the <b>sortDimension</b> field provided by the user. You may also input your own keyword targets to be ranked alongside the keyword recommendations by using the <b>targets</b> array. <br><br> <b> Localization </b> <br> Use the <b> locale </b> field to get keywords in your specified locale. Supported marketplace to locale mappings can be found at the <a href=\'https://advertising.amazon.com/API/docs/en-us/localization/#/Keyword%20Localization\'>POST /keywords/localize</a> endpoint. <h1> Version 5.0 </h1>  <h2> New Features </h2> Version 5.0 utilizes the new theme-based bid recommendations, which can be retrieved at the endpoint <b>/sp/targets/bid/recommendations</b>, to return improved bid recommendations for each keyword. Theme-based bid recommendations provide \\\\\\\"themes\\\\\\\" and \\\\\\\"impact metrics\\\\\\\" along with each bid suggestion to help you choose the right bid for your keyword target.<br><br><b>Themes</b><br> We now may return multiple bid suggestions for each keyword target. Each suggestion will have a theme to express the business objective of the bid. Available themes are: <ul> <li> CONVERSION_OPPORTUNITIES - The default theme which aims to maximize number of conversions. </li> <li> SPECIAL_DAYS - A theme available during high sales events such as Prime Day, to anticipate an increase in sales and competition.</li></ul><b>Impact Metrics</b><br>We have added impact metrics which provide insight on the number of clicks and conversions you will receive for targeting a keyword at a certain bid. <br><br><b>Bidding Strategy</b><br> You may now specify your bidding strategy in the KEYWORDS_BY_ASINS request to get bid suggestions tailored to your bidding strategy. For KEYWORDS_BY_ADGROUP requests, you will not specify a bidding strategy, because the bidding strategy of the ad group is used. The three bidding strategies are: <ul> <li> LEGACY_FOR_SALES - Dynamic bids (down only) </li> <li> AUTO_FOR_SALES - Dynamic bids (up and down) </li> <li> MANUAL - Fixed bids </li> </ul> <h3> Availability </h3> Version 5.0 is only available in the following marketplaces: US, CA, UK, DE, FR, ES, IN, JP. <h1> Version 4.0 </h1> <h2> New features </h2> Version 4.0 allows users to retrieve recommended keyword targets which are sorted in descending order of clicks or conversions. The default sort dimension, if not specified, ranks recommendations by our interal ranking mechanism. We have also have added search term metrics. <b> Search term impression share </b> indicates the percentage share of all ad-attributed impressions you received on that keyword in the last 30 days. This metric helps advertisers identify potential opportunities based on their share on relevant keywords. <b> Search term impression rank </b> indicates your ranking among all advertisers for the keyword by ad impressions in a marketplace. It tells an advertiser how many advertisers had higher share of ad impressions. <i> Search term information is only available for keywords the advertiser targeted with ad impressions. </i> <h3> Availability </h3> Version 4.0 is available in all marketplaces.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Get keyword recommendations
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} [amazonAdvertisingAPIMarketplaceId] The advertiser\&#39;s Marketplace ID associated with the advertiser account.
          * @param {string} [amazonAdvertisingAPIAdvertiserId] The advertiser\&#39;s ID associated with the advertiser account.
-         * @param {string} [amazonAdvertisingAPIClientId] The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} [amazonAdvertisingAPIScope] The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {AdGroupKeywordTargetRankRecommendationRequest | AsinsKeywordTargetRankRecommendationRequest} [adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRankedKeywordRecommendation: async (amazonAdvertisingAPIMarketplaceId?: string, amazonAdvertisingAPIAdvertiserId?: string, amazonAdvertisingAPIClientId?: string, amazonAdvertisingAPIScope?: string, adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest?: AdGroupKeywordTargetRankRecommendationRequest | AsinsKeywordTargetRankRecommendationRequest, options: any = {}): Promise<RequestArgs> => {
+        getRankedKeywordRecommendation: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIMarketplaceId?: string, amazonAdvertisingAPIAdvertiserId?: string, adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest?: AdGroupKeywordTargetRankRecommendationRequest | AsinsKeywordTargetRankRecommendationRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getRankedKeywordRecommendation', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getRankedKeywordRecommendation', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
             const localVarPath = `/sp/targets/keywords/recommendations`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -7281,113 +8535,113 @@ export const GetRankedKeywordsRecommendationsApiAxiosParamCreator = function (co
 };
 
 /**
- * GetRankedKeywordsRecommendationsApi - functional programming interface
+ * KeywordRecommendationsApi - functional programming interface
  * @export
  */
-export const GetRankedKeywordsRecommendationsApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = GetRankedKeywordsRecommendationsApiAxiosParamCreator(configuration)
+export const KeywordRecommendationsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = KeywordRecommendationsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Get keyword recommendations ranked by user-provided metric  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Get ranked keywords recommendations
+         * The <b> POST /sp/targets/keywords/recommendations </b> endpoint returns recommended keyword targets given either A) a list of ad ASINs or B) a campaign ID and ad group ID. Please use the recommendationType field to specify if you want to use option A or option B. This endpoint will also return recommended bids along with each recommendation keyword target.<br><br> <b> Ranking </b> <br> The keyword recommendations will be ranked in descending order of clicks or impressions, depending on the <b>sortDimension</b> field provided by the user. You may also input your own keyword targets to be ranked alongside the keyword recommendations by using the <b>targets</b> array. <br><br> <b> Localization </b> <br> Use the <b> locale </b> field to get keywords in your specified locale. Supported marketplace to locale mappings can be found at the <a href=\'https://advertising.amazon.com/API/docs/en-us/localization/#/Keyword%20Localization\'>POST /keywords/localize</a> endpoint. <h1> Version 5.0 </h1>  <h2> New Features </h2> Version 5.0 utilizes the new theme-based bid recommendations, which can be retrieved at the endpoint <b>/sp/targets/bid/recommendations</b>, to return improved bid recommendations for each keyword. Theme-based bid recommendations provide \\\\\\\"themes\\\\\\\" and \\\\\\\"impact metrics\\\\\\\" along with each bid suggestion to help you choose the right bid for your keyword target.<br><br><b>Themes</b><br> We now may return multiple bid suggestions for each keyword target. Each suggestion will have a theme to express the business objective of the bid. Available themes are: <ul> <li> CONVERSION_OPPORTUNITIES - The default theme which aims to maximize number of conversions. </li> <li> SPECIAL_DAYS - A theme available during high sales events such as Prime Day, to anticipate an increase in sales and competition.</li></ul><b>Impact Metrics</b><br>We have added impact metrics which provide insight on the number of clicks and conversions you will receive for targeting a keyword at a certain bid. <br><br><b>Bidding Strategy</b><br> You may now specify your bidding strategy in the KEYWORDS_BY_ASINS request to get bid suggestions tailored to your bidding strategy. For KEYWORDS_BY_ADGROUP requests, you will not specify a bidding strategy, because the bidding strategy of the ad group is used. The three bidding strategies are: <ul> <li> LEGACY_FOR_SALES - Dynamic bids (down only) </li> <li> AUTO_FOR_SALES - Dynamic bids (up and down) </li> <li> MANUAL - Fixed bids </li> </ul> <h3> Availability </h3> Version 5.0 is only available in the following marketplaces: US, CA, UK, DE, FR, ES, IN, JP. <h1> Version 4.0 </h1> <h2> New features </h2> Version 4.0 allows users to retrieve recommended keyword targets which are sorted in descending order of clicks or conversions. The default sort dimension, if not specified, ranks recommendations by our interal ranking mechanism. We have also have added search term metrics. <b> Search term impression share </b> indicates the percentage share of all ad-attributed impressions you received on that keyword in the last 30 days. This metric helps advertisers identify potential opportunities based on their share on relevant keywords. <b> Search term impression rank </b> indicates your ranking among all advertisers for the keyword by ad impressions in a marketplace. It tells an advertiser how many advertisers had higher share of ad impressions. <i> Search term information is only available for keywords the advertiser targeted with ad impressions. </i> <h3> Availability </h3> Version 4.0 is available in all marketplaces.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Get keyword recommendations
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} [amazonAdvertisingAPIMarketplaceId] The advertiser\&#39;s Marketplace ID associated with the advertiser account.
          * @param {string} [amazonAdvertisingAPIAdvertiserId] The advertiser\&#39;s ID associated with the advertiser account.
-         * @param {string} [amazonAdvertisingAPIClientId] The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} [amazonAdvertisingAPIScope] The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {AdGroupKeywordTargetRankRecommendationRequest | AsinsKeywordTargetRankRecommendationRequest} [adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getRankedKeywordRecommendation(amazonAdvertisingAPIMarketplaceId?: string, amazonAdvertisingAPIAdvertiserId?: string, amazonAdvertisingAPIClientId?: string, amazonAdvertisingAPIScope?: string, adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest?: AdGroupKeywordTargetRankRecommendationRequest | AsinsKeywordTargetRankRecommendationRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<KeywordTargetResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getRankedKeywordRecommendation(amazonAdvertisingAPIMarketplaceId, amazonAdvertisingAPIAdvertiserId, amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest, options);
+        async getRankedKeywordRecommendation(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIMarketplaceId?: string, amazonAdvertisingAPIAdvertiserId?: string, adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest?: AdGroupKeywordTargetRankRecommendationRequest | AsinsKeywordTargetRankRecommendationRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<KeywordTargetResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRankedKeywordRecommendation(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, amazonAdvertisingAPIMarketplaceId, amazonAdvertisingAPIAdvertiserId, adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
 
 /**
- * GetRankedKeywordsRecommendationsApi - factory interface
+ * KeywordRecommendationsApi - factory interface
  * @export
  */
-export const GetRankedKeywordsRecommendationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = GetRankedKeywordsRecommendationsApiFp(configuration)
+export const KeywordRecommendationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = KeywordRecommendationsApiFp(configuration)
     return {
         /**
-         * Get keyword recommendations ranked by user-provided metric  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary Get ranked keywords recommendations
+         * The <b> POST /sp/targets/keywords/recommendations </b> endpoint returns recommended keyword targets given either A) a list of ad ASINs or B) a campaign ID and ad group ID. Please use the recommendationType field to specify if you want to use option A or option B. This endpoint will also return recommended bids along with each recommendation keyword target.<br><br> <b> Ranking </b> <br> The keyword recommendations will be ranked in descending order of clicks or impressions, depending on the <b>sortDimension</b> field provided by the user. You may also input your own keyword targets to be ranked alongside the keyword recommendations by using the <b>targets</b> array. <br><br> <b> Localization </b> <br> Use the <b> locale </b> field to get keywords in your specified locale. Supported marketplace to locale mappings can be found at the <a href=\'https://advertising.amazon.com/API/docs/en-us/localization/#/Keyword%20Localization\'>POST /keywords/localize</a> endpoint. <h1> Version 5.0 </h1>  <h2> New Features </h2> Version 5.0 utilizes the new theme-based bid recommendations, which can be retrieved at the endpoint <b>/sp/targets/bid/recommendations</b>, to return improved bid recommendations for each keyword. Theme-based bid recommendations provide \\\\\\\"themes\\\\\\\" and \\\\\\\"impact metrics\\\\\\\" along with each bid suggestion to help you choose the right bid for your keyword target.<br><br><b>Themes</b><br> We now may return multiple bid suggestions for each keyword target. Each suggestion will have a theme to express the business objective of the bid. Available themes are: <ul> <li> CONVERSION_OPPORTUNITIES - The default theme which aims to maximize number of conversions. </li> <li> SPECIAL_DAYS - A theme available during high sales events such as Prime Day, to anticipate an increase in sales and competition.</li></ul><b>Impact Metrics</b><br>We have added impact metrics which provide insight on the number of clicks and conversions you will receive for targeting a keyword at a certain bid. <br><br><b>Bidding Strategy</b><br> You may now specify your bidding strategy in the KEYWORDS_BY_ASINS request to get bid suggestions tailored to your bidding strategy. For KEYWORDS_BY_ADGROUP requests, you will not specify a bidding strategy, because the bidding strategy of the ad group is used. The three bidding strategies are: <ul> <li> LEGACY_FOR_SALES - Dynamic bids (down only) </li> <li> AUTO_FOR_SALES - Dynamic bids (up and down) </li> <li> MANUAL - Fixed bids </li> </ul> <h3> Availability </h3> Version 5.0 is only available in the following marketplaces: US, CA, UK, DE, FR, ES, IN, JP. <h1> Version 4.0 </h1> <h2> New features </h2> Version 4.0 allows users to retrieve recommended keyword targets which are sorted in descending order of clicks or conversions. The default sort dimension, if not specified, ranks recommendations by our interal ranking mechanism. We have also have added search term metrics. <b> Search term impression share </b> indicates the percentage share of all ad-attributed impressions you received on that keyword in the last 30 days. This metric helps advertisers identify potential opportunities based on their share on relevant keywords. <b> Search term impression rank </b> indicates your ranking among all advertisers for the keyword by ad impressions in a marketplace. It tells an advertiser how many advertisers had higher share of ad impressions. <i> Search term information is only available for keywords the advertiser targeted with ad impressions. </i> <h3> Availability </h3> Version 4.0 is available in all marketplaces.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Get keyword recommendations
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} [amazonAdvertisingAPIMarketplaceId] The advertiser\&#39;s Marketplace ID associated with the advertiser account.
          * @param {string} [amazonAdvertisingAPIAdvertiserId] The advertiser\&#39;s ID associated with the advertiser account.
-         * @param {string} [amazonAdvertisingAPIClientId] The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} [amazonAdvertisingAPIScope] The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {AdGroupKeywordTargetRankRecommendationRequest | AsinsKeywordTargetRankRecommendationRequest} [adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRankedKeywordRecommendation(amazonAdvertisingAPIMarketplaceId?: string, amazonAdvertisingAPIAdvertiserId?: string, amazonAdvertisingAPIClientId?: string, amazonAdvertisingAPIScope?: string, adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest?: AdGroupKeywordTargetRankRecommendationRequest | AsinsKeywordTargetRankRecommendationRequest, options?: any): AxiosPromise<Array<KeywordTargetResponse>> {
-            return localVarFp.getRankedKeywordRecommendation(amazonAdvertisingAPIMarketplaceId, amazonAdvertisingAPIAdvertiserId, amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest, options).then((request) => request(axios, basePath));
+        getRankedKeywordRecommendation(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, amazonAdvertisingAPIMarketplaceId?: string, amazonAdvertisingAPIAdvertiserId?: string, adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest?: AdGroupKeywordTargetRankRecommendationRequest | AsinsKeywordTargetRankRecommendationRequest, options?: any): AxiosPromise<Array<KeywordTargetResponse>> {
+            return localVarFp.getRankedKeywordRecommendation(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, amazonAdvertisingAPIMarketplaceId, amazonAdvertisingAPIAdvertiserId, adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for getRankedKeywordRecommendation operation in GetRankedKeywordsRecommendationsApi.
+ * Request parameters for getRankedKeywordRecommendation operation in KeywordRecommendationsApi.
  * @export
- * @interface GetRankedKeywordsRecommendationsApiGetRankedKeywordRecommendationRequest
+ * @interface KeywordRecommendationsApiGetRankedKeywordRecommendationRequest
  */
-export interface GetRankedKeywordsRecommendationsApiGetRankedKeywordRecommendationRequest {
+export interface KeywordRecommendationsApiGetRankedKeywordRecommendationRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {string}
+     * @memberof KeywordRecommendationsApiGetRankedKeywordRecommendation
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {string}
+     * @memberof KeywordRecommendationsApiGetRankedKeywordRecommendation
+     */
+    readonly amazonAdvertisingAPIScope: string
+
     /**
      * The advertiser\&#39;s Marketplace ID associated with the advertiser account.
      * @type {string}
-     * @memberof GetRankedKeywordsRecommendationsApiGetRankedKeywordRecommendation
+     * @memberof KeywordRecommendationsApiGetRankedKeywordRecommendation
      */
     readonly amazonAdvertisingAPIMarketplaceId?: string
 
     /**
      * The advertiser\&#39;s ID associated with the advertiser account.
      * @type {string}
-     * @memberof GetRankedKeywordsRecommendationsApiGetRankedKeywordRecommendation
+     * @memberof KeywordRecommendationsApiGetRankedKeywordRecommendation
      */
     readonly amazonAdvertisingAPIAdvertiserId?: string
 
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof GetRankedKeywordsRecommendationsApiGetRankedKeywordRecommendation
-     */
-    readonly amazonAdvertisingAPIClientId?: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
-     * @type {string}
-     * @memberof GetRankedKeywordsRecommendationsApiGetRankedKeywordRecommendation
-     */
-    readonly amazonAdvertisingAPIScope?: string
-
-    /**
      * 
      * @type {AdGroupKeywordTargetRankRecommendationRequest | AsinsKeywordTargetRankRecommendationRequest}
-     * @memberof GetRankedKeywordsRecommendationsApiGetRankedKeywordRecommendation
+     * @memberof KeywordRecommendationsApiGetRankedKeywordRecommendation
      */
     readonly adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest?: AdGroupKeywordTargetRankRecommendationRequest | AsinsKeywordTargetRankRecommendationRequest
 }
 
 /**
- * GetRankedKeywordsRecommendationsApi - object-oriented interface
+ * KeywordRecommendationsApi - object-oriented interface
  * @export
- * @class GetRankedKeywordsRecommendationsApi
+ * @class KeywordRecommendationsApi
  * @extends {BaseAPI}
  */
-export class GetRankedKeywordsRecommendationsApi extends BaseAPI {
+export class KeywordRecommendationsApi extends BaseAPI {
     /**
-     * Get keyword recommendations ranked by user-provided metric  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-     * @summary Get ranked keywords recommendations
-     * @param {GetRankedKeywordsRecommendationsApiGetRankedKeywordRecommendationRequest} requestParameters Request parameters.
+     * The <b> POST /sp/targets/keywords/recommendations </b> endpoint returns recommended keyword targets given either A) a list of ad ASINs or B) a campaign ID and ad group ID. Please use the recommendationType field to specify if you want to use option A or option B. This endpoint will also return recommended bids along with each recommendation keyword target.<br><br> <b> Ranking </b> <br> The keyword recommendations will be ranked in descending order of clicks or impressions, depending on the <b>sortDimension</b> field provided by the user. You may also input your own keyword targets to be ranked alongside the keyword recommendations by using the <b>targets</b> array. <br><br> <b> Localization </b> <br> Use the <b> locale </b> field to get keywords in your specified locale. Supported marketplace to locale mappings can be found at the <a href=\'https://advertising.amazon.com/API/docs/en-us/localization/#/Keyword%20Localization\'>POST /keywords/localize</a> endpoint. <h1> Version 5.0 </h1>  <h2> New Features </h2> Version 5.0 utilizes the new theme-based bid recommendations, which can be retrieved at the endpoint <b>/sp/targets/bid/recommendations</b>, to return improved bid recommendations for each keyword. Theme-based bid recommendations provide \\\\\\\"themes\\\\\\\" and \\\\\\\"impact metrics\\\\\\\" along with each bid suggestion to help you choose the right bid for your keyword target.<br><br><b>Themes</b><br> We now may return multiple bid suggestions for each keyword target. Each suggestion will have a theme to express the business objective of the bid. Available themes are: <ul> <li> CONVERSION_OPPORTUNITIES - The default theme which aims to maximize number of conversions. </li> <li> SPECIAL_DAYS - A theme available during high sales events such as Prime Day, to anticipate an increase in sales and competition.</li></ul><b>Impact Metrics</b><br>We have added impact metrics which provide insight on the number of clicks and conversions you will receive for targeting a keyword at a certain bid. <br><br><b>Bidding Strategy</b><br> You may now specify your bidding strategy in the KEYWORDS_BY_ASINS request to get bid suggestions tailored to your bidding strategy. For KEYWORDS_BY_ADGROUP requests, you will not specify a bidding strategy, because the bidding strategy of the ad group is used. The three bidding strategies are: <ul> <li> LEGACY_FOR_SALES - Dynamic bids (down only) </li> <li> AUTO_FOR_SALES - Dynamic bids (up and down) </li> <li> MANUAL - Fixed bids </li> </ul> <h3> Availability </h3> Version 5.0 is only available in the following marketplaces: US, CA, UK, DE, FR, ES, IN, JP. <h1> Version 4.0 </h1> <h2> New features </h2> Version 4.0 allows users to retrieve recommended keyword targets which are sorted in descending order of clicks or conversions. The default sort dimension, if not specified, ranks recommendations by our interal ranking mechanism. We have also have added search term metrics. <b> Search term impression share </b> indicates the percentage share of all ad-attributed impressions you received on that keyword in the last 30 days. This metric helps advertisers identify potential opportunities based on their share on relevant keywords. <b> Search term impression rank </b> indicates your ranking among all advertisers for the keyword by ad impressions in a marketplace. It tells an advertiser how many advertisers had higher share of ad impressions. <i> Search term information is only available for keywords the advertiser targeted with ad impressions. </i> <h3> Availability </h3> Version 4.0 is available in all marketplaces.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+     * @summary Get keyword recommendations
+     * @param {KeywordRecommendationsApiGetRankedKeywordRecommendationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof GetRankedKeywordsRecommendationsApi
+     * @memberof KeywordRecommendationsApi
      */
-    public getRankedKeywordRecommendation(requestParameters: GetRankedKeywordsRecommendationsApiGetRankedKeywordRecommendationRequest = {}, options?: any) {
-        return GetRankedKeywordsRecommendationsApiFp(this.configuration).getRankedKeywordRecommendation(requestParameters.amazonAdvertisingAPIMarketplaceId, requestParameters.amazonAdvertisingAPIAdvertiserId, requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest, options).then((request) => request(this.axios, this.basePath));
+    public getRankedKeywordRecommendation(requestParameters: KeywordRecommendationsApiGetRankedKeywordRecommendationRequest, options?: any) {
+        return KeywordRecommendationsApiFp(this.configuration).getRankedKeywordRecommendation(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.amazonAdvertisingAPIMarketplaceId, requestParameters.amazonAdvertisingAPIAdvertiserId, requestParameters.adGroupKeywordTargetRankRecommendationRequestAsinsKeywordTargetRankRecommendationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

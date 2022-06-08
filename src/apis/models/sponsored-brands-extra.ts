@@ -424,6 +424,225 @@ export enum BudgetType {
 }
 
 /**
+ * 
+ * @export
+ * @interface BudgetUsageCampaign
+ */
+export interface BudgetUsageCampaign {
+    /**
+     * Budget usage percentage (spend / available budget) for the given budget policy.
+     * @type {number}
+     * @memberof BudgetUsageCampaign
+     */
+    budgetUsagePercent?: number;
+    /**
+     * ID of requested resource
+     * @type {string}
+     * @memberof BudgetUsageCampaign
+     */
+    campaignId?: string;
+    /**
+     * Last evaluation time for budget usage
+     * @type {string}
+     * @memberof BudgetUsageCampaign
+     */
+    usageUpdatedTimestamp?: string;
+    /**
+     * An index to maintain order of the campaignIds
+     * @type {number}
+     * @memberof BudgetUsageCampaign
+     */
+    index?: number;
+    /**
+     * Budget amount of resource requested
+     * @type {number}
+     * @memberof BudgetUsageCampaign
+     */
+    budget?: number;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsageCampaignBatchError
+ */
+export interface BudgetUsageCampaignBatchError {
+    /**
+     * An enumerated error code for machine use.
+     * @type {string}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    code?: string;
+    /**
+     * ID of requested resource
+     * @type {string}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    campaignId?: string;
+    /**
+     * An index to maintain order of the campaignIds
+     * @type {number}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    index?: number;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsageCampaignRequest
+ */
+export interface BudgetUsageCampaignRequest {
+    /**
+     * A list of campaign IDs
+     * @type {Array<string>}
+     * @memberof BudgetUsageCampaignRequest
+     */
+    campaignIds?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsageCampaignResponse
+ */
+export interface BudgetUsageCampaignResponse {
+    /**
+     * List of budget usage percentages that were successfully pulled
+     * @type {Array<BudgetUsageCampaign>}
+     * @memberof BudgetUsageCampaignResponse
+     */
+    success?: Array<BudgetUsageCampaign>;
+    /**
+     * List of budget usage percentages that failed to pull
+     * @type {Array<BudgetUsageCampaignBatchError>}
+     * @memberof BudgetUsageCampaignResponse
+     */
+    error?: Array<BudgetUsageCampaignBatchError>;
+}
+/**
+ * The Error Response Object.
+ * @export
+ * @interface BudgetUsageError
+ */
+export interface BudgetUsageError {
+    /**
+     * An enumerated error code for machine use.
+     * @type {string}
+     * @memberof BudgetUsageError
+     */
+    code?: string;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof BudgetUsageError
+     */
+    details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsagePortfolio
+ */
+export interface BudgetUsagePortfolio {
+    /**
+     * Budget usage percentage (spend / available budget) for the given budget policy.
+     * @type {number}
+     * @memberof BudgetUsagePortfolio
+     */
+    budgetUsagePercent?: number;
+    /**
+     * ID of requested resource
+     * @type {string}
+     * @memberof BudgetUsagePortfolio
+     */
+    portfolioId?: string;
+    /**
+     * Last evaluation time for budget usage
+     * @type {string}
+     * @memberof BudgetUsagePortfolio
+     */
+    usageUpdatedTimestamp?: string;
+    /**
+     * An index to maintain order of the portfolioIds
+     * @type {number}
+     * @memberof BudgetUsagePortfolio
+     */
+    index?: number;
+    /**
+     * Budget amount of resource requested
+     * @type {number}
+     * @memberof BudgetUsagePortfolio
+     */
+    budget?: number;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsagePortfolioBatchError
+ */
+export interface BudgetUsagePortfolioBatchError {
+    /**
+     * ID of requested resource
+     * @type {string}
+     * @memberof BudgetUsagePortfolioBatchError
+     */
+    portfolioId?: string;
+    /**
+     * An enumerated error code for machine use.
+     * @type {string}
+     * @memberof BudgetUsagePortfolioBatchError
+     */
+    code?: string;
+    /**
+     * An index to maintain order of the portfolioIds
+     * @type {number}
+     * @memberof BudgetUsagePortfolioBatchError
+     */
+    index?: number;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof BudgetUsagePortfolioBatchError
+     */
+    details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsagePortfolioRequest
+ */
+export interface BudgetUsagePortfolioRequest {
+    /**
+     * A list of portfolio IDs.
+     * @type {Array<string>}
+     * @memberof BudgetUsagePortfolioRequest
+     */
+    portfolioIds?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsagePortfolioResponse
+ */
+export interface BudgetUsagePortfolioResponse {
+    /**
+     * List of budget usage percentages that were successfully pulled
+     * @type {Array<BudgetUsagePortfolio>}
+     * @memberof BudgetUsagePortfolioResponse
+     */
+    success?: Array<BudgetUsagePortfolio>;
+    /**
+     * List of budget usage percentages that failed to pull
+     * @type {Array<BudgetUsagePortfolioBatchError>}
+     * @memberof BudgetUsagePortfolioResponse
+     */
+    error?: Array<BudgetUsagePortfolioBatchError>;
+}
+/**
  * The comparison operator.
  * @export
  * @enum {string}
@@ -514,6 +733,199 @@ export interface CreateSPBudgetRulesRequest {
      */
     budgetRulesDetails?: Array<SPBudgetRuleDetails>;
 }
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsAccessDeniedError
+ */
+export interface CreativeRecommendationsAccessDeniedError {
+    /**
+     * Access denied error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsAccessDeniedError
+     */
+    code?: CreativeRecommendationsAccessDeniedErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsAccessDeniedError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsAccessDeniedErrorCodeEnum {
+    AccessDenied = 'ACCESS_DENIED'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsBadRequestError
+ */
+export interface CreativeRecommendationsBadRequestError {
+    /**
+     * Bad request error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsBadRequestError
+     */
+    code?: CreativeRecommendationsBadRequestErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsBadRequestError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsBadRequestErrorCodeEnum {
+    BadRequest = 'BAD_REQUEST'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsInternalServerError
+ */
+export interface CreativeRecommendationsInternalServerError {
+    /**
+     * Internal error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsInternalServerError
+     */
+    code?: CreativeRecommendationsInternalServerErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsInternalServerError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsInternalServerErrorCodeEnum {
+    InternalError = 'INTERNAL_ERROR'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsNotFoundError
+ */
+export interface CreativeRecommendationsNotFoundError {
+    /**
+     * Not found error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsNotFoundError
+     */
+    code?: CreativeRecommendationsNotFoundErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsNotFoundError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsNotFoundErrorCodeEnum {
+    NotFound = 'NOT_FOUND'
+}
+
+/**
+ * Request structure of creative recommendations API.
+ * @export
+ * @interface CreativeRecommendationsRequest
+ */
+export interface CreativeRecommendationsRequest {
+    /**
+     * An array of ASINs associated with the creative. Note, do not pass an empty array, this results in an error.
+     * @type {Array<string>}
+     * @memberof CreativeRecommendationsRequest
+     */
+    asins: Array<string>;
+    /**
+     * Ad format of the creative.
+     * @type {string}
+     * @memberof CreativeRecommendationsRequest
+     */
+    adFormat: CreativeRecommendationsRequestAdFormatEnum;
+    /**
+     * Required recommendations details.
+     * @type {Array<RequiredRecommendations>}
+     * @memberof CreativeRecommendationsRequest
+     */
+    requiredRecommendations: Array<RequiredRecommendations>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsRequestAdFormatEnum {
+    SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsResponse
+ */
+export interface CreativeRecommendationsResponse {
+    /**
+     * Ordered list of Primary Headline recommendation groups.
+     * @type {Array<Array<TextRecommendation>>}
+     * @memberof CreativeRecommendationsResponse
+     */
+    primaryHeadlines?: Array<Array<TextRecommendation>>;
+    /**
+     * Ordered list of Secondary Headline recommendation groups.
+     * @type {Array<Array<TextRecommendation>>}
+     * @memberof CreativeRecommendationsResponse
+     */
+    secondaryHeadlines?: Array<Array<TextRecommendation>>;
+}
+/**
+ * 
+ * @export
+ * @interface CreativeRecommendationsThrottlingError
+ */
+export interface CreativeRecommendationsThrottlingError {
+    /**
+     * Throttled error code.
+     * @type {string}
+     * @memberof CreativeRecommendationsThrottlingError
+     */
+    code?: CreativeRecommendationsThrottlingErrorCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof CreativeRecommendationsThrottlingError
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreativeRecommendationsThrottlingErrorCodeEnum {
+    Throttled = 'THROTTLED'
+}
+
 /**
  * Type of creative. Only `productCollection` and `video` are supported for forecasting.
  * @export
@@ -1661,6 +2073,31 @@ export interface PerformanceMeasureCondition {
     threshold: number;
 }
 /**
+ * 
+ * @export
+ * @interface PerformanceMeasureConditionForSB
+ */
+export interface PerformanceMeasureConditionForSB {
+    /**
+     * 
+     * @type {PerformanceMetricForSB}
+     * @memberof PerformanceMeasureConditionForSB
+     */
+    metricName: PerformanceMetricForSB;
+    /**
+     * 
+     * @type {ComparisonOperator}
+     * @memberof PerformanceMeasureConditionForSB
+     */
+    comparisonOperator: ComparisonOperator;
+    /**
+     * The performance threshold value.
+     * @type {number}
+     * @memberof PerformanceMeasureConditionForSB
+     */
+    threshold: number;
+}
+/**
  * The advertising performance metric.
  * @export
  * @enum {string}
@@ -1670,6 +2107,16 @@ export enum PerformanceMetric {
     Acos = 'ACOS',
     Ctr = 'CTR',
     Cvr = 'CVR',
+    Roas = 'ROAS'
+}
+
+/**
+ * The advertising performance metric.
+ * @export
+ * @enum {string}
+ */
+
+export enum PerformanceMetricForSB {
     Roas = 'ROAS'
 }
 
@@ -1801,7 +2248,8 @@ export enum PreModerationRequestAdProgramEnum {
     SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO',
     Stores = 'STORES',
     SponsoredDisplay = 'SPONSORED_DISPLAY',
-    Dsp = 'DSP'
+    Dsp = 'DSP',
+    DspRec = 'DSP_REC'
 }
 /**
     * @export
@@ -1901,7 +2349,8 @@ export enum PreModerationResponseAdProgramEnum {
     SponsoredBrandsVideo = 'SPONSORED_BRANDS_VIDEO',
     Stores = 'STORES',
     SponsoredDisplay = 'SPONSORED_DISPLAY',
-    Dsp = 'DSP'
+    Dsp = 'DSP',
+    DspRec = 'DSP_REC'
 }
 /**
     * @export
@@ -1986,6 +2435,25 @@ export interface ProductTarget {
     expressions?: Array<ProductExpression>;
 }
 /**
+ * Recommended Headline in response object. Recommended headline will be locale specific, i.e. for an asin input in ES, Recommended headline will be in ES.
+ * @export
+ * @interface RecommendedHeadline
+ */
+export interface RecommendedHeadline {
+    /**
+     * Unique Id of Recommended headline.
+     * @type {string}
+     * @memberof RecommendedHeadline
+     */
+    headlineId?: string;
+    /**
+     * String that contains Recommended headline.
+     * @type {string}
+     * @memberof RecommendedHeadline
+     */
+    headline?: string;
+}
+/**
  * 
  * @export
  * @interface Recurrence
@@ -2013,6 +2481,35 @@ export interface Recurrence {
 export enum RecurrenceType {
     Daily = 'DAILY',
     Weekly = 'WEEKLY'
+}
+
+/**
+ * 
+ * @export
+ * @interface RequiredRecommendations
+ */
+export interface RequiredRecommendations {
+    /**
+     * Maximum number of recommendations groups that API should return for given type. (recommendations are not guaranteed).
+     * @type {number}
+     * @memberof RequiredRecommendations
+     */
+    maxRecommendationGroups?: number;
+    /**
+     * Type of recommendations.
+     * @type {string}
+     * @memberof RequiredRecommendations
+     */
+    type: RequiredRecommendationsTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum RequiredRecommendationsTypeEnum {
+    PrimaryHeadline = 'PRIMARY_HEADLINE',
+    SecondaryHeadline = 'SECONDARY_HEADLINE'
 }
 
 /**
@@ -2153,10 +2650,10 @@ export interface SBBudgetRuleDetails {
     name?: string;
     /**
      * 
-     * @type {PerformanceMeasureCondition}
+     * @type {PerformanceMeasureConditionForSB}
      * @memberof SBBudgetRuleDetails
      */
-    performanceMeasureCondition?: PerformanceMeasureCondition;
+    performanceMeasureCondition?: PerformanceMeasureConditionForSB;
 }
 /**
  * The Error Response Object.
@@ -2506,13 +3003,14 @@ export interface SBRuleDuration {
     dateRangeTypeRuleDuration: DateRangeTypeRuleDuration;
 }
 /**
- * The type of budget rule. SCHEDULE: A budget rule based on a start and end date.
+ * The type of budget rule. SCHEDULE: A budget rule based on a start and end date. PERFORMANCE: A budget rule based on advertising performance criteria.
  * @export
  * @enum {string}
  */
 
 export enum SBRuleType {
-    Schedule = 'SCHEDULE'
+    Schedule = 'SCHEDULE',
+    Performance = 'PERFORMANCE'
 }
 
 /**
@@ -2633,6 +3131,199 @@ export interface SDGetAssociatedCampaignsResponse {
      */
     nextToken?: string;
 }
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationAccessDeniedException
+ */
+export interface SDHeadlineRecommendationAccessDeniedException {
+    /**
+     * AccessDeniedErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationAccessDeniedException
+     */
+    code?: SDHeadlineRecommendationAccessDeniedExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationAccessDeniedException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationAccessDeniedExceptionCodeEnum {
+    AccessDenied = 'ACCESS_DENIED'
+}
+
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationIdentifierNotfoundException
+ */
+export interface SDHeadlineRecommendationIdentifierNotfoundException {
+    /**
+     * IdentiferNotFoundErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationIdentifierNotfoundException
+     */
+    code?: SDHeadlineRecommendationIdentifierNotfoundExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationIdentifierNotfoundException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationIdentifierNotfoundExceptionCodeEnum {
+    IdentifierNotFound = 'IDENTIFIER_NOT_FOUND'
+}
+
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationInternalServerException
+ */
+export interface SDHeadlineRecommendationInternalServerException {
+    /**
+     * InternalErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationInternalServerException
+     */
+    code?: SDHeadlineRecommendationInternalServerExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationInternalServerException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationInternalServerExceptionCodeEnum {
+    InternalError = 'INTERNAL_ERROR'
+}
+
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationMarsThrottlingException
+ */
+export interface SDHeadlineRecommendationMarsThrottlingException {
+    /**
+     * ThrottledErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationMarsThrottlingException
+     */
+    code?: SDHeadlineRecommendationMarsThrottlingExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationMarsThrottlingException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationMarsThrottlingExceptionCodeEnum {
+    Throttled = 'THROTTLED'
+}
+
+/**
+ * Request structure of SD headline recommendation API.
+ * @export
+ * @interface SDHeadlineRecommendationRequest
+ */
+export interface SDHeadlineRecommendationRequest {
+    /**
+     * An array of ASINs associated with the creative.
+     * @type {Array<string>}
+     * @memberof SDHeadlineRecommendationRequest
+     */
+    asins?: Array<string>;
+    /**
+     * Maximum number of recommendations that API should return. Response will [0, maxNumRecommendations] recommendations (recommendations are not guaranteed as there can be instances where the ML model can not generate policy compliant headlines for the given set of asins).
+     * @type {number}
+     * @memberof SDHeadlineRecommendationRequest
+     */
+    maxNumRecommendations?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SDHeadlineRecommendationRequest
+     */
+    adFormat?: SDHeadlineRecommendationRequestAdFormatEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationRequestAdFormatEnum {
+    SponsoredDisplay = 'SPONSORED_DISPLAY'
+}
+
+/**
+ * Response structure of SD headline recommendation API.
+ * @export
+ * @interface SDHeadlineRecommendationResponse
+ */
+export interface SDHeadlineRecommendationResponse {
+    /**
+     * An identifier for request made which is generated by server.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationResponse
+     */
+    requestId?: string;
+    /**
+     * Recommendations are sorted, i.e., more suitable headline has lesser array index value.
+     * @type {Array<RecommendedHeadline>}
+     * @memberof SDHeadlineRecommendationResponse
+     */
+    recommendations?: Array<RecommendedHeadline>;
+}
+/**
+ * 
+ * @export
+ * @interface SDHeadlineRecommendationSchemaValidationException
+ */
+export interface SDHeadlineRecommendationSchemaValidationException {
+    /**
+     * InvalidArgumentErrorCode.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationSchemaValidationException
+     */
+    code?: SDHeadlineRecommendationSchemaValidationExceptionCodeEnum;
+    /**
+     * A human-readable description of the error response.
+     * @type {string}
+     * @memberof SDHeadlineRecommendationSchemaValidationException
+     */
+    details?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SDHeadlineRecommendationSchemaValidationExceptionCodeEnum {
+    InvalidArgument = 'INVALID_ARGUMENT'
+}
+
 /**
  * 
  * @export
@@ -3165,6 +3856,25 @@ export interface TextPosition {
      * @memberof TextPosition
      */
     end?: number;
+}
+/**
+ * 
+ * @export
+ * @interface TextRecommendation
+ */
+export interface TextRecommendation {
+    /**
+     * Unique ID for generated recommendation.
+     * @type {string}
+     * @memberof TextRecommendation
+     */
+    id?: string;
+    /**
+     * Recommendation value.
+     * @type {string}
+     * @memberof TextRecommendation
+     */
+    value?: string;
 }
 /**
  * 
@@ -4968,6 +5678,159 @@ export class BudgetRulesRecommendationApi extends BaseAPI {
      */
     public sBGetBudgetRulesRecommendation(requestParameters: BudgetRulesRecommendationApiSBGetBudgetRulesRecommendationRequest, options?: any) {
         return BudgetRulesRecommendationApiFp(this.configuration).sBGetBudgetRulesRecommendation(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.uNKNOWNBASETYPE, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * BudgetUsageApi - axios parameter creator
+ * @export
+ */
+export const BudgetUsageApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Budget usage API for SB campaigns
+         * @param {any} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {any} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {BudgetUsageCampaignRequest} budgetUsageCampaignRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sbCampaignsBudgetUsage: async (amazonAdvertisingAPIClientId: any, amazonAdvertisingAPIScope: any, budgetUsageCampaignRequest: BudgetUsageCampaignRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('sbCampaignsBudgetUsage', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('sbCampaignsBudgetUsage', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'budgetUsageCampaignRequest' is not null or undefined
+            assertParamExists('sbCampaignsBudgetUsage', 'budgetUsageCampaignRequest', budgetUsageCampaignRequest)
+            const localVarPath = `/sb/campaigns/budget/usage`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(JSON.stringify(amazonAdvertisingAPIClientId));
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(JSON.stringify(amazonAdvertisingAPIScope));
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sbcampaignbudgetusage.v1+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(budgetUsageCampaignRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BudgetUsageApi - functional programming interface
+ * @export
+ */
+export const BudgetUsageApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BudgetUsageApiAxiosParamCreator(configuration)
+    return {
+        /**
+         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Budget usage API for SB campaigns
+         * @param {any} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {any} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {BudgetUsageCampaignRequest} budgetUsageCampaignRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sbCampaignsBudgetUsage(amazonAdvertisingAPIClientId: any, amazonAdvertisingAPIScope: any, budgetUsageCampaignRequest: BudgetUsageCampaignRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BudgetUsageCampaignResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sbCampaignsBudgetUsage(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetUsageCampaignRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BudgetUsageApi - factory interface
+ * @export
+ */
+export const BudgetUsageApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BudgetUsageApiFp(configuration)
+    return {
+        /**
+         *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Budget usage API for SB campaigns
+         * @param {any} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {any} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {BudgetUsageCampaignRequest} budgetUsageCampaignRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sbCampaignsBudgetUsage(amazonAdvertisingAPIClientId: any, amazonAdvertisingAPIScope: any, budgetUsageCampaignRequest: BudgetUsageCampaignRequest, options?: any): AxiosPromise<BudgetUsageCampaignResponse> {
+            return localVarFp.sbCampaignsBudgetUsage(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetUsageCampaignRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for sbCampaignsBudgetUsage operation in BudgetUsageApi.
+ * @export
+ * @interface BudgetUsageApiSbCampaignsBudgetUsageRequest
+ */
+export interface BudgetUsageApiSbCampaignsBudgetUsageRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {any}
+     * @memberof BudgetUsageApiSbCampaignsBudgetUsage
+     */
+    readonly amazonAdvertisingAPIClientId: any
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {any}
+     * @memberof BudgetUsageApiSbCampaignsBudgetUsage
+     */
+    readonly amazonAdvertisingAPIScope: any
+
+    /**
+     * 
+     * @type {BudgetUsageCampaignRequest}
+     * @memberof BudgetUsageApiSbCampaignsBudgetUsage
+     */
+    readonly budgetUsageCampaignRequest: BudgetUsageCampaignRequest
+}
+
+/**
+ * BudgetUsageApi - object-oriented interface
+ * @export
+ * @class BudgetUsageApi
+ * @extends {BaseAPI}
+ */
+export class BudgetUsageApi extends BaseAPI {
+    /**
+     *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+     * @summary Budget usage API for SB campaigns
+     * @param {BudgetUsageApiSbCampaignsBudgetUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BudgetUsageApi
+     */
+    public sbCampaignsBudgetUsage(requestParameters: BudgetUsageApiSbCampaignsBudgetUsageRequest, options?: any) {
+        return BudgetUsageApiFp(this.configuration).sbCampaignsBudgetUsage(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.budgetUsageCampaignRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

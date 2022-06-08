@@ -291,9 +291,6 @@
   },
   "servers": [
     {
-      "url": "https://advertising-api-test.amazon.com (Sandbox)"
-    },
-    {
       "url": "https://advertising-api.amazon.com (North America)"
     },
     {

@@ -126,12 +126,350 @@
           "Product Eligibility"
         ]
       }
+    },
+    "/eligibility/programs": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProgramEligibilityRequestContent"
+              }
+            }
+          }
+        },
+        "description": "Checks the advertiser's eligibility to ad programs.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "operationId": "ProgramEligibility",
+        "responses": {
+          "200": {
+            "description": "ProgramEligibility 200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProgramEligibilityResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequestException 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UnauthorizedException 401 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedExceptionResponseContent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFoundException 404 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundExceptionResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerErrorException 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorExceptionResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/components/schemas/AcceptLanguage"
+            },
+            "in": "header",
+            "name": "Accept-Language",
+            "description": "Specify the language in which the response is returned."
+          },
+          {
+            "schema": {
+              "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id `profileId` from the response to pass it as input.",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id `profileId` from the response to pass it as input.",
+            "required": true
+          },
+          {
+            "schema": {
+              "description": "Advertiser ID populated from the federated gateway authorizer context",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "advertiserId",
+            "description": "Advertiser ID populated from the federated gateway authorizer context",
+            "required": true
+          },
+          {
+            "schema": {
+              "description": "Entity ID populated from the federated gateway authorizer context",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "entityId",
+            "description": "Entity ID populated from the federated gateway authorizer context"
+          },
+          {
+            "schema": {
+              "description": "Entity type (seller, vendor, author, etc) populated from the federated gateway authorizer context",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "entityType",
+            "description": "Entity type (seller, vendor, author, etc) populated from the federated gateway authorizer context"
+          },
+          {
+            "schema": {
+              "description": "Marketplace ID populated from the federated gateway authorizer context",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "marketplaceId",
+            "description": "Marketplace ID populated from the federated gateway authorizer context"
+          },
+          {
+            "schema": {
+              "description": "Obfuscated Marketplace ID populated from the federated gateway authorizer context, this is included in case marketplace ID is not included",
+              "type": "string"
+            },
+            "in": "header",
+            "name": "obfuscatedMarketplaceId",
+            "description": "Obfuscated Marketplace ID populated from the federated gateway authorizer context, this is included in case marketplace ID is not included"
+          }
+        ],
+        "tags": [
+          "Program Eligibility"
+        ]
+      }
     }
   },
   "components": {
     "headers": {},
     "examples": {},
     "schemas": {
+      "UnauthorizedExceptionResponseContent": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "format": "int32",
+            "description": "Programmatic status code.",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "EligibilityStatusDetail": {
+        "description": "Describes a single program's eligibility status",
+        "type": "object",
+        "properties": {
+          "reasons": {
+            "minItems": 1,
+            "maxItems": 99,
+            "uniqueItems": true,
+            "description": "String identifier for the status.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReasonItem"
+            }
+          },
+          "eligible": {
+            "description": "Boolean value where if true, advertiser is eligible to access the given program.",
+            "type": "boolean"
+          }
+        }
+      },
+      "ProductEligibilityResponse": {
+        "description": "A product advertising eligibility response object.",
+        "type": "object",
+        "properties": {
+          "productResponseList": {
+            "description": "A list of product advertising eligibility responses.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductResponse"
+            }
+          }
+        }
+      },
+      "ProgramEligibilityResponseContent": {
+        "description": "An object of program eligibility responses for an advertiser.",
+        "type": "object",
+        "properties": {
+          "eligibilityStatusMap": {
+            "$ref": "#/components/schemas/EligibilityStatusMap"
+          }
+        }
+      },
+      "Check": {
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "skipAllBillingChecks",
+            "properties": {
+              "skipAllBillingChecks": {
+                "description": "Skip all billing/payments/suspension related checks",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "skipAllBillingChecks"
+            ]
+          }
+        ],
+        "description": "A union of all the checks that we would want to skip"
+      },
+      "ReasonItem": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/ReasonCode"
+          },
+          "level": {
+            "$ref": "#/components/schemas/IneligibleLevel"
+          },
+          "description": {
+            "description": "Message explaining what the status means. Example: Payment preference not found for associated billing account. Please add a new payment method",
+            "type": "string"
+          }
+        }
+      },
+      "EligibilityStatus": {
+        "description": "The advertising eligibility status of a product.",
+        "type": "object",
+        "properties": {
+          "severity": {
+            "description": "An enumerated advertising eligibility severity status. If set to `INELIGIBLE`, the product cannot be included in an advertisement. If set to `ELIGIBLE_WITH_WARNING`, the product may not receive impressions when included in an advertisement.",
+            "type": "string",
+            "enum": [
+              "INELIGIBLE",
+              "ELIGIBLE_WITH_WARNING"
+            ]
+          },
+          "name": {
+            "description": "The status identifier.",
+            "type": "string",
+            "enum": [
+              "ADULT_PRODUCT",
+              "CLOSED_CATEGORY",
+              "INELIGIBLE_CONDITION",
+              "INELIGIBLE_OFFER",
+              "INELIGIBLE_PRODUCT_COST",
+              "LISTING_SUPRESSED",
+              "MISSING_IMAGE",
+              "MISSING_TITLE",
+              "NOT_IN_BUYBOX",
+              "OUT_OF_STOCK",
+              "RESTRICTED_CATEGORY",
+              "VARIATION_PARENT"
+            ]
+          },
+          "helpUrl": {
+            "description": "A URL with additional information about the status identifier. May not be present for all status identifiers.",
+            "type": "string"
+          },
+          "message": {
+            "description": "A human-readable description of the status identifier specified in the `name` field.",
+            "type": "string"
+          }
+        }
+      },
+      "ReasonCode": {
+        "type": "string",
+        "enum": [
+          "BILLING_ACCOUNT_NOT_FOUND",
+          "PAYMENT_PROFILE_NOT_FOUND",
+          "PAYMENT_METHOD_NOT_FOUND",
+          "PAYMENT_METHOD_NOT_VALID",
+          "EXPIRED_PAYMENT_METHOD",
+          "VETTING_FAILURE",
+          "ACCOUNT_SUSPENDED",
+          "TAX_INFO_NOT_COMPLETE",
+          "PREPAY_BALANCE_TOO_LOW",
+          "RO_BALANCE_TOO_LOW",
+          "NO_BRAND_RELATIONS",
+          "NO_TACTIC_ENABLED",
+          "UNKNOWN",
+          "BLOCKED"
+        ]
+      },
+      "ProgramEligibilityRequestContent": {
+        "description": "A request to evaluate account level eligibility for Amazon ad programs (Sponsored Products, Sponsored Brands, Sponsored Display, Stores, etc).",
+        "type": "object",
+        "properties": {
+          "skipChecks": {
+            "$ref": "#/components/schemas/Check"
+          }
+        }
+      },
+      "BadRequestExceptionResponseContent": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "format": "int32",
+            "description": "Programmatic status code.",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "IneligibleLevel": {
+        "type": "string",
+        "enum": [
+          "INELIGIBLE_WITH_RESOLUTION",
+          "INELIGIBLE"
+        ]
+      },
+      "NotFoundExceptionResponseContent": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "format": "int32",
+            "description": "Programmatic status code.",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
       "ProductEligibilityRequest": {
         "description": "A product advertising eligibility request object.",
         "type": "object",
@@ -177,19 +515,6 @@
           }
         }
       },
-      "ProductEligibilityResponse": {
-        "description": "A product advertising eligibility response object.",
-        "type": "object",
-        "properties": {
-          "productResponseList": {
-            "description": "A list of product advertising eligibility responses.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ProductResponse"
-            }
-          }
-        }
-      },
       "ProductDetails": {
         "description": "An Amazon product identifier, seller product identifer, or both.",
         "type": "object",
@@ -203,6 +528,45 @@
           },
           "sku": {
             "description": "A seller product identifier.",
+            "type": "string"
+          }
+        }
+      },
+      "AcceptLanguage": {
+        "type": "string",
+        "enum": [
+          "en-US",
+          "ar-AE",
+          "zh-CN",
+          "nl-NL",
+          "en-AU",
+          "en-CA",
+          "en-IN",
+          "en-GB",
+          "fr-CA",
+          "fr-FR",
+          "de-DE",
+          "it-IT",
+          "ja-JP",
+          "ko-KR",
+          "pl-PL",
+          "pt-BR",
+          "es-ES",
+          "es-US",
+          "es-MX",
+          "tr-TR"
+        ]
+      },
+      "InternalServerErrorExceptionResponseContent": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "format": "int32",
+            "description": "Programmatic status code.",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
             "type": "string"
           }
         }
@@ -236,45 +600,12 @@
           }
         }
       },
-      "EligibilityStatus": {
-        "description": "The advertising eligibility status of a product.",
-        "type": "object",
-        "properties": {
-          "severity": {
-            "description": "An enumerated advertising eligibility severity status. If set to `INELIGIBLE`, the product cannot be included in an advertisement. If set to `ELIGIBLE_WITH_WARNING`, the product may not receive impressions when included in an advertisement.",
-            "type": "string",
-            "enum": [
-              "INELIGIBLE",
-              "ELIGIBLE_WITH_WARNING"
-            ]
-          },
-          "name": {
-            "description": "The status identifier.",
-            "type": "string",
-            "enum": [
-              "ADULT_PRODUCT",
-              "CLOSED_CATEGORY",
-              "INELIGIBLE_CONDITION",
-              "INELIGIBLE_OFFER",
-              "INELIGIBLE_PRODUCT_COST",
-              "LISTING_SUPRESSED",
-              "MISSING_IMAGE",
-              "MISSING_TITLE",
-              "NOT_IN_BUYBOX",
-              "OUT_OF_STOCK",
-              "RESTRICTED_CATEGORY",
-              "VARIATION_PARENT"
-            ]
-          },
-          "helpUrl": {
-            "description": "A URL with additional information about the status identifier. May not be present for all status identifiers.",
-            "type": "string"
-          },
-          "message": {
-            "description": "A human-readable description of the status identifier specified in the `name` field.",
-            "type": "string"
-          }
-        }
+      "EligibilityStatusMap": {
+        "description": "This is a map that will be key'd on the ad program (SB/SD); the value will be an eligibility object.",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/EligibilityStatusDetail"
+        },
+        "type": "object"
       }
     },
     "requestBodies": {},

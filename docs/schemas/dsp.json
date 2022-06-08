@@ -43,6 +43,9 @@
     },
     {
       "name": "Discovery"
+    },
+    {
+      "name": "Domain Targeting"
     }
   ],
   "paths": {
@@ -9987,6 +9990,151 @@
           }
         }
       }
+    },
+    "/dsp/targeting/domain/": {
+      "get": {
+        "tags": [
+          "Domain Targeting"
+        ],
+        "summary": "Gets one or more line items domain targeting information.",
+        "description": "Gets one or more line items domain targeting information.",
+        "operationId": "getDomainTargeting",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "name": "lineItemIdFilter",
+            "description": "Comma-delimited string of line item ids. Maximum 100 ids.",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/vnd.dspreaddomaintargeting.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadDomainTargetingResponses"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "415": {
+            "$ref": "#/components/responses/UnsupportedMediaType"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/EndpointRequestTimedOut"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Domain Targeting"
+        ],
+        "summary": "Update line item domain targeting.",
+        "description": "Replaces the DomainTargeting for the specified line items with the ones provided in the request body.\n",
+        "operationId": "updateDomainTargeting",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          }
+        ],
+        "requestBody": {
+          "description": "An array of domain targeting objects. Maximum length of the array is 1.",
+          "content": {
+            "application/vnd.dspupdatedomaintargeting.v1+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/UpdateDomainTargetingRequest"
+                },
+                "minItems": 1,
+                "maxItems": 1
+              }
+            }
+          }
+        },
+        "responses": {
+          "207": {
+            "description": "Multi-status. This holds array of items which represents success or failure corresponding to the index in the request body.",
+            "content": {
+              "application/vnd.dspdomaintargetingresponse.v1+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UpdateDomainTargetingResponse"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "415": {
+            "$ref": "#/components/responses/UnsupportedMediaType"
+          },
+          "429": {
+            "$ref": "#/components/responses/TooManyRequests"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "502": {
+            "$ref": "#/components/responses/BadGateway"
+          },
+          "503": {
+            "$ref": "#/components/responses/ServiceUnavailable"
+          },
+          "504": {
+            "$ref": "#/components/responses/EndpointRequestTimedOut"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -14770,7 +14918,8 @@
       "SupportedPolicyType": {
         "type": "string",
         "enum": [
-          "PRODUCT"
+          "PRODUCT",
+          "DOMAIN"
         ]
       },
       "LineItemCreativeAssociationsResponse": {
@@ -15337,6 +15486,165 @@
             "type": "string",
             "description": "The URL of the product tracking file.",
             "readOnly": true
+          }
+        }
+      },
+      "ReadDomainTargetingResponses": {
+        "type": "object",
+        "properties": {
+          "response": {
+            "minItems": 1,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReadDomainTargetingResponse"
+            }
+          }
+        }
+      },
+      "ReadDomainTargetingResponse": {
+        "description": "The read operation response.",
+        "type": "object",
+        "readOnly": true,
+        "properties": {
+          "lineItemId": {
+            "type": "string",
+            "description": "The line item identifier."
+          },
+          "inheritFromAdvertiser": {
+            "type": "boolean",
+            "description": "Set to `true` to enable domain inheritance from advertiser."
+          },
+          "targetingType": {
+            "$ref": "#/components/schemas/TargetingType"
+          },
+          "domainListMergedFile": {
+            "type": "string",
+            "description": "The URL address of the domain file after merging all domains into single file, including inheritence from advertiser, domain lists, domain files, domains entered, if any."
+          }
+        }
+      },
+      "TargetingType": {
+        "type": "string",
+        "description": "The list type of the domain. Either INCLUDE (ALLOW_LIST) or EXCLUDE (BLOCK_LIST).",
+        "enum": [
+          "INCLUDE",
+          "EXCLUDE"
+        ]
+      },
+      "UpdateDomainTargetingRequest": {
+        "description": "The update operation request.",
+        "type": "object",
+        "properties": {
+          "lineItemId": {
+            "type": "string",
+            "description": "The line item identifier."
+          },
+          "inheritFromAdvertiser": {
+            "type": "boolean",
+            "description": "Set to `true` to enable domain inheritance from advertiser."
+          },
+          "targetingType": {
+            "$ref": "#/components/schemas/TargetingType"
+          },
+          "domainFiles": {
+            "type": "array",
+            "description": "The list of URL addresses of the domain list files.",
+            "items": {
+              "$ref": "#/components/schemas/DomainFileMetaData"
+            },
+            "maxItems": 10
+          },
+          "domainLists": {
+            "type": "array",
+            "description": "The list of domain lists Ids get from discovery API.",
+            "items": {
+              "type": "string",
+              "maxLength": 36,
+              "description": "The list identifier."
+            },
+            "maxItems": 10
+          },
+          "domainNames": {
+            "type": "array",
+            "description": "The list of raw domain names.",
+            "items": {
+              "type": "string",
+              "maxLength": 255,
+              "description": "The domain name."
+            },
+            "maxItems": 1000
+          }
+        },
+        "required": [
+          "lineItemId",
+          "inheritFromAdvertiser",
+          "targetingType"
+        ]
+      },
+      "DomainFileMetaData": {
+        "type": "object",
+        "properties": {
+          "fileKey": {
+            "type": "string",
+            "description": "The S3 key of domain list file."
+          },
+          "fileName": {
+            "type": "string",
+            "description": "The domain list file name."
+          }
+        },
+        "required": [
+          "fileKey",
+          "fileName"
+        ]
+      },
+      "UpdateDomainTargetingResponse": {
+        "description": "The update operation response. If operation is successful, it contains lineItemId (and domainFilesUploaded). If it is a failure, it contains only errorDetails. Success and failure will be corresponding to that requested index in that batch (array of items).",
+        "type": "object",
+        "properties": {
+          "lineItemId": {
+            "type": "string",
+            "description": "The line item identifier."
+          },
+          "domainFilesUploaded": {
+            "type": "array",
+            "description": "The list of domain file validation results.",
+            "items": {
+              "$ref": "#/components/schemas/DomainFileValidationResponse"
+            }
+          },
+          "errorDetails": {
+            "$ref": "#/components/schemas/Error"
+          }
+        }
+      },
+      "DomainFileValidationResponse": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "description": "The uploaded file name."
+          },
+          "addedDomainSize": {
+            "type": "integer",
+            "description": "Number of domains in the file that have been added to the line item."
+          },
+          "invalidDomainSize": {
+            "type": "integer",
+            "description": "Number of invalid domains in the file. They are not added to the line item."
+          },
+          "duplicateDomainSize": {
+            "type": "integer",
+            "description": "Number of duplicate domains in the file. The unique ones of them are added to the line item."
+          },
+          "invalidDomainsFileUrl": {
+            "type": "string",
+            "description": "The URL of invalid domains file. It expires in 1 hour."
+          },
+          "duplicateDomainsFileUrl": {
+            "type": "string",
+            "description": "The URL of duplicate domains file. It expires in 1 hour."
           }
         }
       },
