@@ -30,12 +30,12 @@ describe('model-generator', () => {
 
 			processSchemas();
 
-			expect(childProcess.execSync).nthCalledWith(
+			expect(childProcess.execSync).toHaveBeenNthCalledWith(
 				1,
 				'openapi-generator-cli generate -g typescript-axios --enable-post-process-file --additional-properties=supportES6=true,useSingleRequestParameter=true --type-mappings=set=Array --skip-validate-spec -o ./src/apis/testSchemaOne -i docs/schemas/testSchemaOne.json'
 			);
 
-			expect(childProcess.execSync).nthCalledWith(
+			expect(childProcess.execSync).toHaveBeenNthCalledWith(
 				2,
 				'openapi-generator-cli generate -g typescript-axios --enable-post-process-file --additional-properties=supportES6=true,useSingleRequestParameter=true --type-mappings=set=Array --skip-validate-spec -o ./src/apis/testSchemaTwo -i docs/schemas/testSchemaTwo.json'
 			);
@@ -49,13 +49,13 @@ describe('model-generator', () => {
 
 			processSchemas();
 
-			expect(childProcess.execSync).nthCalledWith(
+			expect(childProcess.execSync).toHaveBeenNthCalledWith(
 				1,
 				'openapi-generator-cli generate -g typescript-axios --enable-post-process-file --additional-properties=supportES6=true,useSingleRequestParameter=true --type-mappings=set=Array --skip-validate-spec -o ./src/apis/testSchemaOne -i docs/schemas/testSchemaOne.json',
 				{ stdio: 'inherit' }
 			);
 
-			expect(childProcess.execSync).nthCalledWith(
+			expect(childProcess.execSync).toHaveBeenNthCalledWith(
 				2,
 				'openapi-generator-cli generate -g typescript-axios --enable-post-process-file --additional-properties=supportES6=true,useSingleRequestParameter=true --type-mappings=set=Array --skip-validate-spec -o ./src/apis/testSchemaTwo -i docs/schemas/testSchemaTwo.json',
 				{ stdio: 'inherit' }
@@ -69,12 +69,12 @@ describe('model-generator', () => {
 
 			processSchemas();
 
-			expect(fs.renameSync).nthCalledWith(
+			expect(fs.renameSync).toHaveBeenNthCalledWith(
 				4,
 				'./src/apis/testSchemaOne/api.ts',
 				'./src/apis/models/testSchemaOne.ts'
 			);
-			expect(fs.renameSync).nthCalledWith(
+			expect(fs.renameSync).toHaveBeenNthCalledWith(
 				5,
 				'./src/apis/testSchemaTwo/api.ts',
 				'./src/apis/models/testSchemaTwo.ts'
@@ -88,13 +88,13 @@ describe('model-generator', () => {
 
 			processSchemas();
 
-			expect(fs.rmSync).nthCalledWith(1, './src/apis/testSchemaOne', {
+			expect(fs.rmSync).toHaveBeenNthCalledWith(1, './src/apis/testSchemaOne', {
 				force: true,
 				maxRetries: 3,
 				recursive: true,
 			});
 
-			expect(fs.rmSync).nthCalledWith(2, './src/apis/testSchemaTwo', {
+			expect(fs.rmSync).toHaveBeenNthCalledWith(2, './src/apis/testSchemaTwo', {
 				force: true,
 				maxRetries: 3,
 				recursive: true,
@@ -108,9 +108,17 @@ describe('model-generator', () => {
 
 			processSchemas();
 
-			expect(fs.renameSync).nthCalledWith(1, './src/apis/testSchemaOne/base.ts', './src/apis/models/base.ts');
-			expect(fs.renameSync).nthCalledWith(2, './src/apis/testSchemaOne/common.ts', './src/apis/models/common.ts');
-			expect(fs.renameSync).nthCalledWith(
+			expect(fs.renameSync).toHaveBeenNthCalledWith(
+				1,
+				'./src/apis/testSchemaOne/base.ts',
+				'./src/apis/models/base.ts'
+			);
+			expect(fs.renameSync).toHaveBeenNthCalledWith(
+				2,
+				'./src/apis/testSchemaOne/common.ts',
+				'./src/apis/models/common.ts'
+			);
+			expect(fs.renameSync).toHaveBeenNthCalledWith(
 				3,
 				'./src/apis/testSchemaOne/configuration.ts',
 				'./src/apis/models/configuration.ts'
@@ -130,25 +138,25 @@ describe('model-generator', () => {
 
 			processSchemas();
 
-			expect(childProcess.execSync).nthCalledWith(
+			expect(childProcess.execSync).toHaveBeenNthCalledWith(
 				1,
 				'openapi-generator-cli generate -g typescript-axios --enable-post-process-file --additional-properties=supportES6=true,useSingleRequestParameter=true --type-mappings=set=Array --skip-validate-spec -o ./src/apis/testSchemaOne -i docs/schemas/testSchemaOne.json',
 				{ stdio: 'inherit' }
 			);
 
-			expect(fs.renameSync).nthCalledWith(
+			expect(fs.renameSync).toHaveBeenNthCalledWith(
 				3,
 				'./src/apis/testSchemaOne/configuration.ts',
 				'./src/apis/models/configuration.ts'
 			);
 
-			expect(fs.renameSync).nthCalledWith(
+			expect(fs.renameSync).toHaveBeenNthCalledWith(
 				4,
 				'./src/apis/testSchemaOne/api.ts',
 				'./src/apis/models/testSchemaOne.ts'
 			);
 
-			expect(fs.rmSync).nthCalledWith(1, './src/apis/testSchemaOne', {
+			expect(fs.rmSync).toHaveBeenNthCalledWith(1, './src/apis/testSchemaOne', {
 				force: true,
 				maxRetries: 3,
 				recursive: true,
@@ -173,43 +181,43 @@ describe('model-generator', () => {
 
 			processSchemas();
 
-			expect(childProcess.execSync).nthCalledWith(
+			expect(childProcess.execSync).toHaveBeenNthCalledWith(
 				1,
 				'openapi-generator-cli generate -g typescript-axios --enable-post-process-file --additional-properties=supportES6=true,useSingleRequestParameter=true --type-mappings=set=Array --skip-validate-spec -o ./src/apis/testSchemaOne -i docs/schemas/testSchemaOne.json',
 				{ stdio: 'inherit' }
 			);
 
-			expect(childProcess.execSync).nthCalledWith(
+			expect(childProcess.execSync).toHaveBeenNthCalledWith(
 				2,
 				'openapi-generator-cli generate -g typescript-axios --enable-post-process-file --additional-properties=supportES6=true,useSingleRequestParameter=true --type-mappings=set=Array --skip-validate-spec -o ./src/apis/testSchemaTwo -i docs/schemas/testSchemaTwo.json',
 				{ stdio: 'inherit' }
 			);
 
-			expect(fs.renameSync).nthCalledWith(
+			expect(fs.renameSync).toHaveBeenNthCalledWith(
 				3,
 				'./src/apis/testSchemaOne/configuration.ts',
 				'./src/apis/models/configuration.ts'
 			);
 
-			expect(fs.renameSync).nthCalledWith(
+			expect(fs.renameSync).toHaveBeenNthCalledWith(
 				4,
 				'./src/apis/testSchemaOne/api.ts',
 				'./src/apis/models/testSchemaOne.ts'
 			);
 
-			expect(fs.renameSync).nthCalledWith(
+			expect(fs.renameSync).toHaveBeenNthCalledWith(
 				5,
 				'./src/apis/testSchemaTwo/api.ts',
 				'./src/apis/models/testSchemaTwo.ts'
 			);
 
-			expect(fs.rmSync).nthCalledWith(1, './src/apis/testSchemaOne', {
+			expect(fs.rmSync).toHaveBeenNthCalledWith(1, './src/apis/testSchemaOne', {
 				force: true,
 				maxRetries: 3,
 				recursive: true,
 			});
 
-			expect(fs.rmSync).nthCalledWith(2, './src/apis/testSchemaTwo', {
+			expect(fs.rmSync).toHaveBeenNthCalledWith(2, './src/apis/testSchemaTwo', {
 				force: true,
 				maxRetries: 3,
 				recursive: true,
