@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Product Selector
- * The Amazon Product Selector API allows integrators to receive product metadata such as inventory status, price, eligibility status and product details for SKUS or ASINs in their Product Catalog in order to launch, manage or optimize Sponsored Product, Sponsored Brands or Sponsored Display advertising campaigns. The Product Selector API is available to Sellers, Vendors, and Authors.
+ * The Amazon Product Selector API allows integrators to receive product metadata such as inventory status, price, eligibility status and product details for SKUS or ASINs in their Product Catalog in order to launch, manage or optimize Sponsored Product, Sponsored Brands or Sponsored Display advertising campaigns. The Product Selector API is available to Sellers, Vendors, and Authors. Note that for vendors it fetches inventory based on the vendor codes so the result could be different from elsewhere.
  *
  * The version of the OpenAPI document: 3.0
  * 
@@ -496,7 +496,7 @@ export interface ProductMetadataRequest {
      */
     checkItemDetails?: boolean;
     /**
-     * Pagination token used for the suggested sort type
+     * Pagination token used for the suggested sort type or for author merchant
      * @type {string}
      * @memberof ProductMetadataRequest
      */
@@ -526,7 +526,7 @@ export interface ProductMetadataRequest {
      */
     searchStr?: string;
     /**
-     * Index of the page to be returned
+     * Index of the page to be returned; For author, this value will be ignored, should use cursorToken instead.
      * @type {number}
      * @memberof ProductMetadataRequest
      */
@@ -538,7 +538,7 @@ export interface ProductMetadataRequest {
      */
     sortOrder?: ProductMetadataRequestSortOrderEnum;
     /**
-     * Number of items to be returned on this page index (max 100 for author)
+     * Number of items to be returned on this page index
      * @type {number}
      * @memberof ProductMetadataRequest
      */

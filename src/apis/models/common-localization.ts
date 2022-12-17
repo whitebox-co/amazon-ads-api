@@ -473,7 +473,7 @@ export enum LocalizationKeywordResultStatusEnum {
  */
 export interface LocalizationKeywordSourceDetails {
     /**
-     * The ID of the source marketplace. For example, if the caller is an advertiser based in the UK (marketplace ID A1F83G8C2ARO7P) and wishes to localize keywords to Germany (marketplace ID A1PA6795UKMFR9), the source marketplace ID is that of the UK, i.e., A1F83G8C2ARO7P. This marketplace ID is converted into a default locale for that marketplace. The supported locale arcs are outlined in the targetDetails documentation. The following marketplaces are supported for conversion to default locales: |Region|Country Code|Default Locale|Name|Marketplace ID| |-|-|-|-|-| |EU|AE|en_AE|United Arab Emirates|A2VIGQ35RCS4UG| |EU|DE|de_DE|Germany|A1PA6795UKMFR9| |EU|EG|ar_EG|Egypt|ARBP9OOSHTCHU| |EU|ES|es_ES|Spain|A1RKKUPIHCS9HS| |EU|FR|fr_FR|France|A13V1IB3VIYZZH| |EU|GB|en_GB|United Kingdom|A1F83G8C2ARO7P| |EU|IT|it_IT|Italy|APJ6JRA9NG5V4| |EU|NL|nl_NL|Netherlands|A1805IZSGTT6HS| |EU|PL|pl_PL|Poland|A1C3SOZRARQ6R3| |EU|SA|en_SA|Saudi Arabia|A17E79C6D8DWNP| |EU|SE|sv_SE|Sweden|A2NODRKZP88ZB9| |EU|TR|tr_TR|Turkey|A33AVAJ2PDY3EV| |FE|AU|en_AU|Australia|A39IBJ37TRP1C6| |FE|IN|en_IN|India|A21TJRUUN4KGV| |FE|JP|ja_JP|Japan|A1VC38T7YXB528| |FE|SG|en_SG|Singapore|A19VAU5U5O7RUS| |NA|BR|pt_BR|Brazil|A2Q3Y263D00KWC| |NA|CA|en_CA|Canada|A2EUQ1WTGCTBG2| |NA|MX|es_MX|Mexico|A1AM78C64UM0Y8| |NA|US|en_US|United States|ATVPDKIKX0DER|
+     * The ID of the source marketplace. For example, if the caller is an advertiser based in the UK (marketplace ID A1F83G8C2ARO7P) and wishes to localize keywords to Germany (marketplace ID A1PA6795UKMFR9), the source marketplace ID is that of the UK, i.e., A1F83G8C2ARO7P. This marketplace ID is converted into a default locale for that marketplace. The supported locale arcs are outlined in the targetDetails documentation. The following marketplaces are supported for conversion to default locales: |Region|Country Code|Default Locale|Name|Marketplace ID| |-|-|-|-|-| |EU|AE|en_AE|United Arab Emirates|A2VIGQ35RCS4UG| |EU|DE|de_DE|Germany|A1PA6795UKMFR9| |EU|EG|ar_EG|Egypt|ARBP9OOSHTCHU| |EU|ES|es_ES|Spain|A1RKKUPIHCS9HS| |EU|FR|fr_FR|France|A13V1IB3VIYZZH| |EU|GB|en_GB|United Kingdom|A1F83G8C2ARO7P| |EU|IT|it_IT|Italy|APJ6JRA9NG5V4| |EU|NL|nl_NL|Netherlands|A1805IZSGTT6HS| |EU|PL|pl_PL|Poland|A1C3SOZRARQ6R3| |EU|SA|en_SA|Saudi Arabia|A17E79C6D8DWNP| |EU|SE|sv_SE|Sweden|A2NODRKZP88ZB9| |EU|TR|tr_TR|Turkey|A33AVAJ2PDY3EV| |EU|BE|fr_FR|Belgium|AMEN7PMS3EDWL| |EU|NG|en_NG|Nigeria|A3OCL2LJ6GDH9T| |EU|ZA|en_ZA|South Africa|AE08WJ6YKNBMC| |FE|AU|en_AU|Australia|A39IBJ37TRP1C6| |FE|IN|en_IN|India|A21TJRUUN4KGV| |FE|JP|ja_JP|Japan|A1VC38T7YXB528| |FE|SG|en_SG|Singapore|A19VAU5U5O7RUS| |FE|CN|zh_CN|China|AAHKV2X7AFYLW| |NA|CL|es_CL|Chile|A2WDZJZ5TCRMLH| |NA|CO|es_CO|Colombia|A1ZXRLSQW2V54D| |NA|BR|pt_BR|Brazil|A2Q3Y263D00KWC| |NA|CA|en_CA|Canada|A2EUQ1WTGCTBG2| |NA|MX|es_MX|Mexico|A1AM78C64UM0Y8| |NA|US|en_US|United States|ATVPDKIKX0DER|
      * @type {string}
      * @memberof LocalizationKeywordSourceDetails
      */
@@ -492,13 +492,13 @@ export interface LocalizationKeywordSourceDetails {
     locale?: string;
 }
 /**
- * The target details for the LocalizationKeywordRequests. One of locales, countryCode, or marketplaceIds must be present. If locale is present, the content of marketplaceIds and countryCodes is ignored. Each locale / marketplace ID / countryCode across the array must be unique. The following locale pairs are supported. ?? signifies wildcard. For example if en_?? is specified, locales that are supported would include but not be limited to en_US or en_GB: * ar_?? to en_?? * de_?? to en_?? * de_?? to es_?? * de_?? to fr_?? * de_?? to it_?? * de_?? to nl_?? * de_?? to zh_?? * en_?? to ar_?? * en_?? to de_?? * en_?? to es_?? * en_?? to es_MX * en_?? to fr_?? * en_?? to it_?? * en_?? to ja_?? * en_?? to nl_?? * en_?? to pt_?? * es_?? to de_?? * es_?? to en_?? * es_?? to fr_?? * es_?? to it_?? * es_?? to nl_?? * es_?? to zh_?? * es_MX to en_?? * fr_?? to de_?? * fr_?? to en_?? * fr_?? to es_?? * fr_?? to it_?? * fr_?? to nl_?? * fr_?? to zh_?? * it_?? to de_?? * it_?? to en_?? * it_?? to es_?? * it_?? to fr_?? * it_?? to nl_?? * it_?? to zh_?? * ja_?? to en_?? * ja_?? to zh_?? * nl_?? to de_?? * nl_?? to en_?? * nl_?? to es_?? * nl_?? to fr_?? * nl_?? to it_?? * nl_?? to zh_?? * pt_?? to en_?? * zh_?? to de_?? * zh_?? to es_?? * zh_?? to es_MX * zh_?? to fr_?? * zh_?? to it_?? * zh_?? to ja_?? * zh_?? to nl_?? * zh_?? to pt_??
+ * The target details for the LocalizationKeywordRequests. One of locales, countryCode, or marketplaceIds must be present. If locale is present, the content of marketplaceIds and countryCodes is ignored. Each locale / marketplace ID / countryCode across the array must be unique. The following locale pairs are supported. ?? signifies wildcard. For example if en_?? is specified, locales that are supported would include but not be limited to en_US or en_GB: * ar_?? to en_?? * ar_?? to fr_?? * ar_?? to it_?? * ar_?? to nl_?? * ar_?? to pt_?? * ar_?? to tr_?? * de_?? to en_?? * de_?? to es_?? * de_?? to fr_?? * de_?? to it_?? * de_?? to ja_?? * de_?? to nl_?? * de_?? to pt_?? * de_?? to sv_?? * de_?? to zh_?? * en_?? to ar_?? * en_?? to de_?? * en_?? to es_?? * en_?? to es_MX * en_?? to fr_?? * en_?? to it_?? * en_?? to ja_?? * en_?? to nl_?? * en_?? to pl_?? * en_?? to pt_?? * en_?? to sv_?? * en_?? to tr_?? * en_?? to zh_?? * es_?? to de_?? * es_?? to en_?? * es_?? to fr_?? * es_?? to it_?? * es_?? to ja_?? * es_?? to nl_?? * es_?? to pl_?? * es_?? to sv_?? * es_?? to zh_?? * es_MX to en_?? * es_MX to fr_?? * es_MX to it_?? * es_MX to ja_?? * es_MX to nl_?? * es_MX to pl_?? * es_MX to sv_?? * es_MX to zh_?? * fr_?? to de_?? * fr_?? to en_?? * fr_?? to es_?? * fr_?? to es_MX * fr_?? to it_?? * fr_?? to nl_?? * fr_?? to sv_?? * fr_?? to tr_?? * fr_?? to zh_?? * it_?? to de_?? * it_?? to en_?? * it_?? to es_?? * it_?? to es_MX * it_?? to fr_?? * it_?? to ja_?? * it_?? to nl_?? * it_?? to pl_?? * it_?? to pt_?? * it_?? to sv_?? * it_?? to tr_?? * it_?? to zh_?? * ja_?? to en_?? * ja_?? to es_?? * ja_?? to fr_?? * ja_?? to it_?? * ja_?? to nl_?? * ja_?? to pl_?? * ja_?? to pt_?? * ja_?? to tr_?? * ja_?? to zh_?? * nl_?? to de_?? * nl_?? to en_?? * nl_?? to es_?? * nl_?? to fr_?? * nl_?? to it_?? * nl_?? to sv_?? * nl_?? to zh_?? * pl_?? to de_?? * pl_?? to en_?? * pl_?? to es_?? * pl_?? to es_MX * pl_?? to it_?? * pl_?? to ja_?? * pl_?? to sv_?? * pt_?? to de_?? * pt_?? to en_?? * pt_?? to fr_?? * pt_?? to ja_?? * pt_?? to nl_?? * pt_?? to tr_?? * pt_?? to zh_?? * sv_?? to en_?? * sv_?? to ja_?? * sv_?? to pl_?? * sv_?? to pt_?? * tr_?? to fr_?? * tr_?? to es_MX * zh_?? to de_?? * zh_?? to en_?? * zh_?? to es_?? * zh_?? to es_MX * zh_?? to fr_?? * zh_?? to it_?? * zh_?? to ja_?? * zh_?? to nl_?? * zh_?? to pl_?? * zh_?? to pt_?? * zh_?? to sv_?? * zh_?? to tr_??
  * @export
  * @interface LocalizationKeywordTargetDetails
  */
 export interface LocalizationKeywordTargetDetails {
     /**
-     * The IDs of target marketplaces (marketplaces in which the caller wishes to localize the specified keywords). For example, if the caller is an advertiser based in the UK (marketplace ID A1F83G8C2ARO7P) and wishes to localize keywords to Germany (marketplace ID A1PA6795UKMFR9), the target marketplace ID is that of Germany, i.e., A1PA6795UKMFR9. **Please note:** if locales are provided, any provided marketplace IDs will be ignored. The marketplace IDs are converted into default locales. The supported locale arcs are outlined in the targetDetails locales section. The following marketplaces are supported for conversion to default locales: |Region|Country Code|Default Locale|Name|Marketplace ID| |-|-|-|-|-| |EU|AE|en_AE|United Arab Emirates|A2VIGQ35RCS4UG| |EU|DE|de_DE|Germany|A1PA6795UKMFR9| |EU|EG|ar_EG|Egypt|ARBP9OOSHTCHU| |EU|ES|es_ES|Spain|A1RKKUPIHCS9HS| |EU|FR|fr_FR|France|A13V1IB3VIYZZH| |EU|GB|en_GB|United Kingdom|A1F83G8C2ARO7P| |EU|IT|it_IT|Italy|APJ6JRA9NG5V4| |EU|NL|nl_NL|Netherlands|A1805IZSGTT6HS| |EU|PL|pl_PL|Poland|A1C3SOZRARQ6R3| |EU|SA|en_SA|Saudi Arabia|A17E79C6D8DWNP| |EU|SE|sv_SE|Sweden|A2NODRKZP88ZB9| |EU|TR|tr_TR|Turkey|A33AVAJ2PDY3EV| |FE|AU|en_AU|Australia|A39IBJ37TRP1C6| |FE|IN|en_IN|India|A21TJRUUN4KGV| |FE|JP|ja_JP|Japan|A1VC38T7YXB528| |FE|SG|en_SG|Singapore|A19VAU5U5O7RUS| |NA|BR|pt_BR|Brazil|A2Q3Y263D00KWC| |NA|CA|en_CA|Canada|A2EUQ1WTGCTBG2| |NA|MX|es_MX|Mexico|A1AM78C64UM0Y8| |NA|US|en_US|United States|ATVPDKIKX0DER|
+     * The IDs of target marketplaces (marketplaces in which the caller wishes to localize the specified keywords). For example, if the caller is an advertiser based in the UK (marketplace ID A1F83G8C2ARO7P) and wishes to localize keywords to Germany (marketplace ID A1PA6795UKMFR9), the target marketplace ID is that of Germany, i.e., A1PA6795UKMFR9. **Please note:** if locales are provided, any provided marketplace IDs will be ignored. The marketplace IDs are converted into default locales. The supported locale arcs are outlined in the targetDetails locales section. The following marketplaces are supported for conversion to default locales: |Region|Country Code|Default Locale|Name|Marketplace ID| |-|-|-|-|-| |EU|AE|en_AE|United Arab Emirates|A2VIGQ35RCS4UG| |EU|DE|de_DE|Germany|A1PA6795UKMFR9| |EU|EG|ar_EG|Egypt|ARBP9OOSHTCHU| |EU|ES|es_ES|Spain|A1RKKUPIHCS9HS| |EU|FR|fr_FR|France|A13V1IB3VIYZZH| |EU|GB|en_GB|United Kingdom|A1F83G8C2ARO7P| |EU|IT|it_IT|Italy|APJ6JRA9NG5V4| |EU|NL|nl_NL|Netherlands|A1805IZSGTT6HS| |EU|PL|pl_PL|Poland|A1C3SOZRARQ6R3| |EU|SA|en_SA|Saudi Arabia|A17E79C6D8DWNP| |EU|SE|sv_SE|Sweden|A2NODRKZP88ZB9| |EU|TR|tr_TR|Turkey|A33AVAJ2PDY3EV| |FE|AU|en_AU|Australia|A39IBJ37TRP1C6| |FE|IN|en_IN|India|A21TJRUUN4KGV| |FE|JP|ja_JP|Japan|A1VC38T7YXB528| |FE|SG|en_SG|Singapore|A19VAU5U5O7RUS| |FE|CN|zh_CN|China|AAHKV2X7AFYLW| |NA|BR|pt_BR|Brazil|A2Q3Y263D00KWC| |NA|CA|en_CA|Canada|A2EUQ1WTGCTBG2| |NA|MX|es_MX|Mexico|A1AM78C64UM0Y8| |NA|US|en_US|United States|ATVPDKIKX0DER|
      * @type {Array<string>}
      * @memberof LocalizationKeywordTargetDetails
      */
@@ -828,6 +828,61 @@ export enum LocalizationTargetingExpressionResponseV2StatusEnum {
 }
 
 /**
+ * A response to a request to localize a targeting expression from a source marketplace to one or more target marketplaces.
+ * @export
+ * @interface LocalizationTargetingExpressionResponseV3
+ */
+export interface LocalizationTargetingExpressionResponseV3 {
+    /**
+     * 
+     * @type {LocalizationTargetingExpressionResult}
+     * @memberof LocalizationTargetingExpressionResponseV3
+     */
+    localizedTargetingExpressionResults: LocalizationTargetingExpressionResult;
+    /**
+     * If status is ERROR, the error code. Not present if status is SUCCESS.
+     * @type {string}
+     * @memberof LocalizationTargetingExpressionResponseV3
+     */
+    errorCode?: string;
+    /**
+     * A map from resolved source locales to the resolved result (`LocalizationTargetingExpressionResult`). All resolved source locales present in the request will have an entry in this map.
+     * @type {{ [key: string]: LocalizationTargetingExpressionResult; }}
+     * @memberof LocalizationTargetingExpressionResponseV3
+     */
+    sourceResolvedTargetingExpressionResults?: { [key: string]: LocalizationTargetingExpressionResult; };
+    /**
+     * Source targeting expression for this result set.
+     * @type {{ [key: string]: LocalizationTargetingExpression; }}
+     * @memberof LocalizationTargetingExpressionResponseV3
+     */
+    sourceTargetingExpression: { [key: string]: LocalizationTargetingExpression; };
+    /**
+     * A map from resolved target locales to the resolved result (`LocalizationTargetingExpressionResult`). All resolved target locales present in the request will have an entry in this map.
+     * @type {{ [key: string]: LocalizationTargetingExpressionResult; }}
+     * @memberof LocalizationTargetingExpressionResponseV3
+     */
+    localizedResolvedTargetingExpressionResults?: { [key: string]: LocalizationTargetingExpressionResult; };
+    /**
+     * If SUCCESS, PARTIAL_SUCCESS or FAILURE, do not retry. If ERROR, may retry.
+     * @type {string}
+     * @memberof LocalizationTargetingExpressionResponseV3
+     */
+    status: LocalizationTargetingExpressionResponseV3StatusEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum LocalizationTargetingExpressionResponseV3StatusEnum {
+    Success = 'SUCCESS',
+    PartialSuccess = 'PARTIAL_SUCCESS',
+    Failure = 'FAILURE',
+    Error = 'ERROR'
+}
+
+/**
  * Information regarding how and to what extent a targeting expression was localized.
  * @export
  * @interface LocalizationTargetingExpressionResult
@@ -1050,6 +1105,18 @@ export interface TargetingExpressionLocalizationRequest {
      */
     targetDetailsList: Array<LocalizationTargetingTargetDetails>;
     /**
+     * The locale to which the caller wishes to translate the localized targeting expressions to. For example, if the caller is resolving targeted expressions from British English (en_GB) to Simplified Chinese (zh_CN), the locale is zh_CN. If no locale is provided, the response will not have any resolved targeting expressions for the localized targeting expressions.
+     * @type {string}
+     * @memberof TargetingExpressionLocalizationRequest
+     */
+    targetResolvedTargetingExpressionLocale?: string;
+    /**
+     * The locales to which the caller wishes to translate the source targeting expressions to. For example, if the caller is resolving targeted expressions from British English (en_GB) to Simplified Chinese (zh_CN), the locale is zh_CN. If no locales are provided, the response will not have any resolved targeting expressions for the source targeting expressions.
+     * @type {Array<string>}
+     * @memberof TargetingExpressionLocalizationRequest
+     */
+    sourceResolvedTargetingExpressionLocales?: Array<string>;
+    /**
      * A list of requests, each containing a targeting expression to localize. Its order will be maintained in `responses` in the corresponding `targetingExpressionLocalizationResponse` object.
      * @type {Array<LocalizationTargetingExpressionRequest>}
      * @memberof TargetingExpressionLocalizationRequest
@@ -1088,6 +1155,19 @@ export interface TargetingExpressionLocalizationResponseV2 {
      */
     responses: Array<LocalizationTargetingExpressionResponseV2>;
 }
+/**
+ * 
+ * @export
+ * @interface TargetingExpressionLocalizationResponseV3
+ */
+export interface TargetingExpressionLocalizationResponseV3 {
+    /**
+     * A list of responses containing localized targeting expressions. Its order matches that of `requests` in the corresponding `targetingExpressionLocalizationRequest` object.
+     * @type {Array<LocalizationTargetingExpressionResponseV3>}
+     * @memberof TargetingExpressionLocalizationResponseV3
+     */
+    responses: Array<LocalizationTargetingExpressionResponseV3>;
+}
 
 /**
  * CurrencyLocalizationApi - axios parameter creator
@@ -1098,8 +1178,8 @@ export const CurrencyLocalizationApiAxiosParamCreator = function (configuration?
         /**
          * Returns localized currencies within specified marketplaces.
          * @summary Gets an array of localized currencies in their target marketplaces using advertiser identifier in header, and source marketplace ID (via marketplaceId or countryCode) in the body
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {CurrencyLocalizationRequest} currencyLocalizationRequest Contains a list of amounts and a list of target marketplace IDs (via marketplaceId or countryCode), to convert the passed values into the respective marketplace currency.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1158,8 +1238,8 @@ export const CurrencyLocalizationApiFp = function(configuration?: Configuration)
         /**
          * Returns localized currencies within specified marketplaces.
          * @summary Gets an array of localized currencies in their target marketplaces using advertiser identifier in header, and source marketplace ID (via marketplaceId or countryCode) in the body
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {CurrencyLocalizationRequest} currencyLocalizationRequest Contains a list of amounts and a list of target marketplace IDs (via marketplaceId or countryCode), to convert the passed values into the respective marketplace currency.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1181,8 +1261,8 @@ export const CurrencyLocalizationApiFactory = function (configuration?: Configur
         /**
          * Returns localized currencies within specified marketplaces.
          * @summary Gets an array of localized currencies in their target marketplaces using advertiser identifier in header, and source marketplace ID (via marketplaceId or countryCode) in the body
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {CurrencyLocalizationRequest} currencyLocalizationRequest Contains a list of amounts and a list of target marketplace IDs (via marketplaceId or countryCode), to convert the passed values into the respective marketplace currency.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1200,14 +1280,14 @@ export const CurrencyLocalizationApiFactory = function (configuration?: Configur
  */
 export interface CurrencyLocalizationApiGetLocalizedCurrenciesRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
      * @type {string}
      * @memberof CurrencyLocalizationApiGetLocalizedCurrencies
      */
     readonly amazonAdvertisingAPIClientId: string
 
     /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
      * @type {string}
      * @memberof CurrencyLocalizationApiGetLocalizedCurrencies
      */
@@ -1251,8 +1331,8 @@ export const KeywordLocalizationApiAxiosParamCreator = function (configuration?:
         /**
          * Returns localized keywords within specified marketplaces or locales.
          * @summary Returns localized keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {KeywordsLocalizationRequest} keywordsLocalizationRequest Contains list of target details and keywords to localize.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1311,8 +1391,8 @@ export const KeywordLocalizationApiFp = function(configuration?: Configuration) 
         /**
          * Returns localized keywords within specified marketplaces or locales.
          * @summary Returns localized keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {KeywordsLocalizationRequest} keywordsLocalizationRequest Contains list of target details and keywords to localize.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1334,8 +1414,8 @@ export const KeywordLocalizationApiFactory = function (configuration?: Configura
         /**
          * Returns localized keywords within specified marketplaces or locales.
          * @summary Returns localized keywords.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {KeywordsLocalizationRequest} keywordsLocalizationRequest Contains list of target details and keywords to localize.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1353,14 +1433,14 @@ export const KeywordLocalizationApiFactory = function (configuration?: Configura
  */
 export interface KeywordLocalizationApiGetLocalizedKeywordsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
      * @type {string}
      * @memberof KeywordLocalizationApiGetLocalizedKeywords
      */
     readonly amazonAdvertisingAPIClientId: string
 
     /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
      * @type {string}
      * @memberof KeywordLocalizationApiGetLocalizedKeywords
      */
@@ -1404,8 +1484,8 @@ export const ProductLocalizationApiAxiosParamCreator = function (configuration?:
         /**
          * Localizes (maps) products from a source marketplace to one or more target marketplaces. The localization process succeeds for a given target marketplace if a product matching the source product can be found there and the advertiser is eligible to advertise it. Seller requests have an additional condition: the SKU of a localized product must match the SKU of the source product.
          * @summary Returns localized products.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use the &#x60;GET&#x60; method on the Profiles resource to list profiles associated with the access token provided in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {ProductLocalizationRequest} productLocalizationRequest Contains list of target details and products to localize.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1464,8 +1544,8 @@ export const ProductLocalizationApiFp = function(configuration?: Configuration) 
         /**
          * Localizes (maps) products from a source marketplace to one or more target marketplaces. The localization process succeeds for a given target marketplace if a product matching the source product can be found there and the advertiser is eligible to advertise it. Seller requests have an additional condition: the SKU of a localized product must match the SKU of the source product.
          * @summary Returns localized products.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use the &#x60;GET&#x60; method on the Profiles resource to list profiles associated with the access token provided in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {ProductLocalizationRequest} productLocalizationRequest Contains list of target details and products to localize.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1487,8 +1567,8 @@ export const ProductLocalizationApiFactory = function (configuration?: Configura
         /**
          * Localizes (maps) products from a source marketplace to one or more target marketplaces. The localization process succeeds for a given target marketplace if a product matching the source product can be found there and the advertiser is eligible to advertise it. Seller requests have an additional condition: the SKU of a localized product must match the SKU of the source product.
          * @summary Returns localized products.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use the &#x60;GET&#x60; method on the Profiles resource to list profiles associated with the access token provided in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {ProductLocalizationRequest} productLocalizationRequest Contains list of target details and products to localize.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1506,14 +1586,14 @@ export const ProductLocalizationApiFactory = function (configuration?: Configura
  */
 export interface ProductLocalizationApiGetLocalizedProductsRequest {
     /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
      * @type {string}
      * @memberof ProductLocalizationApiGetLocalizedProducts
      */
     readonly amazonAdvertisingAPIClientId: string
 
     /**
-     * The identifier of a profile associated with the advertiser account. Use the &#x60;GET&#x60; method on the Profiles resource to list profiles associated with the access token provided in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
      * @type {string}
      * @memberof ProductLocalizationApiGetLocalizedProducts
      */
@@ -1555,10 +1635,10 @@ export class ProductLocalizationApi extends BaseAPI {
 export const TargetingExpressionLocalizationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Localizes (maps) targeting expressions from a source marketplace to one or more target marketplaces.
+         * Localizes (maps) targeting expressions from a source marketplace to one or more target marketplaces. V3: Providing locales in your request\'s source details or target details, will now return in &lt;sourceField&gt; and &lt;targetField&gt; respectively the translations of your targeting expressions.
          * @summary Localizes targeting expressions used for advertising targeting.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&#39;Login with Amazon\&#39; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use the &#x60;GET&#x60; method on the Profiles resource to list profiles associated with the access token provided in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {TargetingExpressionLocalizationRequest} targetingExpressionLocalizationRequest Contains a list of targeting expressions to localize.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1615,10 +1695,10 @@ export const TargetingExpressionLocalizationApiFp = function(configuration?: Con
     const localVarAxiosParamCreator = TargetingExpressionLocalizationApiAxiosParamCreator(configuration)
     return {
         /**
-         * Localizes (maps) targeting expressions from a source marketplace to one or more target marketplaces.
+         * Localizes (maps) targeting expressions from a source marketplace to one or more target marketplaces. V3: Providing locales in your request\'s source details or target details, will now return in &lt;sourceField&gt; and &lt;targetField&gt; respectively the translations of your targeting expressions.
          * @summary Localizes targeting expressions used for advertising targeting.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&#39;Login with Amazon\&#39; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use the &#x60;GET&#x60; method on the Profiles resource to list profiles associated with the access token provided in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {TargetingExpressionLocalizationRequest} targetingExpressionLocalizationRequest Contains a list of targeting expressions to localize.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1638,10 +1718,10 @@ export const TargetingExpressionLocalizationApiFactory = function (configuration
     const localVarFp = TargetingExpressionLocalizationApiFp(configuration)
     return {
         /**
-         * Localizes (maps) targeting expressions from a source marketplace to one or more target marketplaces.
+         * Localizes (maps) targeting expressions from a source marketplace to one or more target marketplaces. V3: Providing locales in your request\'s source details or target details, will now return in &lt;sourceField&gt; and &lt;targetField&gt; respectively the translations of your targeting expressions.
          * @summary Localizes targeting expressions used for advertising targeting.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&#39;Login with Amazon\&#39; account. This is a required header for advertisers and integrators using the Advertising API.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use the &#x60;GET&#x60; method on the Profiles resource to list profiles associated with the access token provided in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {TargetingExpressionLocalizationRequest} targetingExpressionLocalizationRequest Contains a list of targeting expressions to localize.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1659,14 +1739,14 @@ export const TargetingExpressionLocalizationApiFactory = function (configuration
  */
 export interface TargetingExpressionLocalizationApiGetLocalizedTargetingExpressionRequest {
     /**
-     * The identifier of a client associated with a \&#39;Login with Amazon\&#39; account. This is a required header for advertisers and integrators using the Advertising API.
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
      * @type {string}
      * @memberof TargetingExpressionLocalizationApiGetLocalizedTargetingExpression
      */
     readonly amazonAdvertisingAPIClientId: string
 
     /**
-     * The identifier of a profile associated with the advertiser account. Use the &#x60;GET&#x60; method on the Profiles resource to list profiles associated with the access token provided in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
      * @type {string}
      * @memberof TargetingExpressionLocalizationApiGetLocalizedTargetingExpression
      */
@@ -1688,7 +1768,7 @@ export interface TargetingExpressionLocalizationApiGetLocalizedTargetingExpressi
  */
 export class TargetingExpressionLocalizationApi extends BaseAPI {
     /**
-     * Localizes (maps) targeting expressions from a source marketplace to one or more target marketplaces.
+     * Localizes (maps) targeting expressions from a source marketplace to one or more target marketplaces. V3: Providing locales in your request\'s source details or target details, will now return in &lt;sourceField&gt; and &lt;targetField&gt; respectively the translations of your targeting expressions.
      * @summary Localizes targeting expressions used for advertising targeting.
      * @param {TargetingExpressionLocalizationApiGetLocalizedTargetingExpressionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

@@ -122,7 +122,7 @@
         ],
         "operationId": "listCampaigns",
         "summary": "Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria.",
-        "description": "Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. Returns both productCollection and video campaigns. Use either `adFormatFilter` or `creativeType` to filter campaigns by ad formats such as `productCollection` or `video`. <br>**Note:** An advertiser that has lost brand eligibility will not be able to use any write operations such as `POST`, `PUT`, and `DELETE`. This includes the `GET` operation `/pageAsins`. However, the rest of the `GET` operations such as `/sb/campaigns` will be usable regardless of advertiser's eligibility status.",
+        "description": "**Note**: To ensure you are getting all campaign data, use the [version 4 list campaigns endpoint](https://advertising.amazon.com/API/docs/en-us/sponsored-brands/3-0/openapi/prod#/Campaigns/ListSponsoredBrandsCampaigns) instead.\n\nTo return Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. Returns both productCollection and video campaigns. Use either `adFormatFilter` or `creativeType` to filter campaigns by ad formats such as `productCollection` or `video`. <br>**Note:** An advertiser that has lost brand eligibility will not be able to use any write operations such as `POST`, `PUT`, and `DELETE`. This includes the `GET` operation `/pageAsins`. However, the rest of the `GET` operations such as `/sb/campaigns` will be usable regardless of advertiser's eligibility status. ",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -327,7 +327,7 @@
         ],
         "operationId": "createCampaigns",
         "summary": "Creates one or more new Campaigns.",
-        "description": "See the [create a Sponsored Brands campaign](https://advertising.amazon.com/help#GQFZA83P55P747BZ) topic in the Amazon Ads Support Center for more information about the campaign review process. **Note** to retrieve the state of a campaign submitted for creation, use the listCampaign operation and the campaign identifier from this operation. On SB creation, the state field is read-only. \n<br>**To create a video campaign specify adFormat as 'video'. If adFormat is not specified a Product Collection campaign will be created. Only a single video campaign can be created at a time.**\n<br>**Note** each campaign in campaign creation operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords).\n<br>**Note** each campaign in campaign creation operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting).\n<br>**Note** that keywords or expressions *can not* be recreated for a campaign if the keyword or expression has previously been associated with a campaign and subsequently archived. ",
+        "description": "**Note:** To create multi-ad group campaigns use the [version 4 POST campaigns](https://advertising.amazon.com/API/docs/en-us/sponsored-brands/3-0/openapi/prod#/Campaigns/CreateSponsoredBrandsCampaigns) endpoint. \n\nSee the [create a Sponsored Brands campaign](https://advertising.amazon.com/help#GQFZA83P55P747BZ) topic in the Amazon Ads Support Center for more information about the campaign review process. **Note** to retrieve the state of a campaign submitted for creation, use the listCampaign operation and the campaign identifier from this operation. On SB creation, the state field is read-only. \n<br>**To create a video campaign specify adFormat as 'video'. If adFormat is not specified a Product Collection campaign will be created. Only a single video campaign can be created at a time.**\n<br>**Note** each campaign in campaign creation operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords).\n<br>**Note** each campaign in campaign creation operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting).\n<br>**Note** that keywords or expressions *can not* be recreated for a campaign if the keyword or expression has previously been associated with a campaign and subsequently archived. ",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -830,7 +830,8 @@
                       "format": "int64"
                     }
                   }
-                }
+                },
+                "maxItems": 10
               }
             },
             "application/vnd.updatecampaignsresponse.v3.2+json": {
@@ -883,7 +884,8 @@
                       "format": "int64"
                     }
                   }
-                }
+                },
+                "maxItems": 10
               }
             },
             "application/vnd.updatecampaignsresponse.v3.3+json": {
@@ -937,7 +939,8 @@
                       "$ref": "#/components/schemas/ShopperSegmentBiddingControls"
                     }
                   ]
-                }
+                },
+                "maxItems": 10
               }
             }
           }
@@ -4074,7 +4077,7 @@
                                       "description": "A list of campaign identifiers.",
                                       "type": "array",
                                       "items": {
-                                        "description": "An existing camapign identifier.",
+                                        "description": "An existing campaign identifier.",
                                         "type": "string"
                                       },
                                       "minItems": 1,
@@ -4789,7 +4792,7 @@
           "Reports"
         ],
         "summary": "Requests the creation of a report containing performance data related to Sponsored Brands campaigns.",
-        "description": "Use this interface to request and retrieve performance reports. **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**\n\n**Reports vs. snapshots**\n\nIf you need to download a snapshot of your campaign records, consider requesting a [snapshot](/API/docs/en-us/concepts/snapshots/overview) to minimize report size and timeouts. You can then use the record ID to join snapshot dimensional data and report performance data.\n\n**Constraints of Sponsored Brands reporting**\n\nSponsored Brands reporting data cannot be combined with Sponsored Products data into one report. Only 14-day data is available for Sponsored Brands. Attribution windows of 1, 7, and 30-day intervals are not available.\n\n**New-to-brand performance metrics**\n\nWith new-to-brand metrics, advertisers can measure and optimize campaigns, as well as plan future marketing strategies to grow their customer base on Amazon. New-to-brand metrics determine whether an ad-attributed purchase was made by an existing customer or one buying a brand’s product on Amazon for the first time over the prior year. With new-to-brand metrics, advertisers receive campaign performance metrics such as total new-to-brand purchases and sales, new-to-brand purchase rate, and cost per new-to-brand customer. Advertisers now have the tools they need to estimate the cost of acquiring new customers on Amazon and identify the most efficient channels and tactics to achieve their campaign goals.",
+        "description": "Use this interface to request and retrieve performance reports. **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**\n\n**KDP support**\n\nNote that KDP profiles cannot currently request reports for Sponsored Brands campaigns using the API. Authors should use the advertising console to download reporting data. \n\n**Filtering**\n\nFor more information, see the [Reporting FAQ](/API/docs/en-us/reporting/v2/faq#can-i-filter-a-sponsored-brands-report).\n\n**Constraints of Sponsored Brands reporting**\n\nSponsored Brands reporting data cannot be combined with Sponsored Products data into one report. Only 14-day data is available for Sponsored Brands. Attribution windows of 1, 7, and 30-day intervals are not available.\n\n**New-to-brand performance metrics**\n\nWith new-to-brand metrics, advertisers can measure and optimize campaigns, as well as plan future marketing strategies to grow their customer base on Amazon. New-to-brand metrics determine whether an ad-attributed purchase was made by an existing customer or one buying a brand’s product on Amazon for the first time over the prior year. With new-to-brand metrics, advertisers receive campaign performance metrics such as total new-to-brand purchases and sales, new-to-brand purchase rate, and cost per new-to-brand customer. Advertisers now have the tools they need to estimate the cost of acquiring new customers on Amazon and identify the most efficient channels and tactics to achieve their campaign goals.",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -4832,7 +4835,7 @@
                   },
                   "creativeType": {
                     "type": "string",
-                    "description": "Optional. Supported values are `video` (for video campaigns) and `all` (for both non-video and video campaigns). If not specified, the report will contain data for non-video campaigns. For `ads` report types only, `creativeType` is required and must be set to `all` (`video` is not allowed).",
+                    "description": "Optional. Supported values are `video` (for video campaigns) and `all` (for both non-video and video campaigns). If not specified, the report will contain data for non-video campaigns. For `ads` report types only, `creativeType` is required and must be set to `all` (`video` is not allowed). To return performance data for [multi-ad group campaigns](https://advertising.amazon.com/API/docs/en-us/sponsored-brands/3-0/openapi/prod#/Campaigns), you must include `creativeType` set to `all`` in your request.",
                     "enum": [
                       "video",
                       "all"
@@ -4840,7 +4843,7 @@
                   },
                   "metrics": {
                     "type": "string",
-                    "description": "Each report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/concepts/reporting/report-types).** "
+                    "description": "Each report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/reporting/v2/report-types).** "
                   }
                 }
               }
@@ -4905,7 +4908,7 @@
           "Reports"
         ],
         "summary": "Returns the status of a previously requested report.",
-        "description": "To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).",
+        "description": "To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -4967,7 +4970,7 @@
           "Reports"
         ],
         "summary": "Downloads a previously requested report identified by `reportId`.",
-        "description": "Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created. \n\n**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**\n\nThe report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.\n\n**Note**: The report files in S3 are gzipped.\n\n*Example report download*\n\n`$ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.580149D6.c7aa92c1-ca5b-435d-bb8b-51cb26ad5731?AWSAccessKeyId=AKIAIKLHNT32USZOWVRA&amp;Expires=1476479900&amp;Signature=I%2F2Gd%2B8TbcPbXbBUM6ix%2BSVP3qA%3D\"`",
+        "description": "Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created. \n\n**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**\n\nThe report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.\n\n**Note**: The report files in S3 are gzipped.\n\n*Example report download*\n\n`$ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.580149D6.c7aa92c1-ca5b-435d-bb8b-51cb26ad5731?AWSAccessKeyId=AKIAIKLHNT32USZOWVRA&amp;Expires=1476479900&amp;Signature=I%2F2Gd%2B8TbcPbXbBUM6ix%2BSVP3qA%3D\"`",
         "operationId": "downloadReport",
         "parameters": [
           {

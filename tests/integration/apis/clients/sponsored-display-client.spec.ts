@@ -15,9 +15,6 @@ import {
 	CreateTargetingClauseExpressionTypeEnum,
 	CreateNegativeTargetingClauseExpressionTypeEnum,
 	CustomImageCreativeProperties,
-	CustomImageCreativePropertiesContentTypeEnum,
-	HeadlineLogoCreativeProperties,
-	HeadlineLogoCreativePropertiesContentTypeEnum,
 	NegativeTargetingExpression,
 	Tactic,
 	TargetingPredicate,
@@ -30,6 +27,7 @@ import {
 	NegativeTargetingExpressionTypeEnum,
 	Image,
 	ImageCroppingCoordinates,
+	CreativeProperties,
 } from '../../../../src/apis/models/sponsored-display';
 
 describe('SponsoredDisplayClient', () => {
@@ -105,6 +103,7 @@ describe('SponsoredDisplayClient', () => {
 				adGroupId: 11111111111,
 				state: CreateProductAdStateEnum.Paused,
 				sku: 'TEST_SKU',
+				asin: 'TEST_SKU',
 			};
 
 			const result = await sponsoredDisplayClient.createProductAds({
@@ -201,7 +200,6 @@ describe('SponsoredDisplayClient', () => {
 			};
 
 			const creativeProps: CustomImageCreativeProperties = {
-				contentType: CustomImageCreativePropertiesContentTypeEnum.CustomImage,
 				rectCustomImage: picture,
 				squareCustomImage: picture,
 			};
@@ -225,8 +223,7 @@ describe('SponsoredDisplayClient', () => {
 				croppingCoordinates: coordinates,
 			};
 
-			const creativeProps: HeadlineLogoCreativeProperties = {
-				contentType: HeadlineLogoCreativePropertiesContentTypeEnum.Hl,
+			const creativeProps: CreativeProperties = {
 				brandLogo: picture,
 				headline: 'Test Headline',
 			};

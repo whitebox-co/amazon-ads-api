@@ -88,7 +88,7 @@ export enum AccountType {
 }
 
 /**
- * The countryCode for a given country |Region|`countryCode`|Country Name| |------|-----|-------| |NA|US|United States| |NA|CA|Canada| |NA|MX|Mexico| |NA|BR|Brazil| |EU|UK|United Kingdom| |EU|DE|Germany| |EU|FR|France| |EU|ES|Spain| |EU|IT|Italy| |EU|NL|The Netherlands| |EU|AE|United Arab Emirates| |EU|SE|Sweden| |EU|SE|Sweden| |EU|PL|Poland| |EU|TR|Turkey|         |FE|JP|Japan| |FE|AU|Australia| |FE|SG|Singapore|
+ * The countryCode for a given country |Region|`countryCode`|Country Name| |------|-----|-------| |NA|US|United States| |NA|CA|Canada| |NA|MX|Mexico| |NA|BR|Brazil| |EU|UK|United Kingdom| |EU|EG|Egypt| |EU|DE|Germany| |EU|FR|France| |EU|ES|Spain| |EU|IT|Italy| |EU|NL|The Netherlands| |EU|AE|United Arab Emirates| |EU|SE|Sweden| |EU|SE|Sweden| |EU|PL|Poland| |EU|TR|Turkey|         |FE|JP|Japan| |FE|AU|Australia| |FE|SG|Singapore|
  * @export
  * @enum {string}
  */
@@ -99,6 +99,7 @@ export enum CountryCode {
     Mx = 'MX',
     Br = 'BR',
     Uk = 'UK',
+    Eg = 'EG',
     De = 'DE',
     Fr = 'FR',
     Es = 'ES',
@@ -132,7 +133,7 @@ export interface Profile {
      */
     countryCode?: CountryCode;
     /**
-     * The currency used for all monetary values for entities under this profile. |Region|`countryCode`|Country Name|`currencyCode`| |-----|------|------|------| |NA|US|United States|USD| |NA|CA|Canada|CAD| |NA|MX|Mexico|MXN| |NA|BR|Brazil|BRL| |EU|UK|United Kingdom|GBP| |EU|DE|Germany|EUR| |EU|FR|France|EUR| |EU|ES|Spain|EUR| |EU|IT|Italy|EUR| |EU|NL|The Netherlands|EUR| |EU|SE|Sweden|SEK| |EU|PL|Poland|PLN| |EU|AE|United Arab Emirates|AED| |EU|TR|Turkey|TRY| |FE|JP|Japan|JPY| |FE|AU|Australia|AUD| |FE|SG|Singapore|SGD|
+     * The currency used for all monetary values for entities under this profile. |Region|`countryCode`|Country Name|`currencyCode`| |-----|------|------|------| |NA|US|United States|USD| |NA|CA|Canada|CAD| |NA|MX|Mexico|MXN| |NA|BR|Brazil|BRL| |EU|UK|United Kingdom|GBP| |EU|EG|Egypt|EGP| |EU|DE|Germany|EUR| |EU|FR|France|EUR| |EU|ES|Spain|EUR| |EU|IT|Italy|EUR| |EU|NL|The Netherlands|EUR| |EU|SE|Sweden|SEK| |EU|PL|Poland|PLN| |EU|AE|United Arab Emirates|AED| |EU|TR|Turkey|TRY| |FE|JP|Japan|JPY| |FE|AU|Australia|AUD| |FE|SG|Singapore|SGD|
      * @type {string}
      * @memberof Profile
      */
@@ -144,7 +145,7 @@ export interface Profile {
      */
     dailyBudget?: number;
     /**
-     * The time zone used for all date-based campaign management and reporting. |Region|`countryCode`|Country Name|`timezone`| |------|-----|-----|------| |NA|US|United States|America/Los_Angeles| |NA|CA|Canada|America/Los_Angeles| |NA|MX|Mexico|America/Los_Angeles| |NA|BR|Brazil|America/Sao_Paulo| |EU|UK|United Kingdom|Europe/London| |EU|DE|Germany|Europe/Paris| |EU|FR|France|Europe/Paris| |EU|ES|Spain|Europe/Paris| |EU|IT|Italy|Europe/Paris| |EU|NL|The Netherlands|Europe/Paris| |EU|SE|Sweden|Europe/Stockholm| |EU|PL|Poland|Europe/Warsaw| |EU|AE|United Arab Emirates|Asia/Dubai| |EU|TR|Turkey|Europe/Istanbul| |FE|JP|Japan|Asia/Tokyo| |FE|AU|Australia|Australia/Sydney| |FE|SG|Singapore|Asia/Singapore|
+     * The time zone used for all date-based campaign management and reporting. |Region|`countryCode`|Country Name|`timezone`| |------|-----|-----|------| |NA|US|United States|America/Los_Angeles| |NA|CA|Canada|America/Los_Angeles| |NA|MX|Mexico|America/Los_Angeles| |NA|BR|Brazil|America/Sao_Paulo| |EU|UK|United Kingdom|Europe/London| |EU|EG|Egypt|Africa/Cairo| |EU|DE|Germany|Europe/Paris| |EU|FR|France|Europe/Paris| |EU|ES|Spain|Europe/Paris| |EU|IT|Italy|Europe/Paris| |EU|NL|The Netherlands|Europe/Paris| |EU|SE|Sweden|Europe/Stockholm| |EU|PL|Poland|Europe/Warsaw| |EU|AE|United Arab Emirates|Asia/Dubai| |EU|TR|Turkey|Europe/Istanbul| |FE|JP|Japan|Asia/Tokyo| |FE|AU|Australia|Australia/Sydney| |FE|SG|Singapore|Asia/Singapore|
      * @type {string}
      * @memberof Profile
      */
@@ -167,6 +168,7 @@ export enum ProfileCurrencyCodeEnum {
     Mxn = 'MXN',
     Brl = 'BRL',
     Gbp = 'GBP',
+    Egp = 'EGP',
     Jpy = 'JPY',
     Eur = 'EUR',
     Aud = 'AUD',
@@ -181,6 +183,7 @@ export enum ProfileCurrencyCodeEnum {
     * @enum {string}
     */
 export enum ProfileTimezoneEnum {
+    AfricaCairo = 'Africa/Cairo',
     AmericaLosAngeles = 'America/Los_Angeles',
     AmericaSaoPaulo = 'America/Sao_Paulo',
     EuropeLondon = 'Europe/London',
@@ -219,112 +222,6 @@ export interface ProfileResponse {
      */
     details?: string;
 }
-/**
- * 
- * @export
- * @interface RegisterSellerProfileRequest
- */
-export interface RegisterSellerProfileRequest {
-    /**
-     * 
-     * @type {SandboxCountryCode}
-     * @memberof RegisterSellerProfileRequest
-     */
-    countryCode?: SandboxCountryCode;
-}
-/**
- * 
- * @export
- * @interface RegisterSellerProfileResponse
- */
-export interface RegisterSellerProfileResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof RegisterSellerProfileResponse
-     */
-    status?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RegisterSellerProfileResponse
-     */
-    statusDetails?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RegisterSellerProfileResponse
-     */
-    profileId?: number;
-}
-/**
- * 
- * @export
- * @interface RegisterVendorProfileRequest
- */
-export interface RegisterVendorProfileRequest {
-    /**
-     * 
-     * @type {SandboxCountryCode}
-     * @memberof RegisterVendorProfileRequest
-     */
-    countryCode?: SandboxCountryCode;
-    /**
-     * The vendor account name.
-     * @type {string}
-     * @memberof RegisterVendorProfileRequest
-     */
-    brand?: string;
-}
-/**
- * 
- * @export
- * @interface RegisterVendorProfileResponse
- */
-export interface RegisterVendorProfileResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof RegisterVendorProfileResponse
-     */
-    code?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof RegisterVendorProfileResponse
-     */
-    description?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof RegisterVendorProfileResponse
-     */
-    profileId?: number;
-}
-/**
- * The countryCode for a given country |Region|`countryCode`|Country Name| |------|-----|-------| |NA|US|United States| |NA|CA|Canada| |NA|MX|Mexico| |EU|UK|United Kingdom| |EU|DE|Germany| |EU|FR|France| |EU|ES|Spain| |EU|IT|Italy| |EU|NL|The Netherlands| |EU|AE|United Arab Emirates| |EU|SE|Sweden| |EU|PL|Poland| |EU|TR|Turkey| |FE|JP|Japan| |FE|AU|Australia|
- * @export
- * @enum {string}
- */
-
-export enum SandboxCountryCode {
-    Us = 'US',
-    Ca = 'CA',
-    Mx = 'MX',
-    Uk = 'UK',
-    De = 'DE',
-    Fr = 'FR',
-    Es = 'ES',
-    It = 'IT',
-    Nl = 'NL',
-    Jp = 'JP',
-    Au = 'AU',
-    Ae = 'AE',
-    Se = 'SE',
-    Pl = 'PL',
-    Tr = 'TR'
-}
-
 
 /**
  * ProfilesApi - axios parameter creator
@@ -447,104 +344,6 @@ export const ProfilesApiAxiosParamCreator = function (configuration?: Configurat
             };
         },
         /**
-         * Note that this operation is only used for SANDBOX test environment.
-         * @summary SANDBOX ONLY - Create a seller profile for sandbox.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {RegisterSellerProfileRequest} [registerSellerProfileRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        registerSandboxSeller: async (amazonAdvertisingAPIClientId: string, registerSellerProfileRequest?: RegisterSellerProfileRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('registerSandboxSeller', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
-            const localVarPath = `/v2/profiles/register`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            // authentication oauth2AuthorizationCode required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
-
-            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(registerSellerProfileRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Note that this operation is only used for SANDBOX test environment.
-         * @summary SANDBOX ONLY - Create a vendor profile for sandbox.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {RegisterVendorProfileRequest} [registerVendorProfileRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        registerSandboxVendor: async (amazonAdvertisingAPIClientId: string, registerVendorProfileRequest?: RegisterVendorProfileRequest, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('registerSandboxVendor', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
-            const localVarPath = `/v2/profiles/registerBrand`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            // authentication oauth2AuthorizationCode required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
-
-            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(registerVendorProfileRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Note that this operation is only used for Sellers using Sponsored Products. This operation is not enabled for vendor type accounts.
          * @summary Update the daily budget for one or more profiles.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -631,30 +430,6 @@ export const ProfilesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Note that this operation is only used for SANDBOX test environment.
-         * @summary SANDBOX ONLY - Create a seller profile for sandbox.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {RegisterSellerProfileRequest} [registerSellerProfileRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async registerSandboxSeller(amazonAdvertisingAPIClientId: string, registerSellerProfileRequest?: RegisterSellerProfileRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RegisterSellerProfileResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.registerSandboxSeller(amazonAdvertisingAPIClientId, registerSellerProfileRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Note that this operation is only used for SANDBOX test environment.
-         * @summary SANDBOX ONLY - Create a vendor profile for sandbox.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {RegisterVendorProfileRequest} [registerVendorProfileRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async registerSandboxVendor(amazonAdvertisingAPIClientId: string, registerVendorProfileRequest?: RegisterVendorProfileRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RegisterVendorProfileResponse>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.registerSandboxVendor(amazonAdvertisingAPIClientId, registerVendorProfileRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * Note that this operation is only used for Sellers using Sponsored Products. This operation is not enabled for vendor type accounts.
          * @summary Update the daily budget for one or more profiles.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -700,28 +475,6 @@ export const ProfilesApiFactory = function (configuration?: Configuration, baseP
          */
         listProfiles(amazonAdvertisingAPIClientId: string, apiProgram?: 'billing' | 'campaign' | 'paymentMethod' | 'store' | 'report' | 'account' | 'posts', accessLevel?: 'edit' | 'view', profileTypeFilter?: 'seller' | 'vendor' | 'agency', validPaymentMethodFilter?: 'true' | 'false', options?: any): AxiosPromise<Array<Profile>> {
             return localVarFp.listProfiles(amazonAdvertisingAPIClientId, apiProgram, accessLevel, profileTypeFilter, validPaymentMethodFilter, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Note that this operation is only used for SANDBOX test environment.
-         * @summary SANDBOX ONLY - Create a seller profile for sandbox.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {RegisterSellerProfileRequest} [registerSellerProfileRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        registerSandboxSeller(amazonAdvertisingAPIClientId: string, registerSellerProfileRequest?: RegisterSellerProfileRequest, options?: any): AxiosPromise<Array<RegisterSellerProfileResponse>> {
-            return localVarFp.registerSandboxSeller(amazonAdvertisingAPIClientId, registerSellerProfileRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Note that this operation is only used for SANDBOX test environment.
-         * @summary SANDBOX ONLY - Create a vendor profile for sandbox.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {RegisterVendorProfileRequest} [registerVendorProfileRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        registerSandboxVendor(amazonAdvertisingAPIClientId: string, registerVendorProfileRequest?: RegisterVendorProfileRequest, options?: any): AxiosPromise<Array<RegisterVendorProfileResponse>> {
-            return localVarFp.registerSandboxVendor(amazonAdvertisingAPIClientId, registerVendorProfileRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Note that this operation is only used for Sellers using Sponsored Products. This operation is not enabled for vendor type accounts.
@@ -801,48 +554,6 @@ export interface ProfilesApiListProfilesRequest {
 }
 
 /**
- * Request parameters for registerSandboxSeller operation in ProfilesApi.
- * @export
- * @interface ProfilesApiRegisterSandboxSellerRequest
- */
-export interface ProfilesApiRegisterSandboxSellerRequest {
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-     * @type {string}
-     * @memberof ProfilesApiRegisterSandboxSeller
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * 
-     * @type {RegisterSellerProfileRequest}
-     * @memberof ProfilesApiRegisterSandboxSeller
-     */
-    readonly registerSellerProfileRequest?: RegisterSellerProfileRequest
-}
-
-/**
- * Request parameters for registerSandboxVendor operation in ProfilesApi.
- * @export
- * @interface ProfilesApiRegisterSandboxVendorRequest
- */
-export interface ProfilesApiRegisterSandboxVendorRequest {
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-     * @type {string}
-     * @memberof ProfilesApiRegisterSandboxVendor
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * 
-     * @type {RegisterVendorProfileRequest}
-     * @memberof ProfilesApiRegisterSandboxVendor
-     */
-    readonly registerVendorProfileRequest?: RegisterVendorProfileRequest
-}
-
-/**
  * Request parameters for updateProfiles operation in ProfilesApi.
  * @export
  * @interface ProfilesApiUpdateProfilesRequest
@@ -892,30 +603,6 @@ export class ProfilesApi extends BaseAPI {
      */
     public listProfiles(requestParameters: ProfilesApiListProfilesRequest, options?: any) {
         return ProfilesApiFp(this.configuration).listProfiles(requestParameters.amazonAdvertisingAPIClientId, requestParameters.apiProgram, requestParameters.accessLevel, requestParameters.profileTypeFilter, requestParameters.validPaymentMethodFilter, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Note that this operation is only used for SANDBOX test environment.
-     * @summary SANDBOX ONLY - Create a seller profile for sandbox.
-     * @param {ProfilesApiRegisterSandboxSellerRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ProfilesApi
-     */
-    public registerSandboxSeller(requestParameters: ProfilesApiRegisterSandboxSellerRequest, options?: any) {
-        return ProfilesApiFp(this.configuration).registerSandboxSeller(requestParameters.amazonAdvertisingAPIClientId, requestParameters.registerSellerProfileRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Note that this operation is only used for SANDBOX test environment.
-     * @summary SANDBOX ONLY - Create a vendor profile for sandbox.
-     * @param {ProfilesApiRegisterSandboxVendorRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ProfilesApi
-     */
-    public registerSandboxVendor(requestParameters: ProfilesApiRegisterSandboxVendorRequest, options?: any) {
-        return ProfilesApiFp(this.configuration).registerSandboxVendor(requestParameters.amazonAdvertisingAPIClientId, requestParameters.registerVendorProfileRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -14,6 +14,8 @@ import {
 	ExpressionType,
 	MatchType,
 	NegativeMatchType,
+	NegativeTargetingExpressionPredicate,
+	NegativeTargetingExpressionPredicateTypeEnum,
 	State,
 	TargetingExpressionPredicate,
 	TargetingExpressionPredicateTypeEnum,
@@ -207,9 +209,9 @@ describe('SponsoredProductsClient', () => {
 
 	describe('#createNegativeTargetingClauses', () => {
 		it('should create negative targets for the campaign', async () => {
-			const expressionPred: TargetingExpressionPredicate = {
+			const expressionPred: NegativeTargetingExpressionPredicate = {
 				value: 'TEST_NEGATIVE_TARGET',
-				type: TargetingExpressionPredicateTypeEnum.AsinSameAs,
+				type: NegativeTargetingExpressionPredicateTypeEnum.AsinSameAs,
 			};
 
 			const target: CreateNegativeTargetingClause = {

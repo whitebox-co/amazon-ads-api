@@ -233,7 +233,7 @@ export const AdvertiserApiAxiosParamCreator = function (configuration?: Configur
          * @param {string} amazonAdvertisingAPIClientId The client identifier of the customer making the request.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
          * @param {number} [startIndex] Sets a cursor into the requested set of advertisers. Use in conjunction with the count parameter to control pagination of the returned array. 0-indexed record offset for the result set, defaults to 0.
-         * @param {number} [count] Sets the number of advertisers to be returned in a single call.
+         * @param {number} [count] Sets the number of advertisers to be returned in a single call. Maximum of 100 advertisers per call.
          * @param {string} [advertiserIdFilter] List of comma separated advertiser ids to filter the advertisers. If no advertiser ids provided, all advertisers in this entity will be returned.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -313,7 +313,7 @@ export const AdvertiserApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The client identifier of the customer making the request.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
          * @param {number} [startIndex] Sets a cursor into the requested set of advertisers. Use in conjunction with the count parameter to control pagination of the returned array. 0-indexed record offset for the result set, defaults to 0.
-         * @param {number} [count] Sets the number of advertisers to be returned in a single call.
+         * @param {number} [count] Sets the number of advertisers to be returned in a single call. Maximum of 100 advertisers per call.
          * @param {string} [advertiserIdFilter] List of comma separated advertiser ids to filter the advertisers. If no advertiser ids provided, all advertisers in this entity will be returned.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -348,7 +348,7 @@ export const AdvertiserApiFactory = function (configuration?: Configuration, bas
          * @param {string} amazonAdvertisingAPIClientId The client identifier of the customer making the request.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
          * @param {number} [startIndex] Sets a cursor into the requested set of advertisers. Use in conjunction with the count parameter to control pagination of the returned array. 0-indexed record offset for the result set, defaults to 0.
-         * @param {number} [count] Sets the number of advertisers to be returned in a single call.
+         * @param {number} [count] Sets the number of advertisers to be returned in a single call. Maximum of 100 advertisers per call.
          * @param {string} [advertiserIdFilter] List of comma separated advertiser ids to filter the advertisers. If no advertiser ids provided, all advertisers in this entity will be returned.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -415,7 +415,7 @@ export interface AdvertiserApiDspAdvertisersGetRequest {
     readonly startIndex?: number
 
     /**
-     * Sets the number of advertisers to be returned in a single call.
+     * Sets the number of advertisers to be returned in a single call. Maximum of 100 advertisers per call.
      * @type {number}
      * @memberof AdvertiserApiDspAdvertisersGet
      */

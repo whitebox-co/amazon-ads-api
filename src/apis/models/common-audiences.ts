@@ -35,6 +35,12 @@ export interface AudienceCommonFieldsV1 {
      */
     audienceName: string;
     /**
+     * Audience segment sub-category
+     * @type {string}
+     * @memberof AudienceCommonFieldsV1
+     */
+    subCategory?: string;
+    /**
      * 
      * @type {string}
      * @memberof AudienceCommonFieldsV1
@@ -197,6 +203,12 @@ export interface AudienceV1 {
      * @memberof AudienceV1
      */
     audienceName: string;
+    /**
+     * Audience segment sub-category
+     * @type {string}
+     * @memberof AudienceV1
+     */
+    subCategory?: string;
     /**
      * 
      * @type {string}
@@ -568,13 +580,14 @@ export const DiscoveryApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} [advertiserId] The advertiser to retrieve segments for. This parameter is required for the DSP adType, but optional for the SD adType.
+         * @param {boolean} [canTarget] When set to true, only targetable audience segments will be returned.
          * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
          * @param {number} [maxResults] Sets the maximum number of audiences in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
          * @param {ListAudiencesRequestBodyV1} [listAudiencesRequestBodyV1] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAudiences: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, advertiserId?: string, nextToken?: string, maxResults?: number, listAudiencesRequestBodyV1?: ListAudiencesRequestBodyV1, options: any = {}): Promise<RequestArgs> => {
+        listAudiences: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, advertiserId?: string, canTarget?: boolean, nextToken?: string, maxResults?: number, listAudiencesRequestBodyV1?: ListAudiencesRequestBodyV1, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('listAudiences', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
@@ -593,6 +606,10 @@ export const DiscoveryApiAxiosParamCreator = function (configuration?: Configura
 
             if (advertiserId !== undefined) {
                 localVarQueryParameter['advertiserId'] = advertiserId;
+            }
+
+            if (canTarget !== undefined) {
+                localVarQueryParameter['canTarget'] = canTarget;
             }
 
             if (nextToken !== undefined) {
@@ -657,14 +674,15 @@ export const DiscoveryApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} [advertiserId] The advertiser to retrieve segments for. This parameter is required for the DSP adType, but optional for the SD adType.
+         * @param {boolean} [canTarget] When set to true, only targetable audience segments will be returned.
          * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
          * @param {number} [maxResults] Sets the maximum number of audiences in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
          * @param {ListAudiencesRequestBodyV1} [listAudiencesRequestBodyV1] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listAudiences(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, advertiserId?: string, nextToken?: string, maxResults?: number, listAudiencesRequestBodyV1?: ListAudiencesRequestBodyV1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListAudiencesResponseV1>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listAudiences(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, advertiserId, nextToken, maxResults, listAudiencesRequestBodyV1, options);
+        async listAudiences(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, advertiserId?: string, canTarget?: boolean, nextToken?: string, maxResults?: number, listAudiencesRequestBodyV1?: ListAudiencesRequestBodyV1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListAudiencesResponseV1>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listAudiences(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, advertiserId, canTarget, nextToken, maxResults, listAudiencesRequestBodyV1, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -698,14 +716,15 @@ export const DiscoveryApiFactory = function (configuration?: Configuration, base
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {string} [advertiserId] The advertiser to retrieve segments for. This parameter is required for the DSP adType, but optional for the SD adType.
+         * @param {boolean} [canTarget] When set to true, only targetable audience segments will be returned.
          * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
          * @param {number} [maxResults] Sets the maximum number of audiences in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
          * @param {ListAudiencesRequestBodyV1} [listAudiencesRequestBodyV1] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAudiences(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, advertiserId?: string, nextToken?: string, maxResults?: number, listAudiencesRequestBodyV1?: ListAudiencesRequestBodyV1, options?: any): AxiosPromise<ListAudiencesResponseV1> {
-            return localVarFp.listAudiences(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, advertiserId, nextToken, maxResults, listAudiencesRequestBodyV1, options).then((request) => request(axios, basePath));
+        listAudiences(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, advertiserId?: string, canTarget?: boolean, nextToken?: string, maxResults?: number, listAudiencesRequestBodyV1?: ListAudiencesRequestBodyV1, options?: any): AxiosPromise<ListAudiencesResponseV1> {
+            return localVarFp.listAudiences(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, advertiserId, canTarget, nextToken, maxResults, listAudiencesRequestBodyV1, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -787,6 +806,13 @@ export interface DiscoveryApiListAudiencesRequest {
     readonly advertiserId?: string
 
     /**
+     * When set to true, only targetable audience segments will be returned.
+     * @type {boolean}
+     * @memberof DiscoveryApiListAudiences
+     */
+    readonly canTarget?: boolean
+
+    /**
      * Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
      * @type {string}
      * @memberof DiscoveryApiListAudiences
@@ -836,7 +862,7 @@ export class DiscoveryApi extends BaseAPI {
      * @memberof DiscoveryApi
      */
     public listAudiences(requestParameters: DiscoveryApiListAudiencesRequest, options?: any) {
-        return DiscoveryApiFp(this.configuration).listAudiences(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.advertiserId, requestParameters.nextToken, requestParameters.maxResults, requestParameters.listAudiencesRequestBodyV1, options).then((request) => request(this.axios, this.basePath));
+        return DiscoveryApiFp(this.configuration).listAudiences(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.advertiserId, requestParameters.canTarget, requestParameters.nextToken, requestParameters.maxResults, requestParameters.listAudiencesRequestBodyV1, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

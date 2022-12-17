@@ -33,6 +33,135 @@ export enum AdTypeV1 {
 }
 
 /**
+ * The type of the Asset.
+ * @export
+ * @enum {string}
+ */
+
+export enum AssetTypeV1M2 {
+    Image = 'IMAGE',
+    Video = 'VIDEO'
+}
+
+/**
+ * The Amazon Creative Asset Library asset identifier. Refer https://advertising.amazon.com/API/docs/en-us/creative-asset-library
+ * @export
+ * @interface AssetV1M2
+ */
+export interface AssetV1M2 {
+    /**
+     * The assetId.
+     * @type {string}
+     * @memberof AssetV1M2
+     */
+    assetId?: string;
+    /**
+     * The version of the asset.
+     * @type {string}
+     * @memberof AssetV1M2
+     */
+    version?: string;
+    /**
+     * 
+     * @type {AssetTypeV1M2}
+     * @memberof AssetV1M2
+     */
+    assetType?: AssetTypeV1M2;
+}
+/**
+ * The model for holding Audiece selection within a group. The expression within an audience group will be evaluated using the IntraGroupOperator. The InterGroupOperator will be applied on the output of one audience group with another audience group.
+ * @export
+ * @interface AudienceGroupV1M2
+ */
+export interface AudienceGroupV1M2 {
+    /**
+     * 
+     * @type {AudienceSelectionOperatorV1M2}
+     * @memberof AudienceGroupV1M2
+     */
+    interGroupOperator?: AudienceSelectionOperatorV1M2;
+    /**
+     * 
+     * @type {AudienceSelectionOperatorV1M2}
+     * @memberof AudienceGroupV1M2
+     */
+    intraGroupOperator?: AudienceSelectionOperatorV1M2;
+    /**
+     * List of audience segments in this group.
+     * @type {Array<AudienceSegmentV1M2>}
+     * @memberof AudienceGroupV1M2
+     */
+    audienceSegments?: Array<AudienceSegmentV1M2>;
+}
+/**
+ * The result of Audience Research study.
+ * @export
+ * @interface AudienceResearchStudyResultV1M2
+ */
+export interface AudienceResearchStudyResultV1M2 {
+    /**
+     * Total number of responses received in the Survey.
+     * @type {number}
+     * @memberof AudienceResearchStudyResultV1M2
+     */
+    totalResponses?: number;
+    /**
+     * The canonical Id of Study.
+     * @type {string}
+     * @memberof AudienceResearchStudyResultV1M2
+     */
+    studyId?: string;
+    /**
+     * Detailed response rate for each response in Survey question aggregated by different segments.
+     * @type {Array<SurveyResponseResultV1>}
+     * @memberof AudienceResearchStudyResultV1M2
+     */
+    surveyResponses?: Array<SurveyResponseResultV1>;
+}
+/**
+ * The model for holding an Audience Segment.
+ * @export
+ * @interface AudienceSegmentV1M2
+ */
+export interface AudienceSegmentV1M2 {
+    /**
+     * ID for the audience segment. This ID can be fetched from these APIs- https://advertising.amazon.com/API/docs/en-us/audiences/#/Discovery
+     * @type {string}
+     * @memberof AudienceSegmentV1M2
+     */
+    segmentId?: string;
+}
+/**
+ * The operator used in Audience Segment Selection to determine which operation needs to be applied across selected segments. AND operator takes priority over OR operator.
+ * @export
+ * @enum {string}
+ */
+
+export enum AudienceSelectionOperatorV1M2 {
+    Or = 'OR',
+    And = 'AND'
+}
+
+/**
+ * The model for holding Audiece targeting group. The includedAudienceGroups and excludedAudienceGroups are always joined with AND operator.
+ * @export
+ * @interface AudienceTargetingGroupV1M2
+ */
+export interface AudienceTargetingGroupV1M2 {
+    /**
+     * List of audience groups to be included in the targeted audience.
+     * @type {Array<AudienceGroupV1M2>}
+     * @memberof AudienceTargetingGroupV1M2
+     */
+    includedAudienceGroups?: Array<AudienceGroupV1M2>;
+    /**
+     * List of audience groups to be excluded from the targeted audience.
+     * @type {Array<AudienceGroupV1M2>}
+     * @memberof AudienceTargetingGroupV1M2
+     */
+    excludedAudienceGroups?: Array<AudienceGroupV1M2>;
+}
+/**
  * The request object of measurement eligibility check.
  * @export
  * @interface BaseEligibilityRequestV1
@@ -276,6 +405,12 @@ export interface BaseStudyV1M1 {
      */
     vendorProductId?: string;
     /**
+     * 
+     * @type {StudySubmissionTypeV1}
+     * @memberof BaseStudyV1M1
+     */
+    submissionType?: StudySubmissionTypeV1;
+    /**
      * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
      * @type {string}
      * @memberof BaseStudyV1M1
@@ -349,6 +484,100 @@ export interface BaseStudyV1M1 {
     * @enum {string}
     */
 export enum BaseStudyV1M1StudyResultStatusEnum {
+    Available = 'AVAILABLE'
+}
+
+/**
+ * The base study object.
+ * @export
+ * @interface BaseStudyV1M2
+ */
+export interface BaseStudyV1M2 {
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<string>}
+     * @memberof BaseStudyV1M2
+     */
+    statusReasons?: Array<string>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof BaseStudyV1M2
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof BaseStudyV1M2
+     */
+    endDate?: string;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof BaseStudyV1M2
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof BaseStudyV1M2
+     */
+    vendorProductId?: string;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof BaseStudyV1M2
+     */
+    lastUpdatedDate?: string;
+    /**
+     * The status of result of the study.
+     * @type {string}
+     * @memberof BaseStudyV1M2
+     */
+    studyResultStatus?: BaseStudyV1M2StudyResultStatusEnum;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof BaseStudyV1M2
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof BaseStudyV1M2
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof BaseStudyV1M2
+     */
+    comment?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof BaseStudyV1M2
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {StudyStatusV1}
+     * @memberof BaseStudyV1M2
+     */
+    status?: StudyStatusV1;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof BaseStudyV1M2
+     */
+    createDate?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum BaseStudyV1M2StudyResultStatusEnum {
     Available = 'AVAILABLE'
 }
 
@@ -553,6 +782,336 @@ export interface BrandLiftSummaryV1M1 {
     questionText?: string;
 }
 /**
+ * Create DSP AUDIENCE_RESEARCH study object.
+ * @export
+ * @interface CreateDSPAudienceResearchStudyV1M2
+ */
+export interface CreateDSPAudienceResearchStudyV1M2 {
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<string>}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    statusReasons?: Array<string>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    endDate?: string;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    vendorProductId?: string;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    lastUpdatedDate?: string;
+    /**
+     * The status of result of the study.
+     * @type {string}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    studyResultStatus?: CreateDSPAudienceResearchStudyV1M2StudyResultStatusEnum;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    comment?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {StudyStatusV1}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    status?: StudyStatusV1;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    createDate?: string;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    advertiserId?: string;
+    /**
+     * The study brand name.
+     * @type {string}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    brandName?: string;
+    /**
+     * 
+     * @type {AudienceTargetingGroupV1M2}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    audienceTargetingGroup?: AudienceTargetingGroupV1M2;
+    /**
+     * A list of peer names for the study brand.
+     * @type {Array<string>}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    peerNames?: Array<string>;
+    /**
+     * The study product category.
+     * @type {string}
+     * @memberof CreateDSPAudienceResearchStudyV1M2
+     */
+    productCategory?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreateDSPAudienceResearchStudyV1M2StudyResultStatusEnum {
+    Available = 'AVAILABLE'
+}
+
+/**
+ * Create DSP CREATIVE_TESTING study object.
+ * @export
+ * @interface CreateDSPCreativeTestingStudyV1M2
+ */
+export interface CreateDSPCreativeTestingStudyV1M2 {
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<string>}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    statusReasons?: Array<string>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    endDate?: string;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    vendorProductId?: string;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    lastUpdatedDate?: string;
+    /**
+     * The status of result of the study.
+     * @type {string}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    studyResultStatus?: CreateDSPCreativeTestingStudyV1M2StudyResultStatusEnum;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    comment?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {StudyStatusV1}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    status?: StudyStatusV1;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    createDate?: string;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    advertiserId?: string;
+    /**
+     * The study brand name.
+     * @type {string}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    brandName?: string;
+    /**
+     * A list of assets to be used for the creative testing study as part of either the survey question or the response. In case of API responses, number of assets returned would be limited to 10 even if a creative testing study has more than 10 assets associated with it.
+     * @type {Array<AssetV1M2>}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    assets?: Array<AssetV1M2>;
+    /**
+     * 
+     * @type {AudienceTargetingGroupV1M2}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    audienceTargetingGroup?: AudienceTargetingGroupV1M2;
+    /**
+     * Optional study product category.
+     * @type {string}
+     * @memberof CreateDSPCreativeTestingStudyV1M2
+     */
+    productCategory?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreateDSPCreativeTestingStudyV1M2StudyResultStatusEnum {
+    Available = 'AVAILABLE'
+}
+
+/**
+ * The result of Creative Testing study.
+ * @export
+ * @interface CreativeTestingStudyResultV1M2
+ */
+export interface CreativeTestingStudyResultV1M2 {
+    /**
+     * Total number of responses received in the Survey.
+     * @type {number}
+     * @memberof CreativeTestingStudyResultV1M2
+     */
+    totalResponses?: number;
+    /**
+     * The canonical Id of Study.
+     * @type {string}
+     * @memberof CreativeTestingStudyResultV1M2
+     */
+    studyId?: string;
+    /**
+     * Detailed response rate for each response in Survey question aggregated by different segments.
+     * @type {Array<SurveyResponseResultV1M2>}
+     * @memberof CreativeTestingStudyResultV1M2
+     */
+    surveyResponses?: Array<SurveyResponseResultV1M2>;
+}
+/**
+ * The response object for downloading curated study results.
+ * @export
+ * @interface CuratedStudyResultV1
+ */
+export interface CuratedStudyResultV1 {
+    /**
+     * A pre-signed S3 URL which links to the curated study results file. The URL expires after 60 seconds. If the URL expires before the curated results file is downloaded, a new download request must be created.
+     * @type {string}
+     * @memberof CuratedStudyResultV1
+     */
+    fileDownloadUrl?: string;
+    /**
+     * The file type of the curated results file.
+     * @type {string}
+     * @memberof CuratedStudyResultV1
+     */
+    fileType?: CuratedStudyResultV1FileTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CuratedStudyResultV1FileTypeEnum {
+    Pdf = 'PDF',
+    Powerpoint = 'POWERPOINT',
+    Jpeg = 'JPEG',
+    Png = 'PNG',
+    Other = 'OTHER'
+}
+
+/**
+ * Currency Code.
+ * @export
+ * @enum {string}
+ */
+
+export enum CurrencyCodeV1M2 {
+    Usd = 'USD',
+    Cad = 'CAD',
+    Mxn = 'MXN',
+    Brl = 'BRL',
+    Gbp = 'GBP',
+    Eur = 'EUR',
+    Aed = 'AED',
+    Sar = 'SAR',
+    Inr = 'INR',
+    Jpy = 'JPY',
+    Aud = 'AUD',
+    Sgd = 'SGD',
+    Try = 'TRY',
+    Sek = 'SEK',
+    Egp = 'EGP',
+    Pln = 'PLN'
+}
+
+/**
  * The templated measurement survey question.
  * @export
  * @interface CustomSurveyQuestionV1
@@ -576,6 +1135,280 @@ export interface CustomSurveyQuestionV1 {
      * @memberof CustomSurveyQuestionV1
      */
     questionText?: string;
+}
+/**
+ * The request object of DSP Audience Research study cost estimation.
+ * @export
+ * @interface DSPAudienceResearchCostEstimationRequestV1M2
+ */
+export interface DSPAudienceResearchCostEstimationRequestV1M2 {
+    /**
+     * vendor product canonical identifier.
+     * @type {string}
+     * @memberof DSPAudienceResearchCostEstimationRequestV1M2
+     */
+    vendorProductId?: string;
+    /**
+     * A list of templated survey questions.
+     * @type {Array<TemplatedSurveyQuestionV1>}
+     * @memberof DSPAudienceResearchCostEstimationRequestV1M2
+     */
+    templatedQuestions?: Array<TemplatedSurveyQuestionV1>;
+    /**
+     * A list of custom survey questions.
+     * @type {Array<CustomSurveyQuestionV1>}
+     * @memberof DSPAudienceResearchCostEstimationRequestV1M2
+     */
+    customQuestions?: Array<CustomSurveyQuestionV1>;
+    /**
+     * 
+     * @type {MeasurementLocaleV1}
+     * @memberof DSPAudienceResearchCostEstimationRequestV1M2
+     */
+    locale?: MeasurementLocaleV1;
+    /**
+     * The associated advertiser identifier.
+     * @type {string}
+     * @memberof DSPAudienceResearchCostEstimationRequestV1M2
+     */
+    advertiserId?: string;
+}
+/**
+ * The response object of DSP Audience Research study cost estimation.
+ * @export
+ * @interface DSPAudienceResearchCostEstimationResponseV1M2
+ */
+export interface DSPAudienceResearchCostEstimationResponseV1M2 {
+    /**
+     * The estimated cost for the Study.
+     * @type {number}
+     * @memberof DSPAudienceResearchCostEstimationResponseV1M2
+     */
+    cost?: number;
+    /**
+     * 
+     * @type {CurrencyCodeV1M2}
+     * @memberof DSPAudienceResearchCostEstimationResponseV1M2
+     */
+    currencyCode?: CurrencyCodeV1M2;
+}
+/**
+ * The audience research study eligibility data.
+ * @export
+ * @interface DSPAudienceResearchEligibilityDataV1M2
+ */
+export interface DSPAudienceResearchEligibilityDataV1M2 {
+    /**
+     * 
+     * @type {AudienceTargetingGroupV1M2}
+     * @memberof DSPAudienceResearchEligibilityDataV1M2
+     */
+    audienceTargetingGroup?: AudienceTargetingGroupV1M2;
+}
+/**
+ * The request object of DSP Audience Research study eligibility check.
+ * @export
+ * @interface DSPAudienceResearchEligibilityRequestV1M2
+ */
+export interface DSPAudienceResearchEligibilityRequestV1M2 {
+    /**
+     * FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<FundingTypeV1M2>}
+     * @memberof DSPAudienceResearchEligibilityRequestV1M2
+     */
+    fundingTypeFilters?: Array<FundingTypeV1M2>;
+    /**
+     * VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<string>}
+     * @memberof DSPAudienceResearchEligibilityRequestV1M2
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<VendorTypeV1M2>}
+     * @memberof DSPAudienceResearchEligibilityRequestV1M2
+     */
+    vendorTypeFilters?: Array<VendorTypeV1M2>;
+    /**
+     * 
+     * @type {AudienceTargetingGroupV1M2}
+     * @memberof DSPAudienceResearchEligibilityRequestV1M2
+     */
+    audienceTargetingGroup?: AudienceTargetingGroupV1M2;
+}
+/**
+ * The basic model for all DSP AUDIENCE_RESEARCH objective studies.
+ * @export
+ * @interface DSPAudienceResearchMetadataV1M2
+ */
+export interface DSPAudienceResearchMetadataV1M2 {
+    /**
+     * The study brand name.
+     * @type {string}
+     * @memberof DSPAudienceResearchMetadataV1M2
+     */
+    brandName?: string;
+    /**
+     * 
+     * @type {AudienceTargetingGroupV1M2}
+     * @memberof DSPAudienceResearchMetadataV1M2
+     */
+    audienceTargetingGroup?: AudienceTargetingGroupV1M2;
+    /**
+     * A list of peer names for the study brand.
+     * @type {Array<string>}
+     * @memberof DSPAudienceResearchMetadataV1M2
+     */
+    peerNames?: Array<string>;
+    /**
+     * The study product category.
+     * @type {string}
+     * @memberof DSPAudienceResearchMetadataV1M2
+     */
+    productCategory?: string;
+}
+/**
+ * DSP AUDIENCE_RESEARCH study object.
+ * @export
+ * @interface DSPAudienceResearchStudyV1M2
+ */
+export interface DSPAudienceResearchStudyV1M2 {
+    /**
+     * The study canonical identifier. Immutable field.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    id?: string;
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<string>}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    statusReasons?: Array<string>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    endDate?: string;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    vendorProductId?: string;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    lastUpdatedDate?: string;
+    /**
+     * The status of result of the study.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    studyResultStatus?: DSPAudienceResearchStudyV1M2StudyResultStatusEnum;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    comment?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {StudyStatusV1}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    status?: StudyStatusV1;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    createDate?: string;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    advertiserId?: string;
+    /**
+     * The study brand name.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    brandName?: string;
+    /**
+     * 
+     * @type {AudienceTargetingGroupV1M2}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    audienceTargetingGroup?: AudienceTargetingGroupV1M2;
+    /**
+     * A list of peer names for the study brand.
+     * @type {Array<string>}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    peerNames?: Array<string>;
+    /**
+     * The study product category.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2
+     */
+    productCategory?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DSPAudienceResearchStudyV1M2StudyResultStatusEnum {
+    Available = 'AVAILABLE'
+}
+
+/**
+ * 
+ * @export
+ * @interface DSPAudienceResearchStudyV1M2AllOf
+ */
+export interface DSPAudienceResearchStudyV1M2AllOf {
+    /**
+     * The study canonical identifier. Immutable field.
+     * @type {string}
+     * @memberof DSPAudienceResearchStudyV1M2AllOf
+     */
+    id?: string;
 }
 /**
  * The campaign study eligibility data.
@@ -942,6 +1775,12 @@ export interface DSPBrandLiftStudyV1M1 {
      */
     vendorProductId?: string;
     /**
+     * 
+     * @type {StudySubmissionTypeV1}
+     * @memberof DSPBrandLiftStudyV1M1
+     */
+    submissionType?: StudySubmissionTypeV1;
+    /**
      * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
      * @type {string}
      * @memberof DSPBrandLiftStudyV1M1
@@ -1116,6 +1955,286 @@ export interface DSPCampaignMeasurementMetadataV1M1 {
      */
     advertiserId?: string;
 }
+/**
+ * The basic model for all DSP CAMPAIGN_PLANNING objective studies.
+ * @export
+ * @interface DSPCampaignPlanningMetadataV1M2
+ */
+export interface DSPCampaignPlanningMetadataV1M2 {
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof DSPCampaignPlanningMetadataV1M2
+     */
+    advertiserId?: string;
+}
+/**
+ * The request object of DSP Creative Testing study cost estimation.
+ * @export
+ * @interface DSPCreativeTestingCostEstimationRequestV1M2
+ */
+export interface DSPCreativeTestingCostEstimationRequestV1M2 {
+    /**
+     * vendor product canonical identifier.
+     * @type {string}
+     * @memberof DSPCreativeTestingCostEstimationRequestV1M2
+     */
+    vendorProductId?: string;
+    /**
+     * A list of templated survey questions.
+     * @type {Array<TemplatedSurveyQuestionV1>}
+     * @memberof DSPCreativeTestingCostEstimationRequestV1M2
+     */
+    templatedQuestions?: Array<TemplatedSurveyQuestionV1>;
+    /**
+     * A list of assets to be used for the creative testing study as part of either the survey question or the response.
+     * @type {Array<AssetV1M2>}
+     * @memberof DSPCreativeTestingCostEstimationRequestV1M2
+     */
+    assets?: Array<AssetV1M2>;
+    /**
+     * A list of custom survey questions.
+     * @type {Array<CustomSurveyQuestionV1>}
+     * @memberof DSPCreativeTestingCostEstimationRequestV1M2
+     */
+    customQuestions?: Array<CustomSurveyQuestionV1>;
+    /**
+     * 
+     * @type {MeasurementLocaleV1}
+     * @memberof DSPCreativeTestingCostEstimationRequestV1M2
+     */
+    locale?: MeasurementLocaleV1;
+    /**
+     * The associated advertiser identifier.
+     * @type {string}
+     * @memberof DSPCreativeTestingCostEstimationRequestV1M2
+     */
+    advertiserId?: string;
+}
+/**
+ * The response object of DSP Creative Testing study cost estimation.
+ * @export
+ * @interface DSPCreativeTestingCostEstimationResponseV1M2
+ */
+export interface DSPCreativeTestingCostEstimationResponseV1M2 {
+    /**
+     * The estimated cost for the Study.
+     * @type {number}
+     * @memberof DSPCreativeTestingCostEstimationResponseV1M2
+     */
+    cost?: number;
+    /**
+     * 
+     * @type {CurrencyCodeV1M2}
+     * @memberof DSPCreativeTestingCostEstimationResponseV1M2
+     */
+    currencyCode?: CurrencyCodeV1M2;
+}
+/**
+ * The creative testing study eligibility data.
+ * @export
+ * @interface DSPCreativeTestingEligibilityDataV1M2
+ */
+export interface DSPCreativeTestingEligibilityDataV1M2 {
+    /**
+     * 
+     * @type {AudienceTargetingGroupV1M2}
+     * @memberof DSPCreativeTestingEligibilityDataV1M2
+     */
+    audienceTargetingGroup?: AudienceTargetingGroupV1M2;
+}
+/**
+ * The request object of DSP Creative Testing study eligibility check.
+ * @export
+ * @interface DSPCreativeTestingEligibilityRequestV1M2
+ */
+export interface DSPCreativeTestingEligibilityRequestV1M2 {
+    /**
+     * FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<FundingTypeV1M2>}
+     * @memberof DSPCreativeTestingEligibilityRequestV1M2
+     */
+    fundingTypeFilters?: Array<FundingTypeV1M2>;
+    /**
+     * VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<string>}
+     * @memberof DSPCreativeTestingEligibilityRequestV1M2
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<VendorTypeV1M2>}
+     * @memberof DSPCreativeTestingEligibilityRequestV1M2
+     */
+    vendorTypeFilters?: Array<VendorTypeV1M2>;
+    /**
+     * 
+     * @type {AudienceTargetingGroupV1M2}
+     * @memberof DSPCreativeTestingEligibilityRequestV1M2
+     */
+    audienceTargetingGroup?: AudienceTargetingGroupV1M2;
+}
+/**
+ * The basic model for all DSP CREATIVE_TESTING objective studies.
+ * @export
+ * @interface DSPCreativeTestingMetadataV1M2
+ */
+export interface DSPCreativeTestingMetadataV1M2 {
+    /**
+     * The study brand name.
+     * @type {string}
+     * @memberof DSPCreativeTestingMetadataV1M2
+     */
+    brandName?: string;
+    /**
+     * A list of assets to be used for the creative testing study as part of either the survey question or the response. In case of API responses, number of assets returned would be limited to 10 even if a creative testing study has more than 10 assets associated with it.
+     * @type {Array<AssetV1M2>}
+     * @memberof DSPCreativeTestingMetadataV1M2
+     */
+    assets?: Array<AssetV1M2>;
+    /**
+     * 
+     * @type {AudienceTargetingGroupV1M2}
+     * @memberof DSPCreativeTestingMetadataV1M2
+     */
+    audienceTargetingGroup?: AudienceTargetingGroupV1M2;
+    /**
+     * Optional study product category.
+     * @type {string}
+     * @memberof DSPCreativeTestingMetadataV1M2
+     */
+    productCategory?: string;
+}
+/**
+ * DSP CREATIVE_TESTING study object.
+ * @export
+ * @interface DSPCreativeTestingStudyV1M2
+ */
+export interface DSPCreativeTestingStudyV1M2 {
+    /**
+     * The study canonical identifier. Immutable field.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    id?: string;
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<string>}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    statusReasons?: Array<string>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    endDate?: string;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    vendorProductId?: string;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    lastUpdatedDate?: string;
+    /**
+     * The status of result of the study.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    studyResultStatus?: DSPCreativeTestingStudyV1M2StudyResultStatusEnum;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    comment?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {StudyStatusV1}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    status?: StudyStatusV1;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    createDate?: string;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    advertiserId?: string;
+    /**
+     * The study brand name.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    brandName?: string;
+    /**
+     * A list of assets to be used for the creative testing study as part of either the survey question or the response. In case of API responses, number of assets returned would be limited to 10 even if a creative testing study has more than 10 assets associated with it.
+     * @type {Array<AssetV1M2>}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    assets?: Array<AssetV1M2>;
+    /**
+     * 
+     * @type {AudienceTargetingGroupV1M2}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    audienceTargetingGroup?: AudienceTargetingGroupV1M2;
+    /**
+     * Optional study product category.
+     * @type {string}
+     * @memberof DSPCreativeTestingStudyV1M2
+     */
+    productCategory?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum DSPCreativeTestingStudyV1M2StudyResultStatusEnum {
+    Available = 'AVAILABLE'
+}
+
 /**
  * The campaign study eligibility data.
  * @export
@@ -1425,6 +2544,12 @@ export interface DSPOmnichannelMetricsStudyV1M3 {
      * @memberof DSPOmnichannelMetricsStudyV1M3
      */
     vendorProductId?: string;
+    /**
+     * 
+     * @type {StudySubmissionTypeV1}
+     * @memberof DSPOmnichannelMetricsStudyV1M3
+     */
+    submissionType?: StudySubmissionTypeV1;
     /**
      * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
      * @type {string}
@@ -1789,7 +2914,8 @@ export enum FundingTypeV1M1 {
 
 export enum FundingTypeV1M2 {
     Complimentary = 'COMPLIMENTARY',
-    Cpm = 'CPM'
+    Cpm = 'CPM',
+    FlatRate = 'FLAT_RATE'
 }
 
 /**
@@ -2008,6 +3134,25 @@ export interface PaginatedBaseStudiesV1M1 {
     measurements?: Array<BaseStudyV1M1>;
 }
 /**
+ * A list of audience research studies.
+ * @export
+ * @interface PaginatedDSPAudienceResearchStudiesV1M2
+ */
+export interface PaginatedDSPAudienceResearchStudiesV1M2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedDSPAudienceResearchStudiesV1M2
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<DSPAudienceResearchStudyV1M2>}
+     * @memberof PaginatedDSPAudienceResearchStudiesV1M2
+     */
+    measurements?: Array<DSPAudienceResearchStudyV1M2>;
+}
+/**
  * A list of studies.
  * @export
  * @interface PaginatedDSPBrandLiftStudiesV1
@@ -2044,6 +3189,25 @@ export interface PaginatedDSPBrandLiftStudiesV1M1 {
      * @memberof PaginatedDSPBrandLiftStudiesV1M1
      */
     measurements?: Array<DSPBrandLiftStudyV1M1>;
+}
+/**
+ * A list of creative testing studies.
+ * @export
+ * @interface PaginatedDSPCreativeTestingStudiesV1M2
+ */
+export interface PaginatedDSPCreativeTestingStudiesV1M2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedDSPCreativeTestingStudiesV1M2
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<DSPCreativeTestingStudyV1M2>}
+     * @memberof PaginatedDSPCreativeTestingStudiesV1M2
+     */
+    measurements?: Array<DSPCreativeTestingStudyV1M2>;
 }
 /**
  * A list of studies.
@@ -2308,6 +3472,179 @@ export enum PlaceholderValueTypeV1 {
 }
 
 /**
+ * The planning eligibility data.
+ * @export
+ * @interface PlanningEligibilityDataV1M3
+ */
+export interface PlanningEligibilityDataV1M3 {
+    /**
+     * 
+     * @type {Array<PlanningOrderMetadataV1M3>}
+     * @memberof PlanningEligibilityDataV1M3
+     */
+    orderMetadata?: Array<PlanningOrderMetadataV1M3>;
+    /**
+     * 
+     * @type {MeasurementLocaleV1}
+     * @memberof PlanningEligibilityDataV1M3
+     */
+    locale?: MeasurementLocaleV1;
+    /**
+     * StudyType identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<StudyTypeV1M2>}
+     * @memberof PlanningEligibilityDataV1M3
+     */
+    studyTypeFilters?: Array<StudyTypeV1M2>;
+    /**
+     * The advertiserId.
+     * @type {string}
+     * @memberof PlanningEligibilityDataV1M3
+     */
+    advertiserId?: string;
+}
+/**
+ * The request object of planning eligibility check.
+ * @export
+ * @interface PlanningEligibilityRequestV1M3
+ */
+export interface PlanningEligibilityRequestV1M3 {
+    /**
+     * FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<FundingTypeV1M2>}
+     * @memberof PlanningEligibilityRequestV1M3
+     */
+    fundingTypeFilters?: Array<FundingTypeV1M2>;
+    /**
+     * VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<string>}
+     * @memberof PlanningEligibilityRequestV1M3
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<VendorTypeV1M2>}
+     * @memberof PlanningEligibilityRequestV1M3
+     */
+    vendorTypeFilters?: Array<VendorTypeV1M2>;
+    /**
+     * 
+     * @type {Array<PlanningOrderMetadataV1M3>}
+     * @memberof PlanningEligibilityRequestV1M3
+     */
+    orderMetadata?: Array<PlanningOrderMetadataV1M3>;
+    /**
+     * 
+     * @type {MeasurementLocaleV1}
+     * @memberof PlanningEligibilityRequestV1M3
+     */
+    locale?: MeasurementLocaleV1;
+    /**
+     * StudyType identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<StudyTypeV1M2>}
+     * @memberof PlanningEligibilityRequestV1M3
+     */
+    studyTypeFilters?: Array<StudyTypeV1M2>;
+    /**
+     * The advertiserId.
+     * @type {string}
+     * @memberof PlanningEligibilityRequestV1M3
+     */
+    advertiserId?: string;
+}
+/**
+ * The planning eligibility response object.
+ * @export
+ * @interface PlanningEligibilityResponseV1M3
+ */
+export interface PlanningEligibilityResponseV1M3 {
+    /**
+     * 
+     * @type {EligibilityMetadataV1}
+     * @memberof PlanningEligibilityResponseV1M3
+     */
+    metadata?: EligibilityMetadataV1;
+    /**
+     * 
+     * @type {string}
+     * @memberof PlanningEligibilityResponseV1M3
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<PlanningEligibilityV1M3>}
+     * @memberof PlanningEligibilityResponseV1M3
+     */
+    vendorProductEligibilities?: Array<PlanningEligibilityV1M3>;
+}
+/**
+ * The request object of measurement eligibility check.
+ * @export
+ * @interface PlanningEligibilityV1M3
+ */
+export interface PlanningEligibilityV1M3 {
+    /**
+     * Vendor product canonical identifier.
+     * @type {string}
+     * @memberof PlanningEligibilityV1M3
+     */
+    vendorProductId?: string;
+    /**
+     * The lower the number, the more recommended the vendor product is.
+     * @type {number}
+     * @memberof PlanningEligibilityV1M3
+     */
+    rank?: number;
+    /**
+     * A list of issues will be provided if the status is INELIGIBLE or ELIGIBLE_WITH_WARNING.
+     * @type {Array<EligibilityIssueV1M2>}
+     * @memberof PlanningEligibilityV1M3
+     */
+    issues?: Array<EligibilityIssueV1M2>;
+    /**
+     * 
+     * @type {EligibilityStatusV1}
+     * @memberof PlanningEligibilityV1M3
+     */
+    status?: EligibilityStatusV1;
+}
+/**
+ * Metadata around a hypothetical order.
+ * @export
+ * @interface PlanningOrderMetadataV1M3
+ */
+export interface PlanningOrderMetadataV1M3 {
+    /**
+     * 
+     * @type {MeasurementGoalV1}
+     * @memberof PlanningOrderMetadataV1M3
+     */
+    goal?: MeasurementGoalV1;
+    /**
+     * The estimated end date of the order in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof PlanningOrderMetadataV1M3
+     */
+    endDate?: string;
+    /**
+     * The total estimated impressions of the order.
+     * @type {number}
+     * @memberof PlanningOrderMetadataV1M3
+     */
+    impressions?: number;
+    /**
+     * The estimated start date of the order in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof PlanningOrderMetadataV1M3
+     */
+    startDate?: string;
+    /**
+     * The total estimated budget of the order.
+     * @type {number}
+     * @memberof PlanningOrderMetadataV1M3
+     */
+    budget?: number;
+}
+/**
  * The link that can be used to access corresponding resources in advertising portal.
  * @export
  * @interface ResourceLinkV1M1
@@ -2333,7 +3670,8 @@ export interface ResourceLinkV1M1 {
  */
 
 export enum StudyObjectiveV1 {
-    CampaignMeasurement = 'CAMPAIGN_MEASUREMENT'
+    Measurement = 'CAMPAIGN_MEASUREMENT',
+    Planning = 'CAMPAIGN_PLANNING'
 }
 
 /**
@@ -2460,6 +3798,17 @@ export enum StudyStatusV1 {
 }
 
 /**
+ * The submission type for the creation and updating of studies. Currently, this submission type is supported for brand lift studies only.  This is an optional parameter in each of the request objects and its default value is `SUBMISSION` if not provided. A value of `SUBMISSION` indicates that a study should be submitted for approval. A value of `DRAFT` indicates that a study should be saved but not submitted.
+ * @export
+ * @enum {string}
+ */
+
+export enum StudySubmissionTypeV1 {
+    Draft = 'DRAFT',
+    Submission = 'SUBMISSION'
+}
+
+/**
  * The study type.
  * @export
  * @enum {string}
@@ -2477,7 +3826,9 @@ export enum StudyTypeV1 {
 
 export enum StudyTypeV1M2 {
     BrandLift = 'BRAND_LIFT',
-    OmnichannelMetrics = 'OMNICHANNEL_METRICS'
+    OmnichannelMetrics = 'OMNICHANNEL_METRICS',
+    AudienceResearch = 'AUDIENCE_RESEARCH',
+    CreativeTesting = 'CREATIVE_TESTING'
 }
 
 /**
@@ -2604,7 +3955,10 @@ export enum SurveyQuestionObjectiveTypeV1 {
     Favorability = 'FAVORABILITY',
     AdRecall = 'AD_RECALL',
     Intent = 'INTENT',
-    Attitudes = 'ATTITUDES'
+    Attitudes = 'ATTITUDES',
+    Behaviors = 'BEHAVIORS',
+    Familiarity = 'FAMILIARITY',
+    Association = 'ASSOCIATION'
 }
 
 /**
@@ -2634,7 +3988,9 @@ export enum SurveyQuestionObjectiveTypeV1M1 {
     InMarketStatus = 'IN_MARKET_STATUS',
     PurchaseFrequency = 'PURCHASE_FREQUENCY',
     PurchaseHistory = 'PURCHASE_HISTORY',
-    PurchaseLocation = 'PURCHASE_LOCATION'
+    PurchaseLocation = 'PURCHASE_LOCATION',
+    Behaviors = 'BEHAVIORS',
+    Familiarity = 'FAMILIARITY'
 }
 
 /**
@@ -2792,6 +4148,41 @@ export interface SurveyQuestionPlaceholderV1 {
      */
     fieldValues?: Array<SurveyQuestionPlaceholderFieldValueV1>;
 }
+/**
+ * The survey question response chosen by Survey audience.
+ * @export
+ * @interface SurveyQuestionResponseV1M2
+ */
+export interface SurveyQuestionResponseV1M2 {
+    /**
+     * The type of response.
+     * @type {string}
+     * @memberof SurveyQuestionResponseV1M2
+     */
+    responseType?: SurveyQuestionResponseV1M2ResponseTypeEnum;
+    /**
+     * The response text if the question response type is TEXT.
+     * @type {string}
+     * @memberof SurveyQuestionResponseV1M2
+     */
+    responseValue?: string;
+    /**
+     * 
+     * @type {AssetV1M2}
+     * @memberof SurveyQuestionResponseV1M2
+     */
+    asset?: AssetV1M2;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SurveyQuestionResponseV1M2ResponseTypeEnum {
+    Text = 'TEXT',
+    Asset = 'ASSET'
+}
+
 /**
  * The survey question sub-category. Only applicable to certain categories
  * @export
@@ -2999,7 +4390,7 @@ export interface SurveyQuestionTemplateV1M1 {
     maximumQuestionResponses?: number;
 }
 /**
- * The survey question type. SINGLE_SELECT question will allow customers to choose only one response, MULTI_SELECT question will allow customers to choose multiple responses, RATING will allow customers to choose a rating on a scale (e.g. 1 to 5), FREE_TEXT will allow customers to provide a free formed question text.
+ * The survey question type. SINGLE_SELECT question will allow customers to choose only one response, MULTI_SELECT question will allow customers to choose multiple responses, RATING will allow customers to choose a rating on a scale (e.g. 1 to 5), FREE_TEXT will allow customers to provide a free formed question text, SINGLE_ASSET_SELECT will allow customers to choose an asset as the response.
  * @export
  * @enum {string}
  */
@@ -3008,7 +4399,8 @@ export enum SurveyQuestionTypeV1 {
     SingleSelect = 'SINGLE_SELECT',
     MultiSelect = 'MULTI_SELECT',
     Rating = 'RATING',
-    FreeText = 'FREE_TEXT'
+    FreeText = 'FREE_TEXT',
+    SingleAssetSelect = 'SINGLE_ASSET_SELECT'
 }
 
 /**
@@ -3097,6 +4489,12 @@ export interface SurveyResponseResultV1 {
      * @memberof SurveyResponseResultV1
      */
     segmentType?: SurveyResponseResultV1SegmentTypeEnum;
+    /**
+     * The percentage of margin of error for this response.
+     * @type {number}
+     * @memberof SurveyResponseResultV1
+     */
+    marginOfError?: number;
 }
 
 /**
@@ -3192,6 +4590,106 @@ export interface SurveyResponseResultV1M1 {
     * @enum {string}
     */
 export enum SurveyResponseResultV1M1SegmentTypeEnum {
+    Overall = 'OVERALL',
+    Age = 'AGE',
+    HouseholdIncome = 'HOUSEHOLD_INCOME',
+    Gender = 'GENDER',
+    Audiences = 'AUDIENCES',
+    Frequency = 'FREQUENCY',
+    Channel = 'CHANNEL'
+}
+
+/**
+ * The rate of response for each response in Survey question.
+ * @export
+ * @interface SurveyResponseResultV1M2
+ */
+export interface SurveyResponseResultV1M2 {
+    /**
+     * 
+     * @type {SurveyQuestionResponseV1M2}
+     * @memberof SurveyResponseResultV1M2
+     */
+    questionResponse?: SurveyQuestionResponseV1M2;
+    /**
+     * 
+     * @type {AssetV1M2}
+     * @memberof SurveyResponseResultV1M2
+     */
+    questionAsset?: AssetV1M2;
+    /**
+     * Is the response a qualifying response. Used in calculating Brand Lift.
+     * @type {boolean}
+     * @memberof SurveyResponseResultV1M2
+     */
+    isQualifyingResponse?: boolean;
+    /**
+     * The percentage of people choosing this response.
+     * @type {number}
+     * @memberof SurveyResponseResultV1M2
+     */
+    responseRate?: number;
+    /**
+     * 
+     * @type {SurveyQuestionObjectiveTypeV1}
+     * @memberof SurveyResponseResultV1M2
+     */
+    questionObjective?: SurveyQuestionObjectiveTypeV1;
+    /**
+     * The segment value to which this response data belongs to. Would be corresponding to the above segmentType field.
+     * @type {string}
+     * @memberof SurveyResponseResultV1M2
+     */
+    segmentValue?: string;
+    /**
+     * Text of the Survey question.
+     * @type {string}
+     * @memberof SurveyResponseResultV1M2
+     */
+    questionText?: string;
+    /**
+     * The percentage of margin of error for this response.
+     * @type {number}
+     * @memberof SurveyResponseResultV1M2
+     */
+    marginOfError?: number;
+    /**
+     * The significance percentage for the response data in this segment.
+     * @type {number}
+     * @memberof SurveyResponseResultV1M2
+     */
+    statisticalSignificance?: number;
+    /**
+     * The percent of people in ad exposed group choosing this response.
+     * @type {number}
+     * @memberof SurveyResponseResultV1M2
+     */
+    adExposedGroupResponseRate?: number;
+    /**
+     * The percent of people in control group choosing this response.
+     * @type {number}
+     * @memberof SurveyResponseResultV1M2
+     */
+    controlGroupResponseRate?: number;
+    /**
+     * Sequence number of the question in the Survey.
+     * @type {number}
+     * @memberof SurveyResponseResultV1M2
+     */
+    questionSequence?: number;
+    /**
+     * The segment type to which this response data belongs to.
+     * @type {string}
+     * @memberof SurveyResponseResultV1M2
+     */
+    segmentType?: SurveyResponseResultV1M2SegmentTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum SurveyResponseResultV1M2SegmentTypeEnum {
     Overall = 'OVERALL',
     Age = 'AGE',
     HouseholdIncome = 'HOUSEHOLD_INCOME',
@@ -3401,6 +4899,254 @@ export interface TemplatedSurveyQuestionV1M1 {
      */
     id?: string;
 }
+/**
+ * Update DSP AUDIENCE_RESEARCH study object.
+ * @export
+ * @interface UpdateDSPAudienceResearchStudyV1M2
+ */
+export interface UpdateDSPAudienceResearchStudyV1M2 {
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<string>}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    statusReasons?: Array<string>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    endDate?: string;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    vendorProductId?: string;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    lastUpdatedDate?: string;
+    /**
+     * The status of result of the study.
+     * @type {string}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    studyResultStatus?: UpdateDSPAudienceResearchStudyV1M2StudyResultStatusEnum;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    comment?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {StudyStatusV1}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    status?: StudyStatusV1;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    createDate?: string;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    advertiserId?: string;
+    /**
+     * The study brand name.
+     * @type {string}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    brandName?: string;
+    /**
+     * 
+     * @type {AudienceTargetingGroupV1M2}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    audienceTargetingGroup?: AudienceTargetingGroupV1M2;
+    /**
+     * A list of peer names for the study brand.
+     * @type {Array<string>}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    peerNames?: Array<string>;
+    /**
+     * The study product category.
+     * @type {string}
+     * @memberof UpdateDSPAudienceResearchStudyV1M2
+     */
+    productCategory?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum UpdateDSPAudienceResearchStudyV1M2StudyResultStatusEnum {
+    Available = 'AVAILABLE'
+}
+
+/**
+ * Update DSP CREATIVE_TESTING study object.
+ * @export
+ * @interface UpdateDSPCreativeTestingStudyV1M2
+ */
+export interface UpdateDSPCreativeTestingStudyV1M2 {
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<string>}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    statusReasons?: Array<string>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    endDate?: string;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    vendorProductId?: string;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    lastUpdatedDate?: string;
+    /**
+     * The status of result of the study.
+     * @type {string}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    studyResultStatus?: UpdateDSPCreativeTestingStudyV1M2StudyResultStatusEnum;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    comment?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {StudyStatusV1}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    status?: StudyStatusV1;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    createDate?: string;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    advertiserId?: string;
+    /**
+     * The study brand name.
+     * @type {string}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    brandName?: string;
+    /**
+     * A list of assets to be used for the creative testing study as part of either the survey question or the response. In case of API responses, number of assets returned would be limited to 10 even if a creative testing study has more than 10 assets associated with it.
+     * @type {Array<AssetV1M2>}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    assets?: Array<AssetV1M2>;
+    /**
+     * 
+     * @type {AudienceTargetingGroupV1M2}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    audienceTargetingGroup?: AudienceTargetingGroupV1M2;
+    /**
+     * Optional study product category.
+     * @type {string}
+     * @memberof UpdateDSPCreativeTestingStudyV1M2
+     */
+    productCategory?: string;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum UpdateDSPCreativeTestingStudyV1M2StudyResultStatusEnum {
+    Available = 'AVAILABLE'
+}
+
 /**
  * The measurement eligibility details for a certain vendor product.
  * @export
@@ -3809,7 +5555,9 @@ export enum VendorProductTypeV1M1 {
 
 export enum VendorProductTypeV1M2 {
     ShopperPanel = 'SHOPPER_PANEL',
-    OmnichannelMetrics = 'OMNICHANNEL_METRICS'
+    OmnichannelMetrics = 'OMNICHANNEL_METRICS',
+    ShopperPanelAudienceResearch = 'SHOPPER_PANEL_AUDIENCE_RESEARCH',
+    ShopperPanelComparisonCreativeTesting = 'SHOPPER_PANEL_COMPARISON_CREATIVE_TESTING'
 }
 
 /**
@@ -4046,6 +5794,64 @@ export const MeasurementApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * Checks the DSP AUDIENCE_RESEARCH study type eligibility status against vendor products.  **Requires one of these permissions**: []
+         * @summary Checks the DSP AUDIENCE_RESEARCH study type eligibility against vendor products.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {DSPAudienceResearchEligibilityRequestV1M2} [dSPAudienceResearchEligibilityRequestV1M2] The DSP audience research study eligibility request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkDSPAudienceResearchEligibility: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, dSPAudienceResearchEligibilityRequestV1M2?: DSPAudienceResearchEligibilityRequestV1M2, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('checkDSPAudienceResearchEligibility', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('checkDSPAudienceResearchEligibility', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/measurement/eligibility/audienceResearch`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (nextToken !== undefined) {
+                localVarQueryParameter['nextToken'] = nextToken;
+            }
+
+            if (maxResults !== undefined) {
+                localVarQueryParameter['maxResults'] = maxResults;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.measurementeligibility.v1.2+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(dSPAudienceResearchEligibilityRequestV1M2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Checks the DSP BRAND_LIFT study type eligibility status against vendor products.  **Requires one of these permissions**: []
          * @summary Checks the DSP BRAND_LIFT study type eligibility against vendor products.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -4104,6 +5910,228 @@ export const MeasurementApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * Checks the DSP CREATIVE_TESTING study type eligibility status against vendor products.  **Requires one of these permissions**: []
+         * @summary Checks the DSP CREATIVE_TESTING study type eligibility against vendor products.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {DSPCreativeTestingEligibilityRequestV1M2} [dSPCreativeTestingEligibilityRequestV1M2] The DSP creative testing study eligibility request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkDSPCreativeTestingEligibility: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, dSPCreativeTestingEligibilityRequestV1M2?: DSPCreativeTestingEligibilityRequestV1M2, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('checkDSPCreativeTestingEligibility', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('checkDSPCreativeTestingEligibility', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/measurement/eligibility/creativeTesting`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (nextToken !== undefined) {
+                localVarQueryParameter['nextToken'] = nextToken;
+            }
+
+            if (maxResults !== undefined) {
+                localVarQueryParameter['maxResults'] = maxResults;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.measurementeligibility.v1.2+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(dSPCreativeTestingEligibilityRequestV1M2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Checks the DSP OMNICHANNEL_METRICS study type eligibility status against vendor products.  **Requires one of these permissions**: []
+         * @summary Checks the DSP OMNICHANNEL_METRICS study type eligibility against vendor products.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {DSPOmnichannelMetricsEligibilityRequestV1M2} [dSPOmnichannelMetricsEligibilityRequestV1M2] The DSP omnichannel metrics eligibility request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkDSPOmnichannelMetricsEligibility: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, dSPOmnichannelMetricsEligibilityRequestV1M2?: DSPOmnichannelMetricsEligibilityRequestV1M2, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('checkDSPOmnichannelMetricsEligibility', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('checkDSPOmnichannelMetricsEligibility', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/measurement/eligibility/omnichannelMetrics`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (nextToken !== undefined) {
+                localVarQueryParameter['nextToken'] = nextToken;
+            }
+
+            if (maxResults !== undefined) {
+                localVarQueryParameter['maxResults'] = maxResults;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.measurementeligibility.v1.2+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(dSPOmnichannelMetricsEligibilityRequestV1M2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Checks eligibility against all vendor products.  **Requires one of these permissions**: []
+         * @summary Checks eligibility against all vendor products.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {PlanningEligibilityRequestV1M3} [planningEligibilityRequestV1M3] Fetch measurement vendor products request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkPlanningEligibility: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, planningEligibilityRequestV1M3?: PlanningEligibilityRequestV1M3, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('checkPlanningEligibility', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('checkPlanningEligibility', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/measurement/planning/eligibility`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (nextToken !== undefined) {
+                localVarQueryParameter['nextToken'] = nextToken;
+            }
+
+            if (maxResults !== undefined) {
+                localVarQueryParameter['maxResults'] = maxResults;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.measurementeligibility.v1.3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(planningEligibilityRequestV1M3, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create new DSP AUDIENCE_RESEARCH study.  **Requires one of these permissions**: []
+         * @summary Create new DSP AUDIENCE_RESEARCH study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {CreateDSPAudienceResearchStudyV1M2} [createDSPAudienceResearchStudyV1M2] Create object for DSP AUDIENCE_RESEARCH study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDSPAudienceResearchStudy: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createDSPAudienceResearchStudyV1M2?: CreateDSPAudienceResearchStudyV1M2, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('createDSPAudienceResearchStudy', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('createDSPAudienceResearchStudy', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/measurement/studies/audienceResearch`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.studymanagement.v1.2+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createDSPAudienceResearchStudyV1M2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Create new DSP BRAND_LIFT studies.  **Requires one of these permissions**: []
          * @summary Create new DSP BRAND_LIFT studies.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -4152,6 +6180,102 @@ export const MeasurementApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * Create new DSP CREATIVE_TESTING study.  **Requires one of these permissions**: []
+         * @summary Create new DSP CREATIVE_TESTING study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {CreateDSPCreativeTestingStudyV1M2} [createDSPCreativeTestingStudyV1M2] Create object for DSP CREATIVE_TESTING study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDSPCreativeTestingStudy: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createDSPCreativeTestingStudyV1M2?: CreateDSPCreativeTestingStudyV1M2, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('createDSPCreativeTestingStudy', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('createDSPCreativeTestingStudy', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/measurement/studies/creativeTesting`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.studymanagement.v1.2+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createDSPCreativeTestingStudyV1M2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Create new DSP OMNICHANNEL_METRICS studies.  **Requires one of these permissions**: []
+         * @summary Create new DSP OMNICHANNEL_METRICS studies.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<DSPOmnichannelMetricsStudyV1M2>} [dSPOmnichannelMetricsStudyV1M2] An array of study objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDSPOmnichannelMetricsStudies: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dSPOmnichannelMetricsStudyV1M2?: Array<DSPOmnichannelMetricsStudyV1M2>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('createDSPOmnichannelMetricsStudies', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('createDSPOmnichannelMetricsStudies', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/measurement/studies/omnichannelMetrics`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.studymanagement.v1.2+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(dSPOmnichannelMetricsStudyV1M2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Create new study surveys.  **Requires one of these permissions**: []
          * @summary Create new study surveys.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -4193,6 +6317,125 @@ export const MeasurementApiAxiosParamCreator = function (configuration?: Configu
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(surveyV1M1, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Gets one or more DSP AUDIENCE_RESEARCH studies with requested study identifiers or an advertiser identifier.  **Requires one of these permissions**: []
+         * @summary Gets one or more DSP AUDIENCE_RESEARCH studies with requested study identifiers or an advertiser identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<string>} [studyIds] Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [advertiserId] The advertiser canonical identifier. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDSPAudienceResearchStudies: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, advertiserId?: string, nextToken?: string, maxResults?: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getDSPAudienceResearchStudies', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getDSPAudienceResearchStudies', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/measurement/studies/audienceResearch`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (studyIds) {
+                localVarQueryParameter['studyIds'] = studyIds.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (advertiserId !== undefined) {
+                localVarQueryParameter['advertiserId'] = advertiserId;
+            }
+
+            if (nextToken !== undefined) {
+                localVarQueryParameter['nextToken'] = nextToken;
+            }
+
+            if (maxResults !== undefined) {
+                localVarQueryParameter['maxResults'] = maxResults;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get result of a DSP AUDIENCE_RESEARCH study. Returns 200 successful response if json resource is requested in Accept header. Returns a 307 Temporary Redirect response if any of the file types is requested and response includes a location header with the value set to an AWS S3 path where the result is located. The path expires after 60 seconds.  **Requires one of these permissions**: []
+         * @summary Get result of a DSP AUDIENCE_RESEARCH study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} accept The version(s) of the requested resource. Available version(s) - &#x60;application/vnd.measurementresult.v1.2+json&#x60;, &#x60;text/vnd.measurementresult.v1.2+csv&#x60;.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDSPAudienceResearchStudyResult: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getDSPAudienceResearchStudyResult', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getDSPAudienceResearchStudyResult', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'accept' is not null or undefined
+            assertParamExists('getDSPAudienceResearchStudyResult', 'accept', accept)
+            // verify required parameter 'studyId' is not null or undefined
+            assertParamExists('getDSPAudienceResearchStudyResult', 'studyId', studyId)
+            const localVarPath = `/dsp/measurement/studies/audienceResearch/{studyId}/result`
+                .replace(`{${"studyId"}}`, encodeURIComponent(String(studyId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+            if (accept !== undefined && accept !== null) {
+                localVarHeaderParameter['Accept'] = String(accept);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4305,6 +6548,189 @@ export const MeasurementApiAxiosParamCreator = function (configuration?: Configu
 
             if (accept !== undefined && accept !== null) {
                 localVarHeaderParameter['Accept'] = String(accept);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Gets one or more DSP CREATIVE_TESTING studies with requested study identifiers or an advertiser identifier.  **Requires one of these permissions**: []
+         * @summary Gets one or more DSP CREATIVE_TESTING studies with requested study identifiers or an advertiser identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<string>} [studyIds] Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [advertiserId] The advertiser canonical identifier. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDSPCreativeTestingStudies: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, advertiserId?: string, nextToken?: string, maxResults?: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getDSPCreativeTestingStudies', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getDSPCreativeTestingStudies', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/measurement/studies/creativeTesting`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (studyIds) {
+                localVarQueryParameter['studyIds'] = studyIds.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (advertiserId !== undefined) {
+                localVarQueryParameter['advertiserId'] = advertiserId;
+            }
+
+            if (nextToken !== undefined) {
+                localVarQueryParameter['nextToken'] = nextToken;
+            }
+
+            if (maxResults !== undefined) {
+                localVarQueryParameter['maxResults'] = maxResults;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get result of a DSP CREATIVE_TESTING study. Returns 200 successful response if json resource is requested in Accept header. Returns a 307 Temporary Redirect response if any of the file types is requested and response includes a location header with the value set to an AWS S3 path where the result is located. The path expires after 60 seconds.  **Requires one of these permissions**: []
+         * @summary Get result of a DSP CREATIVE_TESTING study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} accept The version(s) of the requested resource. Available version(s) - &#x60;application/vnd.measurementresult.v1.2+json&#x60;, &#x60;text/vnd.measurementresult.v1.2+csv&#x60;.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDSPCreativeTestingStudyResult: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getDSPCreativeTestingStudyResult', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getDSPCreativeTestingStudyResult', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'accept' is not null or undefined
+            assertParamExists('getDSPCreativeTestingStudyResult', 'accept', accept)
+            // verify required parameter 'studyId' is not null or undefined
+            assertParamExists('getDSPCreativeTestingStudyResult', 'studyId', studyId)
+            const localVarPath = `/dsp/measurement/studies/creativeTesting/{studyId}/result`
+                .replace(`{${"studyId"}}`, encodeURIComponent(String(studyId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+            if (accept !== undefined && accept !== null) {
+                localVarHeaderParameter['Accept'] = String(accept);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Gets one or more DSP OMNICHANNEL_METRICS studies with requested study identifiers or an advertiser identifier.  **Requires one of these permissions**: []
+         * @summary Gets one or more DSP OMNICHANNEL_METRICS studies with requested study identifiers or an advertiser identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<string>} [studyIds] Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [advertiserId] The advertiser canonical identifier. Either one of studyIdFilters or advertiserId should be provided.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDSPOmnichannelMetricsStudies: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, advertiserId?: string, nextToken?: string, maxResults?: number, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getDSPOmnichannelMetricsStudies', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getDSPOmnichannelMetricsStudies', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/measurement/studies/omnichannelMetrics`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (studyIds) {
+                localVarQueryParameter['studyIds'] = studyIds.join(COLLECTION_FORMATS.csv);
+            }
+
+            if (advertiserId !== undefined) {
+                localVarQueryParameter['advertiserId'] = advertiserId;
+            }
+
+            if (nextToken !== undefined) {
+                localVarQueryParameter['nextToken'] = nextToken;
+            }
+
+            if (maxResults !== undefined) {
+                localVarQueryParameter['maxResults'] = maxResults;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
             }
 
 
@@ -4502,6 +6928,116 @@ export const MeasurementApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * Search for brands to be used in the OMNICHANNEL_METRICS vendor product.  **Requires one of these permissions**: []
+         * @summary Search for brands to be used in the OMNICHANNEL_METRICS vendor product.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of brands in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {OmnichannelMetricsBrandSearchRequestV1M2} [omnichannelMetricsBrandSearchRequestV1M2] Fetch measurement vendor products request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        omnichannelMetricsBrandSearch: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, omnichannelMetricsBrandSearchRequestV1M2?: OmnichannelMetricsBrandSearchRequestV1M2, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('omnichannelMetricsBrandSearch', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('omnichannelMetricsBrandSearch', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/measurement/vendorProducts/omnichannelMetrics/brands/list`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (nextToken !== undefined) {
+                localVarQueryParameter['nextToken'] = nextToken;
+            }
+
+            if (maxResults !== undefined) {
+                localVarQueryParameter['maxResults'] = maxResults;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.ocmbrands.v1.3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(omnichannelMetricsBrandSearchRequestV1M2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update DSP AUDIENCE_RESEARCH study. This will be a full update.  **Requires one of these permissions**: []
+         * @summary Update DSP AUDIENCE_RESEARCH study. This will be a full update.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {UpdateDSPAudienceResearchStudyV1M2} [updateDSPAudienceResearchStudyV1M2] Update object for DSP AUDIENCE_RESEARCH study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDSPAudienceResearchStudy: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyId: string, updateDSPAudienceResearchStudyV1M2?: UpdateDSPAudienceResearchStudyV1M2, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('updateDSPAudienceResearchStudy', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('updateDSPAudienceResearchStudy', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'studyId' is not null or undefined
+            assertParamExists('updateDSPAudienceResearchStudy', 'studyId', studyId)
+            const localVarPath = `/dsp/measurement/studies/audienceResearch/{studyId}`
+                .replace(`{${"studyId"}}`, encodeURIComponent(String(studyId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.studymanagement.v1.2+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateDSPAudienceResearchStudyV1M2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Update DSP BRAND_LIFT studies. This will be a full update.  **Requires one of these permissions**: []
          * @summary Update DSP BRAND_LIFT studies. This will be a full update.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -4543,6 +7079,106 @@ export const MeasurementApiAxiosParamCreator = function (configuration?: Configu
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(dSPBrandLiftStudyV1M1, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update DSP CREATIVE_TESTING study. This will be a full update.  **Requires one of these permissions**: []
+         * @summary Update DSP CREATIVE_TESTING study. This will be a full update.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {UpdateDSPCreativeTestingStudyV1M2} [updateDSPCreativeTestingStudyV1M2] Update object for DSP CREATIVE_TESTING study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDSPCreativeTestingStudy: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyId: string, updateDSPCreativeTestingStudyV1M2?: UpdateDSPCreativeTestingStudyV1M2, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('updateDSPCreativeTestingStudy', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('updateDSPCreativeTestingStudy', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'studyId' is not null or undefined
+            assertParamExists('updateDSPCreativeTestingStudy', 'studyId', studyId)
+            const localVarPath = `/dsp/measurement/studies/creativeTesting/{studyId}`
+                .replace(`{${"studyId"}}`, encodeURIComponent(String(studyId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.studymanagement.v1.2+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateDSPCreativeTestingStudyV1M2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Update DSP OMNICHANNEL_METRICS studies. This will be a full update.  **Requires one of these permissions**: []
+         * @summary Update DSP OMNICHANNEL_METRICS studies. This will be a full update.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<DSPOmnichannelMetricsStudyV1M2>} [dSPOmnichannelMetricsStudyV1M2] An array of measurement objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDSPOmnichannelMetricsStudies: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dSPOmnichannelMetricsStudyV1M2?: Array<DSPOmnichannelMetricsStudyV1M2>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('updateDSPOmnichannelMetricsStudies', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('updateDSPOmnichannelMetricsStudies', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/measurement/studies/omnichannelMetrics`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.studymanagement.v1.2+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(dSPOmnichannelMetricsStudyV1M2, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4802,6 +7438,21 @@ export const MeasurementApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Checks the DSP AUDIENCE_RESEARCH study type eligibility status against vendor products.  **Requires one of these permissions**: []
+         * @summary Checks the DSP AUDIENCE_RESEARCH study type eligibility against vendor products.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {DSPAudienceResearchEligibilityRequestV1M2} [dSPAudienceResearchEligibilityRequestV1M2] The DSP audience research study eligibility request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkDSPAudienceResearchEligibility(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, dSPAudienceResearchEligibilityRequestV1M2?: DSPAudienceResearchEligibilityRequestV1M2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EligibilityResponseV1M2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkDSPAudienceResearchEligibility(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, dSPAudienceResearchEligibilityRequestV1M2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Checks the DSP BRAND_LIFT study type eligibility status against vendor products.  **Requires one of these permissions**: []
          * @summary Checks the DSP BRAND_LIFT study type eligibility against vendor products.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -4814,6 +7465,64 @@ export const MeasurementApiFp = function(configuration?: Configuration) {
          */
         async checkDSPBrandLiftEligibility(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, dSPBrandLiftEligibilityRequestV1?: DSPBrandLiftEligibilityRequestV1, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EligibilityResponseV1>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.checkDSPBrandLiftEligibility(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, dSPBrandLiftEligibilityRequestV1, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Checks the DSP CREATIVE_TESTING study type eligibility status against vendor products.  **Requires one of these permissions**: []
+         * @summary Checks the DSP CREATIVE_TESTING study type eligibility against vendor products.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {DSPCreativeTestingEligibilityRequestV1M2} [dSPCreativeTestingEligibilityRequestV1M2] The DSP creative testing study eligibility request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkDSPCreativeTestingEligibility(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, dSPCreativeTestingEligibilityRequestV1M2?: DSPCreativeTestingEligibilityRequestV1M2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EligibilityResponseV1M2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkDSPCreativeTestingEligibility(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, dSPCreativeTestingEligibilityRequestV1M2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Checks the DSP OMNICHANNEL_METRICS study type eligibility status against vendor products.  **Requires one of these permissions**: []
+         * @summary Checks the DSP OMNICHANNEL_METRICS study type eligibility against vendor products.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {DSPOmnichannelMetricsEligibilityRequestV1M2} [dSPOmnichannelMetricsEligibilityRequestV1M2] The DSP omnichannel metrics eligibility request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkDSPOmnichannelMetricsEligibility(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, dSPOmnichannelMetricsEligibilityRequestV1M2?: DSPOmnichannelMetricsEligibilityRequestV1M2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EligibilityResponseV1M2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkDSPOmnichannelMetricsEligibility(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, dSPOmnichannelMetricsEligibilityRequestV1M2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Checks eligibility against all vendor products.  **Requires one of these permissions**: []
+         * @summary Checks eligibility against all vendor products.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {PlanningEligibilityRequestV1M3} [planningEligibilityRequestV1M3] Fetch measurement vendor products request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async checkPlanningEligibility(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, planningEligibilityRequestV1M3?: PlanningEligibilityRequestV1M3, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PlanningEligibilityResponseV1M3>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.checkPlanningEligibility(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, planningEligibilityRequestV1M3, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Create new DSP AUDIENCE_RESEARCH study.  **Requires one of these permissions**: []
+         * @summary Create new DSP AUDIENCE_RESEARCH study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {CreateDSPAudienceResearchStudyV1M2} [createDSPAudienceResearchStudyV1M2] Create object for DSP AUDIENCE_RESEARCH study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createDSPAudienceResearchStudy(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createDSPAudienceResearchStudyV1M2?: CreateDSPAudienceResearchStudyV1M2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DSPAudienceResearchStudyV1M2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createDSPAudienceResearchStudy(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, createDSPAudienceResearchStudyV1M2, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4830,6 +7539,32 @@ export const MeasurementApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Create new DSP CREATIVE_TESTING study.  **Requires one of these permissions**: []
+         * @summary Create new DSP CREATIVE_TESTING study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {CreateDSPCreativeTestingStudyV1M2} [createDSPCreativeTestingStudyV1M2] Create object for DSP CREATIVE_TESTING study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createDSPCreativeTestingStudy(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createDSPCreativeTestingStudyV1M2?: CreateDSPCreativeTestingStudyV1M2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DSPCreativeTestingStudyV1M2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createDSPCreativeTestingStudy(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, createDSPCreativeTestingStudyV1M2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Create new DSP OMNICHANNEL_METRICS studies.  **Requires one of these permissions**: []
+         * @summary Create new DSP OMNICHANNEL_METRICS studies.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<DSPOmnichannelMetricsStudyV1M2>} [dSPOmnichannelMetricsStudyV1M2] An array of study objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createDSPOmnichannelMetricsStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dSPOmnichannelMetricsStudyV1M2?: Array<DSPOmnichannelMetricsStudyV1M2>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyResponsesV1>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createDSPOmnichannelMetricsStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, dSPOmnichannelMetricsStudyV1M2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Create new study surveys.  **Requires one of these permissions**: []
          * @summary Create new study surveys.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -4840,6 +7575,36 @@ export const MeasurementApiFp = function(configuration?: Configuration) {
          */
         async createSurveys(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, surveyV1M1?: Array<SurveyV1M1>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SurveyResponsesV1>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createSurveys(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, surveyV1M1, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Gets one or more DSP AUDIENCE_RESEARCH studies with requested study identifiers or an advertiser identifier.  **Requires one of these permissions**: []
+         * @summary Gets one or more DSP AUDIENCE_RESEARCH studies with requested study identifiers or an advertiser identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<string>} [studyIds] Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [advertiserId] The advertiser canonical identifier. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDSPAudienceResearchStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, advertiserId?: string, nextToken?: string, maxResults?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedDSPAudienceResearchStudiesV1M2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDSPAudienceResearchStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyIds, advertiserId, nextToken, maxResults, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get result of a DSP AUDIENCE_RESEARCH study. Returns 200 successful response if json resource is requested in Accept header. Returns a 307 Temporary Redirect response if any of the file types is requested and response includes a location header with the value set to an AWS S3 path where the result is located. The path expires after 60 seconds.  **Requires one of these permissions**: []
+         * @summary Get result of a DSP AUDIENCE_RESEARCH study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} accept The version(s) of the requested resource. Available version(s) - &#x60;application/vnd.measurementresult.v1.2+json&#x60;, &#x60;text/vnd.measurementresult.v1.2+csv&#x60;.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDSPAudienceResearchStudyResult(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AudienceResearchStudyResultV1M2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDSPAudienceResearchStudyResult(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, accept, studyId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4870,6 +7635,52 @@ export const MeasurementApiFp = function(configuration?: Configuration) {
          */
         async getDSPBrandLiftStudyResult(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BrandLiftStudyResultV1M1>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDSPBrandLiftStudyResult(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, accept, studyId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Gets one or more DSP CREATIVE_TESTING studies with requested study identifiers or an advertiser identifier.  **Requires one of these permissions**: []
+         * @summary Gets one or more DSP CREATIVE_TESTING studies with requested study identifiers or an advertiser identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<string>} [studyIds] Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [advertiserId] The advertiser canonical identifier. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDSPCreativeTestingStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, advertiserId?: string, nextToken?: string, maxResults?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedDSPCreativeTestingStudiesV1M2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDSPCreativeTestingStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyIds, advertiserId, nextToken, maxResults, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get result of a DSP CREATIVE_TESTING study. Returns 200 successful response if json resource is requested in Accept header. Returns a 307 Temporary Redirect response if any of the file types is requested and response includes a location header with the value set to an AWS S3 path where the result is located. The path expires after 60 seconds.  **Requires one of these permissions**: []
+         * @summary Get result of a DSP CREATIVE_TESTING study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} accept The version(s) of the requested resource. Available version(s) - &#x60;application/vnd.measurementresult.v1.2+json&#x60;, &#x60;text/vnd.measurementresult.v1.2+csv&#x60;.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDSPCreativeTestingStudyResult(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreativeTestingStudyResultV1M2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDSPCreativeTestingStudyResult(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, accept, studyId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Gets one or more DSP OMNICHANNEL_METRICS studies with requested study identifiers or an advertiser identifier.  **Requires one of these permissions**: []
+         * @summary Gets one or more DSP OMNICHANNEL_METRICS studies with requested study identifiers or an advertiser identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<string>} [studyIds] Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [advertiserId] The advertiser canonical identifier. Either one of studyIdFilters or advertiserId should be provided.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDSPOmnichannelMetricsStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, advertiserId?: string, nextToken?: string, maxResults?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedDSPOmnichannelMetricsStudiesV1M2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDSPOmnichannelMetricsStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyIds, advertiserId, nextToken, maxResults, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -4919,6 +7730,35 @@ export const MeasurementApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Search for brands to be used in the OMNICHANNEL_METRICS vendor product.  **Requires one of these permissions**: []
+         * @summary Search for brands to be used in the OMNICHANNEL_METRICS vendor product.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of brands in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {OmnichannelMetricsBrandSearchRequestV1M2} [omnichannelMetricsBrandSearchRequestV1M2] Fetch measurement vendor products request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async omnichannelMetricsBrandSearch(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, omnichannelMetricsBrandSearchRequestV1M2?: OmnichannelMetricsBrandSearchRequestV1M2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedOmnichannelMetricsBrandsV1M2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.omnichannelMetricsBrandSearch(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, omnichannelMetricsBrandSearchRequestV1M2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Update DSP AUDIENCE_RESEARCH study. This will be a full update.  **Requires one of these permissions**: []
+         * @summary Update DSP AUDIENCE_RESEARCH study. This will be a full update.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {UpdateDSPAudienceResearchStudyV1M2} [updateDSPAudienceResearchStudyV1M2] Update object for DSP AUDIENCE_RESEARCH study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateDSPAudienceResearchStudy(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyId: string, updateDSPAudienceResearchStudyV1M2?: UpdateDSPAudienceResearchStudyV1M2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DSPAudienceResearchStudyV1M2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateDSPAudienceResearchStudy(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyId, updateDSPAudienceResearchStudyV1M2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Update DSP BRAND_LIFT studies. This will be a full update.  **Requires one of these permissions**: []
          * @summary Update DSP BRAND_LIFT studies. This will be a full update.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -4929,6 +7769,33 @@ export const MeasurementApiFp = function(configuration?: Configuration) {
          */
         async updateDSPBrandLiftStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dSPBrandLiftStudyV1M1?: Array<DSPBrandLiftStudyV1M1>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyResponsesV1>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateDSPBrandLiftStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, dSPBrandLiftStudyV1M1, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Update DSP CREATIVE_TESTING study. This will be a full update.  **Requires one of these permissions**: []
+         * @summary Update DSP CREATIVE_TESTING study. This will be a full update.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {UpdateDSPCreativeTestingStudyV1M2} [updateDSPCreativeTestingStudyV1M2] Update object for DSP CREATIVE_TESTING study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateDSPCreativeTestingStudy(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyId: string, updateDSPCreativeTestingStudyV1M2?: UpdateDSPCreativeTestingStudyV1M2, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DSPCreativeTestingStudyV1M2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateDSPCreativeTestingStudy(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyId, updateDSPCreativeTestingStudyV1M2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Update DSP OMNICHANNEL_METRICS studies. This will be a full update.  **Requires one of these permissions**: []
+         * @summary Update DSP OMNICHANNEL_METRICS studies. This will be a full update.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<DSPOmnichannelMetricsStudyV1M2>} [dSPOmnichannelMetricsStudyV1M2] An array of measurement objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateDSPOmnichannelMetricsStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dSPOmnichannelMetricsStudyV1M2?: Array<DSPOmnichannelMetricsStudyV1M2>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyResponsesV1>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateDSPOmnichannelMetricsStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, dSPOmnichannelMetricsStudyV1M2, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -5013,6 +7880,20 @@ export const MeasurementApiFactory = function (configuration?: Configuration, ba
             return localVarFp.cancelMeasurementStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyIdFilters, options).then((request) => request(axios, basePath));
         },
         /**
+         * Checks the DSP AUDIENCE_RESEARCH study type eligibility status against vendor products.  **Requires one of these permissions**: []
+         * @summary Checks the DSP AUDIENCE_RESEARCH study type eligibility against vendor products.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {DSPAudienceResearchEligibilityRequestV1M2} [dSPAudienceResearchEligibilityRequestV1M2] The DSP audience research study eligibility request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkDSPAudienceResearchEligibility(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, dSPAudienceResearchEligibilityRequestV1M2?: DSPAudienceResearchEligibilityRequestV1M2, options?: any): AxiosPromise<EligibilityResponseV1M2> {
+            return localVarFp.checkDSPAudienceResearchEligibility(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, dSPAudienceResearchEligibilityRequestV1M2, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Checks the DSP BRAND_LIFT study type eligibility status against vendor products.  **Requires one of these permissions**: []
          * @summary Checks the DSP BRAND_LIFT study type eligibility against vendor products.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -5027,6 +7908,60 @@ export const MeasurementApiFactory = function (configuration?: Configuration, ba
             return localVarFp.checkDSPBrandLiftEligibility(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, dSPBrandLiftEligibilityRequestV1, options).then((request) => request(axios, basePath));
         },
         /**
+         * Checks the DSP CREATIVE_TESTING study type eligibility status against vendor products.  **Requires one of these permissions**: []
+         * @summary Checks the DSP CREATIVE_TESTING study type eligibility against vendor products.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {DSPCreativeTestingEligibilityRequestV1M2} [dSPCreativeTestingEligibilityRequestV1M2] The DSP creative testing study eligibility request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkDSPCreativeTestingEligibility(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, dSPCreativeTestingEligibilityRequestV1M2?: DSPCreativeTestingEligibilityRequestV1M2, options?: any): AxiosPromise<EligibilityResponseV1M2> {
+            return localVarFp.checkDSPCreativeTestingEligibility(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, dSPCreativeTestingEligibilityRequestV1M2, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Checks the DSP OMNICHANNEL_METRICS study type eligibility status against vendor products.  **Requires one of these permissions**: []
+         * @summary Checks the DSP OMNICHANNEL_METRICS study type eligibility against vendor products.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {DSPOmnichannelMetricsEligibilityRequestV1M2} [dSPOmnichannelMetricsEligibilityRequestV1M2] The DSP omnichannel metrics eligibility request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkDSPOmnichannelMetricsEligibility(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, dSPOmnichannelMetricsEligibilityRequestV1M2?: DSPOmnichannelMetricsEligibilityRequestV1M2, options?: any): AxiosPromise<EligibilityResponseV1M2> {
+            return localVarFp.checkDSPOmnichannelMetricsEligibility(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, dSPOmnichannelMetricsEligibilityRequestV1M2, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Checks eligibility against all vendor products.  **Requires one of these permissions**: []
+         * @summary Checks eligibility against all vendor products.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {PlanningEligibilityRequestV1M3} [planningEligibilityRequestV1M3] Fetch measurement vendor products request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        checkPlanningEligibility(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, planningEligibilityRequestV1M3?: PlanningEligibilityRequestV1M3, options?: any): AxiosPromise<PlanningEligibilityResponseV1M3> {
+            return localVarFp.checkPlanningEligibility(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, planningEligibilityRequestV1M3, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Create new DSP AUDIENCE_RESEARCH study.  **Requires one of these permissions**: []
+         * @summary Create new DSP AUDIENCE_RESEARCH study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {CreateDSPAudienceResearchStudyV1M2} [createDSPAudienceResearchStudyV1M2] Create object for DSP AUDIENCE_RESEARCH study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDSPAudienceResearchStudy(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createDSPAudienceResearchStudyV1M2?: CreateDSPAudienceResearchStudyV1M2, options?: any): AxiosPromise<DSPAudienceResearchStudyV1M2> {
+            return localVarFp.createDSPAudienceResearchStudy(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, createDSPAudienceResearchStudyV1M2, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Create new DSP BRAND_LIFT studies.  **Requires one of these permissions**: []
          * @summary Create new DSP BRAND_LIFT studies.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -5039,6 +7974,30 @@ export const MeasurementApiFactory = function (configuration?: Configuration, ba
             return localVarFp.createDSPBrandLiftStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, dSPBrandLiftStudyV1M1, options).then((request) => request(axios, basePath));
         },
         /**
+         * Create new DSP CREATIVE_TESTING study.  **Requires one of these permissions**: []
+         * @summary Create new DSP CREATIVE_TESTING study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {CreateDSPCreativeTestingStudyV1M2} [createDSPCreativeTestingStudyV1M2] Create object for DSP CREATIVE_TESTING study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDSPCreativeTestingStudy(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createDSPCreativeTestingStudyV1M2?: CreateDSPCreativeTestingStudyV1M2, options?: any): AxiosPromise<DSPCreativeTestingStudyV1M2> {
+            return localVarFp.createDSPCreativeTestingStudy(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, createDSPCreativeTestingStudyV1M2, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Create new DSP OMNICHANNEL_METRICS studies.  **Requires one of these permissions**: []
+         * @summary Create new DSP OMNICHANNEL_METRICS studies.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<DSPOmnichannelMetricsStudyV1M2>} [dSPOmnichannelMetricsStudyV1M2] An array of study objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createDSPOmnichannelMetricsStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dSPOmnichannelMetricsStudyV1M2?: Array<DSPOmnichannelMetricsStudyV1M2>, options?: any): AxiosPromise<StudyResponsesV1> {
+            return localVarFp.createDSPOmnichannelMetricsStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, dSPOmnichannelMetricsStudyV1M2, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Create new study surveys.  **Requires one of these permissions**: []
          * @summary Create new study surveys.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -5049,6 +8008,34 @@ export const MeasurementApiFactory = function (configuration?: Configuration, ba
          */
         createSurveys(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, surveyV1M1?: Array<SurveyV1M1>, options?: any): AxiosPromise<SurveyResponsesV1> {
             return localVarFp.createSurveys(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, surveyV1M1, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Gets one or more DSP AUDIENCE_RESEARCH studies with requested study identifiers or an advertiser identifier.  **Requires one of these permissions**: []
+         * @summary Gets one or more DSP AUDIENCE_RESEARCH studies with requested study identifiers or an advertiser identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<string>} [studyIds] Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [advertiserId] The advertiser canonical identifier. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDSPAudienceResearchStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, advertiserId?: string, nextToken?: string, maxResults?: number, options?: any): AxiosPromise<PaginatedDSPAudienceResearchStudiesV1M2> {
+            return localVarFp.getDSPAudienceResearchStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyIds, advertiserId, nextToken, maxResults, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get result of a DSP AUDIENCE_RESEARCH study. Returns 200 successful response if json resource is requested in Accept header. Returns a 307 Temporary Redirect response if any of the file types is requested and response includes a location header with the value set to an AWS S3 path where the result is located. The path expires after 60 seconds.  **Requires one of these permissions**: []
+         * @summary Get result of a DSP AUDIENCE_RESEARCH study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} accept The version(s) of the requested resource. Available version(s) - &#x60;application/vnd.measurementresult.v1.2+json&#x60;, &#x60;text/vnd.measurementresult.v1.2+csv&#x60;.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDSPAudienceResearchStudyResult(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options?: any): AxiosPromise<AudienceResearchStudyResultV1M2> {
+            return localVarFp.getDSPAudienceResearchStudyResult(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, accept, studyId, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets one or more DSP BRAND_LIFT studies with requested study identifiers or an advertiser identifier.  **Requires one of these permissions**: []
@@ -5077,6 +8064,49 @@ export const MeasurementApiFactory = function (configuration?: Configuration, ba
          */
         getDSPBrandLiftStudyResult(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options?: any): AxiosPromise<BrandLiftStudyResultV1M1> {
             return localVarFp.getDSPBrandLiftStudyResult(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, accept, studyId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Gets one or more DSP CREATIVE_TESTING studies with requested study identifiers or an advertiser identifier.  **Requires one of these permissions**: []
+         * @summary Gets one or more DSP CREATIVE_TESTING studies with requested study identifiers or an advertiser identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<string>} [studyIds] Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [advertiserId] The advertiser canonical identifier. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDSPCreativeTestingStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, advertiserId?: string, nextToken?: string, maxResults?: number, options?: any): AxiosPromise<PaginatedDSPCreativeTestingStudiesV1M2> {
+            return localVarFp.getDSPCreativeTestingStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyIds, advertiserId, nextToken, maxResults, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get result of a DSP CREATIVE_TESTING study. Returns 200 successful response if json resource is requested in Accept header. Returns a 307 Temporary Redirect response if any of the file types is requested and response includes a location header with the value set to an AWS S3 path where the result is located. The path expires after 60 seconds.  **Requires one of these permissions**: []
+         * @summary Get result of a DSP CREATIVE_TESTING study.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} accept The version(s) of the requested resource. Available version(s) - &#x60;application/vnd.measurementresult.v1.2+json&#x60;, &#x60;text/vnd.measurementresult.v1.2+csv&#x60;.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDSPCreativeTestingStudyResult(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options?: any): AxiosPromise<CreativeTestingStudyResultV1M2> {
+            return localVarFp.getDSPCreativeTestingStudyResult(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, accept, studyId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Gets one or more DSP OMNICHANNEL_METRICS studies with requested study identifiers or an advertiser identifier.  **Requires one of these permissions**: []
+         * @summary Gets one or more DSP OMNICHANNEL_METRICS studies with requested study identifiers or an advertiser identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<string>} [studyIds] Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+         * @param {string} [advertiserId] The advertiser canonical identifier. Either one of studyIdFilters or advertiserId should be provided.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDSPOmnichannelMetricsStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, advertiserId?: string, nextToken?: string, maxResults?: number, options?: any): AxiosPromise<PaginatedDSPOmnichannelMetricsStudiesV1M2> {
+            return localVarFp.getDSPOmnichannelMetricsStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyIds, advertiserId, nextToken, maxResults, options).then((request) => request(axios, basePath));
         },
         /**
          * Get result of a DSP OMNICHANNEL_METRICS study. Returns a 307 Temporary Redirect response if any of the file types is requested and response includes a location header with the value set to an AWS S3 path where the result is located. The path expires after 60 seconds. Accept header does not support json for OMNICHANNEL_METRICS study type.  **Requires one of these permissions**: []
@@ -5122,6 +8152,33 @@ export const MeasurementApiFactory = function (configuration?: Configuration, ba
             return localVarFp.getSurveys(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, surveyIds, studyId, nextToken, maxResults, options).then((request) => request(axios, basePath));
         },
         /**
+         * Search for brands to be used in the OMNICHANNEL_METRICS vendor product.  **Requires one of these permissions**: []
+         * @summary Search for brands to be used in the OMNICHANNEL_METRICS vendor product.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of brands in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {OmnichannelMetricsBrandSearchRequestV1M2} [omnichannelMetricsBrandSearchRequestV1M2] Fetch measurement vendor products request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        omnichannelMetricsBrandSearch(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, omnichannelMetricsBrandSearchRequestV1M2?: OmnichannelMetricsBrandSearchRequestV1M2, options?: any): AxiosPromise<PaginatedOmnichannelMetricsBrandsV1M2> {
+            return localVarFp.omnichannelMetricsBrandSearch(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, omnichannelMetricsBrandSearchRequestV1M2, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Update DSP AUDIENCE_RESEARCH study. This will be a full update.  **Requires one of these permissions**: []
+         * @summary Update DSP AUDIENCE_RESEARCH study. This will be a full update.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {UpdateDSPAudienceResearchStudyV1M2} [updateDSPAudienceResearchStudyV1M2] Update object for DSP AUDIENCE_RESEARCH study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDSPAudienceResearchStudy(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyId: string, updateDSPAudienceResearchStudyV1M2?: UpdateDSPAudienceResearchStudyV1M2, options?: any): AxiosPromise<DSPAudienceResearchStudyV1M2> {
+            return localVarFp.updateDSPAudienceResearchStudy(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyId, updateDSPAudienceResearchStudyV1M2, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Update DSP BRAND_LIFT studies. This will be a full update.  **Requires one of these permissions**: []
          * @summary Update DSP BRAND_LIFT studies. This will be a full update.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
@@ -5132,6 +8189,31 @@ export const MeasurementApiFactory = function (configuration?: Configuration, ba
          */
         updateDSPBrandLiftStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dSPBrandLiftStudyV1M1?: Array<DSPBrandLiftStudyV1M1>, options?: any): AxiosPromise<StudyResponsesV1> {
             return localVarFp.updateDSPBrandLiftStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, dSPBrandLiftStudyV1M1, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Update DSP CREATIVE_TESTING study. This will be a full update.  **Requires one of these permissions**: []
+         * @summary Update DSP CREATIVE_TESTING study. This will be a full update.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {UpdateDSPCreativeTestingStudyV1M2} [updateDSPCreativeTestingStudyV1M2] Update object for DSP CREATIVE_TESTING study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDSPCreativeTestingStudy(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyId: string, updateDSPCreativeTestingStudyV1M2?: UpdateDSPCreativeTestingStudyV1M2, options?: any): AxiosPromise<DSPCreativeTestingStudyV1M2> {
+            return localVarFp.updateDSPCreativeTestingStudy(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyId, updateDSPCreativeTestingStudyV1M2, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Update DSP OMNICHANNEL_METRICS studies. This will be a full update.  **Requires one of these permissions**: []
+         * @summary Update DSP OMNICHANNEL_METRICS studies. This will be a full update.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {Array<DSPOmnichannelMetricsStudyV1M2>} [dSPOmnichannelMetricsStudyV1M2] An array of measurement objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDSPOmnichannelMetricsStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, dSPOmnichannelMetricsStudyV1M2?: Array<DSPOmnichannelMetricsStudyV1M2>, options?: any): AxiosPromise<StudyResponsesV1> {
+            return localVarFp.updateDSPOmnichannelMetricsStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, dSPOmnichannelMetricsStudyV1M2, options).then((request) => request(axios, basePath));
         },
         /**
          * Update measurement surveys. This will be a full update.  **Requires one of these permissions**: []
@@ -5220,6 +8302,48 @@ export interface MeasurementApiCancelMeasurementStudiesRequest {
 }
 
 /**
+ * Request parameters for checkDSPAudienceResearchEligibility operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiCheckDSPAudienceResearchEligibilityRequest
+ */
+export interface MeasurementApiCheckDSPAudienceResearchEligibilityRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiCheckDSPAudienceResearchEligibility
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiCheckDSPAudienceResearchEligibility
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+     * @type {string}
+     * @memberof MeasurementApiCheckDSPAudienceResearchEligibility
+     */
+    readonly nextToken?: string
+
+    /**
+     * Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+     * @type {number}
+     * @memberof MeasurementApiCheckDSPAudienceResearchEligibility
+     */
+    readonly maxResults?: number
+
+    /**
+     * The DSP audience research study eligibility request object.
+     * @type {DSPAudienceResearchEligibilityRequestV1M2}
+     * @memberof MeasurementApiCheckDSPAudienceResearchEligibility
+     */
+    readonly dSPAudienceResearchEligibilityRequestV1M2?: DSPAudienceResearchEligibilityRequestV1M2
+}
+
+/**
  * Request parameters for checkDSPBrandLiftEligibility operation in MeasurementApi.
  * @export
  * @interface MeasurementApiCheckDSPBrandLiftEligibilityRequest
@@ -5262,6 +8386,160 @@ export interface MeasurementApiCheckDSPBrandLiftEligibilityRequest {
 }
 
 /**
+ * Request parameters for checkDSPCreativeTestingEligibility operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiCheckDSPCreativeTestingEligibilityRequest
+ */
+export interface MeasurementApiCheckDSPCreativeTestingEligibilityRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiCheckDSPCreativeTestingEligibility
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiCheckDSPCreativeTestingEligibility
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+     * @type {string}
+     * @memberof MeasurementApiCheckDSPCreativeTestingEligibility
+     */
+    readonly nextToken?: string
+
+    /**
+     * Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+     * @type {number}
+     * @memberof MeasurementApiCheckDSPCreativeTestingEligibility
+     */
+    readonly maxResults?: number
+
+    /**
+     * The DSP creative testing study eligibility request object.
+     * @type {DSPCreativeTestingEligibilityRequestV1M2}
+     * @memberof MeasurementApiCheckDSPCreativeTestingEligibility
+     */
+    readonly dSPCreativeTestingEligibilityRequestV1M2?: DSPCreativeTestingEligibilityRequestV1M2
+}
+
+/**
+ * Request parameters for checkDSPOmnichannelMetricsEligibility operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiCheckDSPOmnichannelMetricsEligibilityRequest
+ */
+export interface MeasurementApiCheckDSPOmnichannelMetricsEligibilityRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiCheckDSPOmnichannelMetricsEligibility
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiCheckDSPOmnichannelMetricsEligibility
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+     * @type {string}
+     * @memberof MeasurementApiCheckDSPOmnichannelMetricsEligibility
+     */
+    readonly nextToken?: string
+
+    /**
+     * Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+     * @type {number}
+     * @memberof MeasurementApiCheckDSPOmnichannelMetricsEligibility
+     */
+    readonly maxResults?: number
+
+    /**
+     * The DSP omnichannel metrics eligibility request object.
+     * @type {DSPOmnichannelMetricsEligibilityRequestV1M2}
+     * @memberof MeasurementApiCheckDSPOmnichannelMetricsEligibility
+     */
+    readonly dSPOmnichannelMetricsEligibilityRequestV1M2?: DSPOmnichannelMetricsEligibilityRequestV1M2
+}
+
+/**
+ * Request parameters for checkPlanningEligibility operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiCheckPlanningEligibilityRequest
+ */
+export interface MeasurementApiCheckPlanningEligibilityRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiCheckPlanningEligibility
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiCheckPlanningEligibility
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+     * @type {string}
+     * @memberof MeasurementApiCheckPlanningEligibility
+     */
+    readonly nextToken?: string
+
+    /**
+     * Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+     * @type {number}
+     * @memberof MeasurementApiCheckPlanningEligibility
+     */
+    readonly maxResults?: number
+
+    /**
+     * Fetch measurement vendor products request object.
+     * @type {PlanningEligibilityRequestV1M3}
+     * @memberof MeasurementApiCheckPlanningEligibility
+     */
+    readonly planningEligibilityRequestV1M3?: PlanningEligibilityRequestV1M3
+}
+
+/**
+ * Request parameters for createDSPAudienceResearchStudy operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiCreateDSPAudienceResearchStudyRequest
+ */
+export interface MeasurementApiCreateDSPAudienceResearchStudyRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiCreateDSPAudienceResearchStudy
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiCreateDSPAudienceResearchStudy
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Create object for DSP AUDIENCE_RESEARCH study.
+     * @type {CreateDSPAudienceResearchStudyV1M2}
+     * @memberof MeasurementApiCreateDSPAudienceResearchStudy
+     */
+    readonly createDSPAudienceResearchStudyV1M2?: CreateDSPAudienceResearchStudyV1M2
+}
+
+/**
  * Request parameters for createDSPBrandLiftStudies operation in MeasurementApi.
  * @export
  * @interface MeasurementApiCreateDSPBrandLiftStudiesRequest
@@ -5290,6 +8568,62 @@ export interface MeasurementApiCreateDSPBrandLiftStudiesRequest {
 }
 
 /**
+ * Request parameters for createDSPCreativeTestingStudy operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiCreateDSPCreativeTestingStudyRequest
+ */
+export interface MeasurementApiCreateDSPCreativeTestingStudyRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiCreateDSPCreativeTestingStudy
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiCreateDSPCreativeTestingStudy
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Create object for DSP CREATIVE_TESTING study.
+     * @type {CreateDSPCreativeTestingStudyV1M2}
+     * @memberof MeasurementApiCreateDSPCreativeTestingStudy
+     */
+    readonly createDSPCreativeTestingStudyV1M2?: CreateDSPCreativeTestingStudyV1M2
+}
+
+/**
+ * Request parameters for createDSPOmnichannelMetricsStudies operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiCreateDSPOmnichannelMetricsStudiesRequest
+ */
+export interface MeasurementApiCreateDSPOmnichannelMetricsStudiesRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiCreateDSPOmnichannelMetricsStudies
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiCreateDSPOmnichannelMetricsStudies
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * An array of study objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+     * @type {Array<DSPOmnichannelMetricsStudyV1M2>}
+     * @memberof MeasurementApiCreateDSPOmnichannelMetricsStudies
+     */
+    readonly dSPOmnichannelMetricsStudyV1M2?: Array<DSPOmnichannelMetricsStudyV1M2>
+}
+
+/**
  * Request parameters for createSurveys operation in MeasurementApi.
  * @export
  * @interface MeasurementApiCreateSurveysRequest
@@ -5315,6 +8649,90 @@ export interface MeasurementApiCreateSurveysRequest {
      * @memberof MeasurementApiCreateSurveys
      */
     readonly surveyV1M1?: Array<SurveyV1M1>
+}
+
+/**
+ * Request parameters for getDSPAudienceResearchStudies operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiGetDSPAudienceResearchStudiesRequest
+ */
+export interface MeasurementApiGetDSPAudienceResearchStudiesRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPAudienceResearchStudies
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPAudienceResearchStudies
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+     * @type {Array<string>}
+     * @memberof MeasurementApiGetDSPAudienceResearchStudies
+     */
+    readonly studyIds?: Array<string>
+
+    /**
+     * The advertiser canonical identifier. Either one of studyIds or advertiserId should be provided.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPAudienceResearchStudies
+     */
+    readonly advertiserId?: string
+
+    /**
+     * Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPAudienceResearchStudies
+     */
+    readonly nextToken?: string
+
+    /**
+     * Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+     * @type {number}
+     * @memberof MeasurementApiGetDSPAudienceResearchStudies
+     */
+    readonly maxResults?: number
+}
+
+/**
+ * Request parameters for getDSPAudienceResearchStudyResult operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiGetDSPAudienceResearchStudyResultRequest
+ */
+export interface MeasurementApiGetDSPAudienceResearchStudyResultRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPAudienceResearchStudyResult
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPAudienceResearchStudyResult
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The version(s) of the requested resource. Available version(s) - &#x60;application/vnd.measurementresult.v1.2+json&#x60;, &#x60;text/vnd.measurementresult.v1.2+csv&#x60;.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPAudienceResearchStudyResult
+     */
+    readonly accept: string
+
+    /**
+     * The canonical identifier that represents a unique study.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPAudienceResearchStudyResult
+     */
+    readonly studyId: string
 }
 
 /**
@@ -5399,6 +8817,139 @@ export interface MeasurementApiGetDSPBrandLiftStudyResultRequest {
      * @memberof MeasurementApiGetDSPBrandLiftStudyResult
      */
     readonly studyId: string
+}
+
+/**
+ * Request parameters for getDSPCreativeTestingStudies operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiGetDSPCreativeTestingStudiesRequest
+ */
+export interface MeasurementApiGetDSPCreativeTestingStudiesRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPCreativeTestingStudies
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPCreativeTestingStudies
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+     * @type {Array<string>}
+     * @memberof MeasurementApiGetDSPCreativeTestingStudies
+     */
+    readonly studyIds?: Array<string>
+
+    /**
+     * The advertiser canonical identifier. Either one of studyIds or advertiserId should be provided.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPCreativeTestingStudies
+     */
+    readonly advertiserId?: string
+
+    /**
+     * Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPCreativeTestingStudies
+     */
+    readonly nextToken?: string
+
+    /**
+     * Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+     * @type {number}
+     * @memberof MeasurementApiGetDSPCreativeTestingStudies
+     */
+    readonly maxResults?: number
+}
+
+/**
+ * Request parameters for getDSPCreativeTestingStudyResult operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiGetDSPCreativeTestingStudyResultRequest
+ */
+export interface MeasurementApiGetDSPCreativeTestingStudyResultRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPCreativeTestingStudyResult
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPCreativeTestingStudyResult
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The version(s) of the requested resource. Available version(s) - &#x60;application/vnd.measurementresult.v1.2+json&#x60;, &#x60;text/vnd.measurementresult.v1.2+csv&#x60;.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPCreativeTestingStudyResult
+     */
+    readonly accept: string
+
+    /**
+     * The canonical identifier that represents a unique study.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPCreativeTestingStudyResult
+     */
+    readonly studyId: string
+}
+
+/**
+ * Request parameters for getDSPOmnichannelMetricsStudies operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiGetDSPOmnichannelMetricsStudiesRequest
+ */
+export interface MeasurementApiGetDSPOmnichannelMetricsStudiesRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPOmnichannelMetricsStudies
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPOmnichannelMetricsStudies
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Study canonical identifier to filter with. Either one of studyIds or advertiserId should be provided.
+     * @type {Array<string>}
+     * @memberof MeasurementApiGetDSPOmnichannelMetricsStudies
+     */
+    readonly studyIds?: Array<string>
+
+    /**
+     * The advertiser canonical identifier. Either one of studyIdFilters or advertiserId should be provided.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPOmnichannelMetricsStudies
+     */
+    readonly advertiserId?: string
+
+    /**
+     * Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+     * @type {string}
+     * @memberof MeasurementApiGetDSPOmnichannelMetricsStudies
+     */
+    readonly nextToken?: string
+
+    /**
+     * Sets the maximum number of studies in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+     * @type {number}
+     * @memberof MeasurementApiGetDSPOmnichannelMetricsStudies
+     */
+    readonly maxResults?: number
 }
 
 /**
@@ -5535,6 +9086,83 @@ export interface MeasurementApiGetSurveysRequest {
 }
 
 /**
+ * Request parameters for omnichannelMetricsBrandSearch operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiOmnichannelMetricsBrandSearchRequest
+ */
+export interface MeasurementApiOmnichannelMetricsBrandSearchRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiOmnichannelMetricsBrandSearch
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiOmnichannelMetricsBrandSearch
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+     * @type {string}
+     * @memberof MeasurementApiOmnichannelMetricsBrandSearch
+     */
+    readonly nextToken?: string
+
+    /**
+     * Sets the maximum number of brands in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+     * @type {number}
+     * @memberof MeasurementApiOmnichannelMetricsBrandSearch
+     */
+    readonly maxResults?: number
+
+    /**
+     * Fetch measurement vendor products request object.
+     * @type {OmnichannelMetricsBrandSearchRequestV1M2}
+     * @memberof MeasurementApiOmnichannelMetricsBrandSearch
+     */
+    readonly omnichannelMetricsBrandSearchRequestV1M2?: OmnichannelMetricsBrandSearchRequestV1M2
+}
+
+/**
+ * Request parameters for updateDSPAudienceResearchStudy operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiUpdateDSPAudienceResearchStudyRequest
+ */
+export interface MeasurementApiUpdateDSPAudienceResearchStudyRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiUpdateDSPAudienceResearchStudy
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiUpdateDSPAudienceResearchStudy
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The canonical identifier that represents a unique study.
+     * @type {string}
+     * @memberof MeasurementApiUpdateDSPAudienceResearchStudy
+     */
+    readonly studyId: string
+
+    /**
+     * Update object for DSP AUDIENCE_RESEARCH study.
+     * @type {UpdateDSPAudienceResearchStudyV1M2}
+     * @memberof MeasurementApiUpdateDSPAudienceResearchStudy
+     */
+    readonly updateDSPAudienceResearchStudyV1M2?: UpdateDSPAudienceResearchStudyV1M2
+}
+
+/**
  * Request parameters for updateDSPBrandLiftStudies operation in MeasurementApi.
  * @export
  * @interface MeasurementApiUpdateDSPBrandLiftStudiesRequest
@@ -5560,6 +9188,69 @@ export interface MeasurementApiUpdateDSPBrandLiftStudiesRequest {
      * @memberof MeasurementApiUpdateDSPBrandLiftStudies
      */
     readonly dSPBrandLiftStudyV1M1?: Array<DSPBrandLiftStudyV1M1>
+}
+
+/**
+ * Request parameters for updateDSPCreativeTestingStudy operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiUpdateDSPCreativeTestingStudyRequest
+ */
+export interface MeasurementApiUpdateDSPCreativeTestingStudyRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiUpdateDSPCreativeTestingStudy
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiUpdateDSPCreativeTestingStudy
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The canonical identifier that represents a unique study.
+     * @type {string}
+     * @memberof MeasurementApiUpdateDSPCreativeTestingStudy
+     */
+    readonly studyId: string
+
+    /**
+     * Update object for DSP CREATIVE_TESTING study.
+     * @type {UpdateDSPCreativeTestingStudyV1M2}
+     * @memberof MeasurementApiUpdateDSPCreativeTestingStudy
+     */
+    readonly updateDSPCreativeTestingStudyV1M2?: UpdateDSPCreativeTestingStudyV1M2
+}
+
+/**
+ * Request parameters for updateDSPOmnichannelMetricsStudies operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiUpdateDSPOmnichannelMetricsStudiesRequest
+ */
+export interface MeasurementApiUpdateDSPOmnichannelMetricsStudiesRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiUpdateDSPOmnichannelMetricsStudies
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiUpdateDSPOmnichannelMetricsStudies
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * An array of measurement objects. For each object, specify required fields and their values. Maximum length of the array is 1.
+     * @type {Array<DSPOmnichannelMetricsStudyV1M2>}
+     * @memberof MeasurementApiUpdateDSPOmnichannelMetricsStudies
+     */
+    readonly dSPOmnichannelMetricsStudyV1M2?: Array<DSPOmnichannelMetricsStudyV1M2>
 }
 
 /**
@@ -5743,6 +9434,18 @@ export class MeasurementApi extends BaseAPI {
     }
 
     /**
+     * Checks the DSP AUDIENCE_RESEARCH study type eligibility status against vendor products.  **Requires one of these permissions**: []
+     * @summary Checks the DSP AUDIENCE_RESEARCH study type eligibility against vendor products.
+     * @param {MeasurementApiCheckDSPAudienceResearchEligibilityRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public checkDSPAudienceResearchEligibility(requestParameters: MeasurementApiCheckDSPAudienceResearchEligibilityRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).checkDSPAudienceResearchEligibility(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.nextToken, requestParameters.maxResults, requestParameters.dSPAudienceResearchEligibilityRequestV1M2, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Checks the DSP BRAND_LIFT study type eligibility status against vendor products.  **Requires one of these permissions**: []
      * @summary Checks the DSP BRAND_LIFT study type eligibility against vendor products.
      * @param {MeasurementApiCheckDSPBrandLiftEligibilityRequest} requestParameters Request parameters.
@@ -5752,6 +9455,54 @@ export class MeasurementApi extends BaseAPI {
      */
     public checkDSPBrandLiftEligibility(requestParameters: MeasurementApiCheckDSPBrandLiftEligibilityRequest, options?: any) {
         return MeasurementApiFp(this.configuration).checkDSPBrandLiftEligibility(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.nextToken, requestParameters.maxResults, requestParameters.dSPBrandLiftEligibilityRequestV1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Checks the DSP CREATIVE_TESTING study type eligibility status against vendor products.  **Requires one of these permissions**: []
+     * @summary Checks the DSP CREATIVE_TESTING study type eligibility against vendor products.
+     * @param {MeasurementApiCheckDSPCreativeTestingEligibilityRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public checkDSPCreativeTestingEligibility(requestParameters: MeasurementApiCheckDSPCreativeTestingEligibilityRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).checkDSPCreativeTestingEligibility(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.nextToken, requestParameters.maxResults, requestParameters.dSPCreativeTestingEligibilityRequestV1M2, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Checks the DSP OMNICHANNEL_METRICS study type eligibility status against vendor products.  **Requires one of these permissions**: []
+     * @summary Checks the DSP OMNICHANNEL_METRICS study type eligibility against vendor products.
+     * @param {MeasurementApiCheckDSPOmnichannelMetricsEligibilityRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public checkDSPOmnichannelMetricsEligibility(requestParameters: MeasurementApiCheckDSPOmnichannelMetricsEligibilityRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).checkDSPOmnichannelMetricsEligibility(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.nextToken, requestParameters.maxResults, requestParameters.dSPOmnichannelMetricsEligibilityRequestV1M2, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Checks eligibility against all vendor products.  **Requires one of these permissions**: []
+     * @summary Checks eligibility against all vendor products.
+     * @param {MeasurementApiCheckPlanningEligibilityRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public checkPlanningEligibility(requestParameters: MeasurementApiCheckPlanningEligibilityRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).checkPlanningEligibility(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.nextToken, requestParameters.maxResults, requestParameters.planningEligibilityRequestV1M3, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Create new DSP AUDIENCE_RESEARCH study.  **Requires one of these permissions**: []
+     * @summary Create new DSP AUDIENCE_RESEARCH study.
+     * @param {MeasurementApiCreateDSPAudienceResearchStudyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public createDSPAudienceResearchStudy(requestParameters: MeasurementApiCreateDSPAudienceResearchStudyRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).createDSPAudienceResearchStudy(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.createDSPAudienceResearchStudyV1M2, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5767,6 +9518,30 @@ export class MeasurementApi extends BaseAPI {
     }
 
     /**
+     * Create new DSP CREATIVE_TESTING study.  **Requires one of these permissions**: []
+     * @summary Create new DSP CREATIVE_TESTING study.
+     * @param {MeasurementApiCreateDSPCreativeTestingStudyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public createDSPCreativeTestingStudy(requestParameters: MeasurementApiCreateDSPCreativeTestingStudyRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).createDSPCreativeTestingStudy(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.createDSPCreativeTestingStudyV1M2, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Create new DSP OMNICHANNEL_METRICS studies.  **Requires one of these permissions**: []
+     * @summary Create new DSP OMNICHANNEL_METRICS studies.
+     * @param {MeasurementApiCreateDSPOmnichannelMetricsStudiesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public createDSPOmnichannelMetricsStudies(requestParameters: MeasurementApiCreateDSPOmnichannelMetricsStudiesRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).createDSPOmnichannelMetricsStudies(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.dSPOmnichannelMetricsStudyV1M2, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Create new study surveys.  **Requires one of these permissions**: []
      * @summary Create new study surveys.
      * @param {MeasurementApiCreateSurveysRequest} requestParameters Request parameters.
@@ -5776,6 +9551,30 @@ export class MeasurementApi extends BaseAPI {
      */
     public createSurveys(requestParameters: MeasurementApiCreateSurveysRequest, options?: any) {
         return MeasurementApiFp(this.configuration).createSurveys(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.surveyV1M1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gets one or more DSP AUDIENCE_RESEARCH studies with requested study identifiers or an advertiser identifier.  **Requires one of these permissions**: []
+     * @summary Gets one or more DSP AUDIENCE_RESEARCH studies with requested study identifiers or an advertiser identifier.
+     * @param {MeasurementApiGetDSPAudienceResearchStudiesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public getDSPAudienceResearchStudies(requestParameters: MeasurementApiGetDSPAudienceResearchStudiesRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).getDSPAudienceResearchStudies(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.studyIds, requestParameters.advertiserId, requestParameters.nextToken, requestParameters.maxResults, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get result of a DSP AUDIENCE_RESEARCH study. Returns 200 successful response if json resource is requested in Accept header. Returns a 307 Temporary Redirect response if any of the file types is requested and response includes a location header with the value set to an AWS S3 path where the result is located. The path expires after 60 seconds.  **Requires one of these permissions**: []
+     * @summary Get result of a DSP AUDIENCE_RESEARCH study.
+     * @param {MeasurementApiGetDSPAudienceResearchStudyResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public getDSPAudienceResearchStudyResult(requestParameters: MeasurementApiGetDSPAudienceResearchStudyResultRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).getDSPAudienceResearchStudyResult(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.accept, requestParameters.studyId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5800,6 +9599,42 @@ export class MeasurementApi extends BaseAPI {
      */
     public getDSPBrandLiftStudyResult(requestParameters: MeasurementApiGetDSPBrandLiftStudyResultRequest, options?: any) {
         return MeasurementApiFp(this.configuration).getDSPBrandLiftStudyResult(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.accept, requestParameters.studyId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gets one or more DSP CREATIVE_TESTING studies with requested study identifiers or an advertiser identifier.  **Requires one of these permissions**: []
+     * @summary Gets one or more DSP CREATIVE_TESTING studies with requested study identifiers or an advertiser identifier.
+     * @param {MeasurementApiGetDSPCreativeTestingStudiesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public getDSPCreativeTestingStudies(requestParameters: MeasurementApiGetDSPCreativeTestingStudiesRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).getDSPCreativeTestingStudies(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.studyIds, requestParameters.advertiserId, requestParameters.nextToken, requestParameters.maxResults, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get result of a DSP CREATIVE_TESTING study. Returns 200 successful response if json resource is requested in Accept header. Returns a 307 Temporary Redirect response if any of the file types is requested and response includes a location header with the value set to an AWS S3 path where the result is located. The path expires after 60 seconds.  **Requires one of these permissions**: []
+     * @summary Get result of a DSP CREATIVE_TESTING study.
+     * @param {MeasurementApiGetDSPCreativeTestingStudyResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public getDSPCreativeTestingStudyResult(requestParameters: MeasurementApiGetDSPCreativeTestingStudyResultRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).getDSPCreativeTestingStudyResult(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.accept, requestParameters.studyId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gets one or more DSP OMNICHANNEL_METRICS studies with requested study identifiers or an advertiser identifier.  **Requires one of these permissions**: []
+     * @summary Gets one or more DSP OMNICHANNEL_METRICS studies with requested study identifiers or an advertiser identifier.
+     * @param {MeasurementApiGetDSPOmnichannelMetricsStudiesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public getDSPOmnichannelMetricsStudies(requestParameters: MeasurementApiGetDSPOmnichannelMetricsStudiesRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).getDSPOmnichannelMetricsStudies(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.studyIds, requestParameters.advertiserId, requestParameters.nextToken, requestParameters.maxResults, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5839,6 +9674,30 @@ export class MeasurementApi extends BaseAPI {
     }
 
     /**
+     * Search for brands to be used in the OMNICHANNEL_METRICS vendor product.  **Requires one of these permissions**: []
+     * @summary Search for brands to be used in the OMNICHANNEL_METRICS vendor product.
+     * @param {MeasurementApiOmnichannelMetricsBrandSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public omnichannelMetricsBrandSearch(requestParameters: MeasurementApiOmnichannelMetricsBrandSearchRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).omnichannelMetricsBrandSearch(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.nextToken, requestParameters.maxResults, requestParameters.omnichannelMetricsBrandSearchRequestV1M2, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Update DSP AUDIENCE_RESEARCH study. This will be a full update.  **Requires one of these permissions**: []
+     * @summary Update DSP AUDIENCE_RESEARCH study. This will be a full update.
+     * @param {MeasurementApiUpdateDSPAudienceResearchStudyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public updateDSPAudienceResearchStudy(requestParameters: MeasurementApiUpdateDSPAudienceResearchStudyRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).updateDSPAudienceResearchStudy(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.studyId, requestParameters.updateDSPAudienceResearchStudyV1M2, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Update DSP BRAND_LIFT studies. This will be a full update.  **Requires one of these permissions**: []
      * @summary Update DSP BRAND_LIFT studies. This will be a full update.
      * @param {MeasurementApiUpdateDSPBrandLiftStudiesRequest} requestParameters Request parameters.
@@ -5848,6 +9707,30 @@ export class MeasurementApi extends BaseAPI {
      */
     public updateDSPBrandLiftStudies(requestParameters: MeasurementApiUpdateDSPBrandLiftStudiesRequest, options?: any) {
         return MeasurementApiFp(this.configuration).updateDSPBrandLiftStudies(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.dSPBrandLiftStudyV1M1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Update DSP CREATIVE_TESTING study. This will be a full update.  **Requires one of these permissions**: []
+     * @summary Update DSP CREATIVE_TESTING study. This will be a full update.
+     * @param {MeasurementApiUpdateDSPCreativeTestingStudyRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public updateDSPCreativeTestingStudy(requestParameters: MeasurementApiUpdateDSPCreativeTestingStudyRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).updateDSPCreativeTestingStudy(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.studyId, requestParameters.updateDSPCreativeTestingStudyV1M2, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Update DSP OMNICHANNEL_METRICS studies. This will be a full update.  **Requires one of these permissions**: []
+     * @summary Update DSP OMNICHANNEL_METRICS studies. This will be a full update.
+     * @param {MeasurementApiUpdateDSPOmnichannelMetricsStudiesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public updateDSPOmnichannelMetricsStudies(requestParameters: MeasurementApiUpdateDSPOmnichannelMetricsStudiesRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).updateDSPOmnichannelMetricsStudies(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.dSPOmnichannelMetricsStudyV1M2, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

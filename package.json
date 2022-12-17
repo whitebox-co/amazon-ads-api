@@ -51,7 +51,7 @@
     "replace-unknown-types": "cross-env RUN_REPLACE_UNKNOWNS=true ts-node utils/replace-unknown-types",
     "semantic-release": "semantic-release",
     "test": "jest --setupFiles dotenv/config",
-    "test:integration": "jest tests/integration/apis/clients/authorization-manager-account-client --setupFiles dotenv/config",
+    "test:integration": "jest tests/integration/ --setupFiles dotenv/config",
     "test:integration:watch": "jest tests/integration --setupFiles dotenv/config --watchAll",
     "test:unit": "jest tests/unit",
     "test:unit:watch": "jest tests/unit --watchAll",

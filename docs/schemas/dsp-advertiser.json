@@ -246,7 +246,7 @@
           {
             "name": "count",
             "in": "query",
-            "description": "Sets the number of advertisers to be returned in a single call.",
+            "description": "Sets the number of advertisers to be returned in a single call. Maximum of 100 advertisers per call.",
             "schema": {
               "type": "integer",
               "format": "int32",

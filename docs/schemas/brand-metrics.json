@@ -61,6 +61,16 @@
               }
             }
           },
+          "424": {
+            "description": "Dependency Failure - Please retry the request",
+            "content": {
+              "application/vnd.insightsBrandMetricsError.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/brandMetricsError"
+                }
+              }
+            }
+          },
           "429": {
             "description": "Too many requests. The request was rate-limited. Retry later.",
             "content": {
@@ -175,6 +185,16 @@
           },
           "422": {
             "description": "Unprocessable Entity - Request was understood, but contained invalid parameters",
+            "content": {
+              "application/vnd.insightsBrandMetricsError.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/brandMetricsError"
+                }
+              }
+            }
+          },
+          "424": {
+            "description": "Dependency Failure - Please retry the request",
             "content": {
               "application/vnd.insightsBrandMetricsError.v1+json": {
                 "schema": {

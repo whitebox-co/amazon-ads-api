@@ -3,7 +3,7 @@
   "info": {
     "version": "2.0",
     "title": "Amazon Ads API - Sponsored Products",
-    "description": "Use the Amazon Ads API for Sponsored Products for campaign, ad group, keyword, negative keyword, and product ad management operations. For more information about Sponsored Products, see the [Sponsored Products Support Center](https://advertising.amazon.com/help?entityId=ENTITY3CWETCZD9HEG2#GWGFKPEWVWG2CLUJ). For onboarding information, see the [account setup](setting-up/account-setup) topic.<br/><br/> ",
+    "description": "Use the Amazon Ads API for Sponsored Products for campaign, ad group, keyword, negative keyword, and product ad management operations. For more information about Sponsored Products, see the [Sponsored Products Support Center](https://advertising.amazon.com/help?entityId=ENTITY3CWETCZD9HEG2#GWGFKPEWVWG2CLUJ). For onboarding information, see the [account setup](setting-up/account-setup) topic.<br/> <br/> **Note**: This contract contains endpoints with upcoming planned deprecations. For more information on the latest versions and migration details, see [Deprecations](info/deprecations).<br/> <br/>",
     "contact": {
       "name": "Amazon Ads API Support",
       "url": "https://amzn-clicks.atlassian.net/servicedesk/customer/portals"
@@ -14,9 +14,6 @@
     }
   },
   "servers": [
-    {
-      "url": "https://advertising-api-test.amazon.com"
-    },
     {
       "url": "https://advertising-api.amazon.com"
     },
@@ -77,7 +74,7 @@
           "Campaigns"
         ],
         "operationId": "createCampaigns",
-        "summary": "Creates one or more campaigns.",
+        "summary": "Creates one or more campaigns. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -125,7 +122,7 @@
           "Campaigns"
         ],
         "operationId": "updateCampaigns",
-        "summary": "Updates one or more campaigns.",
+        "summary": "Updates one or more campaigns. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -173,7 +170,7 @@
           "Campaigns"
         ],
         "operationId": "listCampaigns",
-        "summary": "Gets an array of campaigns.",
+        "summary": "Gets an array of campaigns. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -229,7 +226,7 @@
           "Campaigns"
         ],
         "operationId": "getCampaign",
-        "summary": "Gets a campaign specified by identifier.",
+        "summary": "Gets a campaign specified by identifier. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -271,7 +268,7 @@
           "Campaigns"
         ],
         "operationId": "archiveCampaign",
-        "summary": "Archives a campaign.",
+        "summary": "Archives a campaign. [PLANNED DEPRECATION 6/30/2023]",
         "description": "Sets the campaign status to `archived`. Archived entities cannot be made active again. See [developer notes](https://advertising.amazon.com/API/docs/en-us/get-started/developer-notes#Archiving) for more information.",
         "parameters": [
           {
@@ -316,7 +313,7 @@
           "Campaigns"
         ],
         "operationId": "listCampaignsEx",
-        "summary": "Gets an array of campaigns with extended data fields.",
+        "summary": "Gets an array of campaigns with extended data fields. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -372,7 +369,7 @@
           "Campaigns"
         ],
         "operationId": "getCampaignEx",
-        "summary": "Gets a campaign with extended data fields.",
+        "summary": "Gets a campaign with extended data fields. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -416,7 +413,7 @@
           "Ad groups"
         ],
         "operationId": "createAdGroups",
-        "summary": "Creates one or more ad groups.",
+        "summary": "Creates one or more ad groups. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -464,7 +461,7 @@
           "Ad groups"
         ],
         "operationId": "updateAdGroups",
-        "summary": "Updates one or more ad groups.",
+        "summary": "Updates one or more ad groups. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -512,7 +509,7 @@
           "Ad groups"
         ],
         "operationId": "getAdGroups",
-        "summary": "Gets one or more ad groups.",
+        "summary": "Gets one or more ad groups. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -565,7 +562,7 @@
           "Ad groups"
         ],
         "operationId": "getAdGroup",
-        "summary": "Gets an ad group specified by identifier.",
+        "summary": "Gets an ad group specified by identifier. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -607,7 +604,7 @@
           "Ad groups"
         ],
         "operationId": "archiveAdGroup",
-        "summary": "Archives an ad group.",
+        "summary": "Archives an ad group. [PLANNED DEPRECATION 6/30/2023]",
         "description": "Sets the ad group status to `archived`. Archived entities cannot be made active again. See developer notes for more information.",
         "parameters": [
           {
@@ -652,7 +649,7 @@
           "Ad groups"
         ],
         "operationId": "getAdGroupsEx",
-        "summary": "Gets ad groups that have extended data fields.",
+        "summary": "Gets ad groups that have extended data fields. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -705,7 +702,7 @@
           "Ad groups"
         ],
         "operationId": "getAdGroupEx",
-        "summary": "Gets an ad group that has extended data fields.",
+        "summary": "Gets an ad group that has extended data fields. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -749,7 +746,8 @@
           "Bid recommendations"
         ],
         "operationId": "getAdGroupBidRecommendations",
-        "summary": "Gets a bid recommendation for an ad group.",
+        "summary": "Gets a bid recommendation for an ad group. [PLANNED DEPRECATION 12/31/2022]",
+        "description": "**Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -800,7 +798,8 @@
           "Bid recommendations"
         ],
         "operationId": "getKeywordBidRecommendations",
-        "summary": "Gets a bid recommendation for a keyword.",
+        "summary": "Gets a bid recommendation for a keyword. [PLANNED DEPRECATION 12/31/2022]",
+        "description": "**Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -841,7 +840,8 @@
           "Bid recommendations"
         ],
         "operationId": "createKeywordBidRecommendations",
-        "summary": "Gets bid recommendations for keywords.",
+        "summary": "Gets bid recommendations for keywords. [PLANNED DEPRECATION 12/31/2022]",
+        "description": "**Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -886,7 +886,7 @@
           "Keywords"
         ],
         "operationId": "getKeyword",
-        "summary": "Gets a keyword specified by identifier.",
+        "summary": "Gets a keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -936,7 +936,7 @@
           "Keywords"
         ],
         "operationId": "archiveKeyword",
-        "summary": "Archives a keyword.",
+        "summary": "Archives a keyword. [PLANNED DEPRECATION 6/30/2023]",
         "description": "Set the status of the specified keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.",
         "parameters": [
           {
@@ -981,7 +981,7 @@
           "Keywords"
         ],
         "operationId": "getKeywordEx",
-        "summary": "Gets a keyword with extended data fields.",
+        "summary": "Gets a keyword with extended data fields. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1033,7 +1033,7 @@
           "Keywords"
         ],
         "operationId": "listKeywordsEx",
-        "summary": "Gets a list of keywords that have extended data fields.",
+        "summary": "Gets a list of keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1095,6 +1095,7 @@
           "Keywords"
         ],
         "operationId": "listKeywords",
+        "summary": "Gets one or more keywords. [PLANNED DEPRECATION 6/30/2023]",
         "description": "Gets a list of keywords.",
         "parameters": [
           {
@@ -1155,7 +1156,7 @@
           "Keywords"
         ],
         "operationId": "createKeywords",
-        "summary": "Creates one or more keywords.",
+        "summary": "Creates one or more keywords. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1203,7 +1204,7 @@
           "Keywords"
         ],
         "operationId": "updateKeywords",
-        "summary": "Updates one or more keywords.",
+        "summary": "Updates one or more keywords. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1253,7 +1254,7 @@
           "Negative keywords"
         ],
         "operationId": "getNegativeKeyword",
-        "summary": "Gets a negative keyword specified by identifier.",
+        "summary": "Gets a negative keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1295,7 +1296,7 @@
           "Negative keywords"
         ],
         "operationId": "archiveNegativeKeyword",
-        "summary": "Archives a negative keyword.",
+        "summary": "Archives a negative keyword. [PLANNED DEPRECATION 6/30/2023]",
         "description": "Set the status of the specified negative keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.",
         "parameters": [
           {
@@ -1340,7 +1341,7 @@
           "Negative keywords"
         ],
         "operationId": "getNegativeKeywordEx",
-        "summary": "Gets a negative keyword that has extended data fields.",
+        "summary": "Gets a negative keyword that has extended data fields. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1384,7 +1385,7 @@
           "Negative keywords"
         ],
         "operationId": "listNegativeKeywordsEx",
-        "summary": "Gets a list of negative keywords that have extended data fields.",
+        "summary": "Gets a list of negative keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1443,7 +1444,7 @@
           "Negative keywords"
         ],
         "operationId": "listNegativeKeywords",
-        "summary": "Gets a list of negative keyword objects.",
+        "summary": "Gets a list of negative keyword objects. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1500,7 +1501,7 @@
           "Negative keywords"
         ],
         "operationId": "createNegativeKeywords",
-        "summary": "Creates one or more negative keywords.",
+        "summary": "Creates one or more negative keywords. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1548,7 +1549,7 @@
           "Negative keywords"
         ],
         "operationId": "updateNegativeKeywords",
-        "summary": "Updates one or more negative keywords.",
+        "summary": "Updates one or more negative keywords. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1598,7 +1599,7 @@
           "Campaign negative keywords"
         ],
         "operationId": "getCampaignNegativeKeyword",
-        "summary": "Gets a campaign negative keyword specified by identifier.",
+        "summary": "Gets a campaign negative keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1640,7 +1641,7 @@
           "Campaign negative keywords"
         ],
         "operationId": "archiveCampaignNegativeKeyword",
-        "summary": "Archives a campaign negative keyword.",
+        "summary": "Archives a campaign negative keyword. [PLANNED DEPRECATION 6/30/2023]",
         "description": "Set the status of the specified campaign negative keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.",
         "parameters": [
           {
@@ -1685,7 +1686,7 @@
           "Campaign negative keywords"
         ],
         "operationId": "getCampaignNegativeKeywordEx",
-        "summary": "Gets a campaign negative keyword that has extended data fields.",
+        "summary": "Gets a campaign negative keyword that has extended data fields. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1729,7 +1730,7 @@
           "Campaign negative keywords"
         ],
         "operationId": "listCampaignNegativeKeywordsEx",
-        "summary": "Gets a list of campaign negative keywords that have extended data fields.",
+        "summary": "Gets a list of campaign negative keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1782,7 +1783,7 @@
           "Campaign negative keywords"
         ],
         "operationId": "listCampaignNegativeKeywords",
-        "summary": "Gets a list of campaign negative keywords.",
+        "summary": "Gets a list of campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1833,7 +1834,7 @@
           "Campaign negative keywords"
         ],
         "operationId": "createCampaignNegativeKeywords",
-        "summary": "Creates one or more campaign negative keywords.",
+        "summary": "Creates one or more campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1881,7 +1882,7 @@
           "Campaign negative keywords"
         ],
         "operationId": "updateCampaignNegativeKeywords",
-        "summary": "Updates one or more campaign negative keywords.",
+        "summary": "Updates one or more campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2138,7 +2139,7 @@
           "Product ads"
         ],
         "operationId": "getProductAd",
-        "summary": "Gets a product ad specified by identifier.",
+        "summary": "Gets a product ad specified by identifier. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2174,7 +2175,7 @@
           "Product ads"
         ],
         "operationId": "archiveProductAd",
-        "summary": "Archives a product ad.",
+        "summary": "Archives a product ad. [PLANNED DEPRECATION 6/30/2023]",
         "description": "Sets the state of a specified product ad to `archived`. Note that once the state is set to `archived` it cannot be changed.",
         "parameters": [
           {
@@ -2213,7 +2214,7 @@
           "Product ads"
         ],
         "operationId": "listProductAds",
-        "summary": "Gets a list of product ads filtered by specified criteria.",
+        "summary": "Gets a list of product ads filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2264,7 +2265,7 @@
           "Product ads"
         ],
         "operationId": "CreateProductAds",
-        "summary": "Creates one or more product ads.",
+        "summary": "Creates one or more product ads. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2295,7 +2296,7 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "description": "The list of product ads in the same order as the request.",
+                  "description": "The list of product ads. Note these may not be the same order as the request.",
                   "items": {
                     "$ref": "#/components/schemas/ProductAdResponse"
                   }
@@ -2313,7 +2314,7 @@
           "Product ads"
         ],
         "operationId": "updateProductAds",
-        "summary": "Updates one or more product ads specified by identifier.",
+        "summary": "Updates one or more product ads specified by identifier. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2363,7 +2364,7 @@
           "Product ads"
         ],
         "operationId": "getProductAdEx",
-        "summary": "Gets extended data for a product ad specified by identifier.",
+        "summary": "Gets extended data for a product ad specified by identifier. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2401,7 +2402,7 @@
           "Product ads"
         ],
         "operationId": "listProductAdsEx",
-        "summary": "Gets extended data for a list of product ads filtered by specified criteria.",
+        "summary": "Gets extended data for a list of product ads filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2537,7 +2538,7 @@
           "Product targeting"
         ],
         "operationId": "createTargetingClauses",
-        "summary": "Creates one or more targeting expressions.",
+        "summary": "Creates one or more targeting expressions. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2583,7 +2584,7 @@
           "Product targeting"
         ],
         "operationId": "updateTargetingClause",
-        "summary": "Updates one or more targeting clauses.",
+        "summary": "Updates one or more targeting clauses. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2632,7 +2633,7 @@
           "Product targeting"
         ],
         "operationId": "listTargetingClauses",
-        "summary": "Gets a list of targeting clauses filtered by specified criteria.",
+        "summary": "Gets a list of targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2685,7 +2686,7 @@
           "Product targeting"
         ],
         "operationId": "getTargetingClause",
-        "summary": "Get a targeting clause specified by identifier.",
+        "summary": "Get a targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2718,7 +2719,7 @@
           "Product targeting"
         ],
         "operationId": "archiveTargetingClause",
-        "summary": "Archives a targeting clause.",
+        "summary": "Archives a targeting clause. [PLANNED DEPRECATION 6/30/2023]",
         "description": "Set the `status` of a targeting clause to `archived`. Note that once a targeting clause `status` is set to `archived`, it cannot be changed.",
         "parameters": [
           {
@@ -2757,7 +2758,7 @@
           "Product targeting"
         ],
         "operationId": "listTargetingClausesEx",
-        "summary": "Gets a list of targeting clauses filtered by specified criteria.",
+        "summary": "Gets a list of targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2810,7 +2811,7 @@
           "Product targeting"
         ],
         "operationId": "getTargetingClauseEx",
-        "summary": "Get a targeting clause specified by identifier.",
+        "summary": "Get a targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2845,7 +2846,8 @@
           "Product targeting"
         ],
         "operationId": "createTargetRecommendations",
-        "summary": "Gets a list of recommended products for targeting.",
+        "summary": "Gets a list of recommended products for targeting. [PLANNED DEPRECATION 2/28/2023]",
+        "description": "**Deprecation notice: This endpoint will be deprecated on February 28, 2023. Use [version 3 targeting recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/Product%20Recommendation%20Service/getProductRecommendations) going forward.**",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2898,61 +2900,13 @@
         }
       }
     },
-    "/v2/sp/targets/brands": {
-      "get": {
-        "tags": [
-          "Product targeting"
-        ],
-        "operationId": "getBrandRecommendations",
-        "summary": "Get recommended brands for Sponsored Products.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/clientHeader"
-          },
-          {
-            "$ref": "#/components/parameters/profileHeader"
-          },
-          {
-            "name": "keyword",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "description": "A keyword for which to get recommended brands."
-          },
-          {
-            "name": "categoryId",
-            "in": "query",
-            "schema": {
-              "type": "number"
-            },
-            "description": "Gets the top 50 brands for the specified category identifier."
-          }
-        ],
-        "responses": {
-          "207": {
-            "description": "Multi-status.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BrandResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/Unauthorized"
-          }
-        }
-      }
-    },
     "/v2/sp/negativeTargets": {
       "post": {
         "tags": [
           "Negative product targeting"
         ],
         "operationId": "createNegativeTargetingClauses",
-        "summary": "Creates one ore more negative targeting expressions.",
+        "summary": "Creates one ore more negative targeting expressions. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2998,7 +2952,7 @@
           "Negative product targeting"
         ],
         "operationId": "updateNegativeTargetingClause",
-        "summary": "Updates one or more negative targeting clauses.",
+        "summary": "Updates one or more negative targeting clauses. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -3044,7 +2998,7 @@
           "Negative product targeting"
         ],
         "operationId": "listNegativeTargetingClauses",
-        "summary": "Gets a list of negative targeting clauses filtered by specified criteria.",
+        "summary": "Gets a list of negative targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -3097,7 +3051,7 @@
           "Negative product targeting"
         ],
         "operationId": "getNegativeTargetingClause",
-        "summary": "Get a negative targeting clause specified by identifier.",
+        "summary": "Get a negative targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -3130,7 +3084,7 @@
           "Negative product targeting"
         ],
         "operationId": "archiveNegativeTargetingClause",
-        "summary": "Archives a negative targeting clause.",
+        "summary": "Archives a negative targeting clause. [PLANNED DEPRECATION 6/30/2023]",
         "description": "Set the `status` of a negative targeting clause to `archived`. Note that once a negative targeting clause `status` is set to `archived`, it cannot be changed.",
         "parameters": [
           {
@@ -3166,7 +3120,7 @@
           "Negative product targeting"
         ],
         "operationId": "listNegativeTargetingClausesEx",
-        "summary": "Gets a list of negative targeting clauses filtered by specified criteria.",
+        "summary": "Gets a list of negative targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -3219,7 +3173,7 @@
           "Negative product targeting"
         ],
         "operationId": "getNegativeTargetingClauseEx",
-        "summary": "Get a negative targeting clause specified by identifier.",
+        "summary": "Get a negative targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -3254,8 +3208,8 @@
           "Reports"
         ],
         "operationId": "requestReport",
-        "summary": "Requests a Sponsored Products report.",
-        "description": "Requests the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`. \n\n**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**\n\n**Note**: `asins` reports currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.",
+        "summary": "Requests a Sponsored Products report. [PLANNED DEPRECATION 3/30/2023]",
+        "description": "**Deprecation notice: This endpoint will be deprecated on March 30, 2023. Use the [version 3 reporting endpoints](/API/docs/en-us/offline-report-prod-3p) going forward.**\n\nRequests the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`. \n\n**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**\n\n**Note**: `asins` reports currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -3338,7 +3292,7 @@
         ],
         "operationId": "getReport",
         "summary": "Gets a previously requested report specified by identifier.",
-        "description": "To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).",
+        "description": "To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -3396,7 +3350,7 @@
           "Reports"
         ],
         "summary": "Downloads a previously requested report identified by report ID.",
-        "description": "Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created. \n\nThe report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.\n\n**Note**: The report files in S3 are gzipped.\n\n*Example report download*\n\n```\n$ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\"\n```\n\n**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**",
+        "description": "Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created. \n\nThe report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.\n\n**Note**: The report files in S3 are gzipped.\n\n*Example report download*\n\n```\n$ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\"\n```\n\n**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**",
         "operationId": "downloadReport",
         "parameters": [
           {
@@ -3726,7 +3680,7 @@
       "count": {
         "name": "count",
         "in": "query",
-        "description": "Number of records to include in the paged response. Defaults to max page size.",
+        "description": "Number of records to include in the paged response. Defaults to max page size of 5000.",
         "required": false,
         "schema": {
           "type": "number"
@@ -4667,7 +4621,7 @@
             "type": "number"
           },
           "code": {
-            "description": "An enumerated success or error code for machine use.",
+            "description": "An enumerated `SUCCESS` or `ERROR` code for machine use.",
             "type": "string"
           },
           "description": {
@@ -4718,8 +4672,8 @@
         "description": "The type of expression.",
         "type": "string",
         "enum": [
-          "auto",
-          "manual"
+          "manual",
+          "auto"
         ]
       },
       "GetAsinSuggestedKeywordsResponse": {
@@ -4932,10 +4886,10 @@
                 "matchType": {
                   "$ref": "#/components/schemas/MatchType"
                 }
-              },
-              "minItems": 0,
-              "maxItems": 5000
-            }
+              }
+            },
+            "minItems": 0,
+            "maxItems": 5000
           }
         }
       },
@@ -5143,7 +5097,7 @@
             "description": "The negative targeting expression.",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TargetingExpressionPredicate"
+              "$ref": "#/components/schemas/NegativeTargetingExpressionPredicate"
             }
           },
           "expressionType": {
@@ -5164,7 +5118,7 @@
             "description": "The targeting expression.",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TargetingExpressionPredicate"
+              "$ref": "#/components/schemas/NegativeTargetingExpressionPredicate"
             }
           },
           "expressionType": {
@@ -5193,18 +5147,11 @@
             "description": "The negative targeting expression.",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TargetingExpressionPredicate"
-            }
-          },
-          "resolvedExpression": {
-            "description": "The resolved targeting expression.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TargetingExpressionPredicate"
+              "$ref": "#/components/schemas/NegativeTargetingExpressionPredicate"
             }
           },
           "expressionType": {
-            "$ref": "#/components/schemas/ExpressionType"
+            "$ref": "#/components/schemas/NegativeExpressionType"
           }
         }
       },
@@ -5229,18 +5176,11 @@
             "description": "The negative targeting expression.",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TargetingExpressionPredicate"
-            }
-          },
-          "resolvedExpression": {
-            "description": "The resolved targeting expression.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TargetingExpressionPredicate"
+              "$ref": "#/components/schemas/NegativeTargetingExpressionPredicate"
             }
           },
           "expressionType": {
-            "$ref": "#/components/schemas/ExpressionType"
+            "$ref": "#/components/schemas/NegativeExpressionType"
           },
           "creationDate": {
             "description": "The epoch time that the negative targeting clause was created.",
@@ -5454,7 +5394,7 @@
         }
       },
       "ReportMetrics": {
-        "description": "A comma-separated list of the metrics to be included in the report. \nEach report type supports different metrics. To understand supported metrics for each report type, see [Report types](/API/docs/en-us/concepts/reporting/report-types).",
+        "description": "A comma-separated list of the metrics to be included in the report. \nEach report type supports different metrics. To understand supported metrics for each report type, see [Report types](/API/docs/en-us/reporting/v2/report-types).",
         "type": "string"
       },
       "Report": {
@@ -5611,6 +5551,29 @@
           }
         }
       },
+      "NegativeExpressionType": {
+        "description": "The type of expression.",
+        "type": "string",
+        "enum": [
+          "manual"
+        ]
+      },
+      "NegativeTargetingExpressionPredicate": {
+        "properties": {
+          "value": {
+            "description": "The expression value",
+            "type": "string"
+          },
+          "type": {
+            "description": "The targeting type",
+            "type": "string",
+            "enum": [
+              "asinBrandSameAs",
+              "asinSameAs"
+            ]
+          }
+        }
+      },
       "TargetingExpressionPredicate": {
         "properties": {
           "value": {
@@ -5618,12 +5581,9 @@
             "type": "string"
           },
           "type": {
-            "description": "The type of targeting expression. You can specify values for the following predicates:\n| Predicate | Description |\n| --- | --- |\n| `queryBroadMatches` | \n| `asinCategorySameAs` | Negatively Target the same category as the category expressed. |\n| `asinBrandSameAs` | Target the brand that is the same as the brand expressed. |\n| `asinPriceLessThan` | Target a price that is less than the price expressed. |\n| `asinPriceBetween` | Target a price that is between the prices expressed. |\n| `asinPriceGreaterThan` | Target a price that is greater than the price expressed. |\n| `asinReviewRatingLessThan` | Target a review rating less than the review rating that is expressed. |\n| `asinReviewRatingBetween` | Target a review rating that is between the review ratings expressed. |\n| `asinReviewRatingGreaterThan` | Target a review rating that is greater than the review rating expressed. |\n| `asinSameAs` | Target an ASIN that is the same as the ASIN expressed. |\n| `asinIsPrimeShippingEligible` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. |\n| `asinAgeRangeSameAs` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. |\n| `asinGenreSameAs` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   |",
+            "description": "The type of targeting expression. You can specify values for the following predicates:\n| Predicate | Description |\n| --- | --- |\n| `asinCategorySameAs` | Negatively Target the same category as the category expressed. |\n| `asinBrandSameAs` | Target the brand that is the same as the brand expressed. |\n| `asinPriceLessThan` | Target a price that is less than the price expressed. |\n| `asinPriceBetween` | Target a price that is between the prices expressed. |\n| `asinPriceGreaterThan` | Target a price that is greater than the price expressed. |\n| `asinReviewRatingLessThan` | Target a review rating less than the review rating that is expressed. |\n| `asinReviewRatingBetween` | Target a review rating that is between the review ratings expressed. |\n| `asinReviewRatingGreaterThan` | Target a review rating that is greater than the review rating expressed. |\n| `asinSameAs` | Target an ASIN that is the same as the ASIN expressed. |\n| `asinIsPrimeShippingEligible` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. |\n| `asinAgeRangeSameAs` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. |\n| `asinGenreSameAs` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   |\n| `asinExpandedFrom` | Target a single product along with others closely related to it, including substitutes and complements.   |",
             "type": "string",
             "enum": [
-              "queryBroadMatches",
-              "queryPhraseMatches",
-              "queryExactMatches",
               "asinCategorySameAs",
               "asinBrandSameAs",
               "asinPriceLessThan",
@@ -5639,7 +5599,8 @@
               "asinAccessoryRelated",
               "asinAgeRangeSameAs",
               "asinGenreSameAs",
-              "asinIsPrimeShippingEligible"
+              "asinIsPrimeShippingEligible",
+              "asinExpandedFrom"
             ]
           }
         }

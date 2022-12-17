@@ -59,6 +59,7 @@ describe('CommonCreativeAssetsClient', () => {
 				amazonAdvertisingAPIClientId: env.AMAZON_ADS_CLIENT_ID,
 				inlineObject: creative,
 			});
+
 			expect(result.data).toBeDefined();
 		});
 	});

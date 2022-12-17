@@ -26,8 +26,7 @@ describe('CommonPortfoliosClient', () => {
 		const portfolioNames = response.data.map((portfolio) => {
 			return portfolio.name;
 		});
-		// console.log(portfolioNames);
 
-		expect(portfolioNames).toEqual({});
+		expect(portfolioNames.length).toBeGreaterThanOrEqual(0);
 	}, 10000);
 });

@@ -101,6 +101,15 @@
           },
           {
             "schema": {
+              "default": "false",
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "canTarget",
+            "description": "When set to true, only targetable audience segments will be returned."
+          },
+          {
+            "schema": {
               "type": "string"
             },
             "in": "query",
@@ -109,7 +118,7 @@
           },
           {
             "schema": {
-              "default": 10,
+              "default": "10",
               "maximum": 250,
               "type": "integer",
               "minimum": 1
@@ -228,7 +237,7 @@
           },
           {
             "schema": {
-              "default": 250,
+              "default": "250",
               "maximum": 250,
               "type": "integer",
               "minimum": 1
@@ -282,21 +291,6 @@
           }
         }
       },
-      "AudienceFilterV1": {
-        "type": "object",
-        "properties": {
-          "field": {
-            "description": "Field to filter by. Supported enums are 'audienceName', 'category', 'categoryPath' and 'audienceId'. The 'category' enum returns all audiences under a high-level category, whereas the 'categoryPath' enum expects a path of nodes in the taxonomy tree and returns audiences attached directly to the node at the specified path.",
-            "type": "string"
-          },
-          "values": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
       "FetchTaxonomyRequestBodyV1": {
         "description": "The response data will have the categories that are under the given path, and main categories will be returned if no path is specified. The response data also depends on the adType specified here since ad programs may support targeting audiences in certain categories.",
         "type": "object",
@@ -309,6 +303,21 @@
             ]
           },
           "categoryPath": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "AudienceFilterV1": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "description": "Field to filter by. Supported enums are 'audienceName', 'category', 'categoryPath' and 'audienceId'. The 'category' enum returns all audiences under a high-level category, whereas the 'categoryPath' enum expects a path of nodes in the taxonomy tree and returns audiences attached directly to the node at the specified path.",
+            "type": "string"
+          },
+          "values": {
             "type": "array",
             "items": {
               "type": "string"
@@ -393,6 +402,10 @@
             "description": "Audience name",
             "type": "string"
           },
+          "subCategory": {
+            "description": "Audience segment sub-category",
+            "type": "string"
+          },
           "updateDate": {
             "format": "date-time",
             "type": "string"
@@ -452,6 +465,16 @@
           }
         }
       },
+      "AudienceV1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AudienceCommonFieldsV1"
+          },
+          {
+            "type": "object"
+          }
+        ]
+      },
       "AudienceErrorV1": {
         "description": "The error response object.",
         "type": "object",
@@ -471,16 +494,6 @@
             }
           }
         }
-      },
-      "AudienceV1": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AudienceCommonFieldsV1"
-          },
-          {
-            "type": "object"
-          }
-        ]
       },
       "AudienceSubErrorV1": {
         "description": "The sub error object.",

@@ -18,7 +18,7 @@
           },
           "required": true
         },
-        "description": "Gets a list of advertising eligibility objects for a set of products. Requests are permitted only for products sold by the merchant associated with the profile. Note that the request object is a list of ASINs, but multiple SKUs are returned if there is more than one SKU associated with an ASIN. If a product is not eligible for advertising, the response includes an object describing the reasons for ineligibility.",
+        "description": "Gets a list of advertising eligibility objects for a set of products. Requests are permitted only for products sold by the merchant associated with the profile. Note that the request object is a list of ASINs, but multiple SKUs are returned if there is more than one SKU associated with an ASIN. If a product is not eligible for advertising, the response includes an object describing the reasons for ineligibility.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
         "operationId": "productEligibility",
         "responses": {
           "200": {
@@ -126,54 +126,212 @@
           "Product Eligibility"
         ]
       }
+    },
+    "/eligibility/programs": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProgramEligibilityRequestContent"
+              }
+            }
+          }
+        },
+        "description": "Checks the advertiser's eligibility to ad programs.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "operationId": "ProgramEligibility",
+        "responses": {
+          "200": {
+            "description": "ProgramEligibility 200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProgramEligibilityResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "BadRequestException 400 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestExceptionResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "UnauthorizedException 401 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedExceptionResponseContent"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFoundException 404 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundExceptionResponseContent"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "RateExceededException 429 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateExceededExceptionResponseContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "InternalServerErrorException 500 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorExceptionResponseContent"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/components/schemas/AcceptLanguage"
+            },
+            "in": "header",
+            "name": "Accept-Language",
+            "description": "Specify the language in which the response is returned."
+          },
+          {
+            "schema": {
+              "pattern": "\\S*",
+              "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+              "type": "string",
+              "maxLength": 120
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
+            "required": true
+          },
+          {
+            "schema": {
+              "pattern": "\\S*",
+              "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id `profileId` from the response to pass it as input.",
+              "type": "string",
+              "maxLength": 120
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id `profileId` from the response to pass it as input.",
+            "required": true
+          },
+          {
+            "schema": {
+              "pattern": "\\S*",
+              "description": "Advertiser ID populated from the federated gateway authorizer context",
+              "type": "string",
+              "maxLength": 120
+            },
+            "in": "header",
+            "name": "advertiserId",
+            "description": "Advertiser ID populated from the federated gateway authorizer context",
+            "required": true
+          },
+          {
+            "schema": {
+              "pattern": "\\S*",
+              "description": "Entity ID populated from the federated gateway authorizer context",
+              "type": "string",
+              "maxLength": 120
+            },
+            "in": "header",
+            "name": "entityId",
+            "description": "Entity ID populated from the federated gateway authorizer context"
+          },
+          {
+            "schema": {
+              "pattern": "\\S*",
+              "description": "Entity type (seller, vendor, author, etc) populated from the federated gateway authorizer context. Note, must be a Seller Central Entity.",
+              "type": "string",
+              "maxLength": 120
+            },
+            "in": "header",
+            "name": "entityType",
+            "description": "Entity type (seller, vendor, author, etc) populated from the federated gateway authorizer context. Note, must be a Seller Central Entity."
+          },
+          {
+            "schema": {
+              "pattern": "\\S*",
+              "description": "Marketplace ID populated from the federated gateway authorizer context",
+              "type": "string",
+              "maxLength": 120
+            },
+            "in": "header",
+            "name": "marketplaceId",
+            "description": "Marketplace ID populated from the federated gateway authorizer context"
+          },
+          {
+            "schema": {
+              "pattern": "\\S*",
+              "description": "Obfuscated Marketplace ID populated from the federated gateway authorizer context, this is included in case marketplace ID is not included",
+              "type": "string",
+              "maxLength": 120
+            },
+            "in": "header",
+            "name": "obfuscatedMarketplaceId",
+            "description": "Obfuscated Marketplace ID populated from the federated gateway authorizer context, this is included in case marketplace ID is not included"
+          }
+        ],
+        "tags": [
+          "Program Eligibility"
+        ]
+      }
     }
   },
   "components": {
     "headers": {},
     "examples": {},
     "schemas": {
-      "ProductEligibilityRequest": {
-        "description": "A product advertising eligibility request object.",
-        "type": "object",
-        "required": [
-          "productDetailsList"
-        ],
-        "properties": {
-          "adType": {
-            "default": "sp",
-            "description": "Set to 'sp' to check product eligibility for Sponsored Products advertisements. Set to 'sb' to check product eligibility for Sponsored Brands advertisements.",
-            "type": "string",
-            "enum": [
-              "sp",
-              "sb"
-            ]
-          },
-          "productDetailsList": {
-            "minItems": 1,
-            "maxItems": 30,
-            "description": "A list of product identifier objects.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ProductDetails"
-            }
-          },
-          "locale": {
-            "description": "Set to the locale string in the table below to specify the language in which the response is returned.\n|Locale|Language (ISO 639)|Country (ISO 3166)|\n|------|------------------|------------------|\n|ar-AE|Arabic (ar)|United Arab Emirates (AE)|\n|zh-CN|Chinese (zh)|China (CN)|\n|nl-NL|Dutch (nl)|Netherlands (NL)|\n|en-AU|English (en)|Australia (AU)|\n|en-CA|English (en)|Canada (CA)|\n|en-IN|English (en)|India (IN)|\n|en-GB|English (en)|United Kingdom (GB)|\n|en-US|English (en)|United States (US)|\n|fr-CA|French (fr)|Canada (CA)|\n|fr-FR|French (fr)|France (FR)|\n|de-DE|German (de)|Germany (DE)|\n|it-IT|Italian (it)|Italy (IT)|\n|ja-JP|Japanese (ja)|Japan (JP)|\n|ko-KR|Korean (ko)|South Korea (KR)|\n|pt-BR|Portuguese (pt)|Brazil (BR)|\n|es-ES|Spanish (es)|Spain (ES)|\n|es-US|Spanish (es)|United States (US)|\n|es-MX|Spanish (es)|Mexico (MX)|\n|tr-TR|Turkish (tr)|Turkey (TR)|\n",
-            "type": "string"
-          }
-        }
-      },
-      "ProductEligibilityError": {
-        "description": "The error response object.",
+      "UnauthorizedExceptionResponseContent": {
         "type": "object",
         "properties": {
           "code": {
-            "description": "The HTTP status code of the response.",
-            "type": "string"
+            "description": "Programmatic status code.",
+            "type": "number"
           },
           "details": {
             "description": "A human-readable description of the response.",
             "type": "string"
+          }
+        }
+      },
+      "EligibilityStatusDetail": {
+        "description": "Describes a single program's eligibility status",
+        "type": "object",
+        "properties": {
+          "reasons": {
+            "minItems": 1,
+            "maxItems": 99,
+            "uniqueItems": true,
+            "description": "String identifier for the status.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReasonItem"
+            }
+          },
+          "eligible": {
+            "description": "Boolean value where if true, advertiser is eligible to access the given program.",
+            "type": "boolean"
           }
         }
       },
@@ -190,49 +348,45 @@
           }
         }
       },
-      "ProductDetails": {
-        "description": "An Amazon product identifier, seller product identifer, or both.",
+      "ProgramEligibilityResponseContent": {
+        "description": "An object of program eligibility responses for an advertiser.",
         "type": "object",
-        "required": [
-          "asin"
-        ],
         "properties": {
-          "asin": {
-            "description": "An Amazon product identifier.",
-            "type": "string"
-          },
-          "sku": {
-            "description": "A seller product identifier.",
-            "type": "string"
+          "eligibilityStatusMap": {
+            "$ref": "#/components/schemas/EligibilityStatusMap"
           }
         }
       },
-      "ProductResponse": {
-        "description": "An product advertising eligibility response.",
-        "type": "object",
-        "required": [
-          "eligibilityStatusList",
-          "overallStatus",
-          "productDetails"
-        ],
-        "properties": {
-          "productDetails": {
-            "$ref": "#/components/schemas/ProductDetails"
-          },
-          "eligibilityStatusList": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/EligibilityStatus"
-            }
-          },
-          "overallStatus": {
-            "description": "A human-readable description of the product's advertising eligibility status. Inherits highest severity from eligibilityStatusList.",
-            "type": "string",
-            "enum": [
-              "ELIGIBLE",
-              "INELIGIBLE",
-              "ELIGIBLE_WITH_WARNING"
+      "Check": {
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "skipAllBillingChecks",
+            "properties": {
+              "skipAllBillingChecks": {
+                "description": "Skip all billing/payments/suspension related checks",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "skipAllBillingChecks"
             ]
+          }
+        ],
+        "description": "A union of all the checks that we would want to skip"
+      },
+      "ReasonItem": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/ReasonCode"
+          },
+          "level": {
+            "$ref": "#/components/schemas/IneligibleLevel"
+          },
+          "description": {
+            "description": "Message explaining what the status means. Example: Payment preference not found for associated billing account. Please add a new payment method",
+            "type": "string"
           }
         }
       },
@@ -275,6 +429,222 @@
             "type": "string"
           }
         }
+      },
+      "ReasonCode": {
+        "type": "string",
+        "enum": [
+          "BILLING_ACCOUNT_NOT_FOUND",
+          "PAYMENT_PROFILE_NOT_FOUND",
+          "PAYMENT_METHOD_NOT_FOUND",
+          "PAYMENT_METHOD_NOT_VALID",
+          "EXPIRED_PAYMENT_METHOD",
+          "VETTING_FAILURE",
+          "ACCOUNT_SUSPENDED",
+          "TAX_INFO_NOT_COMPLETE",
+          "PREPAY_BALANCE_TOO_LOW",
+          "RO_BALANCE_TOO_LOW",
+          "NO_BRAND_RELATIONS",
+          "NOT_BRAND_REPRESENTATIVE",
+          "NO_TACTIC_ENABLED",
+          "DIRECT_TO_CONSUMER_OWNER_TAG_ID_NOT_FOUND",
+          "DIRECT_TO_CONSUMER_SUBSCRIPTION_NOT_FOUND",
+          "ADVERTISING_ACCOUNT_NOT_FOUND",
+          "NOT_LAUNCHED_IN_MARKETPLACE",
+          "UNKNOWN",
+          "BLOCKED"
+        ]
+      },
+      "ProgramEligibilityRequestContent": {
+        "description": "A request to evaluate account level eligibility for Amazon ad programs (Sponsored Products, Sponsored Brands, Sponsored Display, Stores, etc).",
+        "type": "object",
+        "properties": {
+          "skipChecks": {
+            "$ref": "#/components/schemas/Check"
+          }
+        }
+      },
+      "BadRequestExceptionResponseContent": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Programmatic status code.",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "IneligibleLevel": {
+        "type": "string",
+        "enum": [
+          "INELIGIBLE_WITH_RESOLUTION",
+          "INELIGIBLE"
+        ]
+      },
+      "NotFoundExceptionResponseContent": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Programmatic status code.",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "RateExceededExceptionResponseContent": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Programmatic status code.",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "ProductEligibilityRequest": {
+        "description": "A product advertising eligibility request object.",
+        "type": "object",
+        "required": [
+          "productDetailsList"
+        ],
+        "properties": {
+          "adType": {
+            "default": "sp",
+            "description": "Set to 'sp' to check product eligibility for Sponsored Products advertisements. Set to 'sb' to check product eligibility for Sponsored Brands advertisements. Set to 'sd' to check product eligibility for Sponsored Display advertisements.",
+            "type": "string",
+            "enum": [
+              "sp",
+              "sb",
+              "sd"
+            ]
+          },
+          "productDetailsList": {
+            "minItems": 1,
+            "maxItems": 30,
+            "description": "A list of product identifier objects.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductDetails"
+            }
+          },
+          "locale": {
+            "description": "Set to the locale string in the table below to specify the language in which the response is returned.\n|Locale|Language (ISO 639)|Country (ISO 3166)|\n|------|------------------|------------------|\n|ar-AE|Arabic (ar)|United Arab Emirates (AE)|\n|zh-CN|Chinese (zh)|China (CN)|\n|nl-NL|Dutch (nl)|Netherlands (NL)|\n|en-AU|English (en)|Australia (AU)|\n|en-CA|English (en)|Canada (CA)|\n|en-IN|English (en)|India (IN)|\n|en-GB|English (en)|United Kingdom (GB)|\n|en-US|English (en)|United States (US)|\n|fr-CA|French (fr)|Canada (CA)|\n|fr-FR|French (fr)|France (FR)|\n|de-DE|German (de)|Germany (DE)|\n|it-IT|Italian (it)|Italy (IT)|\n|ja-JP|Japanese (ja)|Japan (JP)|\n|ko-KR|Korean (ko)|South Korea (KR)|\n|pt-BR|Portuguese (pt)|Brazil (BR)|\n|es-ES|Spanish (es)|Spain (ES)|\n|es-US|Spanish (es)|United States (US)|\n|es-MX|Spanish (es)|Mexico (MX)|\n|tr-TR|Turkish (tr)|Turkey (TR)|\n",
+            "type": "string"
+          }
+        }
+      },
+      "ProductEligibilityError": {
+        "description": "The error response object.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "The HTTP status code of the response.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "ProductDetails": {
+        "description": "An Amazon product identifier, seller product identifer, or both.",
+        "type": "object",
+        "required": [
+          "asin"
+        ],
+        "properties": {
+          "asin": {
+            "description": "An Amazon product identifier.",
+            "type": "string"
+          },
+          "sku": {
+            "description": "A seller product identifier.",
+            "type": "string"
+          }
+        }
+      },
+      "AcceptLanguage": {
+        "type": "string",
+        "enum": [
+          "en-US",
+          "ar-AE",
+          "zh-CN",
+          "nl-NL",
+          "en-AU",
+          "en-CA",
+          "en-IN",
+          "en-GB",
+          "fr-CA",
+          "fr-FR",
+          "de-DE",
+          "it-IT",
+          "ja-JP",
+          "ko-KR",
+          "pl-PL",
+          "pt-BR",
+          "es-ES",
+          "es-US",
+          "es-MX",
+          "tr-TR"
+        ]
+      },
+      "InternalServerErrorExceptionResponseContent": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Programmatic status code.",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "ProductResponse": {
+        "description": "An product advertising eligibility response.",
+        "type": "object",
+        "required": [
+          "eligibilityStatusList",
+          "overallStatus",
+          "productDetails"
+        ],
+        "properties": {
+          "productDetails": {
+            "$ref": "#/components/schemas/ProductDetails"
+          },
+          "eligibilityStatusList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EligibilityStatus"
+            }
+          },
+          "overallStatus": {
+            "description": "A human-readable description of the product's advertising eligibility status. Inherits highest severity from eligibilityStatusList.",
+            "type": "string",
+            "enum": [
+              "ELIGIBLE",
+              "INELIGIBLE",
+              "ELIGIBLE_WITH_WARNING"
+            ]
+          }
+        }
+      },
+      "EligibilityStatusMap": {
+        "description": "This is a map that will be key'd on the ad program (SB/SD); the value will be an eligibility object.",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/EligibilityStatusDetail"
+        },
+        "type": "object"
       }
     },
     "requestBodies": {},

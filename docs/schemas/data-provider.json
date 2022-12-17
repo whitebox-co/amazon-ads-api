@@ -39,9 +39,6 @@
             "$ref": "#/components/parameters/clientHeader"
           },
           {
-            "$ref": "#/components/parameters/hostHeader"
-          },
-          {
             "$ref": "#/components/parameters/contentTypeHeader"
           }
         ],
@@ -178,9 +175,6 @@
             "$ref": "#/components/parameters/clientHeader"
           },
           {
-            "$ref": "#/components/parameters/hostHeader"
-          },
-          {
             "$ref": "#/components/parameters/contentTypeHeader"
           },
           {
@@ -297,9 +291,6 @@
             "$ref": "#/components/parameters/clientHeader"
           },
           {
-            "$ref": "#/components/parameters/hostHeader"
-          },
-          {
             "$ref": "#/components/parameters/contentTypeHeader"
           },
           {
@@ -407,9 +398,6 @@
           },
           {
             "$ref": "#/components/parameters/clientHeader"
-          },
-          {
-            "$ref": "#/components/parameters/hostHeader"
           },
           {
             "$ref": "#/components/parameters/contentTypeHeader"
@@ -574,16 +562,6 @@
             },
             "description": "The client identifier.",
             "example": "amzn1.application-oa2-client.8baa9caa3eac48eab89780e73ce03b19",
-            "required": true
-          },
-          {
-            "in": "header",
-            "name": "Host",
-            "schema": {
-              "type": "string"
-            },
-            "description": "A valid Amazon Ads API endpoint. ",
-            "example": "advertising-api.amazon.com",
             "required": true
           },
           {
@@ -1094,16 +1072,6 @@
         },
         "description": "The `Content-Type` is application/json.",
         "example": "application/json",
-        "required": true
-      },
-      "hostHeader": {
-        "in": "header",
-        "name": "Host",
-        "schema": {
-          "type": "string"
-        },
-        "description": "The Amazon Ads API endpoint.",
-        "example": "advertising-api.amazon.com",
         "required": true
       }
     },

@@ -1163,6 +1163,68 @@ export enum DiscoveryLineItemTypes {
 /**
  * 
  * @export
+ * @interface DomainFileMetaData
+ */
+export interface DomainFileMetaData {
+    /**
+     * The S3 key of domain list file.
+     * @type {string}
+     * @memberof DomainFileMetaData
+     */
+    fileKey: string;
+    /**
+     * The domain list file name.
+     * @type {string}
+     * @memberof DomainFileMetaData
+     */
+    fileName: string;
+}
+/**
+ * 
+ * @export
+ * @interface DomainFileValidationResponse
+ */
+export interface DomainFileValidationResponse {
+    /**
+     * The uploaded file name.
+     * @type {string}
+     * @memberof DomainFileValidationResponse
+     */
+    fileName?: string;
+    /**
+     * Number of domains in the file that have been added to the line item.
+     * @type {number}
+     * @memberof DomainFileValidationResponse
+     */
+    addedDomainSize?: number;
+    /**
+     * Number of invalid domains in the file. They are not added to the line item.
+     * @type {number}
+     * @memberof DomainFileValidationResponse
+     */
+    invalidDomainSize?: number;
+    /**
+     * Number of duplicate domains in the file. The unique ones of them are added to the line item.
+     * @type {number}
+     * @memberof DomainFileValidationResponse
+     */
+    duplicateDomainSize?: number;
+    /**
+     * The URL of invalid domains file. It expires in 1 hour.
+     * @type {string}
+     * @memberof DomainFileValidationResponse
+     */
+    invalidDomainsFileUrl?: string;
+    /**
+     * The URL of duplicate domains file. It expires in 1 hour.
+     * @type {string}
+     * @memberof DomainFileValidationResponse
+     */
+    duplicateDomainsFileUrl?: string;
+}
+/**
+ * 
+ * @export
  * @interface DomainList
  */
 export interface DomainList {
@@ -2091,7 +2153,7 @@ export interface DspCreateThirdPartyCreativeRequestV1 {
      * @type {DspSizeV1}
      * @memberof DspCreateThirdPartyCreativeRequestV1
      */
-    size?: DspSizeV1;
+    size: DspSizeV1;
     /**
      * The third party tag associated with creative.
      * @type {string}
@@ -2749,7 +2811,7 @@ export interface DspReadWriteThirdPartyCreativeAttributesV1 {
      * @type {DspSizeV1}
      * @memberof DspReadWriteThirdPartyCreativeAttributesV1
      */
-    size?: DspSizeV1;
+    size: DspSizeV1;
     /**
      * The third party tag associated with creative.
      * @type {string}
@@ -3236,7 +3298,7 @@ export interface DspThirdPartyCreativeV1 {
      * @type {DspSizeV1}
      * @memberof DspThirdPartyCreativeV1
      */
-    size?: DspSizeV1;
+    size: DspSizeV1;
     /**
      * The third party tag associated with creative.
      * @type {string}
@@ -3496,7 +3558,7 @@ export interface DspUpdateThirdPartyCreativeRequestV1 {
      * @type {DspSizeV1}
      * @memberof DspUpdateThirdPartyCreativeRequestV1
      */
-    size?: DspSizeV1;
+    size: DspSizeV1;
     /**
      * The third party tag associated with creative.
      * @type {string}
@@ -7387,6 +7449,50 @@ export interface ProductTrackingV21 {
     productFile?: string;
 }
 /**
+ * The read operation response.
+ * @export
+ * @interface ReadDomainTargetingResponse
+ */
+export interface ReadDomainTargetingResponse {
+    /**
+     * The line item identifier.
+     * @type {string}
+     * @memberof ReadDomainTargetingResponse
+     */
+    lineItemId?: string;
+    /**
+     * Set to `true` to enable domain inheritance from advertiser.
+     * @type {boolean}
+     * @memberof ReadDomainTargetingResponse
+     */
+    inheritFromAdvertiser?: boolean;
+    /**
+     * 
+     * @type {TargetingType}
+     * @memberof ReadDomainTargetingResponse
+     */
+    targetingType?: TargetingType;
+    /**
+     * The URL address of the domain file after merging all domains into single file, including inheritence from advertiser, domain lists, domain files, domains entered, if any.
+     * @type {string}
+     * @memberof ReadDomainTargetingResponse
+     */
+    domainListMergedFile?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ReadDomainTargetingResponses
+ */
+export interface ReadDomainTargetingResponses {
+    /**
+     * 
+     * @type {Array<ReadDomainTargetingResponse>}
+     * @memberof ReadDomainTargetingResponses
+     */
+    response?: Array<ReadDomainTargetingResponse>;
+}
+/**
  * The segment clause.
  * @export
  * @interface SegmentClause
@@ -8120,7 +8226,8 @@ export enum SupportedLineItemTypes {
  */
 
 export enum SupportedPolicyType {
-    Product = 'PRODUCT'
+    Product = 'PRODUCT',
+    Domain = 'DOMAIN'
 }
 
 /**
@@ -8150,6 +8257,17 @@ export enum SupportedProductTrackingDomainV1 {
     WholeFoodsMarketUs = 'WHOLE_FOODS_MARKET_US',
     FreshStoresUs = 'FRESH_STORES_US',
     PrimeVideoRowNa = 'PRIME_VIDEO_ROW_NA'
+}
+
+/**
+ * The list type of the domain. Either INCLUDE (ALLOW_LIST) or EXCLUDE (BLOCK_LIST).
+ * @export
+ * @enum {string}
+ */
+
+export enum TargetingType {
+    Include = 'INCLUDE',
+    Exclude = 'EXCLUDE'
 }
 
 /**
@@ -8249,6 +8367,74 @@ export interface ThirdPartyPreBidTargetingV21 {
      * @memberof ThirdPartyPreBidTargetingV21
      */
     integralAdScience?: IntegralAdScience;
+}
+/**
+ * The update operation request.
+ * @export
+ * @interface UpdateDomainTargetingRequest
+ */
+export interface UpdateDomainTargetingRequest {
+    /**
+     * The line item identifier.
+     * @type {string}
+     * @memberof UpdateDomainTargetingRequest
+     */
+    lineItemId: string;
+    /**
+     * Set to `true` to enable domain inheritance from advertiser.
+     * @type {boolean}
+     * @memberof UpdateDomainTargetingRequest
+     */
+    inheritFromAdvertiser: boolean;
+    /**
+     * 
+     * @type {TargetingType}
+     * @memberof UpdateDomainTargetingRequest
+     */
+    targetingType: TargetingType;
+    /**
+     * The list of URL addresses of the domain list files.
+     * @type {Array<DomainFileMetaData>}
+     * @memberof UpdateDomainTargetingRequest
+     */
+    domainFiles?: Array<DomainFileMetaData>;
+    /**
+     * The list of domain lists Ids get from discovery API.
+     * @type {Array<string>}
+     * @memberof UpdateDomainTargetingRequest
+     */
+    domainLists?: Array<string>;
+    /**
+     * The list of raw domain names.
+     * @type {Array<string>}
+     * @memberof UpdateDomainTargetingRequest
+     */
+    domainNames?: Array<string>;
+}
+/**
+ * The update operation response. If operation is successful, it contains lineItemId (and domainFilesUploaded). If it is a failure, it contains only errorDetails. Success and failure will be corresponding to that requested index in that batch (array of items).
+ * @export
+ * @interface UpdateDomainTargetingResponse
+ */
+export interface UpdateDomainTargetingResponse {
+    /**
+     * The line item identifier.
+     * @type {string}
+     * @memberof UpdateDomainTargetingResponse
+     */
+    lineItemId?: string;
+    /**
+     * The list of domain file validation results.
+     * @type {Array<DomainFileValidationResponse>}
+     * @memberof UpdateDomainTargetingResponse
+     */
+    domainFilesUploaded?: Array<DomainFileValidationResponse>;
+    /**
+     * 
+     * @type {Error}
+     * @memberof UpdateDomainTargetingResponse
+     */
+    errorDetails?: Error;
 }
 /**
  * The geographical location type of Amazon customers targeted. For example, `US`, `EVERYWHERE`, `NON-US`.
@@ -10833,6 +11019,273 @@ export class DiscoveryApi extends BaseAPI {
      */
     public getSupplySources(requestParameters: DiscoveryApiGetSupplySourcesRequest, options?: any) {
         return DiscoveryApiFp(this.configuration).getSupplySources(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.lineItemType, requestParameters.supplySourceType, requestParameters.orderId, requestParameters.advertiserId, requestParameters.deviceTypes, requestParameters.nextToken, requestParameters.maxResults, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * DomainTargetingApi - axios parameter creator
+ * @export
+ */
+export const DomainTargetingApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Gets one or more line items domain targeting information.
+         * @summary Gets one or more line items domain targeting information.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {string} lineItemIdFilter Comma-delimited string of line item ids. Maximum 100 ids.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDomainTargeting: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemIdFilter: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getDomainTargeting', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getDomainTargeting', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'lineItemIdFilter' is not null or undefined
+            assertParamExists('getDomainTargeting', 'lineItemIdFilter', lineItemIdFilter)
+            const localVarPath = `/dsp/targeting/domain/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (lineItemIdFilter !== undefined) {
+                localVarQueryParameter['lineItemIdFilter'] = lineItemIdFilter;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Replaces the DomainTargeting for the specified line items with the ones provided in the request body. 
+         * @summary Update line item domain targeting.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {Array<UpdateDomainTargetingRequest>} [updateDomainTargetingRequest] An array of domain targeting objects. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDomainTargeting: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, updateDomainTargetingRequest?: Array<UpdateDomainTargetingRequest>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('updateDomainTargeting', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('updateDomainTargeting', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/dsp/targeting/domain/`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.dspupdatedomaintargeting.v1+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateDomainTargetingRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * DomainTargetingApi - functional programming interface
+ * @export
+ */
+export const DomainTargetingApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DomainTargetingApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Gets one or more line items domain targeting information.
+         * @summary Gets one or more line items domain targeting information.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {string} lineItemIdFilter Comma-delimited string of line item ids. Maximum 100 ids.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getDomainTargeting(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemIdFilter: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ReadDomainTargetingResponses>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDomainTargeting(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, lineItemIdFilter, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Replaces the DomainTargeting for the specified line items with the ones provided in the request body. 
+         * @summary Update line item domain targeting.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {Array<UpdateDomainTargetingRequest>} [updateDomainTargetingRequest] An array of domain targeting objects. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateDomainTargeting(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, updateDomainTargetingRequest?: Array<UpdateDomainTargetingRequest>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UpdateDomainTargetingResponse>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateDomainTargeting(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, updateDomainTargetingRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * DomainTargetingApi - factory interface
+ * @export
+ */
+export const DomainTargetingApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DomainTargetingApiFp(configuration)
+    return {
+        /**
+         * Gets one or more line items domain targeting information.
+         * @summary Gets one or more line items domain targeting information.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {string} lineItemIdFilter Comma-delimited string of line item ids. Maximum 100 ids.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getDomainTargeting(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, lineItemIdFilter: string, options?: any): AxiosPromise<ReadDomainTargetingResponses> {
+            return localVarFp.getDomainTargeting(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, lineItemIdFilter, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Replaces the DomainTargeting for the specified line items with the ones provided in the request body. 
+         * @summary Update line item domain targeting.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+         * @param {Array<UpdateDomainTargetingRequest>} [updateDomainTargetingRequest] An array of domain targeting objects. Maximum length of the array is 1.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateDomainTargeting(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, updateDomainTargetingRequest?: Array<UpdateDomainTargetingRequest>, options?: any): AxiosPromise<Array<UpdateDomainTargetingResponse>> {
+            return localVarFp.updateDomainTargeting(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, updateDomainTargetingRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getDomainTargeting operation in DomainTargetingApi.
+ * @export
+ * @interface DomainTargetingApiGetDomainTargetingRequest
+ */
+export interface DomainTargetingApiGetDomainTargetingRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof DomainTargetingApiGetDomainTargeting
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+     * @type {string}
+     * @memberof DomainTargetingApiGetDomainTargeting
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Comma-delimited string of line item ids. Maximum 100 ids.
+     * @type {string}
+     * @memberof DomainTargetingApiGetDomainTargeting
+     */
+    readonly lineItemIdFilter: string
+}
+
+/**
+ * Request parameters for updateDomainTargeting operation in DomainTargetingApi.
+ * @export
+ * @interface DomainTargetingApiUpdateDomainTargetingRequest
+ */
+export interface DomainTargetingApiUpdateDomainTargetingRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof DomainTargetingApiUpdateDomainTargeting
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input. For DSP profiles, the &#x60;type&#x60; field of the &#x60;accountInfo&#x60; object must be set to &#x60;agency&#x60; and the &#x60;subType&#x60; field must not be &#x60;AMAZON_ATTRIBUTION&#x60;.
+     * @type {string}
+     * @memberof DomainTargetingApiUpdateDomainTargeting
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * An array of domain targeting objects. Maximum length of the array is 1.
+     * @type {Array<UpdateDomainTargetingRequest>}
+     * @memberof DomainTargetingApiUpdateDomainTargeting
+     */
+    readonly updateDomainTargetingRequest?: Array<UpdateDomainTargetingRequest>
+}
+
+/**
+ * DomainTargetingApi - object-oriented interface
+ * @export
+ * @class DomainTargetingApi
+ * @extends {BaseAPI}
+ */
+export class DomainTargetingApi extends BaseAPI {
+    /**
+     * Gets one or more line items domain targeting information.
+     * @summary Gets one or more line items domain targeting information.
+     * @param {DomainTargetingApiGetDomainTargetingRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DomainTargetingApi
+     */
+    public getDomainTargeting(requestParameters: DomainTargetingApiGetDomainTargetingRequest, options?: any) {
+        return DomainTargetingApiFp(this.configuration).getDomainTargeting(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.lineItemIdFilter, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Replaces the DomainTargeting for the specified line items with the ones provided in the request body. 
+     * @summary Update line item domain targeting.
+     * @param {DomainTargetingApiUpdateDomainTargetingRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DomainTargetingApi
+     */
+    public updateDomainTargeting(requestParameters: DomainTargetingApiUpdateDomainTargetingRequest, options?: any) {
+        return DomainTargetingApiFp(this.configuration).updateDomainTargeting(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.updateDomainTargetingRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

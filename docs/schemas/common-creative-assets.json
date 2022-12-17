@@ -1,21 +1,12 @@
 {
-  "openapi": "3.0.1",
   "info": {
-    "description": "# Overview:\n Advertisers can use creative assets to store, organize and reuse brand content, such as logos, images, etc. Stored content can be used for Amazon Ads and on Amazon shopping pages. Creative assets enables brands to provide a consistent shopping experience by easily applying brand content across Amazon. \n\n\n   # Workflow\n\n\n   **Asset Upload and Registration**\n\n\n   *Step 1* - **Get Upload URL** - This step is creating a temporary upload location to which you will be uploading your asset to in the following step.\n   `Request (POST) - /assets/upload` (ensure to include the file name in the body including the file extension as documented in the assets/upload section below)\n\n\n   **Response** - `uploadURL` - This is the url location to which you will be uploading your asset in Step 2\n\n\n   *Step 2* - **Upload File** -  \n   `Request (PUT) <uploadURL>`\n\n\n   **Response** - `200 Success` Once your asset is successfully uploaded to the uploadURL, you can proceed to register this asset.\n\n\n   *Step 3* - **Register Asset** -\n   `Request (POST) - /assets/register` \n\n  **Example Request Body**\n     \n   ```\n\n   {\n     \n     \"url\": \"uploadUrl\"\n     \"name\": \"assetName\"\n     \"asinList\": [\n       \"BXXXXXXXX\"\n     ],\n     \"assetType\": \"IMAGE\",\n     \"assetSubTypeList\": [\n       \"LOGO\"\n     ],\n     \"versionInfo\": {\n       \"linkedAssetId\": \"xxxx.xxxxxxxxx.xxxxxxx.xxxxxxxxxxxxxxx\",\n       \"versionNotes\": \"This version is for Team A\"\n       },\n     \"tags\": [\n       \"Awareness\",\n       \"Spring\"\n     ]\n     \"associatedSubEntityList\": [ \n         {\n           \"brandEntityId\": \"string\" //required for sellers\n         }\n      ]\n   }\n   \n   ```\n   Response - `assetId + version` These can be used on GET assets and is the identifier of the asset you uploaded to Creative Assets.\n",
+    "description": "# Overview:\n Advertisers can use creative assets to store, organize and reuse brand content, such as logos, images, etc. Stored content can be used for Amazon Advertising and on Amazon shopping pages. Creative assets enables brands to provide a consistent shopping experience by easily applying brand content across Amazon. \n\n\n   # Workflow\n\n\n   **Asset Upload and Registration**\n\n\n   *Step 1* - **Get Upload URL** - This step is creating a temporary upload location to which you will be uploading your asset to in the following step.\n   `Request (POST) - /assets/upload` (ensure to include the file name in the body including the file extension as documented in the assets/upload section below)\n\n\n   **Response** - `uploadURL` - This is the url location to which you will be uploading your asset in Step 2\n\n\n   *Step 2* - **Upload File** -  \n   `Request (PUT) <uploadURL>`\n\n\n   **Response** - `200 Success` Once your asset is successfully uploaded to the uploadURL, you can proceed to register this asset.\n\n\n   *Step 3* - **Register Asset** -\n   `Request (POST) - /assets/register` \n\n  **Example Request Body**\n     \n   ```\n\n   {\n     \n     \"url\": \"uploadUrl\"\n     \"name\": \"assetName\"\n     \"asinList\": [\n       \"BXXXXXXXX\"\n     ],\n     \"assetType\": \"IMAGE\",\n     \"assetSubTypeList\": [\n       \"LOGO\"\n     ],\n     \"versionInfo\": {\n       \"linkedAssetId\": \"amzn1.assetlibrary.asset1.18298129182sfsd435\",\n       \"versionNotes\": \"This version is for Team A\"\n       },\n     \"tags\": [\n       \"Awareness\",\n       \"Spring\"\n     ]\n     \"associatedSubEntityList\": [ \n         {\n           \"brandEntityId\": \"string\" //required for sellers\n         }\n      ]\n   }\n   \n   ```\n   Response - `assetId + version` These can be used on GET assets and is the identifier of the asset you uploaded to Creative Assets.\n",
     "title": "Creative Assets",
     "version": "3.0"
   },
-  "tags": [
-    {
-      "name": "Creative Assets"
-    }
-  ],
   "paths": {
     "/assets/": {
       "get": {
-        "tags": [
-          "Creative Assets"
-        ],
         "summary": "Retrieves an asset along with the metadata",
         "operationId": "getAsset",
         "responses": {
@@ -115,15 +106,15 @@
             "description": "The versionId of the asset, if not included all versions will return.",
             "required": false
           }
+        ],
+        "tags": [
+          "Creative Assets"
         ]
       }
     },
     "/assets/register": {
       "post": {
-        "tags": [
-          "Creative Assets"
-        ],
-        "summary": "Registers an uploaded asset with the creative assets library with optional contextual and tagging information.",
+        "summary": "Registers an uploaded asset with creative assets with optional contextual and tagging information.",
         "requestBody": {
           "description": "Note - **asinList**, **versionInfo**, and **tags** are optional in the request body.",
           "content": {
@@ -265,14 +256,14 @@
             "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
             "required": true
           }
+        ],
+        "tags": [
+          "Creative Assets"
         ]
       }
     },
     "/assets/upload": {
       "post": {
-        "tags": [
-          "Creative Assets"
-        ],
         "summary": "Creates an upload location to upload an asset.",
         "requestBody": {
           "description": "Make sure to include file extension along with filename . (ie. \"filename.mp4\")",
@@ -349,6 +340,9 @@
             }
           }
         },
+        "tags": [
+          "Creative Assets"
+        ],
         "parameters": [
           {
             "schema": {
@@ -373,10 +367,7 @@
     },
     "/assets/search/": {
       "post": {
-        "tags": [
-          "Creative Assets"
-        ],
-        "summary": "Search the creative asset library.",
+        "summary": "Search assets",
         "requestBody": {
           "description": "text - optional, this field matches asset name, asset name prefix, tags and ASINs associated with the assets\n\nfilterCriteria - optional, this is used to filter results\n\nsortCriteria - optional, this is used to get sorted results\n\npageCriteria - optional, this is used for pagination\n",
           "content": {
@@ -475,6 +466,9 @@
             "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.",
             "required": true
           }
+        ],
+        "tags": [
+          "Creative Assets"
         ]
       }
     }
@@ -686,13 +680,14 @@
       },
       "caAssetSubType": {
         "type": "string",
-        "description": "1. For assetType `IMAGE` acceptable assetSubTypes are `LOGO`, `PRODUCT_IMAGE`, `AUTHOR_IMAGE`, `LIFESTYLE_IMAGE`, `OTHER_IMAGE`",
+        "description": "1. For assetType `IMAGE` acceptable assetSubTypes are `LOGO`, `PRODUCT_IMAGE`, `AUTHOR_IMAGE`, `LIFESTYLE_IMAGE`, `OTHER_IMAGE`\n2. For assetType `VIDEO` acceptable assetSubtype (optional) is `BACKGROUND_VIDEO`.",
         "enum": [
           "LOGO",
           "PRODUCT_IMAGE",
           "AUTHOR_IMAGE",
           "LIFESTYLE_IMAGE",
-          "OTHER_IMAGE"
+          "OTHER_IMAGE",
+          "BACKGROUND_VIDEO"
         ]
       },
       "caAssetGlobal": {
@@ -749,12 +744,9 @@
         "type": "string",
         "enum": [
           "SPONSORED_BRANDS_VIDEO",
-          "STORES_VIDEO_TILE_FULL_WIDTH",
-          "STORES_VIDEO_TILE_LARGE",
-          "STORES_VIDEO_TILE_MEDIUM",
-          "STORES_BACKGROUND_VIDEO_TILE_FULL_WIDTH",
-          "STORES_BACKGROUND_VIDEO_TILE_LARGE",
-          "STORES_BACKGROUND_VIDEO_TILE_MEDIUM",
+          "SPONSORED_DISPLAY_VIDEO",
+          "STORES_VIDEO_TILE",
+          "STORES_BACKGROUND_VIDEO_TILE",
           "STORES_INTRO_SPLASH",
           "DEMAND_SIDE_PLATFORM_OTT",
           "DEMAND_SIDE_PLATFORM_OLV"
@@ -843,6 +835,7 @@
         "type": "string",
         "enum": [
           "ACTIVE",
+          "PROCESSING",
           "ARCHIVED"
         ]
       },
@@ -963,10 +956,11 @@
         "type": "string"
       },
       "caAssetType": {
-        "description": "The asset type you are registering [`IMAGE`]",
+        "description": "The asset type you are registering [`IMAGE`, `VIDEO`]",
         "type": "string",
         "enum": [
-          "IMAGE"
+          "IMAGE",
+          "VIDEO"
         ]
       },
       "caInternalError": {
@@ -1244,20 +1238,54 @@
         }
       },
       "caProcessedUrlType": {
-        "description": "Enum containing different type of processed urls\n 1. `MODERATION`: This is an internal url that will be used to moderate the asset.\n 2. `VIDEO_DEFAULT_OPTIMIZED`: This is the default processed url for video asset type for optimized rendering.\n3. This is the url for image asset type to support thumbnail rendering of max side 500px. \n4. `PRODUCT_VIDEO_OPTIMIZED`: This is the processed url for video that can be used for product.\n5. `VIDEO_TILE_FULL_WIDTH`: This is the processed url for video that can be used for video tile full width.\n6. `VIDEO_TILE_LARGE`: This is the processed url for video that can be used for video tile large.\n7. `VIDEO_TILE_MEDIUM`: This is the processed url for video that can be used for video tile medium.\n8. `BACKGROUND_VIDEO_TILE_FULL_WIDTH`: This is the processed url for video that can be used for background video tile full width.\n9. `BACKGROUND_VIDEO_TILE_LARGE`: This is the processed url for video that can be used for background video tile large.\n10. `BACKGROUND_VIDEO_TILE_MEDIUM`: This is the processed url for video that can be used for background video tile medium.\n11. `INTRO_SPLASH`: This is the processed url for video that can be used for intro splash.",
+        "description": "Enum containing different type of processed urls\n1. `MODERATION`: This is an internal url that will be used to moderate the asset.\n2. `IMAGE_THUMBNAIL_500`: This is the url for image asset type to support thumbnail rendering of max side 500px.\n3. `VIDEO_DEFAULT_OPTIMIZED`: This is the default processed url for video asset type for optimized rendering.\n4. `PRODUCT_VIDEO_OPTIMIZED`: This is the processed url for video that can be used for product.\n5. `BACKGROUND_VIDEO_TILE`: This is the processed url for video that can be used for background video tile.\n6. `VIDEO_TILE`: This is the processed url for video that can be used for video tile.\n7. `INTRO_SPLASH`: This is the processed url for video that can be used for intro splash.\n8. `MP4_260KBS_25FPS_48KHZ_64KBS_180P_H264_BASELINE`: This is the processed url for video that can be used with mp4 container, 260KBS bitrate, 25fps(frame per sec), 48KHZ sampleRate, 64KBS audio bit rate, 180p height and generated with codec profile H.264/ Baseline.\n9. `MP4_300KBS_15FPS_48KHZ_96KBS_360P`: This is the processed url for video that can be used with mp4 container, 300KBS bitrate, 15fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate and 360p height.\n10. `MP4_300KBS_30FPS_48KHZ_96KBS_360P_H264_BASELINE`: This is the processed url for video that can be used with mp4 container, 300KBS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate, 360p height and generated with codec profile H.264/ Baseline.\n11. `MP4_320KBS_25FPS_48KHZ_96KBS_576P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 320KBS bitrate, 25fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate, 576p height and generated with codec profile H.264/ High.\n12. `MP4_375KBS_30FPS_48KHZ_192KBS_360P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 375KBS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 192KBS audio bit rate, 360p height and generated with codec profile H.264/ High.\n13. `MP4_450KBS_15FPS_48KHZ_96KBS_360P`: This is the processed url for video that can be used with mp4 container, 450KBS bitrate, 15fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate and 360p height. \n14. `MP4_450KBS_30FPS_48KHZ_96KBS_360P_H264_BASELINE`: This is the processed url for video that can be used with mp4 container, 450KBS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate, 360p height and generated with codec profile H.264/ Baseline.\n15. `MP4_600KBS_15FPS_48KHZ_96KBS_480P`: This is the processed url for video that can be used with mp4 container, 600KBS bitrate, 15fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate and 480p height. \n16. `MP4_600KBS_30FPS_48KHZ_96KBS_480P_H264_BASELINE`: This is the processed url for video that can be used with mp4 container, 600KBS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate, 480p height and generated with codec profile H.264/ Baseline.\n17. `MP4_600KBS_25FPS_48KHZ_128KBS_360P_H264_BASELINE`: This is the processed url for video that can be used with mp4 container, 600KBS bitrate, 25fps(frame per sec), 48KHZ sampleRate, 128KBS audio bit rate, 360p height and generated with codec profile H.264/ Baseline.\n18. `MP4_600KBS_30FPS_48KHZ_128KBS_360P_H264_BASELINE`: This is the processed url for video that can be used with mp4 container, 600KBS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 128KBS audio bit rate, 360p height and generated with codec profile H.264/ Baseline.\n19. `MP4_700KBS_24FPS_48KHZ_96KBS_360P`: This is the processed url for video that can be used with mp4 container, 700KBS bitrate, 24fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate and 360p height.\n20. `MP4_750KBS_30FPS_48KHZ_192KBS_432P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 750KBS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 192KBS audio bit rate, 432p height and generated with codec profile H.264/ High.\n21. `MP4_750KBS_25FPS_48KHZ_96KBS_576P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 750KBS bitrate, 25fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate, 576p height and generated with codec profile H.264/ High.\n22. `MP4_900KBS_15FPS_48KHZ_96KBS_480P`: This is the processed url for video that can be used with mp4 container, 900KBS bitrate, 15fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate and 480p height. \n23. `MP4_900KBS_30FPS_48KHZ_96KBS_480P_H264_BASELINE`: This is the processed url for video that can be used with mp4 container, 900KBS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate, 480p height and generated with codec profile H.264/ Baseline.\n24. `MP4_1350KBS_30FPS_48KHZ_96KBS_720P`: This is the processed url for video that can be used with mp4 container, 1350KBS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate and 720p height. \n25. `MP4_1350KBS_30FPS_48KHZ_96KBS_720P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 1.35MBPS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate, 720p height and generated with codec profile H.264/ High.\n26. `MP4_1350KBS_25FPS_48KHZ_128KBS_540P_H264_MAIN`: This is the processed url for video that can be used with mp4 container, 1.35MBPS bitrate, 25fps(frame per sec), 48KHZ sampleRate, 128KBS audio bit rate, 540p height and generated with codec profile H.264/ Main.\n27. `MP4_1500KBS_24FPS_48KHZ_96KBS_576P`: This is the processed url for video that can be used with mp4 container, 1500KBS bitrate, 24fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate and 576p height.\n28. `MP4_1500KBS_30FPS_48KHZ_192KBS_540P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 1.5MBPS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 192KBS audio bit rate, 540p height and generated with codec profile H.264/ High.\n29. `MP4_1500KBS_25FPS_48KHZ_128KBS_576P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 1.5MBPS bitrate, 25fps(frame per sec), 48KHZ sampleRate, 128KBS audio bit rate, 576p height and generated with codec profile H.264/ High.\n30. `MP4_2000KBS_30FPS_48KHZ_96KBS_720P`: This is the processed url for video that can be used with mp4 container, 2000KBS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate and 720p height. \n31. `MP4_2000KBS_30FPS_48KHZ_96KBS_720P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 2MBPS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate, 720p height and generated with codec profile H.264/ High.\n32. `MP4_2000KBS_30FPS_48KHZ_192KBS_720P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 2MBPS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 192KBS audio bit rate, 720p height and generated with codec profile H.264/ High.\n33. `MP4_2100KBS_30FPS_48KHZ_192KBS_576P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 2.1MBPS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 192KBS audio bit rate, 576p height and generated with codec profile H.264/ High.\n34. `MP4_2100KBS_30FPS_48KHZ_192KBS_480P_H264_MAIN`: This is the processed url for video that can be used with mp4 container, 2.1MBPS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 192KBS audio bit rate, 480p height and generated with codec profile H.264/ Main.\n35. `MP4_3400KBS_30FPS_48KHZ_192KBS_1080P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 3.4MBPS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 192KBS audio bit rate, 1080p height and generated with codec profile H.264/ High.\n36. `MP4_3500KBS_24FPS_48KHZ_96KBS_1080P`: This is the processed url for video that can be used with mp4 container, 3500KBS bitrate, 24fps(frame per sec), 48KHZ sampleRate, 96KBS audio bit rate and 1080p height.\n37. `MP4_3500KBS_30FPS_48KHZ_128KBS_720P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 3.5MBPS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 128KBS audio bit rate, 720p height and generated with codec profile H.264/ High.\n38. `MP4_4000KBS_30FPS_48KHZ_192KBS_1080P`: This is the processed url for video that can be used with mp4 container, 4000KBS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 192KBS audio bit rate and 1080p height. \n39. `MP4_4000KBS_30FPS_48KHZ_192KBS_1080P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 4MBPS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 192KBS audio bit rate, 1080p height and generated with codec profile H.264/ High.\n40. `MP4_10000KBS_30FPS_48KHZ_320KBS_1080P`: This is the processed url for video that can be used with mp4 container, 10000KBS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 320KBS audio bit rate and 1080p height. \n41. `MP4_10000KBS_30FPS_48KHZ_320KBS_1080P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 10MBPS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 320KBS audio bit rate, 1080p height and generated with codec profile H.264/ High.\n42. `MP4_20000KBS_AUTOFPS_48KHZ_320KBS`: This is the processed url for video that can be used with mp4 container, 20000KBS bitrate, auto fps, 48KHZ sampleRate, 320KBS audio bit rate.\n43. `MP4_20000KBS_AUTOFPS_48KHZ_320KBS_1080P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 20MBPS bitrate, auto fps, 48KHZ sampleRate, 320KBS audio bit rate, 1080p height and generated with codec profile H.264/ High.\n44. `MP4_25000KBS_30FPS_48KHZ_192KBS_1080P_H264_HIGH`: This is the processed url for video that can be used with mp4 container, 25MBPS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 192KBS audio bit rate, 1080p height and generated with codec profile H.264/ High.\n45. `MP4_25000KBS_30FPS_48KHZ_192KBS_1080P_H264_MAIN`: This is the processed url for video that can be used with mp4 container, 25MBPS bitrate, 30fps(frame per sec), 48KHZ sampleRate, 192KBS audio bit rate, 1080p height and generated with codec profile H.264/ Main.",
         "type": "string",
         "enum": [
           "MODERATION",
-          "VIDEO_DEFAULT_OPTIMIZED",
           "IMAGE_THUMBNAIL_500",
+          "VIDEO_DEFAULT_OPTIMIZED",
           "PRODUCT_VIDEO_OPTIMIZED",
-          "VIDEO_TILE_FULL_WIDTH",
-          "VIDEO_TILE_LARGE",
-          "VIDEO_TILE_MEDIUM",
-          "BACKGROUND_VIDEO_TILE_FULL_WIDTH",
-          "BACKGROUND_VIDEO_TILE_LARGE",
-          "BACKGROUND_VIDEO_TILE_MEDIUM",
-          "INTRO_SPLASH"
+          "BACKGROUND_VIDEO_TILE",
+          "VIDEO_TILE",
+          "INTRO_SPLASH",
+          "MP4_260KBS_25FPS_48KHZ_64KBS_180P_H264_BASELINE",
+          "MP4_300KBS_15FPS_48KHZ_96KBS_360P",
+          "MP4_300KBS_30FPS_48KHZ_96KBS_360P_H264_BASELINE",
+          "MP4_320KBS_25FPS_48KHZ_96KBS_576P_H264_HIGH",
+          "MP4_375KBS_30FPS_48KHZ_192KBS_360P_H264_HIGH",
+          "MP4_450KBS_15FPS_48KHZ_96KBS_360P",
+          "MP4_450KBS_30FPS_48KHZ_96KBS_360P_H264_BASELINE",
+          "MP4_600KBS_15FPS_48KHZ_96KBS_480P",
+          "MP4_600KBS_30FPS_48KHZ_96KBS_480P_H264_BASELINE",
+          "MP4_600KBS_25FPS_48KHZ_128KBS_360P_H264_BASELINE",
+          "MP4_600KBS_30FPS_48KHZ_128KBS_360P_H264_BASELINE",
+          "MP4_700KBS_24FPS_48KHZ_96KBS_360P",
+          "MP4_750KBS_30FPS_48KHZ_192KBS_432P_H264_HIGH",
+          "MP4_750KBS_25FPS_48KHZ_96KBS_576P_H264_HIGH",
+          "MP4_900KBS_15FPS_48KHZ_96KBS_480P",
+          "MP4_900KBS_30FPS_48KHZ_96KBS_480P_H264_BASELINE",
+          "MP4_1350KBS_30FPS_48KHZ_96KBS_720P",
+          "MP4_1350KBS_30FPS_48KHZ_96KBS_720P_H264_HIGH",
+          "MP4_1350KBS_25FPS_48KHZ_128KBS_540P_H264_MAIN",
+          "MP4_1500KBS_24FPS_48KHZ_96KBS_576P",
+          "MP4_1500KBS_30FPS_48KHZ_192KBS_540P_H264_HIGH",
+          "MP4_1500KBS_25FPS_48KHZ_128KBS_576P_H264_HIGH",
+          "MP4_2000KBS_30FPS_48KHZ_96KBS_720P",
+          "MP4_2000KBS_30FPS_48KHZ_96KBS_720P_H264_HIGH",
+          "MP4_2000KBS_30FPS_48KHZ_192KBS_720P_H264_HIGH",
+          "MP4_2100KBS_30FPS_48KHZ_192KBS_576P_H264_HIGH",
+          "MP4_2100KBS_30FPS_48KHZ_192KBS_480P_H264_MAIN",
+          "MP4_3400KBS_30FPS_48KHZ_192KBS_1080P_H264_HIGH",
+          "MP4_3500KBS_24FPS_48KHZ_96KBS_1080P",
+          "MP4_3500KBS_30FPS_48KHZ_128KBS_720P_H264_HIGH",
+          "MP4_4000KBS_30FPS_48KHZ_192KBS_1080P",
+          "MP4_4000KBS_30FPS_48KHZ_192KBS_1080P_H264_HIGH",
+          "MP4_10000KBS_30FPS_48KHZ_320KBS_1080P",
+          "MP4_10000KBS_30FPS_48KHZ_320KBS_1080P_H264_HIGH",
+          "MP4_20000KBS_AUTOFPS_48KHZ_320KBS",
+          "MP4_20000KBS_AUTOFPS_48KHZ_320KBS_1080P_H264_HIGH",
+          "MP4_25000KBS_30FPS_48KHZ_192KBS_1080P_H264_HIGH",
+          "MP4_25000KBS_30FPS_48KHZ_192KBS_1080P_H264_MAIN"
         ]
       },
       "caProcessedFileMetadata": {
@@ -1472,6 +1500,13 @@
         "type": "string",
         "description": "The campaignID for which to filter."
       }
-    }
-  }
+    },
+    "requestBodies": {},
+    "responses": {},
+    "callbacks": {},
+    "links": {},
+    "securitySchemes": {},
+    "parameters": {}
+  },
+  "openapi": "3.0.1"
 }

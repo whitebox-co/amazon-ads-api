@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Amazon Ads API - Sponsored Products
- * Use the Amazon Ads API for Sponsored Products for campaign, ad group, keyword, negative keyword, and product ad management operations. For more information about Sponsored Products, see the [Sponsored Products Support Center](https://advertising.amazon.com/help?entityId=ENTITY3CWETCZD9HEG2#GWGFKPEWVWG2CLUJ). For onboarding information, see the [account setup](setting-up/account-setup) topic.<br/><br/> 
+ * Use the Amazon Ads API for Sponsored Products for campaign, ad group, keyword, negative keyword, and product ad management operations. For more information about Sponsored Products, see the [Sponsored Products Support Center](https://advertising.amazon.com/help?entityId=ENTITY3CWETCZD9HEG2#GWGFKPEWVWG2CLUJ). For onboarding information, see the [account setup](setting-up/account-setup) topic.<br/> <br/> **Note**: This contract contains endpoints with upcoming planned deprecations. For more information on the latest versions and migration details, see [Deprecations](info/deprecations).<br/> <br/>
  *
  * The version of the OpenAPI document: 2.0
  * 
@@ -796,7 +796,7 @@ export interface CampaignResponse {
      */
     campaignId?: number;
     /**
-     * An enumerated success or error code for machine use.
+     * An enumerated `SUCCESS` or `ERROR` code for machine use.
      * @type {string}
      * @memberof CampaignResponse
      */
@@ -1128,10 +1128,10 @@ export interface CreateNegativeTargetingClause {
     state?: State;
     /**
      * The negative targeting expression.
-     * @type {Array<TargetingExpressionPredicate>}
+     * @type {Array<NegativeTargetingExpressionPredicate>}
      * @memberof CreateNegativeTargetingClause
      */
-    expression?: Array<TargetingExpressionPredicate>;
+    expression?: Array<NegativeTargetingExpressionPredicate>;
     /**
      * 
      * @type {ExpressionType}
@@ -1232,8 +1232,8 @@ export interface CreateTargetingClause {
  */
 
 export enum ExpressionType {
-    Auto = 'auto',
-    Manual = 'manual'
+    Manual = 'manual',
+    Auto = 'auto'
 }
 
 /**
@@ -1724,6 +1724,16 @@ export interface ModelError {
     details?: string;
 }
 /**
+ * The type of expression.
+ * @export
+ * @enum {string}
+ */
+
+export enum NegativeExpressionType {
+    Manual = 'manual'
+}
+
+/**
  * 
  * @export
  * @interface NegativeKeyword
@@ -1920,22 +1930,16 @@ export interface NegativeTargetingClause {
     state?: State;
     /**
      * The negative targeting expression.
-     * @type {Array<TargetingExpressionPredicate>}
+     * @type {Array<NegativeTargetingExpressionPredicate>}
      * @memberof NegativeTargetingClause
      */
-    expression?: Array<TargetingExpressionPredicate>;
-    /**
-     * The resolved targeting expression.
-     * @type {Array<TargetingExpressionPredicate>}
-     * @memberof NegativeTargetingClause
-     */
-    resolvedExpression?: Array<TargetingExpressionPredicate>;
+    expression?: Array<NegativeTargetingExpressionPredicate>;
     /**
      * 
-     * @type {ExpressionType}
+     * @type {NegativeExpressionType}
      * @memberof NegativeTargetingClause
      */
-    expressionType?: ExpressionType;
+    expressionType?: NegativeExpressionType;
 }
 /**
  * 
@@ -1969,22 +1973,16 @@ export interface NegativeTargetingClauseEx {
     state?: State;
     /**
      * The negative targeting expression.
-     * @type {Array<TargetingExpressionPredicate>}
+     * @type {Array<NegativeTargetingExpressionPredicate>}
      * @memberof NegativeTargetingClauseEx
      */
-    expression?: Array<TargetingExpressionPredicate>;
-    /**
-     * The resolved targeting expression.
-     * @type {Array<TargetingExpressionPredicate>}
-     * @memberof NegativeTargetingClauseEx
-     */
-    resolvedExpression?: Array<TargetingExpressionPredicate>;
+    expression?: Array<NegativeTargetingExpressionPredicate>;
     /**
      * 
-     * @type {ExpressionType}
+     * @type {NegativeExpressionType}
      * @memberof NegativeTargetingClauseEx
      */
-    expressionType?: ExpressionType;
+    expressionType?: NegativeExpressionType;
     /**
      * The epoch time that the negative targeting clause was created.
      * @type {number}
@@ -2054,6 +2052,35 @@ export interface NegativeTargetingClauseResponse {
      */
     description?: string;
 }
+/**
+ * 
+ * @export
+ * @interface NegativeTargetingExpressionPredicate
+ */
+export interface NegativeTargetingExpressionPredicate {
+    /**
+     * The expression value
+     * @type {string}
+     * @memberof NegativeTargetingExpressionPredicate
+     */
+    value?: string;
+    /**
+     * The targeting type
+     * @type {string}
+     * @memberof NegativeTargetingExpressionPredicate
+     */
+    type?: NegativeTargetingExpressionPredicateTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum NegativeTargetingExpressionPredicateTypeEnum {
+    AsinBrandSameAs = 'asinBrandSameAs',
+    AsinSameAs = 'asinSameAs'
+}
+
 /**
  * 
  * @export
@@ -2347,7 +2374,7 @@ export interface Report {
      */
     reportDate?: string;
     /**
-     * A comma-separated list of the metrics to be included in the report.  Each report type supports different metrics. To understand supported metrics for each report type, see [Report types](/API/docs/en-us/concepts/reporting/report-types).
+     * A comma-separated list of the metrics to be included in the report.  Each report type supports different metrics. To understand supported metrics for each report type, see [Report types](/API/docs/en-us/reporting/v2/report-types).
      * @type {string}
      * @memberof Report
      */
@@ -2741,7 +2768,7 @@ export interface TargetingExpressionPredicate {
      */
     value?: string;
     /**
-     * The type of targeting expression. You can specify values for the following predicates: | Predicate | Description | | --- | --- | | `queryBroadMatches` |  | `asinCategorySameAs` | Negatively Target the same category as the category expressed. | | `asinBrandSameAs` | Target the brand that is the same as the brand expressed. | | `asinPriceLessThan` | Target a price that is less than the price expressed. | | `asinPriceBetween` | Target a price that is between the prices expressed. | | `asinPriceGreaterThan` | Target a price that is greater than the price expressed. | | `asinReviewRatingLessThan` | Target a review rating less than the review rating that is expressed. | | `asinReviewRatingBetween` | Target a review rating that is between the review ratings expressed. | | `asinReviewRatingGreaterThan` | Target a review rating that is greater than the review rating expressed. | | `asinSameAs` | Target an ASIN that is the same as the ASIN expressed. | | `asinIsPrimeShippingEligible` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. | | `asinAgeRangeSameAs` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. | | `asinGenreSameAs` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   |
+     * The type of targeting expression. You can specify values for the following predicates: | Predicate | Description | | --- | --- | | `asinCategorySameAs` | Negatively Target the same category as the category expressed. | | `asinBrandSameAs` | Target the brand that is the same as the brand expressed. | | `asinPriceLessThan` | Target a price that is less than the price expressed. | | `asinPriceBetween` | Target a price that is between the prices expressed. | | `asinPriceGreaterThan` | Target a price that is greater than the price expressed. | | `asinReviewRatingLessThan` | Target a review rating less than the review rating that is expressed. | | `asinReviewRatingBetween` | Target a review rating that is between the review ratings expressed. | | `asinReviewRatingGreaterThan` | Target a review rating that is greater than the review rating expressed. | | `asinSameAs` | Target an ASIN that is the same as the ASIN expressed. | | `asinIsPrimeShippingEligible` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. | | `asinAgeRangeSameAs` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. | | `asinGenreSameAs` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   | | `asinExpandedFrom` | Target a single product along with others closely related to it, including substitutes and complements.   |
      * @type {string}
      * @memberof TargetingExpressionPredicate
      */
@@ -2753,9 +2780,6 @@ export interface TargetingExpressionPredicate {
     * @enum {string}
     */
 export enum TargetingExpressionPredicateTypeEnum {
-    QueryBroadMatches = 'queryBroadMatches',
-    QueryPhraseMatches = 'queryPhraseMatches',
-    QueryExactMatches = 'queryExactMatches',
     AsinCategorySameAs = 'asinCategorySameAs',
     AsinBrandSameAs = 'asinBrandSameAs',
     AsinPriceLessThan = 'asinPriceLessThan',
@@ -2771,7 +2795,8 @@ export enum TargetingExpressionPredicateTypeEnum {
     AsinAccessoryRelated = 'asinAccessoryRelated',
     AsinAgeRangeSameAs = 'asinAgeRangeSameAs',
     AsinGenreSameAs = 'asinGenreSameAs',
-    AsinIsPrimeShippingEligible = 'asinIsPrimeShippingEligible'
+    AsinIsPrimeShippingEligible = 'asinIsPrimeShippingEligible',
+    AsinExpandedFrom = 'asinExpandedFrom'
 }
 
 /**
@@ -2964,10 +2989,10 @@ export interface UpdateNegativeTargetingClause {
     state?: State;
     /**
      * The targeting expression.
-     * @type {Array<TargetingExpressionPredicate>}
+     * @type {Array<NegativeTargetingExpressionPredicate>}
      * @memberof UpdateNegativeTargetingClause
      */
-    expression?: Array<TargetingExpressionPredicate>;
+    expression?: Array<NegativeTargetingExpressionPredicate>;
     /**
      * 
      * @type {ExpressionType}
@@ -3046,7 +3071,7 @@ export const AdGroupsApiAxiosParamCreator = function (configuration?: Configurat
     return {
         /**
          * Sets the ad group status to `archived`. Archived entities cannot be made active again. See developer notes for more information.
-         * @summary Archives an ad group.
+         * @summary Archives an ad group. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
@@ -3098,7 +3123,7 @@ export const AdGroupsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Creates one or more ad groups.
+         * @summary Creates one or more ad groups. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateAdGroup>} [createAdGroup] An array of ad groups.
@@ -3150,7 +3175,7 @@ export const AdGroupsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Gets an ad group specified by identifier.
+         * @summary Gets an ad group specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
@@ -3202,7 +3227,7 @@ export const AdGroupsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Gets an ad group that has extended data fields.
+         * @summary Gets an ad group that has extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
@@ -3254,11 +3279,11 @@ export const AdGroupsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Gets one or more ad groups.
+         * @summary Gets one or more ad groups. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {string} [campaignType] Restricts results to ad groups within campaign types specified in comma-separated list.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [name] Restricts results to campaigns with the specified name.
@@ -3332,11 +3357,11 @@ export const AdGroupsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Gets ad groups that have extended data fields.
+         * @summary Gets ad groups that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {string} [campaignType] Restricts results to ad groups within campaign types specified in comma-separated list.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [name] Restricts results to campaigns with the specified name.
@@ -3410,7 +3435,7 @@ export const AdGroupsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Updates one or more ad groups.
+         * @summary Updates one or more ad groups. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateAdGroup>} [updateAdGroup] An array of ad groups that have updated field values.
@@ -3472,7 +3497,7 @@ export const AdGroupsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * Sets the ad group status to `archived`. Archived entities cannot be made active again. See developer notes for more information.
-         * @summary Archives an ad group.
+         * @summary Archives an ad group. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
@@ -3485,7 +3510,7 @@ export const AdGroupsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Creates one or more ad groups.
+         * @summary Creates one or more ad groups. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateAdGroup>} [createAdGroup] An array of ad groups.
@@ -3498,7 +3523,7 @@ export const AdGroupsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets an ad group specified by identifier.
+         * @summary Gets an ad group specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
@@ -3511,7 +3536,7 @@ export const AdGroupsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets an ad group that has extended data fields.
+         * @summary Gets an ad group that has extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
@@ -3524,11 +3549,11 @@ export const AdGroupsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets one or more ad groups.
+         * @summary Gets one or more ad groups. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {string} [campaignType] Restricts results to ad groups within campaign types specified in comma-separated list.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [name] Restricts results to campaigns with the specified name.
@@ -3542,11 +3567,11 @@ export const AdGroupsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets ad groups that have extended data fields.
+         * @summary Gets ad groups that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {string} [campaignType] Restricts results to ad groups within campaign types specified in comma-separated list.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [name] Restricts results to campaigns with the specified name.
@@ -3560,7 +3585,7 @@ export const AdGroupsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Updates one or more ad groups.
+         * @summary Updates one or more ad groups. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateAdGroup>} [updateAdGroup] An array of ad groups that have updated field values.
@@ -3583,7 +3608,7 @@ export const AdGroupsApiFactory = function (configuration?: Configuration, baseP
     return {
         /**
          * Sets the ad group status to `archived`. Archived entities cannot be made active again. See developer notes for more information.
-         * @summary Archives an ad group.
+         * @summary Archives an ad group. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
@@ -3595,7 +3620,7 @@ export const AdGroupsApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Creates one or more ad groups.
+         * @summary Creates one or more ad groups. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateAdGroup>} [createAdGroup] An array of ad groups.
@@ -3607,7 +3632,7 @@ export const AdGroupsApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Gets an ad group specified by identifier.
+         * @summary Gets an ad group specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
@@ -3619,7 +3644,7 @@ export const AdGroupsApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Gets an ad group that has extended data fields.
+         * @summary Gets an ad group that has extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
@@ -3631,11 +3656,11 @@ export const AdGroupsApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Gets one or more ad groups.
+         * @summary Gets one or more ad groups. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {string} [campaignType] Restricts results to ad groups within campaign types specified in comma-separated list.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [name] Restricts results to campaigns with the specified name.
@@ -3648,11 +3673,11 @@ export const AdGroupsApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Gets ad groups that have extended data fields.
+         * @summary Gets ad groups that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {string} [campaignType] Restricts results to ad groups within campaign types specified in comma-separated list.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [name] Restricts results to campaigns with the specified name.
@@ -3665,7 +3690,7 @@ export const AdGroupsApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Updates one or more ad groups.
+         * @summary Updates one or more ad groups. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateAdGroup>} [updateAdGroup] An array of ad groups that have updated field values.
@@ -3818,7 +3843,7 @@ export interface AdGroupsApiGetAdGroupsRequest {
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof AdGroupsApiGetAdGroups
      */
@@ -3881,7 +3906,7 @@ export interface AdGroupsApiGetAdGroupsExRequest {
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof AdGroupsApiGetAdGroupsEx
      */
@@ -3953,7 +3978,7 @@ export interface AdGroupsApiUpdateAdGroupsRequest {
 export class AdGroupsApi extends BaseAPI {
     /**
      * Sets the ad group status to `archived`. Archived entities cannot be made active again. See developer notes for more information.
-     * @summary Archives an ad group.
+     * @summary Archives an ad group. [PLANNED DEPRECATION 6/30/2023]
      * @param {AdGroupsApiArchiveAdGroupRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3965,7 +3990,7 @@ export class AdGroupsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Creates one or more ad groups.
+     * @summary Creates one or more ad groups. [PLANNED DEPRECATION 6/30/2023]
      * @param {AdGroupsApiCreateAdGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3977,7 +4002,7 @@ export class AdGroupsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets an ad group specified by identifier.
+     * @summary Gets an ad group specified by identifier. [PLANNED DEPRECATION 6/30/2023]
      * @param {AdGroupsApiGetAdGroupRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -3989,7 +4014,7 @@ export class AdGroupsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets an ad group that has extended data fields.
+     * @summary Gets an ad group that has extended data fields. [PLANNED DEPRECATION 6/30/2023]
      * @param {AdGroupsApiGetAdGroupExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4001,7 +4026,7 @@ export class AdGroupsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets one or more ad groups.
+     * @summary Gets one or more ad groups. [PLANNED DEPRECATION 6/30/2023]
      * @param {AdGroupsApiGetAdGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4013,7 +4038,7 @@ export class AdGroupsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets ad groups that have extended data fields.
+     * @summary Gets ad groups that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
      * @param {AdGroupsApiGetAdGroupsExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4025,7 +4050,7 @@ export class AdGroupsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Updates one or more ad groups.
+     * @summary Updates one or more ad groups. [PLANNED DEPRECATION 6/30/2023]
      * @param {AdGroupsApiUpdateAdGroupsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4044,8 +4069,8 @@ export class AdGroupsApi extends BaseAPI {
 export const BidRecommendationsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 
-         * @summary Gets bid recommendations for keywords.
+         * **Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**
+         * @summary Gets bid recommendations for keywords. [PLANNED DEPRECATION 12/31/2022]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {KeywordBidRecommendationsData} [keywordBidRecommendationsData] An array of keyword bid recommendation objects.
@@ -4096,8 +4121,8 @@ export const BidRecommendationsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
-         * 
-         * @summary Gets a bid recommendation for an ad group.
+         * **Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**
+         * @summary Gets a bid recommendation for an ad group. [PLANNED DEPRECATION 12/31/2022]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
@@ -4186,8 +4211,8 @@ export const BidRecommendationsApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
-         * 
-         * @summary Gets a bid recommendation for a keyword.
+         * **Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**
+         * @summary Gets a bid recommendation for a keyword. [PLANNED DEPRECATION 12/31/2022]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
@@ -4248,8 +4273,8 @@ export const BidRecommendationsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BidRecommendationsApiAxiosParamCreator(configuration)
     return {
         /**
-         * 
-         * @summary Gets bid recommendations for keywords.
+         * **Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**
+         * @summary Gets bid recommendations for keywords. [PLANNED DEPRECATION 12/31/2022]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {KeywordBidRecommendationsData} [keywordBidRecommendationsData] An array of keyword bid recommendation objects.
@@ -4261,8 +4286,8 @@ export const BidRecommendationsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @summary Gets a bid recommendation for an ad group.
+         * **Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**
+         * @summary Gets a bid recommendation for an ad group. [PLANNED DEPRECATION 12/31/2022]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
@@ -4285,8 +4310,8 @@ export const BidRecommendationsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @summary Gets a bid recommendation for a keyword.
+         * **Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**
+         * @summary Gets a bid recommendation for a keyword. [PLANNED DEPRECATION 12/31/2022]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
@@ -4308,8 +4333,8 @@ export const BidRecommendationsApiFactory = function (configuration?: Configurat
     const localVarFp = BidRecommendationsApiFp(configuration)
     return {
         /**
-         * 
-         * @summary Gets bid recommendations for keywords.
+         * **Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**
+         * @summary Gets bid recommendations for keywords. [PLANNED DEPRECATION 12/31/2022]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {KeywordBidRecommendationsData} [keywordBidRecommendationsData] An array of keyword bid recommendation objects.
@@ -4320,8 +4345,8 @@ export const BidRecommendationsApiFactory = function (configuration?: Configurat
             return localVarFp.createKeywordBidRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, keywordBidRecommendationsData, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Gets a bid recommendation for an ad group.
+         * **Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**
+         * @summary Gets a bid recommendation for an ad group. [PLANNED DEPRECATION 12/31/2022]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of an existing ad group.
@@ -4342,8 +4367,8 @@ export const BidRecommendationsApiFactory = function (configuration?: Configurat
             return localVarFp.getBidRecommendations(inlineObject1, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Gets a bid recommendation for a keyword.
+         * **Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**
+         * @summary Gets a bid recommendation for a keyword. [PLANNED DEPRECATION 12/31/2022]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
@@ -4462,8 +4487,8 @@ export interface BidRecommendationsApiGetKeywordBidRecommendationsRequest {
  */
 export class BidRecommendationsApi extends BaseAPI {
     /**
-     * 
-     * @summary Gets bid recommendations for keywords.
+     * **Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**
+     * @summary Gets bid recommendations for keywords. [PLANNED DEPRECATION 12/31/2022]
      * @param {BidRecommendationsApiCreateKeywordBidRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4474,8 +4499,8 @@ export class BidRecommendationsApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @summary Gets a bid recommendation for an ad group.
+     * **Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**
+     * @summary Gets a bid recommendation for an ad group. [PLANNED DEPRECATION 12/31/2022]
      * @param {BidRecommendationsApiGetAdGroupBidRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4498,8 +4523,8 @@ export class BidRecommendationsApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @summary Gets a bid recommendation for a keyword.
+     * **Deprecation notice: This endpoint will be deprecated on December 31, 2022. Use [theme-based bid recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/ThemeBasedBidRecommendation/GetThemeBasedBidRecommendationForAdGroup_v1) going forward.**
+     * @summary Gets a bid recommendation for a keyword. [PLANNED DEPRECATION 12/31/2022]
      * @param {BidRecommendationsApiGetKeywordBidRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4519,7 +4544,7 @@ export const CampaignNegativeKeywordsApiAxiosParamCreator = function (configurat
     return {
         /**
          * Set the status of the specified campaign negative keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.
-         * @summary Archives a campaign negative keyword.
+         * @summary Archives a campaign negative keyword. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing campaign negative keyword.
@@ -4571,7 +4596,7 @@ export const CampaignNegativeKeywordsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @summary Creates one or more campaign negative keywords.
+         * @summary Creates one or more campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateCampaignNegativeKeyword>} [createCampaignNegativeKeyword] An array of campaign negative keyword objects.
@@ -4623,7 +4648,7 @@ export const CampaignNegativeKeywordsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @summary Gets a campaign negative keyword specified by identifier.
+         * @summary Gets a campaign negative keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing campaign negative keyword.
@@ -4675,7 +4700,7 @@ export const CampaignNegativeKeywordsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @summary Gets a campaign negative keyword that has extended data fields.
+         * @summary Gets a campaign negative keyword that has extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing campaign negative keyword.
@@ -4727,11 +4752,11 @@ export const CampaignNegativeKeywordsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @summary Gets a list of campaign negative keywords.
+         * @summary Gets a list of campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'negativePhrase' | 'negativeExact'} [matchTypeFilter] Restricts results to negative keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to negative keywords that match the specified text.
          * @param {string} [campaignIdFilter] Restricts results to negative keywords associated with campaigns specified by identifier in the comma-delimited list.
@@ -4805,11 +4830,11 @@ export const CampaignNegativeKeywordsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @summary Gets a list of campaign negative keywords that have extended data fields.
+         * @summary Gets a list of campaign negative keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'negativePhrase' | 'negativeExact'} [matchTypeFilter] Restricts results to negative keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to negative keywords that match the specified text.
          * @param {string} [campaignIdFilter] Restricts results to negative keywords associated with campaigns specified by identifier in the comma-delimited list.
@@ -4883,7 +4908,7 @@ export const CampaignNegativeKeywordsApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @summary Updates one or more campaign negative keywords.
+         * @summary Updates one or more campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateCampaignNegativeKeyword>} [updateCampaignNegativeKeyword] An array of campaign negative keywords with updated values.
@@ -4945,7 +4970,7 @@ export const CampaignNegativeKeywordsApiFp = function(configuration?: Configurat
     return {
         /**
          * Set the status of the specified campaign negative keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.
-         * @summary Archives a campaign negative keyword.
+         * @summary Archives a campaign negative keyword. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing campaign negative keyword.
@@ -4958,7 +4983,7 @@ export const CampaignNegativeKeywordsApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @summary Creates one or more campaign negative keywords.
+         * @summary Creates one or more campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateCampaignNegativeKeyword>} [createCampaignNegativeKeyword] An array of campaign negative keyword objects.
@@ -4971,7 +4996,7 @@ export const CampaignNegativeKeywordsApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @summary Gets a campaign negative keyword specified by identifier.
+         * @summary Gets a campaign negative keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing campaign negative keyword.
@@ -4984,7 +5009,7 @@ export const CampaignNegativeKeywordsApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @summary Gets a campaign negative keyword that has extended data fields.
+         * @summary Gets a campaign negative keyword that has extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing campaign negative keyword.
@@ -4997,11 +5022,11 @@ export const CampaignNegativeKeywordsApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @summary Gets a list of campaign negative keywords.
+         * @summary Gets a list of campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'negativePhrase' | 'negativeExact'} [matchTypeFilter] Restricts results to negative keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to negative keywords that match the specified text.
          * @param {string} [campaignIdFilter] Restricts results to negative keywords associated with campaigns specified by identifier in the comma-delimited list.
@@ -5015,11 +5040,11 @@ export const CampaignNegativeKeywordsApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @summary Gets a list of campaign negative keywords that have extended data fields.
+         * @summary Gets a list of campaign negative keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'negativePhrase' | 'negativeExact'} [matchTypeFilter] Restricts results to negative keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to negative keywords that match the specified text.
          * @param {string} [campaignIdFilter] Restricts results to negative keywords associated with campaigns specified by identifier in the comma-delimited list.
@@ -5033,7 +5058,7 @@ export const CampaignNegativeKeywordsApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @summary Updates one or more campaign negative keywords.
+         * @summary Updates one or more campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateCampaignNegativeKeyword>} [updateCampaignNegativeKeyword] An array of campaign negative keywords with updated values.
@@ -5056,7 +5081,7 @@ export const CampaignNegativeKeywordsApiFactory = function (configuration?: Conf
     return {
         /**
          * Set the status of the specified campaign negative keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.
-         * @summary Archives a campaign negative keyword.
+         * @summary Archives a campaign negative keyword. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing campaign negative keyword.
@@ -5068,7 +5093,7 @@ export const CampaignNegativeKeywordsApiFactory = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Creates one or more campaign negative keywords.
+         * @summary Creates one or more campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateCampaignNegativeKeyword>} [createCampaignNegativeKeyword] An array of campaign negative keyword objects.
@@ -5080,7 +5105,7 @@ export const CampaignNegativeKeywordsApiFactory = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Gets a campaign negative keyword specified by identifier.
+         * @summary Gets a campaign negative keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing campaign negative keyword.
@@ -5092,7 +5117,7 @@ export const CampaignNegativeKeywordsApiFactory = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Gets a campaign negative keyword that has extended data fields.
+         * @summary Gets a campaign negative keyword that has extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing campaign negative keyword.
@@ -5104,11 +5129,11 @@ export const CampaignNegativeKeywordsApiFactory = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Gets a list of campaign negative keywords.
+         * @summary Gets a list of campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'negativePhrase' | 'negativeExact'} [matchTypeFilter] Restricts results to negative keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to negative keywords that match the specified text.
          * @param {string} [campaignIdFilter] Restricts results to negative keywords associated with campaigns specified by identifier in the comma-delimited list.
@@ -5121,11 +5146,11 @@ export const CampaignNegativeKeywordsApiFactory = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Gets a list of campaign negative keywords that have extended data fields.
+         * @summary Gets a list of campaign negative keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'negativePhrase' | 'negativeExact'} [matchTypeFilter] Restricts results to negative keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to negative keywords that match the specified text.
          * @param {string} [campaignIdFilter] Restricts results to negative keywords associated with campaigns specified by identifier in the comma-delimited list.
@@ -5138,7 +5163,7 @@ export const CampaignNegativeKeywordsApiFactory = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Updates one or more campaign negative keywords.
+         * @summary Updates one or more campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateCampaignNegativeKeyword>} [updateCampaignNegativeKeyword] An array of campaign negative keywords with updated values.
@@ -5291,7 +5316,7 @@ export interface CampaignNegativeKeywordsApiListCampaignNegativeKeywordsRequest 
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof CampaignNegativeKeywordsApiListCampaignNegativeKeywords
      */
@@ -5354,7 +5379,7 @@ export interface CampaignNegativeKeywordsApiListCampaignNegativeKeywordsExReques
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof CampaignNegativeKeywordsApiListCampaignNegativeKeywordsEx
      */
@@ -5426,7 +5451,7 @@ export interface CampaignNegativeKeywordsApiUpdateCampaignNegativeKeywordsReques
 export class CampaignNegativeKeywordsApi extends BaseAPI {
     /**
      * Set the status of the specified campaign negative keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.
-     * @summary Archives a campaign negative keyword.
+     * @summary Archives a campaign negative keyword. [PLANNED DEPRECATION 6/30/2023]
      * @param {CampaignNegativeKeywordsApiArchiveCampaignNegativeKeywordRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5438,7 +5463,7 @@ export class CampaignNegativeKeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Creates one or more campaign negative keywords.
+     * @summary Creates one or more campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]
      * @param {CampaignNegativeKeywordsApiCreateCampaignNegativeKeywordsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5450,7 +5475,7 @@ export class CampaignNegativeKeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a campaign negative keyword specified by identifier.
+     * @summary Gets a campaign negative keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]
      * @param {CampaignNegativeKeywordsApiGetCampaignNegativeKeywordRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5462,7 +5487,7 @@ export class CampaignNegativeKeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a campaign negative keyword that has extended data fields.
+     * @summary Gets a campaign negative keyword that has extended data fields. [PLANNED DEPRECATION 6/30/2023]
      * @param {CampaignNegativeKeywordsApiGetCampaignNegativeKeywordExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5474,7 +5499,7 @@ export class CampaignNegativeKeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a list of campaign negative keywords.
+     * @summary Gets a list of campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]
      * @param {CampaignNegativeKeywordsApiListCampaignNegativeKeywordsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5486,7 +5511,7 @@ export class CampaignNegativeKeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a list of campaign negative keywords that have extended data fields.
+     * @summary Gets a list of campaign negative keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
      * @param {CampaignNegativeKeywordsApiListCampaignNegativeKeywordsExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5498,7 +5523,7 @@ export class CampaignNegativeKeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Updates one or more campaign negative keywords.
+     * @summary Updates one or more campaign negative keywords. [PLANNED DEPRECATION 6/30/2023]
      * @param {CampaignNegativeKeywordsApiUpdateCampaignNegativeKeywordsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5518,7 +5543,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
     return {
         /**
          * Sets the campaign status to `archived`. Archived entities cannot be made active again. See [developer notes](https://advertising.amazon.com/API/docs/en-us/get-started/developer-notes#Archiving) for more information.
-         * @summary Archives a campaign.
+         * @summary Archives a campaign. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
@@ -5570,7 +5595,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Creates one or more campaigns.
+         * @summary Creates one or more campaigns. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateCampaign>} [createCampaign] An array of campaigns.
@@ -5622,7 +5647,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Gets a campaign specified by identifier.
+         * @summary Gets a campaign specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
@@ -5674,7 +5699,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Gets a campaign with extended data fields.
+         * @summary Gets a campaign with extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
@@ -5726,11 +5751,11 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Gets an array of campaigns.
+         * @summary Gets an array of campaigns. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [name] Restricts results to campaigns with the specified name.
          * @param {string} [portfolioIdFilter] A comma-delimited list of portfolio identifiers.
@@ -5804,11 +5829,11 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Gets an array of campaigns with extended data fields.
+         * @summary Gets an array of campaigns with extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [name] Restricts results to campaigns with the specified name.
          * @param {string} [portfolioIdFilter] A comma-delimited list of portfolio identifiers.
@@ -5882,7 +5907,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
-         * @summary Updates one or more campaigns.
+         * @summary Updates one or more campaigns. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateCampaign>} [updateCampaign] An array of campaigns with updated values.
@@ -5944,7 +5969,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * Sets the campaign status to `archived`. Archived entities cannot be made active again. See [developer notes](https://advertising.amazon.com/API/docs/en-us/get-started/developer-notes#Archiving) for more information.
-         * @summary Archives a campaign.
+         * @summary Archives a campaign. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
@@ -5957,7 +5982,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Creates one or more campaigns.
+         * @summary Creates one or more campaigns. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateCampaign>} [createCampaign] An array of campaigns.
@@ -5970,7 +5995,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets a campaign specified by identifier.
+         * @summary Gets a campaign specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
@@ -5983,7 +6008,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets a campaign with extended data fields.
+         * @summary Gets a campaign with extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
@@ -5996,11 +6021,11 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets an array of campaigns.
+         * @summary Gets an array of campaigns. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [name] Restricts results to campaigns with the specified name.
          * @param {string} [portfolioIdFilter] A comma-delimited list of portfolio identifiers.
@@ -6014,11 +6039,11 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets an array of campaigns with extended data fields.
+         * @summary Gets an array of campaigns with extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [name] Restricts results to campaigns with the specified name.
          * @param {string} [portfolioIdFilter] A comma-delimited list of portfolio identifiers.
@@ -6032,7 +6057,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Updates one or more campaigns.
+         * @summary Updates one or more campaigns. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateCampaign>} [updateCampaign] An array of campaigns with updated values.
@@ -6055,7 +6080,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
     return {
         /**
          * Sets the campaign status to `archived`. Archived entities cannot be made active again. See [developer notes](https://advertising.amazon.com/API/docs/en-us/get-started/developer-notes#Archiving) for more information.
-         * @summary Archives a campaign.
+         * @summary Archives a campaign. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
@@ -6067,7 +6092,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
-         * @summary Creates one or more campaigns.
+         * @summary Creates one or more campaigns. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateCampaign>} [createCampaign] An array of campaigns.
@@ -6079,7 +6104,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
-         * @summary Gets a campaign specified by identifier.
+         * @summary Gets a campaign specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
@@ -6091,7 +6116,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
-         * @summary Gets a campaign with extended data fields.
+         * @summary Gets a campaign with extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} campaignId The identifier of an existing campaign.
@@ -6103,11 +6128,11 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
-         * @summary Gets an array of campaigns.
+         * @summary Gets an array of campaigns. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [name] Restricts results to campaigns with the specified name.
          * @param {string} [portfolioIdFilter] A comma-delimited list of portfolio identifiers.
@@ -6120,11 +6145,11 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
-         * @summary Gets an array of campaigns with extended data fields.
+         * @summary Gets an array of campaigns with extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [name] Restricts results to campaigns with the specified name.
          * @param {string} [portfolioIdFilter] A comma-delimited list of portfolio identifiers.
@@ -6137,7 +6162,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
-         * @summary Updates one or more campaigns.
+         * @summary Updates one or more campaigns. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateCampaign>} [updateCampaign] An array of campaigns with updated values.
@@ -6290,7 +6315,7 @@ export interface CampaignsApiListCampaignsRequest {
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof CampaignsApiListCampaigns
      */
@@ -6353,7 +6378,7 @@ export interface CampaignsApiListCampaignsExRequest {
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof CampaignsApiListCampaignsEx
      */
@@ -6425,7 +6450,7 @@ export interface CampaignsApiUpdateCampaignsRequest {
 export class CampaignsApi extends BaseAPI {
     /**
      * Sets the campaign status to `archived`. Archived entities cannot be made active again. See [developer notes](https://advertising.amazon.com/API/docs/en-us/get-started/developer-notes#Archiving) for more information.
-     * @summary Archives a campaign.
+     * @summary Archives a campaign. [PLANNED DEPRECATION 6/30/2023]
      * @param {CampaignsApiArchiveCampaignRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6437,7 +6462,7 @@ export class CampaignsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Creates one or more campaigns.
+     * @summary Creates one or more campaigns. [PLANNED DEPRECATION 6/30/2023]
      * @param {CampaignsApiCreateCampaignsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6449,7 +6474,7 @@ export class CampaignsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a campaign specified by identifier.
+     * @summary Gets a campaign specified by identifier. [PLANNED DEPRECATION 6/30/2023]
      * @param {CampaignsApiGetCampaignRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6461,7 +6486,7 @@ export class CampaignsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a campaign with extended data fields.
+     * @summary Gets a campaign with extended data fields. [PLANNED DEPRECATION 6/30/2023]
      * @param {CampaignsApiGetCampaignExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6473,7 +6498,7 @@ export class CampaignsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets an array of campaigns.
+     * @summary Gets an array of campaigns. [PLANNED DEPRECATION 6/30/2023]
      * @param {CampaignsApiListCampaignsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6485,7 +6510,7 @@ export class CampaignsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets an array of campaigns with extended data fields.
+     * @summary Gets an array of campaigns with extended data fields. [PLANNED DEPRECATION 6/30/2023]
      * @param {CampaignsApiListCampaignsExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6497,7 +6522,7 @@ export class CampaignsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Updates one or more campaigns.
+     * @summary Updates one or more campaigns. [PLANNED DEPRECATION 6/30/2023]
      * @param {CampaignsApiUpdateCampaignsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -6517,7 +6542,7 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
     return {
         /**
          * Set the status of the specified keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.
-         * @summary Archives a keyword.
+         * @summary Archives a keyword. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
@@ -6569,7 +6594,7 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Creates one or more keywords.
+         * @summary Creates one or more keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateKeyword>} [createKeyword] An array of keyword objects.
@@ -6621,7 +6646,7 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Gets a keyword specified by identifier.
+         * @summary Gets a keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
@@ -6678,7 +6703,7 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Gets a keyword with extended data fields.
+         * @summary Gets a keyword with extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
@@ -6735,10 +6760,11 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * Gets a list of keywords.
+         * @summary Gets one or more keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'broad' | 'phrase' | 'exact'} [matchTypeFilter] Restricts results to keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to keywords that match the specified text exactly.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
@@ -6827,11 +6853,11 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Gets a list of keywords that have extended data fields.
+         * @summary Gets a list of keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'broad' | 'phrase' | 'exact'} [matchTypeFilter] Restricts results to keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to keywords that match the specified text exactly.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
@@ -6920,7 +6946,7 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @summary Updates one or more keywords.
+         * @summary Updates one or more keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateKeyword>} [updateKeyword] An array of update keyword objects.
@@ -6982,7 +7008,7 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * Set the status of the specified keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.
-         * @summary Archives a keyword.
+         * @summary Archives a keyword. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
@@ -6995,7 +7021,7 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Creates one or more keywords.
+         * @summary Creates one or more keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateKeyword>} [createKeyword] An array of keyword objects.
@@ -7008,7 +7034,7 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets a keyword specified by identifier.
+         * @summary Gets a keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
@@ -7022,7 +7048,7 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets a keyword with extended data fields.
+         * @summary Gets a keyword with extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
@@ -7036,10 +7062,11 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
         },
         /**
          * Gets a list of keywords.
+         * @summary Gets one or more keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'broad' | 'phrase' | 'exact'} [matchTypeFilter] Restricts results to keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to keywords that match the specified text exactly.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
@@ -7056,11 +7083,11 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets a list of keywords that have extended data fields.
+         * @summary Gets a list of keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'broad' | 'phrase' | 'exact'} [matchTypeFilter] Restricts results to keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to keywords that match the specified text exactly.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
@@ -7077,7 +7104,7 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Updates one or more keywords.
+         * @summary Updates one or more keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateKeyword>} [updateKeyword] An array of update keyword objects.
@@ -7100,7 +7127,7 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
     return {
         /**
          * Set the status of the specified keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.
-         * @summary Archives a keyword.
+         * @summary Archives a keyword. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
@@ -7112,7 +7139,7 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Creates one or more keywords.
+         * @summary Creates one or more keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateKeyword>} [createKeyword] An array of keyword objects.
@@ -7124,7 +7151,7 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Gets a keyword specified by identifier.
+         * @summary Gets a keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
@@ -7137,7 +7164,7 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Gets a keyword with extended data fields.
+         * @summary Gets a keyword with extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing keyword.
@@ -7150,10 +7177,11 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * Gets a list of keywords.
+         * @summary Gets one or more keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'broad' | 'phrase' | 'exact'} [matchTypeFilter] Restricts results to keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to keywords that match the specified text exactly.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
@@ -7169,11 +7197,11 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Gets a list of keywords that have extended data fields.
+         * @summary Gets a list of keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'broad' | 'phrase' | 'exact'} [matchTypeFilter] Restricts results to keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to keywords that match the specified text exactly.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
@@ -7189,7 +7217,7 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
-         * @summary Updates one or more keywords.
+         * @summary Updates one or more keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateKeyword>} [updateKeyword] An array of update keyword objects.
@@ -7356,7 +7384,7 @@ export interface KeywordsApiListKeywordsRequest {
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof KeywordsApiListKeywords
      */
@@ -7440,7 +7468,7 @@ export interface KeywordsApiListKeywordsExRequest {
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof KeywordsApiListKeywordsEx
      */
@@ -7533,7 +7561,7 @@ export interface KeywordsApiUpdateKeywordsRequest {
 export class KeywordsApi extends BaseAPI {
     /**
      * Set the status of the specified keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.
-     * @summary Archives a keyword.
+     * @summary Archives a keyword. [PLANNED DEPRECATION 6/30/2023]
      * @param {KeywordsApiArchiveKeywordRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7545,7 +7573,7 @@ export class KeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Creates one or more keywords.
+     * @summary Creates one or more keywords. [PLANNED DEPRECATION 6/30/2023]
      * @param {KeywordsApiCreateKeywordsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7557,7 +7585,7 @@ export class KeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a keyword specified by identifier.
+     * @summary Gets a keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]
      * @param {KeywordsApiGetKeywordRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7569,7 +7597,7 @@ export class KeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a keyword with extended data fields.
+     * @summary Gets a keyword with extended data fields. [PLANNED DEPRECATION 6/30/2023]
      * @param {KeywordsApiGetKeywordExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7581,6 +7609,7 @@ export class KeywordsApi extends BaseAPI {
 
     /**
      * Gets a list of keywords.
+     * @summary Gets one or more keywords. [PLANNED DEPRECATION 6/30/2023]
      * @param {KeywordsApiListKeywordsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7592,7 +7621,7 @@ export class KeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a list of keywords that have extended data fields.
+     * @summary Gets a list of keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
      * @param {KeywordsApiListKeywordsExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7604,7 +7633,7 @@ export class KeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Updates one or more keywords.
+     * @summary Updates one or more keywords. [PLANNED DEPRECATION 6/30/2023]
      * @param {KeywordsApiUpdateKeywordsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -7624,7 +7653,7 @@ export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Co
     return {
         /**
          * Set the status of the specified negative keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.
-         * @summary Archives a negative keyword.
+         * @summary Archives a negative keyword. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing negative keyword.
@@ -7676,7 +7705,7 @@ export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary Creates one or more negative keywords.
+         * @summary Creates one or more negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateNegativeKeyword>} [createNegativeKeyword] An array of negative keyword objects.
@@ -7728,7 +7757,7 @@ export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary Gets a negative keyword specified by identifier.
+         * @summary Gets a negative keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing negative keyword.
@@ -7780,7 +7809,7 @@ export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary Gets a negative keyword that has extended data fields.
+         * @summary Gets a negative keyword that has extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing negative keyword.
@@ -7832,11 +7861,11 @@ export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary Gets a list of negative keyword objects.
+         * @summary Gets a list of negative keyword objects. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'negativePhrase' | 'negativeExact'} [matchTypeFilter] Restricts results to negative keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to negative keywords that match the specified text.
          * @param {'enabled' | 'archived'} [stateFilter] Restricts results to negative resources with state within the specified comma-separated list. Default includes all.
@@ -7920,11 +7949,11 @@ export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary Gets a list of negative keywords that have extended data fields.
+         * @summary Gets a list of negative keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'negativePhrase' | 'negativeExact'} [matchTypeFilter] Restricts results to negative keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to negative keywords that match the specified text.
          * @param {'enabled' | 'archived'} [stateFilter] Restricts results to negative resources with state within the specified comma-separated list. Default includes all.
@@ -8008,7 +8037,7 @@ export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary Updates one or more negative keywords.
+         * @summary Updates one or more negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateNegativeKeyword>} [updateNegativeKeyword] An array negative keywords with updated values.
@@ -8070,7 +8099,7 @@ export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * Set the status of the specified negative keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.
-         * @summary Archives a negative keyword.
+         * @summary Archives a negative keyword. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing negative keyword.
@@ -8083,7 +8112,7 @@ export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Creates one or more negative keywords.
+         * @summary Creates one or more negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateNegativeKeyword>} [createNegativeKeyword] An array of negative keyword objects.
@@ -8096,7 +8125,7 @@ export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets a negative keyword specified by identifier.
+         * @summary Gets a negative keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing negative keyword.
@@ -8109,7 +8138,7 @@ export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets a negative keyword that has extended data fields.
+         * @summary Gets a negative keyword that has extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing negative keyword.
@@ -8122,11 +8151,11 @@ export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets a list of negative keyword objects.
+         * @summary Gets a list of negative keyword objects. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'negativePhrase' | 'negativeExact'} [matchTypeFilter] Restricts results to negative keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to negative keywords that match the specified text.
          * @param {'enabled' | 'archived'} [stateFilter] Restricts results to negative resources with state within the specified comma-separated list. Default includes all.
@@ -8142,11 +8171,11 @@ export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets a list of negative keywords that have extended data fields.
+         * @summary Gets a list of negative keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'negativePhrase' | 'negativeExact'} [matchTypeFilter] Restricts results to negative keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to negative keywords that match the specified text.
          * @param {'enabled' | 'archived'} [stateFilter] Restricts results to negative resources with state within the specified comma-separated list. Default includes all.
@@ -8162,7 +8191,7 @@ export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Updates one or more negative keywords.
+         * @summary Updates one or more negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateNegativeKeyword>} [updateNegativeKeyword] An array negative keywords with updated values.
@@ -8185,7 +8214,7 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
     return {
         /**
          * Set the status of the specified negative keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.
-         * @summary Archives a negative keyword.
+         * @summary Archives a negative keyword. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing negative keyword.
@@ -8197,7 +8226,7 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary Creates one or more negative keywords.
+         * @summary Creates one or more negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateNegativeKeyword>} [createNegativeKeyword] An array of negative keyword objects.
@@ -8209,7 +8238,7 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary Gets a negative keyword specified by identifier.
+         * @summary Gets a negative keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing negative keyword.
@@ -8221,7 +8250,7 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary Gets a negative keyword that has extended data fields.
+         * @summary Gets a negative keyword that has extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} keywordId The identifier of an existing negative keyword.
@@ -8233,11 +8262,11 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary Gets a list of negative keyword objects.
+         * @summary Gets a list of negative keyword objects. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'negativePhrase' | 'negativeExact'} [matchTypeFilter] Restricts results to negative keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to negative keywords that match the specified text.
          * @param {'enabled' | 'archived'} [stateFilter] Restricts results to negative resources with state within the specified comma-separated list. Default includes all.
@@ -8252,11 +8281,11 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary Gets a list of negative keywords that have extended data fields.
+         * @summary Gets a list of negative keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'negativePhrase' | 'negativeExact'} [matchTypeFilter] Restricts results to negative keywords with match types within the specified comma-separated list. For more information, see [match types](https://advertising.amazon.com/help#GHTRFDZRJPW6764R) in the Amazon Ads support center.
          * @param {string} [keywordText] Restricts results to negative keywords that match the specified text.
          * @param {'enabled' | 'archived'} [stateFilter] Restricts results to negative resources with state within the specified comma-separated list. Default includes all.
@@ -8271,7 +8300,7 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary Updates one or more negative keywords.
+         * @summary Updates one or more negative keywords. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateNegativeKeyword>} [updateNegativeKeyword] An array negative keywords with updated values.
@@ -8424,7 +8453,7 @@ export interface NegativeKeywordsApiListNegativeKeywordsRequest {
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof NegativeKeywordsApiListNegativeKeywords
      */
@@ -8501,7 +8530,7 @@ export interface NegativeKeywordsApiListNegativeKeywordsExRequest {
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof NegativeKeywordsApiListNegativeKeywordsEx
      */
@@ -8587,7 +8616,7 @@ export interface NegativeKeywordsApiUpdateNegativeKeywordsRequest {
 export class NegativeKeywordsApi extends BaseAPI {
     /**
      * Set the status of the specified negative keyword to `archived`. Note that once the status for a keyword is set to `archived` it cannot be changed.
-     * @summary Archives a negative keyword.
+     * @summary Archives a negative keyword. [PLANNED DEPRECATION 6/30/2023]
      * @param {NegativeKeywordsApiArchiveNegativeKeywordRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -8599,7 +8628,7 @@ export class NegativeKeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Creates one or more negative keywords.
+     * @summary Creates one or more negative keywords. [PLANNED DEPRECATION 6/30/2023]
      * @param {NegativeKeywordsApiCreateNegativeKeywordsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -8611,7 +8640,7 @@ export class NegativeKeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a negative keyword specified by identifier.
+     * @summary Gets a negative keyword specified by identifier. [PLANNED DEPRECATION 6/30/2023]
      * @param {NegativeKeywordsApiGetNegativeKeywordRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -8623,7 +8652,7 @@ export class NegativeKeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a negative keyword that has extended data fields.
+     * @summary Gets a negative keyword that has extended data fields. [PLANNED DEPRECATION 6/30/2023]
      * @param {NegativeKeywordsApiGetNegativeKeywordExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -8635,7 +8664,7 @@ export class NegativeKeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a list of negative keyword objects.
+     * @summary Gets a list of negative keyword objects. [PLANNED DEPRECATION 6/30/2023]
      * @param {NegativeKeywordsApiListNegativeKeywordsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -8647,7 +8676,7 @@ export class NegativeKeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a list of negative keywords that have extended data fields.
+     * @summary Gets a list of negative keywords that have extended data fields. [PLANNED DEPRECATION 6/30/2023]
      * @param {NegativeKeywordsApiListNegativeKeywordsExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -8659,7 +8688,7 @@ export class NegativeKeywordsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Updates one or more negative keywords.
+     * @summary Updates one or more negative keywords. [PLANNED DEPRECATION 6/30/2023]
      * @param {NegativeKeywordsApiUpdateNegativeKeywordsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -8679,7 +8708,7 @@ export const NegativeProductTargetingApiAxiosParamCreator = function (configurat
     return {
         /**
          * Set the `status` of a negative targeting clause to `archived`. Note that once a negative targeting clause `status` is set to `archived`, it cannot be changed.
-         * @summary Archives a negative targeting clause.
+         * @summary Archives a negative targeting clause. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -8731,7 +8760,7 @@ export const NegativeProductTargetingApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @summary Creates one ore more negative targeting expressions.
+         * @summary Creates one ore more negative targeting expressions. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateNegativeTargetingClause>} [createNegativeTargetingClause] A list of negative targeting clauses.
@@ -8783,7 +8812,7 @@ export const NegativeProductTargetingApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @summary Get a negative targeting clause specified by identifier.
+         * @summary Get a negative targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -8835,7 +8864,7 @@ export const NegativeProductTargetingApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @summary Get a negative targeting clause specified by identifier.
+         * @summary Get a negative targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -8887,11 +8916,11 @@ export const NegativeProductTargetingApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @summary Gets a list of negative targeting clauses filtered by specified criteria.
+         * @summary Gets a list of negative targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'archived'} [stateFilter] Restricts results to negative resources with state within the specified comma-separated list. Default includes all.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -8965,11 +8994,11 @@ export const NegativeProductTargetingApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @summary Gets a list of negative targeting clauses filtered by specified criteria.
+         * @summary Gets a list of negative targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'archived'} [stateFilter] Restricts results to negative resources with state within the specified comma-separated list. Default includes all.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -9043,7 +9072,7 @@ export const NegativeProductTargetingApiAxiosParamCreator = function (configurat
         },
         /**
          * 
-         * @summary Updates one or more negative targeting clauses.
+         * @summary Updates one or more negative targeting clauses. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateNegativeTargetingClause>} [updateNegativeTargetingClause] A list of negative targeting clauses with updated values.
@@ -9105,7 +9134,7 @@ export const NegativeProductTargetingApiFp = function(configuration?: Configurat
     return {
         /**
          * Set the `status` of a negative targeting clause to `archived`. Note that once a negative targeting clause `status` is set to `archived`, it cannot be changed.
-         * @summary Archives a negative targeting clause.
+         * @summary Archives a negative targeting clause. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -9118,7 +9147,7 @@ export const NegativeProductTargetingApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @summary Creates one ore more negative targeting expressions.
+         * @summary Creates one ore more negative targeting expressions. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateNegativeTargetingClause>} [createNegativeTargetingClause] A list of negative targeting clauses.
@@ -9131,7 +9160,7 @@ export const NegativeProductTargetingApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @summary Get a negative targeting clause specified by identifier.
+         * @summary Get a negative targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -9144,7 +9173,7 @@ export const NegativeProductTargetingApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @summary Get a negative targeting clause specified by identifier.
+         * @summary Get a negative targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -9157,11 +9186,11 @@ export const NegativeProductTargetingApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @summary Gets a list of negative targeting clauses filtered by specified criteria.
+         * @summary Gets a list of negative targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'archived'} [stateFilter] Restricts results to negative resources with state within the specified comma-separated list. Default includes all.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -9175,11 +9204,11 @@ export const NegativeProductTargetingApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @summary Gets a list of negative targeting clauses filtered by specified criteria.
+         * @summary Gets a list of negative targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'archived'} [stateFilter] Restricts results to negative resources with state within the specified comma-separated list. Default includes all.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -9193,7 +9222,7 @@ export const NegativeProductTargetingApiFp = function(configuration?: Configurat
         },
         /**
          * 
-         * @summary Updates one or more negative targeting clauses.
+         * @summary Updates one or more negative targeting clauses. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateNegativeTargetingClause>} [updateNegativeTargetingClause] A list of negative targeting clauses with updated values.
@@ -9216,7 +9245,7 @@ export const NegativeProductTargetingApiFactory = function (configuration?: Conf
     return {
         /**
          * Set the `status` of a negative targeting clause to `archived`. Note that once a negative targeting clause `status` is set to `archived`, it cannot be changed.
-         * @summary Archives a negative targeting clause.
+         * @summary Archives a negative targeting clause. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -9228,7 +9257,7 @@ export const NegativeProductTargetingApiFactory = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Creates one ore more negative targeting expressions.
+         * @summary Creates one ore more negative targeting expressions. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateNegativeTargetingClause>} [createNegativeTargetingClause] A list of negative targeting clauses.
@@ -9240,7 +9269,7 @@ export const NegativeProductTargetingApiFactory = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Get a negative targeting clause specified by identifier.
+         * @summary Get a negative targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -9252,7 +9281,7 @@ export const NegativeProductTargetingApiFactory = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Get a negative targeting clause specified by identifier.
+         * @summary Get a negative targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -9264,11 +9293,11 @@ export const NegativeProductTargetingApiFactory = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Gets a list of negative targeting clauses filtered by specified criteria.
+         * @summary Gets a list of negative targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'archived'} [stateFilter] Restricts results to negative resources with state within the specified comma-separated list. Default includes all.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -9281,11 +9310,11 @@ export const NegativeProductTargetingApiFactory = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Gets a list of negative targeting clauses filtered by specified criteria.
+         * @summary Gets a list of negative targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'archived'} [stateFilter] Restricts results to negative resources with state within the specified comma-separated list. Default includes all.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -9298,7 +9327,7 @@ export const NegativeProductTargetingApiFactory = function (configuration?: Conf
         },
         /**
          * 
-         * @summary Updates one or more negative targeting clauses.
+         * @summary Updates one or more negative targeting clauses. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateNegativeTargetingClause>} [updateNegativeTargetingClause] A list of negative targeting clauses with updated values.
@@ -9451,7 +9480,7 @@ export interface NegativeProductTargetingApiListNegativeTargetingClausesRequest 
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof NegativeProductTargetingApiListNegativeTargetingClauses
      */
@@ -9514,7 +9543,7 @@ export interface NegativeProductTargetingApiListNegativeTargetingClausesExReques
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof NegativeProductTargetingApiListNegativeTargetingClausesEx
      */
@@ -9586,7 +9615,7 @@ export interface NegativeProductTargetingApiUpdateNegativeTargetingClauseRequest
 export class NegativeProductTargetingApi extends BaseAPI {
     /**
      * Set the `status` of a negative targeting clause to `archived`. Note that once a negative targeting clause `status` is set to `archived`, it cannot be changed.
-     * @summary Archives a negative targeting clause.
+     * @summary Archives a negative targeting clause. [PLANNED DEPRECATION 6/30/2023]
      * @param {NegativeProductTargetingApiArchiveNegativeTargetingClauseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -9598,7 +9627,7 @@ export class NegativeProductTargetingApi extends BaseAPI {
 
     /**
      * 
-     * @summary Creates one ore more negative targeting expressions.
+     * @summary Creates one ore more negative targeting expressions. [PLANNED DEPRECATION 6/30/2023]
      * @param {NegativeProductTargetingApiCreateNegativeTargetingClausesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -9610,7 +9639,7 @@ export class NegativeProductTargetingApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get a negative targeting clause specified by identifier.
+     * @summary Get a negative targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
      * @param {NegativeProductTargetingApiGetNegativeTargetingClauseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -9622,7 +9651,7 @@ export class NegativeProductTargetingApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get a negative targeting clause specified by identifier.
+     * @summary Get a negative targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
      * @param {NegativeProductTargetingApiGetNegativeTargetingClauseExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -9634,7 +9663,7 @@ export class NegativeProductTargetingApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a list of negative targeting clauses filtered by specified criteria.
+     * @summary Gets a list of negative targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
      * @param {NegativeProductTargetingApiListNegativeTargetingClausesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -9646,7 +9675,7 @@ export class NegativeProductTargetingApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a list of negative targeting clauses filtered by specified criteria.
+     * @summary Gets a list of negative targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
      * @param {NegativeProductTargetingApiListNegativeTargetingClausesExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -9658,7 +9687,7 @@ export class NegativeProductTargetingApi extends BaseAPI {
 
     /**
      * 
-     * @summary Updates one or more negative targeting clauses.
+     * @summary Updates one or more negative targeting clauses. [PLANNED DEPRECATION 6/30/2023]
      * @param {NegativeProductTargetingApiUpdateNegativeTargetingClauseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -9678,7 +9707,7 @@ export const ProductAdsApiAxiosParamCreator = function (configuration?: Configur
     return {
         /**
          * Sets the state of a specified product ad to `archived`. Note that once the state is set to `archived` it cannot be changed.
-         * @summary Archives a product ad.
+         * @summary Archives a product ad. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adId A product ad identifier.
@@ -9730,7 +9759,7 @@ export const ProductAdsApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary Creates one or more product ads.
+         * @summary Creates one or more product ads. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateProductAd>} [createProductAd] A list of product ads for creation. Note that the &#x60;SKU&#x60; field is used by sellers and the &#x60;ASIN&#x60; field is used by vendors.
@@ -9782,7 +9811,7 @@ export const ProductAdsApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary Gets a product ad specified by identifier.
+         * @summary Gets a product ad specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adId A product ad identifier.
@@ -9834,7 +9863,7 @@ export const ProductAdsApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary Gets extended data for a product ad specified by identifier.
+         * @summary Gets extended data for a product ad specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adId A product ad identifier.
@@ -9886,11 +9915,11 @@ export const ProductAdsApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary Gets a list of product ads filtered by specified criteria.
+         * @summary Gets a list of product ads filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -9964,11 +9993,11 @@ export const ProductAdsApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary Gets extended data for a list of product ads filtered by specified criteria.
+         * @summary Gets extended data for a list of product ads filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -10042,7 +10071,7 @@ export const ProductAdsApiAxiosParamCreator = function (configuration?: Configur
         },
         /**
          * 
-         * @summary Updates one or more product ads specified by identifier.
+         * @summary Updates one or more product ads specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateProductAd>} [updateProductAd] A list of product ad objects with updated values for the &#x60;state&#x60; field.
@@ -10104,7 +10133,7 @@ export const ProductAdsApiFp = function(configuration?: Configuration) {
     return {
         /**
          * Sets the state of a specified product ad to `archived`. Note that once the state is set to `archived` it cannot be changed.
-         * @summary Archives a product ad.
+         * @summary Archives a product ad. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adId A product ad identifier.
@@ -10117,7 +10146,7 @@ export const ProductAdsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Creates one or more product ads.
+         * @summary Creates one or more product ads. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateProductAd>} [createProductAd] A list of product ads for creation. Note that the &#x60;SKU&#x60; field is used by sellers and the &#x60;ASIN&#x60; field is used by vendors.
@@ -10130,7 +10159,7 @@ export const ProductAdsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets a product ad specified by identifier.
+         * @summary Gets a product ad specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adId A product ad identifier.
@@ -10143,7 +10172,7 @@ export const ProductAdsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets extended data for a product ad specified by identifier.
+         * @summary Gets extended data for a product ad specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adId A product ad identifier.
@@ -10156,11 +10185,11 @@ export const ProductAdsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets a list of product ads filtered by specified criteria.
+         * @summary Gets a list of product ads filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -10174,11 +10203,11 @@ export const ProductAdsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets extended data for a list of product ads filtered by specified criteria.
+         * @summary Gets extended data for a list of product ads filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -10192,7 +10221,7 @@ export const ProductAdsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Updates one or more product ads specified by identifier.
+         * @summary Updates one or more product ads specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateProductAd>} [updateProductAd] A list of product ad objects with updated values for the &#x60;state&#x60; field.
@@ -10215,7 +10244,7 @@ export const ProductAdsApiFactory = function (configuration?: Configuration, bas
     return {
         /**
          * Sets the state of a specified product ad to `archived`. Note that once the state is set to `archived` it cannot be changed.
-         * @summary Archives a product ad.
+         * @summary Archives a product ad. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adId A product ad identifier.
@@ -10227,7 +10256,7 @@ export const ProductAdsApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
-         * @summary Creates one or more product ads.
+         * @summary Creates one or more product ads. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateProductAd>} [createProductAd] A list of product ads for creation. Note that the &#x60;SKU&#x60; field is used by sellers and the &#x60;ASIN&#x60; field is used by vendors.
@@ -10239,7 +10268,7 @@ export const ProductAdsApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
-         * @summary Gets a product ad specified by identifier.
+         * @summary Gets a product ad specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adId A product ad identifier.
@@ -10251,7 +10280,7 @@ export const ProductAdsApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
-         * @summary Gets extended data for a product ad specified by identifier.
+         * @summary Gets extended data for a product ad specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adId A product ad identifier.
@@ -10263,11 +10292,11 @@ export const ProductAdsApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
-         * @summary Gets a list of product ads filtered by specified criteria.
+         * @summary Gets a list of product ads filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -10280,11 +10309,11 @@ export const ProductAdsApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
-         * @summary Gets extended data for a list of product ads filtered by specified criteria.
+         * @summary Gets extended data for a list of product ads filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -10297,7 +10326,7 @@ export const ProductAdsApiFactory = function (configuration?: Configuration, bas
         },
         /**
          * 
-         * @summary Updates one or more product ads specified by identifier.
+         * @summary Updates one or more product ads specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateProductAd>} [updateProductAd] A list of product ad objects with updated values for the &#x60;state&#x60; field.
@@ -10450,7 +10479,7 @@ export interface ProductAdsApiListProductAdsRequest {
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof ProductAdsApiListProductAds
      */
@@ -10513,7 +10542,7 @@ export interface ProductAdsApiListProductAdsExRequest {
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof ProductAdsApiListProductAdsEx
      */
@@ -10585,7 +10614,7 @@ export interface ProductAdsApiUpdateProductAdsRequest {
 export class ProductAdsApi extends BaseAPI {
     /**
      * Sets the state of a specified product ad to `archived`. Note that once the state is set to `archived` it cannot be changed.
-     * @summary Archives a product ad.
+     * @summary Archives a product ad. [PLANNED DEPRECATION 6/30/2023]
      * @param {ProductAdsApiArchiveProductAdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -10597,7 +10626,7 @@ export class ProductAdsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Creates one or more product ads.
+     * @summary Creates one or more product ads. [PLANNED DEPRECATION 6/30/2023]
      * @param {ProductAdsApiCreateProductAdsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -10609,7 +10638,7 @@ export class ProductAdsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a product ad specified by identifier.
+     * @summary Gets a product ad specified by identifier. [PLANNED DEPRECATION 6/30/2023]
      * @param {ProductAdsApiGetProductAdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -10621,7 +10650,7 @@ export class ProductAdsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets extended data for a product ad specified by identifier.
+     * @summary Gets extended data for a product ad specified by identifier. [PLANNED DEPRECATION 6/30/2023]
      * @param {ProductAdsApiGetProductAdExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -10633,7 +10662,7 @@ export class ProductAdsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a list of product ads filtered by specified criteria.
+     * @summary Gets a list of product ads filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
      * @param {ProductAdsApiListProductAdsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -10645,7 +10674,7 @@ export class ProductAdsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets extended data for a list of product ads filtered by specified criteria.
+     * @summary Gets extended data for a list of product ads filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
      * @param {ProductAdsApiListProductAdsExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -10657,7 +10686,7 @@ export class ProductAdsApi extends BaseAPI {
 
     /**
      * 
-     * @summary Updates one or more product ads specified by identifier.
+     * @summary Updates one or more product ads specified by identifier. [PLANNED DEPRECATION 6/30/2023]
      * @param {ProductAdsApiUpdateProductAdsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -10677,7 +10706,7 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
     return {
         /**
          * Set the `status` of a targeting clause to `archived`. Note that once a targeting clause `status` is set to `archived`, it cannot be changed.
-         * @summary Archives a targeting clause.
+         * @summary Archives a targeting clause. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -10728,8 +10757,8 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
             };
         },
         /**
-         * 
-         * @summary Gets a list of recommended products for targeting.
+         * **Deprecation notice: This endpoint will be deprecated on February 28, 2023. Use [version 3 targeting recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/Product%20Recommendation%20Service/getProductRecommendations) going forward.**
+         * @summary Gets a list of recommended products for targeting. [PLANNED DEPRECATION 2/28/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {InlineObject2} [inlineObject2] 
@@ -10781,7 +10810,7 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary Creates one or more targeting expressions.
+         * @summary Creates one or more targeting expressions. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateTargetingClause>} [createTargetingClause] A list of targeting clauses.
@@ -10833,65 +10862,7 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary Get recommended brands for Sponsored Products.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {string} [keyword] A keyword for which to get recommended brands.
-         * @param {number} [categoryId] Gets the top 50 brands for the specified category identifier.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBrandRecommendations: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keyword?: string, categoryId?: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('getBrandRecommendations', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('getBrandRecommendations', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            const localVarPath = `/v2/sp/targets/brands`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearer required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            if (keyword !== undefined) {
-                localVarQueryParameter['keyword'] = keyword;
-            }
-
-            if (categoryId !== undefined) {
-                localVarQueryParameter['categoryId'] = categoryId;
-            }
-
-            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
-            }
-
-            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Get a targeting clause specified by identifier.
+         * @summary Get a targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -10943,7 +10914,7 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary Get a targeting clause specified by identifier.
+         * @summary Get a targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -10995,11 +10966,11 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary Gets a list of targeting clauses filtered by specified criteria.
+         * @summary Gets a list of targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -11073,11 +11044,11 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary Gets a list of targeting clauses filtered by specified criteria.
+         * @summary Gets a list of targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -11151,7 +11122,7 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
         },
         /**
          * 
-         * @summary Updates one or more targeting clauses.
+         * @summary Updates one or more targeting clauses. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateTargetingClause>} [updateTargetingClause] A list of targeting clauses with updated values.
@@ -11213,7 +11184,7 @@ export const ProductTargetingApiFp = function(configuration?: Configuration) {
     return {
         /**
          * Set the `status` of a targeting clause to `archived`. Note that once a targeting clause `status` is set to `archived`, it cannot be changed.
-         * @summary Archives a targeting clause.
+         * @summary Archives a targeting clause. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -11225,8 +11196,8 @@ export const ProductTargetingApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 
-         * @summary Gets a list of recommended products for targeting.
+         * **Deprecation notice: This endpoint will be deprecated on February 28, 2023. Use [version 3 targeting recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/Product%20Recommendation%20Service/getProductRecommendations) going forward.**
+         * @summary Gets a list of recommended products for targeting. [PLANNED DEPRECATION 2/28/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {InlineObject2} [inlineObject2] 
@@ -11239,7 +11210,7 @@ export const ProductTargetingApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Creates one or more targeting expressions.
+         * @summary Creates one or more targeting expressions. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateTargetingClause>} [createTargetingClause] A list of targeting clauses.
@@ -11252,21 +11223,7 @@ export const ProductTargetingApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get recommended brands for Sponsored Products.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {string} [keyword] A keyword for which to get recommended brands.
-         * @param {number} [categoryId] Gets the top 50 brands for the specified category identifier.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getBrandRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keyword?: string, categoryId?: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BrandResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getBrandRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, keyword, categoryId, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Get a targeting clause specified by identifier.
+         * @summary Get a targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -11279,7 +11236,7 @@ export const ProductTargetingApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get a targeting clause specified by identifier.
+         * @summary Get a targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -11292,11 +11249,11 @@ export const ProductTargetingApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets a list of targeting clauses filtered by specified criteria.
+         * @summary Gets a list of targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -11310,11 +11267,11 @@ export const ProductTargetingApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Gets a list of targeting clauses filtered by specified criteria.
+         * @summary Gets a list of targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -11328,7 +11285,7 @@ export const ProductTargetingApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Updates one or more targeting clauses.
+         * @summary Updates one or more targeting clauses. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateTargetingClause>} [updateTargetingClause] A list of targeting clauses with updated values.
@@ -11351,7 +11308,7 @@ export const ProductTargetingApiFactory = function (configuration?: Configuratio
     return {
         /**
          * Set the `status` of a targeting clause to `archived`. Note that once a targeting clause `status` is set to `archived`, it cannot be changed.
-         * @summary Archives a targeting clause.
+         * @summary Archives a targeting clause. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -11362,8 +11319,8 @@ export const ProductTargetingApiFactory = function (configuration?: Configuratio
             return localVarFp.archiveTargetingClause(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, targetId, options).then((request) => request(axios, basePath));
         },
         /**
-         * 
-         * @summary Gets a list of recommended products for targeting.
+         * **Deprecation notice: This endpoint will be deprecated on February 28, 2023. Use [version 3 targeting recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/Product%20Recommendation%20Service/getProductRecommendations) going forward.**
+         * @summary Gets a list of recommended products for targeting. [PLANNED DEPRECATION 2/28/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {InlineObject2} [inlineObject2] 
@@ -11375,7 +11332,7 @@ export const ProductTargetingApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary Creates one or more targeting expressions.
+         * @summary Creates one or more targeting expressions. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateTargetingClause>} [createTargetingClause] A list of targeting clauses.
@@ -11387,20 +11344,7 @@ export const ProductTargetingApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary Get recommended brands for Sponsored Products.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {string} [keyword] A keyword for which to get recommended brands.
-         * @param {number} [categoryId] Gets the top 50 brands for the specified category identifier.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getBrandRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, keyword?: string, categoryId?: number, options?: any): AxiosPromise<BrandResponse> {
-            return localVarFp.getBrandRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, keyword, categoryId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Get a targeting clause specified by identifier.
+         * @summary Get a targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -11412,7 +11356,7 @@ export const ProductTargetingApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary Get a targeting clause specified by identifier.
+         * @summary Get a targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} targetId The target identifier.
@@ -11424,11 +11368,11 @@ export const ProductTargetingApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary Gets a list of targeting clauses filtered by specified criteria.
+         * @summary Gets a list of targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -11441,11 +11385,11 @@ export const ProductTargetingApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary Gets a list of targeting clauses filtered by specified criteria.
+         * @summary Gets a list of targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} [startIndex] 0-indexed record offset for the result set.
-         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size.
+         * @param {number} [count] Number of records to include in the paged response. Defaults to max page size of 5000.
          * @param {'enabled' | 'paused' | 'archived' | 'enabled, paused' | 'enabled, archived' | 'paused, archived' | 'enabled, paused, archived'} [stateFilter] Restricts results to resources with state within the specified comma-separated list.
          * @param {string} [campaignIdFilter] A comma-delimited list of campaign identifiers.
          * @param {string} [adGroupIdFilter] Restricts results to keywords associated with ad groups specified by identifier in the comma-delimited list.
@@ -11458,7 +11402,7 @@ export const ProductTargetingApiFactory = function (configuration?: Configuratio
         },
         /**
          * 
-         * @summary Updates one or more targeting clauses.
+         * @summary Updates one or more targeting clauses. [PLANNED DEPRECATION 6/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<UpdateTargetingClause>} [updateTargetingClause] A list of targeting clauses with updated values.
@@ -11556,41 +11500,6 @@ export interface ProductTargetingApiCreateTargetingClausesRequest {
 }
 
 /**
- * Request parameters for getBrandRecommendations operation in ProductTargetingApi.
- * @export
- * @interface ProductTargetingApiGetBrandRecommendationsRequest
- */
-export interface ProductTargetingApiGetBrandRecommendationsRequest {
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
-     * @type {string}
-     * @memberof ProductTargetingApiGetBrandRecommendations
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-     * @type {string}
-     * @memberof ProductTargetingApiGetBrandRecommendations
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
-     * A keyword for which to get recommended brands.
-     * @type {string}
-     * @memberof ProductTargetingApiGetBrandRecommendations
-     */
-    readonly keyword?: string
-
-    /**
-     * Gets the top 50 brands for the specified category identifier.
-     * @type {number}
-     * @memberof ProductTargetingApiGetBrandRecommendations
-     */
-    readonly categoryId?: number
-}
-
-/**
  * Request parameters for getTargetingClause operation in ProductTargetingApi.
  * @export
  * @interface ProductTargetingApiGetTargetingClauseRequest
@@ -11674,7 +11583,7 @@ export interface ProductTargetingApiListTargetingClausesRequest {
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof ProductTargetingApiListTargetingClauses
      */
@@ -11737,7 +11646,7 @@ export interface ProductTargetingApiListTargetingClausesExRequest {
     readonly startIndex?: number
 
     /**
-     * Number of records to include in the paged response. Defaults to max page size.
+     * Number of records to include in the paged response. Defaults to max page size of 5000.
      * @type {number}
      * @memberof ProductTargetingApiListTargetingClausesEx
      */
@@ -11809,7 +11718,7 @@ export interface ProductTargetingApiUpdateTargetingClauseRequest {
 export class ProductTargetingApi extends BaseAPI {
     /**
      * Set the `status` of a targeting clause to `archived`. Note that once a targeting clause `status` is set to `archived`, it cannot be changed.
-     * @summary Archives a targeting clause.
+     * @summary Archives a targeting clause. [PLANNED DEPRECATION 6/30/2023]
      * @param {ProductTargetingApiArchiveTargetingClauseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -11820,8 +11729,8 @@ export class ProductTargetingApi extends BaseAPI {
     }
 
     /**
-     * 
-     * @summary Gets a list of recommended products for targeting.
+     * **Deprecation notice: This endpoint will be deprecated on February 28, 2023. Use [version 3 targeting recommendations](/API/docs/en-us/sponsored-products/3-0/openapi/prod#/Product%20Recommendation%20Service/getProductRecommendations) going forward.**
+     * @summary Gets a list of recommended products for targeting. [PLANNED DEPRECATION 2/28/2023]
      * @param {ProductTargetingApiCreateTargetRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -11833,7 +11742,7 @@ export class ProductTargetingApi extends BaseAPI {
 
     /**
      * 
-     * @summary Creates one or more targeting expressions.
+     * @summary Creates one or more targeting expressions. [PLANNED DEPRECATION 6/30/2023]
      * @param {ProductTargetingApiCreateTargetingClausesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -11845,19 +11754,7 @@ export class ProductTargetingApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get recommended brands for Sponsored Products.
-     * @param {ProductTargetingApiGetBrandRecommendationsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ProductTargetingApi
-     */
-    public getBrandRecommendations(requestParameters: ProductTargetingApiGetBrandRecommendationsRequest, options?: any) {
-        return ProductTargetingApiFp(this.configuration).getBrandRecommendations(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.keyword, requestParameters.categoryId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Get a targeting clause specified by identifier.
+     * @summary Get a targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
      * @param {ProductTargetingApiGetTargetingClauseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -11869,7 +11766,7 @@ export class ProductTargetingApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get a targeting clause specified by identifier.
+     * @summary Get a targeting clause specified by identifier. [PLANNED DEPRECATION 6/30/2023]
      * @param {ProductTargetingApiGetTargetingClauseExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -11881,7 +11778,7 @@ export class ProductTargetingApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a list of targeting clauses filtered by specified criteria.
+     * @summary Gets a list of targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
      * @param {ProductTargetingApiListTargetingClausesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -11893,7 +11790,7 @@ export class ProductTargetingApi extends BaseAPI {
 
     /**
      * 
-     * @summary Gets a list of targeting clauses filtered by specified criteria.
+     * @summary Gets a list of targeting clauses filtered by specified criteria. [PLANNED DEPRECATION 6/30/2023]
      * @param {ProductTargetingApiListTargetingClausesExRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -11905,7 +11802,7 @@ export class ProductTargetingApi extends BaseAPI {
 
     /**
      * 
-     * @summary Updates one or more targeting clauses.
+     * @summary Updates one or more targeting clauses. [PLANNED DEPRECATION 6/30/2023]
      * @param {ProductTargetingApiUpdateTargetingClauseRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -11924,7 +11821,7 @@ export class ProductTargetingApi extends BaseAPI {
 export const ReportsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**
          * @summary Downloads a previously requested report identified by report ID.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -11976,7 +11873,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).
+         * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).
          * @summary Gets a previously requested report specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12028,8 +11925,8 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Requests the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  **Note**: `asins` reports currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
-         * @summary Requests a Sponsored Products report.
+         * **Deprecation notice: This endpoint will be deprecated on March 30, 2023. Use the [version 3 reporting endpoints](/API/docs/en-us/offline-report-prod-3p) going forward.**  Requests the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**  **Note**: `asins` reports currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
+         * @summary Requests a Sponsored Products report. [PLANNED DEPRECATION 3/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {'campaigns' | 'adGroups' | 'keywords' | 'productAds' | 'asins' | 'targets'} recordType The type of entity for which the report should be generated.
@@ -12094,7 +11991,7 @@ export const ReportsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ReportsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**
          * @summary Downloads a previously requested report identified by report ID.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12107,7 +12004,7 @@ export const ReportsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).
+         * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).
          * @summary Gets a previously requested report specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12120,8 +12017,8 @@ export const ReportsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Requests the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  **Note**: `asins` reports currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
-         * @summary Requests a Sponsored Products report.
+         * **Deprecation notice: This endpoint will be deprecated on March 30, 2023. Use the [version 3 reporting endpoints](/API/docs/en-us/offline-report-prod-3p) going forward.**  Requests the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**  **Note**: `asins` reports currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
+         * @summary Requests a Sponsored Products report. [PLANNED DEPRECATION 3/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {'campaigns' | 'adGroups' | 'keywords' | 'productAds' | 'asins' | 'targets'} recordType The type of entity for which the report should be generated.
@@ -12144,7 +12041,7 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = ReportsApiFp(configuration)
     return {
         /**
-         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**
          * @summary Downloads a previously requested report identified by report ID.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12156,7 +12053,7 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.downloadReport(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options).then((request) => request(axios, basePath));
         },
         /**
-         * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).
+         * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).
          * @summary Gets a previously requested report specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12168,8 +12065,8 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getReport(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Requests the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  **Note**: `asins` reports currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
-         * @summary Requests a Sponsored Products report.
+         * **Deprecation notice: This endpoint will be deprecated on March 30, 2023. Use the [version 3 reporting endpoints](/API/docs/en-us/offline-report-prod-3p) going forward.**  Requests the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**  **Note**: `asins` reports currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
+         * @summary Requests a Sponsored Products report. [PLANNED DEPRECATION 3/30/2023]
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; developer account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {'campaigns' | 'adGroups' | 'keywords' | 'productAds' | 'asins' | 'targets'} recordType The type of entity for which the report should be generated.
@@ -12282,7 +12179,7 @@ export interface ReportsApiRequestReportRequest {
  */
 export class ReportsApi extends BaseAPI {
     /**
-     * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**
+     * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.   The report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.  **Note**: The report files in S3 are gzipped.  *Example report download*  ``` $ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.xxxxxxx.xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxx?AWSAccessKeyId=XXXXXXXXXXXXXXX&amp;Expires=1476479900&amp;Signature=xxxxxxxxxxxxxxxxxxxx\" ```  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**
      * @summary Downloads a previously requested report identified by report ID.
      * @param {ReportsApiDownloadReportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12294,7 +12191,7 @@ export class ReportsApi extends BaseAPI {
     }
 
     /**
-     * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).
+     * To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).
      * @summary Gets a previously requested report specified by identifier.
      * @param {ReportsApiGetReportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12306,8 +12203,8 @@ export class ReportsApi extends BaseAPI {
     }
 
     /**
-     * Requests the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/concepts/reporting/sponsored-ads).**  **Note**: `asins` reports currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
-     * @summary Requests a Sponsored Products report.
+     * **Deprecation notice: This endpoint will be deprecated on March 30, 2023. Use the [version 3 reporting endpoints](/API/docs/en-us/offline-report-prod-3p) going forward.**  Requests the creation of a performance report for all entities of a single type which have performance data to report. Record types can be one of `campaigns`, `adGroups`, `keywords`, `productAds`, `asins`, and `targets`.   **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**  **Note**: `asins` reports currently can **not** include metrics associated with both keywords and targets. If the `targetingId` value is set in the request, the report filters on targets and does not return sales associated with keywords. If the `targetingId` value is **not** set in the request, the report filters on keywords and does not return sales associated with targets. Therefore, the default behavior filters the report on keywords. Also note that if both `keywordId` **and** `targetingId` values are passed, the report filters on targets only and does **not** return keywords.
+     * @summary Requests a Sponsored Products report. [PLANNED DEPRECATION 3/30/2023]
      * @param {ReportsApiRequestReportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
