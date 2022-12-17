@@ -176,7 +176,7 @@ describe('helpers', () => {
 
 			await createRequestFunction(requestArgs, axiosInstance, BASE_PATH)();
 
-			expect(envoyRateLimit.getLimit).toBeCalledTimes(0);
+			expect(envoyRateLimit.getLimit).toHaveBeenNthCalledWith(0);
 		});
 	});
 });
