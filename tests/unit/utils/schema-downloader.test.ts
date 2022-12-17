@@ -29,7 +29,7 @@ describe('schema-downloader', () => {
 
 			await downloadSchemas();
 
-			expect(fs.rmSync).nthCalledWith(1, PATHS.SCHEMAS, {
+			expect(fs.rmSync).toHaveBeenNthCalledWith(1, PATHS.SCHEMAS, {
 				force: true,
 				maxRetries: 2,
 				recursive: true,
@@ -42,7 +42,7 @@ describe('schema-downloader', () => {
 
 			await downloadSchemas();
 
-			expect(fs.mkdirSync).nthCalledWith(1, PATHS.SCHEMAS);
+			expect(fs.mkdirSync).toHaveBeenNthCalledWith(1, PATHS.SCHEMAS);
 		});
 	});
 
@@ -56,7 +56,7 @@ describe('schema-downloader', () => {
 
 			await downloadSchemas();
 
-			expect(fs.writeFileSync).nthCalledWith(1, './docs/schemas/authorization-profiles.yaml', '{}');
+			expect(fs.writeFileSync).toHaveBeenNthCalledWith(1, './docs/schemas/authorization-profiles.yaml', '{}');
 		});
 
 		it('should load and transform the yaml file to a new json file', async () => {
@@ -64,7 +64,11 @@ describe('schema-downloader', () => {
 
 			await downloadSchemas();
 
-			expect(fs.writeFileSync).nthCalledWith(2, './docs/schemas/authorization-profiles.json', undefined);
+			expect(fs.writeFileSync).toHaveBeenNthCalledWith(
+				2,
+				'./docs/schemas/authorization-profiles.json',
+				undefined
+			);
 		});
 
 		it('should delete the original yaml file', async () => {
@@ -72,7 +76,7 @@ describe('schema-downloader', () => {
 
 			await downloadSchemas();
 
-			expect(fs.rmSync).nthCalledWith(2, './docs/schemas/authorization-profiles.yaml');
+			expect(fs.rmSync).toHaveBeenNthCalledWith(2, './docs/schemas/authorization-profiles.yaml');
 		});
 	});
 
@@ -85,15 +89,27 @@ describe('schema-downloader', () => {
 		it('should save a json schema file to the filesystem', async () => {
 			await downloadSchemas();
 
-			expect(fs.writeFileSync).nthCalledWith(2, './docs/schemas/authorization-profiles.json', undefined);
-			expect(fs.writeFileSync).nthCalledWith(3, './docs/schemas/authorization-manager-account.json', '"{}"');
+			expect(fs.writeFileSync).toHaveBeenNthCalledWith(
+				2,
+				'./docs/schemas/authorization-profiles.json',
+				undefined
+			);
+			expect(fs.writeFileSync).toHaveBeenNthCalledWith(
+				3,
+				'./docs/schemas/authorization-manager-account.json',
+				'"{}"'
+			);
 		});
 
 		it('should transform a yaml file and then save a json schema file to the filesystem', async () => {
 			await downloadSchemas();
 
-			expect(fs.writeFileSync).nthCalledWith(1, './docs/schemas/authorization-profiles.yaml', '{}');
-			expect(fs.writeFileSync).nthCalledWith(2, './docs/schemas/authorization-profiles.json', undefined);
+			expect(fs.writeFileSync).toHaveBeenNthCalledWith(1, './docs/schemas/authorization-profiles.yaml', '{}');
+			expect(fs.writeFileSync).toHaveBeenNthCalledWith(
+				2,
+				'./docs/schemas/authorization-profiles.json',
+				undefined
+			);
 		});
 	});
 
@@ -106,7 +122,7 @@ describe('schema-downloader', () => {
 		it('should generate a schemas.js json file', async () => {
 			await downloadSchemas();
 
-			expect(fs.writeFileSync).nthCalledWith(38, PATHS.SCHEMAS_DOCS, expect.anything(), 'utf8');
+			expect(fs.writeFileSync).toHaveBeenNthCalledWith(38, PATHS.SCHEMAS_DOCS, expect.anything(), 'utf8');
 		});
 	});
 
@@ -120,7 +136,7 @@ describe('schema-downloader', () => {
 			await downloadSchemas();
 
 			// 37 times includes json, yaml, and schema.js writes.
-			expect(fs.writeFileSync).toBeCalledTimes(38);
+			expect(fs.writeFileSync).toHaveBeenCalledTimes(38);
 		});
 	});
 });
