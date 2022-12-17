@@ -106,7 +106,7 @@
     "prettier-package-json": "^2.6.0",
     "quicktype": "^15.0.260",
     "replace-in-file": "^6.3.2",
-    "semantic-release": "^19.0.2",
+    "semantic-release": "^19.0.3",
     "ts-jest": "^27.0.4",
     "ts-morph": "^14.0.0",
     "ts-node": "^10.2.0",
