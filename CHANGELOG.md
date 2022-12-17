@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.0.0](https://github.com/whitebox-co/amazon-ads-api/compare/v1.6.0...v2.0.0) (2022-12-17)
+
+### Bug Fixes
+
+-   adding skipLibCheck to fix failing lib build ([febe94a](https://github.com/whitebox-co/amazon-ads-api/commit/febe94a4494b137199793e150aab95b3c7818462))
+-   running npm audit fix to update package-lock issues ([77ea22b](https://github.com/whitebox-co/amazon-ads-api/commit/77ea22b2ed4220063dfe7130df9e78a07fe07315))
+
+-   feat(api)!: generating new code based on latest schema changes from amazon ([120fb93](https://github.com/whitebox-co/amazon-ads-api/commit/120fb93415b68754164e59be3746150e46a76b13))
+
+### BREAKING CHANGES
+
+-   InlineResponse generation and schema changes
+
 # [1.6.0](https://github.com/whitebox-co/amazon-ads-api/compare/v1.5.2...v1.6.0) (2022-03-30)
 
 ### Features
