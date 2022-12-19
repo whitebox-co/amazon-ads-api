@@ -98,7 +98,7 @@
     "lint-staged": "^12.2.1",
     "lodash": "^4.17.21",
     "markdownlint": "^0.25.1",
-    "markdownlint-cli": "^0.31.1",
+    "markdownlint-cli": "^0.32.2",
     "npm": "^8.3.0",
     "openapi-types": "^10.0.0",
     "prettier": "^2.4.0",
