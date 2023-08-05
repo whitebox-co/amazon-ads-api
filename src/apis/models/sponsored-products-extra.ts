@@ -227,6 +227,31 @@ export interface AgeRange {
     id?: string;
 }
 /**
+ * 
+ * @export
+ * @interface AgeRangeLoP
+ */
+export interface AgeRangeLoP {
+    /**
+     * Name of Age Range.
+     * @type {string}
+     * @memberof AgeRangeLoP
+     */
+    name?: string;
+    /**
+     * Id of Age Range. Use the POST /sp/targets/category/{categoryId}/refinements endpoint to retrieve Age Range Node IDs.
+     * @type {string}
+     * @memberof AgeRangeLoP
+     */
+    id?: string;
+    /**
+     * Translated name of Age Range based off locale sent in request.
+     * @type {string}
+     * @memberof AgeRangeLoP
+     */
+    translatedName?: string;
+}
+/**
  * This request type is used to retrieve recommended keyword targets for ASINs. Set the recommendationType to KEYWORD_FOR_ASINS to use this request type.
  * @export
  * @interface AsinsKeywordTargetRankRecommendationRequest
@@ -437,18 +462,35 @@ export interface BadRequestException {
     details?: string;
 }
 /**
- * Similar campaigns\' metrics benchmark.
+ * Forecasted impact metrics for next 7 days or during special days.
  * @export
  * @interface Benchmark
  */
 export interface Benchmark {
     /**
-     * 
-     * @type {Daily}
+     * Specifies the processing status of the benchmark. Success - If all fields in values property (impressions, clicks, conversions) have all non-null values. Failed - If all fields in values property have all null values. Partial - If some of the fields (impressions, clicks, or conversions) in values property have null values.
+     * @type {string}
      * @memberof Benchmark
      */
-    daily: Daily;
+    benchmarkStatus?: BenchmarkBenchmarkStatusEnum;
+    /**
+     * 
+     * @type {Values}
+     * @memberof Benchmark
+     */
+    values?: Values;
 }
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum BenchmarkBenchmarkStatusEnum {
+    Success = 'success',
+    Failed = 'failed',
+    Partial = 'partial'
+}
+
 /**
  * 
  * @export
@@ -653,6 +695,25 @@ export interface Brand {
      * Id of brand. This field is REQUIRED if the Brand object is being used as an input. Use the GetRefinementsForCategory to retrieve Brand Node IDs.
      * @type {string}
      * @memberof Brand
+     */
+    id?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BrandLoP
+ */
+export interface BrandLoP {
+    /**
+     * Name of brand.
+     * @type {string}
+     * @memberof BrandLoP
+     */
+    name?: string;
+    /**
+     * Id of brand.
+     * @type {string}
+     * @memberof BrandLoP
      */
     id?: string;
 }
@@ -1276,6 +1337,55 @@ export interface CategoryItemWithAsinCounts {
     id?: string;
 }
 /**
+ * 
+ * @export
+ * @interface CategoryItemWithAsinCountsLoP
+ */
+export interface CategoryItemWithAsinCountsLoP {
+    /**
+     * The path of the category, which contains the current category and all parent categories
+     * @type {string}
+     * @memberof CategoryItemWithAsinCountsLoP
+     */
+    categoryPath?: string;
+    /**
+     * The name of the category
+     * @type {string}
+     * @memberof CategoryItemWithAsinCountsLoP
+     */
+    name?: string;
+    /**
+     * The translated path of the category, which contains the current category and all parent categories.
+     * @type {string}
+     * @memberof CategoryItemWithAsinCountsLoP
+     */
+    translatedCategoryPath?: string;
+    /**
+     * 
+     * @type {IntegerRange}
+     * @memberof CategoryItemWithAsinCountsLoP
+     */
+    asinCounts?: IntegerRange;
+    /**
+     * The category id of the parent node
+     * @type {string}
+     * @memberof CategoryItemWithAsinCountsLoP
+     */
+    parentCategoryId?: string;
+    /**
+     * The category id of the current node
+     * @type {string}
+     * @memberof CategoryItemWithAsinCountsLoP
+     */
+    id?: string;
+    /**
+     * The translated name of the category.
+     * @type {string}
+     * @memberof CategoryItemWithAsinCountsLoP
+     */
+    translatedName?: string;
+}
+/**
  * Response object for the GetCategoryRecommendationsForAsins API.
  * @export
  * @interface CategoryRecommendations
@@ -1300,6 +1410,19 @@ export interface CategoryRecommendationsWithAsinCounts {
      * @memberof CategoryRecommendationsWithAsinCounts
      */
     categories?: Array<CategoryItemWithAsinCounts>;
+}
+/**
+ * Response object for the GetCategoryRecommendationsForAsins API.
+ * @export
+ * @interface CategoryRecommendationsWithAsinCountsLoP
+ */
+export interface CategoryRecommendationsWithAsinCountsLoP {
+    /**
+     * List of category recommendations
+     * @type {Array<CategoryItemWithAsinCountsLoP>}
+     * @memberof CategoryRecommendationsWithAsinCountsLoP
+     */
+    categories?: Array<CategoryItemWithAsinCountsLoP>;
 }
 /**
  * Clicks benchmark.
@@ -1500,31 +1623,6 @@ export interface CreateSPCampaignOptimizationRulesResponse {
     details?: string;
 }
 /**
- * Daily metrics benchmark.
- * @export
- * @interface Daily
- */
-export interface Daily {
-    /**
-     * 
-     * @type {Conversions}
-     * @memberof Daily
-     */
-    conversions: Conversions;
-    /**
-     * 
-     * @type {Clicks}
-     * @memberof Daily
-     */
-    clicks: Clicks;
-    /**
-     * 
-     * @type {Impressions}
-     * @memberof Daily
-     */
-    impressions: Impressions;
-}
-/**
  * Object representing date range type rule duration.
  * @export
  * @interface DateRangeTypeRuleDuration
@@ -1633,6 +1731,31 @@ export interface Genre {
      * @memberof Genre
      */
     id?: string;
+}
+/**
+ * 
+ * @export
+ * @interface GenreLoP
+ */
+export interface GenreLoP {
+    /**
+     * Name of Genre.
+     * @type {string}
+     * @memberof GenreLoP
+     */
+    name?: string;
+    /**
+     * Id of Genre. Use the POST /sp/targets/category/{categoryId}/refinements endpoint to retrieve Genre Node IDs.
+     * @type {string}
+     * @memberof GenreLoP
+     */
+    id?: string;
+    /**
+     * Translated name of the Genre based off locale send in the query parameter.
+     * @type {string}
+     * @memberof GenreLoP
+     */
+    translatedName?: string;
 }
 /**
  * 
@@ -1862,7 +1985,7 @@ export interface GetTargetableAsinCountsRequest {
     priceRange?: PriceRange;
 }
 /**
- * The impacts are given in the same order of suggested bids.
+ * The impact metrics are given in the same order of suggested bids.  Note: This object is nullable
  * @export
  * @interface ImpactMetric
  */
@@ -1875,7 +1998,7 @@ export interface ImpactMetric {
     values?: Array<RangeMetricValue>;
 }
 /**
- * For the CONVERSION_OPPORTUNITIES theme, the impact metrics are weekly clicks and orders received for similar products. For other event-based themes, the impact metrics are clicks and orders received for similar products during the event days
+ * For the CONVERSION_OPPORTUNITIES theme, the impact metrics are weekly clicks and orders received for similar products. For other event-based themes, the impact metrics are clicks and orders received for similar products during the event days  Note: This object is nullable
  * @export
  * @interface ImpactMetrics
  */
@@ -1885,13 +2008,13 @@ export interface ImpactMetrics {
      * @type {ImpactMetric}
      * @memberof ImpactMetrics
      */
-    clicks?: ImpactMetric;
+    clicks?: ImpactMetric | null;
     /**
      * 
      * @type {ImpactMetric}
      * @memberof ImpactMetrics
      */
-    orders?: ImpactMetric;
+    orders?: ImpactMetric | null;
 }
 /**
  * Impressions benchmark.
@@ -1972,7 +2095,7 @@ export interface InitialBudgetRecommendationResponse {
      */
     specialEvents: Array<SpecialEvent>;
     /**
-     * Recommended daily budget for the new campaign.
+     * Recommended daily budget for the new campaign. Note: value -1 means we don’t have enough information to provide a recommendation.
      * @type {number}
      * @memberof InitialBudgetRecommendationResponse
      */
@@ -2389,6 +2512,8 @@ export enum PerformanceMetric {
  */
 
 export enum PerformanceMetricForSB {
+    Is = 'IS',
+    Ntb = 'NTB',
     Roas = 'ROAS'
 }
 
@@ -2548,7 +2673,7 @@ export interface Range {
     max?: number;
 }
 /**
- * Describes lower and upper bounds of the range.
+ * Describes lower and upper bounds of the range.  Note: This object is nullable
  * @export
  * @interface RangeMetricValue
  */
@@ -3029,6 +3154,31 @@ export interface Refinements {
      * @memberof Refinements
      */
     genres?: Array<Genre>;
+}
+/**
+ * Response object for the POST /sp/targets/category/{categoryId}/refinements endpoint, containing information on Brand Nodes, Age Range Nodes, and Genre Nodes.
+ * @export
+ * @interface RefinementsLoP
+ */
+export interface RefinementsLoP {
+    /**
+     * List of Age Ranges in a language of preference (LoP). Use the POST /sp/targets/category/{categoryId}/refinements endpoint to retrieve Age Ranges. Age Ranges are only available for categories related to children\'s toys and games.
+     * @type {Array<AgeRangeLoP>}
+     * @memberof RefinementsLoP
+     */
+    ageRanges?: Array<AgeRangeLoP>;
+    /**
+     * List of Brands.
+     * @type {Array<BrandLoP>}
+     * @memberof RefinementsLoP
+     */
+    brands?: Array<BrandLoP>;
+    /**
+     * List of Genres in a language of preference (LoP). Use the POST /sp/targets/category/{categoryId}/refinements endpoint to retrieve Genre Node IDs. Genres are only available for categories related to books.
+     * @type {Array<GenreLoP>}
+     * @memberof RefinementsLoP
+     */
+    genres?: Array<GenreLoP>;
 }
 /**
  * The action taken when the campaign optimization rule is enabled. Defaults to adopt
@@ -4174,7 +4324,7 @@ export interface SevenDaysMissedOpportunities {
  */
 export interface SpecialEvent {
     /**
-     * The factor used to boost the recommended budget.
+     * Deprecated. The factor used to boost the recommended budget.
      * @type {number}
      * @memberof SpecialEvent
      */
@@ -4185,6 +4335,18 @@ export interface SpecialEvent {
      * @memberof SpecialEvent
      */
     endDate?: string;
+    /**
+     * Recommended daily budget for the new campaign during the special event period.
+     * @type {number}
+     * @memberof SpecialEvent
+     */
+    dailyBudget?: number;
+    /**
+     * The key of the special event.
+     * @type {string}
+     * @memberof SpecialEvent
+     */
+    eventKey?: string;
     /**
      * The name of the special event.
      * @type {string}
@@ -4197,6 +4359,12 @@ export interface SpecialEvent {
      * @memberof SpecialEvent
      */
     startDate?: string;
+    /**
+     * 
+     * @type {Benchmark}
+     * @memberof SpecialEvent
+     */
+    benchmark?: Benchmark;
 }
 /**
  * 
@@ -4299,7 +4467,7 @@ export interface SponsoredProductsAdGroup {
      */
     adGroupId: string;
     /**
-     * A bid value for use when no bid is specified for keywords in the ad group.
+     * A bid value for use when no bid is specified for keywords in the ad group. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsAdGroup
      */
@@ -4684,7 +4852,7 @@ export enum SponsoredProductsAdGroupServingStatusReason {
     PortfolioStatusEnabledDetail = 'PORTFOLIO_STATUS_ENABLED_DETAIL',
     PortfolioPausedDetail = 'PORTFOLIO_PAUSED_DETAIL',
     PortfolioArchivedDetail = 'PORTFOLIO_ARCHIVED_DETAIL',
-    PortfolioOutOfBudget = 'PORTFOLIO_OUT_OF_BUDGET',
+    PortfolioOutOfBudgetDetail = 'PORTFOLIO_OUT_OF_BUDGET_DETAIL',
     PortfolioPendingStartDateDetail = 'PORTFOLIO_PENDING_START_DATE_DETAIL',
     PortfolioEndedDetail = 'PORTFOLIO_ENDED_DETAIL',
     AdvertiserPolicingSuspendedDetail = 'ADVERTISER_POLICING_SUSPENDED_DETAIL',
@@ -5726,13 +5894,13 @@ export interface SponsoredProductsCampaign {
      */
     endDate?: string | null;
     /**
-     * entity object identifier
+     * The identifier of the campaign.
      * @type {string}
      * @memberof SponsoredProductsCampaign
      */
     campaignId: string;
     /**
-     * 
+     * The name of the campaign.
      * @type {string}
      * @memberof SponsoredProductsCampaign
      */
@@ -7013,7 +7181,7 @@ export interface SponsoredProductsCopyCampaignTaskDetails {
  */
 export interface SponsoredProductsCopySponsoredProductsCampaignsRequestContent {
     /**
-     * 
+     * An array of campaigns.
      * @type {Array<SponsoredProductsCopyCampaign>}
      * @memberof SponsoredProductsCopySponsoredProductsCampaignsRequestContent
      */
@@ -7070,7 +7238,7 @@ export interface SponsoredProductsCreateAdGroup {
      */
     state: SponsoredProductsCreateOrUpdateEntityState;
     /**
-     * A bid value for use when no bid is specified for keywords in the ad group.
+     * A bid value for use when no bid is specified for keywords in the ad group. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsCreateAdGroup
      */
@@ -7095,7 +7263,7 @@ export interface SponsoredProductsCreateCampaign {
      */
     endDate?: string | null;
     /**
-     * 
+     * The name of the campaign.
      * @type {string}
      * @memberof SponsoredProductsCreateCampaign
      */
@@ -7119,7 +7287,7 @@ export interface SponsoredProductsCreateCampaign {
      */
     dynamicBidding?: SponsoredProductsCreateOrUpdateDynamicBidding;
     /**
-     * The format of the date is YYYY-MM-DD.
+     * Default: today\'s date. The format of the date is YYYY-MM-DD.
      * @type {string}
      * @memberof SponsoredProductsCreateCampaign
      */
@@ -7212,7 +7380,7 @@ export interface SponsoredProductsCreateDraftAdGroup {
      */
     name?: string;
     /**
-     * A bid value for use when no bid is specified for keywords in the ad group.
+     * A bid value for use when no bid is specified for keywords in the ad group. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsCreateDraftAdGroup
      */
@@ -7237,7 +7405,7 @@ export interface SponsoredProductsCreateDraftCampaign {
      */
     endDate?: string | null;
     /**
-     * 
+     * The name of the DraftCampaign.
      * @type {string}
      * @memberof SponsoredProductsCreateDraftCampaign
      */
@@ -7292,7 +7460,7 @@ export interface SponsoredProductsCreateDraftKeyword {
      */
     nativeLanguageLocale?: string;
     /**
-     * entity object identifier
+     * The identifer of the campaign to which the draft keyword is associated.
      * @type {string}
      * @memberof SponsoredProductsCreateDraftKeyword
      */
@@ -7304,13 +7472,13 @@ export interface SponsoredProductsCreateDraftKeyword {
      */
     matchType?: SponsoredProductsCreateOrUpdateMatchType;
     /**
-     * Bid associated with this draft keyword. Applicable to biddable match types only
+     * Bid associated with this draft keyword. Applicable to biddable match types only. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsCreateDraftKeyword
      */
     bid?: number;
     /**
-     * entity object identifier
+     * The identifier of the ad group to which this draft keyword is associated.
      * @type {string}
      * @memberof SponsoredProductsCreateDraftKeyword
      */
@@ -7328,6 +7496,18 @@ export interface SponsoredProductsCreateDraftKeyword {
  * @interface SponsoredProductsCreateDraftNegativeKeyword
  */
 export interface SponsoredProductsCreateDraftNegativeKeyword {
+    /**
+     * The unlocalized keyword text in the preferred locale of the advertiser
+     * @type {string}
+     * @memberof SponsoredProductsCreateDraftNegativeKeyword
+     */
+    nativeLanguageKeyword?: string;
+    /**
+     * The locale preference of the advertiser.
+     * @type {string}
+     * @memberof SponsoredProductsCreateDraftNegativeKeyword
+     */
+    nativeLanguageLocale?: string;
     /**
      * The identifer of the campaign to which the keyword is associated.
      * @type {string}
@@ -7446,7 +7626,7 @@ export interface SponsoredProductsCreateDraftTargetingClause {
      */
     state?: SponsoredProductsEntityState;
     /**
-     * The bid for ads sourced using the target. Targets that do not have bid values in listDraftTargetingClauses will inherit the defaultBid from the adGroup level. This table details the maximum allowable bid (in local currency) for keywords by marketplace: | Marketplace | Currency | Min / Max bid for SP | | --- | --- | --- | | US | USD | 0.02 / 1000 | | CA | CAD | 0.02 / 1000 | | UK | GBP | 0.02 / 1000 | | DE | EUR | 0.02 / 1000 | | FR | EUR | 0.02 / 1000 | | ES | EUR | 0.02 / 1000 | | IT | EUR | 0.02 / 1000 | | JP | JPY | 2.0 / 100000 | | AU | AUD | 0.10 / 1410 | | AE | AED | 0.24 / 184.0 |
+     * The bid for ads sourced using the target. Targets that do not have bid values in listDraftTargetingClauses will inherit the defaultBid from the adGroup level. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsCreateDraftTargetingClause
      */
@@ -7518,7 +7698,7 @@ export interface SponsoredProductsCreateGlobalCampaign {
      */
     endDate?: string;
     /**
-     * 
+     * The name of the campaign.
      * @type {string}
      * @memberof SponsoredProductsCreateGlobalCampaign
      */
@@ -7604,7 +7784,7 @@ export interface SponsoredProductsCreateGlobalCampaignNegativeKeyword {
  */
 export interface SponsoredProductsCreateGlobalKeyword {
     /**
-     * entity object identifier
+     * The identifer of the campaign to which the keyword is associated.
      * @type {string}
      * @memberof SponsoredProductsCreateGlobalKeyword
      */
@@ -7634,7 +7814,7 @@ export interface SponsoredProductsCreateGlobalKeyword {
      */
     bid?: SponsoredProductsGlobalBid;
     /**
-     * entity object identifier
+     * The identifier of the ad group to which this keyword is associated.
      * @type {string}
      * @memberof SponsoredProductsCreateGlobalKeyword
      */
@@ -7843,7 +8023,7 @@ export interface SponsoredProductsCreateKeyword {
      */
     nativeLanguageLocale?: string;
     /**
-     * entity object identifier
+     * The identifer of the campaign to which the keyword is associated.
      * @type {string}
      * @memberof SponsoredProductsCreateKeyword
      */
@@ -7861,19 +8041,19 @@ export interface SponsoredProductsCreateKeyword {
      */
     state: SponsoredProductsCreateOrUpdateEntityState;
     /**
-     * Bid associated with this keyword. Applicable to biddable match types only
+     * Bid associated with this keyword. Applicable to biddable match types only. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsCreateKeyword
      */
     bid?: number | null;
     /**
-     * entity object identifier
+     * The identifier of the ad group to which this keyword is associated.
      * @type {string}
      * @memberof SponsoredProductsCreateKeyword
      */
     adGroupId: string;
     /**
-     * 
+     * The keyword text.
      * @type {string}
      * @memberof SponsoredProductsCreateKeyword
      */
@@ -7885,6 +8065,18 @@ export interface SponsoredProductsCreateKeyword {
  * @interface SponsoredProductsCreateNegativeKeyword
  */
 export interface SponsoredProductsCreateNegativeKeyword {
+    /**
+     * The unlocalized keyword text in the preferred locale of the advertiser
+     * @type {string}
+     * @memberof SponsoredProductsCreateNegativeKeyword
+     */
+    nativeLanguageKeyword?: string;
+    /**
+     * The locale preference of the advertiser.
+     * @type {string}
+     * @memberof SponsoredProductsCreateNegativeKeyword
+     */
+    nativeLanguageLocale?: string;
     /**
      * The identifer of the campaign to which the keyword is associated.
      * @type {string}
@@ -7948,7 +8140,7 @@ export interface SponsoredProductsCreateNegativeTargetingClause {
     adGroupId: string;
 }
 /**
- * The bidding strategy. | Value | Strategy name | Description | |----------------|---------------|-------------| | `LEGACY_FOR_SALES` | Dynamic bids - down only | Lowers your bids in real time when your ad may be less likely to convert to a sale. Campaigns created before the release of the bidding controls feature used this setting by default. | | `AUTO_FOR_SALES` | Dynamic bids - up and down | Increases or decreases your bids in real time by a maximum of 100%. With this setting bids increase when your ad is more likely to convert to a sale, and bids decrease when less likely to convert to a sale. | | `MANUAL` | Fixed bid | Uses your exact bid and any placement adjustments you set, and is not subject to dynamic bidding. | | `RULE_BASED` | Rule based bidding | See Rule based bidding documentation https://advertising.amazon.com/API/docs/en-us/sponsored-products/rule-based-bidding/overview |
+ * The bidding strategy. `strategy` is required for create requests if dynamicBidding is provided, but is optional for update requests. | Value | Strategy name | Description | |----------------|---------------|-------------| | `LEGACY_FOR_SALES` | Dynamic bids - down only | Lowers your bids in real time when your ad may be less likely to convert to a sale. Campaigns created before the release of the bidding controls feature used this setting by default. | | `AUTO_FOR_SALES` | Dynamic bids - up and down | Increases or decreases your bids in real time by a maximum of 100%. With this setting bids increase when your ad is more likely to convert to a sale, and bids decrease when less likely to convert to a sale. | | `MANUAL` | Fixed bid | Uses your exact bid and any placement adjustments you set, and is not subject to dynamic bidding. | | `RULE_BASED` | Rule based bidding | See Rule based bidding documentation https://advertising.amazon.com/API/docs/en-us/sponsored-products/rule-based-bidding/overview |
  * @export
  * @enum {string}
  */
@@ -8038,7 +8230,7 @@ export interface SponsoredProductsCreateOrUpdateDraftCampaignDynamicBidding {
     strategy: SponsoredProductsCreateOrUpdateBiddingStrategy;
 }
 /**
- * 
+ * Specifies bidding controls. DynamicBidding is optional for both Create and Update requests. For Create Campaign requests, if you don\'t specify dynamicBidding, default strategy of `LEGACY_FOR_SALES` will be applied.
  * @export
  * @interface SponsoredProductsCreateOrUpdateDynamicBidding
  */
@@ -8054,7 +8246,7 @@ export interface SponsoredProductsCreateOrUpdateDynamicBidding {
      * @type {SponsoredProductsCreateOrUpdateBiddingStrategy}
      * @memberof SponsoredProductsCreateOrUpdateDynamicBidding
      */
-    strategy: SponsoredProductsCreateOrUpdateBiddingStrategy;
+    strategy?: SponsoredProductsCreateOrUpdateBiddingStrategy;
 }
 /**
  * Entity state for create or update operation
@@ -8209,7 +8401,7 @@ export interface SponsoredProductsCreateProductAd {
  */
 export interface SponsoredProductsCreateSponsoredProductsAdGroupsRequestContent {
     /**
-     * 
+     * An array of adGroups.
      * @type {Array<SponsoredProductsCreateAdGroup>}
      * @memberof SponsoredProductsCreateSponsoredProductsAdGroupsRequestContent
      */
@@ -8235,7 +8427,7 @@ export interface SponsoredProductsCreateSponsoredProductsAdGroupsResponseContent
  */
 export interface SponsoredProductsCreateSponsoredProductsCampaignNegativeKeywordsRequestContent {
     /**
-     * 
+     * An array of campaignNegativeKeywords.
      * @type {Array<SponsoredProductsCreateCampaignNegativeKeyword>}
      * @memberof SponsoredProductsCreateSponsoredProductsCampaignNegativeKeywordsRequestContent
      */
@@ -8261,7 +8453,7 @@ export interface SponsoredProductsCreateSponsoredProductsCampaignNegativeKeyword
  */
 export interface SponsoredProductsCreateSponsoredProductsCampaignNegativeTargetingClausesRequestContent {
     /**
-     * 
+     * An array of Campaign Negative TargetingClauses.
      * @type {Array<SponsoredProductsCreateCampaignNegativeTargetingClause>}
      * @memberof SponsoredProductsCreateSponsoredProductsCampaignNegativeTargetingClausesRequestContent
      */
@@ -8287,7 +8479,7 @@ export interface SponsoredProductsCreateSponsoredProductsCampaignNegativeTargeti
  */
 export interface SponsoredProductsCreateSponsoredProductsCampaignsRequestContent {
     /**
-     * 
+     * An array of campaigns.
      * @type {Array<SponsoredProductsCreateCampaign>}
      * @memberof SponsoredProductsCreateSponsoredProductsCampaignsRequestContent
      */
@@ -8313,7 +8505,7 @@ export interface SponsoredProductsCreateSponsoredProductsCampaignsResponseConten
  */
 export interface SponsoredProductsCreateSponsoredProductsDraftAdGroupsRequestContent {
     /**
-     * 
+     * An array of draftAdGroups.
      * @type {Array<SponsoredProductsCreateDraftAdGroup>}
      * @memberof SponsoredProductsCreateSponsoredProductsDraftAdGroupsRequestContent
      */
@@ -8339,7 +8531,7 @@ export interface SponsoredProductsCreateSponsoredProductsDraftAdGroupsResponseCo
  */
 export interface SponsoredProductsCreateSponsoredProductsDraftCampaignsRequestContent {
     /**
-     * 
+     * An array of drafts.
      * @type {Array<SponsoredProductsCreateDraftCampaign>}
      * @memberof SponsoredProductsCreateSponsoredProductsDraftCampaignsRequestContent
      */
@@ -8365,7 +8557,7 @@ export interface SponsoredProductsCreateSponsoredProductsDraftCampaignsResponseC
  */
 export interface SponsoredProductsCreateSponsoredProductsDraftKeywordsRequestContent {
     /**
-     * 
+     * An array of draft keywords.
      * @type {Array<SponsoredProductsCreateDraftKeyword>}
      * @memberof SponsoredProductsCreateSponsoredProductsDraftKeywordsRequestContent
      */
@@ -8391,7 +8583,7 @@ export interface SponsoredProductsCreateSponsoredProductsDraftKeywordsResponseCo
  */
 export interface SponsoredProductsCreateSponsoredProductsDraftNegativeKeywordsRequestContent {
     /**
-     * 
+     * An array of negativeKeywords.
      * @type {Array<SponsoredProductsCreateDraftNegativeKeyword>}
      * @memberof SponsoredProductsCreateSponsoredProductsDraftNegativeKeywordsRequestContent
      */
@@ -8417,7 +8609,7 @@ export interface SponsoredProductsCreateSponsoredProductsDraftNegativeKeywordsRe
  */
 export interface SponsoredProductsCreateSponsoredProductsDraftNegativeTargetingClausesRequestContent {
     /**
-     * 
+     * An array of negativeTargetingClauses.
      * @type {Array<SponsoredProductsCreateDraftNegativeTargetingClause>}
      * @memberof SponsoredProductsCreateSponsoredProductsDraftNegativeTargetingClausesRequestContent
      */
@@ -8469,7 +8661,7 @@ export interface SponsoredProductsCreateSponsoredProductsDraftProductAdsResponse
  */
 export interface SponsoredProductsCreateSponsoredProductsDraftTargetingClausesRequestContent {
     /**
-     * 
+     * An array of draftTargetingClauses.
      * @type {Array<SponsoredProductsCreateDraftTargetingClause>}
      * @memberof SponsoredProductsCreateSponsoredProductsDraftTargetingClausesRequestContent
      */
@@ -8495,7 +8687,7 @@ export interface SponsoredProductsCreateSponsoredProductsDraftTargetingClausesRe
  */
 export interface SponsoredProductsCreateSponsoredProductsGlobalAdGroupsRequestContent {
     /**
-     * 
+     * An array of adGroups.
      * @type {Array<SponsoredProductsCreateGlobalAdGroup>}
      * @memberof SponsoredProductsCreateSponsoredProductsGlobalAdGroupsRequestContent
      */
@@ -8573,7 +8765,7 @@ export interface SponsoredProductsCreateSponsoredProductsGlobalCampaignsResponse
  */
 export interface SponsoredProductsCreateSponsoredProductsGlobalKeywordsRequestContent {
     /**
-     * 
+     * An array of keywords.
      * @type {Array<SponsoredProductsCreateGlobalKeyword>}
      * @memberof SponsoredProductsCreateSponsoredProductsGlobalKeywordsRequestContent
      */
@@ -8703,7 +8895,7 @@ export interface SponsoredProductsCreateSponsoredProductsGlobalTargetingClausesR
  */
 export interface SponsoredProductsCreateSponsoredProductsKeywordsRequestContent {
     /**
-     * 
+     * An array of keywords.
      * @type {Array<SponsoredProductsCreateKeyword>}
      * @memberof SponsoredProductsCreateSponsoredProductsKeywordsRequestContent
      */
@@ -8729,7 +8921,7 @@ export interface SponsoredProductsCreateSponsoredProductsKeywordsResponseContent
  */
 export interface SponsoredProductsCreateSponsoredProductsNegativeKeywordsRequestContent {
     /**
-     * 
+     * An array of negativeKeywords.
      * @type {Array<SponsoredProductsCreateNegativeKeyword>}
      * @memberof SponsoredProductsCreateSponsoredProductsNegativeKeywordsRequestContent
      */
@@ -8755,7 +8947,7 @@ export interface SponsoredProductsCreateSponsoredProductsNegativeKeywordsRespons
  */
 export interface SponsoredProductsCreateSponsoredProductsNegativeTargetingClausesRequestContent {
     /**
-     * 
+     * An array of negativeTargeting.
      * @type {Array<SponsoredProductsCreateNegativeTargetingClause>}
      * @memberof SponsoredProductsCreateSponsoredProductsNegativeTargetingClausesRequestContent
      */
@@ -8781,7 +8973,7 @@ export interface SponsoredProductsCreateSponsoredProductsNegativeTargetingClause
  */
 export interface SponsoredProductsCreateSponsoredProductsProductAdsRequestContent {
     /**
-     * 
+     * An array of ads.
      * @type {Array<SponsoredProductsCreateProductAd>}
      * @memberof SponsoredProductsCreateSponsoredProductsProductAdsRequestContent
      */
@@ -8807,7 +8999,7 @@ export interface SponsoredProductsCreateSponsoredProductsProductAdsResponseConte
  */
 export interface SponsoredProductsCreateSponsoredProductsTargetingClausesRequestContent {
     /**
-     * 
+     * An array of targetingClauses.
      * @type {Array<SponsoredProductsCreateTargetingClause>}
      * @memberof SponsoredProductsCreateSponsoredProductsTargetingClausesRequestContent
      */
@@ -8857,7 +9049,7 @@ export interface SponsoredProductsCreateTargetingClause {
      */
     state: SponsoredProductsCreateOrUpdateEntityState;
     /**
-     * The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. This table details the maximum allowable bid (in local currency) for keywords by marketplace: | Marketplace | Currency | Min / Max bid for SP | | --- | --- | --- | | US | USD | 0.02 / 1000 | | CA | CAD | 0.02 / 1000 | | UK | GBP | 0.02 / 1000 | | DE | EUR | 0.02 / 1000 | | FR | EUR | 0.02 / 1000 | | ES | EUR | 0.02 / 1000 | | IT | EUR | 0.02 / 1000 | | JP | JPY | 2.0 / 100000 | | AU | AUD | 0.10 / 1410 | | AE | AED | 0.24 / 184.0 |
+     * The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsCreateTargetingClause
      */
@@ -8889,7 +9081,7 @@ export interface SponsoredProductsCreateTargetingExpressionPredicate {
     value?: string;
 }
 /**
- * The type of targeting expression. You can specify values for the following predicates: | Predicate | Description | | --- | --- | | `ASIN_CATEGORY_SAME_AS` | Negatively Target the same category as the category expressed. | | `ASIN_BRAND_SAME_AS` | Target the brand that is the same as the brand expressed. | | `ASIN_PRICE_LESS_THAN` | Target a price that is less than the price expressed. | | `ASIN_PRICE_BETWEEN` | Target a price that is between the prices expressed. | | `ASIN_PRICE_GREATER_THAN` | Target a price that is greater than the price expressed. | | `ASIN_REVIEW_RATING_LESS_THAN` | Target a review rating less than the review rating that is expressed. | | `ASIN_REVIEW_RATING_BETWEEN` | Target a review rating that is between the review ratings expressed. | | `ASIN_REVIEW_RATING_GREATER_THAN` | Target a review rating that is greater than the review rating expressed. | | `ASIN_SAME_AS` | Target an ASIN that is the same as the ASIN expressed. | | `ASIN_IS_PRIME_SHIPPING_ELIGIBLE` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. | | `ASIN_AGE_RANGE_SAME_AS` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. | | `ASIN_GENRE_SAME_AS` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   | | `ASIN_EXPANDED_FROM` | Target products similar in performance to the ASIN expressed.   |
+ * The type of targeting expression. You can specify values for the following predicates: | Predicate | Description | | --- | --- | | `ASIN_CATEGORY_SAME_AS` | Target the category that is the same as the category expressed. | | `ASIN_BRAND_SAME_AS` | Target the brand that is the same as the brand expressed. | | `ASIN_PRICE_LESS_THAN` | Target a price that is less than the price expressed. | | `ASIN_PRICE_BETWEEN` | Target a price that is between the prices expressed. | | `ASIN_PRICE_GREATER_THAN` | Target a price that is greater than the price expressed. | | `ASIN_REVIEW_RATING_LESS_THAN` | Target a review rating less than the review rating that is expressed. | | `ASIN_REVIEW_RATING_BETWEEN` | Target a review rating that is between the review ratings expressed. | | `ASIN_REVIEW_RATING_GREATER_THAN` | Target a review rating that is greater than the review rating expressed. | | `ASIN_SAME_AS` | Target an ASIN that is the same as the ASIN expressed. | | `ASIN_IS_PRIME_SHIPPING_ELIGIBLE` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. | | `ASIN_AGE_RANGE_SAME_AS` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. | | `ASIN_GENRE_SAME_AS` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   | | `ASIN_EXPANDED_FROM` | Target products similar in performance to the ASIN expressed.   |
  * @export
  * @enum {string}
  */
@@ -9012,7 +9204,8 @@ export enum SponsoredProductsDateErrorReason {
     EndDateLaterThanMaximum = 'END_DATE_LATER_THAN_MAXIMUM',
     StartDateAfterEndDate = 'START_DATE_AFTER_END_DATE',
     UpdatingReadOnlyStartDate = 'UPDATING_READ_ONLY_START_DATE',
-    UpdatingReadOnlyEndDate = 'UPDATING_READ_ONLY_END_DATE'
+    UpdatingReadOnlyEndDate = 'UPDATING_READ_ONLY_END_DATE',
+    UpdatingEndedCampaignWithoutExtension = 'UPDATING_ENDED_CAMPAIGN_WITHOUT_EXTENSION'
 }
 
 /**
@@ -9690,7 +9883,7 @@ export interface SponsoredProductsDraftAdGroup {
      */
     adGroupId: string;
     /**
-     * A bid value for use when no bid is specified for keywords in the ad group.
+     * A bid value for use when no bid is specified for keywords in the ad group. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsDraftAdGroup
      */
@@ -10006,13 +10199,13 @@ export interface SponsoredProductsDraftCampaign {
      */
     endDate?: string | null;
     /**
-     * entity object identifier
+     * The identifier of the draft.
      * @type {string}
      * @memberof SponsoredProductsDraftCampaign
      */
     campaignId: string;
     /**
-     * 
+     * The name of the draft.
      * @type {string}
      * @memberof SponsoredProductsDraftCampaign
      */
@@ -10901,7 +11094,7 @@ export interface SponsoredProductsDraftCampaignPromotionStatus {
  */
 export interface SponsoredProductsDraftKeyword {
     /**
-     * entity object identifier
+     * The identifier of the draft keyword.
      * @type {string}
      * @memberof SponsoredProductsDraftKeyword
      */
@@ -10913,7 +11106,7 @@ export interface SponsoredProductsDraftKeyword {
      */
     nativeLanguageLocale?: string;
     /**
-     * entity object identifier
+     * The identifier of the campaign to which the draft keyword is associated.
      * @type {string}
      * @memberof SponsoredProductsDraftKeyword
      */
@@ -10931,19 +11124,19 @@ export interface SponsoredProductsDraftKeyword {
      */
     nativeLanguageDraftKeyword?: string;
     /**
-     * Bid associated with this draft keyword. Applicable to biddable match types only
+     * Bid associated with this draft keyword. Applicable to biddable match types only. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsDraftKeyword
      */
     bid?: number | null;
     /**
-     * entity object identifier
+     * The identifier of the ad group to which this draft keyword is associated.
      * @type {string}
      * @memberof SponsoredProductsDraftKeyword
      */
     adGroupId: string;
     /**
-     * 
+     * The draft keyword text.
      * @type {string}
      * @memberof SponsoredProductsDraftKeyword
      */
@@ -11264,6 +11457,18 @@ export interface SponsoredProductsDraftNegativeKeyword {
      * @memberof SponsoredProductsDraftNegativeKeyword
      */
     keywordId: string;
+    /**
+     * The unlocalized keyword text in the preferred locale of the advertiser
+     * @type {string}
+     * @memberof SponsoredProductsDraftNegativeKeyword
+     */
+    nativeLanguageKeyword?: string;
+    /**
+     * The locale preference of the advertiser.
+     * @type {string}
+     * @memberof SponsoredProductsDraftNegativeKeyword
+     */
+    nativeLanguageLocale?: string;
     /**
      * The identifier of the campaign to which the keyword is associated.
      * @type {string}
@@ -12377,7 +12582,7 @@ export interface SponsoredProductsDraftTargetingClause {
      */
     state?: SponsoredProductsEntityState;
     /**
-     * The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. This table details the maximum allowable bid (in local currency) for keywords by marketplace: | Marketplace | Currency | Min / Max bid for SP | | --- | --- | --- | | US | USD | 0.02 / 1000 | | CA | CAD | 0.02 / 1000 | | UK | GBP | 0.02 / 1000 | | DE | EUR | 0.02 / 1000 | | FR | EUR | 0.02 / 1000 | | ES | EUR | 0.02 / 1000 | | IT | EUR | 0.02 / 1000 | | JP | JPY | 2.0 / 100000 | | AU | AUD | 0.10 / 1410 | | AE | AED | 0.24 / 184.0 |
+     * The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsDraftTargetingClause
      */
@@ -12617,7 +12822,7 @@ export interface SponsoredProductsEntityQuotaError {
     message: string;
 }
 /**
- * The current resource state.
+ * The current resource state. | State | Description | | --- | --- | | `ENABLED` | Enabled State | | `PAUSED` | Paused State | | `ARCHIVED` | ARCHIVED State | | `ENABLING` | State for Draft Entity Only | | `USER_DELETED` | State for Draft Entity Only | | `OTHER` | Read Only |
  * @export
  * @enum {string}
  */
@@ -13083,7 +13288,7 @@ export interface SponsoredProductsGlobalCampaign {
      */
     endDate?: string;
     /**
-     * entity object identifier
+     * The identifier of the campaign.
      * @type {string}
      * @memberof SponsoredProductsGlobalCampaign
      */
@@ -13095,7 +13300,7 @@ export interface SponsoredProductsGlobalCampaign {
      */
     applicableMarketplaces?: Array<string>;
     /**
-     * 
+     * The name of the campaign.
      * @type {string}
      * @memberof SponsoredProductsGlobalCampaign
      */
@@ -13438,13 +13643,13 @@ export interface SponsoredProductsGlobalEntityState {
  */
 export interface SponsoredProductsGlobalKeyword {
     /**
-     * entity object identifier
+     * The identifier of the keyword.
      * @type {string}
      * @memberof SponsoredProductsGlobalKeyword
      */
     keywordId: string;
     /**
-     * entity object identifier
+     * The identifier of the campaign to which the keyword is associated.
      * @type {string}
      * @memberof SponsoredProductsGlobalKeyword
      */
@@ -13474,7 +13679,7 @@ export interface SponsoredProductsGlobalKeyword {
      */
     bid: SponsoredProductsGlobalBid;
     /**
-     * entity object identifier
+     * The identifier of the ad group to which this keyword is associated.
      * @type {string}
      * @memberof SponsoredProductsGlobalKeyword
      */
@@ -14516,7 +14721,7 @@ export enum SponsoredProductsInvalidInputErrorReason {
  */
 export interface SponsoredProductsKeyword {
     /**
-     * entity object identifier
+     * The identifier of the keyword.
      * @type {string}
      * @memberof SponsoredProductsKeyword
      */
@@ -14534,7 +14739,7 @@ export interface SponsoredProductsKeyword {
      */
     nativeLanguageLocale?: string;
     /**
-     * entity object identifier
+     * The identifier of the campaign to which the keyword is associated.
      * @type {string}
      * @memberof SponsoredProductsKeyword
      */
@@ -14552,19 +14757,19 @@ export interface SponsoredProductsKeyword {
      */
     state: SponsoredProductsEntityState;
     /**
-     * Bid associated with this keyword. Applicable to biddable match types only
+     * Bid associated with this keyword. Applicable to biddable match types only. Keywords that do not have bid values in listKeywords will inherit the defaultBid from the adGroup level. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsKeyword
      */
     bid?: number;
     /**
-     * entity object identifier
+     * The identifier of the ad group to which this keyword is associated.
      * @type {string}
      * @memberof SponsoredProductsKeyword
      */
     adGroupId: string;
     /**
-     * 
+     * The keyword text.
      * @type {string}
      * @memberof SponsoredProductsKeyword
      */
@@ -15745,6 +15950,12 @@ export interface SponsoredProductsListSponsoredProductsDraftNegativeKeywordsRequ
      */
     includeExtendedDataFields?: boolean;
     /**
+     * The locale preference of the advertiser.
+     * @type {string}
+     * @memberof SponsoredProductsListSponsoredProductsDraftNegativeKeywordsRequestContent
+     */
+    locale?: string;
+    /**
      * 
      * @type {SponsoredProductsObjectIdFilter}
      * @memberof SponsoredProductsListSponsoredProductsDraftNegativeKeywordsRequestContent
@@ -16685,6 +16896,12 @@ export interface SponsoredProductsListSponsoredProductsNegativeKeywordsPreviewRe
      */
     includeExtendedDataFields?: boolean;
     /**
+     * Restricts results to negativeKeywords that match the specified locale.
+     * @type {string}
+     * @memberof SponsoredProductsListSponsoredProductsNegativeKeywordsPreviewRequestContent
+     */
+    locale?: string;
+    /**
      * 
      * @type {SponsoredProductsObjectIdFilter}
      * @memberof SponsoredProductsListSponsoredProductsNegativeKeywordsPreviewRequestContent
@@ -16770,6 +16987,12 @@ export interface SponsoredProductsListSponsoredProductsNegativeKeywordsRequestCo
      * @memberof SponsoredProductsListSponsoredProductsNegativeKeywordsRequestContent
      */
     includeExtendedDataFields?: boolean;
+    /**
+     * Restricts results to negativeKeywords that match the specified locale.
+     * @type {string}
+     * @memberof SponsoredProductsListSponsoredProductsNegativeKeywordsRequestContent
+     */
+    locale?: string;
     /**
      * 
      * @type {SponsoredProductsObjectIdFilter}
@@ -17645,6 +17868,18 @@ export interface SponsoredProductsNegativeKeyword {
      * @memberof SponsoredProductsNegativeKeyword
      */
     keywordId: string;
+    /**
+     * The unlocalized keyword text in the preferred locale of the advertiser
+     * @type {string}
+     * @memberof SponsoredProductsNegativeKeyword
+     */
+    nativeLanguageKeyword?: string;
+    /**
+     * The locale preference of the advertiser.
+     * @type {string}
+     * @memberof SponsoredProductsNegativeKeyword
+     */
+    nativeLanguageLocale?: string;
     /**
      * The identifier of the campaign to which the keyword is associated.
      * @type {string}
@@ -19393,7 +19628,7 @@ export interface SponsoredProductsTargetingClause {
      */
     state: SponsoredProductsEntityState;
     /**
-     * The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. This table details the maximum allowable bid (in local currency) for keywords by marketplace: | Marketplace | Currency | Min / Max bid for SP | | --- | --- | --- | | US | USD | 0.02 / 1000 | | CA | CAD | 0.02 / 1000 | | UK | GBP | 0.02 / 1000 | | DE | EUR | 0.02 / 1000 | | FR | EUR | 0.02 / 1000 | | ES | EUR | 0.02 / 1000 | | IT | EUR | 0.02 / 1000 | | JP | JPY | 2.0 / 100000 | | AU | AUD | 0.10 / 1410 | | AE | AED | 0.24 / 184.0 |
+     * The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsTargetingClause
      */
@@ -19569,7 +19804,7 @@ export interface SponsoredProductsTargetingExpressionPredicateMarketValue {
     value?: string;
 }
 /**
- * The type of targeting expression. You can specify values for the following predicates: | Predicate | Description | | --- | --- | | `QUERY_BROAD_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Loose match` target type in the UI, this will show your ad to shoppers who use search terms loosely related to your products.| | `QUERY_HIGH_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Close match` target type in the UI, this will show your ad to shoppers who use search terms closely related to your products.| | `ASIN_ACCESSORY_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Complements` target type in the UI, this will show your ad to shoppers who view the detail pages of products that complement your product.| | `ASIN_SUBSTITUTE_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Substitutes` target type in the UI, this will show your ad to shoppers who use detail pages of products similar to yours.| | `ASIN_CATEGORY_SAME_AS` | Negatively Target the same category as the category expressed. | | `ASIN_BRAND_SAME_AS` | Target the brand that is the same as the brand expressed. | | `ASIN_PRICE_LESS_THAN` | Target a price that is less than the price expressed. | | `ASIN_PRICE_BETWEEN` | Target a price that is between the prices expressed. | | `ASIN_PRICE_GREATER_THAN` | Target a price that is greater than the price expressed. | | `ASIN_REVIEW_RATING_LESS_THAN` | Target a review rating less than the review rating that is expressed. | | `ASIN_REVIEW_RATING_BETWEEN` | Target a review rating that is between the review ratings expressed. | | `ASIN_REVIEW_RATING_GREATER_THAN` | Target a review rating that is greater than the review rating expressed. | | `ASIN_SAME_AS` | Target an ASIN that is the same as the ASIN expressed. | | `ASIN_IS_PRIME_SHIPPING_ELIGIBLE` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. | | `ASIN_AGE_RANGE_SAME_AS` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. | | `ASIN_GENRE_SAME_AS` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   | | `ASIN_EXPANDED_FROM` | Target products similar in performance to the ASIN expressed.   | | `OTHER` | Other Type.   |
+ * The type of targeting expression. You can specify values for the following predicates: | Predicate | Description | | --- | --- | | `QUERY_BROAD_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Loose match` target type in the UI, this will show your ad to shoppers who use search terms loosely related to your products.| | `QUERY_HIGH_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Close match` target type in the UI, this will show your ad to shoppers who use search terms closely related to your products.| | `ASIN_ACCESSORY_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Complements` target type in the UI, this will show your ad to shoppers who view the detail pages of products that complement your product.| | `ASIN_SUBSTITUTE_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Substitutes` target type in the UI, this will show your ad to shoppers who use detail pages of products similar to yours.| | `ASIN_CATEGORY_SAME_AS` | Target the category that is the same as the category expressed | | `ASIN_BRAND_SAME_AS` | Target the brand that is the same as the brand expressed. | | `ASIN_PRICE_LESS_THAN` | Target a price that is less than the price expressed. | | `ASIN_PRICE_BETWEEN` | Target a price that is between the prices expressed. | | `ASIN_PRICE_GREATER_THAN` | Target a price that is greater than the price expressed. | | `ASIN_REVIEW_RATING_LESS_THAN` | Target a review rating less than the review rating that is expressed. | | `ASIN_REVIEW_RATING_BETWEEN` | Target a review rating that is between the review ratings expressed. | | `ASIN_REVIEW_RATING_GREATER_THAN` | Target a review rating that is greater than the review rating expressed. | | `ASIN_SAME_AS` | Target an ASIN that is the same as the ASIN expressed. | | `ASIN_IS_PRIME_SHIPPING_ELIGIBLE` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. | | `ASIN_AGE_RANGE_SAME_AS` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. | | `ASIN_GENRE_SAME_AS` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   | | `ASIN_EXPANDED_FROM` | Target products similar in performance to the ASIN expressed.   | | `OTHER` | Other Type.   |
  * @export
  * @enum {string}
  */
@@ -19596,7 +19831,7 @@ export enum SponsoredProductsTargetingExpressionPredicateType {
 }
 
 /**
- * The type of targeting expression. You can specify values for the following predicates: | Predicate | Description | | --- | --- | | `QUERY_BROAD_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Loose match` target type in the UI, this will show your ad to shoppers who use search terms loosely related to your products.| | `QUERY_HIGH_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Close match` target type in the UI, this will show your ad to shoppers who use search terms closely related to your products.| | `ASIN_ACCESSORY_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Complements` target type in the UI, this will show your ad to shoppers who view the detail pages of products that complement your product.| | `ASIN_SUBSTITUTE_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Substitutes` target type in the UI, this will show your ad to shoppers who use detail pages of products similar to yours.| | `ASIN_CATEGORY_SAME_AS` | Negatively Target the same category as the category expressed. | | `ASIN_BRAND_SAME_AS` | Target the brand that is the same as the brand expressed. | | `ASIN_PRICE_LESS_THAN` | Target a price that is less than the price expressed. | | `ASIN_PRICE_BETWEEN` | Target a price that is between the prices expressed. | | `ASIN_PRICE_GREATER_THAN` | Target a price that is greater than the price expressed. | | `ASIN_REVIEW_RATING_LESS_THAN` | Target a review rating less than the review rating that is expressed. | | `ASIN_REVIEW_RATING_BETWEEN` | Target a review rating that is between the review ratings expressed. | | `ASIN_REVIEW_RATING_GREATER_THAN` | Target a review rating that is greater than the review rating expressed. | | `ASIN_SAME_AS` | Target an ASIN that is the same as the ASIN expressed. | | `ASIN_IS_PRIME_SHIPPING_ELIGIBLE` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. | | `ASIN_AGE_RANGE_SAME_AS` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. | | `ASIN_GENRE_SAME_AS` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   | | `ASIN_EXPANDED_FROM` | Target products similar in performance to the ASIN expressed.   | | `OTHER` | Other Type.   |
+ * The type of targeting expression. You can specify values for the following predicates: | Predicate | Description | | --- | --- | | `QUERY_BROAD_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Loose match` target type in the UI, this will show your ad to shoppers who use search terms loosely related to your products.| | `QUERY_HIGH_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Close match` target type in the UI, this will show your ad to shoppers who use search terms closely related to your products.| | `ASIN_ACCESSORY_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Complements` target type in the UI, this will show your ad to shoppers who view the detail pages of products that complement your product.| | `ASIN_SUBSTITUTE_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Substitutes` target type in the UI, this will show your ad to shoppers who use detail pages of products similar to yours.| | `ASIN_CATEGORY_SAME_AS` | Target the category that is the same as the category expressed | | `ASIN_BRAND_SAME_AS` | Target the brand that is the same as the brand expressed. | | `ASIN_PRICE_LESS_THAN` | Target a price that is less than the price expressed. | | `ASIN_PRICE_BETWEEN` | Target a price that is between the prices expressed. | | `ASIN_PRICE_GREATER_THAN` | Target a price that is greater than the price expressed. | | `ASIN_REVIEW_RATING_LESS_THAN` | Target a review rating less than the review rating that is expressed. | | `ASIN_REVIEW_RATING_BETWEEN` | Target a review rating that is between the review ratings expressed. | | `ASIN_REVIEW_RATING_GREATER_THAN` | Target a review rating that is greater than the review rating expressed. | | `ASIN_SAME_AS` | Target an ASIN that is the same as the ASIN expressed. | | `ASIN_IS_PRIME_SHIPPING_ELIGIBLE` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. | | `ASIN_AGE_RANGE_SAME_AS` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. | | `ASIN_GENRE_SAME_AS` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   | | `ASIN_EXPANDED_FROM` | Target products similar in performance to the ASIN expressed.   | | `OTHER` | Other Type.   |
  * @export
  * @enum {string}
  */
@@ -19819,13 +20054,13 @@ export interface SponsoredProductsUpdateAdGroup {
      * @type {string}
      * @memberof SponsoredProductsUpdateAdGroup
      */
-    name: string;
+    name?: string;
     /**
      * 
      * @type {SponsoredProductsCreateOrUpdateEntityState}
      * @memberof SponsoredProductsUpdateAdGroup
      */
-    state: SponsoredProductsCreateOrUpdateEntityState;
+    state?: SponsoredProductsCreateOrUpdateEntityState;
     /**
      * The identifier of the keyword.
      * @type {string}
@@ -19833,11 +20068,11 @@ export interface SponsoredProductsUpdateAdGroup {
      */
     adGroupId: string;
     /**
-     * A bid value for use when no bid is specified for keywords in the ad group.
+     * A bid value for use when no bid is specified for keywords in the ad group. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsUpdateAdGroup
      */
-    defaultBid: number;
+    defaultBid?: number;
 }
 /**
  * 
@@ -19858,7 +20093,7 @@ export interface SponsoredProductsUpdateCampaign {
      */
     endDate?: string | null;
     /**
-     * entity object identifier
+     * The identifier of the campaign.
      * @type {string}
      * @memberof SponsoredProductsUpdateCampaign
      */
@@ -19913,7 +20148,7 @@ export interface SponsoredProductsUpdateCampaign {
  */
 export interface SponsoredProductsUpdateCampaignNegativeKeyword {
     /**
-     * entity object identifier
+     * The identifier of the keyword.
      * @type {string}
      * @memberof SponsoredProductsUpdateCampaignNegativeKeyword
      */
@@ -19969,7 +20204,7 @@ export interface SponsoredProductsUpdateDraftCampaign {
      */
     endDate?: string | null;
     /**
-     * entity object identifier
+     * The identifier of the draft.
      * @type {string}
      * @memberof SponsoredProductsUpdateDraftCampaign
      */
@@ -20061,7 +20296,7 @@ export interface SponsoredProductsUpdateGlobalCampaign {
      */
     endDate?: string;
     /**
-     * entity object identifier
+     * The identifier of the campaign.
      * @type {string}
      * @memberof SponsoredProductsUpdateGlobalCampaign
      */
@@ -20116,7 +20351,7 @@ export interface SponsoredProductsUpdateGlobalCampaign {
  */
 export interface SponsoredProductsUpdateGlobalCampaignNegativeKeyword {
     /**
-     * entity object identifier
+     * The identifier of the keyword.
      * @type {string}
      * @memberof SponsoredProductsUpdateGlobalCampaignNegativeKeyword
      */
@@ -20147,7 +20382,7 @@ export interface SponsoredProductsUpdateGlobalCampaignNegativeKeyword {
  */
 export interface SponsoredProductsUpdateGlobalKeyword {
     /**
-     * entity object identifier
+     * The identifier of the keyword.
      * @type {string}
      * @memberof SponsoredProductsUpdateGlobalKeyword
      */
@@ -20184,7 +20419,7 @@ export interface SponsoredProductsUpdateGlobalKeyword {
  */
 export interface SponsoredProductsUpdateGlobalNegativeKeyword {
     /**
-     * entity object identifier
+     * The identifier of the keyword.
      * @type {string}
      * @memberof SponsoredProductsUpdateGlobalNegativeKeyword
      */
@@ -20326,7 +20561,7 @@ export interface SponsoredProductsUpdateGlobalTargetingClause {
  */
 export interface SponsoredProductsUpdateKeyword {
     /**
-     * entity object identifier
+     * The identifier of the keyword.
      * @type {string}
      * @memberof SponsoredProductsUpdateKeyword
      */
@@ -20338,7 +20573,7 @@ export interface SponsoredProductsUpdateKeyword {
      */
     state?: SponsoredProductsCreateOrUpdateEntityState;
     /**
-     * Bid associated with this keyword. Applicable to biddable match types only
+     * Bid associated with this keyword. Applicable to biddable match types only. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsUpdateKeyword
      */
@@ -20351,7 +20586,7 @@ export interface SponsoredProductsUpdateKeyword {
  */
 export interface SponsoredProductsUpdateNegativeKeyword {
     /**
-     * entity object identifier
+     * The identifier of the keyword.
      * @type {string}
      * @memberof SponsoredProductsUpdateNegativeKeyword
      */
@@ -20414,7 +20649,7 @@ export interface SponsoredProductsUpdateProductAd {
  */
 export interface SponsoredProductsUpdateSponsoredProductsAdGroupsRequestContent {
     /**
-     * 
+     * An array of adGroups with updated values.
      * @type {Array<SponsoredProductsUpdateAdGroup>}
      * @memberof SponsoredProductsUpdateSponsoredProductsAdGroupsRequestContent
      */
@@ -20440,7 +20675,7 @@ export interface SponsoredProductsUpdateSponsoredProductsAdGroupsResponseContent
  */
 export interface SponsoredProductsUpdateSponsoredProductsCampaignNegativeKeywordsRequestContent {
     /**
-     * 
+     * An array of campaignNegativeKeywords with updated values.
      * @type {Array<SponsoredProductsUpdateCampaignNegativeKeyword>}
      * @memberof SponsoredProductsUpdateSponsoredProductsCampaignNegativeKeywordsRequestContent
      */
@@ -20466,7 +20701,7 @@ export interface SponsoredProductsUpdateSponsoredProductsCampaignNegativeKeyword
  */
 export interface SponsoredProductsUpdateSponsoredProductsCampaignNegativeTargetingClausesRequestContent {
     /**
-     * 
+     * An array of Campaign Negative TargetingClauses with updated values.
      * @type {Array<SponsoredProductsUpdateCampaignNegativeTargetingClause>}
      * @memberof SponsoredProductsUpdateSponsoredProductsCampaignNegativeTargetingClausesRequestContent
      */
@@ -20492,7 +20727,7 @@ export interface SponsoredProductsUpdateSponsoredProductsCampaignNegativeTargeti
  */
 export interface SponsoredProductsUpdateSponsoredProductsCampaignsRequestContent {
     /**
-     * 
+     * An array of campaigns with updated values.
      * @type {Array<SponsoredProductsUpdateCampaign>}
      * @memberof SponsoredProductsUpdateSponsoredProductsCampaignsRequestContent
      */
@@ -20518,7 +20753,7 @@ export interface SponsoredProductsUpdateSponsoredProductsCampaignsResponseConten
  */
 export interface SponsoredProductsUpdateSponsoredProductsDraftCampaignsRequestContent {
     /**
-     * 
+     * An array of drafts with updated values.
      * @type {Array<SponsoredProductsUpdateDraftCampaign>}
      * @memberof SponsoredProductsUpdateSponsoredProductsDraftCampaignsRequestContent
      */
@@ -20544,7 +20779,7 @@ export interface SponsoredProductsUpdateSponsoredProductsDraftCampaignsResponseC
  */
 export interface SponsoredProductsUpdateSponsoredProductsGlobalAdGroupsRequestContent {
     /**
-     * 
+     * An array of adGroups with updated values.
      * @type {Array<SponsoredProductsUpdateGlobalAdGroup>}
      * @memberof SponsoredProductsUpdateSponsoredProductsGlobalAdGroupsRequestContent
      */
@@ -20570,7 +20805,7 @@ export interface SponsoredProductsUpdateSponsoredProductsGlobalAdGroupsResponseC
  */
 export interface SponsoredProductsUpdateSponsoredProductsGlobalCampaignNegativeKeywordsRequestContent {
     /**
-     * 
+     * An array of campaignNegativeKeywords with updated values.
      * @type {Array<SponsoredProductsUpdateGlobalCampaignNegativeKeyword>}
      * @memberof SponsoredProductsUpdateSponsoredProductsGlobalCampaignNegativeKeywordsRequestContent
      */
@@ -20596,7 +20831,7 @@ export interface SponsoredProductsUpdateSponsoredProductsGlobalCampaignNegativeK
  */
 export interface SponsoredProductsUpdateSponsoredProductsGlobalCampaignsRequestContent {
     /**
-     * 
+     * An array of campaigns with updated values.
      * @type {Array<SponsoredProductsUpdateGlobalCampaign>}
      * @memberof SponsoredProductsUpdateSponsoredProductsGlobalCampaignsRequestContent
      */
@@ -20622,7 +20857,7 @@ export interface SponsoredProductsUpdateSponsoredProductsGlobalCampaignsResponse
  */
 export interface SponsoredProductsUpdateSponsoredProductsGlobalKeywordsRequestContent {
     /**
-     * 
+     * An array of keywords with updated values.
      * @type {Array<SponsoredProductsUpdateGlobalKeyword>}
      * @memberof SponsoredProductsUpdateSponsoredProductsGlobalKeywordsRequestContent
      */
@@ -20648,7 +20883,7 @@ export interface SponsoredProductsUpdateSponsoredProductsGlobalKeywordsResponseC
  */
 export interface SponsoredProductsUpdateSponsoredProductsGlobalNegativeKeywordsRequestContent {
     /**
-     * 
+     * An array of negativeKeywords with updated values.
      * @type {Array<SponsoredProductsUpdateGlobalNegativeKeyword>}
      * @memberof SponsoredProductsUpdateSponsoredProductsGlobalNegativeKeywordsRequestContent
      */
@@ -20674,7 +20909,7 @@ export interface SponsoredProductsUpdateSponsoredProductsGlobalNegativeKeywordsR
  */
 export interface SponsoredProductsUpdateSponsoredProductsGlobalNegativeTargetingClausesRequestContent {
     /**
-     * 
+     * An array of negativeTargeting with updated values.
      * @type {Array<SponsoredProductsUpdateGlobalNegativeTargetingClause>}
      * @memberof SponsoredProductsUpdateSponsoredProductsGlobalNegativeTargetingClausesRequestContent
      */
@@ -20700,7 +20935,7 @@ export interface SponsoredProductsUpdateSponsoredProductsGlobalNegativeTargeting
  */
 export interface SponsoredProductsUpdateSponsoredProductsGlobalProductAdsRequestContent {
     /**
-     * 
+     * An array of ads with updated values.
      * @type {Array<SponsoredProductsUpdateGlobalProductAd>}
      * @memberof SponsoredProductsUpdateSponsoredProductsGlobalProductAdsRequestContent
      */
@@ -20726,7 +20961,7 @@ export interface SponsoredProductsUpdateSponsoredProductsGlobalProductAdsRespons
  */
 export interface SponsoredProductsUpdateSponsoredProductsGlobalTargetingClausesRequestContent {
     /**
-     * 
+     * An array of targetingClauses with updated values.
      * @type {Array<SponsoredProductsUpdateGlobalTargetingClause>}
      * @memberof SponsoredProductsUpdateSponsoredProductsGlobalTargetingClausesRequestContent
      */
@@ -20752,7 +20987,7 @@ export interface SponsoredProductsUpdateSponsoredProductsGlobalTargetingClausesR
  */
 export interface SponsoredProductsUpdateSponsoredProductsKeywordsRequestContent {
     /**
-     * 
+     * An array of keywords with updated values.
      * @type {Array<SponsoredProductsUpdateKeyword>}
      * @memberof SponsoredProductsUpdateSponsoredProductsKeywordsRequestContent
      */
@@ -20778,7 +21013,7 @@ export interface SponsoredProductsUpdateSponsoredProductsKeywordsResponseContent
  */
 export interface SponsoredProductsUpdateSponsoredProductsNegativeKeywordsRequestContent {
     /**
-     * 
+     * An array of negativeKeywords with updated values.
      * @type {Array<SponsoredProductsUpdateNegativeKeyword>}
      * @memberof SponsoredProductsUpdateSponsoredProductsNegativeKeywordsRequestContent
      */
@@ -20804,7 +21039,7 @@ export interface SponsoredProductsUpdateSponsoredProductsNegativeKeywordsRespons
  */
 export interface SponsoredProductsUpdateSponsoredProductsNegativeTargetingClausesRequestContent {
     /**
-     * 
+     * An array of negativeTargeting with updated values.
      * @type {Array<SponsoredProductsUpdateNegativeTargetingClause>}
      * @memberof SponsoredProductsUpdateSponsoredProductsNegativeTargetingClausesRequestContent
      */
@@ -20830,7 +21065,7 @@ export interface SponsoredProductsUpdateSponsoredProductsNegativeTargetingClause
  */
 export interface SponsoredProductsUpdateSponsoredProductsProductAdsRequestContent {
     /**
-     * 
+     * An array of ads with updated values.
      * @type {Array<SponsoredProductsUpdateProductAd>}
      * @memberof SponsoredProductsUpdateSponsoredProductsProductAdsRequestContent
      */
@@ -20856,7 +21091,7 @@ export interface SponsoredProductsUpdateSponsoredProductsProductAdsResponseConte
  */
 export interface SponsoredProductsUpdateSponsoredProductsTargetingClausesRequestContent {
     /**
-     * 
+     * An array of targetingClauses with updated values.
      * @type {Array<SponsoredProductsUpdateTargetingClause>}
      * @memberof SponsoredProductsUpdateSponsoredProductsTargetingClausesRequestContent
      */
@@ -20906,7 +21141,7 @@ export interface SponsoredProductsUpdateTargetingClause {
      */
     state?: SponsoredProductsCreateOrUpdateEntityState;
     /**
-     * The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. This table details the maximum allowable bid (in local currency) for keywords by marketplace: | Marketplace | Currency | Min / Max bid for SP | | --- | --- | --- | | US | USD | 0.02 / 1000 | | CA | CAD | 0.02 / 1000 | | UK | GBP | 0.02 / 1000 | | DE | EUR | 0.02 / 1000 | | FR | EUR | 0.02 / 1000 | | ES | EUR | 0.02 / 1000 | | IT | EUR | 0.02 / 1000 | | JP | JPY | 2.0 / 100000 | | AU | AUD | 0.10 / 1410 | | AE | AED | 0.24 / 184.0 |
+     * The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {number}
      * @memberof SponsoredProductsUpdateTargetingClause
      */
@@ -20959,6 +21194,19 @@ export interface TargetableCategories {
      * 
      * @type {string}
      * @memberof TargetableCategories
+     */
+    categoryTree?: string;
+}
+/**
+ * Response object containing all targetable categories for the advertiser\'s marketplace in a language of preference (LoP) provide by the locale query parameter. ID is the category ID. NA is the name. TN is the translated name in the language of preference. CH is the list of child categories. TA is if the category is targetable. AsinCountRange is the AsinCounts of the node. Version 4 adds the number of targetable ASINs to each category.
+ * @export
+ * @interface TargetableCategoriesLoP
+ */
+export interface TargetableCategoriesLoP {
+    /**
+     * 
+     * @type {string}
+     * @memberof TargetableCategoriesLoP
      */
     categoryTree?: string;
 }
@@ -21056,7 +21304,7 @@ export enum TargetingGroupBidRecommendationActionEnum {
 }
 
 /**
- * The bid recommendation theme.
+ * The bid recommendation theme. This API currently supports `CONVERSION_OPPORTUNITIES`, `PRIME_DAY`, `FALL_PRIME_DEAL_EVENT`, and `BFCM_HOLIDAY` themes.
  * @export
  * @enum {string}
  */
@@ -21065,14 +21313,7 @@ export enum Theme {
     ConversionOpportunities = 'CONVERSION_OPPORTUNITIES',
     PrimeDay = 'PRIME_DAY',
     FallPrimeDealEvent = 'FALL_PRIME_DEAL_EVENT',
-    ValentinesDay = 'VALENTINES_DAY',
-    BackToSchool = 'BACK_TO_SCHOOL',
-    BfcmHoliday = 'BFCM_HOLIDAY',
-    TimeSaleFestival = 'TIME_SALE_FESTIVAL',
-    FashionTimeSaleFestival = 'FASHION_TIME_SALE_FESTIVAL',
-    GreatRepublicDaySale = 'GREAT_REPUBLIC_DAY_SALE',
-    GreatIndianFestival = 'GREAT_INDIAN_FESTIVAL',
-    SpringSaleEvent = 'SPRING_SALE_EVENT'
+    BfcmHoliday = 'BFCM_HOLIDAY'
 }
 
 /**
@@ -21098,7 +21339,7 @@ export interface ThemeBasedBidRecommendation {
      * @type {ImpactMetrics}
      * @memberof ThemeBasedBidRecommendation
      */
-    impactMetrics?: ImpactMetrics;
+    impactMetrics?: ImpactMetrics | null;
 }
 /**
  * A list of bid recommendation themes and associated bid recommendations.
@@ -21388,6 +21629,31 @@ export interface ValidationException {
      */
     details?: string;
 }
+/**
+ * Metrics benchmark values.
+ * @export
+ * @interface Values
+ */
+export interface Values {
+    /**
+     * 
+     * @type {Conversions}
+     * @memberof Values
+     */
+    conversions?: Conversions;
+    /**
+     * 
+     * @type {Clicks}
+     * @memberof Values
+     */
+    clicks?: Clicks;
+    /**
+     * 
+     * @type {Impressions}
+     * @memberof Values
+     */
+    impressions?: Impressions;
+}
 
 /**
  * AdGroupsApi - axios parameter creator
@@ -21400,7 +21666,7 @@ export const AdGroupsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsAdGroupsRequestContent} sponsoredProductsCreateSponsoredProductsAdGroupsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -21550,7 +21816,7 @@ export const AdGroupsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsAdGroupsRequestContent} sponsoredProductsUpdateSponsoredProductsAdGroupsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -21614,7 +21880,7 @@ export const AdGroupsApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsAdGroupsRequestContent} sponsoredProductsCreateSponsoredProductsAdGroupsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -21651,7 +21917,7 @@ export const AdGroupsApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsAdGroupsRequestContent} sponsoredProductsUpdateSponsoredProductsAdGroupsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -21674,7 +21940,7 @@ export const AdGroupsApiFactory = function (configuration?: Configuration, baseP
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsAdGroupsRequestContent} sponsoredProductsCreateSponsoredProductsAdGroupsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -21708,7 +21974,7 @@ export const AdGroupsApiFactory = function (configuration?: Configuration, baseP
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsAdGroupsRequestContent} sponsoredProductsUpdateSponsoredProductsAdGroupsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -21746,7 +22012,7 @@ export interface AdGroupsApiCreateSponsoredProductsAdGroupsRequest {
     readonly sponsoredProductsCreateSponsoredProductsAdGroupsRequestContent: SponsoredProductsCreateSponsoredProductsAdGroupsRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof AdGroupsApiCreateSponsoredProductsAdGroups
      */
@@ -21837,7 +22103,7 @@ export interface AdGroupsApiUpdateSponsoredProductsAdGroupsRequest {
     readonly sponsoredProductsUpdateSponsoredProductsAdGroupsRequestContent: SponsoredProductsUpdateSponsoredProductsAdGroupsRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof AdGroupsApiUpdateSponsoredProductsAdGroups
      */
@@ -22051,7 +22317,7 @@ export class BudgetRecommendationNewCampaignsApi extends BaseAPI {
 export const BudgetRecommendationsAndMissedOpportunitiesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Given a list of campaigns as input, this API provides the following metrics -  <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign\'s chances of running out of budget. <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. <br> <b>3. Estimated missed impressions, clicks and sales </b> - for all campaigns. These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopt the recommended budget. These are estimates based on previous website traffic and campaign\'s historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions. Note: the API only supports NA region currently and when you send the requst, please make sure the campaign belongs to the corresponding marketplace.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * Given a list of campaigns as input, this API provides the following metrics -  <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign\'s chances of running out of budget. <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. Note: value -1 means we don’t have enough information to compute the campaign’s percent time in budget. <br> <b>3. Estimated missed impressions, clicks and sales </b> - for all campaigns. These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopt the recommended budget. These are estimates based on previous website traffic and campaign\'s historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions. Note: the API only supports NA region currently and when you send the requst, please make sure the campaign belongs to the corresponding marketplace.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Get recommended daily budget and estimated missed opportunities for campaigns.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -22111,7 +22377,7 @@ export const BudgetRecommendationsAndMissedOpportunitiesApiFp = function(configu
     const localVarAxiosParamCreator = BudgetRecommendationsAndMissedOpportunitiesApiAxiosParamCreator(configuration)
     return {
         /**
-         * Given a list of campaigns as input, this API provides the following metrics -  <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign\'s chances of running out of budget. <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. <br> <b>3. Estimated missed impressions, clicks and sales </b> - for all campaigns. These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopt the recommended budget. These are estimates based on previous website traffic and campaign\'s historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions. Note: the API only supports NA region currently and when you send the requst, please make sure the campaign belongs to the corresponding marketplace.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * Given a list of campaigns as input, this API provides the following metrics -  <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign\'s chances of running out of budget. <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. Note: value -1 means we don’t have enough information to compute the campaign’s percent time in budget. <br> <b>3. Estimated missed impressions, clicks and sales </b> - for all campaigns. These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopt the recommended budget. These are estimates based on previous website traffic and campaign\'s historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions. Note: the API only supports NA region currently and when you send the requst, please make sure the campaign belongs to the corresponding marketplace.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Get recommended daily budget and estimated missed opportunities for campaigns.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -22134,7 +22400,7 @@ export const BudgetRecommendationsAndMissedOpportunitiesApiFactory = function (c
     const localVarFp = BudgetRecommendationsAndMissedOpportunitiesApiFp(configuration)
     return {
         /**
-         * Given a list of campaigns as input, this API provides the following metrics -  <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign\'s chances of running out of budget. <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. <br> <b>3. Estimated missed impressions, clicks and sales </b> - for all campaigns. These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopt the recommended budget. These are estimates based on previous website traffic and campaign\'s historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions. Note: the API only supports NA region currently and when you send the requst, please make sure the campaign belongs to the corresponding marketplace.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * Given a list of campaigns as input, this API provides the following metrics -  <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign\'s chances of running out of budget. <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. Note: value -1 means we don’t have enough information to compute the campaign’s percent time in budget. <br> <b>3. Estimated missed impressions, clicks and sales </b> - for all campaigns. These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopt the recommended budget. These are estimates based on previous website traffic and campaign\'s historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions. Note: the API only supports NA region currently and when you send the requst, please make sure the campaign belongs to the corresponding marketplace.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Get recommended daily budget and estimated missed opportunities for campaigns.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -22184,7 +22450,7 @@ export interface BudgetRecommendationsAndMissedOpportunitiesApiGetBudgetRecommen
  */
 export class BudgetRecommendationsAndMissedOpportunitiesApi extends BaseAPI {
     /**
-     * Given a list of campaigns as input, this API provides the following metrics -  <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign\'s chances of running out of budget. <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. <br> <b>3. Estimated missed impressions, clicks and sales </b> - for all campaigns. These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopt the recommended budget. These are estimates based on previous website traffic and campaign\'s historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions. Note: the API only supports NA region currently and when you send the requst, please make sure the campaign belongs to the corresponding marketplace.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+     * Given a list of campaigns as input, this API provides the following metrics -  <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign\'s chances of running out of budget. <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. Note: value -1 means we don’t have enough information to compute the campaign’s percent time in budget. <br> <b>3. Estimated missed impressions, clicks and sales </b> - for all campaigns. These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopt the recommended budget. These are estimates based on previous website traffic and campaign\'s historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions. Note: the API only supports NA region currently and when you send the requst, please make sure the campaign belongs to the corresponding marketplace.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
      * @summary Get recommended daily budget and estimated missed opportunities for campaigns.
      * @param {BudgetRecommendationsAndMissedOpportunitiesApiGetBudgetRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -22468,7 +22734,7 @@ export const BudgetRulesApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * **Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Gets the budget history for a campaign specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
@@ -22775,7 +23041,7 @@ export const BudgetRulesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * **Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Gets the budget history for a campaign specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
@@ -22906,7 +23172,7 @@ export const BudgetRulesApiFactory = function (configuration?: Configuration, ba
             return localVarFp.getCampaignsAssociatedWithSPBudgetRule(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetRuleId, pageSize, nextToken, options).then((request) => request(axios, basePath));
         },
         /**
-         * The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * **Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Gets the budget history for a campaign specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
@@ -23344,7 +23610,7 @@ export class BudgetRulesApi extends BaseAPI {
     }
 
     /**
-     * The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+     * **Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
      * @summary Gets the budget history for a campaign specified by identifier.
      * @param {BudgetRulesApiGetRuleBasedBudgetHistoryForSPCampaignsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -23708,7 +23974,7 @@ export const CampaignNegativeKeywordsApiAxiosParamCreator = function (configurat
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsCampaignNegativeKeywordsRequestContent} sponsoredProductsCreateSponsoredProductsCampaignNegativeKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -23858,7 +24124,7 @@ export const CampaignNegativeKeywordsApiAxiosParamCreator = function (configurat
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsCampaignNegativeKeywordsRequestContent} sponsoredProductsUpdateSponsoredProductsCampaignNegativeKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -23922,7 +24188,7 @@ export const CampaignNegativeKeywordsApiFp = function(configuration?: Configurat
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsCampaignNegativeKeywordsRequestContent} sponsoredProductsCreateSponsoredProductsCampaignNegativeKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -23959,7 +24225,7 @@ export const CampaignNegativeKeywordsApiFp = function(configuration?: Configurat
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsCampaignNegativeKeywordsRequestContent} sponsoredProductsUpdateSponsoredProductsCampaignNegativeKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -23982,7 +24248,7 @@ export const CampaignNegativeKeywordsApiFactory = function (configuration?: Conf
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsCampaignNegativeKeywordsRequestContent} sponsoredProductsCreateSponsoredProductsCampaignNegativeKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -24016,7 +24282,7 @@ export const CampaignNegativeKeywordsApiFactory = function (configuration?: Conf
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsCampaignNegativeKeywordsRequestContent} sponsoredProductsUpdateSponsoredProductsCampaignNegativeKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -24054,7 +24320,7 @@ export interface CampaignNegativeKeywordsApiCreateSponsoredProductsCampaignNegat
     readonly sponsoredProductsCreateSponsoredProductsCampaignNegativeKeywordsRequestContent: SponsoredProductsCreateSponsoredProductsCampaignNegativeKeywordsRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof CampaignNegativeKeywordsApiCreateSponsoredProductsCampaignNegativeKeywords
      */
@@ -24145,7 +24411,7 @@ export interface CampaignNegativeKeywordsApiUpdateSponsoredProductsCampaignNegat
     readonly sponsoredProductsUpdateSponsoredProductsCampaignNegativeKeywordsRequestContent: SponsoredProductsUpdateSponsoredProductsCampaignNegativeKeywordsRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof CampaignNegativeKeywordsApiUpdateSponsoredProductsCampaignNegativeKeywords
      */
@@ -24216,7 +24482,7 @@ export const CampaignNegativeTargetingClausesApiAxiosParamCreator = function (co
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsCampaignNegativeTargetingClausesRequestContent} sponsoredProductsCreateSponsoredProductsCampaignNegativeTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -24366,7 +24632,7 @@ export const CampaignNegativeTargetingClausesApiAxiosParamCreator = function (co
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsCampaignNegativeTargetingClausesRequestContent} sponsoredProductsUpdateSponsoredProductsCampaignNegativeTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -24430,7 +24696,7 @@ export const CampaignNegativeTargetingClausesApiFp = function(configuration?: Co
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsCampaignNegativeTargetingClausesRequestContent} sponsoredProductsCreateSponsoredProductsCampaignNegativeTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -24467,7 +24733,7 @@ export const CampaignNegativeTargetingClausesApiFp = function(configuration?: Co
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsCampaignNegativeTargetingClausesRequestContent} sponsoredProductsUpdateSponsoredProductsCampaignNegativeTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -24490,7 +24756,7 @@ export const CampaignNegativeTargetingClausesApiFactory = function (configuratio
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsCampaignNegativeTargetingClausesRequestContent} sponsoredProductsCreateSponsoredProductsCampaignNegativeTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -24524,7 +24790,7 @@ export const CampaignNegativeTargetingClausesApiFactory = function (configuratio
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsCampaignNegativeTargetingClausesRequestContent} sponsoredProductsUpdateSponsoredProductsCampaignNegativeTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -24562,7 +24828,7 @@ export interface CampaignNegativeTargetingClausesApiCreateSponsoredProductsCampa
     readonly sponsoredProductsCreateSponsoredProductsCampaignNegativeTargetingClausesRequestContent: SponsoredProductsCreateSponsoredProductsCampaignNegativeTargetingClausesRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof CampaignNegativeTargetingClausesApiCreateSponsoredProductsCampaignNegativeTargetingClauses
      */
@@ -24653,7 +24919,7 @@ export interface CampaignNegativeTargetingClausesApiUpdateSponsoredProductsCampa
     readonly sponsoredProductsUpdateSponsoredProductsCampaignNegativeTargetingClausesRequestContent: SponsoredProductsUpdateSponsoredProductsCampaignNegativeTargetingClausesRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof CampaignNegativeTargetingClausesApiUpdateSponsoredProductsCampaignNegativeTargetingClauses
      */
@@ -25448,7 +25714,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsCampaignsRequestContent} sponsoredProductsCreateSponsoredProductsCampaignsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -25598,7 +25864,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsCampaignsRequestContent} sponsoredProductsUpdateSponsoredProductsCampaignsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -25662,7 +25928,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsCampaignsRequestContent} sponsoredProductsCreateSponsoredProductsCampaignsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -25699,7 +25965,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsCampaignsRequestContent} sponsoredProductsUpdateSponsoredProductsCampaignsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -25722,7 +25988,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsCampaignsRequestContent} sponsoredProductsCreateSponsoredProductsCampaignsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -25756,7 +26022,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsCampaignsRequestContent} sponsoredProductsUpdateSponsoredProductsCampaignsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -25794,7 +26060,7 @@ export interface CampaignsApiCreateSponsoredProductsCampaignsRequest {
     readonly sponsoredProductsCreateSponsoredProductsCampaignsRequestContent: SponsoredProductsCreateSponsoredProductsCampaignsRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof CampaignsApiCreateSponsoredProductsCampaigns
      */
@@ -25885,7 +26151,7 @@ export interface CampaignsApiUpdateSponsoredProductsCampaignsRequest {
     readonly sponsoredProductsUpdateSponsoredProductsCampaignsRequestContent: SponsoredProductsUpdateSponsoredProductsCampaignsRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof CampaignsApiUpdateSponsoredProductsCampaigns
      */
@@ -26297,7 +26563,7 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsKeywordsRequestContent} sponsoredProductsCreateSponsoredProductsKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -26447,7 +26713,7 @@ export const KeywordsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsKeywordsRequestContent} sponsoredProductsUpdateSponsoredProductsKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -26511,7 +26777,7 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsKeywordsRequestContent} sponsoredProductsCreateSponsoredProductsKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -26548,7 +26814,7 @@ export const KeywordsApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsKeywordsRequestContent} sponsoredProductsUpdateSponsoredProductsKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -26571,7 +26837,7 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsKeywordsRequestContent} sponsoredProductsCreateSponsoredProductsKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -26605,7 +26871,7 @@ export const KeywordsApiFactory = function (configuration?: Configuration, baseP
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsKeywordsRequestContent} sponsoredProductsUpdateSponsoredProductsKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -26643,7 +26909,7 @@ export interface KeywordsApiCreateSponsoredProductsKeywordsRequest {
     readonly sponsoredProductsCreateSponsoredProductsKeywordsRequestContent: SponsoredProductsCreateSponsoredProductsKeywordsRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof KeywordsApiCreateSponsoredProductsKeywords
      */
@@ -26734,7 +27000,7 @@ export interface KeywordsApiUpdateSponsoredProductsKeywordsRequest {
     readonly sponsoredProductsUpdateSponsoredProductsKeywordsRequestContent: SponsoredProductsUpdateSponsoredProductsKeywordsRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof KeywordsApiUpdateSponsoredProductsKeywords
      */
@@ -26805,7 +27071,7 @@ export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Co
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsNegativeKeywordsRequestContent} sponsoredProductsCreateSponsoredProductsNegativeKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -26955,7 +27221,7 @@ export const NegativeKeywordsApiAxiosParamCreator = function (configuration?: Co
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsNegativeKeywordsRequestContent} sponsoredProductsUpdateSponsoredProductsNegativeKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27019,7 +27285,7 @@ export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsNegativeKeywordsRequestContent} sponsoredProductsCreateSponsoredProductsNegativeKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27056,7 +27322,7 @@ export const NegativeKeywordsApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsNegativeKeywordsRequestContent} sponsoredProductsUpdateSponsoredProductsNegativeKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27079,7 +27345,7 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsNegativeKeywordsRequestContent} sponsoredProductsCreateSponsoredProductsNegativeKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27113,7 +27379,7 @@ export const NegativeKeywordsApiFactory = function (configuration?: Configuratio
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsNegativeKeywordsRequestContent} sponsoredProductsUpdateSponsoredProductsNegativeKeywordsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27151,7 +27417,7 @@ export interface NegativeKeywordsApiCreateSponsoredProductsNegativeKeywordsReque
     readonly sponsoredProductsCreateSponsoredProductsNegativeKeywordsRequestContent: SponsoredProductsCreateSponsoredProductsNegativeKeywordsRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof NegativeKeywordsApiCreateSponsoredProductsNegativeKeywords
      */
@@ -27242,7 +27508,7 @@ export interface NegativeKeywordsApiUpdateSponsoredProductsNegativeKeywordsReque
     readonly sponsoredProductsUpdateSponsoredProductsNegativeKeywordsRequestContent: SponsoredProductsUpdateSponsoredProductsNegativeKeywordsRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof NegativeKeywordsApiUpdateSponsoredProductsNegativeKeywords
      */
@@ -27313,7 +27579,7 @@ export const NegativeTargetingClausesApiAxiosParamCreator = function (configurat
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsNegativeTargetingClausesRequestContent} sponsoredProductsCreateSponsoredProductsNegativeTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27463,7 +27729,7 @@ export const NegativeTargetingClausesApiAxiosParamCreator = function (configurat
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsNegativeTargetingClausesRequestContent} sponsoredProductsUpdateSponsoredProductsNegativeTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27527,7 +27793,7 @@ export const NegativeTargetingClausesApiFp = function(configuration?: Configurat
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsNegativeTargetingClausesRequestContent} sponsoredProductsCreateSponsoredProductsNegativeTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27564,7 +27830,7 @@ export const NegativeTargetingClausesApiFp = function(configuration?: Configurat
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsNegativeTargetingClausesRequestContent} sponsoredProductsUpdateSponsoredProductsNegativeTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27587,7 +27853,7 @@ export const NegativeTargetingClausesApiFactory = function (configuration?: Conf
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsNegativeTargetingClausesRequestContent} sponsoredProductsCreateSponsoredProductsNegativeTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27621,7 +27887,7 @@ export const NegativeTargetingClausesApiFactory = function (configuration?: Conf
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsNegativeTargetingClausesRequestContent} sponsoredProductsUpdateSponsoredProductsNegativeTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27659,7 +27925,7 @@ export interface NegativeTargetingClausesApiCreateSponsoredProductsNegativeTarge
     readonly sponsoredProductsCreateSponsoredProductsNegativeTargetingClausesRequestContent: SponsoredProductsCreateSponsoredProductsNegativeTargetingClausesRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof NegativeTargetingClausesApiCreateSponsoredProductsNegativeTargetingClauses
      */
@@ -27750,7 +28016,7 @@ export interface NegativeTargetingClausesApiUpdateSponsoredProductsNegativeTarge
     readonly sponsoredProductsUpdateSponsoredProductsNegativeTargetingClausesRequestContent: SponsoredProductsUpdateSponsoredProductsNegativeTargetingClausesRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof NegativeTargetingClausesApiUpdateSponsoredProductsNegativeTargetingClauses
      */
@@ -27821,7 +28087,7 @@ export const ProductAdsApiAxiosParamCreator = function (configuration?: Configur
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsProductAdsRequestContent} sponsoredProductsCreateSponsoredProductsProductAdsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -27971,7 +28237,7 @@ export const ProductAdsApiAxiosParamCreator = function (configuration?: Configur
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsProductAdsRequestContent} sponsoredProductsUpdateSponsoredProductsProductAdsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -28035,7 +28301,7 @@ export const ProductAdsApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsProductAdsRequestContent} sponsoredProductsCreateSponsoredProductsProductAdsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -28072,7 +28338,7 @@ export const ProductAdsApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsProductAdsRequestContent} sponsoredProductsUpdateSponsoredProductsProductAdsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -28095,7 +28361,7 @@ export const ProductAdsApiFactory = function (configuration?: Configuration, bas
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsProductAdsRequestContent} sponsoredProductsCreateSponsoredProductsProductAdsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -28129,7 +28395,7 @@ export const ProductAdsApiFactory = function (configuration?: Configuration, bas
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsProductAdsRequestContent} sponsoredProductsUpdateSponsoredProductsProductAdsRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -28167,7 +28433,7 @@ export interface ProductAdsApiCreateSponsoredProductsProductAdsRequest {
     readonly sponsoredProductsCreateSponsoredProductsProductAdsRequestContent: SponsoredProductsCreateSponsoredProductsProductAdsRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof ProductAdsApiCreateSponsoredProductsProductAds
      */
@@ -28258,7 +28524,7 @@ export interface ProductAdsApiUpdateSponsoredProductsProductAdsRequest {
     readonly sponsoredProductsUpdateSponsoredProductsProductAdsRequestContent: SponsoredProductsUpdateSponsoredProductsProductAdsRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof ProductAdsApiUpdateSponsoredProductsProductAds
      */
@@ -28495,11 +28761,12 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} [prefer] Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.
+         * @param {'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'} [locale] The locale to which the caller wishes to translate the list of category recommendations to. For example, if the caller wishes to receive a list of category recommendations in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the returned list of category recommendations will be in the default language of the marketplace.
          * @param {GetCategoryRecommendationsForAsinsRequest} [getCategoryRecommendationsForAsinsRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCategoryRecommendationsForASINs: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, prefer?: string, getCategoryRecommendationsForAsinsRequest?: GetCategoryRecommendationsForAsinsRequest, options: any = {}): Promise<RequestArgs> => {
+        getCategoryRecommendationsForASINs: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, prefer?: string, locale?: 'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN', getCategoryRecommendationsForAsinsRequest?: GetCategoryRecommendationsForAsinsRequest, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('getCategoryRecommendationsForASINs', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
@@ -28515,6 +28782,10 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (locale !== undefined) {
+                localVarQueryParameter['locale'] = locale;
+            }
 
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
                 localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
@@ -28598,10 +28869,11 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} categoryId The category ID. Please use the GetTargetableCategories API or the GetCategoriesForASINs API to retrieve categories IDs. This API does not check if the category is a valid category.
          * @param {string} [prefer] Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.
+         * @param {'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'} [locale] The locale to which the caller wishes to translate the refinements to. For example, if the caller wishes to receive the refinements in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the refinements will be in the default language of the marketplace.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRefinementsForCategory: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, categoryId: string, prefer?: string, options: any = {}): Promise<RequestArgs> => {
+        getRefinementsForCategory: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, categoryId: string, prefer?: string, locale?: 'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN', options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('getRefinementsForCategory', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
@@ -28620,6 +28892,10 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (locale !== undefined) {
+                localVarQueryParameter['locale'] = locale;
+            }
 
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
                 localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
@@ -28703,10 +28979,11 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} [prefer] Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.
+         * @param {'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'} [locale] The locale to which the caller wishes to translate the targetable categories to. For example, if the caller wishes to receive the targetable categories in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the returned targetable categories will be in the default language of the marketplace.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTargetableCategories: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, prefer?: string, options: any = {}): Promise<RequestArgs> => {
+        getTargetableCategories: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, prefer?: string, locale?: 'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN', options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('getTargetableCategories', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
@@ -28722,6 +28999,10 @@ export const ProductTargetingApiAxiosParamCreator = function (configuration?: Co
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (locale !== undefined) {
+                localVarQueryParameter['locale'] = locale;
+            }
 
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
                 localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
@@ -28815,12 +29096,13 @@ export const ProductTargetingApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} [prefer] Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.
+         * @param {'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'} [locale] The locale to which the caller wishes to translate the list of category recommendations to. For example, if the caller wishes to receive a list of category recommendations in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the returned list of category recommendations will be in the default language of the marketplace.
          * @param {GetCategoryRecommendationsForAsinsRequest} [getCategoryRecommendationsForAsinsRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCategoryRecommendationsForASINs(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, prefer?: string, getCategoryRecommendationsForAsinsRequest?: GetCategoryRecommendationsForAsinsRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CategoryRecommendations>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCategoryRecommendationsForASINs(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, prefer, getCategoryRecommendationsForAsinsRequest, options);
+        async getCategoryRecommendationsForASINs(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, prefer?: string, locale?: 'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN', getCategoryRecommendationsForAsinsRequest?: GetCategoryRecommendationsForAsinsRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CategoryRecommendations>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCategoryRecommendationsForASINs(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, prefer, locale, getCategoryRecommendationsForAsinsRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -28843,11 +29125,12 @@ export const ProductTargetingApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} categoryId The category ID. Please use the GetTargetableCategories API or the GetCategoriesForASINs API to retrieve categories IDs. This API does not check if the category is a valid category.
          * @param {string} [prefer] Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.
+         * @param {'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'} [locale] The locale to which the caller wishes to translate the refinements to. For example, if the caller wishes to receive the refinements in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the refinements will be in the default language of the marketplace.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getRefinementsForCategory(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, categoryId: string, prefer?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Refinements>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getRefinementsForCategory(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, categoryId, prefer, options);
+        async getRefinementsForCategory(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, categoryId: string, prefer?: string, locale?: 'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN', options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Refinements>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRefinementsForCategory(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, categoryId, prefer, locale, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -28870,11 +29153,12 @@ export const ProductTargetingApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} [prefer] Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.
+         * @param {'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'} [locale] The locale to which the caller wishes to translate the targetable categories to. For example, if the caller wishes to receive the targetable categories in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the returned targetable categories will be in the default language of the marketplace.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTargetableCategories(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, prefer?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TargetableCategories>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTargetableCategories(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, prefer, options);
+        async getTargetableCategories(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, prefer?: string, locale?: 'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN', options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TargetableCategories>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTargetableCategories(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, prefer, locale, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -28907,12 +29191,13 @@ export const ProductTargetingApiFactory = function (configuration?: Configuratio
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} [prefer] Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.
+         * @param {'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'} [locale] The locale to which the caller wishes to translate the list of category recommendations to. For example, if the caller wishes to receive a list of category recommendations in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the returned list of category recommendations will be in the default language of the marketplace.
          * @param {GetCategoryRecommendationsForAsinsRequest} [getCategoryRecommendationsForAsinsRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCategoryRecommendationsForASINs(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, prefer?: string, getCategoryRecommendationsForAsinsRequest?: GetCategoryRecommendationsForAsinsRequest, options?: any): AxiosPromise<CategoryRecommendations> {
-            return localVarFp.getCategoryRecommendationsForASINs(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, prefer, getCategoryRecommendationsForAsinsRequest, options).then((request) => request(axios, basePath));
+        getCategoryRecommendationsForASINs(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, prefer?: string, locale?: 'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN', getCategoryRecommendationsForAsinsRequest?: GetCategoryRecommendationsForAsinsRequest, options?: any): AxiosPromise<CategoryRecommendations> {
+            return localVarFp.getCategoryRecommendationsForASINs(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, prefer, locale, getCategoryRecommendationsForAsinsRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns brands recommended for negative targeting. Only available for Sellers and Vendors. These recommendations include your own brands because targeting your own brands usually results in lower performance than targeting competitors\' brands.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
@@ -28933,11 +29218,12 @@ export const ProductTargetingApiFactory = function (configuration?: Configuratio
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} categoryId The category ID. Please use the GetTargetableCategories API or the GetCategoriesForASINs API to retrieve categories IDs. This API does not check if the category is a valid category.
          * @param {string} [prefer] Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.
+         * @param {'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'} [locale] The locale to which the caller wishes to translate the refinements to. For example, if the caller wishes to receive the refinements in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the refinements will be in the default language of the marketplace.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRefinementsForCategory(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, categoryId: string, prefer?: string, options?: any): AxiosPromise<Refinements> {
-            return localVarFp.getRefinementsForCategory(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, categoryId, prefer, options).then((request) => request(axios, basePath));
+        getRefinementsForCategory(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, categoryId: string, prefer?: string, locale?: 'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN', options?: any): AxiosPromise<Refinements> {
+            return localVarFp.getRefinementsForCategory(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, categoryId, prefer, locale, options).then((request) => request(axios, basePath));
         },
         /**
          * Get number of targetable asins based on refinements provided by the user. Please use the GetTargetableCategories API or the GetCategoryRecommendationsForASINs API to retrieve the category ID. Please use the GetRefinementsByCategory API to retrieve refinements data for a category.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
@@ -28958,11 +29244,12 @@ export const ProductTargetingApiFactory = function (configuration?: Configuratio
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} [prefer] Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.
+         * @param {'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'} [locale] The locale to which the caller wishes to translate the targetable categories to. For example, if the caller wishes to receive the targetable categories in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the returned targetable categories will be in the default language of the marketplace.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTargetableCategories(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, prefer?: string, options?: any): AxiosPromise<TargetableCategories> {
-            return localVarFp.getTargetableCategories(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, prefer, options).then((request) => request(axios, basePath));
+        getTargetableCategories(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, prefer?: string, locale?: 'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN', options?: any): AxiosPromise<TargetableCategories> {
+            return localVarFp.getTargetableCategories(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, prefer, locale, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns up to 100 brands related to keyword input for negative targeting.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
@@ -29006,6 +29293,13 @@ export interface ProductTargetingApiGetCategoryRecommendationsForASINsRequest {
      * @memberof ProductTargetingApiGetCategoryRecommendationsForASINs
      */
     readonly prefer?: string
+
+    /**
+     * The locale to which the caller wishes to translate the list of category recommendations to. For example, if the caller wishes to receive a list of category recommendations in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the returned list of category recommendations will be in the default language of the marketplace.
+     * @type {'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'}
+     * @memberof ProductTargetingApiGetCategoryRecommendationsForASINs
+     */
+    readonly locale?: 'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'
 
     /**
      * 
@@ -29076,6 +29370,13 @@ export interface ProductTargetingApiGetRefinementsForCategoryRequest {
      * @memberof ProductTargetingApiGetRefinementsForCategory
      */
     readonly prefer?: string
+
+    /**
+     * The locale to which the caller wishes to translate the refinements to. For example, if the caller wishes to receive the refinements in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the refinements will be in the default language of the marketplace.
+     * @type {'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'}
+     * @memberof ProductTargetingApiGetRefinementsForCategory
+     */
+    readonly locale?: 'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'
 }
 
 /**
@@ -29139,6 +29440,13 @@ export interface ProductTargetingApiGetTargetableCategoriesRequest {
      * @memberof ProductTargetingApiGetTargetableCategories
      */
     readonly prefer?: string
+
+    /**
+     * The locale to which the caller wishes to translate the targetable categories to. For example, if the caller wishes to receive the targetable categories in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the returned targetable categories will be in the default language of the marketplace.
+     * @type {'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'}
+     * @memberof ProductTargetingApiGetTargetableCategories
+     */
+    readonly locale?: 'ar_AE' | 'de_DE' | 'en_AE' | 'en_AU' | 'en_CA' | 'en_GB' | 'en_IN' | 'en_SG' | 'en_US' | 'es_ES' | 'es_MX' | 'fr_CA' | 'fr_FR' | 'hi_IN' | 'it_IT' | 'ja_JP' | 'ko_KR' | 'nl_NL' | 'pl_PL' | 'pt_BR' | 'sv_SE' | 'ta_IN' | 'th_TH' | 'tr_TR' | 'vi_VN' | 'zh_CN'
 }
 
 /**
@@ -29192,7 +29500,7 @@ export class ProductTargetingApi extends BaseAPI {
      * @memberof ProductTargetingApi
      */
     public getCategoryRecommendationsForASINs(requestParameters: ProductTargetingApiGetCategoryRecommendationsForASINsRequest, options?: any) {
-        return ProductTargetingApiFp(this.configuration).getCategoryRecommendationsForASINs(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.prefer, requestParameters.getCategoryRecommendationsForAsinsRequest, options).then((request) => request(this.axios, this.basePath));
+        return ProductTargetingApiFp(this.configuration).getCategoryRecommendationsForASINs(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.prefer, requestParameters.locale, requestParameters.getCategoryRecommendationsForAsinsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -29216,7 +29524,7 @@ export class ProductTargetingApi extends BaseAPI {
      * @memberof ProductTargetingApi
      */
     public getRefinementsForCategory(requestParameters: ProductTargetingApiGetRefinementsForCategoryRequest, options?: any) {
-        return ProductTargetingApiFp(this.configuration).getRefinementsForCategory(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.categoryId, requestParameters.prefer, options).then((request) => request(this.axios, this.basePath));
+        return ProductTargetingApiFp(this.configuration).getRefinementsForCategory(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.categoryId, requestParameters.prefer, requestParameters.locale, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -29240,7 +29548,7 @@ export class ProductTargetingApi extends BaseAPI {
      * @memberof ProductTargetingApi
      */
     public getTargetableCategories(requestParameters: ProductTargetingApiGetTargetableCategoriesRequest, options?: any) {
-        return ProductTargetingApiFp(this.configuration).getTargetableCategories(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.prefer, options).then((request) => request(this.axios, this.basePath));
+        return ProductTargetingApiFp(this.configuration).getTargetableCategories(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.prefer, requestParameters.locale, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -29268,7 +29576,7 @@ export const TargetingClausesApiAxiosParamCreator = function (configuration?: Co
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsTargetingClausesRequestContent} sponsoredProductsCreateSponsoredProductsTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -29418,7 +29726,7 @@ export const TargetingClausesApiAxiosParamCreator = function (configuration?: Co
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsTargetingClausesRequestContent} sponsoredProductsUpdateSponsoredProductsTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -29482,7 +29790,7 @@ export const TargetingClausesApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsTargetingClausesRequestContent} sponsoredProductsCreateSponsoredProductsTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -29519,7 +29827,7 @@ export const TargetingClausesApiFp = function(configuration?: Configuration) {
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsTargetingClausesRequestContent} sponsoredProductsUpdateSponsoredProductsTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -29542,7 +29850,7 @@ export const TargetingClausesApiFactory = function (configuration?: Configuratio
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsCreateSponsoredProductsTargetingClausesRequestContent} sponsoredProductsCreateSponsoredProductsTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -29576,7 +29884,7 @@ export const TargetingClausesApiFactory = function (configuration?: Configuratio
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use GET method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {SponsoredProductsUpdateSponsoredProductsTargetingClausesRequestContent} sponsoredProductsUpdateSponsoredProductsTargetingClausesRequestContent 
-         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+         * @param {string} [prefer] The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -29614,7 +29922,7 @@ export interface TargetingClausesApiCreateSponsoredProductsTargetingClausesReque
     readonly sponsoredProductsCreateSponsoredProductsTargetingClausesRequestContent: SponsoredProductsCreateSponsoredProductsTargetingClausesRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof TargetingClausesApiCreateSponsoredProductsTargetingClauses
      */
@@ -29705,7 +30013,7 @@ export interface TargetingClausesApiUpdateSponsoredProductsTargetingClausesReque
     readonly sponsoredProductsUpdateSponsoredProductsTargetingClausesRequestContent: SponsoredProductsUpdateSponsoredProductsTargetingClausesRequestContent
 
     /**
-     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids
+     * The \&quot;Prefer\&quot; header, as defined in [RFC7240], allows clients to request certain behavior from the service. The service ignores preference values that are either not supported or not known by the service. Either multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent Supported preferences: return&#x3D;representation - return the full object when doing create/update/delete operations instead of ids. Please note that the extendedData field will be part of the full object for /list endpoints only.
      * @type {string}
      * @memberof TargetingClausesApiUpdateSponsoredProductsTargetingClauses
      */
@@ -29773,7 +30081,7 @@ export const ThemeBasedBidRecommendationApiAxiosParamCreator = function (configu
     return {
         /**
          * Gets theme-based bid recommendations for new or existing ad groups.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary The current version of the theme-based bid recommendation service supports auto-targeting and keyword targeting expressions only. Note that the currency for bid recommendations are in local currency units.
+         * @summary This API is currently available in US, UK, DE, CA, JP, IN, ES, and FR. The API supports keyword and auto targets only. The API will return a 422 response when an unsupported marketplace or target is provided. For product targets in all marketplaces, and keyword or auto targets in other marketplaces, call /v2/sp/targets/bidRecommendations.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {AdGroupThemeBasedBidRecommendationRequest | AsinsThemeBasedBidRecommendationRequest} [adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest] 
@@ -29831,7 +30139,7 @@ export const ThemeBasedBidRecommendationApiFp = function(configuration?: Configu
     return {
         /**
          * Gets theme-based bid recommendations for new or existing ad groups.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary The current version of the theme-based bid recommendation service supports auto-targeting and keyword targeting expressions only. Note that the currency for bid recommendations are in local currency units.
+         * @summary This API is currently available in US, UK, DE, CA, JP, IN, ES, and FR. The API supports keyword and auto targets only. The API will return a 422 response when an unsupported marketplace or target is provided. For product targets in all marketplaces, and keyword or auto targets in other marketplaces, call /v2/sp/targets/bidRecommendations.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {AdGroupThemeBasedBidRecommendationRequest | AsinsThemeBasedBidRecommendationRequest} [adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest] 
@@ -29854,7 +30162,7 @@ export const ThemeBasedBidRecommendationApiFactory = function (configuration?: C
     return {
         /**
          * Gets theme-based bid recommendations for new or existing ad groups.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-         * @summary The current version of the theme-based bid recommendation service supports auto-targeting and keyword targeting expressions only. Note that the currency for bid recommendations are in local currency units.
+         * @summary This API is currently available in US, UK, DE, CA, JP, IN, ES, and FR. The API supports keyword and auto targets only. The API will return a 422 response when an unsupported marketplace or target is provided. For product targets in all marketplaces, and keyword or auto targets in other marketplaces, call /v2/sp/targets/bidRecommendations.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {AdGroupThemeBasedBidRecommendationRequest | AsinsThemeBasedBidRecommendationRequest} [adGroupThemeBasedBidRecommendationRequestAsinsThemeBasedBidRecommendationRequest] 
@@ -29904,7 +30212,7 @@ export interface ThemeBasedBidRecommendationApiGetThemeBasedBidRecommendationFor
 export class ThemeBasedBidRecommendationApi extends BaseAPI {
     /**
      * Gets theme-based bid recommendations for new or existing ad groups.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
-     * @summary The current version of the theme-based bid recommendation service supports auto-targeting and keyword targeting expressions only. Note that the currency for bid recommendations are in local currency units.
+     * @summary This API is currently available in US, UK, DE, CA, JP, IN, ES, and FR. The API supports keyword and auto targets only. The API will return a 422 response when an unsupported marketplace or target is provided. For product targets in all marketplaces, and keyword or auto targets in other marketplaces, call /v2/sp/targets/bidRecommendations.
      * @param {ThemeBasedBidRecommendationApiGetThemeBasedBidRecommendationForAdGroupV1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

@@ -25,7 +25,7 @@
         "operationId": "ProductMetadata",
         "responses": {
           "200": {
-            "description": "Successful operation",
+            "description": "Successful operation.",
             "content": {
               "application/vnd.productmetadataresponse.v1+json": {
                 "schema": {
@@ -102,7 +102,7 @@
             },
             "in": "header",
             "name": "Amazon-Advertising-API-ClientId",
-            "description": "The client identifier of the customer making the request.",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
             "required": true
           },
           {
@@ -111,7 +111,7 @@
             },
             "in": "header",
             "name": "Amazon-Advertising-API-Scope",
-            "description": "The profile or entity identifier associated with the advertiser account.",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id `profileId` from the response to pass it as input.",
             "required": true
           }
         ]
@@ -130,6 +130,8 @@
             "type": "string"
           },
           "status": {
+            "minItems": 0,
+            "maxItems": 9,
             "type": "array",
             "items": {
               "type": "string"
@@ -159,7 +161,7 @@
             "$ref": "#/components/schemas/tvPreviewMetadata"
           },
           "ineligibilityCodes": {
-            "description": "List of ineligibile status identifier",
+            "description": "List of ineligible status identifier",
             "type": "array",
             "items": {
               "type": "string"
@@ -236,6 +238,8 @@
             "example": "https:/amazon.com/dp/B0018OFKJS"
           },
           "titleAuthority": {
+            "minItems": 0,
+            "maxItems": 1500,
             "description": "List of ASIN variations of the book item",
             "type": "array",
             "items": {
@@ -396,7 +400,9 @@
             "$ref": "#/components/schemas/priceToPay"
           },
           "ineligibilityCodes": {
-            "description": "List of ineligibile status identifier",
+            "minItems": 0,
+            "maxItems": 12,
+            "description": "List of ineligible status identifier",
             "type": "array",
             "items": {
               "type": "string"
@@ -460,6 +466,8 @@
             "example": "Levi's"
           },
           "variationList": {
+            "minItems": 0,
+            "maxItems": 1500,
             "description": "List of ASIN variations of the current item",
             "type": "array",
             "items": {
@@ -471,6 +479,8 @@
             ]
           },
           "ineligibilityReasons": {
+            "minItems": 0,
+            "maxItems": 12,
             "description": "List of reasons that made this item ineligible to be advertised",
             "type": "array",
             "items": {
@@ -505,11 +515,14 @@
         ],
         "properties": {
           "asins": {
+            "minItems": 0,
             "maxItems": 300,
             "description": "Specific asins to search for in the advertiser's inventory. Cannot use together with skus or searchStr input types.",
             "type": "array",
             "items": {
-              "type": "string"
+              "minLength": 10,
+              "type": "string",
+              "maxLength": 10
             },
             "example": [
               "B0018OFKJS",
@@ -518,7 +531,7 @@
           },
           "checkItemDetails": {
             "default": "false",
-            "description": "Whether item details such as name, image, and price is required",
+            "description": "Whether item details such as name, image, and price is required.",
             "type": "boolean"
           },
           "cursorToken": {
@@ -535,8 +548,9 @@
             ]
           },
           "skus": {
+            "minItems": 0,
             "maxItems": 300,
-            "description": "Specific skus to search for in the advertiser's inventory. Currently only support SP program type for sellers. Cannot use together with asins or searchStr input types",
+            "description": "Specific SKUs to search for in the advertiser's inventory. Currently only support SP program type for sellers. Cannot use together with asins or searchStr input types.",
             "type": "array",
             "items": {
               "type": "string"
@@ -552,13 +566,14 @@
             "type": "boolean"
           },
           "searchStr": {
-            "description": "Specific string in the item title to search for in the advertiser's inventory. Case insensitive. Cannot use together with asins or skus input types",
+            "description": "Specific string in the item title to search for in the advertiser's inventory. Case insensitive. Cannot use together with asins or skus input types.",
             "type": "string",
+            "maxLength": 200,
             "example": "jean"
           },
           "pageIndex": {
             "format": "int32",
-            "description": "Index of the page to be returned; For author, this value will be ignored, should use cursorToken instead.",
+            "description": "Index of the page to be returned; For author, this value will be ignored, should use cursorToken instead. For seller, results are capped at 10k(pageIndex * pageSize). For vendor, results are capped at 50k.",
             "type": "integer",
             "minimum": 0,
             "example": "0"
@@ -574,7 +589,7 @@
           },
           "pageSize": {
             "format": "int32",
-            "description": "Number of items to be returned on this page index",
+            "description": "Number of items to be returned on this page index.",
             "maximum": 300,
             "type": "integer",
             "minimum": 1,
@@ -599,7 +614,9 @@
         "type": "object",
         "properties": {
           "ineligibilityCodes": {
-            "description": "List of ineligibile status identifier",
+            "minItems": 0,
+            "maxItems": 99,
+            "description": "List of ineligible status identifier",
             "type": "array",
             "items": {
               "type": "string"
@@ -610,6 +627,8 @@
             ]
           },
           "ineligibilityReasons": {
+            "minItems": 0,
+            "maxItems": 99,
             "description": "List of reasons that made this item ineligible to be advertised",
             "type": "array",
             "items": {
@@ -630,6 +649,7 @@
             "type": "string"
           },
           "ProductMetadataList": {
+            "minItems": 0,
             "maxItems": 300,
             "type": "array",
             "items": {

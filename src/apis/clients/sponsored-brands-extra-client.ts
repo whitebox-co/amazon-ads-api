@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-import { AdCreativesApi,AdGroupsApi,AdsApi,BudgetRecommendationsApi,BudgetRulesApi,BudgetRulesRecommendationApi,BudgetUsageApi,CampaignsApi,DefaultApi,KeywordRecommendationsApi,ProductTargetingApi,RecommendationsApi,SuggestionsApi } from '../models/sponsored-brands-extra';
+import { AdCreativesApi,AdGroupsApi,AdsApi,BudgetRecommendationsApi,BudgetRulesApi,BudgetRulesRecommendationApi,BudgetUsageApi,CampaignsApi,InsightsApi,KeywordRecommendationsApi,ProductTargetingCategoriesApi,RecommendationsApi,SuggestionsApi,TargetingRecommendationsApi } from '../models/sponsored-brands-extra';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
 import { getAxiosInstance, applyMixins, AdsConfiguration } from '../../helpers';
 
@@ -21,6 +21,6 @@ export class SponsoredBrandsExtraClient extends AdCreativesApi {
 }
 
 
-    export interface SponsoredBrandsExtraClient extends AdCreativesApi,AdGroupsApi,AdsApi,BudgetRecommendationsApi,BudgetRulesApi,BudgetRulesRecommendationApi,BudgetUsageApi,CampaignsApi,DefaultApi,KeywordRecommendationsApi,ProductTargetingApi,RecommendationsApi,SuggestionsApi {}
-    applyMixins(SponsoredBrandsExtraClient, [AdCreativesApi,AdGroupsApi,AdsApi,BudgetRecommendationsApi,BudgetRulesApi,BudgetRulesRecommendationApi,BudgetUsageApi,CampaignsApi,DefaultApi,KeywordRecommendationsApi,ProductTargetingApi,RecommendationsApi,SuggestionsApi])
+    export interface SponsoredBrandsExtraClient extends AdCreativesApi,AdGroupsApi,AdsApi,BudgetRecommendationsApi,BudgetRulesApi,BudgetRulesRecommendationApi,BudgetUsageApi,CampaignsApi,InsightsApi,KeywordRecommendationsApi,ProductTargetingCategoriesApi,RecommendationsApi,SuggestionsApi,TargetingRecommendationsApi {}
+    applyMixins(SponsoredBrandsExtraClient, [AdCreativesApi,AdGroupsApi,AdsApi,BudgetRecommendationsApi,BudgetRulesApi,BudgetRulesRecommendationApi,BudgetUsageApi,CampaignsApi,InsightsApi,KeywordRecommendationsApi,ProductTargetingCategoriesApi,RecommendationsApi,SuggestionsApi,TargetingRecommendationsApi])
     

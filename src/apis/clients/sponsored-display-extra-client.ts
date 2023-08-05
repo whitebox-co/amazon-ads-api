@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-import { BrandSafetyDenyListDomainsApi,BrandSafetyRequestResultsApi,BrandSafetyRequestStatusApi,BudgetRulesApi,BudgetUsageApi,RecommendationsApi,SnapshotAPIsApi,TargetingRecommendationsApi } from '../models/sponsored-display-extra';
+import { BrandSafetyDenyListDomainsApi,BrandSafetyRequestResultsApi,BrandSafetyRequestStatusApi,BudgetRecommendationsApi,BudgetRulesApi,BudgetUsageApi,RecommendationsApi,SnapshotAPIsApi,TargetingRecommendationsApi } from '../models/sponsored-display-extra';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
 import { getAxiosInstance, applyMixins, AdsConfiguration } from '../../helpers';
 
@@ -21,6 +21,6 @@ export class SponsoredDisplayExtraClient extends BrandSafetyDenyListDomainsApi {
 }
 
 
-    export interface SponsoredDisplayExtraClient extends BrandSafetyDenyListDomainsApi,BrandSafetyRequestResultsApi,BrandSafetyRequestStatusApi,BudgetRulesApi,BudgetUsageApi,RecommendationsApi,SnapshotAPIsApi,TargetingRecommendationsApi {}
-    applyMixins(SponsoredDisplayExtraClient, [BrandSafetyDenyListDomainsApi,BrandSafetyRequestResultsApi,BrandSafetyRequestStatusApi,BudgetRulesApi,BudgetUsageApi,RecommendationsApi,SnapshotAPIsApi,TargetingRecommendationsApi])
+    export interface SponsoredDisplayExtraClient extends BrandSafetyDenyListDomainsApi,BrandSafetyRequestResultsApi,BrandSafetyRequestStatusApi,BudgetRecommendationsApi,BudgetRulesApi,BudgetUsageApi,RecommendationsApi,SnapshotAPIsApi,TargetingRecommendationsApi {}
+    applyMixins(SponsoredDisplayExtraClient, [BrandSafetyDenyListDomainsApi,BrandSafetyRequestResultsApi,BrandSafetyRequestStatusApi,BudgetRecommendationsApi,BudgetRulesApi,BudgetUsageApi,RecommendationsApi,SnapshotAPIsApi,TargetingRecommendationsApi])
     

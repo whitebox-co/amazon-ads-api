@@ -191,8 +191,8 @@
         ]
       },
       "get": {
-        "summary": "Returns all Manager accounts that a given Amazon Advertising user has access to.",
-        "description": "Returns all [Manager accounts](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8) that a user has access to, along with metadata for all of the Amazon Advertising accounts that are linked to the Manager account.",
+        "summary": "Returns all manager accounts that a given Amazon Ads user has access to.",
+        "description": "Returns all [manager accounts](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8) that a user has access to, along with metadata for the Amazon Ads accounts that are linked to each manager account. NOTE: A maximum of 50 linked accounts are returned for each manager account.",
         "operationId": "getManagerAccountsForUser",
         "responses": {
           "200": {
@@ -407,6 +407,7 @@
             "type": "string"
           },
           "linkedAccounts": {
+            "maxItems": 50,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Account"
@@ -481,6 +482,19 @@
           "MARKETING_CLOUD"
         ]
       },
+      "GetManagerAccountsResponse": {
+        "description": "Response containing a list of Manager Accounts that a given user has access to.",
+        "type": "object",
+        "properties": {
+          "managerAccounts": {
+            "description": "List of Manager Accounts that the user has access to",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ManagerAccount"
+            }
+          }
+        }
+      },
       "AccountToUpdate": {
         "description": "String identifier for an Amazon Advertising account or advertiser. `ACCOUNT_ID` is an identifier that is returned by the [Profiles resource](https://advertising.amazon.com/API/docs/en-us/reference/2/profiles#/Profiles/listProfiles), within the `AccountInfo.id` data member. `ACCOUNT_ID` may begin with the string `\"ENTITY\"`.\n`DSP_ADVERTISER_ID` is an identifier for a DSP advertiser, which is returned by the [DSP resource](https://advertising.amazon.com/API/docs/en-us/dsp-advertiser/#/Advertiser/get_dsp_advertisers).",
         "type": "object",
@@ -503,19 +517,6 @@
               "ACCOUNT_ID",
               "DSP_ADVERTISER_ID"
             ]
-          }
-        }
-      },
-      "GetManagerAccountsResponse": {
-        "description": "Response containing a list of Manager Accounts that a given user has access to.",
-        "type": "object",
-        "properties": {
-          "managerAccounts": {
-            "description": "List of Manager Accounts that the user has access to",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ManagerAccount"
-            }
           }
         }
       },

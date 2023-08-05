@@ -3,7 +3,7 @@
   "info": {
     "version": "3.0",
     "title": "Amazon Ads API - Sponsored Brands",
-    "description": "Use the Amazon Ads API for Sponsored Brands for campaign, ad group, keyword, negative keyword, drafts, Stores, landing pages, and Brands management operations. For more information about Sponsored Brands, see the [Sponsored Brands Support Center](https://advertising.amazon.com/help#GQFZA83P55P747BZ). For onboarding information, see the [account setup](https://advertising.amazon.com/API/docs/v3/guides/account_setup) topic.<br/><br/> ",
+    "description": "Use the Amazon Ads API for Sponsored Brands for campaign, ad group, keyword, negative keyword, drafts, Stores, landing pages, and Brands management operations. For more information about Sponsored Brands, see the [Sponsored Brands Support Center](https://advertising.amazon.com/help#GQFZA83P55P747BZ). For onboarding information, see the [account setup](https://advertising.amazon.com/API/docs/v3/guides/account_setup) topic. ",
     "contact": {
       "name": "Amazon Ads API Support",
       "url": "https://amzn-clicks.atlassian.net/servicedesk/customer/portals"
@@ -31,6 +31,9 @@
     },
     {
       "name": "Negative product targeting"
+    },
+    {
+      "name": "Theme targeting"
     },
     {
       "name": "Targeting recommendations"
@@ -121,8 +124,8 @@
           "Campaigns"
         ],
         "operationId": "listCampaigns",
-        "summary": "Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria.",
-        "description": "**Note**: To ensure you are getting all campaign data, use the [version 4 list campaigns endpoint](https://advertising.amazon.com/API/docs/en-us/sponsored-brands/3-0/openapi/prod#/Campaigns/ListSponsoredBrandsCampaigns) instead.\n\nTo return Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. Returns both productCollection and video campaigns. Use either `adFormatFilter` or `creativeType` to filter campaigns by ad formats such as `productCollection` or `video`. <br>**Note:** An advertiser that has lost brand eligibility will not be able to use any write operations such as `POST`, `PUT`, and `DELETE`. This includes the `GET` operation `/pageAsins`. However, the rest of the `GET` operations such as `/sb/campaigns` will be usable regardless of advertiser's eligibility status. ",
+        "summary": "Returns campaigns associated with the account. [PLANNED SHUTOFF DATE 1/31/2024]",
+        "description": "**Note**: GET /sb/campaigns returns only a single ad group and creative per campaign. Additionally, the v3.x endpoint does not return [brand video](https://advertising.amazon.com/API/docs/en-us/sponsored-brands/3-0/openapi/prod#/Ads/CreateSponsoredBrandsBrandVideoAds) ads. To view the full list of ad groups and ads associated to a campaign, use the [version 4 list endpoints](https://advertising.amazon.com/API/docs/en-us/sponsored-brands/3-0/openapi/prod) instead.\n\nTo return Gets an array of all campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. Returns both productCollection and video campaigns. Use either `adFormat` or `creativeType` to filter campaigns by ad formats such as `productCollection` or `video`. <br>**Note:** An advertiser that has lost brand eligibility will not be able to use any write operations such as `POST`, `PUT`, and `DELETE`. This includes the `GET` operation `/pageAsins`. However, the rest of the `GET` operations such as `/sb/campaigns` will be usable regardless of advertiser's eligibility status. ",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -326,7 +329,7 @@
           "Campaigns"
         ],
         "operationId": "createCampaigns",
-        "summary": "Creates one or more new Campaigns.",
+        "summary": "Creates one or more new campaigns. [PLANNED SHUTOFF DATE 1/31/2024]",
         "description": "**Note:** To create multi-ad group campaigns use the [version 4 POST campaigns](https://advertising.amazon.com/API/docs/en-us/sponsored-brands/3-0/openapi/prod#/Campaigns/CreateSponsoredBrandsCampaigns) endpoint. \n\nSee the [create a Sponsored Brands campaign](https://advertising.amazon.com/help#GQFZA83P55P747BZ) topic in the Amazon Ads Support Center for more information about the campaign review process. **Note** to retrieve the state of a campaign submitted for creation, use the listCampaign operation and the campaign identifier from this operation. On SB creation, the state field is read-only. \n<br>**To create a video campaign specify adFormat as 'video'. If adFormat is not specified a Product Collection campaign will be created. Only a single video campaign can be created at a time.**\n<br>**Note** each campaign in campaign creation operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords).\n<br>**Note** each campaign in campaign creation operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting).\n<br>**Note** that keywords or expressions *can not* be recreated for a campaign if the keyword or expression has previously been associated with a campaign and subsequently archived. ",
         "parameters": [
           {
@@ -767,8 +770,8 @@
           "Campaigns"
         ],
         "operationId": "updateCampaigns",
-        "summary": "Updates one or more campaigns.",
-        "description": "Mutable fields:\n* `name` \n* `state`\n* `portfolioId`\n* `budget`\n* `bidOptimization`\n* `bidMultiplier`\n* `bidAdjustments`\n* `endDate`",
+        "summary": "Updates one or more campaigns. [PLANNED SHUTOFF DATE 1/31/2024]",
+        "description": "Use [PUT /sb/v4/campaigns](sponsored-brands/3-0/openapi/prod#tag/Campaigns/operation/UpdateSponsoredBrandsCampaigns) going forward.\nMutable fields:\n* `name` \n* `state`\n* `portfolioId`\n* `budget`\n* `bidOptimization`\n* `bidMultiplier`\n* `bidAdjustments`\n* `endDate`",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -994,7 +997,8 @@
           "Campaigns"
         ],
         "operationId": "getCampaign",
-        "summary": "Gets a campaign specified by identifier.",
+        "summary": "Gets a campaign specified by identifier. [PLANNED SHUTOFF DATE 1/31/2024]",
+        "description": "Use [POST /sb/v4/campaigns/list](sponsored-brands/3-0/openapi/prod#tag/Campaigns/operation/UpdateSponsoredBrandsCampaigns) going forward.",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1071,8 +1075,8 @@
           "Campaigns"
         ],
         "operationId": "archiveCampaign",
-        "summary": "Archives a campaign specified by identifier.",
-        "description": "This operation is equivalent to an update operation that sets the status field to 'archived'. Note that setting the status field to 'archived' is permanent and can't be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.",
+        "summary": "Archives a campaign specified by identifier. [PLANNED SHUTOFF DATE 1/31/2024]",
+        "description": "**Use [POST /sb/v4/campaigns/delete](sponsored-brands/3-0/openapi/prod#tag/Campaigns/operation/DeleteSponsoredBrandsCampaigns) going forward.**\nThis operation is equivalent to an update operation that sets the status field to 'archived'. Note that setting the status field to 'archived' is permanent and can't be undone. See [Developer\nNotes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1126,7 +1130,8 @@
           "Ad groups"
         ],
         "operationId": "listAdGroups",
-        "summary": "Gets an array of ad groups associated with the client identifier passed in the authorization header, filtered by specified criteria.",
+        "summary": "Gets an array of ad groups. [PLANNED SHUTOFF DATE 1/31/2024]",
+        "description": "Use [POST sb/v4/adGroups/list](sponsored-brands/3-0/openapi/prod#tag/AdGroups/operation/ListSponsoredBrandsAdGroups) going forward.",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1218,7 +1223,8 @@
           "Ad groups"
         ],
         "operationId": "getAdGroup",
-        "summary": "Gets an ad group specified by identifier.",
+        "summary": "Gets an ad group specified by identifier. [PLANNED SHUTOFF DATE 1/31/2024]",
+        "description": "Use [POST sb/v4/adGroups/list](sponsored-brands/3-0/openapi/prod#tag/AdGroups/operation/ListSponsoredBrandsAdGroups) going forward.",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1268,6 +1274,7 @@
         ],
         "operationId": "listKeywords",
         "summary": "Gets an array of keywords, filtered by optional criteria.",
+        "description": "**Note**: Keywords associated with BrandVideo ad groups are only available in v3.2 version.",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1369,6 +1376,14 @@
           "200": {
             "description": "Success.",
             "content": {
+              "application/vnd.sbkeyword.v3.2+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SBKeyword"
+                  }
+                }
+              },
               "application/vnd.sbkeyword.v3+json": {
                 "schema": {
                   "type": "array",
@@ -1635,6 +1650,7 @@
         ],
         "operationId": "listNegativeKeywords",
         "summary": "Gets an array of negative keywords, filtered by optional criteria.",
+        "description": "**Note**: Negative keywords associated with BrandVideo ad groups are only available in v3.2 version.",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -1721,6 +1737,14 @@
           "200": {
             "description": "Success.",
             "content": {
+              "application/vnd.sbnegativekeyword.v3.2+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SBNegativeKeyword"
+                  }
+                }
+              },
               "application/vnd.sbnegativekeyword.v3+json": {
                 "schema": {
                   "type": "array",
@@ -1980,7 +2004,7 @@
           "Drafts"
         ],
         "operationId": "listDraftCampaigns",
-        "summary": "Gets an array of draft campaign objects.",
+        "summary": "Gets an array of draft campaign objects. [PLANNED SHUTOFF DATE 1/31/2024]",
         "description": "Gets an array of all draft campaigns associated with the client identifier passed in the authorization header, filtered by specified criteria. <br>**Returns both productCollection and video draft campaigns by default. Use adFormatFilter to filter drafts by ad formats.**",
         "parameters": [
           {
@@ -2151,7 +2175,7 @@
           "Drafts"
         ],
         "operationId": "createDraftCampaigns",
-        "summary": "Creates one or more new draft campaigns.",
+        "summary": "Creates one or more new draft campaigns. [PLANNED SHUTOFF DATE 1/31/2024]",
         "description": "Creates sponsored brands draft campaigns. <br>**To create a video campaign specify adFormat as 'video'. If adFormat is not specified then a product collection draft is created.**\n<br>Note each draft campaign can have keywords, negative keywords, targets and negative targets with batch size of upto 100.\n<br>**Note** each draft campaign in this operation supports adding keywords or negative keywords with maximum list size of 100. Additional keywords or negative keywords can be added using [createKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Keywords) or [createNegativeKeywords](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative_Keywords).\n<br>**Note** each draft campaign in this operation supports adding targets or negative targets with maximum list size of 100. Additional targets or negative targets can be added using [createTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Product%20targeting) or [createNegativeTargets](https://advertising.amazon.com/API/docs/v3/reference/SponsoredBrands/Negative%20product%20targeting).",
         "parameters": [
           {
@@ -2469,7 +2493,7 @@
           "Drafts"
         ],
         "operationId": "updateDraftCampaigns",
-        "summary": "Updates one or more draft campaigns.",
+        "summary": "Updates one or more draft campaigns. [PLANNED SHUTOFF DATE 1/31/2024]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2577,7 +2601,7 @@
           "Drafts"
         ],
         "operationId": "getDraftCampaign.",
-        "summary": "Gets a draft campaign specified by identifier.",
+        "summary": "Gets a draft campaign specified by identifier. [PLANNED SHUTOFF DATE 1/31/2024]",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -2752,7 +2776,7 @@
           "Drafts"
         ],
         "operationId": "deleteDraftCampaign",
-        "summary": "Archives a draft campaign specified by identifier.",
+        "summary": "Archives a draft campaign specified by identifier. [PLANNED SHUTOFF DATE 1/31/2024]",
         "description": "This operation is equivalent to an update operation that sets the status field to 'archived'. Note that setting the status field to 'archived' is permanent and can't be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/v2/guides/developer_notes) for more information.",
         "parameters": [
           {
@@ -2807,7 +2831,7 @@
           "Drafts"
         ],
         "operationId": "submitDraftCampaign",
-        "summary": "Submits one or more existing draft campaigns to the moderation approval queue.",
+        "summary": "Submits one or more existing draft campaigns to the moderation approval queue. [PLANNED SHUTOFF DATE 1/31/2024]",
         "description": "On successful submission, a campaign is created with an identifier that could be different from the original draft campaign identifier. The new identifier is returned in the response. Note that when a draft campaign is approved, the 'status' and 'servingStatus' fields are changed to values associated with an active campaign.",
         "parameters": [
           {
@@ -2960,8 +2984,8 @@
         "tags": [
           "Media"
         ],
-        "summary": "Creates an ephemeral resource (upload location) to upload Media for an Ad Program (SponsoredBrands).",
-        "description": "Creates an ephemeral resource (upload location) to upload Media for an Ad Program. The upload location is short lived and expires in 15 minutes. Once the upload is complete, /media/complete API should be used to notify that the upload is complete. <p> The upload location only supports `PUT` HTTP Method to upload the media content. If the upload location expires, API user will get `403 Forbidden` response. </p>",
+        "summary": "Creates an ephemeral resource (upload location). [PLANNED SHUTOFF DATE 1/31/2024]",
+        "description": "**Going forward, use [Asset library](creative-asset-library) to manage media.** Creates an ephemeral resource (upload location) to upload Media\nfor an Ad Program. The upload location is short lived and expires in 15 minutes.\nOnce the upload is complete, /media/complete API should be used to notify\nthat the upload is complete. <p> The upload location only supports `PUT` HTTP\nMethod to upload the media content. If the upload location expires, API user\nwill get `403 Forbidden` response. </p>",
         "parameters": [
           {
             "in": "header",
@@ -3383,7 +3407,7 @@
         "requestBody": {
           "description": "A list of keywords or targeting expressions for which to generate bid recommendations. Note that if a value is specified for the `campaignId` field, the past performance data for the campaign may be use to create bid recommendations.",
           "content": {
-            "application/vnd.sbbidsrecommendation.v3.1+json": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -3418,7 +3442,7 @@
           "200": {
             "description": "A list of bid recommendations.",
             "content": {
-              "application/vnd.sbbidsrecommendation.v3.1+json": {
+              "application/vnd.sbbidsrecommendation.v3+json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -3532,11 +3556,11 @@
           "Product targeting"
         ],
         "operationId": "listTargets",
-        "description": "Gets a list of product targets associated with the client identifier passed in the authorization header, filtered by specified criteria.",
+        "description": "Gets a list of product targets associated with the client identifier passed in the authorization header, filtered by specified criteria.\n\n**Note**: Product targets associated with BrandVideo ad groups are only available in v3.2 version.",
         "requestBody": {
           "description": "A set of filters.",
           "content": {
-            "application/vnd.sblisttargetsresponse.v3+json": {
+            "application/json": {
               "schema": {
                 "allOf": [
                   {
@@ -3697,6 +3721,61 @@
           "200": {
             "description": "A list of targeting clauses.",
             "content": {
+              "application/vnd.sblisttargetsresponse.v3.2+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ListResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "targets": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "targetId": {
+                                "type": "integer",
+                                "format": "int64",
+                                "description": "The target identifier."
+                              },
+                              "adGroupId": {
+                                "type": "integer",
+                                "format": "int64",
+                                "description": "The identifier of the ad group to which the target is associated."
+                              },
+                              "campaignId": {
+                                "type": "integer",
+                                "format": "int64",
+                                "description": "The identifier of the campaign to which the target is associated."
+                              },
+                              "expressions": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/components/schemas/SBExpression"
+                                }
+                              },
+                              "resolvedExpressions": {
+                                "type": "array",
+                                "items": {
+                                  "$ref": "#/components/schemas/SBResolvedExpression"
+                                }
+                              },
+                              "state": {
+                                "$ref": "#/components/schemas/SBProductTargetState"
+                              },
+                              "bid": {
+                                "$ref": "#/components/schemas/Bid"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
               "application/vnd.sblisttargetsresponse.v3+json": {
                 "schema": {
                   "allOf": [
@@ -3767,7 +3846,7 @@
         "requestBody": {
           "description": "A list of targets with updated values. <br/>Note that targets can be updated on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 targets.",
           "content": {
-            "application/vnd.updatetargetsresponse.v3+json": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
@@ -3851,7 +3930,7 @@
         "requestBody": {
           "description": "A list of targeting clauses for creation. <br/>Note that targets can be created on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 targets.",
           "content": {
-            "application/vnd.sbcreatetargetsresponse.v3+json": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
@@ -3975,10 +4054,11 @@
         ],
         "operationId": "listNegativeTargets",
         "summary": "Gets a list of product negative targets associated with the client identifier passed in the authorization header, filtered by specified criteria.",
+        "description": "**Note**: Negative targets associated with BrandVideo ad groups are only available in v3.2 version.",
         "requestBody": {
           "description": "A set of filters.",
           "content": {
-            "application/vnd.sblistnegativetargetsresponse.v3+json": {
+            "application/json": {
               "schema": {
                 "allOf": [
                   {
@@ -4134,6 +4214,26 @@
           "200": {
             "description": "A list of negative targets.",
             "content": {
+              "application/vnd.sblistnegativetargetsresponse.v3.2+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ListResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "negativeTargets": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SBTargetingClause"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
               "application/vnd.sblistnegativetargetsresponse.v3+json": {
                 "schema": {
                   "allOf": [
@@ -4172,7 +4272,7 @@
         "requestBody": {
           "description": "A list of negative targets with updated values. <br/>Note that negative targeting clauses can be created on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative targets.",
           "content": {
-            "application/vnd.updatenegativetargetsresponse.v3+json": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -4253,7 +4353,7 @@
         "requestBody": {
           "description": "A list of negative targeting clauses for creation. <br/>Note that negative targeting clauses can be created on campaigns where serving status is not one of `archived`, `terminated`, `rejected`, or `ended`. <br/>Note that this operation supports a maximum list size of 100 negative targets.",
           "content": {
-            "application/vnd.sbcreatenegativetargetsrequest.v3+json": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
@@ -4363,6 +4463,298 @@
         }
       }
     },
+    "/sb/themes/list": {
+      "post": {
+        "tags": [
+          "Theme targeting"
+        ],
+        "operationId": "sbListThemes",
+        "description": "This endpoint is a PREVIEW ONLY and cannot be used as part of a request or response. Gets a list of theme targets associated with the client identifier passed in the authorization header, filtered by specified criteria.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          }
+        ],
+        "requestBody": {
+          "description": "A set of filters.",
+          "content": {
+            "application/vnd.sbthemeslistrequest.v3+json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ListRequest"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "themeIdFilter": {
+                        "description": "A list of theme targets identifiers.",
+                        "properties": {
+                          "include": {
+                            "type": "array",
+                            "items": {
+                              "description": "An theme target identifier.",
+                              "type": "string",
+                              "minItems": 1,
+                              "maxItems": 100
+                            }
+                          }
+                        }
+                      },
+                      "adGroupIdFilter": {
+                        "description": "A list of ad group identifiers.",
+                        "properties": {
+                          "include": {
+                            "type": "array",
+                            "items": {
+                              "description": "An ad group identifier.",
+                              "type": "string",
+                              "minItems": 1,
+                              "maxItems": 100
+                            }
+                          }
+                        }
+                      },
+                      "campaignIdFilter": {
+                        "description": "A list of campaign identifiers.",
+                        "properties": {
+                          "include": {
+                            "type": "array",
+                            "items": {
+                              "description": "A campaign identifier.",
+                              "type": "string",
+                              "minItems": 1,
+                              "maxItems": 100
+                            }
+                          }
+                        }
+                      },
+                      "stateFilter": {
+                        "description": "A list of theme target states.",
+                        "properties": {
+                          "include": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "enum": [
+                                "paused",
+                                "enabled",
+                                "archived"
+                              ],
+                              "default": "enabled,paused",
+                              "minItems": 1,
+                              "maxItems": 3
+                            }
+                          }
+                        }
+                      },
+                      "themeTypeFilter": {
+                        "description": "A list of theme target type.",
+                        "properties": {
+                          "include": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/components/schemas/ThemeType"
+                            },
+                            "minItems": 1,
+                            "maxItems": 2
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A list of targeting clauses.",
+            "content": {
+              "application/vnd.sbthemeslistresponse.v3+json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ListResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "themes": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SBTheme"
+                          },
+                          "minItems": 0,
+                          "maxItems": 5000
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sb/themes": {
+      "put": {
+        "tags": [
+          "Theme targeting"
+        ],
+        "operationId": "sbUpdateThemes",
+        "description": "This endpoint is a PREVIEW ONLY and cannot be used as part of a request or response.",
+        "summary": "Updates one or more theme targets.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          }
+        ],
+        "requestBody": {
+          "description": "A list of theme targets with updated values. <br/>Note that theme targets can be updated on multi-adGroups campaigns and where campaign serving status is not one of `archived`, `terminated`, `rejected`, or `ended` and adgroup state is not 'archived'. <br/>Note that this operation supports a maximum list size of 100 theme targets. Also theme target can not be archived.",
+          "content": {
+            "application/vnd.sbathemessupdaterequest.v3+json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "themes"
+                ],
+                "properties": {
+                  "themes": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/SBUpdateThemesRequest"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A list of success and error results for theme targets submitted for update.",
+            "content": {
+              "application/vnd.sbthemesupdateresponse.v3+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "description": "Lists the successfully updated theme targets. Note that theme targets in the response are correlated to theme targets in the request using the `index` field. For example, if `index` is set to `2`, the values correlate to the third theme target object in the request.",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "themeId": {
+                            "$ref": "#/components/schemas/SBThemeId"
+                          },
+                          "index": {
+                            "$ref": "#/components/schemas/SBTargetRequestIndex"
+                          }
+                        }
+                      },
+                      "minItems": 0,
+                      "maxItems": 100
+                    },
+                    "error": {
+                      "description": "Lists errors that occurred during theme target update. Note that errors are correlated to theme target update requests by the `index` field. This field corresponds to the order of the theme target in the request. For example, if `index` is set to `2`, the values correlate to the third theme target object in the request array.",
+                      "type": "array",
+                      "items": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/Error"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "themeId": {
+                                "$ref": "#/components/schemas/SBThemeId"
+                              },
+                              "index": {
+                                "$ref": "#/components/schemas/SBTargetRequestIndex"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "minItems": 0,
+                      "maxItems": 100
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400BadRequest"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Theme targeting"
+        ],
+        "operationId": "sbCreateThemes",
+        "description": "This endpoint is a PREVIEW ONLY and cannot be used as part of a request or response.",
+        "summary": "Create one or more theme targets.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          }
+        ],
+        "requestBody": {
+          "description": "A list of theme targets for creation. <br/>Note that theme targets can be created on multi-adGroups campaigns and where campaign serving status is not one of `archived`, `terminated`, `rejected`, or `ended` and adgroup state is not 'archived'. <br/>Note that this operation supports a maximum list size of 100 theme targets and only one target can be created for each themeType per adGroup.",
+          "content": {
+            "application/vnd.sbthemescreaterequest.v3+json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "themes"
+                ],
+                "properties": {
+                  "themes": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/SBCreateThemesRequest"
+                    },
+                    "minItems": 1,
+                    "maxItems": 100
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A list of success and error results for theme targets submitted for creation.",
+            "content": {
+              "application/vnd.sbthemescreateresponse.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SBCreateThemesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400BadRequest"
+          }
+        }
+      }
+    },
     "/sb/recommendations/targets/product/list": {
       "post": {
         "tags": [
@@ -4371,6 +4763,14 @@
         "operationId": "getProductRecommendations",
         "summary": "Gets a list of recommended products for targeting.",
         "description": "Recommendations are based on the ASINs that are passed in the request.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          }
+        ],
         "requestBody": {
           "description": "A list of ASINs.",
           "content": {
@@ -4471,10 +4871,55 @@
         "operationId": "getTargetingCategories",
         "summary": "Gets a list of recommended categories for targeting.",
         "description": "Recommendations are based on the ASINs that are passed in the request.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "description": "Return the categories in the specified locale.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ar_AE",
+                "de_DE",
+                "en_AE",
+                "en_AU",
+                "en_CA",
+                "en_GB",
+                "en_IN",
+                "en_SG",
+                "en_US",
+                "es_ES",
+                "es_MX",
+                "fr_CA",
+                "fr_FR",
+                "hi_IN",
+                "it_IT",
+                "ja_JP",
+                "ko_KR",
+                "nl_NL",
+                "pl_PL",
+                "pt_BR",
+                "sv_SE",
+                "ta_IN",
+                "th_TH",
+                "tr_TR",
+                "vi_VN",
+                "zh_CN"
+              ]
+            }
+          }
+        ],
         "requestBody": {
           "description": "List of ASINs.",
           "content": {
-            "application/vnd.sbcategoryrecommendations.v3.0+json": {
+            "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -4484,6 +4929,14 @@
                     "items": {
                       "type": "string"
                     }
+                  },
+                  "supplySource": {
+                    "type": "string",
+                    "description": "The supply source of the campaign. Use `AMAZON` for placements on Amazon website. Use `STREAMING_VIDEO` for off-site video placements such as IMDb TV. Default value is `AMAZON`.",
+                    "enum": [
+                      "AMAZON",
+                      "STREAMING_VIDEO"
+                    ]
                   }
                 }
               }
@@ -4494,7 +4947,7 @@
           "200": {
             "description": "A list of category targeting recommendations.",
             "content": {
-              "application/vnd.sbcategoryrecommendationsresponse.v3.0+json": {
+              "application/vnd.sbcategoryrecommendationsresponse.v3.2+json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -4520,6 +4973,14 @@
         "operationId": "getBrandRecommendations",
         "summary": "Gets a list of brand suggestions.",
         "description": "The Brand suggestions are based on a list of either category identifiers or keywords passed in the request. It is not valid to specify both category identifiers and keywords in the request.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/vnd.sbbrandrecommendations.v3.0+json": {
@@ -4792,7 +5253,7 @@
           "Reports"
         ],
         "summary": "Requests the creation of a report containing performance data related to Sponsored Brands campaigns.",
-        "description": "Use this interface to request and retrieve performance reports. **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**\n\n**KDP support**\n\nNote that KDP profiles cannot currently request reports for Sponsored Brands campaigns using the API. Authors should use the advertising console to download reporting data. \n\n**Filtering**\n\nFor more information, see the [Reporting FAQ](/API/docs/en-us/reporting/v2/faq#can-i-filter-a-sponsored-brands-report).\n\n**Constraints of Sponsored Brands reporting**\n\nSponsored Brands reporting data cannot be combined with Sponsored Products data into one report. Only 14-day data is available for Sponsored Brands. Attribution windows of 1, 7, and 30-day intervals are not available.\n\n**New-to-brand performance metrics**\n\nWith new-to-brand metrics, advertisers can measure and optimize campaigns, as well as plan future marketing strategies to grow their customer base on Amazon. New-to-brand metrics determine whether an ad-attributed purchase was made by an existing customer or one buying a brand’s product on Amazon for the first time over the prior year. With new-to-brand metrics, advertisers receive campaign performance metrics such as total new-to-brand purchases and sales, new-to-brand purchase rate, and cost per new-to-brand customer. Advertisers now have the tools they need to estimate the cost of acquiring new customers on Amazon and identify the most efficient channels and tactics to achieve their campaign goals.",
+        "description": "Use this interface to request and retrieve performance reports. **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**\n\n**KDP support**\n\nNote that KDP profiles cannot currently request reports for Sponsored Brands campaigns using the API. Authors should use the advertising console to download reporting data. \n\n**Filtering**\n\nFor more information, see the [Reporting FAQ](/API/docs/en-us/guides/reporting/v2/faq#can-i-filter-a-sponsored-brands-report).\n\n**Constraints of Sponsored Brands reporting**\n\nSponsored Brands reporting data cannot be combined with Sponsored Products data into one report. Only 14-day data is available for Sponsored Brands. Attribution windows of 1, 7, and 30-day intervals are not available.\n\n**New-to-brand performance metrics**\n\nWith new-to-brand metrics, advertisers can measure and optimize campaigns, as well as plan future marketing strategies to grow their customer base on Amazon. New-to-brand metrics determine whether an ad-attributed purchase was made by an existing customer or one buying a brand’s product on Amazon for the first time over the prior year. With new-to-brand metrics, advertisers receive campaign performance metrics such as total new-to-brand purchases and sales, new-to-brand purchase rate, and cost per new-to-brand customer. Advertisers now have the tools they need to estimate the cost of acquiring new customers on Amazon and identify the most efficient channels and tactics to achieve their campaign goals.",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -4823,7 +5284,7 @@
                 "properties": {
                   "reportDate": {
                     "type": "string",
-                    "description": "Date in YYYYMMDD format. The report only contains performance data for the specified date. The time zone is specified by the profile used to request the report. If this date is today, then the performance report may contain partial information. Reports are not available for data older than 60 days. For details on data latency, see [Service Guarantees](../../get-started/developer-notes)."
+                    "description": "Date in YYYYMMDD format. The report only contains performance data for the specified date. The time zone is specified by the profile used to request the report. If this date is today, then the performance report may contain partial information. Reports are not available for data older than 60 days. For details on data latency, see [Service Guarantees](../../reference/concepts/developer-notes)."
                   },
                   "segment": {
                     "type": "string",
@@ -4843,7 +5304,7 @@
                   },
                   "metrics": {
                     "type": "string",
-                    "description": "Each report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/reporting/v2/report-types).** "
+                    "description": "Each report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/guides/reporting/v2/report-types).** "
                   }
                 }
               }
@@ -4908,7 +5369,7 @@
           "Reports"
         ],
         "summary": "Returns the status of a previously requested report.",
-        "description": "To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).",
+        "description": "To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -4970,7 +5431,7 @@
           "Reports"
         ],
         "summary": "Downloads a previously requested report identified by `reportId`.",
-        "description": "Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created. \n\n**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**\n\nThe report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.\n\n**Note**: The report files in S3 are gzipped.\n\n*Example report download*\n\n`$ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.580149D6.c7aa92c1-ca5b-435d-bb8b-51cb26ad5731?AWSAccessKeyId=AKIAIKLHNT32USZOWVRA&amp;Expires=1476479900&amp;Signature=I%2F2Gd%2B8TbcPbXbBUM6ix%2BSVP3qA%3D\"`",
+        "description": "Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created. \n\n**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**\n\nThe report file contains one row per entity for which performance data is present. These records are represented as JSON containing the ID attribute corresponding to the `recordType`, the segment (if specified), and each of the metrics in the request.\n\n**Note**: The report files in S3 are gzipped.\n\n*Example report download*\n\n`$ curl -o /tmp/report.json.gz \"https://sandboxreports.s3.amazonaws.com/amzn1.clicksAPI.v1.m1.580149D6.c7aa92c1-ca5b-435d-bb8b-51cb26ad5731?AWSAccessKeyId=AKIAIKLHNT32USZOWVRA&amp;Expires=1476479900&amp;Signature=I%2F2Gd%2B8TbcPbXbBUM6ix%2BSVP3qA%3D\"`",
         "operationId": "downloadReport",
         "parameters": [
           {
@@ -5330,6 +5791,10 @@
           "video"
         ],
         "description": "collection is deprecated in favor of productCollection."
+      },
+      "ThemeType": {
+        "type": "string",
+        "description": "The theme target type.\n- KEYWORDS_RELATED_TO_YOUR_BRAND - keywords related to brands.\n- KEYWORDS_RELATED_TO_YOUR_LANDING_PAGES - keywords related to your landing pages.\n- Note: Additional theme types may be added in the future."
       },
       "SBKeywordState": {
         "type": "string",
@@ -8464,6 +8929,41 @@
           "draft"
         ]
       },
+      "SBTheme": {
+        "description": "| themeType | description |\n|-----------|-------------|\n| KEYWORDS_RELATED_TO_YOUR_BRAND | keywords related to brands. |\n| KEYWORDS_RELATED_TO_YOUR_LANDING_PAGES | keywords related to your landing pages. |",
+        "properties": {
+          "themeId": {
+            "description": "The theme target identifier.",
+            "type": "string"
+          },
+          "adGroupId": {
+            "description": "The identifier of the ad group associated with the theme target.",
+            "type": "string"
+          },
+          "campaignId": {
+            "description": "The identifier of the campaign associated with the theme target.",
+            "type": "string"
+          },
+          "themeType": {
+            "$ref": "#/components/schemas/ThemeType"
+          },
+          "state": {
+            "$ref": "#/components/schemas/SBThemeState"
+          },
+          "bid": {
+            "description": "The associated bid. Note that this value must be less than the budget associated with the Advertiser account. For more information, see [supported features](https://advertising.amazon.com/API/docs/v2/guides/supported_features).",
+            "type": "number"
+          }
+        }
+      },
+      "SBThemeState": {
+        "type": "string",
+        "enum": [
+          "enabled",
+          "paused",
+          "archived"
+        ]
+      },
       "SBCreateTargetsResponse": {
         "properties": {
           "createTargetSuccessResults": {
@@ -8550,10 +9050,105 @@
           }
         }
       },
+      "SBCreateThemesResponse": {
+        "properties": {
+          "success": {
+            "description": "Lists the successfully created theme targets. Note that theme targets in the response are correlated to theme targets in the request using the `index` field. For example, if `index` is set to `2`, the values correlate to the third theme target object in the request.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "index": {
+                  "$ref": "#/components/schemas/SBTargetRequestIndex"
+                },
+                "themeId": {
+                  "$ref": "#/components/schemas/SBThemeId"
+                }
+              }
+            },
+            "minItems": 0,
+            "maxItems": 100
+          },
+          "error": {
+            "description": "Lists errors that occurred during theme target creation. Note that errors are correlated to theme target create requests by the `index` field. This field corresponds to the order of the target object in the request. For example, if `index` is set to `3`, an error occurred during creation of the fourth theme target in the request.",
+            "type": "array",
+            "items": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Error"
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "index": {
+                      "$ref": "#/components/schemas/SBTargetRequestIndex"
+                    }
+                  }
+                }
+              ]
+            },
+            "minItems": 0,
+            "maxItems": 100
+          }
+        }
+      },
+      "SBCreateThemesRequest": {
+        "properties": {
+          "adGroupId": {
+            "type": "string",
+            "description": "The identifier of the ad group to which the target is associated."
+          },
+          "campaignId": {
+            "type": "string",
+            "description": "The identifier of the campaign to which the target is associated."
+          },
+          "themeType": {
+            "$ref": "#/components/schemas/ThemeType"
+          },
+          "bid": {
+            "$ref": "#/components/schemas/Bid"
+          }
+        },
+        "required": [
+          "adGroupId",
+          "themeType",
+          "bid"
+        ]
+      },
+      "SBUpdateThemesRequest": {
+        "properties": {
+          "themeId": {
+            "type": "string",
+            "description": "The identifier of the theme target."
+          },
+          "adGroupId": {
+            "type": "string",
+            "description": "The identifier of the ad group to which the target is associated."
+          },
+          "campaignId": {
+            "type": "string",
+            "description": "The identifier of the campaign to which the target is associated."
+          },
+          "state": {
+            "$ref": "#/components/schemas/SBThemeState"
+          },
+          "bid": {
+            "$ref": "#/components/schemas/Bid"
+          }
+        },
+        "required": [
+          "themeId",
+          "adGroupId"
+        ]
+      },
       "SBTargetId": {
         "type": "integer",
         "format": "int64",
         "description": "The identifier of a target."
+      },
+      "SBThemeId": {
+        "type": "string",
+        "description": "The identifier of theme target."
       },
       "SBExpressionRequestIndex": {
         "description": "Correlates the expression to the expression array index specified in the request. Zero-based.",
@@ -8641,6 +9236,10 @@
             "type": "string",
             "description": "The category name."
           },
+          "translatedName": {
+            "type": "string",
+            "description": "The category name translated to the specified locale in the request."
+          },
           "isTargetable": {
             "type": "boolean",
             "description": "Set to `true` if the category can be targeted in a targeting expression, and `false` if not."
@@ -8648,6 +9247,14 @@
           "path": {
             "type": "string",
             "description": "The path of the category within the category catalogue."
+          },
+          "translatedPath": {
+            "type": "string",
+            "description": "The path of the category within the category catalogue translated to the specified locale in the request."
+          },
+          "estimatedReach": {
+            "type": "string",
+            "description": "The estimated daily reach range of the category. Only set when supply source is `STREAMING_VIDEO`"
           }
         }
       },

@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-import { MeasurementApi } from '../models/dsp-measurement';
+import { MeasurementApi,OmnichannelMetricsStudyApi } from '../models/dsp-measurement';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
 import { getAxiosInstance, applyMixins, AdsConfiguration } from '../../helpers';
 
@@ -21,3 +21,6 @@ export class DspMeasurementClient extends MeasurementApi {
 }
 
 
+    export interface DspMeasurementClient extends MeasurementApi,OmnichannelMetricsStudyApi {}
+    applyMixins(DspMeasurementClient, [MeasurementApi,OmnichannelMetricsStudyApi])
+    

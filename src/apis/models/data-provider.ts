@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Amazon Ads API for Data Providers.
- * Use to create, read, or update audience metadata and to add or remove audience records. For onboarding information, see [_setting up for the Amazon Ads API_](../setting-up/account-setup).
+ * Use to create, read, or update audience metadata and to add or remove audience records. For onboarding information, see [_setting up for the Amazon Ads API_](../guides/onboarding/overview).
  *
  * The version of the OpenAPI document: 3.0
  * 

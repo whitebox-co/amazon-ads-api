@@ -1,8 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
- * Creative Assets
- * # Overview:  Advertisers can use creative assets to store, organize and reuse brand content, such as logos, images, etc. Stored content can be used for Amazon Advertising and on Amazon shopping pages. Creative assets enables brands to provide a consistent shopping experience by easily applying brand content across Amazon.       # Workflow      **Asset Upload and Registration**      *Step 1* - **Get Upload URL** - This step is creating a temporary upload location to which you will be uploading your asset to in the following step.    `Request (POST) - /assets/upload` (ensure to include the file name in the body including the file extension as documented in the assets/upload section below)      **Response** - `uploadURL` - This is the url location to which you will be uploading your asset in Step 2      *Step 2* - **Upload File** -      `Request (PUT) <uploadURL>`      **Response** - `200 Success` Once your asset is successfully uploaded to the uploadURL, you can proceed to register this asset.      *Step 3* - **Register Asset** -    `Request (POST) - /assets/register`     **Example Request Body**          ```     {            \"url\": \"uploadUrl\"      \"name\": \"assetName\"      \"asinList\": [        \"BXXXXXXXX\"      ],      \"assetType\": \"IMAGE\",      \"assetSubTypeList\": [        \"LOGO\"      ],      \"versionInfo\": {        \"linkedAssetId\": \"amzn1.assetlibrary.asset1.18298129182sfsd435\",        \"versionNotes\": \"This version is for Team A\"        },      \"tags\": [        \"Awareness\",        \"Spring\"      ]      \"associatedSubEntityList\": [           {            \"brandEntityId\": \"string\" //required for sellers          }       ]    }        ```    Response - `assetId + version` These can be used on GET assets and is the identifier of the asset you uploaded to Creative Assets. 
+ * Creative assets
+ * Use the creative assets API to create and manage video and image assets for use in Amazon Ads campaigns. For details on using this API, see [Creatives overview](guides/creative-asset/asset-library-overview).
  *
  * The version of the OpenAPI document: 3.0
  * 
@@ -346,7 +346,7 @@ export enum CaAssetStatus {
 }
 
 /**
- * 1. For assetType `IMAGE` acceptable assetSubTypes are `LOGO`, `PRODUCT_IMAGE`, `AUTHOR_IMAGE`, `LIFESTYLE_IMAGE`, `OTHER_IMAGE` 2. For assetType `VIDEO` acceptable assetSubtype (optional) is `BACKGROUND_VIDEO`.
+ * 1. For assetType `IMAGE` acceptable assetSubTypes are `LOGO`, `PRODUCT_IMAGE`, `AUTHOR_IMAGE`, `LIFESTYLE_IMAGE`, `OTHER_IMAGE` 2. For assetType `VIDEO` acceptable assetSubtype is `BACKGROUND_VIDEO`.
  * @export
  * @enum {string}
  */
@@ -1479,7 +1479,7 @@ export const CreativeAssetsApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         * Creates an ephemeral resource (upload location) to upload Assets to Creative Assets tool. The upload location is short lived and expires in 15 minutes.The upload location only supports PUT HTTP Method to upload the asset content. If the upload location expires, API user will get `403` Forbidden response. * All ad specs - sizes and policies can be found [here](https://advertising.amazon.com/resources/ad-specs/?ref_=a20m_us_hnav_spcs)  * Program specific links 1. **Stores** - [here](https://advertising.amazon.com/resources/ad-specs/stores?ref_=a20m_us_spcs_stcrgd) 2. **SB/SBV/sponsored ads** - [here](https://advertising.amazon.com/resources/ad-policy/sponsored-ads-policies?ref_=a20m_us_spcs_sbv_spcs_spadcap)
+         * Creates an ephemeral resource (upload location) to upload Assets to Creative Assets tool. The upload location is short lived and expires in 15 minutes.The upload location only supports PUT HTTP Method to upload the asset content. If the upload location expires, API user will get `403` Forbidden response. * All ad specs - sizes and policies can be found [here](https://advertising.amazon.com/resources/ad-specs/?ref_=a20m_us_hnav_spcs)  * Program specific links 1. **Stores** - [here](https://advertising.amazon.com/resources/ad-specs/stores?ref_=a20m_us_spcs_stcrgd) 2. **SB/SBV/sponsored ads** - [here](https://advertising.amazon.com/resources/ad-policy/sponsored-ads-policies?ref_=a20m_us_spcs_sbv_spcs_spadcap) See [Creating assets](guides/creative-asset/creating-assets) to understand the call flow.
          * @summary Creates an upload location to upload an asset.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -1529,7 +1529,7 @@ export const CreativeAssetsApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
-         * The API should be called once the asset is uploaded to the location provided by the /asset/upload API endpoint.
+         * The API should be called once the asset is uploaded to the location provided by the /asset/upload API endpoint. See [Creating assets](guides/creative-asset/creating-assets) to understand the call flow.
          * @summary Registers an uploaded asset with creative assets with optional contextual and tagging information.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -1653,7 +1653,7 @@ export const CreativeAssetsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Creates an ephemeral resource (upload location) to upload Assets to Creative Assets tool. The upload location is short lived and expires in 15 minutes.The upload location only supports PUT HTTP Method to upload the asset content. If the upload location expires, API user will get `403` Forbidden response. * All ad specs - sizes and policies can be found [here](https://advertising.amazon.com/resources/ad-specs/?ref_=a20m_us_hnav_spcs)  * Program specific links 1. **Stores** - [here](https://advertising.amazon.com/resources/ad-specs/stores?ref_=a20m_us_spcs_stcrgd) 2. **SB/SBV/sponsored ads** - [here](https://advertising.amazon.com/resources/ad-policy/sponsored-ads-policies?ref_=a20m_us_spcs_sbv_spcs_spadcap)
+         * Creates an ephemeral resource (upload location) to upload Assets to Creative Assets tool. The upload location is short lived and expires in 15 minutes.The upload location only supports PUT HTTP Method to upload the asset content. If the upload location expires, API user will get `403` Forbidden response. * All ad specs - sizes and policies can be found [here](https://advertising.amazon.com/resources/ad-specs/?ref_=a20m_us_hnav_spcs)  * Program specific links 1. **Stores** - [here](https://advertising.amazon.com/resources/ad-specs/stores?ref_=a20m_us_spcs_stcrgd) 2. **SB/SBV/sponsored ads** - [here](https://advertising.amazon.com/resources/ad-policy/sponsored-ads-policies?ref_=a20m_us_spcs_sbv_spcs_spadcap) See [Creating assets](guides/creative-asset/creating-assets) to understand the call flow.
          * @summary Creates an upload location to upload an asset.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -1666,7 +1666,7 @@ export const CreativeAssetsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * The API should be called once the asset is uploaded to the location provided by the /asset/upload API endpoint.
+         * The API should be called once the asset is uploaded to the location provided by the /asset/upload API endpoint. See [Creating assets](guides/creative-asset/creating-assets) to understand the call flow.
          * @summary Registers an uploaded asset with creative assets with optional contextual and tagging information.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -1715,7 +1715,7 @@ export const CreativeAssetsApiFactory = function (configuration?: Configuration,
             return localVarFp.getAsset(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, assetId, version, options).then((request) => request(axios, basePath));
         },
         /**
-         * Creates an ephemeral resource (upload location) to upload Assets to Creative Assets tool. The upload location is short lived and expires in 15 minutes.The upload location only supports PUT HTTP Method to upload the asset content. If the upload location expires, API user will get `403` Forbidden response. * All ad specs - sizes and policies can be found [here](https://advertising.amazon.com/resources/ad-specs/?ref_=a20m_us_hnav_spcs)  * Program specific links 1. **Stores** - [here](https://advertising.amazon.com/resources/ad-specs/stores?ref_=a20m_us_spcs_stcrgd) 2. **SB/SBV/sponsored ads** - [here](https://advertising.amazon.com/resources/ad-policy/sponsored-ads-policies?ref_=a20m_us_spcs_sbv_spcs_spadcap)
+         * Creates an ephemeral resource (upload location) to upload Assets to Creative Assets tool. The upload location is short lived and expires in 15 minutes.The upload location only supports PUT HTTP Method to upload the asset content. If the upload location expires, API user will get `403` Forbidden response. * All ad specs - sizes and policies can be found [here](https://advertising.amazon.com/resources/ad-specs/?ref_=a20m_us_hnav_spcs)  * Program specific links 1. **Stores** - [here](https://advertising.amazon.com/resources/ad-specs/stores?ref_=a20m_us_spcs_stcrgd) 2. **SB/SBV/sponsored ads** - [here](https://advertising.amazon.com/resources/ad-policy/sponsored-ads-policies?ref_=a20m_us_spcs_sbv_spcs_spadcap) See [Creating assets](guides/creative-asset/creating-assets) to understand the call flow.
          * @summary Creates an upload location to upload an asset.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -1727,7 +1727,7 @@ export const CreativeAssetsApiFactory = function (configuration?: Configuration,
             return localVarFp.getUploadLocation(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, inlineObject1, options).then((request) => request(axios, basePath));
         },
         /**
-         * The API should be called once the asset is uploaded to the location provided by the /asset/upload API endpoint.
+         * The API should be called once the asset is uploaded to the location provided by the /asset/upload API endpoint. See [Creating assets](guides/creative-asset/creating-assets) to understand the call flow.
          * @summary Registers an uploaded asset with creative assets with optional contextual and tagging information.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -1892,7 +1892,7 @@ export class CreativeAssetsApi extends BaseAPI {
     }
 
     /**
-     * Creates an ephemeral resource (upload location) to upload Assets to Creative Assets tool. The upload location is short lived and expires in 15 minutes.The upload location only supports PUT HTTP Method to upload the asset content. If the upload location expires, API user will get `403` Forbidden response. * All ad specs - sizes and policies can be found [here](https://advertising.amazon.com/resources/ad-specs/?ref_=a20m_us_hnav_spcs)  * Program specific links 1. **Stores** - [here](https://advertising.amazon.com/resources/ad-specs/stores?ref_=a20m_us_spcs_stcrgd) 2. **SB/SBV/sponsored ads** - [here](https://advertising.amazon.com/resources/ad-policy/sponsored-ads-policies?ref_=a20m_us_spcs_sbv_spcs_spadcap)
+     * Creates an ephemeral resource (upload location) to upload Assets to Creative Assets tool. The upload location is short lived and expires in 15 minutes.The upload location only supports PUT HTTP Method to upload the asset content. If the upload location expires, API user will get `403` Forbidden response. * All ad specs - sizes and policies can be found [here](https://advertising.amazon.com/resources/ad-specs/?ref_=a20m_us_hnav_spcs)  * Program specific links 1. **Stores** - [here](https://advertising.amazon.com/resources/ad-specs/stores?ref_=a20m_us_spcs_stcrgd) 2. **SB/SBV/sponsored ads** - [here](https://advertising.amazon.com/resources/ad-policy/sponsored-ads-policies?ref_=a20m_us_spcs_sbv_spcs_spadcap) See [Creating assets](guides/creative-asset/creating-assets) to understand the call flow.
      * @summary Creates an upload location to upload an asset.
      * @param {CreativeAssetsApiGetUploadLocationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1904,7 +1904,7 @@ export class CreativeAssetsApi extends BaseAPI {
     }
 
     /**
-     * The API should be called once the asset is uploaded to the location provided by the /asset/upload API endpoint.
+     * The API should be called once the asset is uploaded to the location provided by the /asset/upload API endpoint. See [Creating assets](guides/creative-asset/creating-assets) to understand the call flow.
      * @summary Registers an uploaded asset with creative assets with optional contextual and tagging information.
      * @param {CreativeAssetsApiRegisterAssetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

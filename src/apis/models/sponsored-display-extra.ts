@@ -1762,6 +1762,8 @@ export enum PerformanceMetric {
  */
 
 export enum PerformanceMetricForSB {
+    Is = 'IS',
+    Ntb = 'NTB',
     Roas = 'ROAS'
 }
 
@@ -2784,6 +2786,100 @@ export interface SDBudgetHistory {
 /**
  * 
  * @export
+ * @interface SDBudgetRecommendation
+ */
+export interface SDBudgetRecommendation {
+    /**
+     * Campaign id.
+     * @type {string}
+     * @memberof SDBudgetRecommendation
+     */
+    campaignId: string;
+    /**
+     * Recommended budget for the campaign. This will be in local currency.
+     * @type {number}
+     * @memberof SDBudgetRecommendation
+     */
+    suggestedBudget: number;
+    /**
+     * Correlate the recommendation to the campaign index in the request. Zero-based.
+     * @type {number}
+     * @memberof SDBudgetRecommendation
+     */
+    index: number;
+    /**
+     * 
+     * @type {SDSevenDaysMissedOpportunities}
+     * @memberof SDBudgetRecommendation
+     */
+    sevenDaysMissedOpportunities: SDSevenDaysMissedOpportunities;
+}
+/**
+ * 
+ * @export
+ * @interface SDBudgetRecommendationError
+ */
+export interface SDBudgetRecommendationError {
+    /**
+     * The HTTP status code of the response.
+     * @type {string}
+     * @memberof SDBudgetRecommendationError
+     */
+    code: string;
+    /**
+     * Campaign id.
+     * @type {string}
+     * @memberof SDBudgetRecommendationError
+     */
+    campaignId: string;
+    /**
+     * Correlate the recommendation to the campaign index in the request. Zero-based.
+     * @type {number}
+     * @memberof SDBudgetRecommendationError
+     */
+    index: number;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof SDBudgetRecommendationError
+     */
+    details: string;
+}
+/**
+ * Request for budget recommendations.
+ * @export
+ * @interface SDBudgetRecommendationsRequest
+ */
+export interface SDBudgetRecommendationsRequest {
+    /**
+     * A list of campaign ids for which to get budget recommendations and missed opportunities.
+     * @type {Array<string>}
+     * @memberof SDBudgetRecommendationsRequest
+     */
+    campaignIds: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface SDBudgetRecommendationsResponse
+ */
+export interface SDBudgetRecommendationsResponse {
+    /**
+     * List of successful budget recommendation for campaigns.
+     * @type {Array<SDBudgetRecommendation>}
+     * @memberof SDBudgetRecommendationsResponse
+     */
+    budgetRecommendationsSuccessResults: Array<SDBudgetRecommendation>;
+    /**
+     * List of errors that occurred when generating budget recommendation.
+     * @type {Array<SDBudgetRecommendationError>}
+     * @memberof SDBudgetRecommendationsResponse
+     */
+    budgetRecommendationsErrorResults: Array<SDBudgetRecommendationError>;
+}
+/**
+ * 
+ * @export
  * @interface SDBudgetRule
  */
 export interface SDBudgetRule {
@@ -3007,6 +3103,17 @@ export interface SDCategoryRecommendationsV33 {
 export enum SDCostTypeV31 {
     Cpc = 'cpc',
     Vcpm = 'vcpm'
+}
+
+/**
+ * The type of the associated creative. If the field is empty or null, a default value of IMAGE will be used. Only supports one type (VIDEO or IMAGE) at a time.
+ * @export
+ * @enum {string}
+ */
+
+export enum SDCreativeType {
+    Image = 'IMAGE',
+    Video = 'VIDEO'
 }
 
 /**
@@ -3378,7 +3485,7 @@ export interface SDProductRecommendationsV32 {
  */
 export interface SDProductTargetingRecommendationsSuccess {
     /**
-     * HTTP status code 200 indicating a successful response for product recomendations.
+     * HTTP status code 200 indicating a successful response for product recommendations.
      * @type {string}
      * @memberof SDProductTargetingRecommendationsSuccess
      */
@@ -3393,6 +3500,37 @@ export interface SDProductTargetingRecommendationsSuccess {
      * A list of recommended products.
      * @type {Array<SDProductRecommendationV32>}
      * @memberof SDProductTargetingRecommendationsSuccess
+     */
+    recommendations?: Array<SDProductRecommendationV32>;
+}
+/**
+ * Recommendation results for product targeting.
+ * @export
+ * @interface SDProductTargetingRecommendationsSuccessV34
+ */
+export interface SDProductTargetingRecommendationsSuccessV34 {
+    /**
+     * HTTP status code 200 indicating a successful response for product recommendations.
+     * @type {string}
+     * @memberof SDProductTargetingRecommendationsSuccessV34
+     */
+    code?: string;
+    /**
+     * A list of expressions defining the product targeting theme. The list will define an AND operator on different expressions. For example, asinPriceGreaterThan and asinReviewRatingLessThan can be used to request product recommendations which are both with greater price and less review rating compared to the goal products. Note: currently the service only support one item in the array.
+     * @type {Array<SDProductTargetingThemeExpression>}
+     * @memberof SDProductTargetingRecommendationsSuccessV34
+     */
+    expression?: Array<SDProductTargetingThemeExpression>;
+    /**
+     * The theme name specified in the request.
+     * @type {string}
+     * @memberof SDProductTargetingRecommendationsSuccessV34
+     */
+    name?: string;
+    /**
+     * A list of recommended products.
+     * @type {Array<SDProductRecommendationV32>}
+     * @memberof SDProductTargetingRecommendationsSuccessV34
      */
     recommendations?: Array<SDProductRecommendationV32>;
 }
@@ -3435,9 +3573,9 @@ export interface SDProductTargetingThemeExpression {
     */
 export enum SDProductTargetingThemeExpressionTypeEnum {
     AsinPriceGreaterThan = 'asinPriceGreaterThan',
+    AsinBrandSameAs = 'asinBrandSameAs',
     AsinReviewRatingLessThan = 'asinReviewRatingLessThan',
-    AsinGlanceViewsGreaterThan = 'asinGlanceViewsGreaterThan',
-    AsinBrandSameAs = 'asinBrandSameAs'
+    AsinGlanceViewsGreaterThan = 'asinGlanceViewsGreaterThan'
 }
 
 /**
@@ -3522,6 +3660,79 @@ export enum SDRuleType {
 }
 
 /**
+ * 
+ * @export
+ * @interface SDSevenDaysMissedOpportunities
+ */
+export interface SDSevenDaysMissedOpportunities {
+    /**
+     * Lower bound of the estimated missed sales. This will be in local currency.
+     * @type {number}
+     * @memberof SDSevenDaysMissedOpportunities
+     */
+    estimatedMissedSalesLower?: number;
+    /**
+     * Upper bound of the estimated missed sales. This will be in local currency.
+     * @type {number}
+     * @memberof SDSevenDaysMissedOpportunities
+     */
+    estimatedMissedSalesUpper?: number;
+    /**
+     * End date of the missed opportunities date range (YYYY-MM-DD).
+     * @type {string}
+     * @memberof SDSevenDaysMissedOpportunities
+     */
+    endDate?: string;
+    /**
+     * Lower bound of the estimated missed impressions.
+     * @type {number}
+     * @memberof SDSevenDaysMissedOpportunities
+     */
+    estimatedMissedImpressionsLower?: number;
+    /**
+     * Lower bound of the estimated missed clicks.
+     * @type {number}
+     * @memberof SDSevenDaysMissedOpportunities
+     */
+    estimatedMissedClicksLower?: number;
+    /**
+     * Upper bound of the estimated missed clicks.
+     * @type {number}
+     * @memberof SDSevenDaysMissedOpportunities
+     */
+    estimatedMissedClicksUpper?: number;
+    /**
+     * Upper bound of the estimated missed impressions.
+     * @type {number}
+     * @memberof SDSevenDaysMissedOpportunities
+     */
+    estimatedMissedImpressionsUpper?: number;
+    /**
+     * Start date of the missed opportunities date range (YYYY-MM-DD).
+     * @type {string}
+     * @memberof SDSevenDaysMissedOpportunities
+     */
+    startDate?: string;
+    /**
+     * Percentage of time the campaign is active with a budget.
+     * @type {number}
+     * @memberof SDSevenDaysMissedOpportunities
+     */
+    percentTimeInBudget?: number;
+    /**
+     * Lower bound of the estimated missed viewable impressions for vCPM campaigns.
+     * @type {number}
+     * @memberof SDSevenDaysMissedOpportunities
+     */
+    estimatedMissedViewableImpressionsLower?: number;
+    /**
+     * Upper bound of the estimated missed viewable impressions for vCPM campaigns.
+     * @type {number}
+     * @memberof SDSevenDaysMissedOpportunities
+     */
+    estimatedMissedViewableImpressionsUpper?: number;
+}
+/**
  * The advertising tactic associated with the campaign. The following table lists available tactic names:  |Tactic Name|Type|Description| |-----------|-----|-----------| |T00001&nbsp;|&nbsp;|This tactic name is only applicable for the `requestReport` operation and does not apply to any other campaign management operations. Reach shoppers who showed interest in categories related to your promoted products, or target specific products or product categories on Amazon. This tactic is for use by only vendors. This tactic is used to retrieve metrics for Sponsored Display campaigns that use interest, product or category audiences, including Sponsored Display campaigns that were previously Product Display Ads campaigns.| |T00010&nbsp;|Views&nbsp;|**Note that this advertising tactic is not currently supported. This note will be removed when this advertising tactic is available.** This is the same tactic as \'remarketing\'. Shoppers who viewed the detail pages of your advertised products or similar products.| |remarketing&nbsp;|Views&nbsp;|This is the same tactic as \'T00010\'. Shoppers who viewed the detail pages of your advertised products or similar products.| |T00020&nbsp;|Products&nbsp;|Products: Choose individual products to show your ads in placements related to those products.<br>Categories: Choose individual categories to show your ads in placements related to those categories.|
  * @export
  * @enum {string}
@@ -3562,10 +3773,10 @@ export type SDTargetExpressionV31 = SDTargetingPredicateNestedV31 | SDTargetingP
 export interface SDTargetingBidRecommendationsRequestV31 {
     /**
      * A list of targeting clauses to receive bid recommendations for.
-     * @type {Array<SDTargetingBidRecommendationsRequestV32TargetingClauses>}
+     * @type {Array<SDTargetingBidRecommendationsRequestV33TargetingClauses>}
      * @memberof SDTargetingBidRecommendationsRequestV31
      */
-    targetingClauses: Array<SDTargetingBidRecommendationsRequestV32TargetingClauses>;
+    targetingClauses: Array<SDTargetingBidRecommendationsRequestV33TargetingClauses>;
     /**
      * A list of products to tailor bid recommendations for category and audience based targeting clauses.
      * @type {Array<SDGoalProduct>}
@@ -3593,10 +3804,10 @@ export interface SDTargetingBidRecommendationsRequestV32 {
     costType: SDCostTypeV31;
     /**
      * A list of targeting clauses to receive bid recommendations for.
-     * @type {Array<SDTargetingBidRecommendationsRequestV32TargetingClauses>}
+     * @type {Array<SDTargetingBidRecommendationsRequestV33TargetingClauses>}
      * @memberof SDTargetingBidRecommendationsRequestV32
      */
-    targetingClauses: Array<SDTargetingBidRecommendationsRequestV32TargetingClauses>;
+    targetingClauses: Array<SDTargetingBidRecommendationsRequestV33TargetingClauses>;
     /**
      * A list of products to tailor bid recommendations for category and audience based targeting clauses.
      * @type {Array<SDGoalProduct>}
@@ -3605,15 +3816,52 @@ export interface SDTargetingBidRecommendationsRequestV32 {
     products?: Array<SDGoalProduct>;
 }
 /**
+ * Request for targeting bid recommendations.
+ * @export
+ * @interface SDTargetingBidRecommendationsRequestV33
+ */
+export interface SDTargetingBidRecommendationsRequestV33 {
+    /**
+     * 
+     * @type {SDBidOptimizationV32}
+     * @memberof SDTargetingBidRecommendationsRequestV33
+     */
+    bidOptimization: SDBidOptimizationV32;
+    /**
+     * 
+     * @type {SDCreativeType}
+     * @memberof SDTargetingBidRecommendationsRequestV33
+     */
+    creativeType?: SDCreativeType | null;
+    /**
+     * 
+     * @type {SDCostTypeV31}
+     * @memberof SDTargetingBidRecommendationsRequestV33
+     */
+    costType: SDCostTypeV31;
+    /**
+     * A list of targeting clauses to receive bid recommendations for.
+     * @type {Array<SDTargetingBidRecommendationsRequestV33TargetingClauses>}
+     * @memberof SDTargetingBidRecommendationsRequestV33
+     */
+    targetingClauses: Array<SDTargetingBidRecommendationsRequestV33TargetingClauses>;
+    /**
+     * A list of products to tailor bid recommendations for category and audience based targeting clauses.
+     * @type {Array<SDGoalProduct>}
+     * @memberof SDTargetingBidRecommendationsRequestV33
+     */
+    products?: Array<SDGoalProduct>;
+}
+/**
  * 
  * @export
- * @interface SDTargetingBidRecommendationsRequestV32TargetingClauses
+ * @interface SDTargetingBidRecommendationsRequestV33TargetingClauses
  */
-export interface SDTargetingBidRecommendationsRequestV32TargetingClauses {
+export interface SDTargetingBidRecommendationsRequestV33TargetingClauses {
     /**
      * 
      * @type {SDTargetingClauseV31}
-     * @memberof SDTargetingBidRecommendationsRequestV32TargetingClauses
+     * @memberof SDTargetingBidRecommendationsRequestV33TargetingClauses
      */
     targetingClause: SDTargetingClauseV31;
 }
@@ -3754,7 +4002,7 @@ export enum SDTargetingClauseV31ExpressionTypeEnum {
 }
 
 /**
- * A predicate to match against inside the TargetingPredicateNested component (only applicable to Audience targeting - T00030).  * All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Advertising browse system. * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the â€˜betweenâ€™ strings to construct a targeting expression the format of the string is â€˜double-doubleâ€™ where the first double must be smaller than the second double. Prices are not inclusive. * The exactProduct, similarProduct, and negative types do not utilize the value field. * The only type currently applicable to Amazon Audiences targeting is \'audienceSameAs\'. * **Future** A \'negative\' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.
+ * A predicate to match against inside the TargetingPredicateNested component (only applicable to Audience targeting - T00030).  * All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Advertising browse system. * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the â€˜betweenâ€™ strings to construct a targeting expression the format of the string is â€˜double-doubleâ€™ where the first double must be smaller than the second double. Prices are not inclusive. * The exactProduct, similarProduct, relatedProduct, and negative types do not utilize the value field. * The only type currently applicable to Amazon Audiences targeting is \'audienceSameAs\'. * **Future** A \'negative\' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.
  * @export
  * @interface SDTargetingPredicateBaseV31
  */
@@ -3906,6 +4154,37 @@ export interface SDTargetingRecommendationsFailure {
     errorMessage?: string;
 }
 /**
+ * A targeting recommendation failure record.
+ * @export
+ * @interface SDTargetingRecommendationsFailureV34
+ */
+export interface SDTargetingRecommendationsFailureV34 {
+    /**
+     * HTTP status code indicating a failure response for targeting recomendations.
+     * @type {string}
+     * @memberof SDTargetingRecommendationsFailureV34
+     */
+    code?: string;
+    /**
+     * A list of expressions that failed to be applied in the product targeting theme.
+     * @type {Array<SDProductTargetingThemeExpression>}
+     * @memberof SDTargetingRecommendationsFailureV34
+     */
+    expression?: Array<SDProductTargetingThemeExpression>;
+    /**
+     * The theme name specified in the request. If the themes field is not provided in the request, the value of this field will be set to default.
+     * @type {string}
+     * @memberof SDTargetingRecommendationsFailureV34
+     */
+    name?: string;
+    /**
+     * A human friendly error message indicating the failure reasons.
+     * @type {string}
+     * @memberof SDTargetingRecommendationsFailureV34
+     */
+    errorMessage?: string;
+}
+/**
  * Request for targeting recommendations
  * @export
  * @interface SDTargetingRecommendationsRequest
@@ -4018,6 +4297,37 @@ export interface SDTargetingRecommendationsRequestV33 {
     products: Array<SDGoalProduct>;
 }
 /**
+ * Request for targeting recommendations
+ * @export
+ * @interface SDTargetingRecommendationsRequestV34
+ */
+export interface SDTargetingRecommendationsRequestV34 {
+    /**
+     * 
+     * @type {SDTargetingRecommendationsThemes}
+     * @memberof SDTargetingRecommendationsRequestV34
+     */
+    themes?: SDTargetingRecommendationsThemes;
+    /**
+     * A filter to indicate which types of recommendations to request.
+     * @type {Array<SDRecommendationTypeV32>}
+     * @memberof SDTargetingRecommendationsRequestV34
+     */
+    typeFilter: Array<SDRecommendationTypeV32>;
+    /**
+     * 
+     * @type {SDTacticV31}
+     * @memberof SDTargetingRecommendationsRequestV34
+     */
+    tactic: SDTacticV31;
+    /**
+     * A list of products for which to get targeting recommendations
+     * @type {Array<SDGoalProduct>}
+     * @memberof SDTargetingRecommendationsRequestV34
+     */
+    products: Array<SDGoalProduct>;
+}
+/**
  * Response to a request for targeting recommendations
  * @export
  * @interface SDTargetingRecommendationsResponse
@@ -4068,6 +4378,19 @@ export interface SDTargetingRecommendationsResponseV33 {
      * @memberof SDTargetingRecommendationsResponseV33
      */
     recommendations?: SDTargetingRecommendationsV33;
+}
+/**
+ * Response to a request for targeting recommendations
+ * @export
+ * @interface SDTargetingRecommendationsResponseV34
+ */
+export interface SDTargetingRecommendationsResponseV34 {
+    /**
+     * 
+     * @type {SDTargetingRecommendationsV34}
+     * @memberof SDTargetingRecommendationsResponseV34
+     */
+    recommendations?: SDTargetingRecommendationsV34;
 }
 /**
  * The themes used to refine the recommendations. Currently only product targeting themes are supported.
@@ -4171,6 +4494,37 @@ export interface SDTargetingRecommendationsV33 {
     themes?: SDThemeRecommendations;
 }
 /**
+ * A collection of targeting recommendations. Results will be sorted with strongest recommendations in the beginning.
+ * @export
+ * @interface SDTargetingRecommendationsV34
+ */
+export interface SDTargetingRecommendationsV34 {
+    /**
+     * 
+     * @type {SDThemeRecommendationsV34}
+     * @memberof SDTargetingRecommendationsV34
+     */
+    themes?: SDThemeRecommendationsV34;
+    /**
+     * List of recommended audience targets, broken down by audience category
+     * @type {Array<SDAudienceCategoryRecommendations>}
+     * @memberof SDTargetingRecommendationsV34
+     */
+    audiences?: Array<SDAudienceCategoryRecommendations>;
+    /**
+     * List of recommended category targets
+     * @type {Array<SDCategoryRecommendationV33>}
+     * @memberof SDTargetingRecommendationsV34
+     */
+    categories?: Array<SDCategoryRecommendationV33>;
+    /**
+     * List of recommended product targets
+     * @type {Array<SDProductRecommendationV32>}
+     * @memberof SDTargetingRecommendationsV34
+     */
+    products?: Array<SDProductRecommendationV32>;
+}
+/**
  * 
  * @export
  * @interface SDThemeRecommendations
@@ -4182,6 +4536,19 @@ export interface SDThemeRecommendations {
      * @memberof SDThemeRecommendations
      */
     products?: Array<SDProductTargetingRecommendationsSuccess | SDTargetingRecommendationsFailure>;
+}
+/**
+ * 
+ * @export
+ * @interface SDThemeRecommendationsV34
+ */
+export interface SDThemeRecommendationsV34 {
+    /**
+     * A list of product targeting theme recommendations.
+     * @type {Array<SDProductTargetingRecommendationsSuccessV34 | SDTargetingRecommendationsFailureV34>}
+     * @memberof SDThemeRecommendationsV34
+     */
+    products?: Array<SDProductTargetingRecommendationsSuccessV34 | SDTargetingRecommendationsFailureV34>;
 }
 /**
  * 
@@ -6026,6 +6393,157 @@ export class BrandSafetyRequestStatusApi extends BaseAPI {
 
 
 /**
+ * BudgetRecommendationsApi - axios parameter creator
+ * @export
+ */
+export const BudgetRecommendationsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Given a list of campaigns as input, this API provides the following metrics: <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign\'s chances of running out of budget.  <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. <br> <b>3. Estimated missed impressions, clicks and sales </b> - These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopted the recommended budget. These are estimates based on campaign\'s historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Returns recommended daily budget and estimated missed opportunities for campaigns
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {SDBudgetRecommendationsRequest} [sDBudgetRecommendationsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSDBudgetRecommendations: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDBudgetRecommendationsRequest?: SDBudgetRecommendationsRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getSDBudgetRecommendations', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getSDBudgetRecommendations', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sd/campaigns/budgetRecommendations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sdbudgetrecommendations.v3+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(sDBudgetRecommendationsRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BudgetRecommendationsApi - functional programming interface
+ * @export
+ */
+export const BudgetRecommendationsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BudgetRecommendationsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Given a list of campaigns as input, this API provides the following metrics: <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign\'s chances of running out of budget.  <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. <br> <b>3. Estimated missed impressions, clicks and sales </b> - These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopted the recommended budget. These are estimates based on campaign\'s historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Returns recommended daily budget and estimated missed opportunities for campaigns
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {SDBudgetRecommendationsRequest} [sDBudgetRecommendationsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSDBudgetRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDBudgetRecommendationsRequest?: SDBudgetRecommendationsRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SDBudgetRecommendationsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSDBudgetRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sDBudgetRecommendationsRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BudgetRecommendationsApi - factory interface
+ * @export
+ */
+export const BudgetRecommendationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BudgetRecommendationsApiFp(configuration)
+    return {
+        /**
+         * Given a list of campaigns as input, this API provides the following metrics: <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign\'s chances of running out of budget.  <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. <br> <b>3. Estimated missed impressions, clicks and sales </b> - These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopted the recommended budget. These are estimates based on campaign\'s historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Returns recommended daily budget and estimated missed opportunities for campaigns
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {SDBudgetRecommendationsRequest} [sDBudgetRecommendationsRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSDBudgetRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDBudgetRecommendationsRequest?: SDBudgetRecommendationsRequest, options?: any): AxiosPromise<SDBudgetRecommendationsResponse> {
+            return localVarFp.getSDBudgetRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sDBudgetRecommendationsRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getSDBudgetRecommendations operation in BudgetRecommendationsApi.
+ * @export
+ * @interface BudgetRecommendationsApiGetSDBudgetRecommendationsRequest
+ */
+export interface BudgetRecommendationsApiGetSDBudgetRecommendationsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof BudgetRecommendationsApiGetSDBudgetRecommendations
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof BudgetRecommendationsApiGetSDBudgetRecommendations
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * 
+     * @type {SDBudgetRecommendationsRequest}
+     * @memberof BudgetRecommendationsApiGetSDBudgetRecommendations
+     */
+    readonly sDBudgetRecommendationsRequest?: SDBudgetRecommendationsRequest
+}
+
+/**
+ * BudgetRecommendationsApi - object-oriented interface
+ * @export
+ * @class BudgetRecommendationsApi
+ * @extends {BaseAPI}
+ */
+export class BudgetRecommendationsApi extends BaseAPI {
+    /**
+     * Given a list of campaigns as input, this API provides the following metrics: <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign\'s chances of running out of budget.  <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. <br> <b>3. Estimated missed impressions, clicks and sales </b> - These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopted the recommended budget. These are estimates based on campaign\'s historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+     * @summary Returns recommended daily budget and estimated missed opportunities for campaigns
+     * @param {BudgetRecommendationsApiGetSDBudgetRecommendationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BudgetRecommendationsApi
+     */
+    public getSDBudgetRecommendations(requestParameters: BudgetRecommendationsApiGetSDBudgetRecommendationsRequest, options?: any) {
+        return BudgetRecommendationsApiFp(this.configuration).getSDBudgetRecommendations(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.sDBudgetRecommendationsRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * BudgetRulesApi - axios parameter creator
  * @export
  */
@@ -6296,7 +6814,7 @@ export const BudgetRulesApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
-         * The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.
+         * **Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.
          * @summary Gets the budget history for a campaign specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
@@ -6603,7 +7121,7 @@ export const BudgetRulesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.
+         * **Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.
          * @summary Gets the budget history for a campaign specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
@@ -6734,7 +7252,7 @@ export const BudgetRulesApiFactory = function (configuration?: Configuration, ba
             return localVarFp.getCampaignsAssociatedWithSDBudgetRule(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetRuleId, pageSize, nextToken, options).then((request) => request(axios, basePath));
         },
         /**
-         * The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.
+         * **Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.
          * @summary Gets the budget history for a campaign specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
@@ -7172,7 +7690,7 @@ export class BudgetRulesApi extends BaseAPI {
     }
 
     /**
-     * The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.
+     * **Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.
      * @summary Gets the budget history for a campaign specified by identifier.
      * @param {BudgetRulesApiGetRuleBasedBudgetHistoryForSDCampaignsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7908,15 +8426,15 @@ export class SnapshotAPIsApi extends BaseAPI {
 export const TargetingRecommendationsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.  The recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Product targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins   #### Refinement Notes: - Refinements are currently not supported and if included will not impact the bid recommendation for the target   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct & exactProduct targets the advertised asins are required  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.  The recommended bids are derived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Product targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins |purchases(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has purchased products in the given category |purchases(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased the advertised asins |purchases(relatedProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased related products to the advertised asins |audience(audienceSameAs=12345)|Receive a bid recommendation for the given target audience   #### Refinement Notes: - Refinements are currently not supported and if included will not impact the bid recommendation for the target   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategorySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct, exactProduct, and relatedProduct targets the advertised asins are required  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Returns a set of bid recommendations for targeting clauses
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {SDTargetingBidRecommendationsRequestV32} [sDTargetingBidRecommendationsRequestV32] 
+         * @param {SDTargetingBidRecommendationsRequestV33} [sDTargetingBidRecommendationsRequestV33] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTargetBidRecommendations: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDTargetingBidRecommendationsRequestV32?: SDTargetingBidRecommendationsRequestV32, options: any = {}): Promise<RequestArgs> => {
+        getTargetBidRecommendations: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDTargetingBidRecommendationsRequestV33?: SDTargetingBidRecommendationsRequestV33, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('getTargetBidRecommendations', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
@@ -7943,12 +8461,12 @@ export const TargetingRecommendationsApiAxiosParamCreator = function (configurat
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/vnd.sdtargetingrecommendations.v3.2+json';
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sdtargetingrecommendations.v3.3+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(sDTargetingBidRecommendationsRequestV32, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(sDTargetingBidRecommendationsRequestV33, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -8019,16 +8537,16 @@ export const TargetingRecommendationsApiFp = function(configuration?: Configurat
     const localVarAxiosParamCreator = TargetingRecommendationsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.  The recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Product targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins   #### Refinement Notes: - Refinements are currently not supported and if included will not impact the bid recommendation for the target   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct & exactProduct targets the advertised asins are required  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.  The recommended bids are derived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Product targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins |purchases(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has purchased products in the given category |purchases(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased the advertised asins |purchases(relatedProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased related products to the advertised asins |audience(audienceSameAs=12345)|Receive a bid recommendation for the given target audience   #### Refinement Notes: - Refinements are currently not supported and if included will not impact the bid recommendation for the target   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategorySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct, exactProduct, and relatedProduct targets the advertised asins are required  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Returns a set of bid recommendations for targeting clauses
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {SDTargetingBidRecommendationsRequestV32} [sDTargetingBidRecommendationsRequestV32] 
+         * @param {SDTargetingBidRecommendationsRequestV33} [sDTargetingBidRecommendationsRequestV33] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTargetBidRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDTargetingBidRecommendationsRequestV32?: SDTargetingBidRecommendationsRequestV32, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SDTargetingBidRecommendationsResponseV32>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTargetBidRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sDTargetingBidRecommendationsRequestV32, options);
+        async getTargetBidRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDTargetingBidRecommendationsRequestV33?: SDTargetingBidRecommendationsRequestV33, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SDTargetingBidRecommendationsResponseV32>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTargetBidRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sDTargetingBidRecommendationsRequestV33, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -8056,16 +8574,16 @@ export const TargetingRecommendationsApiFactory = function (configuration?: Conf
     const localVarFp = TargetingRecommendationsApiFp(configuration)
     return {
         /**
-         * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.  The recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Product targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins   #### Refinement Notes: - Refinements are currently not supported and if included will not impact the bid recommendation for the target   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct & exactProduct targets the advertised asins are required  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.  The recommended bids are derived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Product targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins |purchases(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has purchased products in the given category |purchases(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased the advertised asins |purchases(relatedProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased related products to the advertised asins |audience(audienceSameAs=12345)|Receive a bid recommendation for the given target audience   #### Refinement Notes: - Refinements are currently not supported and if included will not impact the bid recommendation for the target   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategorySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct, exactProduct, and relatedProduct targets the advertised asins are required  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Returns a set of bid recommendations for targeting clauses
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {SDTargetingBidRecommendationsRequestV32} [sDTargetingBidRecommendationsRequestV32] 
+         * @param {SDTargetingBidRecommendationsRequestV33} [sDTargetingBidRecommendationsRequestV33] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTargetBidRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDTargetingBidRecommendationsRequestV32?: SDTargetingBidRecommendationsRequestV32, options?: any): AxiosPromise<SDTargetingBidRecommendationsResponseV32> {
-            return localVarFp.getTargetBidRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sDTargetingBidRecommendationsRequestV32, options).then((request) => request(axios, basePath));
+        getTargetBidRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDTargetingBidRecommendationsRequestV33?: SDTargetingBidRecommendationsRequestV33, options?: any): AxiosPromise<SDTargetingBidRecommendationsResponseV32> {
+            return localVarFp.getTargetBidRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sDTargetingBidRecommendationsRequestV33, options).then((request) => request(axios, basePath));
         },
         /**
          * Provides a list of products to target based on the list of input ASINs. Currently the API will return up to 100 recommended products and categories. The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Product Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
@@ -8105,10 +8623,10 @@ export interface TargetingRecommendationsApiGetTargetBidRecommendationsRequest {
 
     /**
      * 
-     * @type {SDTargetingBidRecommendationsRequestV32}
+     * @type {SDTargetingBidRecommendationsRequestV33}
      * @memberof TargetingRecommendationsApiGetTargetBidRecommendations
      */
-    readonly sDTargetingBidRecommendationsRequestV32?: SDTargetingBidRecommendationsRequestV32
+    readonly sDTargetingBidRecommendationsRequestV33?: SDTargetingBidRecommendationsRequestV33
 }
 
 /**
@@ -8154,7 +8672,7 @@ export interface TargetingRecommendationsApiGetTargetRecommendationsRequest {
  */
 export class TargetingRecommendationsApi extends BaseAPI {
     /**
-     * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.  The recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Product targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins   #### Refinement Notes: - Refinements are currently not supported and if included will not impact the bid recommendation for the target   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct & exactProduct targets the advertised asins are required  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+     * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.  The recommended bids are derived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Product targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins |purchases(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has purchased products in the given category |purchases(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased the advertised asins |purchases(relatedProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased related products to the advertised asins |audience(audienceSameAs=12345)|Receive a bid recommendation for the given target audience   #### Refinement Notes: - Refinements are currently not supported and if included will not impact the bid recommendation for the target   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategorySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct, exactProduct, and relatedProduct targets the advertised asins are required  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
      * @summary Returns a set of bid recommendations for targeting clauses
      * @param {TargetingRecommendationsApiGetTargetBidRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -8162,7 +8680,7 @@ export class TargetingRecommendationsApi extends BaseAPI {
      * @memberof TargetingRecommendationsApi
      */
     public getTargetBidRecommendations(requestParameters: TargetingRecommendationsApiGetTargetBidRecommendationsRequest, options?: any) {
-        return TargetingRecommendationsApiFp(this.configuration).getTargetBidRecommendations(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.sDTargetingBidRecommendationsRequestV32, options).then((request) => request(this.axios, this.basePath));
+        return TargetingRecommendationsApiFp(this.configuration).getTargetBidRecommendations(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.sDTargetingBidRecommendationsRequestV33, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

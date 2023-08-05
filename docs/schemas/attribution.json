@@ -453,18 +453,10 @@
         "description": "The identifier of a publisher that does not support macros.",
         "type": "string"
       },
-      "MaaSError": {
-        "description": "The error response object.",
-        "type": "object",
-        "properties": {
-          "code": {
-            "description": "The HTTP status code of the response. Possible value of code is \"200\", \"207\", \"400\", \"401\", \"429\", \"403\", or \"500\".",
-            "type": "string"
-          },
-          "details": {
-            "description": "A human-readable description of the response.",
-            "type": "string"
-          }
+      "macroPublishers": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/macroPublisher"
         }
       },
       "PublishersResponse": {
@@ -479,10 +471,18 @@
           }
         }
       },
-      "macroPublishers": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/macroPublisher"
+      "MaaSError": {
+        "description": "The error response object.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "The HTTP status code of the response. Possible value of code is \"200\", \"207\", \"400\", \"401\", \"429\", \"403\", or \"500\".",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
         }
       },
       "nonMacroPublishers": {
@@ -631,7 +631,7 @@
             "minimum": 1
           },
           "metrics": {
-            "description": "A comma-delimited list of metrics to include in the report. In the report, each metric’s value reflects the events which took place on the row’s date; in other words, events are reported on the date they occurred, not on the date of the attributed click. Attribution is calculated using a 14-day last-click model. For more detail on attribution methodology, see the [Measurement](https://advertising.amazon.com/API/docs/en-us/amazon-attribution/how-to#measurement) section of the API guide. View the list of available metrics for each report type below.\"Promoted products\" refers to products associated with the campaign.\n|Metrics for reportType`PERFORMANCE`|\n|-------------------|\n\n|Metric  |Description|\n|--------|-----------|\n|Click-throughs|Ad clicks.|\n|attributedDetailPageViewsClicks14d|Ad click-attributed detail page views for promoted product.|\n|attributedAddToCartClicks14d|Ad click-attributed add to carts for promoted products.|\n|attributedPurchases14d|Ad click-attributed purchases for promoted products.|\n|unitsSold14d|Ad click-attributed units sold for promoted products.|\n|attributedSales14d|Ad click-attributed sales for promoted products in local currency.|\n|attributedTotalDetailPageViewsClicks14d|Ad click-attributed detail page views  for promoted products plus brand halo products.|\n|attributedTotalAddToCartClicks14d|Ad click-attributed add to carts for promoted products plus brand halo products.|\n|attributedTotalPurchases14d|Ad click-attributed purchases for promoted products plus brand halo products.|\n|totalUnitsSold14d|Ad click-attributed units sold for promoted products plus brand halo products.|\n|totalAttributedSales14d|Ad click-attributed attributed sales for promoted products plus brand halo products.|\n|brb_bonus_amount|Estimated ad-attributed Brand Referral Bonus credit amount in local currency. Will be omitted from response if advertiser is not a BRB-enrolled seller or request does not include a ‘metrics’ list. Requests for this metric must groupBy ADGROUP or CAMPAIGN, or will result in an error 400. Please refer to <https://sellercentral.amazon.com/gp/help/external/L9HPJ34VBFP76HX> to learn more about BRB program.|\n\n|Metrics for reportType`PRODUCTS`|\n|-------------------|\n\n|Metric  |Description|\n|--------|-----------|\n|attributedDetailPageViewsClicks14d|Ad click-attributed detail page views for promoted products.|\n|attributedAddToCartClicks14d|Ad click-attributed add to carts for promoted products.|\n|attributedPurchases14d|Ad click-attributed purchases for promoted products.|\n|unitsSold14d|Ad click-attributed units sold for promoted products.|\n|attributedSales14d|Ad click-attributed sales for promoted products in local currency.|\n|brandHaloDetailPageViewsClicks14d|Ad click-attributed detail page views for brand halo products.|\n|brandHaloAttributedAddToCartClicks14d|Ad click-attributed add to carts for brand halo products.|\n|brandHaloAttributedPurchases14d|Ad click-attributed purchases for brand halo products.|\n|brandHaloUnitsSold14d|Ad click-attributed units sold for brand halo products.|\n|brandHaloAttributedSales14d|Ad click-attributed attributed sales for brand halo products.|\n|attributedNewToBrandPurchases14d|Ad click-attributed new-to-brand purchases for promoted products. A purchase is new-to-brand when a shopper purchases a product from the brand for the first time in the past year.|\n|attributedNewToBrandUnitsSold14d|Ad click-attributed units sold in new-to-brand purchases for promoted products. A purchase is new-to-brand when a shopper purchases a product from the brand for the first time in the past year.|\n|attributedNewToBrandSales14d|Ad click-attributed sales of new-to-brand purchases for promoted products in local currency. A purchase is new-to-brand when a shopper purchases a product from the brand for the first time in the past year.|\n|brandHaloNewToBrandPurchases14d|Ad click-attributed new-to-brand purchases for brand halo products. A purchase is new-to-brand when a shopper purchases a product from the brand for the first time in the past year.|\n|brandHaloNewToBrandUnitsSold14d|Ad click-attributed units sold in new-to-brand purchases for brand halo products. A purchase is new-to-brand when a shopper purchases a product from the brand for the first time in the past year.|\n|brandHaloNewToBrandSales14d|Ad click-attributed sales of new-to-brand purchases for brand halo products in local currency. A purchase is new-to-brand when a shopper purchases a product from the brand for the first time in the past year.|",
+            "description": "A comma-delimited list of metrics to include in the report. In the report, each metric’s value reflects the events which took place on the row’s date; in other words, events are reported on the date they occurred, not on the date of the attributed click. Attribution is calculated using a 14-day last-click model. For more detail on attribution methodology, see the [Measurement](https://advertising.amazon.com/API/docs/en-us/amazon-attribution/how-to#measurement) section of the API guide. View the list of available metrics for each report type below.\"Promoted products\" refers to products associated with the campaign.\n|Metrics for reportType`PERFORMANCE`|\n|-------------------|\n\n|Metric  |Description|\n|--------|-----------|\n|Click-throughs|Ad clicks.|\n|attributedDetailPageViewsClicks14d|Ad click-attributed detail page views for promoted product.|\n|attributedAddToCartClicks14d|Ad click-attributed add to carts for promoted products.|\n|attributedPurchases14d|Ad click-attributed purchases for promoted products.|\n|unitsSold14d|Ad click-attributed units sold for promoted products.|\n|attributedSales14d|Ad click-attributed sales for promoted products in local currency.|\n|attributedTotalDetailPageViewsClicks14d|Ad click-attributed detail page views  for promoted products plus brand halo products.|\n|attributedTotalAddToCartClicks14d|Ad click-attributed add to carts for promoted products plus brand halo products.|\n|attributedTotalPurchases14d|Ad click-attributed purchases for promoted products plus brand halo products.|\n|totalUnitsSold14d|Ad click-attributed units sold for promoted products plus brand halo products.|\n|totalAttributedSales14d|Ad click-attributed attributed sales for promoted products plus brand halo products.|\n|attributedPagesRead14d| The no of pages read attributed to ad click-throughs within 14 days.|\n|attributedRoyaltyAmount14d|Royalty amount attributed to ad click-throughs within 14 days.|\n|brb_bonus_amount|Estimated ad-attributed Brand Referral Bonus credit amount in local currency. Will be omitted from response if advertiser is not a BRB-enrolled seller or request does not include a ‘metrics’ list. Requests for this metric must groupBy ADGROUP or CAMPAIGN, or will result in an error 400. Please refer to <https://sellercentral.amazon.com/gp/help/external/L9HPJ34VBFP76HX> to learn more about BRB program.|\n|kindleEditionNormalizedPagesRead14d| Number of attributed Kindle edition pages read within 14 days of ad click.|\n|kindleEditionNormalizedPagesRoyalties14d|The estimated royalties of attributed estimated Kindle edition normalized pages within 14 days of ad click.|\n\n|Metrics for reportType`PRODUCTS`|\n|-------------------|\n\n|Metric  |Description|\n|--------|-----------|\n|attributedDetailPageViewsClicks14d|Ad click-attributed detail page views for promoted products.|\n|attributedAddToCartClicks14d|Ad click-attributed add to carts for promoted products.|\n|attributedPurchases14d|Ad click-attributed purchases for promoted products.|\n|unitsSold14d|Ad click-attributed units sold for promoted products.|\n|attributedSales14d|Ad click-attributed sales for promoted products in local currency.|\n|brandHaloDetailPageViewsClicks14d|Ad click-attributed detail page views for brand halo products.|\n|brandHaloAttributedAddToCartClicks14d|Ad click-attributed add to carts for brand halo products.|\n|brandHaloAttributedPurchases14d|Ad click-attributed purchases for brand halo products.|\n|brandHaloUnitsSold14d|Ad click-attributed units sold for brand halo products.|\n|brandHaloAttributedSales14d|Ad click-attributed attributed sales for brand halo products.|\n|attributedNewToBrandPurchases14d|Ad click-attributed new-to-brand purchases for promoted products. A purchase is new-to-brand when a shopper purchases a product from the brand for the first time in the past year.|\n|attributedNewToBrandUnitsSold14d|Ad click-attributed units sold in new-to-brand purchases for promoted products. A purchase is new-to-brand when a shopper purchases a product from the brand for the first time in the past year.|\n|attributedNewToBrandSales14d|Ad click-attributed sales of new-to-brand purchases for promoted products in local currency. A purchase is new-to-brand when a shopper purchases a product from the brand for the first time in the past year.|\n|brandHaloNewToBrandPurchases14d|Ad click-attributed new-to-brand purchases for brand halo products. A purchase is new-to-brand when a shopper purchases a product from the brand for the first time in the past year.|\n|brandHaloNewToBrandUnitsSold14d|Ad click-attributed units sold in new-to-brand purchases for brand halo products. A purchase is new-to-brand when a shopper purchases a product from the brand for the first time in the past year.|\n|brandHaloNewToBrandSales14d|Ad click-attributed sales of new-to-brand purchases for brand halo products in local currency. A purchase is new-to-brand when a shopper purchases a product from the brand for the first time in the past year.|\n|kindleEditionNormalizedPagesRead14d| The no of pages read attributed to ad click-throughs within 14 days.|\n|kindleEditionNormalizedPagesRoyalties14d|The estimated royalties of attributed estimated Kindle edition normalized pages within 14 days of ad click.|",
             "type": "string"
           },
           "groupBy": {
@@ -675,10 +675,6 @@
           }
         }
       },
-      "macroPublisher": {
-        "description": "The identifier of a macro publisher.",
-        "type": "string"
-      },
       "AdvertiserResponse": {
         "type": "object",
         "properties": {
@@ -689,6 +685,10 @@
             }
           }
         }
+      },
+      "macroPublisher": {
+        "description": "The identifier of a macro publisher.",
+        "type": "string"
       }
     },
     "requestBodies": {},
