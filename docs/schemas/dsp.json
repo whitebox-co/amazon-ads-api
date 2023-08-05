@@ -3,7 +3,7 @@
   "info": {
     "version": "3.1",
     "title": "Amazon Ads API - Amazon DSP",
-    "description": "Use the Amazon Ads API for DSP for campaign, creative, line item and association operations. For onboarding information, see the [account setup](https://advertising.amazon.com/API/docs/v3/guides/account_setup) topic.<br/><br/> .",
+    "description": "Use the Amazon Ads API for DSP for campaign, creative, line item and association operations. For onboarding information, see the [account setup](https://advertising.amazon.com/API/docs/v3/guides/account_setup) topic.",
     "contact": {
       "name": "Amazon Ads API Support",
       "url": "https://amzn-clicks.atlassian.net/servicedesk/customer/portals"
@@ -78,6 +78,11 @@
           "200": {
             "description": "Successful operation.",
             "content": {
+              "application/vnd.dsporders.v2.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderV2_3"
+                }
+              },
               "application/vnd.dsporders.v2.2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/OrderV2_2"
@@ -501,6 +506,11 @@
           "200": {
             "description": "Successful operation.",
             "content": {
+              "application/vnd.dsporders.v2.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrdersV2_3"
+                }
+              },
               "application/vnd.dsporders.v2.2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/OrdersV2_2"
@@ -876,6 +886,16 @@
         "requestBody": {
           "description": "An array of order objects. For each object, specify required fields and their values. Maximum length of the array is 1.",
           "content": {
+            "application/vnd.dsporders.v2.3+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrderV2_3"
+                },
+                "minItems": 1,
+                "maxItems": 1
+              }
+            },
             "application/vnd.dsporders.v2.2+json": {
               "schema": {
                 "type": "array",
@@ -912,6 +932,14 @@
           "207": {
             "description": "Multi-status. This holds array of items which represents success or failure corresponding to the index in the request body.",
             "content": {
+              "application/vnd.dsporders.v2.3+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderResponse"
+                  }
+                }
+              },
               "application/vnd.dsporders.v2.2+json": {
                 "schema": {
                   "type": "array",
@@ -1296,6 +1324,16 @@
         "requestBody": {
           "description": "An array of order objects. For each object, specify required fields and their values. Maximum length of the array is 1.",
           "content": {
+            "application/vnd.dsporders.v2.3+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrderV2_3"
+                },
+                "minItems": 1,
+                "maxItems": 1
+              }
+            },
             "application/vnd.dsporders.v2.2+json": {
               "schema": {
                 "type": "array",
@@ -1332,6 +1370,14 @@
           "207": {
             "description": "Multi-status. This holds array of items which represents success or failure corresponding to the index in the request body.",
             "content": {
+              "application/vnd.dsporders.v2.3+json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderResponse"
+                  }
+                }
+              },
               "application/vnd.dsporders.v2.2+json": {
                 "schema": {
                   "type": "array",
@@ -3606,6 +3652,11 @@
           "200": {
             "description": "Successful operation.",
             "content": {
+              "application/vnd.dsplineitems.v3.2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LineItemV3_2"
+                }
+              },
               "application/vnd.dsplineitems.v3.1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/LineItemV3_1"
@@ -4611,6 +4662,16 @@
         "requestBody": {
           "description": "An array of lineitem objects. For each object, specify required fields and their values. Maximum length of the array is 1.",
           "content": {
+            "application/vnd.dsplineitems.v3.2+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/LineItemV3_2"
+                },
+                "minItems": 1,
+                "maxItems": 1
+              }
+            },
             "application/vnd.dsplineitems.v3.1+json": {
               "schema": {
                 "type": "array",
@@ -5163,6 +5224,16 @@
         "requestBody": {
           "description": "An array of line item objects. For each object, specify required fields and their values. Maximum length of the array is 1.",
           "content": {
+            "application/vnd.dsplineitems.v3.2+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/LineItemV3_2"
+                },
+                "minItems": 1,
+                "maxItems": 1
+              }
+            },
             "application/vnd.dsplineitems.v3.1+json": {
               "schema": {
                 "type": "array",
@@ -7302,7 +7373,7 @@
         }
       }
     },
-    "/dsp/creatives/thirdParty": {
+    "/dsp/creatives/thirdparty": {
       "get": {
         "tags": [
           "Third Party Creative"
@@ -7501,7 +7572,7 @@
         }
       }
     },
-    "/dsp/creatives/thirdParty/preview": {
+    "/dsp/creatives/thirdparty/preview": {
       "post": {
         "tags": [
           "Third Party Creative"
@@ -9782,6 +9853,20 @@
           "200": {
             "description": "Success",
             "content": {
+              "application/vnd.goalconfigurations.v1+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "goalConfigurations": {
+                      "type": "array",
+                      "description": "Array of GoalConfiguration sorted by goal name in ascending lexicographical order.",
+                      "items": {
+                        "$ref": "#/components/schemas/GoalConfigurationV1"
+                      }
+                    }
+                  }
+                }
+              },
               "application/json": {
                 "schema": {
                   "type": "object",
@@ -9801,6 +9886,11 @@
           "400": {
             "description": "Bad Request.",
             "content": {
+              "application/vnd.goalconfigurations.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
@@ -9811,6 +9901,11 @@
           "401": {
             "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
             "content": {
+              "application/vnd.goalconfigurations.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
@@ -9821,6 +9916,11 @@
           "403": {
             "description": "Forbidden. The request failed because the user does not have access to the specified resource.",
             "content": {
+              "application/vnd.goalconfigurations.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
@@ -9831,6 +9931,11 @@
           "429": {
             "description": "Too Many Requests. The request was rate-limited. Retry later.",
             "content": {
+              "application/vnd.goalconfigurations.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
@@ -9841,6 +9946,11 @@
           "500": {
             "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
             "content": {
+              "application/vnd.goalconfigurations.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              },
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
@@ -10338,6 +10448,23 @@
           }
         }
       },
+      "OrdersV2_3": {
+        "type": "object",
+        "properties": {
+          "totalResults": {
+            "type": "integer",
+            "description": "Total number of results which satisfy the filtering criteria. This will help to support pagination."
+          },
+          "response": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderBasicV2_3"
+            },
+            "minItems": 1,
+            "maxItems": 100
+          }
+        }
+      },
       "OrderBasic": {
         "type": "object",
         "description": "This model is designed to support batch get operation for better performance.",
@@ -10421,6 +10548,71 @@
         "properties": {
           "currencyCode": {
             "$ref": "#/components/schemas/CurrencyCodeV3"
+          }
+        }
+      },
+      "OrderBasicV2_3": {
+        "type": "object",
+        "description": "This model is designed to support batch get operation for better performance.",
+        "properties": {
+          "orderId": {
+            "type": "string",
+            "description": "The order identifier."
+          },
+          "advertiserId": {
+            "type": "string",
+            "description": "The advertiser identifier."
+          },
+          "name": {
+            "type": "string",
+            "description": "The order name."
+          },
+          "externalId": {
+            "type": "string",
+            "description": "The order external identifier, also known as purchase order number (PO number). This field is required if \"Mandatory PO numbers\" is set at the entity level. \"N/A\" (not applicable) is a valid value. This field will be deprecated and renamed to poNumber in a future release."
+          },
+          "comments": {
+            "type": "string",
+            "description": "The order comments."
+          },
+          "startDateTime": {
+            "type": "string",
+            "description": "The order start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00 UTC"
+          },
+          "endDateTime": {
+            "type": "string",
+            "description": "The order end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00 UTC"
+          },
+          "budget": {
+            "$ref": "#/components/schemas/OrderBudgetBasic"
+          },
+          "agencyFee": {
+            "$ref": "#/components/schemas/AgencyFee"
+          },
+          "currencyCode": {
+            "$ref": "#/components/schemas/CurrencyCodeV3"
+          },
+          "deliveryActivationStatus": {
+            "$ref": "#/components/schemas/DeliveryActivationStatus"
+          },
+          "deliveryStatus": {
+            "$ref": "#/components/schemas/OrderDeliveryStatus"
+          },
+          "frequencyCap": {
+            "$ref": "#/components/schemas/FrequencyCap"
+          },
+          "optimization": {
+            "$ref": "#/components/schemas/OrderOptimizationV2_3"
+          },
+          "creationDate": {
+            "type": "string",
+            "description": "The order creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00. This field is available since version `application/vnd.dsporders.v2.1+json`.",
+            "readOnly": true
+          },
+          "lastUpdatedDate": {
+            "type": "string",
+            "description": "The order last update date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00. This field is available since version `application/vnd.dsporders.v2.1+json`.",
+            "readOnly": true
           }
         }
       },
@@ -10510,6 +10702,81 @@
             "$ref": "#/components/schemas/CurrencyCodeV3"
           }
         }
+      },
+      "OrderV2_3": {
+        "type": "object",
+        "description": "Complete order model which willl be used for create/update and get.",
+        "properties": {
+          "orderId": {
+            "type": "string",
+            "description": "The order identifier. It will be used to perform update operation. Immutable field."
+          },
+          "advertiserId": {
+            "type": "string",
+            "description": "The advertiser identifier. Immutable field."
+          },
+          "name": {
+            "type": "string",
+            "description": "The order name."
+          },
+          "externalId": {
+            "type": "string",
+            "description": "The order external identifier, also known as purchase order number (PO number). This field is required if \"Mandatory PO numbers\" is set at the entity level. `N/A` (not applicable) is a valid value. This field will be deprecated and renamed to `poNumber` in a future release."
+          },
+          "comments": {
+            "type": "string",
+            "description": "The order comments."
+          },
+          "startDateTime": {
+            "type": "string",
+            "description": "The order start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00 UTC. The start date has to be modeled as a part of flights object.\n",
+            "readOnly": true
+          },
+          "endDateTime": {
+            "type": "string",
+            "description": "The order end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00 UTC. The end date has to be modeled as a part of flights object.\n",
+            "readOnly": true
+          },
+          "budget": {
+            "$ref": "#/components/schemas/OrderBudget"
+          },
+          "currencyCode": {
+            "$ref": "#/components/schemas/CurrencyCodeV3"
+          },
+          "agencyFee": {
+            "description": "It is immutable if the order has one or more lineItems.",
+            "$ref": "#/components/schemas/AgencyFee"
+          },
+          "frequencyCap": {
+            "$ref": "#/components/schemas/FrequencyCap"
+          },
+          "optimization": {
+            "$ref": "#/components/schemas/OrderOptimizationV2_3"
+          },
+          "deliveryActivationStatus": {
+            "$ref": "#/components/schemas/DeliveryActivationStatus"
+          },
+          "deliveryStatus": {
+            "$ref": "#/components/schemas/OrderDeliveryStatus"
+          },
+          "creationDate": {
+            "type": "string",
+            "description": "The order creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00.",
+            "readOnly": true
+          },
+          "lastUpdatedDate": {
+            "type": "string",
+            "description": "The order last update date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. For example, 2020-12-16T19:20:30+01:00.",
+            "readOnly": true
+          }
+        },
+        "required": [
+          "advertiserId",
+          "name",
+          "budget",
+          "frequencyCap",
+          "optimization"
+        ]
       },
       "OrderResponse": {
         "description": "Response for the order create/update operations. If operation is successful, it contains only orderId. If it is a failure, it contains only errorDetails. success and failure will be corresponding to that requested index in that batch (array of items).\n",
@@ -10876,6 +11143,18 @@
           }
         }
       },
+      "LineItemV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/LineItemV3_1"
+          }
+        ],
+        "properties": {
+          "targeting": {
+            "$ref": "#/components/schemas/LineItemTargetingV3_2"
+          }
+        }
+      },
       "LineItemResponse": {
         "description": "Response for the line item create/update operations. Success contains only lineItemId and failure contains only errorDetails corresponding to that requested index in that batch (array of items).",
         "type": "object",
@@ -10980,62 +11259,126 @@
         "type": "object",
         "properties": {
           "productLocation": {
-            "type": "string",
-            "description": "The product location indicates whether the product is endemic or non-endemic.",
-            "enum": [
-              "SOLD_ON_AMAZON",
-              "NOT_SOLD_ON_AMAZON"
-            ]
+            "$ref": "#/components/schemas/ProductLocation"
           },
           "goal": {
-            "type": "string",
-            "description": "The budget optimization goal type.",
-            "enum": [
-              "AWARENESS",
-              "ENGAGEMENT_WITH_MY_AD",
-              "CONSIDERATIONS_ON_AMAZON",
-              "CONVERSIONS_OFF_AMAZON",
-              "PURCHASES_ON_AMAZON",
-              "MOBILE_APP_INSTALLS"
-            ]
+            "$ref": "#/components/schemas/OptimizationGoal"
           },
           "goalKpi": {
-            "type": "string",
-            "description": "KPI for the selected goal.",
-            "enum": [
-              "VIDEO_COMPLETION_RATE",
-              "CLICK_THROUGH_RATE",
-              "COST_PER_CLICK",
-              "COST_PER_ACQUISITION",
-              "COST_PER_DOWNLOAD",
-              "DETAIL_PAGE_VIEW_RATE",
-              "COST_PER_DETAIL_PAGE_VIEW",
-              "RETURN_ON_AD_SPEND",
-              "TOTAL_RETURN_ON_AD_SPEND",
-              "COST_PER_VIDEO_COMPLETION",
-              "NONE",
-              "OTHER",
-              "REACH"
-            ]
+            "$ref": "#/components/schemas/OptimizationGoalKpi"
           },
           "autoOptimizations": {
-            "type": "array",
-            "description": "The list of optimizations supported.",
-            "items": {
-              "type": "string",
-              "enum": [
-                "BUDGET",
-                "BID"
-              ]
-            }
+            "$ref": "#/components/schemas/AutoOptimizations"
           },
           "biddingStrategy": {
-            "description": "It specifies how Amazon Ads determines bids on your behalf for each opportunity to serve an impression. It is immutable once the order has started delivering.\n",
-            "type": "string",
-            "enum": [
-              "SPEND_BUDGET_IN_FULL",
-              "MAXIMIZE_PERFORMANCE"
-            ]
+            "$ref": "#/components/schemas/BiddingStrategy"
+          }
+        },
+        "required": [
+          "productLocation",
+          "goal",
+          "goalKpi"
+        ]
+      },
+      "ProductLocation": {
+        "type": "string",
+        "description": "The product location indicates whether the product is endemic or non-endemic.",
+        "enum": [
+          "SOLD_ON_AMAZON",
+          "NOT_SOLD_ON_AMAZON"
+        ]
+      },
+      "OptimizationGoal": {
+        "type": "string",
+        "description": "The budget optimization goal type.",
+        "enum": [
+          "AWARENESS",
+          "ENGAGEMENT_WITH_MY_AD",
+          "CONSIDERATIONS_ON_AMAZON",
+          "CONVERSIONS_OFF_AMAZON",
+          "PURCHASES_ON_AMAZON",
+          "MOBILE_APP_INSTALLS"
+        ]
+      },
+      "OptimizationGoalKpi": {
+        "type": "string",
+        "description": "KPI for the selected goal.",
+        "enum": [
+          "VIDEO_COMPLETION_RATE",
+          "CLICK_THROUGH_RATE",
+          "COST_PER_CLICK",
+          "COST_PER_ACQUISITION",
+          "COST_PER_DOWNLOAD",
+          "DETAIL_PAGE_VIEW_RATE",
+          "COST_PER_DETAIL_PAGE_VIEW",
+          "RETURN_ON_AD_SPEND",
+          "TOTAL_RETURN_ON_AD_SPEND",
+          "COST_PER_VIDEO_COMPLETION",
+          "NONE",
+          "OTHER",
+          "REACH"
+        ]
+      },
+      "AutoOptimizations": {
+        "type": "array",
+        "description": "The list of optimizations supported.",
+        "items": {
+          "type": "string",
+          "enum": [
+            "BUDGET",
+            "BID"
+          ]
+        }
+      },
+      "BiddingStrategy": {
+        "description": "It specifies how Amazon Advertising determines bids on your behalf for each opportunity to serve an impression. It is immutable once the order has started delivering.\n",
+        "type": "string",
+        "enum": [
+          "SPEND_BUDGET_IN_FULL",
+          "MAXIMIZE_PERFORMANCE"
+        ]
+      },
+      "OptimizationGoalV2_3": {
+        "type": "string",
+        "description": "The budget optimization goal type. PURCHASES_ON_OFF_AMAZON is available since application/vnd.dsporders.v2.3+json.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OptimizationGoal"
+          }
+        ],
+        "enum": [
+          "PURCHASES_ON_OFF_AMAZON"
+        ]
+      },
+      "OptimizationGoalKpiV2_3": {
+        "type": "string",
+        "description": "KPI for the selected goal. COMBINED_RETURN_ON_AD_SPEND is available since application/vnd.dsporders.v2.3+json.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OptimizationGoalKpi"
+          }
+        ],
+        "enum": [
+          "COMBINED_RETURN_ON_AD_SPEND"
+        ]
+      },
+      "OrderOptimizationV2_3": {
+        "type": "object",
+        "properties": {
+          "productLocation": {
+            "$ref": "#/components/schemas/ProductLocation"
+          },
+          "goal": {
+            "$ref": "#/components/schemas/OptimizationGoalV2_3"
+          },
+          "goalKpi": {
+            "$ref": "#/components/schemas/OptimizationGoalKpiV2_3"
+          },
+          "autoOptimizations": {
+            "$ref": "#/components/schemas/AutoOptimizations"
+          },
+          "biddingStrategy": {
+            "$ref": "#/components/schemas/BiddingStrategy"
           }
         },
         "required": [
@@ -11164,6 +11507,23 @@
           },
           "videoTargeting": {
             "$ref": "#/components/schemas/VideoTargetingV3_1"
+          }
+        }
+      },
+      "LineItemTargetingV3_2": {
+        "type": "object",
+        "properties": {
+          "standardDisplayTargeting": {
+            "$ref": "#/components/schemas/StandardDisplayTargetingV3_2"
+          },
+          "aapMobileAppTargeting": {
+            "$ref": "#/components/schemas/AapMobileAppTargetingV3_2"
+          },
+          "amazonMobileDisplayTargeting": {
+            "$ref": "#/components/schemas/AmazonMobileDisplayTargetingV3_1"
+          },
+          "videoTargeting": {
+            "$ref": "#/components/schemas/VideoTargetingV3_2"
           }
         }
       },
@@ -11507,6 +11867,18 @@
           }
         }
       },
+      "VideoTargetingV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/VideoTargetingV3_1"
+          }
+        ],
+        "properties": {
+          "thirdPartyPreBidTargeting": {
+            "$ref": "#/components/schemas/VideoThirdPartyPreBidTargetingV3_2"
+          }
+        }
+      },
       "StandardDisplayTargeting": {
         "type": "object",
         "properties": {
@@ -11629,6 +12001,18 @@
           }
         }
       },
+      "StandardDisplayTargetingV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StandardDisplayTargetingV3_1"
+          }
+        ],
+        "properties": {
+          "thirdPartyPreBidTargeting": {
+            "$ref": "#/components/schemas/StandardDisplayThirdPartyPreBidTargetingV3_2"
+          }
+        }
+      },
       "AapMobileAppTargeting": {
         "type": "object",
         "properties": {
@@ -11742,6 +12126,18 @@
         "properties": {
           "thirdPartyPreBidTargeting": {
             "$ref": "#/components/schemas/MobileAppThirdPartyPreBidTargetingV3_1"
+          }
+        }
+      },
+      "AapMobileAppTargetingV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AapMobileAppTargetingV3_1"
+          }
+        ],
+        "properties": {
+          "thirdPartyPreBidTargeting": {
+            "$ref": "#/components/schemas/MobileAppThirdPartyPreBidTargetingV3_2"
           }
         }
       },
@@ -12023,6 +12419,18 @@
           }
         }
       },
+      "StandardDisplayThirdPartyPreBidTargetingV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StandardDisplayThirdPartyPreBidTargetingV3_1"
+          }
+        ],
+        "properties": {
+          "doubleVerify": {
+            "$ref": "#/components/schemas/StandardDisplayDoubleVerifyV3_2"
+          }
+        }
+      },
       "MobileAppThirdPartyPreBidTargeting": {
         "type": "object",
         "description": "Amazon DSP automatically filters fraudulent and invalid traffic as well as unsafe content using a combination of proprietary technology and solutions from comScore and Sizmek. This service is available by default and at no extra charge for Amazon DSP customers. You may choose to augment the default filters with pre-bid targeting products offered by third parties. These services are currently offered at no charge.",
@@ -12053,6 +12461,18 @@
           }
         }
       },
+      "MobileAppThirdPartyPreBidTargetingV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/MobileAppThirdPartyPreBidTargetingV3_1"
+          }
+        ],
+        "properties": {
+          "doubleVerify": {
+            "$ref": "#/components/schemas/MobileAppDoubleVerifyV3_2"
+          }
+        }
+      },
       "VideoThirdPartyPreBidTargeting": {
         "type": "object",
         "description": "Amazon DSP automatically filters fraudulent and invalid traffic as well as unsafe content using a combination of proprietary technology and solutions from comScore and Sizmek. This service is available by default and at no extra charge for Amazon DSP customers. You may choose to augment the default filters with pre-bid targeting products offered by third parties. These services are currently offered at no charge.",
@@ -12080,6 +12500,18 @@
           },
           "pixalate": {
             "$ref": "#/components/schemas/Pixalate"
+          }
+        }
+      },
+      "VideoThirdPartyPreBidTargetingV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/VideoThirdPartyPreBidTargetingV3_1"
+          }
+        ],
+        "properties": {
+          "doubleVerify": {
+            "$ref": "#/components/schemas/VideoDoubleVerifyV3_2"
           }
         }
       },
@@ -12220,6 +12652,42 @@
           },
           "customContextualSegmentId": {
             "$ref": "#/components/schemas/DvCustomContextualSegmentId"
+          }
+        }
+      },
+      "StandardDisplayDoubleVerifyV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StandardDisplayDoubleVerify"
+          }
+        ],
+        "properties": {
+          "brandSafety": {
+            "$ref": "#/components/schemas/StandardDisplayDoubleVerifyBrandSafetyV3_2"
+          }
+        }
+      },
+      "MobileAppDoubleVerifyV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/MobileAppDoubleVerify"
+          }
+        ],
+        "properties": {
+          "brandSafety": {
+            "$ref": "#/components/schemas/MobileAppDoubleVerifyBrandSafetyV3_2"
+          }
+        }
+      },
+      "VideoDoubleVerifyV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/VideoDoubleVerify"
+          }
+        ],
+        "properties": {
+          "brandSafety": {
+            "$ref": "#/components/schemas/VideoDoubleVerifyBrandSafetyV3_2"
           }
         }
       },
@@ -12381,9 +12849,42 @@
           ]
         }
       },
+      "DvBrandSafetyContentCategoriesV3_2": {
+        "type": "array",
+        "description": "A list of content categories to exclude from targeting. EXTREME_GRAPHIC is available since version `application/vnd.dsplineitems.v3.2+json`.",
+        "items": {
+          "type": "string",
+          "enum": [
+            "AD_SERVER",
+            "CELEBRITY_GOSSIP",
+            "CULTS_SURVIVALISM",
+            "GAMBLING",
+            "INCENTIVIZED_MALWARE_CLUTTER",
+            "INFLAMMATORY_POLITICS_NEWS",
+            "NEGATIVE_NEWS_FINANCIAL",
+            "NEGATIVE_NEWS_PHARMACEUTICAL",
+            "NON_STANDARD_CONTENT_NON_ENGLISH",
+            "NON_STANDARD_CONTENT_PARKING_PAGE",
+            "OCCULT",
+            "PIRACY_COPYRIGHT_INFRINGEMENT",
+            "UNMODERATED_UGC_FORUMS_IMAGES_VIDEO",
+            "EXTREME_GRAPHIC"
+          ]
+        }
+      },
       "DvBrandSafetyContentCategoriesWithRisk": {
         "type": "object",
         "description": "A map from content categories to risk level to exclude from targeting. Available keys are: [`ADULT_CONTENT`, `ALCOHOL`, `CRIME`, `DISASTER_AVIATION`, `DISASTER_MAN_MADE`, `DISASTER_NATURAL`, `DISASTER_TERRORIST_EVENTS`, `DISASTER_VEHICLE`, `HATE_SPEECH`, `PROFANITY`, `SUBSTANCE_ABUSE`, `TOBACCO_ECIGARETTES`, `VIOLENCE_EXTREME_GRAPHIC`]",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/BrandSuitabilityRiskLevel"
+        },
+        "example": {
+          "ADULT_CONTENT": "HIGH_MEDIUM"
+        }
+      },
+      "DvBrandSafetyContentCategoriesWithRiskV3_2": {
+        "type": "object",
+        "description": "A map from content categories to risk level to exclude from targeting. Available keys are: [`ADULT_CONTENT`, `ALCOHOL`, `CRIME`, `DEATH_INJURIES`, `DISASTER_AVIATION`, `DISASTER_MAN_MADE`, `DISASTER_NATURAL`, `DISASTER_TERRORIST_EVENTS`, `DISASTER_VEHICLE`, `HATE_SPEECH`, `PROFANITY`, `SUBSTANCE_ABUSE`, `TOBACCO_ECIGARETTES`, `VIOLENCE_EXTREME_GRAPHIC`]. `DEATH_INJURIES` is available since version `application/vnd.dsplineitems.v3.2+json`.",
         "additionalProperties": {
           "$ref": "#/components/schemas/BrandSuitabilityRiskLevel"
         },
@@ -12456,6 +12957,51 @@
           },
           "excludeAppsWithInsufficientRating": {
             "$ref": "#/components/schemas/DvBrandSafetyExcludeApps"
+          }
+        }
+      },
+      "StandardDisplayDoubleVerifyBrandSafetyV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StandardDisplayDoubleVerifyBrandSafety"
+          }
+        ],
+        "properties": {
+          "contentCategories": {
+            "$ref": "#/components/schemas/DvBrandSafetyContentCategoriesV3_2"
+          },
+          "contentCategoriesWithRisk": {
+            "$ref": "#/components/schemas/DvBrandSafetyContentCategoriesWithRiskV3_2"
+          }
+        }
+      },
+      "MobileAppDoubleVerifyBrandSafetyV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/MobileAppDoubleVerifyBrandSafety"
+          }
+        ],
+        "properties": {
+          "contentCategories": {
+            "$ref": "#/components/schemas/DvBrandSafetyContentCategoriesV3_2"
+          },
+          "contentCategoriesWithRisk": {
+            "$ref": "#/components/schemas/DvBrandSafetyContentCategoriesWithRiskV3_2"
+          }
+        }
+      },
+      "VideoDoubleVerifyBrandSafetyV3_2": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/VideoDoubleVerifyBrandSafety"
+          }
+        ],
+        "properties": {
+          "contentCategories": {
+            "$ref": "#/components/schemas/DvBrandSafetyContentCategoriesV3_2"
+          },
+          "contentCategoriesWithRisk": {
+            "$ref": "#/components/schemas/DvBrandSafetyContentCategoriesWithRiskV3_2"
           }
         }
       },
@@ -13069,7 +13615,7 @@
         "properties": {
           "deliveryProfile": {
             "type": "string",
-            "description": "The type of line item delivery profile. FRONT_LOADED: Initially front-load 20% of the budget. Remaining delivery is spread evenly across the remaining duration of the line item. Note that catchup boosts do not apply to this delivery profile. EVENLY: Distributes the delivery evenly across the duration of the line items. Catchup boosts are enabled for this delivery profile.",
+            "description": "The type of line item delivery profile. FRONT_LOADED: Front loaded can deliver up to 25% more than the daily Even pace targets. EVENLY: Even pacing spends your budget consistently across the length of the campaign. We recommend turning catch up boost off to ensure consistent delivery.",
             "enum": [
               "FRONT_LOADED",
               "EVENLY"
@@ -13077,7 +13623,7 @@
           },
           "catchUpBoost": {
             "type": "string",
-            "description": "The catch up boost value associated with the line item. Represents the percentage of additional delivery that can be targeted when the line item is under-pacing. A catchup boost only applies to the EVENLY deliver profile. CatchUpBoost_2X: 200. CatchUpBoost_3X: 300. CatchUpBoost_4X: 400.",
+            "description": "Turning on catch up boost will lead to inconsistent delivery. If you want to avoid delivery spikes, we recommend turning catch up boost off.",
             "enum": [
               "CATCH_UP_BOOST_2X",
               "CATCH_UP_BOOST_3X",
@@ -13222,7 +13768,7 @@
       },
       "BudgetCap": {
         "type": "object",
-        "description": "The per day or per month spending limit.",
+        "description": "Adding a budget cap can result in under-delivery.",
         "properties": {
           "recurrenceTimePeriod": {
             "type": "string",
@@ -14523,10 +15069,7 @@
         "type": "string",
         "description": "Marketplace where this creative is applicable.",
         "enum": [
-          "US",
-          "CA",
-          "BR",
-          "MX"
+          "US"
         ]
       },
       "DspAssetV1": {
@@ -15340,6 +15883,18 @@
           "MOBILE_APP_INSTALLS"
         ]
       },
+      "GoalV1": {
+        "type": "string",
+        "description": "The primary goal that a campaign using this configuration is trying to achieve. PURCHASES_ON_OFF_AMAZON is available since application/vnd.goalconfigurations.v1+json.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Goal"
+          }
+        ],
+        "enum": [
+          "PURCHASES_ON_OFF_AMAZON"
+        ]
+      },
       "GoalKpi": {
         "type": "string",
         "description": "Performance metrics that may be chosen to measure how effectively an order is achieving the desired goal. Although some goals may have multiple possible KPIs, exactly one KPI must be chosen during order creation.",
@@ -15357,6 +15912,18 @@
           "RETURN_ON_AD_SPEND",
           "TOTAL_RETURN_AD_SPEND",
           "VIDEO_COMPLETION_RATE"
+        ]
+      },
+      "GoalKpiV1": {
+        "type": "string",
+        "description": "Performance metrics that may be chosen to measure how effectively an order is achieving the desired goal. Although some goals may have multiple possible KPIs, exactly one KPI must be chosen during order creation. COMBINED_RETURN_ON_AD_SPEND is available since application/vnd.goalconfigurations.v1+json.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/GoalKpi"
+          }
+        ],
+        "enum": [
+          "COMBINED_RETURN_ON_AD_SPEND"
         ]
       },
       "AutoOptimization": {
@@ -15379,6 +15946,32 @@
               "properties": {
                 "kpiName": {
                   "$ref": "#/components/schemas/GoalKpi"
+                },
+                "autoOptimizations": {
+                  "type": "array",
+                  "description": "Which optimizations can be applied for this KPI",
+                  "items": {
+                    "$ref": "#/components/schemas/AutoOptimization"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "GoalConfigurationV1": {
+        "type": "object",
+        "properties": {
+          "goalName": {
+            "$ref": "#/components/schemas/GoalV1"
+          },
+          "availableKpis": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "kpiName": {
+                  "$ref": "#/components/schemas/GoalKpiV1"
                 },
                 "autoOptimizations": {
                   "type": "array",
@@ -15522,7 +16115,7 @@
           },
           "domainListMergedFile": {
             "type": "string",
-            "description": "The URL address of the domain file after merging all domains into single file, including inheritence from advertiser, domain lists, domain files, domains entered, if any."
+            "description": "The URL address of the domain file after merging all domains into single file, including inheritance from advertiser, domain lists, domain files, domains entered, if any."
           }
         }
       },

@@ -327,8 +327,8 @@ export const ManagerAccountsApiAxiosParamCreator = function (configuration?: Con
             };
         },
         /**
-         * Returns all [Manager accounts](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8) that a user has access to, along with metadata for all of the Amazon Advertising accounts that are linked to the Manager account.
-         * @summary Returns all Manager accounts that a given Amazon Advertising user has access to.
+         * Returns all [manager accounts](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8) that a user has access to, along with metadata for the Amazon Ads accounts that are linked to each manager account. NOTE: A maximum of 50 linked accounts are returned for each manager account.
+         * @summary Returns all manager accounts that a given Amazon Ads user has access to.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -480,8 +480,8 @@ export const ManagerAccountsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Returns all [Manager accounts](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8) that a user has access to, along with metadata for all of the Amazon Advertising accounts that are linked to the Manager account.
-         * @summary Returns all Manager accounts that a given Amazon Advertising user has access to.
+         * Returns all [manager accounts](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8) that a user has access to, along with metadata for the Amazon Ads accounts that are linked to each manager account. NOTE: A maximum of 50 linked accounts are returned for each manager account.
+         * @summary Returns all manager accounts that a given Amazon Ads user has access to.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -538,8 +538,8 @@ export const ManagerAccountsApiFactory = function (configuration?: Configuration
             return localVarFp.createManagerAccount(amazonAdvertisingAPIClientId, createManagerAccountRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns all [Manager accounts](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8) that a user has access to, along with metadata for all of the Amazon Advertising accounts that are linked to the Manager account.
-         * @summary Returns all Manager accounts that a given Amazon Advertising user has access to.
+         * Returns all [manager accounts](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8) that a user has access to, along with metadata for the Amazon Ads accounts that are linked to each manager account. NOTE: A maximum of 50 linked accounts are returned for each manager account.
+         * @summary Returns all manager accounts that a given Amazon Ads user has access to.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -685,8 +685,8 @@ export class ManagerAccountsApi extends BaseAPI {
     }
 
     /**
-     * Returns all [Manager accounts](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8) that a user has access to, along with metadata for all of the Amazon Advertising accounts that are linked to the Manager account.
-     * @summary Returns all Manager accounts that a given Amazon Advertising user has access to.
+     * Returns all [manager accounts](https://advertising.amazon.com/help?ref_=a20m_us_blog_whtsnewfb2020_040120#GU3YDB26FR7XT3C8) that a user has access to, along with metadata for the Amazon Ads accounts that are linked to each manager account. NOTE: A maximum of 50 linked accounts are returned for each manager account.
+     * @summary Returns all manager accounts that a given Amazon Ads user has access to.
      * @param {ManagerAccountsApiGetManagerAccountsForUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

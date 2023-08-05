@@ -51,7 +51,8 @@
                 "report",
                 "account",
                 "posts"
-              ]
+              ],
+              "default": "campaign"
             }
           },
           {
@@ -63,7 +64,8 @@
               "enum": [
                 "edit",
                 "view"
-              ]
+              ],
+              "default": "edit"
             }
           },
           {
@@ -240,7 +242,7 @@
           "name": {
             "type": "string",
             "readOnly": true,
-            "description": "Account Name. Not currently populated for sellers."
+            "description": "Account name."
           },
           "subType": {
             "type": "string",
@@ -261,26 +263,29 @@
       "countryCode": {
         "type": "string",
         "readOnly": true,
-        "description": "The countryCode for a given country\n|Region|`countryCode`|Country Name|\n|------|-----|-------|\n|NA|US|United States|\n|NA|CA|Canada|\n|NA|MX|Mexico|\n|NA|BR|Brazil|\n|EU|UK|United Kingdom|\n|EU|EG|Egypt|\n|EU|DE|Germany|\n|EU|FR|France|\n|EU|ES|Spain|\n|EU|IT|Italy|\n|EU|NL|The Netherlands|\n|EU|AE|United Arab Emirates|\n|EU|SE|Sweden|\n|EU|SE|Sweden|\n|EU|PL|Poland|\n|EU|TR|Turkey|        \n|FE|JP|Japan|\n|FE|AU|Australia|\n|FE|SG|Singapore|",
+        "description": "The countryCode for a given country\n|Region|`countryCode`|Country Name|\n|------|-----|-------|\n|NA|BR|Brazil|\n|NA|CA|Canada|\n|NA|MX|Mexico|\n|NA|US|United States|\n|EU|AE|United Arab Emirates|\n|EU|BE|Belgium| \n|EU|DE|Germany|\n|EU|EG|Egypt|\n|EU|ES|Spain|\n|EU|FR|France|\n|EU|IN|India|\n|EU|IT|Italy|\n|EU|NL|The Netherlands|\n|EU|PL|Poland|\n|EU|SA|Saudi Arabia| \n|EU|SE|Sweden|  \n|EU|TR|Turkey|\n|EU|UK|United Kingdom|\n|FE|AU|Australia|    \n|FE|JP|Japan|\n|FE|SG|Singapore|",
         "enum": [
-          "US",
+          "BR",
           "CA",
           "MX",
-          "BR",
-          "UK",
-          "EG",
+          "US",
+          "AE",
+          "BE",
           "DE",
-          "FR",
+          "EG",
           "ES",
+          "FR",
+          "IN",
           "IT",
           "NL",
-          "JP",
-          "AU",
-          "AE",
-          "SG",
-          "SE",
           "PL",
-          "TR"
+          "SA",
+          "SE",
+          "TR",
+          "UK",
+          "AU",
+          "JP",
+          "SG"
         ]
       },
       "Profile": {
@@ -295,22 +300,24 @@
           "currencyCode": {
             "type": "string",
             "readOnly": true,
-            "description": "The currency used for all monetary values for entities under this profile.\n|Region|`countryCode`|Country Name|`currencyCode`|\n|-----|------|------|------|\n|NA|US|United States|USD|\n|NA|CA|Canada|CAD|\n|NA|MX|Mexico|MXN|\n|NA|BR|Brazil|BRL|\n|EU|UK|United Kingdom|GBP|\n|EU|EG|Egypt|EGP|\n|EU|DE|Germany|EUR|\n|EU|FR|France|EUR|\n|EU|ES|Spain|EUR|\n|EU|IT|Italy|EUR|\n|EU|NL|The Netherlands|EUR|\n|EU|SE|Sweden|SEK|\n|EU|PL|Poland|PLN|\n|EU|AE|United Arab Emirates|AED|\n|EU|TR|Turkey|TRY|\n|FE|JP|Japan|JPY|\n|FE|AU|Australia|AUD|\n|FE|SG|Singapore|SGD|",
+            "description": "The currency used for all monetary values for entities under this profile.\n|Region|`countryCode`|Country Name|`currencyCode`|\n|-----|------|------|------|\n|NA|BR|Brazil|BRL|\n|NA|CA|Canada|CAD|\n|NA|MX|Mexico|MXN|\n|NA|US|United States|USD|\n|EU|AE|United Arab Emirates|AED|\n|EU|BE|Belgium|EUR|\n|EU|DE|Germany|EUR|\n|EU|EG|Egypt|EGP|\n|EU|ES|Spain|EUR|\n|EU|FR|France|EUR|\n|EU|IN|India|INR|\n|EU|IT|Italy|EUR|\n|EU|NL|The Netherlands|EUR|\n|EU|PL|Poland|PLN|\n|EU|SA|Saudi Arabia|SAR|\n|EU|SE|Sweden|SEK|\n|EU|TR|Turkey|TRY|\n|EU|UK|United Kingdom|GBP|\n|FE|AU|Australia|AUD|\n|FE|JP|Japan|JPY|\n|FE|SG|Singapore|SGD|",
             "enum": [
-              "USD",
+              "BRL",
               "CAD",
               "MXN",
-              "BRL",
-              "GBP",
-              "EGP",
-              "JPY",
-              "EUR",
-              "AUD",
+              "USD",
               "AED",
-              "SEK",
+              "EUR",
+              "EGP",
+              "INR",
               "PLN",
-              "SGD",
-              "TRY"
+              "SAR",
+              "SEK",
+              "TRY",
+              "GBP",
+              "AUD",
+              "JPY",
+              "SGD"
             ]
           },
           "dailyBudget": {
@@ -321,20 +328,23 @@
           "timezone": {
             "type": "string",
             "readOnly": true,
-            "description": "The time zone used for all date-based campaign management and reporting.\n|Region|`countryCode`|Country Name|`timezone`|\n|------|-----|-----|------|\n|NA|US|United States|America/Los_Angeles|\n|NA|CA|Canada|America/Los_Angeles|\n|NA|MX|Mexico|America/Los_Angeles|\n|NA|BR|Brazil|America/Sao_Paulo|\n|EU|UK|United Kingdom|Europe/London|\n|EU|EG|Egypt|Africa/Cairo|\n|EU|DE|Germany|Europe/Paris|\n|EU|FR|France|Europe/Paris|\n|EU|ES|Spain|Europe/Paris|\n|EU|IT|Italy|Europe/Paris|\n|EU|NL|The Netherlands|Europe/Paris|\n|EU|SE|Sweden|Europe/Stockholm|\n|EU|PL|Poland|Europe/Warsaw|\n|EU|AE|United Arab Emirates|Asia/Dubai|\n|EU|TR|Turkey|Europe/Istanbul|\n|FE|JP|Japan|Asia/Tokyo|\n|FE|AU|Australia|Australia/Sydney|\n|FE|SG|Singapore|Asia/Singapore|",
+            "description": "The time zone used for all date-based campaign management and reporting.\n|Region|`countryCode`|Country Name|`timezone`|\n|------|-----|-----|------|\n|NA|BR|Brazil|America/Sao_Paulo|\n|NA|CA|Canada|America/Los_Angeles|\n|NA|MX|Mexico|America/Los_Angeles|\n|NA|US|United States|America/Los_Angeles|\n|EU|AE|United Arab Emirates|Asia/Dubai|\n|EU|BE|Belgium|Europe/Paris|\n|EU|DE|Germany|Europe/Paris|\n|EU|EG|Egypt|Africa/Cairo|\n|EU|ES|Spain|Europe/Paris|\n|EU|FR|France|Europe/Paris|\n|EU|IN|India|Asia/Kolkata|\n|EU|IT|Italy|Europe/Paris|\n|EU|NL|The Netherlands|Europe/Amsterdam|\n|EU|PL|Poland|Europe/Warsaw|\n|EU|SA|Saudi Arabia|Asia/Riyadh|\n|EU|SE|Sweden|Europe/Stockholm|\n|EU|TR|Turkey|Europe/Istanbul|\n|EU|UK|United Kingdom|Europe/London|\n|FE|AU|Australia|Australia/Sydney|\n|FE|JP|Japan|Asia/Tokyo|\n|FE|SG|Singapore|Asia/Singapore|",
             "enum": [
               "Africa/Cairo",
-              "America/Los_Angeles",
               "America/Sao_Paulo",
-              "Europe/London",
-              "Europe/Stockholm",
-              "Europe/Paris",
-              "Europe/Warsaw",
-              "Europe/Istanbul",
+              "America/Los_Angeles",
+              "Asia/Dubai",
+              "Asia/Kolkata",
+              "Asia/Riyadh",
+              "Asia/Singapore",
               "Asia/Tokyo",
               "Australia/Sydney",
-              "Asia/Dubai",
-              "Asia/Singapore"
+              "Europe/Amsterdam",
+              "Europe/Istanbul",
+              "Europe/London",
+              "Europe/Paris",
+              "Europe/Stockholm",
+              "Europe/Warsaw"
             ]
           },
           "accountInfo": {

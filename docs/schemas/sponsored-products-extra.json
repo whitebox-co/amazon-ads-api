@@ -7,7 +7,7 @@
   "paths": {
     "/sp/targets/bid/recommendations": {
       "post": {
-        "summary": "The current version of the theme-based bid recommendation service supports auto-targeting and keyword targeting expressions only. Note that the currency for bid recommendations are in local currency units.",
+        "summary": "This API is currently available in US, UK, DE, CA, JP, IN, ES, and FR. The API supports keyword and auto targets only. The API will return a 422 response when an unsupported marketplace or target is provided. For product targets in all marketplaces, and keyword or auto targets in other marketplaces, call /v2/sp/targets/bidRecommendations.",
         "requestBody": {
           "content": {
             "application/vnd.spthemebasedbidrecommendation.v3+json": {
@@ -64,8 +64,38 @@
               }
             }
           },
+          "405": {
+            "description": "Method Not Allowed. Request failed because the request HTTP method is not supported.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BidRecommendationError"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Not Acceptable. Request failed because the service cannot produce a response in a format matching the media types provided in the Accept header.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BidRecommendationError"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type. Request failed because the payload format is not supported.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BidRecommendationError"
+                }
+              }
+            }
+          },
           "422": {
-            "description": "Unprocessable entity. Failed due to invalid parameters.",
+            "description": "Unprocessable entity. Failed due to invalid parameters. If you receive an error like “Invalid Advertiser and ASINs combination in the request”, please make sure the ad group has at least one ASIN in it.",
             "content": {
               "application/json": {
                 "schema": {
@@ -699,6 +729,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/TargetableCategories"
                 }
+              },
+              "application/vnd.spproducttargetingresponse.v5+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TargetableCategoriesLoP"
+                }
               }
             }
           },
@@ -770,6 +805,42 @@
             "name": "Prefer",
             "description": "Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.",
             "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ar_AE",
+                "de_DE",
+                "en_AE",
+                "en_AU",
+                "en_CA",
+                "en_GB",
+                "en_IN",
+                "en_SG",
+                "en_US",
+                "es_ES",
+                "es_MX",
+                "fr_CA",
+                "fr_FR",
+                "hi_IN",
+                "it_IT",
+                "ja_JP",
+                "ko_KR",
+                "nl_NL",
+                "pl_PL",
+                "pt_BR",
+                "sv_SE",
+                "ta_IN",
+                "th_TH",
+                "tr_TR",
+                "vi_VN",
+                "zh_CN"
+              ]
+            },
+            "in": "query",
+            "name": "locale",
+            "description": "The locale to which the caller wishes to translate the targetable categories to. For example, if the caller wishes to receive the targetable categories in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the returned targetable categories will be in the default language of the marketplace."
           }
         ],
         "tags": [
@@ -780,6 +851,10 @@
     "/sp/rules/campaignOptimization": {
       "post": {
         "summary": "Creates a campaign optimization rule.",
+        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\"]",
+        "tags": [
+          "Campaign Optimization Rules"
+        ],
         "requestBody": {
           "content": {
             "application/vnd.optimizationrules.v1+json": {
@@ -863,7 +938,6 @@
             }
           }
         },
-        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\"]",
         "parameters": [
           {
             "schema": {
@@ -883,13 +957,14 @@
             "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
             "required": true
           }
-        ],
-        "tags": [
-          "Campaign Optimization Rules"
         ]
       },
       "put": {
         "summary": "Updates a campaign optimization rule.",
+        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\"]",
+        "tags": [
+          "Campaign Optimization Rules"
+        ],
         "requestBody": {
           "content": {
             "application/vnd.optimizationrules.v1+json": {
@@ -973,7 +1048,6 @@
             }
           }
         },
-        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\"]",
         "parameters": [
           {
             "schema": {
@@ -993,9 +1067,6 @@
             "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
             "required": true
           }
-        ],
-        "tags": [
-          "Campaign Optimization Rules"
         ]
       }
     },
@@ -1344,6 +1415,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/Refinements"
                 }
+              },
+              "application/vnd.spproducttargetingresponse.v4+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefinementsLoP"
+                }
               }
             }
           },
@@ -1434,6 +1510,42 @@
             "name": "Prefer",
             "description": "Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.",
             "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ar_AE",
+                "de_DE",
+                "en_AE",
+                "en_AU",
+                "en_CA",
+                "en_GB",
+                "en_IN",
+                "en_SG",
+                "en_US",
+                "es_ES",
+                "es_MX",
+                "fr_CA",
+                "fr_FR",
+                "hi_IN",
+                "it_IT",
+                "ja_JP",
+                "ko_KR",
+                "nl_NL",
+                "pl_PL",
+                "pt_BR",
+                "sv_SE",
+                "ta_IN",
+                "th_TH",
+                "tr_TR",
+                "vi_VN",
+                "zh_CN"
+              ]
+            },
+            "in": "query",
+            "name": "locale",
+            "description": "The locale to which the caller wishes to translate the refinements to. For example, if the caller wishes to receive the refinements in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the refinements will be in the default language of the marketplace."
           }
         ],
         "tags": [
@@ -1925,12 +2037,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -2064,12 +2176,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -2442,6 +2554,11 @@
                 "schema": {
                   "$ref": "#/components/schemas/CategoryRecommendationsWithAsinCounts"
                 }
+              },
+              "application/vnd.spproducttargetingresponse.v5+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryRecommendationsWithAsinCountsLoP"
+                }
               }
             }
           },
@@ -2523,6 +2640,42 @@
             "name": "Prefer",
             "description": "Used to indicate the behavior preferred by the client but is not required for successful completion of the request. Supported values will be updated in the future.",
             "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "ar_AE",
+                "de_DE",
+                "en_AE",
+                "en_AU",
+                "en_CA",
+                "en_GB",
+                "en_IN",
+                "en_SG",
+                "en_US",
+                "es_ES",
+                "es_MX",
+                "fr_CA",
+                "fr_FR",
+                "hi_IN",
+                "it_IT",
+                "ja_JP",
+                "ko_KR",
+                "nl_NL",
+                "pl_PL",
+                "pt_BR",
+                "sv_SE",
+                "ta_IN",
+                "th_TH",
+                "tr_TR",
+                "vi_VN",
+                "zh_CN"
+              ]
+            },
+            "in": "query",
+            "name": "locale",
+            "description": "The locale to which the caller wishes to translate the list of category recommendations to. For example, if the caller wishes to receive a list of category recommendations in Simplified Chinese, the locale parameter should be set to zh_CN. If no locale is provided, the returned list of category recommendations will be in the default language of the marketplace."
           }
         ],
         "tags": [
@@ -3004,7 +3157,7 @@
           },
           "required": true
         },
-        "description": "Given a list of campaigns as input, this API provides the following metrics -  <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign's chances of running out of budget. <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. <br> <b>3. Estimated missed impressions, clicks and sales </b> - for all campaigns. These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopt the recommended budget. These are estimates based on previous website traffic and campaign's historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions. Note: the API only supports NA region currently and when you send the requst, please make sure the campaign belongs to the corresponding marketplace.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "description": "Given a list of campaigns as input, this API provides the following metrics -  <br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign's chances of running out of budget. <br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days. Note: value -1 means we don’t have enough information to compute the campaign’s percent time in budget. <br> <b>3. Estimated missed impressions, clicks and sales </b> - for all campaigns. These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopt the recommended budget. These are estimates based on previous website traffic and campaign's historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions. Note: the API only supports NA region currently and when you send the requst, please make sure the campaign belongs to the corresponding marketplace.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
         "operationId": "getBudgetRecommendations",
         "responses": {
           "200": {
@@ -3241,12 +3394,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -3380,12 +3533,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -3521,12 +3674,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -3660,12 +3813,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -3892,12 +4045,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -4031,12 +4184,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -4172,12 +4325,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -4311,12 +4464,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -4697,12 +4850,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -4836,12 +4989,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -6077,12 +6230,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -6216,12 +6369,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -6582,7 +6735,7 @@
     "/sp/campaigns/{campaignId}/budgetRules/budgetHistory": {
       "get": {
         "summary": "Gets the budget history for a campaign specified by identifier.",
-        "description": "The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "description": "**Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
         "operationId": "getRuleBasedBudgetHistoryForSPCampaigns",
         "responses": {
           "200": {
@@ -6729,6 +6882,10 @@
     "/sp/rules/campaignOptimization/eligibility": {
       "post": {
         "summary": "Gets a campaign optimization rule recommendation for SP campaigns.",
+        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "tags": [
+          "Campaign Optimization Rules"
+        ],
         "requestBody": {
           "content": {
             "application/vnd.optimizationrules.v1+json": {
@@ -6812,7 +6969,6 @@
             }
           }
         },
-        "description": "\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
         "parameters": [
           {
             "schema": {
@@ -6832,9 +6988,6 @@
             "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
             "required": true
           }
-        ],
-        "tags": [
-          "Campaign Optimization Rules"
         ]
       }
     },
@@ -7317,12 +7470,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -7456,12 +7609,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -7841,12 +7994,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -7980,12 +8133,12 @@
           },
           {
             "schema": {
-              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids",
+              "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only.",
               "type": "string"
             },
             "in": "header",
             "name": "Prefer",
-            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids"
+            "description": "The \"Prefer\" header, as defined in [RFC7240], allows clients to request certain behavior from the service.\nThe service ignores preference values that are either not supported or not known by the service.\nEither multiple Prefer headers are passed or single one with comma separated values, both forms are equivalent\nSupported preferences:\nreturn=representation - return the full object when doing create/update/delete operations instead of ids.\nPlease note that the extendedData field will be part of the full object for /list endpoints only."
           }
         ],
         "tags": [
@@ -8187,6 +8340,14 @@
             "description": "The identifier of the keyword.",
             "type": "string"
           },
+          "nativeLanguageKeyword": {
+            "description": "The unlocalized keyword text in the preferred locale of the advertiser",
+            "type": "string"
+          },
+          "nativeLanguageLocale": {
+            "description": "The locale preference of the advertiser.",
+            "type": "string"
+          },
           "campaignId": {
             "description": "The identifier of the campaign to which the keyword is associated.",
             "type": "string"
@@ -8213,6 +8374,19 @@
           "keywordText",
           "matchType"
         ]
+      },
+      "BrandLoP": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Name of brand.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Id of brand.",
+            "type": "string"
+          }
+        }
       },
       "GetTargetableAsinCountsRequest": {
         "type": "object",
@@ -8635,6 +8809,7 @@
           "targetingClauses": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of targetingClauses with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateTargetingClause"
@@ -8651,6 +8826,7 @@
           "keywords": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of keywords.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateKeyword"
@@ -8741,6 +8917,10 @@
           "includeExtendedDataFields": {
             "description": "Whether to get entity with extended data fields such as creationDate, lastUpdateDate, servingStatus",
             "type": "boolean"
+          },
+          "locale": {
+            "description": "Restricts results to negativeKeywords that match the specified locale.",
+            "type": "string"
           },
           "negativeKeywordIdFilter": {
             "$ref": "#/components/schemas/SponsoredProductsObjectIdFilter"
@@ -9164,6 +9344,7 @@
             "type": "string"
           },
           "name": {
+            "description": "The name of the campaign.",
             "type": "string"
           },
           "targetingType": {
@@ -9533,7 +9714,7 @@
           "bid": {
             "nullable": true,
             "format": "double",
-            "description": "The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. This table details the maximum allowable bid (in local currency) for keywords by marketplace:\n| Marketplace | Currency | Min / Max bid for SP |\n| --- | --- | --- |\n| US | USD | 0.02 / 1000 |\n| CA | CAD | 0.02 / 1000 |\n| UK | GBP | 0.02 / 1000 |\n| DE | EUR | 0.02 / 1000 |\n| FR | EUR | 0.02 / 1000 |\n| ES | EUR | 0.02 / 1000 |\n| IT | EUR | 0.02 / 1000 |\n| JP | JPY | 2.0 / 100000 |\n| AU | AUD | 0.10 / 1410 |\n| AE | AED | 0.24 / 184.0 |",
+            "description": "The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
             "type": "number"
           },
           "adGroupId": {
@@ -9647,6 +9828,7 @@
           "campaigns": {
             "minItems": 0,
             "maxItems": 100,
+            "description": "An array of drafts with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateDraftCampaign"
@@ -9914,6 +10096,7 @@
           "negativeTargetingClauses": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of negativeTargeting with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateNegativeTargetingClause"
@@ -10041,6 +10224,7 @@
             "type": "string"
           },
           "name": {
+            "description": "The name of the DraftCampaign.",
             "type": "string"
           },
           "targetingType": {
@@ -10097,6 +10281,7 @@
           "adGroups": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of adGroups.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateGlobalAdGroup"
@@ -10118,6 +10303,20 @@
           "productAds"
         ]
       },
+      "Values": {
+        "description": "Metrics benchmark values.",
+        "properties": {
+          "conversions": {
+            "$ref": "#/components/schemas/Conversions"
+          },
+          "clicks": {
+            "$ref": "#/components/schemas/Clicks"
+          },
+          "impressions": {
+            "$ref": "#/components/schemas/Impressions"
+          }
+        }
+      },
       "SponsoredProductsGlobalCampaign": {
         "type": "object",
         "properties": {
@@ -10127,7 +10326,7 @@
             "type": "string"
           },
           "campaignId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the campaign.",
             "type": "string"
           },
           "applicableMarketplaces": {
@@ -10139,6 +10338,7 @@
             }
           },
           "name": {
+            "description": "The name of the campaign.",
             "type": "string"
           },
           "targetingType": {
@@ -10205,7 +10405,7 @@
         ]
       },
       "RangeMetricValue": {
-        "description": "Describes lower and upper bounds of the range.",
+        "description": "Describes lower and upper bounds of the range.\n\nNote: This object is nullable",
         "type": "object",
         "properties": {
           "lower": {
@@ -10266,7 +10466,7 @@
             }
           },
           "dailyBudget": {
-            "description": "Recommended daily budget for the new campaign.",
+            "description": "Recommended daily budget for the new campaign. Note: value -1 means we don’t have enough information to provide a recommendation.",
             "type": "number"
           },
           "recommendationId": {
@@ -10498,7 +10698,7 @@
           },
           "bid": {
             "format": "double",
-            "description": "The bid for ads sourced using the target. Targets that do not have bid values in listDraftTargetingClauses will inherit the defaultBid from the adGroup level. This table details the maximum allowable bid (in local currency) for keywords by marketplace:\n| Marketplace | Currency | Min / Max bid for SP |\n| --- | --- | --- |\n| US | USD | 0.02 / 1000 |\n| CA | CAD | 0.02 / 1000 |\n| UK | GBP | 0.02 / 1000 |\n| DE | EUR | 0.02 / 1000 |\n| FR | EUR | 0.02 / 1000 |\n| ES | EUR | 0.02 / 1000 |\n| IT | EUR | 0.02 / 1000 |\n| JP | JPY | 2.0 / 100000 |\n| AU | AUD | 0.10 / 1410 |\n| AE | AED | 0.24 / 184.0 |",
+            "description": "The bid for ads sourced using the target. Targets that do not have bid values in listDraftTargetingClauses will inherit the defaultBid from the adGroup level. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
             "type": "number"
           },
           "adGroupId": {
@@ -10673,6 +10873,13 @@
         "enum": [
           "AD_INELIGIBLE"
         ]
+      },
+      "BrandsLoP": {
+        "description": "List of Brands.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/BrandLoP"
+        }
       },
       "SponsoredProductsGlobalTargetingClauseFailureResponseItem": {
         "type": "object",
@@ -11172,6 +11379,7 @@
           "negativeKeywords": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of negativeKeywords.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateNegativeKeyword"
@@ -11344,20 +11552,13 @@
         ]
       },
       "Theme": {
-        "description": "The bid recommendation theme.",
+        "description": "The bid recommendation theme. This API currently supports `CONVERSION_OPPORTUNITIES`, `PRIME_DAY`, `FALL_PRIME_DEAL_EVENT`, and `BFCM_HOLIDAY` themes.",
         "type": "string",
         "enum": [
           "CONVERSION_OPPORTUNITIES",
           "PRIME_DAY",
           "FALL_PRIME_DEAL_EVENT",
-          "VALENTINES_DAY",
-          "BACK_TO_SCHOOL",
-          "BFCM_HOLIDAY",
-          "TIME_SALE_FESTIVAL",
-          "FASHION_TIME_SALE_FESTIVAL",
-          "GREAT_REPUBLIC_DAY_SALE",
-          "GREAT_INDIAN_FESTIVAL",
-          "SPRING_SALE_EVENT"
+          "BFCM_HOLIDAY"
         ]
       },
       "SponsoredProductsDraftKeywordExtendedData": {
@@ -11513,6 +11714,15 @@
           "keywordIdFilter": {
             "$ref": "#/components/schemas/SponsoredProductsObjectIdFilter"
           }
+        }
+      },
+      "AgeRangesLoP": {
+        "description": "List of Age Ranges in a language of preference (LoP). Use the POST /sp/targets/category/{categoryId}/refinements endpoint to retrieve Age Ranges. Age Ranges are only available for categories related to children's toys and games.",
+        "type": "array",
+        "items": {
+          "minItems": 0,
+          "maxItems": 15,
+          "$ref": "#/components/schemas/AgeRangeLoP"
         }
       },
       "SponsoredProductsDeleteSponsoredProductsAdGroupsRequestContent": {
@@ -12138,7 +12348,7 @@
         "type": "object",
         "properties": {
           "keywordId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the keyword.",
             "type": "string"
           },
           "name": {
@@ -12173,6 +12383,7 @@
           "negativeKeywords": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of negativeKeywords with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateNegativeKeyword"
@@ -12314,7 +12525,7 @@
         "type": "object",
         "properties": {
           "keywordId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the keyword.",
             "type": "string"
           },
           "name": {
@@ -12453,6 +12664,10 @@
             "description": "Whether to get entity with extended data fields such as creationDate, lastUpdateDate, servingStatus",
             "type": "boolean"
           },
+          "locale": {
+            "description": "Restricts results to negativeKeywords that match the specified locale.",
+            "type": "string"
+          },
           "negativeKeywordIdFilter": {
             "$ref": "#/components/schemas/SponsoredProductsObjectIdFilter"
           },
@@ -12578,7 +12793,7 @@
             "type": "string"
           },
           "campaignId": {
-            "description": "entity object identifier",
+            "description": "The identifer of the campaign to which the draft keyword is associated.",
             "type": "string"
           },
           "matchType": {
@@ -12586,12 +12801,11 @@
           },
           "bid": {
             "format": "double",
-            "description": "Bid associated with this draft keyword. Applicable to biddable match types only",
-            "type": "number",
-            "minimum": 0.02
+            "description": "Bid associated with this draft keyword. Applicable to biddable match types only. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
+            "type": "number"
           },
           "adGroupId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the ad group to which this draft keyword is associated.",
             "type": "string"
           },
           "keywordText": {
@@ -13004,7 +13218,7 @@
         "type": "object",
         "properties": {
           "keywordId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the keyword.",
             "type": "string"
           },
           "name": {
@@ -13135,6 +13349,7 @@
           "campaigns": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of campaigns with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateCampaign"
@@ -13692,6 +13907,7 @@
           "productAds": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of ads.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateProductAd"
@@ -13751,6 +13967,23 @@
           },
           "adServingStatus": {
             "$ref": "#/components/schemas/SponsoredProductsGlobalEntityServingStatus"
+          }
+        }
+      },
+      "GenreLoP": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Name of Genre.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Id of Genre. Use the POST /sp/targets/category/{categoryId}/refinements endpoint to retrieve Genre Node IDs.",
+            "type": "string"
+          },
+          "translatedName": {
+            "description": "Translated name of the Genre based off locale send in the query parameter.",
+            "type": "string"
           }
         }
       },
@@ -14363,7 +14596,8 @@
         ]
       },
       "ImpactMetrics": {
-        "description": "For the CONVERSION_OPPORTUNITIES theme, the impact metrics are weekly clicks and orders received for similar products.\nFor other event-based themes, the impact metrics are clicks and orders received for similar products during the event days",
+        "nullable": true,
+        "description": "For the CONVERSION_OPPORTUNITIES theme, the impact metrics are weekly clicks and orders received for similar products.\nFor other event-based themes, the impact metrics are clicks and orders received for similar products during the event days\n\nNote: This object is nullable",
         "type": "object",
         "properties": {
           "clicks": {
@@ -14412,7 +14646,7 @@
           "PORTFOLIO_STATUS_ENABLED_DETAIL",
           "PORTFOLIO_PAUSED_DETAIL",
           "PORTFOLIO_ARCHIVED_DETAIL",
-          "PORTFOLIO_OUT_OF_BUDGET",
+          "PORTFOLIO_OUT_OF_BUDGET_DETAIL",
           "PORTFOLIO_PENDING_START_DATE_DETAIL",
           "PORTFOLIO_ENDED_DETAIL",
           "ADVERTISER_POLICING_SUSPENDED_DETAIL",
@@ -14534,7 +14768,7 @@
           "bid": {
             "nullable": true,
             "format": "double",
-            "description": "The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. This table details the maximum allowable bid (in local currency) for keywords by marketplace:\n| Marketplace | Currency | Min / Max bid for SP |\n| --- | --- | --- |\n| US | USD | 0.02 / 1000 |\n| CA | CAD | 0.02 / 1000 |\n| UK | GBP | 0.02 / 1000 |\n| DE | EUR | 0.02 / 1000 |\n| FR | EUR | 0.02 / 1000 |\n| ES | EUR | 0.02 / 1000 |\n| IT | EUR | 0.02 / 1000 |\n| JP | JPY | 2.0 / 100000 |\n| AU | AUD | 0.10 / 1410 |\n| AE | AED | 0.24 / 184.0 |",
+            "description": "The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
             "type": "number"
           }
         },
@@ -14564,10 +14798,11 @@
             "type": "string"
           },
           "campaignId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the campaign.",
             "type": "string"
           },
           "name": {
+            "description": "The name of the campaign.",
             "type": "string"
           },
           "targetingType": {
@@ -14609,6 +14844,7 @@
           "keywords": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of keywords with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateGlobalKeyword"
@@ -14755,6 +14991,8 @@
         "description": "The advertising performance metric.",
         "type": "string",
         "enum": [
+          "IS",
+          "NTB",
           "ROAS"
         ]
       },
@@ -14887,6 +15125,23 @@
           "message"
         ]
       },
+      "AgeRangeLoP": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Name of Age Range.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Id of Age Range. Use the POST /sp/targets/category/{categoryId}/refinements endpoint to retrieve Age Range Node IDs.",
+            "type": "string"
+          },
+          "translatedName": {
+            "description": "Translated name of Age Range based off locale sent in request.",
+            "type": "string"
+          }
+        }
+      },
       "BudgetUsagePortfolioBatchError": {
         "type": "object",
         "properties": {
@@ -14987,7 +15242,7 @@
         "type": "object",
         "properties": {
           "campaignId": {
-            "description": "entity object identifier",
+            "description": "The identifer of the campaign to which the keyword is associated.",
             "type": "string"
           },
           "matchType": {
@@ -15004,7 +15259,7 @@
             "$ref": "#/components/schemas/SponsoredProductsGlobalBid"
           },
           "adGroupId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the ad group to which this keyword is associated.",
             "type": "string"
           },
           "keywordText": {
@@ -15018,6 +15273,16 @@
           "matchType",
           "state"
         ]
+      },
+      "TargetableCategoriesLoP": {
+        "description": "Response object containing all targetable categories for the advertiser's marketplace in a language of preference (LoP) provide by the locale query parameter. ID is the category ID. NA is the name. TN is the translated name in the language of preference. CH is the list of child categories. TA is if the category is targetable. AsinCountRange is the AsinCounts of the node. Version 4 adds the number of targetable ASINs to each category.",
+        "type": "object",
+        "properties": {
+          "categoryTree": {
+            "type": "string"
+          }
+        },
+        "example": "[{\"id\":2748212011,\"na\":\"Art Paper\",\"tn\":\"Papel de arte\",\"ch\":[{\"id\":8090742011,\"na\":\"Palette Paper\",\"tn\":\"Papel de paleta\",\"ch\":[],\"ta\":true, \"asinCountRange\":{\"min\":11,\"max\":19}},{\"id\":8090734011,\"na\":\"Sketchbooks & Notebooks\",\"tn\":\"Cuadernos de bocetos y cuadernos\",\"ch\":[],\"ta\":true, \"asinCountRange\":{\"min\":3,\"max\":5}}],\"ta\":true,\"asinCountRange\":{\"min\":57,\"max\":84}},{\"id\":12898291,\"na\":\"Tracing Paper\",\"tn\":\"Papel de trazar\",\"ch\":[],\"ta\":true, \"asinCountRange\":{\"min\":24,\"max\":40}}]"
       },
       "SponsoredProductsCreateCampaignNegativeTargetingClause": {
         "type": "object",
@@ -15267,11 +15532,11 @@
         "type": "object",
         "properties": {
           "keywordId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the keyword.",
             "type": "string"
           },
           "campaignId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the campaign to which the keyword is associated.",
             "type": "string"
           },
           "matchType": {
@@ -15288,7 +15553,7 @@
             "$ref": "#/components/schemas/SponsoredProductsGlobalBid"
           },
           "adGroupId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the ad group to which this keyword is associated.",
             "type": "string"
           },
           "keywordText": {
@@ -15508,6 +15773,7 @@
           "campaigns": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of campaigns.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateCampaign"
@@ -15548,7 +15814,7 @@
             "type": "string"
           },
           "campaignId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the draft.",
             "type": "string"
           },
           "name": {
@@ -15920,6 +16186,7 @@
           "campaigns": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of campaigns with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateGlobalCampaign"
@@ -16412,7 +16679,7 @@
         "type": "object",
         "properties": {
           "keywordId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the draft keyword.",
             "type": "string"
           },
           "nativeLanguageLocale": {
@@ -16420,7 +16687,7 @@
             "type": "string"
           },
           "campaignId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the campaign to which the draft keyword is associated.",
             "type": "string"
           },
           "matchType": {
@@ -16433,15 +16700,15 @@
           "bid": {
             "nullable": true,
             "format": "double",
-            "description": "Bid associated with this draft keyword. Applicable to biddable match types only",
-            "type": "number",
-            "minimum": 0.02
+            "description": "Bid associated with this draft keyword. Applicable to biddable match types only. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
+            "type": "number"
           },
           "adGroupId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the ad group to which this draft keyword is associated.",
             "type": "string"
           },
           "keywordText": {
+            "description": "The draft keyword text.",
             "type": "string"
           },
           "extendedData": {
@@ -16651,7 +16918,7 @@
           },
           "defaultBid": {
             "format": "double",
-            "description": "A bid value for use when no bid is specified for keywords in the ad group.",
+            "description": "A bid value for use when no bid is specified for keywords in the ad group. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
             "type": "number"
           },
           "extendedData": {
@@ -16739,6 +17006,7 @@
           "campaignNegativeKeywords": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of campaignNegativeKeywords.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateCampaignNegativeKeyword"
@@ -16806,6 +17074,7 @@
           "negativeTargetingClauses": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of negativeTargeting with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateGlobalNegativeTargetingClause"
@@ -16874,7 +17143,8 @@
         }
       },
       "ImpactMetric": {
-        "description": "The impacts are given in the same order of suggested bids.",
+        "nullable": true,
+        "description": "The impact metrics are given in the same order of suggested bids.\n\nNote: This object is nullable",
         "type": "object",
         "properties": {
           "values": {
@@ -17120,7 +17390,7 @@
           },
           "defaultBid": {
             "format": "double",
-            "description": "A bid value for use when no bid is specified for keywords in the ad group.",
+            "description": "A bid value for use when no bid is specified for keywords in the ad group. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
             "type": "number"
           }
         },
@@ -17272,6 +17542,14 @@
       "SponsoredProductsCreateNegativeKeyword": {
         "type": "object",
         "properties": {
+          "nativeLanguageKeyword": {
+            "description": "The unlocalized keyword text in the preferred locale of the advertiser",
+            "type": "string"
+          },
+          "nativeLanguageLocale": {
+            "description": "The locale preference of the advertiser.",
+            "type": "string"
+          },
           "campaignId": {
             "description": "The identifer of the campaign to which the keyword is associated.",
             "type": "string"
@@ -17351,6 +17629,7 @@
           "adGroups": {
             "minItems": 0,
             "maxItems": 100,
+            "description": "An array of draftAdGroups.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateDraftAdGroup"
@@ -17386,7 +17665,7 @@
           "bid": {
             "nullable": true,
             "format": "double",
-            "description": "The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. This table details the maximum allowable bid (in local currency) for keywords by marketplace:\n| Marketplace | Currency | Min / Max bid for SP |\n| --- | --- | --- |\n| US | USD | 0.02 / 1000 |\n| CA | CAD | 0.02 / 1000 |\n| UK | GBP | 0.02 / 1000 |\n| DE | EUR | 0.02 / 1000 |\n| FR | EUR | 0.02 / 1000 |\n| ES | EUR | 0.02 / 1000 |\n| IT | EUR | 0.02 / 1000 |\n| JP | JPY | 2.0 / 100000 |\n| AU | AUD | 0.10 / 1410 |\n| AE | AED | 0.24 / 184.0 |",
+            "description": "The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
             "type": "number"
           },
           "adGroupId": {
@@ -17406,7 +17685,7 @@
         "type": "object",
         "properties": {
           "keywordId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the keyword.",
             "type": "string"
           },
           "nativeLanguageKeyword": {
@@ -17418,7 +17697,7 @@
             "type": "string"
           },
           "campaignId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the campaign to which the keyword is associated.",
             "type": "string"
           },
           "matchType": {
@@ -17429,15 +17708,15 @@
           },
           "bid": {
             "format": "double",
-            "description": "Bid associated with this keyword. Applicable to biddable match types only",
-            "type": "number",
-            "minimum": 0.02
+            "description": "Bid associated with this keyword. Applicable to biddable match types only. Keywords that do not have bid values in listKeywords will inherit the defaultBid from the adGroup level. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
+            "type": "number"
           },
           "adGroupId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the ad group to which this keyword is associated.",
             "type": "string"
           },
           "keywordText": {
+            "description": "The keyword text.",
             "type": "string"
           },
           "extendedData": {
@@ -17561,6 +17840,7 @@
           "campaigns": {
             "minItems": 0,
             "maxItems": 100,
+            "description": "An array of drafts.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateDraftCampaign"
@@ -17726,6 +18006,7 @@
           "campaignNegativeTargetingClauses": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of Campaign Negative TargetingClauses.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateCampaignNegativeTargetingClause"
@@ -17879,6 +18160,10 @@
             "description": "Whether to get entity with extended data fields such as creationDate, lastUpdateDate, servingStatus",
             "type": "boolean"
           },
+          "locale": {
+            "description": "The locale preference of the advertiser.",
+            "type": "string"
+          },
           "negativeKeywordIdFilter": {
             "$ref": "#/components/schemas/SponsoredProductsObjectIdFilter"
           },
@@ -17908,7 +18193,7 @@
         }
       },
       "SponsoredProductsTargetingExpressionPredicateTypeWithoutOther": {
-        "description": "The type of targeting expression. You can specify values for the following predicates:\n| Predicate | Description |\n| --- | --- |\n| `QUERY_BROAD_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Loose match` target type in the UI, this will show your ad to shoppers who use search terms loosely related to your products.|\n| `QUERY_HIGH_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Close match` target type in the UI, this will show your ad to shoppers who use search terms closely related to your products.|\n| `ASIN_ACCESSORY_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Complements` target type in the UI, this will show your ad to shoppers who view the detail pages of products that complement your product.|\n| `ASIN_SUBSTITUTE_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Substitutes` target type in the UI, this will show your ad to shoppers who use detail pages of products similar to yours.|\n| `ASIN_CATEGORY_SAME_AS` | Negatively Target the same category as the category expressed. |\n| `ASIN_BRAND_SAME_AS` | Target the brand that is the same as the brand expressed. |\n| `ASIN_PRICE_LESS_THAN` | Target a price that is less than the price expressed. |\n| `ASIN_PRICE_BETWEEN` | Target a price that is between the prices expressed. |\n| `ASIN_PRICE_GREATER_THAN` | Target a price that is greater than the price expressed. |\n| `ASIN_REVIEW_RATING_LESS_THAN` | Target a review rating less than the review rating that is expressed. |\n| `ASIN_REVIEW_RATING_BETWEEN` | Target a review rating that is between the review ratings expressed. |\n| `ASIN_REVIEW_RATING_GREATER_THAN` | Target a review rating that is greater than the review rating expressed. |\n| `ASIN_SAME_AS` | Target an ASIN that is the same as the ASIN expressed. |\n| `ASIN_IS_PRIME_SHIPPING_ELIGIBLE` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. |\n| `ASIN_AGE_RANGE_SAME_AS` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. |\n| `ASIN_GENRE_SAME_AS` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   |\n| `ASIN_EXPANDED_FROM` | Target products similar in performance to the ASIN expressed.   |\n| `OTHER` | Other Type.   |",
+        "description": "The type of targeting expression. You can specify values for the following predicates:\n| Predicate | Description |\n| --- | --- |\n| `QUERY_BROAD_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Loose match` target type in the UI, this will show your ad to shoppers who use search terms loosely related to your products.|\n| `QUERY_HIGH_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Close match` target type in the UI, this will show your ad to shoppers who use search terms closely related to your products.|\n| `ASIN_ACCESSORY_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Complements` target type in the UI, this will show your ad to shoppers who view the detail pages of products that complement your product.|\n| `ASIN_SUBSTITUTE_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Substitutes` target type in the UI, this will show your ad to shoppers who use detail pages of products similar to yours.|\n| `ASIN_CATEGORY_SAME_AS` | Target the category that is the same as the category expressed |\n| `ASIN_BRAND_SAME_AS` | Target the brand that is the same as the brand expressed. |\n| `ASIN_PRICE_LESS_THAN` | Target a price that is less than the price expressed. |\n| `ASIN_PRICE_BETWEEN` | Target a price that is between the prices expressed. |\n| `ASIN_PRICE_GREATER_THAN` | Target a price that is greater than the price expressed. |\n| `ASIN_REVIEW_RATING_LESS_THAN` | Target a review rating less than the review rating that is expressed. |\n| `ASIN_REVIEW_RATING_BETWEEN` | Target a review rating that is between the review ratings expressed. |\n| `ASIN_REVIEW_RATING_GREATER_THAN` | Target a review rating that is greater than the review rating expressed. |\n| `ASIN_SAME_AS` | Target an ASIN that is the same as the ASIN expressed. |\n| `ASIN_IS_PRIME_SHIPPING_ELIGIBLE` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. |\n| `ASIN_AGE_RANGE_SAME_AS` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. |\n| `ASIN_GENRE_SAME_AS` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   |\n| `ASIN_EXPANDED_FROM` | Target products similar in performance to the ASIN expressed.   |\n| `OTHER` | Other Type.   |",
         "type": "string",
         "enum": [
           "ASIN_CATEGORY_SAME_AS",
@@ -18046,10 +18331,11 @@
             "type": "string"
           },
           "campaignId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the draft.",
             "type": "string"
           },
           "name": {
+            "description": "The name of the draft.",
             "type": "string"
           },
           "targetingType": {
@@ -18103,6 +18389,7 @@
           "productAds": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of ads with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateProductAd"
@@ -18167,6 +18454,7 @@
           "negativeKeywords": {
             "minItems": 0,
             "maxItems": 100,
+            "description": "An array of negativeKeywords.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateDraftNegativeKeyword"
@@ -18238,6 +18526,7 @@
           "adGroups": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of adGroups with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateGlobalAdGroup"
@@ -18418,6 +18707,7 @@
           "adGroups": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of adGroups with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateAdGroup"
@@ -18849,6 +19139,7 @@
           "adGroups": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of adGroups.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateAdGroup"
@@ -18916,7 +19207,7 @@
             "type": "string"
           },
           "campaignId": {
-            "description": "entity object identifier",
+            "description": "The identifer of the campaign to which the keyword is associated.",
             "type": "string"
           },
           "matchType": {
@@ -18928,15 +19219,15 @@
           "bid": {
             "nullable": true,
             "format": "double",
-            "description": "Bid associated with this keyword. Applicable to biddable match types only",
-            "type": "number",
-            "minimum": 0.02
+            "description": "Bid associated with this keyword. Applicable to biddable match types only. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
+            "type": "number"
           },
           "adGroupId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the ad group to which this keyword is associated.",
             "type": "string"
           },
           "keywordText": {
+            "description": "The keyword text.",
             "type": "string"
           }
         },
@@ -19335,7 +19626,7 @@
             "type": "string"
           },
           "campaignId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the campaign.",
             "type": "string"
           },
           "name": {
@@ -19824,6 +20115,7 @@
           "keywords": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of keywords.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateGlobalKeyword"
@@ -19833,6 +20125,39 @@
         "required": [
           "keywords"
         ]
+      },
+      "CategoryItemWithAsinCountsLoP": {
+        "type": "object",
+        "properties": {
+          "categoryPath": {
+            "description": "The path of the category, which contains the current category and all parent categories",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the category",
+            "type": "string"
+          },
+          "translatedCategoryPath": {
+            "description": "The translated path of the category, which contains the current category and all parent categories.",
+            "type": "string"
+          },
+          "asinCounts": {
+            "description": "The number of asins belonging to the category.",
+            "$ref": "#/components/schemas/IntegerRange"
+          },
+          "parentCategoryId": {
+            "description": "The category id of the parent node",
+            "type": "string"
+          },
+          "id": {
+            "description": "The category id of the current node",
+            "type": "string"
+          },
+          "translatedName": {
+            "description": "The translated name of the category.",
+            "type": "string"
+          }
+        }
       },
       "GetCategoryRecommendationsForAsinsRequest": {
         "description": "Request object to retrieve Category Recommendations based on the input ASINs.",
@@ -20052,7 +20377,7 @@
         "type": "object",
         "properties": {
           "keywordId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the keyword.",
             "type": "string"
           },
           "state": {
@@ -20061,9 +20386,8 @@
           "bid": {
             "nullable": true,
             "format": "double",
-            "description": "Bid associated with this keyword. Applicable to biddable match types only",
-            "type": "number",
-            "minimum": 0.02
+            "description": "Bid associated with this keyword. Applicable to biddable match types only. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
+            "type": "number"
           }
         },
         "required": [
@@ -20154,7 +20478,8 @@
           "END_DATE_LATER_THAN_MAXIMUM",
           "START_DATE_AFTER_END_DATE",
           "UPDATING_READ_ONLY_START_DATE",
-          "UPDATING_READ_ONLY_END_DATE"
+          "UPDATING_READ_ONLY_END_DATE",
+          "UPDATING_ENDED_CAMPAIGN_WITHOUT_EXTENSION"
         ]
       },
       "SponsoredProductsGlobalNegativeKeywordFailureResponseItem": {
@@ -20194,11 +20519,19 @@
       "SpecialEvent": {
         "properties": {
           "budgetModifier": {
-            "description": "The factor used to boost the recommended budget.",
+            "description": "Deprecated. The factor used to boost the recommended budget.",
             "type": "number"
           },
           "endDate": {
             "description": "The end date of the special event in YYYYMMDD format.",
+            "type": "string"
+          },
+          "dailyBudget": {
+            "description": "Recommended daily budget for the new campaign during the special event period.",
+            "type": "number"
+          },
+          "eventKey": {
+            "description": "The key of the special event.",
             "type": "string"
           },
           "eventName": {
@@ -20208,6 +20541,9 @@
           "startDate": {
             "description": "The start date of the special event in YYYYMMDD format.",
             "type": "string"
+          },
+          "benchmark": {
+            "$ref": "#/components/schemas/Benchmark"
           }
         }
       },
@@ -20226,7 +20562,7 @@
         "type": "object",
         "properties": {
           "keywordId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the keyword.",
             "type": "string"
           },
           "state": {
@@ -20309,6 +20645,7 @@
           "targetingClauses": {
             "minItems": 0,
             "maxItems": 100,
+            "description": "An array of draftTargetingClauses.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateDraftTargetingClause"
@@ -20530,6 +20867,7 @@
           "productAds": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of ads with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateGlobalProductAd"
@@ -20590,6 +20928,7 @@
           "targetingClauses": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of targetingClauses with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateGlobalTargetingClause"
@@ -20642,15 +20981,12 @@
           },
           "defaultBid": {
             "format": "double",
-            "description": "A bid value for use when no bid is specified for keywords in the ad group.",
+            "description": "A bid value for use when no bid is specified for keywords in the ad group. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
             "type": "number"
           }
         },
         "required": [
-          "adGroupId",
-          "defaultBid",
-          "name",
-          "state"
+          "adGroupId"
         ]
       },
       "SponsoredProductsNegativeKeywordAccessErrorSelector": {
@@ -20973,6 +21309,7 @@
           "campaignNegativeTargetingClauses": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of Campaign Negative TargetingClauses with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateCampaignNegativeTargetingClause"
@@ -21107,7 +21444,7 @@
           },
           "bid": {
             "format": "double",
-            "description": "The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. This table details the maximum allowable bid (in local currency) for keywords by marketplace:\n| Marketplace | Currency | Min / Max bid for SP |\n| --- | --- | --- |\n| US | USD | 0.02 / 1000 |\n| CA | CAD | 0.02 / 1000 |\n| UK | GBP | 0.02 / 1000 |\n| DE | EUR | 0.02 / 1000 |\n| FR | EUR | 0.02 / 1000 |\n| ES | EUR | 0.02 / 1000 |\n| IT | EUR | 0.02 / 1000 |\n| JP | JPY | 2.0 / 100000 |\n| AU | AUD | 0.10 / 1410 |\n| AE | AED | 0.24 / 184.0 |",
+            "description": "The bid for ads sourced using the target. Targets that do not have bid values in listTargetingClauses will inherit the defaultBid from the adGroup level. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
             "type": "number"
           },
           "adGroupId": {
@@ -21211,6 +21548,7 @@
           "campaignNegativeKeywords": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of campaignNegativeKeywords with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateGlobalCampaignNegativeKeyword"
@@ -21365,25 +21703,6 @@
           }
         }
       },
-      "Daily": {
-        "description": "Daily metrics benchmark.",
-        "required": [
-          "clicks",
-          "conversions",
-          "impressions"
-        ],
-        "properties": {
-          "conversions": {
-            "$ref": "#/components/schemas/Conversions"
-          },
-          "clicks": {
-            "$ref": "#/components/schemas/Clicks"
-          },
-          "impressions": {
-            "$ref": "#/components/schemas/Impressions"
-          }
-        }
-      },
       "SponsoredProductsTargetingType": {
         "type": "string",
         "enum": [
@@ -21467,6 +21786,7 @@
             "type": "string"
           },
           "name": {
+            "description": "The name of the campaign.",
             "type": "string"
           },
           "targetingType": {
@@ -21480,7 +21800,7 @@
           },
           "startDate": {
             "format": "date",
-            "description": "The format of the date is YYYY-MM-DD.",
+            "description": "Default: today's date. The format of the date is YYYY-MM-DD.",
             "type": "string"
           },
           "budget": {
@@ -21523,6 +21843,14 @@
         "properties": {
           "keywordId": {
             "description": "The identifier of the keyword.",
+            "type": "string"
+          },
+          "nativeLanguageKeyword": {
+            "description": "The unlocalized keyword text in the preferred locale of the advertiser",
+            "type": "string"
+          },
+          "nativeLanguageLocale": {
+            "description": "The locale preference of the advertiser.",
             "type": "string"
           },
           "campaignId": {
@@ -21598,6 +21926,7 @@
           "campaignNegativeKeywords": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of campaignNegativeKeywords with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateCampaignNegativeKeyword"
@@ -21614,6 +21943,7 @@
           "targetingClauses": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of targetingClauses.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateTargetingClause"
@@ -21764,6 +22094,21 @@
           "OTHER"
         ]
       },
+      "RefinementsLoP": {
+        "description": "Response object for the POST /sp/targets/category/{categoryId}/refinements endpoint, containing information on Brand Nodes, Age Range Nodes, and Genre Nodes.",
+        "type": "object",
+        "properties": {
+          "ageRanges": {
+            "$ref": "#/components/schemas/AgeRangesLoP"
+          },
+          "brands": {
+            "$ref": "#/components/schemas/BrandsLoP"
+          },
+          "genres": {
+            "$ref": "#/components/schemas/GenresLoP"
+          }
+        }
+      },
       "SponsoredProductsCopyCampaignErrorDetail": {
         "type": "object",
         "properties": {
@@ -21866,7 +22211,7 @@
           },
           "defaultBid": {
             "format": "double",
-            "description": "A bid value for use when no bid is specified for keywords in the ad group.",
+            "description": "A bid value for use when no bid is specified for keywords in the ad group. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
             "type": "number"
           },
           "extendedData": {
@@ -21881,7 +22226,7 @@
         ]
       },
       "SponsoredProductsEntityState": {
-        "description": "The current resource state.",
+        "description": "The current resource state.\n| State | Description |\n| --- | --- |\n| `ENABLED` | Enabled State |\n| `PAUSED` | Paused State |\n| `ARCHIVED` | ARCHIVED State |\n| `ENABLING` | State for Draft Entity Only |\n| `USER_DELETED` | State for Draft Entity Only |\n| `OTHER` | Read Only |",
         "type": "string",
         "enum": [
           "ENABLED",
@@ -22138,6 +22483,7 @@
           "negativeKeywords": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of negativeKeywords with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateGlobalNegativeKeyword"
@@ -22465,6 +22811,14 @@
       "SponsoredProductsCreateDraftNegativeKeyword": {
         "type": "object",
         "properties": {
+          "nativeLanguageKeyword": {
+            "description": "The unlocalized keyword text in the preferred locale of the advertiser",
+            "type": "string"
+          },
+          "nativeLanguageLocale": {
+            "description": "The locale preference of the advertiser.",
+            "type": "string"
+          },
           "campaignId": {
             "description": "The identifer of the campaign to which the keyword is associated.",
             "type": "string"
@@ -22776,6 +23130,21 @@
           "recommendationType": "BIDS_FOR_NEW_AD_GROUP"
         }
       },
+      "CategoryRecommendationsWithAsinCountsLoP": {
+        "description": "Response object for the GetCategoryRecommendationsForAsins API.",
+        "type": "object",
+        "properties": {
+          "categories": {
+            "description": "List of category recommendations",
+            "type": "array",
+            "items": {
+              "minItems": 0,
+              "maxItems": 50,
+              "$ref": "#/components/schemas/CategoryItemWithAsinCountsLoP"
+            }
+          }
+        }
+      },
       "SponsoredProductsListSponsoredProductsKeywordsPreviewResponseContent": {
         "type": "object",
         "properties": {
@@ -22948,6 +23317,7 @@
           "copyCampaignsItems": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of campaigns.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCopyCampaign"
@@ -23421,7 +23791,7 @@
         ]
       },
       "SponsoredProductsCreateTargetingExpressionPredicateType": {
-        "description": "The type of targeting expression. You can specify values for the following predicates:\n| Predicate | Description |\n| --- | --- |\n| `ASIN_CATEGORY_SAME_AS` | Negatively Target the same category as the category expressed. |\n| `ASIN_BRAND_SAME_AS` | Target the brand that is the same as the brand expressed. |\n| `ASIN_PRICE_LESS_THAN` | Target a price that is less than the price expressed. |\n| `ASIN_PRICE_BETWEEN` | Target a price that is between the prices expressed. |\n| `ASIN_PRICE_GREATER_THAN` | Target a price that is greater than the price expressed. |\n| `ASIN_REVIEW_RATING_LESS_THAN` | Target a review rating less than the review rating that is expressed. |\n| `ASIN_REVIEW_RATING_BETWEEN` | Target a review rating that is between the review ratings expressed. |\n| `ASIN_REVIEW_RATING_GREATER_THAN` | Target a review rating that is greater than the review rating expressed. |\n| `ASIN_SAME_AS` | Target an ASIN that is the same as the ASIN expressed. |\n| `ASIN_IS_PRIME_SHIPPING_ELIGIBLE` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. |\n| `ASIN_AGE_RANGE_SAME_AS` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. |\n| `ASIN_GENRE_SAME_AS` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   |\n| `ASIN_EXPANDED_FROM` | Target products similar in performance to the ASIN expressed.   |",
+        "description": "The type of targeting expression. You can specify values for the following predicates:\n| Predicate | Description |\n| --- | --- |\n| `ASIN_CATEGORY_SAME_AS` | Target the category that is the same as the category expressed. |\n| `ASIN_BRAND_SAME_AS` | Target the brand that is the same as the brand expressed. |\n| `ASIN_PRICE_LESS_THAN` | Target a price that is less than the price expressed. |\n| `ASIN_PRICE_BETWEEN` | Target a price that is between the prices expressed. |\n| `ASIN_PRICE_GREATER_THAN` | Target a price that is greater than the price expressed. |\n| `ASIN_REVIEW_RATING_LESS_THAN` | Target a review rating less than the review rating that is expressed. |\n| `ASIN_REVIEW_RATING_BETWEEN` | Target a review rating that is between the review ratings expressed. |\n| `ASIN_REVIEW_RATING_GREATER_THAN` | Target a review rating that is greater than the review rating expressed. |\n| `ASIN_SAME_AS` | Target an ASIN that is the same as the ASIN expressed. |\n| `ASIN_IS_PRIME_SHIPPING_ELIGIBLE` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. |\n| `ASIN_AGE_RANGE_SAME_AS` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. |\n| `ASIN_GENRE_SAME_AS` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   |\n| `ASIN_EXPANDED_FROM` | Target products similar in performance to the ASIN expressed.   |",
         "type": "string",
         "enum": [
           "ASIN_CATEGORY_SAME_AS",
@@ -23458,6 +23828,7 @@
           "negativeTargetingClauses": {
             "minItems": 0,
             "maxItems": 100,
+            "description": "An array of negativeTargetingClauses.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateDraftNegativeTargetingClause"
@@ -23485,6 +23856,7 @@
           "keywords": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of keywords with updated values.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsUpdateKeyword"
@@ -23782,7 +24154,7 @@
         }
       },
       "SponsoredProductsCreateOrUpdateBiddingStrategy": {
-        "description": "The bidding strategy.\n| Value | Strategy name | Description |\n|----------------|---------------|-------------|\n| `LEGACY_FOR_SALES` | Dynamic bids - down only | Lowers your bids in real time when your ad may be less likely to convert to a sale. Campaigns created before the release of the bidding controls feature used this setting by default. |\n| `AUTO_FOR_SALES` | Dynamic bids - up and down | Increases or decreases your bids in real time by a maximum of 100%. With this setting bids increase when your ad is more likely to convert to a sale, and bids decrease when less likely to convert to a sale. |\n| `MANUAL` | Fixed bid | Uses your exact bid and any placement adjustments you set, and is not subject to dynamic bidding. |\n| `RULE_BASED` | Rule based bidding | See Rule based bidding documentation https://advertising.amazon.com/API/docs/en-us/sponsored-products/rule-based-bidding/overview |",
+        "description": "The bidding strategy.\n`strategy` is required for create requests if dynamicBidding is provided, but is optional for update requests.\n| Value | Strategy name | Description |\n|----------------|---------------|-------------|\n| `LEGACY_FOR_SALES` | Dynamic bids - down only | Lowers your bids in real time when your ad may be less likely to convert to a sale. Campaigns created before the release of the bidding controls feature used this setting by default. |\n| `AUTO_FOR_SALES` | Dynamic bids - up and down | Increases or decreases your bids in real time by a maximum of 100%. With this setting bids increase when your ad is more likely to convert to a sale, and bids decrease when less likely to convert to a sale. |\n| `MANUAL` | Fixed bid | Uses your exact bid and any placement adjustments you set, and is not subject to dynamic bidding. |\n| `RULE_BASED` | Rule based bidding | See Rule based bidding documentation https://advertising.amazon.com/API/docs/en-us/sponsored-products/rule-based-bidding/overview |",
         "type": "string",
         "enum": [
           "LEGACY_FOR_SALES",
@@ -24298,7 +24670,7 @@
         "type": "object",
         "properties": {
           "keywordId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the keyword.",
             "type": "string"
           },
           "state": {
@@ -24346,6 +24718,15 @@
           "servingStatus": {
             "$ref": "#/components/schemas/SponsoredProductsGlobalCampaignServingStatus"
           }
+        }
+      },
+      "GenresLoP": {
+        "description": "List of Genres in a language of preference (LoP). Use the POST /sp/targets/category/{categoryId}/refinements endpoint to retrieve Genre Node IDs. Genres are only available for categories related to books.",
+        "type": "array",
+        "items": {
+          "minItems": 0,
+          "maxItems": 300,
+          "$ref": "#/components/schemas/GenreLoP"
         }
       },
       "SponsoredProductsDraftCampaignPromotionError": {
@@ -24420,13 +24801,19 @@
         }
       },
       "Benchmark": {
-        "description": "Similar campaigns' metrics benchmark.",
-        "required": [
-          "daily"
-        ],
+        "description": "Forecasted impact metrics for next 7 days or during special days.",
         "properties": {
-          "daily": {
-            "$ref": "#/components/schemas/Daily"
+          "benchmarkStatus": {
+            "description": "Specifies the processing status of the benchmark. Success - If all fields in values property (impressions, clicks, conversions) have all non-null values. Failed - If all fields in values property have all null values. Partial - If some of the fields (impressions, clicks, or conversions) in values property have null values.",
+            "type": "string",
+            "enum": [
+              "success",
+              "failed",
+              "partial"
+            ]
+          },
+          "values": {
+            "$ref": "#/components/schemas/Values"
           }
         }
       },
@@ -24509,7 +24896,7 @@
           },
           "defaultBid": {
             "format": "double",
-            "description": "A bid value for use when no bid is specified for keywords in the ad group.",
+            "description": "A bid value for use when no bid is specified for keywords in the ad group. For more information about bid constraints by marketplace, see [bid limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
             "type": "number"
           }
         },
@@ -24524,6 +24911,7 @@
           "negativeTargetingClauses": {
             "minItems": 0,
             "maxItems": 1000,
+            "description": "An array of negativeTargeting.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateNegativeTargetingClause"
@@ -24580,6 +24968,7 @@
           "keywords": {
             "minItems": 0,
             "maxItems": 100,
+            "description": "An array of draft keywords.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/SponsoredProductsCreateDraftKeyword"
@@ -24917,7 +25306,7 @@
             "type": "string"
           },
           "campaignId": {
-            "description": "entity object identifier",
+            "description": "The identifier of the campaign.",
             "type": "string"
           },
           "name": {
@@ -25110,6 +25499,7 @@
         }
       },
       "SponsoredProductsCreateOrUpdateDynamicBidding": {
+        "description": "Specifies bidding controls. DynamicBidding is optional for both Create and Update requests.\nFor Create Campaign requests, if you don't specify dynamicBidding, default strategy of `LEGACY_FOR_SALES` will be applied.",
         "type": "object",
         "properties": {
           "placementBidding": {
@@ -25121,13 +25511,10 @@
           "strategy": {
             "$ref": "#/components/schemas/SponsoredProductsCreateOrUpdateBiddingStrategy"
           }
-        },
-        "required": [
-          "strategy"
-        ]
+        }
       },
       "SponsoredProductsTargetingExpressionPredicateType": {
-        "description": "The type of targeting expression. You can specify values for the following predicates:\n| Predicate | Description |\n| --- | --- |\n| `QUERY_BROAD_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Loose match` target type in the UI, this will show your ad to shoppers who use search terms loosely related to your products.|\n| `QUERY_HIGH_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Close match` target type in the UI, this will show your ad to shoppers who use search terms closely related to your products.|\n| `ASIN_ACCESSORY_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Complements` target type in the UI, this will show your ad to shoppers who view the detail pages of products that complement your product.|\n| `ASIN_SUBSTITUTE_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Substitutes` target type in the UI, this will show your ad to shoppers who use detail pages of products similar to yours.|\n| `ASIN_CATEGORY_SAME_AS` | Negatively Target the same category as the category expressed. |\n| `ASIN_BRAND_SAME_AS` | Target the brand that is the same as the brand expressed. |\n| `ASIN_PRICE_LESS_THAN` | Target a price that is less than the price expressed. |\n| `ASIN_PRICE_BETWEEN` | Target a price that is between the prices expressed. |\n| `ASIN_PRICE_GREATER_THAN` | Target a price that is greater than the price expressed. |\n| `ASIN_REVIEW_RATING_LESS_THAN` | Target a review rating less than the review rating that is expressed. |\n| `ASIN_REVIEW_RATING_BETWEEN` | Target a review rating that is between the review ratings expressed. |\n| `ASIN_REVIEW_RATING_GREATER_THAN` | Target a review rating that is greater than the review rating expressed. |\n| `ASIN_SAME_AS` | Target an ASIN that is the same as the ASIN expressed. |\n| `ASIN_IS_PRIME_SHIPPING_ELIGIBLE` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. |\n| `ASIN_AGE_RANGE_SAME_AS` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. |\n| `ASIN_GENRE_SAME_AS` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   |\n| `ASIN_EXPANDED_FROM` | Target products similar in performance to the ASIN expressed.   |\n| `OTHER` | Other Type.   |",
+        "description": "The type of targeting expression. You can specify values for the following predicates:\n| Predicate | Description |\n| --- | --- |\n| `QUERY_BROAD_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Loose match` target type in the UI, this will show your ad to shoppers who use search terms loosely related to your products.|\n| `QUERY_HIGH_REL_MATCHES` | Auto Targeting - cannot be manually created - corresponds to the `Close match` target type in the UI, this will show your ad to shoppers who use search terms closely related to your products.|\n| `ASIN_ACCESSORY_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Complements` target type in the UI, this will show your ad to shoppers who view the detail pages of products that complement your product.|\n| `ASIN_SUBSTITUTE_RELATED` | Auto Targeting - cannot be manually created - corresponds to the `Substitutes` target type in the UI, this will show your ad to shoppers who use detail pages of products similar to yours.|\n| `ASIN_CATEGORY_SAME_AS` | Target the category that is the same as the category expressed |\n| `ASIN_BRAND_SAME_AS` | Target the brand that is the same as the brand expressed. |\n| `ASIN_PRICE_LESS_THAN` | Target a price that is less than the price expressed. |\n| `ASIN_PRICE_BETWEEN` | Target a price that is between the prices expressed. |\n| `ASIN_PRICE_GREATER_THAN` | Target a price that is greater than the price expressed. |\n| `ASIN_REVIEW_RATING_LESS_THAN` | Target a review rating less than the review rating that is expressed. |\n| `ASIN_REVIEW_RATING_BETWEEN` | Target a review rating that is between the review ratings expressed. |\n| `ASIN_REVIEW_RATING_GREATER_THAN` | Target a review rating that is greater than the review rating expressed. |\n| `ASIN_SAME_AS` | Target an ASIN that is the same as the ASIN expressed. |\n| `ASIN_IS_PRIME_SHIPPING_ELIGIBLE` | Target products that are Prime Shipping Eligible. This refinement can be applied at a category or brand level only. |\n| `ASIN_AGE_RANGE_SAME_AS` | Target an age range that is in the expressed range. This refinement can be applied for toys and games categories only. |\n| `ASIN_GENRE_SAME_AS` | Target products related to the expressed genre. This refinement can be applied for Books and eBooks categories only.   |\n| `ASIN_EXPANDED_FROM` | Target products similar in performance to the ASIN expressed.   |\n| `OTHER` | Other Type.   |",
         "type": "string",
         "enum": [
           "ASIN_CATEGORY_SAME_AS",

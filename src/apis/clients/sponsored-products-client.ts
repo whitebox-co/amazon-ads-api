@@ -8,11 +8,11 @@
  * Do not edit the class manually.
  */
 
-import { AdGroupsApi,BidRecommendationsApi,CampaignNegativeKeywordsApi,CampaignsApi,KeywordsApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductAdsApi,ProductTargetingApi,ReportsApi,SnapshotsApi,SuggestedKeywordsApi } from '../models/sponsored-products';
+import { BidRecommendationsApi,SnapshotsApi,SuggestedKeywordsApi } from '../models/sponsored-products';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
 import { getAxiosInstance, applyMixins, AdsConfiguration } from '../../helpers';
 
-export class SponsoredProductsClient extends AdGroupsApi {
+export class SponsoredProductsClient extends BidRecommendationsApi {
   constructor(parameters: APIConfigurationParameters) {
     const axios = getAxiosInstance(parameters)
     const configuration = new AdsConfiguration(parameters)
@@ -21,6 +21,6 @@ export class SponsoredProductsClient extends AdGroupsApi {
 }
 
 
-    export interface SponsoredProductsClient extends AdGroupsApi,BidRecommendationsApi,CampaignNegativeKeywordsApi,CampaignsApi,KeywordsApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductAdsApi,ProductTargetingApi,ReportsApi,SnapshotsApi,SuggestedKeywordsApi {}
-    applyMixins(SponsoredProductsClient, [AdGroupsApi,BidRecommendationsApi,CampaignNegativeKeywordsApi,CampaignsApi,KeywordsApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductAdsApi,ProductTargetingApi,ReportsApi,SnapshotsApi,SuggestedKeywordsApi])
+    export interface SponsoredProductsClient extends BidRecommendationsApi,SnapshotsApi,SuggestedKeywordsApi {}
+    applyMixins(SponsoredProductsClient, [BidRecommendationsApi,SnapshotsApi,SuggestedKeywordsApi])
     

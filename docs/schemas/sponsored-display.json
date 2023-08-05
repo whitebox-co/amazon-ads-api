@@ -2,14 +2,14 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Amazon Ads API for Sponsored Display",
-    "description": "This API enables programmatic access for campaign creation, management, and reporting for Sponsored Display campaigns. For more information on the functionality, see the [Sponsored Display Support Center](https://advertising.amazon.com/help#GTPPHE6RAWC2C4LZ). For API onboarding information, see the [account setup](https://advertising.amazon.com/API/docs/en-us/setting-up/account-setup) topic.<br/><br/>\n> This specification is available for download from the **[Advertising API developer portal](https://d3a0d0y2hgofx6.cloudfront.net/openapi/en-us/sponsored-display/3-0/openapi.yaml).**",
+    "description": "This API enables programmatic access for campaign creation, management, and reporting for Sponsored Display campaigns. For more information on the functionality, see the [Sponsored Display Support Center](https://advertising.amazon.com/help#GTPPHE6RAWC2C4LZ). For API onboarding information, see the [account setup](https://advertising.amazon.com/API/docs/en-us/guides/onboarding/overview) topic.<br/><br/>\n> This specification is available for download from the **[Advertising API developer portal](https://d3a0d0y2hgofx6.cloudfront.net/openapi/en-us/sponsored-display/3-0/openapi.yaml).**",
     "contact": {
       "name": "Amazon Ads API Support",
       "url": "https://amzn-clicks.atlassian.net/servicedesk/customer/portals"
     },
     "license": {
       "name": "Amazon Ads API License Agreement",
-      "url": "https://advertising.amazon.com/API/docs/license_agreement"
+      "url": "https://advertising.amazon.com/API/docs/license-agreement"
     },
     "version": "3.0"
   },
@@ -32,10 +32,10 @@
       "name": "Campaigns"
     },
     {
-      "name": "Ad groups"
+      "name": "Ad Groups"
     },
     {
-      "name": "Product ads"
+      "name": "Product Ads"
     },
     {
       "name": "Targeting"
@@ -47,7 +47,7 @@
       "name": "Bid Recommendations"
     },
     {
-      "name": "Negative targeting"
+      "name": "Negative Targeting"
     },
     {
       "name": "Creatives"
@@ -65,7 +65,16 @@
       "name": "Forecasts"
     },
     {
-      "name": "Optimization rules [Preview Only]"
+      "name": "Optimization Rules [Preview Only]"
+    },
+    {
+      "name": "Budget Rules"
+    },
+    {
+      "name": "Budget Usage"
+    },
+    {
+      "name": "Locations (beta)"
     }
   ],
   "paths": {
@@ -341,7 +350,7 @@
           }
         ],
         "requestBody": {
-          "description": "An array of Campaign objects. For each object, specify required fields and their values. Required fields are `name`, `tactic`, `state`, `budget`, and `startDate`. Maximum length of the array is 100 objects.",
+          "description": "An array of Campaign objects. For each object, specify required fields and their values. Required fields are `name`, `tactic`, `state`, and `startDate`. Maximum length of the array is 100 objects. If you don't specify a `budget`, it will be set as the [default budget for your region](https://advertising.amazon.com/API/docs/en-us/concepts/limits#default-budgets).\n  If you are using Optimization rules, the following campaign budget must be at least:\n  - 5x the value of any COST_PER_ORDER threshold.\n  - 10x the value of any COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS threshold.\n  - 20x the value of any COST_PER_CLICK threshold.\n",
           "content": {
             "application/json": {
               "schema": {
@@ -885,7 +894,7 @@
     "/sd/adGroups": {
       "get": {
         "tags": [
-          "Ad groups"
+          "Ad Groups"
         ],
         "summary": "Gets a list of ad groups.",
         "description": "Gets an array of AdGroup objects for a requested set of Sponsored Display ad groups. Note that the AdGroup object is designed for performance, and includes a small set of commonly used fields to reduce size. If the extended set of fields is required, use the ad group operations that return the AdGroupResponseEx object.",
@@ -1036,7 +1045,7 @@
       },
       "put": {
         "tags": [
-          "Ad groups"
+          "Ad Groups"
         ],
         "summary": "Updates on or more ad groups.",
         "operationId": "updateAdGroups",
@@ -1140,7 +1149,7 @@
       },
       "post": {
         "tags": [
-          "Ad groups"
+          "Ad Groups"
         ],
         "summary": "Creates one or more ad groups.",
         "operationId": "createAdGroups",
@@ -1153,7 +1162,7 @@
           }
         ],
         "requestBody": {
-          "description": "An array of AdGroup objects. For each object, specify required fields and their values. Required fields are `campaignId`, `name`, `state`, and `defaultBid`. Maximum length of the array is 100 objects.",
+          "description": "An array of AdGroup objects. For each object, specify required fields and their values. Required fields are `campaignId`, `name`, `state`, and `defaultBid`. Maximum length of the array is 100 objects. Note - when using landingPageType of OFF_AMAZON_LINK or STORES within productAds, only 1 adGroup is supported.",
           "content": {
             "application/json": {
               "schema": {
@@ -1246,7 +1255,7 @@
     "/sd/adGroups/{adGroupId}": {
       "get": {
         "tags": [
-          "Ad groups"
+          "Ad Groups"
         ],
         "summary": "Gets a requested ad group.",
         "description": "Returns an AdGroup object for a requested campaign. Note that the AdGroup object is designed for performance, with a small set of commonly used ad group fields to reduce size. If the extended set of fields is required, use the campaign operations that return the AdGroupResponseEx object.",
@@ -1344,7 +1353,7 @@
       },
       "delete": {
         "tags": [
-          "Ad groups"
+          "Ad Groups"
         ],
         "summary": "Sets the ad group status to archived.",
         "description": "This operation is equivalent to an update operation that sets the status field to 'archived'. Note that setting the status field to 'archived' is permanent and can't be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.",
@@ -1444,7 +1453,7 @@
     "/sd/adGroups/extended": {
       "get": {
         "tags": [
-          "Ad groups"
+          "Ad Groups"
         ],
         "summary": "Gets a list of ad groups with extended fields.",
         "description": "Gets an array of AdGroupResponseEx objects for a set of requested ad groups.",
@@ -1597,7 +1606,7 @@
     "/sd/adGroups/extended/{adGroupId}": {
       "get": {
         "tags": [
-          "Ad groups"
+          "Ad Groups"
         ],
         "summary": "Gets extended information for a requested ad group.",
         "operationId": "getAdGroupResponseEx",
@@ -1696,7 +1705,7 @@
     "/sd/productAds": {
       "get": {
         "tags": [
-          "Product ads"
+          "Product Ads"
         ],
         "summary": "Gets a list of product ads.",
         "description": "Gets an array of ProductAd objects for a requested set of Sponsored Display product ads. Note that the ProductAd object is designed for performance, and includes a small set of commonly used fields to reduce size. If the extended set of fields is required, use a product ad operation that returns the ProductAdResponseEx object.",
@@ -1847,7 +1856,7 @@
       },
       "put": {
         "tags": [
-          "Product ads"
+          "Product Ads"
         ],
         "summary": "Updates one or more product ads.",
         "operationId": "updateProductAds",
@@ -1951,7 +1960,7 @@
       },
       "post": {
         "tags": [
-          "Product ads"
+          "Product Ads"
         ],
         "summary": "Creates one or more product ads.",
         "operationId": "createProductAds",
@@ -1971,6 +1980,40 @@
                 "type": "array",
                 "items": {
                   "$ref": "#/components/schemas/CreateProductAd"
+                }
+              },
+              "examples": {
+                "Vendor example": {
+                  "value": [
+                    {
+                      "state": "enabled",
+                      "adGroupId": 0,
+                      "campaignId": 0,
+                      "asin": "B081FGSWTJ"
+                    }
+                  ]
+                },
+                "Seller example": {
+                  "value": [
+                    {
+                      "state": "enabled",
+                      "adGroupId": 0,
+                      "campaignId": 0,
+                      "sku": "sku-1234567"
+                    }
+                  ]
+                },
+                "Off Amazon example": {
+                  "value": [
+                    {
+                      "state": "enabled",
+                      "adGroupId": 0,
+                      "campaignId": 0,
+                      "landingPageURL": "https://advertising.amazon.com",
+                      "landingPageType": "OFF_AMAZON_LINK",
+                      "adName": "AmazonAdvertising"
+                    }
+                  ]
                 }
               }
             }
@@ -2057,7 +2100,7 @@
     "/sd/productAds/{adId}": {
       "get": {
         "tags": [
-          "Product ads"
+          "Product Ads"
         ],
         "summary": "Gets a requested product ad.",
         "description": "Note that the ProductAd object is designed for performance, and includes a small set of commonly used fields to reduce size. If the extended set of fields is required, use a product ad operations that returns the ProductAdResponseEx object.",
@@ -2155,7 +2198,7 @@
       },
       "delete": {
         "tags": [
-          "Product ads"
+          "Product Ads"
         ],
         "summary": "Sets the status of a sproduct ad to archived.",
         "description": "This operation is equivalent to an update operation that sets the status field to 'archived'. Note that setting the status field to 'archived' is permanent and can't be undone. See [Developer Notes](https://advertising.amazon.com/API/docs/en-us/info/developer-notes#archiving) for more information.",
@@ -2255,7 +2298,7 @@
     "/sd/productAds/extended": {
       "get": {
         "tags": [
-          "Product ads"
+          "Product Ads"
         ],
         "summary": "Gets a list of product ads with extended fields.",
         "description": "Gets an array of ProductAdResponseEx objects for a set of requested ad groups. The ProductAdResponseEx object includes the extended set of available fields.",
@@ -2408,7 +2451,7 @@
     "/sd/productAds/extended/{adId}": {
       "get": {
         "tags": [
-          "Product ads"
+          "Product Ads"
         ],
         "summary": "Gets extended information for a product ad.",
         "operationId": "getProductAdResponseEx",
@@ -2808,7 +2851,7 @@
           "Reports"
         ],
         "summary": "Gets the status of a report previously requested.",
-        "description": "Uses the `reportId` value from the response of a report previously requested via `POST` method of the `/sd/{recordType}/report` operation.\n\n**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**",
+        "description": "Uses the `reportId` value from the response of a report previously requested via `POST` method of the `/sd/{recordType}/report` operation.\n\n**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**",
         "operationId": "getReportStatus",
         "parameters": [
           {
@@ -2907,7 +2950,7 @@
           "Reports"
         ],
         "summary": "Downloads a previously requested report identified by reportId.",
-        "description": "Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.\n\n**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**",
+        "description": "Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.\n\n**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**",
         "operationId": "downloadReport",
         "parameters": [
           {
@@ -3007,7 +3050,7 @@
           "Reports"
         ],
         "summary": "Creates a report request.",
-        "description": "**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**\n\nThe Sponsored Display API supports creation of reports for campaigns, ad groups, product ads, targets, and asins. Create a ReportRequest object specifying the fields corresponding to performance data metrics to include in the report.",
+        "description": "**To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**\n\nThe Sponsored Display API supports creation of reports for campaigns, ad groups, product ads, targets, and asins. Create a ReportRequest object specifying the fields corresponding to performance data metrics to include in the report.",
         "operationId": "requestReport",
         "parameters": [
           {
@@ -3215,6 +3258,10 @@
                   "expression": {
                     "type": "asinSameAs",
                     "value": "B0123456789"
+                  },
+                  "resolvedExpression": {
+                    "type": "asinSameAs",
+                    "value": "B0123456789"
                   }
                 }
               }
@@ -3306,17 +3353,6 @@
                 "items": {
                   "$ref": "#/components/schemas/UpdateTargetingClause"
                 }
-              },
-              "example": {
-                "targetId": 123,
-                "adGroupId": 321,
-                "state": "enabled",
-                "expressionType": "manual",
-                "bid": 1.5,
-                "expression": {
-                  "type": "asinSameAs",
-                  "value": "B0123456789"
-                }
               }
             }
           },
@@ -3403,7 +3439,7 @@
           "Targeting"
         ],
         "summary": "Creates one or more targeting clauses.",
-        "description": "Successfully created targeting clauses are assigned a unique `targetId` value.\n\nCreate new targeting clauses for campaigns with tactic 'T00020' using the following:\n| Contextual targeting clause | Description |\n|------------------|-------------|\n| similarProduct | Dynamic segment to target products that are similar to the advertised asin. We recommend using 'similarProduct' targeting for all adGroups. |\n| asinSameAs=B0123456789 | Target this product. |\n| asinCategorySameAs=12345 | Target products in the category. |\n| asinCategorySameAs=12345 asinBrandSameAs=45678 | Target products in the category and brand. |\n\n**Refinements:**\n- asinBrandSameAs\n- asinPriceBetween\n- asinPriceGreaterThan\n- asinPriceLessThan\n- asinReviewRatingLessThan\n- asinReviewRatingGreaterThan\n- asinReviewRatingBetween\n- asinIsPrimeShippingEligible\n- asinAgeRangeSameAs\n- asinGenreSameAs\n\n**Refinement Notes:**\n* Brand, price, and review predicates are optional and may only be specified if category is also specified.\n* Review predicates accept numbers between 0 and 5 and are inclusive.\n* When using either of the 'between' strings to construct a targeting expression the format of the string is 'double-double' where the first double must be smaller than the second double. Prices are not inclusive.\n* 'similarProduct' has no expression value or refinements.\n\nCreate new targeting clauses for campaigns with tactic 'T00030' using the following:\n| Audience targeting clause | Description |\n|------------------|-------------|\n| views(exactProduct lookback=30) | Target an audience that has viewed the advertised asins in the past 7,14,30,60, or 90 days. |\n| views(similarProduct lookback=60) | Target an audience that has viewed similar products to the advertised asins in the past 7,14,30,60, or 90 days. |\n| views(asinCategorySameAs=12345 lookback=90) | Target an audience that has viewed products in the given category in the past 7,14,30,60, or 90 days. |\n| views(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=60) | Target an audience that has viewed products in the given category, brand, and price range in the past 7,14,30,60, or 90 days. |\n| purchases(relatedProduct lookback=180) | Target an audience that has purchased a related product in the past 7,14,30,60,90,180 or 365 days|\n| purchases(exactProduct lookback=365) | Target an audience that has purchased the advertised asins in the past 7,14,30,60,90,180 or 365 days|\n| purchases(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=90) | Target an audience that has purchased products in the given category, brand, and price range in the past 7,14,30,60,90,180 or 365 days |\n\nNote:\n1. There is a limit of 20 targeting clauses per request for T00030.\n2. There is a limit of 100 targeting clauses per request for T00020.\n3. If you receive the error of \"Cannot create targeting clause: audience size is too small\", please expand or broaden your targeting clause to increase the audience size.",
+        "description": "Successfully created targeting clauses are assigned a unique `targetId` value.\n\nCreate new targeting clauses for campaigns with tactic 'T00020' using the following:\n| Contextual targeting clause | Description |\n|------------------|-------------|\n| similarProduct | Dynamic segment to target products that are similar to the advertised asin. We recommend using 'similarProduct' targeting for all adGroups. |\n| asinSameAs=B0123456789 | Target this product. |\n| asinCategorySameAs=12345 | Target products in the category. |\n| asinCategorySameAs=12345 asinBrandSameAs=45678 | Target products in the category and brand. |\n\n**Refinements:**\n- asinBrandSameAs\n- asinPriceBetween\n- asinPriceGreaterThan\n- asinPriceLessThan\n- asinReviewRatingLessThan\n- asinReviewRatingGreaterThan\n- asinReviewRatingBetween\n- asinIsPrimeShippingEligible\n- asinAgeRangeSameAs\n- asinGenreSameAs\n\n**Refinement Notes:**\n* Brand, price, and review predicates are optional and may only be specified if category is also specified.\n* Review predicates accept numbers between 0 and 5 and are inclusive.\n* When using either of the 'between' strings to construct a targeting expression the format of the string is 'double-double' where the first double must be smaller than the second double. Prices are not inclusive.\n* 'similarProduct' has no expression value or refinements.\n\nCreate new targeting clauses for campaigns with tactic 'T00030' using the following:\n| Audience targeting clause | Description |\n|------------------|-------------|\n| views(exactProduct lookback=30) | Target an audience that has viewed the advertised asins in the past 7,14,30,60, or 90 days. Note: This target should only be used for productAds with SKU or ASIN. |\n| views(similarProduct lookback=60) | Target an audience that has viewed similar products to the advertised asins in the past 7,14,30,60, or 90 days. Note: This target should only be used for productAds with SKU or ASIN.|\n| views(asinCategorySameAs=12345 lookback=90) | Target an audience that has viewed products in the given category in the past 7,14,30,60, or 90 days. |\n| views(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=60) | Target an audience that has viewed products in the given category, brand, and price range in the past 7,14,30,60, or 90 days. |\n| purchases(relatedProduct lookback=180) | Target an audience that has purchased a related product in the past 7,14,30,60,90,180 or 365 days. Note: This target should only be used for productAds with SKU or ASIN.|\n| purchases(exactProduct lookback=365) | Target an audience that has purchased the advertised asins in the past 7,14,30,60,90,180 or 365 days. Note: This target should only be used for productAds with SKU or ASIN.|\n| purchases(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=90) | Target an audience that has purchased products in the given category, brand, and price range in the past 7,14,30,60,90,180 or 365 days |\n\nNote:\n1. There is a limit of 20 targeting clauses per request for T00030.\n2. There is a limit of 100 targeting clauses per request for T00020.\n3. If you receive the error of \"Cannot create targeting clause: audience size is too small\", please expand or broaden your targeting clause to increase the audience size.",
         "operationId": "createTargetingClauses",
         "parameters": [
           {
@@ -3545,6 +3581,10 @@
                   "expressionType": "manual",
                   "bid": 1.5,
                   "expression": {
+                    "type": "asinSameAs",
+                    "value": "B0123456789"
+                  },
+                  "resolvedExpression": {
                     "type": "asinSameAs",
                     "value": "B0123456789"
                   }
@@ -3810,6 +3850,10 @@
                     "type": "asinSameAs",
                     "value": "B0123456789"
                   },
+                  "resolvedExpression": {
+                    "type": "asinSameAs",
+                    "value": "B0123456789"
+                  },
                   "servingStatus": "TARGET_STATUS_PAUSED",
                   "creationDate": 1537568785000,
                   "lastUpdateDate": 1537568785000
@@ -3924,6 +3968,10 @@
                     "type": "asinSameAs",
                     "value": "B0123456789"
                   },
+                  "resolvedExpression": {
+                    "type": "asinSameAs",
+                    "value": "B0123456789"
+                  },
                   "servingStatus": "TARGET_STATUS_PAUSED",
                   "creationDate": 1537568785000,
                   "lastUpdateDate": 1537568785000
@@ -4001,17 +4049,31 @@
         ],
         "operationId": "getTargetRecommendations",
         "summary": "Returns a set of recommended products and categories to target",
-        "description": "This API provides product and category recommendations to target based on the list of input ASINs.\nAllow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service.\n\nFor API v3.0, the API returns up to 100 recommendations for contextual targeting.\n\nFor API v3.1, the API returns up to 100 recommendations for both product and category targeting.\n\nFor API v3.2, the API introduces contextual targeting themes in the request and returns product recommendations based on different targeting themes.\n\nThe currently available tactic identifiers are:\n\n|Tactic Name|Type|Description|\n|-----------|----|-----------|\n|T00020&nbsp;|Contextual Targeting|Products: Choose individual products to show your ads in placements related to those products.|\n|T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|",
+        "description": "This API provides product, category and standard audience recommendations to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service. Note -  recommendations are only available for productAds with SKU or ASIN.\n\nFor API v3.0, the API returns up to 100 recommendations for contextual targeting.\n\nFor API v3.1, the API returns up to 100 recommendations for both product and category targeting.\n\nFor API v3.2, the API introduces contextual targeting themes in the request and returns product recommendations based on different targeting themes.\n\nFor API v3.3, the API introduces standard audience recommendations and translated category recommendations based on locale.\n\nThe currently available tactic identifiers are:\n\n|Tactic Name|Type|Description|\n|-----------|----|-----------|\n|T00020&nbsp;|Contextual Targeting|Products: Choose individual products to show your ads in placements related to those products.|\n|T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
           },
           {
             "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "name": "locale",
+            "in": "query",
+            "description": "The requested locale from query parameter to return translated category recommendations.",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/SDTargetingRecommendationsLocale"
+            }
           }
         ],
         "requestBody": {
           "content": {
+            "application/vnd.sdtargetingrecommendations.v3.3+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SDTargetingRecommendationsRequestV33"
+              }
+            },
             "application/vnd.sdtargetingrecommendations.v3.2+json": {
               "schema": {
                 "$ref": "#/components/schemas/SDTargetingRecommendationsRequestV32"
@@ -4033,6 +4095,11 @@
           "200": {
             "description": "Successful operation.",
             "content": {
+              "application/vnd.sdtargetingrecommendations.v3.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDTargetingRecommendationsResponseV33"
+                }
+              },
               "application/vnd.sdtargetingrecommendations.v3.2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/SDTargetingRecommendationsResponseV32"
@@ -4116,7 +4183,7 @@
     "/sd/negativeTargets": {
       "get": {
         "tags": [
-          "Negative targeting"
+          "Negative Targeting"
         ],
         "summary": "Gets a list of negative targeting clauses.",
         "description": "Gets a list of negative targeting clauses objects for a requested set of Sponsored Display negative targets. Note that the Negative Targeting Clause object is designed for performance, and includes a small set of commonly used fields to reduce size. If the extended set of fields is required, use the negative target operations that return the NegativeTargetingClauseEx object.",
@@ -4259,7 +4326,7 @@
       },
       "put": {
         "tags": [
-          "Negative targeting"
+          "Negative Targeting"
         ],
         "summary": "Updates one or more negative targeting clauses.",
         "description": "Updates one or more negative targeting clauses. Negative targeting clauses are identified using their targetId. The mutable field is `state`. Maximum length of the array is 100 objects.",
@@ -4364,7 +4431,7 @@
       },
       "post": {
         "tags": [
-          "Negative targeting"
+          "Negative Targeting"
         ],
         "summary": "Creates one or more negative targeting clauses.",
         "description": "Successfully created negative targeting clauses associated with an ad group are assigned a unique target identifier.\nProduct negative targeting clause examples:\n| Negative targeting clause | Description |\n|---------------------------|-------------|\n| asinSameAs=B0123456789 | Negatively target this product.|\n| asinBrandSameAs=12345 | Negatively target products in the brand.|",
@@ -4471,7 +4538,7 @@
     "/sd/negativeTargets/{negativeTargetId}": {
       "get": {
         "tags": [
-          "Negative targeting"
+          "Negative Targeting"
         ],
         "summary": "Gets a negative targeting clause specified by identifier.",
         "description": "This call returns the minimal set of negative targeting clause fields, but is more efficient than getNegativeTargetsEx.",
@@ -4569,7 +4636,7 @@
       },
       "delete": {
         "tags": [
-          "Negative targeting"
+          "Negative Targeting"
         ],
         "summary": "Sets the `state` of a negative targeting clause to `archived`.",
         "description": "Equivalent to using the updateNegativeTargetingClauses operation to set the `state` property of a targeting clause to `archived`. See [Developer Notes](http://advertising.amazon.com/API/docs/guides/developer_notes#Archiving) for more information.",
@@ -4669,7 +4736,7 @@
     "/sd/negativeTargets/extended": {
       "get": {
         "tags": [
-          "Negative targeting"
+          "Negative Targeting"
         ],
         "summary": "Gets a list of negative targeting clause objects with extended fields.",
         "description": "Gets an array of NegativeTargetingClauseEx objects for a set of requested negative targets. Note that this call returns the full set of negative targeting clause extended fields, but is less efficient than getNegativeTargets.",
@@ -4822,7 +4889,7 @@
     "/sd/negativeTargets/extended/{negativeTargetId}": {
       "get": {
         "tags": [
-          "Negative targeting"
+          "Negative Targeting"
         ],
         "summary": "Gets extended information for a negative targeting clause.",
         "description": "Gets a negative targeting clause with extended fields. Note that this call returns the full set of negative targeting clause extended fields, but is less efficient than getNegativeTarget.",
@@ -4925,7 +4992,7 @@
           "Snapshots"
         ],
         "summary": "Request a file-based snapshot of all entities of the specified type in the account satisfying the filtering criteria",
-        "description": "**To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads-reports).**",
+        "description": "**To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/get-started).**",
         "operationId": "createSnapshot",
         "parameters": [
           {
@@ -5024,7 +5091,7 @@
           "Snapshots"
         ],
         "summary": "Retrieve status, metadata, and location of previously requested snapshot",
-        "description": "**To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/tutorials/sponsored-ads-snapshots).**",
+        "description": "**To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/get-started).**",
         "operationId": "getSnapshot",
         "parameters": [
           {
@@ -5113,7 +5180,7 @@
           "Snapshots"
         ],
         "summary": "Download previously requested snapshot",
-        "description": "**To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**",
+        "description": "**To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/overview).**",
         "operationId": "downloadSnapshot",
         "parameters": [
           {
@@ -5438,7 +5505,7 @@
           }
         ],
         "requestBody": {
-          "description": "An array of Creative objects to create. Maximum length of the array is 100 objects.",
+          "description": "An array of Creative objects to create. Maximum length of the array is 100 objects. Note - when using productAds with landingPageURL of OFF_AMAZON_LINK, STORE, or MOMENT, the following properties are required all together;\n1) headline, 2) brandLogo, and 3) rectCustomImage, squareCustomImage.",
           "content": {
             "application/json": {
               "schema": {
@@ -6053,7 +6120,7 @@
         ],
         "operationId": "getTargetBidRecommendations",
         "summary": "Returns a set of bid recommendations for targeting clauses",
-        "description": "Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.\n\nThe recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.\n\n\nReceive bid recommendations using the following:\nContextual targeting clause|Description|\n|-----------|----|\n|asinSameAs=B0123456789|Receive a bid recommendation for this target product\n|asinCategorySameAs=12345|Receive a bid recommendation for this target category\n|similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.\n\n\nAudience targeting clause|Description|\n|-----------|----|\n|views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category\n|views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins\n|views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins\n\n\n#### Notes:\n- Bid recommendations for purchases and audiences are **not currently supported**. This note will be removed when these operations are available.\n- Refinements are currently not supported and if included will not impact the bid recommendation for the target.\n\n\n#### Advertised ASIN Notes:\n- For asinSameAs targets the advertised asins will not impact the bid recommendation\n- For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation\n- For similarProduct & exactProduct targets the advertised asins are required",
+        "description": "Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses. Note - these recommendations are only available when productAds have ASIN or SKU fields.\n\nThe recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.\n\n\nReceive bid recommendations using the following:\nContextual targeting clause|Description|\n|-----------|----|\n|asinSameAs=B0123456789|Receive a bid recommendation for this target product\n|asinCategorySameAs=12345|Receive a bid recommendation for this target category\n|similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.\n\n\nAudience targeting clause|Description|\n|-----------|----|\n|views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category\n|views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins\n|views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins\n|purchases(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has purchased products in the given category\n|purchases(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased the advertised asins\n|purchases(relatedProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased related products to the advertised asins\n|audience(audienceSameAs=12345)|Receive a bid recommendation for the given target audience\n\n\n#### Notes:\n- Refinements are currently not supported and if included will not impact the bid recommendation for the target.\n\n\n#### Advertised ASIN Notes:\n- For asinSameAs targets the advertised asins will not impact the bid recommendation\n- For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation\n- For similarProduct, exactProduct, and relatedProduct targets the advertised asins are required",
         "parameters": [
           {
             "$ref": "#/components/parameters/clientHeader"
@@ -6158,7 +6225,7 @@
     "/sd/optimizationRules": {
       "get": {
         "tags": [
-          "Optimization rules [Preview Only]"
+          "Optimization Rules [Preview Only]"
         ],
         "summary": "Gets a list of optimization rules.",
         "description": "This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. Gets an array of OptimizationRule objects for a requested set of Sponsored Display optimization rules.",
@@ -6230,7 +6297,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/GetOptimizationRuleResponse"
+                    "$ref": "#/components/schemas/OptimizationRule"
                   }
                 }
               }
@@ -6300,7 +6367,7 @@
       },
       "put": {
         "tags": [
-          "Optimization rules [Preview Only]"
+          "Optimization Rules [Preview Only]"
         ],
         "summary": "Updates one or more optimization rules.",
         "description": "This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.",
@@ -6407,10 +6474,10 @@
       },
       "post": {
         "tags": [
-          "Optimization rules [Preview Only]"
+          "Optimization Rules [Preview Only]"
         ],
-        "summary": "Creates one or more optimization rules.",
-        "description": "This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.",
+        "summary": "Creates one or more optimization rules, also known as outcome optimizations.",
+        "description": "This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. \n\n* When an optimization rule is associated to an ad group, manual bids for individual targets will be overridden.\n* Optimization rules can only be associated to ad groups that have productAds with ASIN or SKU.\n* If you are using optimization rules, the following campaign budget must be at least:\n  - 5x the value of any COST_PER_ORDER threshold.\n  - 10x the value of any COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS threshold.\n  - 20x the value of any COST_PER_CLICK threshold.",
         "operationId": "createOptimizationRules",
         "parameters": [
           {
@@ -6516,7 +6583,7 @@
     "/sd/optimizationRules/{optimizationRuleId}": {
       "get": {
         "tags": [
-          "Optimization rules [Preview Only]"
+          "Optimization Rules [Preview Only]"
         ],
         "summary": "Gets a requested optimization rule.",
         "description": "This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. Gets an OptimizationRule object for a requested Sponsored Display optimization rule.",
@@ -6614,10 +6681,10 @@
     "/sd/adGroups/{adGroupId}/optimizationRules": {
       "post": {
         "tags": [
-          "Optimization rules [Preview Only]"
+          "Optimization Rules [Preview Only]"
         ],
-        "summary": "Associate one or more optimization rules to an ad group specified by identifier. Only one optimization rule can be associated per adGroup. This note will be removed when multiple rules are supported per adGroup.",
-        "description": "This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.",
+        "summary": "Associate one or more optimization rules to an ad group specified by identifier.",
+        "description": "This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.\n\n* When an optimization rule is associated to an ad group, manual bids for individual targets will be overridden.\n* Only one optimization rule can be associated per adGroup. This note will be removed when multiple rules are supported per adGroup.",
         "operationId": "associateOptimizationRulesWithAdGroup",
         "parameters": [
           {
@@ -6726,7 +6793,7 @@
       },
       "get": {
         "tags": [
-          "Optimization rules [Preview Only]"
+          "Optimization Rules [Preview Only]"
         ],
         "summary": "Gets a list of optimization rules associated to an adgroup specified by identifier.",
         "description": "This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. Gets an OptimizationRule object for a requested Sponsored Display optimization rule.",
@@ -6758,115 +6825,6 @@
                   "items": {
                     "$ref": "#/components/schemas/OptimizationRule"
                   }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden - Request failed because user does not have access to a specified resource",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found - Requested resource does not exist or is not visible for the authenticated user.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests - Request was rate-limited. Retry later.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/sd/adGroups/{adGroupId}/optimizationRules/{optimizationRuleId}": {
-      "delete": {
-        "tags": [
-          "Optimization rules [Preview Only]"
-        ],
-        "summary": "Disassociate optimization rule from an ad group.",
-        "description": "This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.",
-        "operationId": "disassociateOptimizationRule",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/clientHeader"
-          },
-          {
-            "$ref": "#/components/parameters/profileHeader"
-          },
-          {
-            "name": "optimizationRuleId",
-            "in": "path",
-            "description": "The identifier of the optimization rule.",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "adGroupId",
-            "in": "path",
-            "description": "The identifier of the ad group.",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful operation.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OptimizationRuleResponse"
                 }
               }
             }
@@ -7022,13 +6980,959 @@
           }
         }
       }
+    },
+    "/sd/campaigns/{campaignId}/budgetRules/budgetHistory": {
+      "get": {
+        "summary": "Gets the budget history for a campaign specified by identifier.",
+        "description": "**Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.",
+        "operationId": "getRuleBasedBudgetHistoryForSDCampaigns",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDBudgetHistory"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "format": "int64",
+              "type": "number"
+            },
+            "in": "path",
+            "name": "campaignId",
+            "description": "The campaign identifier.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "nextToken",
+            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results."
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "pageSize",
+            "description": "Sets a limit on the number of results returned. Maximum limit of `pageSize` is 30.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "startDate",
+            "description": "The start date of the budget history in YYYYMMDD format.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "endDate",
+            "description": "The end date of the budget history in YYYYMMDD format.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Budget Rules"
+        ]
+      }
+    },
+    "/sd/budgetRules/{budgetRuleId}": {
+      "get": {
+        "summary": "Gets a budget rule specified by identifier.",
+        "operationId": "GetBudgetRuleByRuleIdForSDCampaigns",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSDBudgetRuleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "budgetRuleId",
+            "description": "The budget rule identifier.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Budget Rules"
+        ]
+      }
+    },
+    "/sd/budgetRules": {
+      "post": {
+        "summary": "Creates one or more budget rules.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSDBudgetRulesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "operationId": "CreateBudgetRulesForSDCampaigns",
+        "responses": {
+          "207": {
+            "description": "Multi-status. An object containing a list of budget rule response objects reflecting the same order as the input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBudgetRulesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server BudgetRuleError - Something went wrong on the server. Retry later and report an BudgetRuleError if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Budget Rules"
+        ]
+      },
+      "get": {
+        "summary": "Get all budget rules created by an advertiser",
+        "operationId": "GetSDBudgetRulesForAdvertiser",
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSDBudgetRulesForAdvertiserResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error. Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "nextToken",
+            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results."
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "pageSize",
+            "description": "Sets a limit on the number of results returned. Maximum limit of `pageSize` is 30.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Budget Rules"
+        ]
+      },
+      "put": {
+        "summary": "Update one or more budget rules.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSDBudgetRulesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "operationId": "UpdateBudgetRulesForSDCampaigns",
+        "responses": {
+          "207": {
+            "description": "Multi-status. An object containing a list of budget rule response objects reflecting the same order as the input.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateBudgetRulesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server BudgetRuleError - Something went wrong on the server. Retry later and report an BudgetRuleError if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetRuleError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          }
+        ],
+        "tags": [
+          "Budget Rules"
+        ]
+      }
+    },
+    "/sd/campaigns/budget/usage": {
+      "post": {
+        "summary": "Budget usage API for SD campaigns",
+        "description": "**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "tags": [
+          "Budget Usage"
+        ],
+        "requestBody": {
+          "content": {
+            "application/vnd.sdcampaignbudgetusage.v1+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BudgetUsageCampaignRequest"
+              }
+            }
+          }
+        },
+        "operationId": "sdCampaignsBudgetUsage",
+        "responses": {
+          "207": {
+            "description": "Multi-status. An object containing a list of budget usage response objects reflecting the same order as the input.",
+            "content": {
+              "application/vnd.sdcampaignbudgetusage.v1+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageCampaignResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. The request failed because the user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. The request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity. The server understood the request, but was unable to process the instruction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests. The request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server BudgetUsageError - Something went wrong on the server. Retry later and report an BudgetUsageError if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BudgetUsageError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {},
+            "in": "header",
+            "name": "Amazon-Advertising-API-ClientId",
+            "description": "The identifier of a client associated with a \"Login with Amazon\" account. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          },
+          {
+            "schema": {},
+            "in": "header",
+            "name": "Amazon-Advertising-API-Scope",
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.",
+            "required": true
+          }
+        ]
+      }
+    },
+    "/sd/locations": {
+      "get": {
+        "tags": [
+          "Locations (beta)"
+        ],
+        "summary": "Gets a list of locations associated with ad groups.",
+        "description": "Gets a list of Sponsored Display Location objects. This resource is not available when productAds have ASIN or SKU fields and only available for advertisers that do not sell products on Amazon. See [Developer Guide](https://advertising.amazon.com/API/docs/en-us/guides/sponsored-display/non-amazon-sellers/get-started)",
+        "operationId": "listLocations",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          },
+          {
+            "name": "startIndex",
+            "in": "query",
+            "description": "Optional. 0-indexed record offset for the result set. Defaults to 0.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Optional. Number of records to include in the paged response. Defaults to max page size.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "stateFilter",
+            "in": "query",
+            "description": "Optional. Restricts results to those with state within the specified comma-separated list. Must be one of: `enabled`.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "enabled"
+              ],
+              "default": "enabled"
+            }
+          },
+          {
+            "name": "adGroupIdFilter",
+            "in": "query",
+            "description": "Optional list of comma separated adGroupIds. Restricts results to locations with the specified `adGroupId`.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "campaignIdFilter",
+            "in": "query",
+            "description": "Optional list of comma separated campaignIds. Restricts results to locations with the specified `campaignId`.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Location"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user does not have access to a specified resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request was understood, but contained invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Locations"
+        ],
+        "summary": "Creates one or more locations associated with an ad group.",
+        "description": "This resource is not available when productAds have ASIN or SKU fields and only available for advertisers that do not sell products on Amazon.   See [Developer Guide](https://advertising.amazon.com/API/docs/en-us/guides/sponsored-display/non-amazon-sellers/get-started)\n\nLocations optimize Ad Groups for delivery to users that have an association with those locations. For example,\nan Ad Group might contain the following: \n- A Targeting Clause representing an audience of users that viewed a shoe \n- A Location representing Seattle, Washington, USA.\n- A Location representing New York, New York, USA.\nIn this case, delivery of the Targeting Clause will be optimized for New York and Seattle.\n\n\nYou can discover predefined Locations to use in your Ad Groups by calling the GET /locations API. The table below lists \nseveral example Locations.\n| Location | Description |\n|---------------------------|-------------|\n| location=amzn1.ad-geo.XHvCjcKHXsKUwos= | Optimize the AdGroup for the specified location (either a 'city', 'state', 'dma', 'postal code', or 'country').|\n\nIf Locations are to be used, they must be created before Targeting Clauses within an Ad Group. Creating a Location after a  \nTargeting Clause is only permitted if other Locations already exist in the Ad Group. In that case, additional \nLocations increase the Targeting Clause's potential reach.",
+        "operationId": "createLocations",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/clientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/profileHeader"
+          }
+        ],
+        "requestBody": {
+          "description": "A list of up to 20 Locations for creation.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 20,
+                "items": {
+                  "$ref": "#/components/schemas/CreateLocation"
+                }
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "An array of Locations.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Location"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user does not have access to a specified resource",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity - Request was understood, but contained invalid parameters",
+            "content": {
+              "a-pplication/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
       "TacticReport": {
         "type": "string",
-        "description": "The advertising tactic associated with the campaign. The following table lists available tactic names:\n|Tactic Name|Type|Description|\n|-----------|-----|-----------|\n|T00020     |Contextual targeting | Choose individual products to show your ads in placements related to those products.<br> Choose individual categories to show your ads in placements related to those categories on and off Amazon. This tactic supports adGroup creativeType IMAGE only.|\n|T00030     |Audiences targeting | Select individual audiences to show your ads. This tactic supports adGroup creativeType IMAGE and VIDEO. |",
+        "description": "The advertising tactic associated with the campaign. The following table lists available tactic names:\n|Tactic Name|Type|Description|\n|-----------|-----|-----------|\n|T00020     |Contextual targeting | Choose individual products to show your ads in placements related to those products.<br> Choose individual categories to show your ads in placements related to those categories on and off Amazon.|\n|T00030     |Audiences targeting | Select individual audiences to show your ads.|",
         "example": "T00020",
         "enum": [
           "T00020",
@@ -7045,7 +7949,7 @@
       },
       "Tactic": {
         "type": "string",
-        "description": "The advertising tactic associated with the campaign. The following table lists available tactic names:\n|Tactic Name|Type|Description|\n|-----------|-----|-----------|\n|T00020     |Contextual targeting | Choose individual products to show your ads in placements related to those products.<br> Choose individual categories to show your ads in placements related to those categories on and off Amazon. This tactic supports adGroup creativeType IMAGE only.|\n|T00030     |Audiences targeting | Select individual audiences to show your ads. This tactic supports adGroup creativeType IMAGE and VIDEO.|",
+        "description": "The advertising tactic associated with the campaign. The following table lists available tactic names:\n|Tactic Name|Type|Description|\n|-----------|-----|-----------|\n|T00020     |Contextual targeting | Choose individual products to show your ads in placements related to those products.<br> Choose individual categories to show your ads in placements related to those categories on and off Amazon.|\n|T00030     |Audiences targeting | Select individual audiences to show your ads.|",
         "example": "T00020",
         "enum": [
           "T00020",
@@ -7055,7 +7959,7 @@
       "CreativeType": {
         "type": "string",
         "nullable": true,
-        "description": "The type of the associated creative. If the field is empty or null, a default value of IMAGE will be used. One ad group only supports one type (VIDEO or IMAGE) of creativeType at a time.\n|Name|Tactic|Description|\n|----|------|-----------|\n|IMAGE |T00020, T00030 |The creative will display static assets (e.g. headline, brandLogo or custom image).|\n|VIDEO |T00030 |The creative will display video assets. This type of creative must have video assets provided. Audiences (T00030) is currently only available today, contextual (T00020) will be coming soon.|",
+        "description": "The type of the associated creative. If the field is empty or null, a default value of IMAGE will be used. One ad group only supports one type (VIDEO or IMAGE) of creativeType at a time.\n|Name|Description|\n|----|-----------|\n|IMAGE |The creative will display static assets (e.g. headline, brandLogo or custom image).|\n|VIDEO |The creative will display video assets. This type of creative must have a video asset provided. Only supported when using productAds with ASIN or SKU.|",
         "example": null,
         "enum": [
           "IMAGE",
@@ -7095,7 +7999,7 @@
           },
           "costType": {
             "type": "string",
-            "description": "Determines how the campaign will bid and charge.\n|Name|Supported Tactics|Description|\n|----|----------|-----------|\n|cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.|\n|vcpm |T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|",
+            "description": "Determines how the campaign will bid and charge.\n|Name|Description|\n|----|----------|\n|cpc |[Default] The performance of this campaign is measured by the clicks triggered by the ad.|\n|vcpm |The performance of this campaign is measured by the viewed impressions triggered by the ad. |\n\nTo view minimum and maximum bids based on the costType, see [Limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).",
             "enum": [
               "cpc",
               "vcpm"
@@ -7138,6 +8042,9 @@
                 "enum": [
                   "as_soon_as_possible"
                 ]
+              },
+              "ruleBasedBudget": {
+                "$ref": "#/components/schemas/RuleBasedBudget"
               }
             }
           }
@@ -7263,7 +8170,7 @@
           },
           "costType": {
             "type": "string",
-            "description": "Determines how the campaign will bid and charge.\n|Name|Supported Tactics|Description|\n|----|----------|-----------|\n|cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.|\n|vcpm|T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|",
+            "description": "Determines how the campaign will bid and charge.\n|Name|Description|\n|----|----------|-----------|\n|cpc |[Default] The performance of this campaign is measured by the clicks triggered by the ad.|\n|vcpm|The performance of this campaign is measured by the viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|",
             "enum": [
               "cpc",
               "vcpm"
@@ -7278,6 +8185,9 @@
             "type": "integer",
             "description": "Epoch date of the last update to any property associated with the campaign.",
             "format": "int64"
+          },
+          "ruleBasedBudget": {
+            "$ref": "#/components/schemas/RuleBasedBudget"
           }
         }
       },
@@ -7298,7 +8208,7 @@
           },
           "bidOptimization": {
             "type": "string",
-            "description": "Bid Optimization for the Adgroup. Default behavior is to optimize for clicks.\n|Name|CostType|Supported Tactics|Description|\n|----|----------|-----------|-----------|\n|clicks |cpc|T00020 T00030|[Default] Optimize for page visits|\n|conversions |cpc|T00020 T00030|Optimize for conversion|\n|reach |vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|",
+            "description": "Bid Optimization for the Adgroup. Default behavior is to optimize for clicks.\n|Name|CostType|Description|\n|----|--------|-----------|\n|reach |vcpm|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|\n|clicks |cpc|[Default] Optimize for page visits.|\n|conversions |cpc|Optimize for conversion.|",
             "enum": [
               "clicks",
               "conversions",
@@ -7457,7 +8367,7 @@
           },
           "bidOptimization": {
             "type": "string",
-            "description": "Bid optimization type for the Adgroup. Default behavior is to optimize for clicks.\n|Name|CostType|Supported Tactics|Description|\n|----|----------|-----------|-----------|\n|clicks [Default]|cpc|T00020 T00030|Optimize for page visits|\n|conversions|cpc|T00020 T00030|Optimize for conversion|\n|reach|vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|",
+            "description": "Bid optimization type for the Adgroup. Default behavior is to optimize for clicks. Note, reach and clicks are only accepted with productAds that include landingPageURL OFF_AMAZON_LINK.\n|Name|CostType|Description|\n|----|--------|-----------|\n|reach|vcpm|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|\n|clicks [Default]|cpc|Optimize for page visits.|\n|conversions|cpc|Optimize for conversion.|\n|leads |cpc| [PREVIEW ONLY] Optimize for lead generation.|",
             "enum": [
               "clicks",
               "conversions",
@@ -7507,13 +8417,22 @@
               "campaignId": {
                 "$ref": "#/components/schemas/CampaignId"
               },
+              "landingPageURL": {
+                "$ref": "#/components/schemas/LandingPageURL"
+              },
+              "landingPageType": {
+                "$ref": "#/components/schemas/LandingPageType"
+              },
+              "adName": {
+                "$ref": "#/components/schemas/AdName"
+              },
               "asin": {
                 "type": "string",
-                "description": "The ASIN of the product advertised by the product ad."
+                "description": "The Amazon ASIN of the product advertised by the product ad."
               },
               "sku": {
                 "type": "string",
-                "description": "The SKU of the product advertised by the product ad."
+                "description": "The Amazon SKU of the product advertised by the product ad."
               }
             }
           }
@@ -7539,6 +8458,15 @@
               },
               "campaignId": {
                 "$ref": "#/components/schemas/CampaignId"
+              },
+              "landingPageURL": {
+                "$ref": "#/components/schemas/LandingPageURL"
+              },
+              "landingPageType": {
+                "$ref": "#/components/schemas/LandingPageType"
+              },
+              "adName": {
+                "$ref": "#/components/schemas/AdName"
               },
               "asin": {
                 "type": "string",
@@ -7575,6 +8503,23 @@
         "format": "int64",
         "description": "The identifier of the product ad."
       },
+      "LandingPageURL": {
+        "type": "string",
+        "description": "The URL where customers will land after clicking on its link. Must be provided if a LandingPageType is set. Please note that if a single product ad sets the landing page url, only one product ad can be added to the ad group. This field is not supported when using ASIN or SKU fields.\n||Specifications|\n|------------------|------------------|\n|LandingPageType| Description|\n|STORE| Not yet supported. The url should be in the format of https://www.amazon.com/stores/* (using a correct Amazon url based on the marketplace)|\n|MOMENT| Not yet supported. The url should be in the format of https://www.amazon.com/moments/promotion/{campaignId} (using a correct Amazon url based on the marketplace)|\n|OFF_AMAZON_LINK| The url should be in the format of https://www.****.com. Note that this LandingPageType is not supported when using ASIN or SKU fields. A custom creative of headline, logo, image are require for this LandingPageType. |"
+      },
+      "LandingPageType": {
+        "type": "string",
+        "description": "The type of the landingPage used. This field is completely optional and will be set in conjunction with the LandingPageURL to indicate the type of landing page that will be set. This field is not supported when using ASIN or SKU fields.",
+        "enum": [
+          "STORE",
+          "MOMENT",
+          "OFF_AMAZON_LINK"
+        ]
+      },
+      "AdName": {
+        "type": "string",
+        "description": "The name of the ad. Note that this field is not supported when using ASIN or SKU fields."
+      },
       "ProductAdResponse": {
         "type": "object",
         "properties": {
@@ -7606,6 +8551,15 @@
           "campaignId": {
             "type": "number",
             "description": "The identifier of the campaign associated with the ad."
+          },
+          "landingPageURL": {
+            "$ref": "#/components/schemas/LandingPageURL"
+          },
+          "landingPageType": {
+            "$ref": "#/components/schemas/LandingPageType"
+          },
+          "adName": {
+            "$ref": "#/components/schemas/AdName"
           },
           "asin": {
             "type": "string",
@@ -7733,7 +8687,7 @@
       },
       "TargetingPredicateNested": {
         "type": "object",
-        "description": "A behavioral event and list of targeting predicates that represents an audience to target (only applicable to audience targeting - T00030).\n\n* For manual ASIN-grain targeting, the value array must contain only, 'exactProduct', 'similarProduct', 'relatedProduct' and 'lookback' TargetingPredicateBase components. The 'lookback' is mandatory and the value should be set to '7', '14', '30', '60', '90', '180' or '365'.\n* For manual Category-grain targeting, the value array must contain a 'lookback' and 'asinCategorySameAs' TargetingPredicateBase component, which can be further refined with optional brand, price, star-rating and shipping eligibility refinements. The 'lookback' is mandatory and the value should be set to '7', '14', '30', '60', '90', '180' or '365'.\n* For Amazon Audiences targeting, the TargetingPredicateNested type should be set to 'audience' and the value array should include one TargetingPredicateBase component with type set to 'audienceSameAs'.\n* **Future** For manual Category-grain targeting, adding a 'negative' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.",
+        "description": "A behavioral event and list of targeting predicates that represents an audience to target (only applicable to audience targeting - T00030).\n\n* For manual ASIN-grain targeting, the value array must contain only, 'exactProduct', 'similarProduct', 'relatedProduct' and 'lookback' TargetingPredicateBase components. The 'lookback' is mandatory and the value should be set to '7', '14', '30', '60', '90', '180' or '365'.\n* For manual Category-grain targeting, the value array must contain a 'lookback' and 'asinCategorySameAs' TargetingPredicateBase component, which can be further refined with optional brand, price, star-rating and shipping eligibility refinements. The 'lookback' is mandatory and the value should be set to '7', '14', '30', '60', '90', '180' or '365'.\n* For Amazon Audiences targeting, the TargetingPredicateNested type should be set to 'audience' and the value array should include one TargetingPredicateBase component with type set to 'audienceSameAs'.",
         "properties": {
           "type": {
             "type": "string",
@@ -7753,7 +8707,7 @@
       },
       "TargetingPredicateBase": {
         "type": "object",
-        "description": "A predicate to match against inside the TargetingPredicateNested component (only applicable to audience targeting - T00030).\n\n* All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Ads browse system.\n* Brand, price, and review predicates are optional and may only be specified if category is also specified.\n* Review predicates accept numbers between 0 and 5 and are inclusive.\n* When using either of the 'between' strings to construct a targeting expression the format of the string is 'double-double' where the first double must be smaller than the second double. Prices are not inclusive.\n* The 'exactProduct', 'similarProduct', 'relatedProduct', and 'negative' types do not utilize the value field.\n* The only type currently applicable to Amazon Audiences targeting is 'audienceSameAs'.\n* A 'relatedProduct' TargetingPredicateBase will Target an audience that has purchased a related product in the past 7,14,30,60,90,180, or 365 days.\n* **Future** A 'negative' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.",
+        "description": "A predicate to match against inside the TargetingPredicateNested component (only applicable to audience targeting - T00030).\n\n* All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Ads browse system.\n* Brand, price, and review predicates are optional and may only be specified if category is also specified.\n* Review predicates accept numbers between 0 and 5 and are inclusive.\n* When using either of the 'between' strings to construct a targeting expression the format of the string is 'double-double' where the first double must be smaller than the second double. Prices are not inclusive.\n* The 'exactProduct', 'similarProduct', 'relatedProduct', and 'negative' types do not utilize the value field.\n* The only type currently applicable to Amazon Audiences targeting is 'audienceSameAs'.\n* A 'relatedProduct' TargetingPredicateBase will Target an audience that has purchased a related product in the past 7,14,30,60,90,180, or 365 days.",
         "properties": {
           "type": {
             "type": "string",
@@ -7786,7 +8740,7 @@
       },
       "TargetingExpression": {
         "type": "array",
-        "description": "The targeting expression to match against.\n\n------- Applicable to contextual targeting (T00020) -------\n* A 'TargetingExpression' in a contextual targeting campaign can only contain 'TargetingPredicate' components.\n* Expressions must specify either a category predicate or an ASIN predicate, but never both.\n* Only one category may be specified per targeting expression.\n* Only one brand may be specified per targeting expression.\n* Only one asin may be specified per targeting expression.\n* To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.\n\n------- Applicable to audience targeting (T00030) -------\n* A 'TargetingExpression' in an audience campaign can only contain 'TargetingPredicateNested' components.\n* Expressions must specify ASIN-grain ('exactProduct'), manual ASIN-grain ('relatedProducts' or 'relatedProducts'), or category-grain targeting.\n* **Future** To exclude parts of an audience, specify a TargetingPredicateNested component that contains a negative TargetingPredicate type.",
+        "description": "The targeting expression to match against.\n\n------- Applicable to contextual targeting (T00020) -------\n* A 'TargetingExpression' in a contextual targeting campaign can only contain 'TargetingPredicate' components.\n* Expressions must specify either a category predicate or an ASIN predicate, but never both.\n* Only one category may be specified per targeting expression.\n* Only one brand may be specified per targeting expression.\n* Only one asin may be specified per targeting expression.\n* To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.\n\n------- Applicable to audience targeting (T00030) -------\n* A 'TargetingExpression' in an audience campaign can only contain 'TargetingPredicateNested' components.\n* Expressions must specify ASIN-grain ('exactProduct'), manual ASIN-grain ('relatedProducts' or 'relatedProducts'), or category-grain targeting.",
         "items": {
           "oneOf": [
             {
@@ -7803,7 +8757,7 @@
       },
       "CreateTargetingExpression": {
         "type": "array",
-        "description": "The targeting expression to match against.\n\n------- Applicable to contextual targeting (T00020) -------\n* A 'TargetingExpression' in a contextual targeting campaign can only contain 'TargetingPredicate' components.\n* Expressions must specify either a category predicate or an ASIN predicate, but never both.\n* Only one category may be specified per targeting expression.\n* Only one brand may be specified per targeting expression.\n* Only one asin may be specified per targeting expression.\n* To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.\n\n------- Applicable to audience targeting (T00030) -------\n* A 'TargetingExpression' in an audience campaign can only contain 'TargetingPredicateNested' components.\n* Expressions must specify either auto ASIN-grain (exact products), manual ASIN-grain (similar products), or manual category-grain targeting.\n* **Future** To exclude parts of an audience, specify a TargetingPredicateNested component that contains a negative TargetingPredicate type.",
+        "description": "The targeting expression to match against.\n\n------- Applicable to contextual targeting (T00020) -------\n* A 'TargetingExpression' in a contextual targeting campaign can only contain 'TargetingPredicate' components.\n* Expressions must specify either a category predicate or an ASIN predicate, but never both.\n* Only one category may be specified per targeting expression.\n* Only one brand may be specified per targeting expression.\n* Only one asin may be specified per targeting expression.\n* To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.\n\n------- Applicable to audience targeting (T00030) -------\n* A 'TargetingExpression' in an audience campaign can only contain 'TargetingPredicateNested' components.\n* Expressions must specify either auto ASIN-grain (exact products), manual ASIN-grain (similar products), or manual category-grain targeting.",
         "items": {
           "oneOf": [
             {
@@ -7828,7 +8782,7 @@
           },
           "bid": {
             "type": "number",
-            "description": "The bid will override the adGroup bid if specified. This field is not used for negative targeting clauses. The bid must be less than the maximum allowable bid for the campaign's marketplace; for a list of maximum allowable bids, find the [\"Bid constraints by marketplace\" table in our documentation overview](https://advertising.amazon.com/API/docs/en-us/get-started/overview). You cannot manually set a bid when the targeting clause's adGroup has an enabled optimization rule.",
+            "description": "The bid will override the adGroup bid if specified. This field is not used for negative targeting clauses. The bid must be less than the maximum allowable bid for the campaign's marketplace; for a list of maximum allowable bids, find the [\"Bid constraints by marketplace\" table in our documentation overview](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace). You cannot manually set a bid when the targeting clause's adGroup has an enabled optimization rule.",
             "format": "float",
             "nullable": true,
             "minimum": 0.02
@@ -7984,6 +8938,9 @@
             "description": "If a value for `bid` is specified, it overrides the current adGroup bid. When using vcpm costType. $1 is the minimum bid for vCPM. Note that this field is ignored for negative targeting clauses."
           },
           "expression": {
+            "$ref": "#/components/schemas/TargetingExpression"
+          },
+          "resolvedExpression": {
             "$ref": "#/components/schemas/TargetingExpression"
           },
           "servingStatus": {
@@ -8248,7 +9205,7 @@
         }
       },
       "TargetingRecommendationsResponse": {
-        "description": "Response to a request for targeting recommendations",
+        "description": "Response to a request for targeting recommendations.",
         "properties": {
           "recommendations": {
             "$ref": "#/components/schemas/TargetingRecommendations"
@@ -8337,7 +9294,7 @@
           },
           "metrics": {
             "type": "string",
-            "description": "A comma-separated list of the metrics to be included in the report.\n\nEach report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/reporting/v2/report-types).**\n\n**Note**: Campaigns with vCPM costType should use view+click based metrics (viewAttributedConversions14d, viewAttributedDetailPageView14d, viewAttributedSales14d, viewAttributedUnitsOrdered14d, viewImpressions).\n\n**Note**: Detail page view metrics (attributedDetailPageView14d, viewAttributedDetailPageView14d) have an SLA of 3 days.\n\n**Tip**: Use new-to-brand (NTB) metrics to calculate how efficient your campaigns are at driving new shoppers:\n\n  1. Percentage of NTB orders = attributedOrdersNewToBrand14d / attributedConversions14d\n  2. Percentage NTB sales = attributedSalesNewToBrand14d / attributedSales14d\n  3. Percentage NTB units = attributedUnitsOrderedNewToBrand14d / attributedUnitsOrdered14d\n  4. NTB order rate = attributedOrdersNewToBrand14 / impressions",
+            "description": "A comma-separated list of the metrics to be included in the report.\n\nEach report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/guides/reporting/v2/report-types).**\n\n**Note**: Campaigns with vCPM costType should use view+click based metrics (viewAttributedConversions14d, viewAttributedDetailPageView14d, viewAttributedSales14d, viewAttributedUnitsOrdered14d, viewImpressions).\n\n**Note**: Detail page view metrics (attributedDetailPageView14d, viewAttributedDetailPageView14d) have an SLA of 3 days.\n\n**Tip**: Use new-to-brand (NTB) metrics to calculate how efficient your campaigns are at driving new shoppers:\n\n  1. Percentage of NTB orders = attributedOrdersNewToBrand14d / attributedConversions14d\n  2. Percentage NTB sales = attributedSalesNewToBrand14d / attributedSales14d\n  3. Percentage NTB units = attributedUnitsOrderedNewToBrand14d / attributedUnitsOrdered14d\n  4. NTB order rate = attributedOrdersNewToBrand14 / impressions",
             "example": "campaignName,campaignId,impressions,clicks,cost,attributedSales14d"
           }
         }
@@ -8502,6 +9459,27 @@
           },
           "squareCustomImage": {
             "$ref": "#/components/schemas/Image"
+          },
+          "squareImages": {
+            "type": "array",
+            "description": "An optional collection of 1:1 square images which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.",
+            "items": {
+              "$ref": "#/components/schemas/Image"
+            }
+          },
+          "landscapeImages": {
+            "type": "array",
+            "description": "An optional collection of 16:9 landscape images which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.",
+            "items": {
+              "$ref": "#/components/schemas/Image"
+            }
+          },
+          "portraitImages": {
+            "type": "array",
+            "description": "An optional collection of 9:16 portrait images which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.",
+            "items": {
+              "$ref": "#/components/schemas/Image"
+            }
           }
         }
       },
@@ -8511,6 +9489,27 @@
         "properties": {
           "video": {
             "$ref": "#/components/schemas/Video"
+          },
+          "squareVideos": {
+            "type": "array",
+            "description": "An optional collection of 1:1 square videos which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.",
+            "items": {
+              "$ref": "#/components/schemas/Video"
+            }
+          },
+          "landscapeVideos": {
+            "type": "array",
+            "description": "An optional collection of 16:9 landscape videos which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.",
+            "items": {
+              "$ref": "#/components/schemas/Video"
+            }
+          },
+          "portraitVideos": {
+            "type": "array",
+            "description": "An optional collection of 9:16 portrait videos which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.",
+            "items": {
+              "$ref": "#/components/schemas/Video"
+            }
           }
         }
       },
@@ -8792,7 +9791,7 @@
       "CreativeTypeInCreativeRequest": {
         "type": "string",
         "nullable": true,
-        "description": "\nThe type of the creative.\n|Name|Description|\n|----|-----------|\n|IMAGE |The creative will display static assets (e.g. headline, brandLogo or custom image).|\n|VIDEO |The creative will display video assets. This type of creative must have video assets provided.|",
+        "description": "The type of the creative.\n|Name|Description|\n|----|-----------|\n|IMAGE |The creative will display static assets (e.g. headline, brandLogo or custom image).|\n|VIDEO |The creative will display video assets. This type of creative must have video assets provided. Only supported when using productAds with ASIN or SKU.|",
         "example": null,
         "enum": [
           "IMAGE",
@@ -8822,8 +9821,7 @@
         "properties": {
           "creativeId": {
             "type": "number",
-            "description": "Unique identifier of the creative.",
-            "readOnly": true
+            "description": "Unique identifier of the creative."
           },
           "adGroupId": {
             "$ref": "#/components/schemas/AdGroupId"
@@ -8969,6 +9967,15 @@
               }
             }
           },
+          "landingPageURL": {
+            "$ref": "#/components/schemas/LandingPageURL"
+          },
+          "landingPageType": {
+            "$ref": "#/components/schemas/LandingPageType"
+          },
+          "adName": {
+            "$ref": "#/components/schemas/AdName"
+          },
           "isMobile": {
             "type": "boolean",
             "description": "Preview the creative as if it is on a mobile environment."
@@ -8977,6 +9984,12 @@
             "type": "boolean",
             "description": "Preview the creative as if it is on an amazon site or third party site. The main difference is whether the preview will contain an AdChoices icon."
           }
+        }
+      },
+      "CreativePreviewConfigurations": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/CreativePreviewConfiguration"
         }
       },
       "CreativePreviewRequest": {
@@ -8991,6 +10004,9 @@
           },
           "previewConfiguration": {
             "$ref": "#/components/schemas/CreativePreviewConfiguration"
+          },
+          "previewConfigurations": {
+            "$ref": "#/components/schemas/CreativePreviewConfigurations"
           }
         }
       },
@@ -9002,6 +10018,12 @@
         "properties": {
           "previewHtml": {
             "type": "string"
+          },
+          "previewHtmls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -9118,6 +10140,38 @@
           }
         }
       },
+      "SDTargetingRecommendationsLocale": {
+        "type": "string",
+        "description": "List of supported locales.",
+        "enum": [
+          "ar_AE",
+          "de_DE",
+          "en_AE",
+          "en_AU",
+          "en_CA",
+          "en_GB",
+          "en_IN",
+          "en_SG",
+          "en_US",
+          "es_ES",
+          "es_MX",
+          "fr_CA",
+          "fr_FR",
+          "hi_IN",
+          "it_IT",
+          "ja_JP",
+          "ko_KR",
+          "nl_NL",
+          "pl_PL",
+          "pt_BR",
+          "sv_SE",
+          "ta_IN",
+          "th_TH",
+          "tr_TR",
+          "vi_VN",
+          "zh_CN"
+        ]
+      },
       "SDTargetingRecommendationsRequest": {
         "description": "Request for targeting recommendations",
         "required": [
@@ -9190,6 +10244,28 @@
           }
         }
       },
+      "SDTargetingRecommendationsRequestV33": {
+        "description": "Request for targeting recommendations for API version 3.3.",
+        "required": [
+          "tactic",
+          "products",
+          "typeFilter"
+        ],
+        "properties": {
+          "tactic": {
+            "$ref": "#/components/schemas/SDTacticV31"
+          },
+          "products": {
+            "$ref": "#/components/schemas/SDTargetingRecommendationsProducts"
+          },
+          "typeFilter": {
+            "$ref": "#/components/schemas/SDTargetingRecommendationsTypeFilterV32"
+          },
+          "themes": {
+            "$ref": "#/components/schemas/SDTargetingRecommendationsThemes"
+          }
+        }
+      },
       "SDTargetingRecommendationsProducts": {
         "type": "array",
         "description": "A list of products for which to get targeting recommendations",
@@ -9210,6 +10286,20 @@
         ],
         "items": {
           "$ref": "#/components/schemas/SDRecommendationTypeV31"
+        }
+      },
+      "SDTargetingRecommendationsTypeFilterV32": {
+        "type": "array",
+        "description": "A filter to indicate which types of recommendations to request.",
+        "minItems": 1,
+        "maxItems": 2,
+        "example": [
+          "PRODUCT",
+          "CATEGORY",
+          "AUDIENCE"
+        ],
+        "items": {
+          "$ref": "#/components/schemas/SDRecommendationTypeV32"
         }
       },
       "SDTargetingRecommendationsThemes": {
@@ -9289,6 +10379,16 @@
           "CATEGORY"
         ]
       },
+      "SDRecommendationTypeV32": {
+        "type": "string",
+        "description": "Signifies a type of recommendation. PRODUCT and CATEGORY are supported by tactic T00020. CATEGORY and AUDIENCE are supported by tactic T00030.",
+        "example": "PRODUCT",
+        "enum": [
+          "PRODUCT",
+          "CATEGORY",
+          "AUDIENCE"
+        ]
+      },
       "SDASIN": {
         "type": "string",
         "description": "Amazon Standard Identification Number",
@@ -9331,6 +10431,14 @@
           }
         }
       },
+      "SDTargetingRecommendationsResponseV33": {
+        "description": "Response to a request for targeting recommendations.",
+        "properties": {
+          "recommendations": {
+            "$ref": "#/components/schemas/SDTargetingRecommendationsV33"
+          }
+        }
+      },
       "SDTargetingRecommendationsV32": {
         "description": "For v3.2 the service will continue to return the recommendations returned for v3.1 in products field, and return recommendations for contextual targeting themes in themes field.",
         "allOf": [
@@ -9339,6 +10447,23 @@
           },
           {
             "$ref": "#/components/schemas/SDCategoryRecommendations"
+          },
+          {
+            "$ref": "#/components/schemas/SDThemeRecommendations"
+          }
+        ]
+      },
+      "SDTargetingRecommendationsV33": {
+        "description": "For v3.3 the service will continue to return the recommendations returned for v3.2, and return audience recommendations if requested.",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SDProductRecommendationsV32"
+          },
+          {
+            "$ref": "#/components/schemas/SDCategoryRecommendationsV33"
+          },
+          {
+            "$ref": "#/components/schemas/SDAudienceRecommendations"
           },
           {
             "$ref": "#/components/schemas/SDThemeRecommendations"
@@ -9521,6 +10646,20 @@
           }
         }
       },
+      "SDCategoryRecommendationsV33": {
+        "type": "object",
+        "properties": {
+          "categories": {
+            "type": "array",
+            "description": "List of recommended category targets.",
+            "minItems": 0,
+            "maxItems": 1000,
+            "items": {
+              "$ref": "#/components/schemas/SDCategoryRecommendationV33"
+            }
+          }
+        }
+      },
       "SDCategoryRecommendation": {
         "description": "A recommended category to target ads on",
         "properties": {
@@ -9533,7 +10672,7 @@
           },
           "path": {
             "type": "array",
-            "description": " The path of the category within the category catalogue",
+            "description": "The path of the category within the category catalogue.",
             "minItems": 1,
             "items": {
               "type": "string"
@@ -9557,6 +10696,119 @@
             "minimum": 1
           }
         }
+      },
+      "SDCategoryRecommendationV33": {
+        "description": "A recommended category to target ads on",
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/SDCategory"
+          },
+          "name": {
+            "type": "string",
+            "description": "The category name"
+          },
+          "translatedName": {
+            "type": "string",
+            "description": "The translated category name by requested locale, field will not be provided if locale is not provided or campaign localization service is down."
+          },
+          "path": {
+            "type": "array",
+            "description": "The path of the category within the category catalogue.",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "translatedPath": {
+            "type": "array",
+            "description": "The translated path of the category within the category catalogue by requested locale, field will not be provided if locale is not provided or campaign localization is down.",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "targetableAsinCountRange": {
+            "type": "object",
+            "description": "The range of ASINs available within the category catalogue.",
+            "properties": {
+              "rangeLower": {
+                "type": "integer"
+              },
+              "rangeUpper": {
+                "type": "integer"
+              }
+            }
+          },
+          "rank": {
+            "type": "integer",
+            "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation.",
+            "minimum": 1
+          }
+        }
+      },
+      "SDAudienceRecommendations": {
+        "type": "object",
+        "properties": {
+          "audiences": {
+            "type": "array",
+            "description": "List of recommended audience targets, broken down by audience category",
+            "minItems": 0,
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/components/schemas/SDAudienceCategoryRecommendations"
+            }
+          }
+        }
+      },
+      "SDAudienceCategoryRecommendations": {
+        "description": "List of recommended standard Amazon audience targets of a specific audience category",
+        "properties": {
+          "category": {
+            "$ref": "#/components/schemas/SDAudienceCategory"
+          },
+          "audiences": {
+            "type": "array",
+            "description": "List of recommended standard Amazon audience targets",
+            "minItems": 0,
+            "maxItems": 1000,
+            "items": {
+              "$ref": "#/components/schemas/SDAudienceRecommendation"
+            }
+          }
+        }
+      },
+      "SDAudienceCategory": {
+        "type": "string",
+        "description": "An audience category determines the goal of the audience such as In-market, Interest, Lifestyle and Life Event",
+        "example": "In-Market",
+        "enum": [
+          "In-market",
+          "Lifestyle",
+          "Interest",
+          "Life event"
+        ]
+      },
+      "SDAudienceRecommendation": {
+        "description": "A recommended standard Amazon audience to target ads on",
+        "properties": {
+          "audience": {
+            "$ref": "#/components/schemas/SDAudience"
+          },
+          "name": {
+            "type": "string",
+            "description": "The Amazon audience name"
+          },
+          "rank": {
+            "type": "integer",
+            "description": "A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation",
+            "minimum": 1
+          }
+        }
+      },
+      "SDAudience": {
+        "type": "string",
+        "description": "The audience identifier",
+        "example": 417464173123977660
       },
       "SDTactic": {
         "type": "string",
@@ -9894,7 +11146,7 @@
         }
       },
       "SDCostTypeV31": {
-        "description": "Determines what performance metric the bid recommendations will be optimized for.\n|Name|Supported Tactics|Description|\n|----|----------|-----------|\n|cpc|T00020 T00030|The bid recommendations will be optimized for clicks triggered by the ad.|\n|vcpm|T00020 T00030|The bid recommendations will be optimized for viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|",
+        "description": "Determines what performance metric the bid recommendations will be optimized for.\n|Name|Description|\n|----|----------|-----------|\n|cpc|The bid recommendations will be optimized for clicks triggered by the ad.|\n|vcpm|The bid recommendations will be optimized for viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|",
         "type": "string",
         "enum": [
           "cpc",
@@ -9989,7 +11241,7 @@
       },
       "SDTargetingExpressionV31": {
         "type": "array",
-        "description": "The targeting expression to match against.\n\n------- Applicable to contextual targeting (T00020) -------\n* A 'TargetingExpression' in a contextual targeting campaign can only contain 'TargetingPredicate' components.\n* Expressions must specify either a category predicate or an ASIN predicate, but never both.\n* Only one category may be specified per targeting expression.\n* Only one brand may be specified per targeting expression.\n* Only one asin may be specified per targeting expression.\n* To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.\n\n------- Applicable to audience targeting (T00030) -------\n* A 'TargetingExpression' in an audience campaign can only contain 'TargetingPredicateNested' components.\n* **Future** To exclude parts of an audience, specify a TargetingPredicateNested component that contains a negative TargetingPredicate type.",
+        "description": "The targeting expression to match against.\n\n------- Applicable to contextual targeting (T00020) -------\n* A 'TargetingExpression' in a contextual targeting campaign can only contain 'TargetingPredicate' components.\n* Expressions must specify either a category predicate or an ASIN predicate, but never both.\n* Only one category may be specified per targeting expression.\n* Only one brand may be specified per targeting expression.\n* Only one asin may be specified per targeting expression.\n* To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.\n\n------- Applicable to audience targeting (T00030) -------\n* A 'TargetingExpression' in an audience campaign can only contain 'TargetingPredicateNested' components.",
         "minItems": 1,
         "items": {
           "$ref": "#/components/schemas/SDTargetExpressionV31"
@@ -10007,7 +11259,7 @@
       },
       "SDTargetingPredicateV31": {
         "type": "object",
-        "description": "A predicate to match against in the Targeting Expression (only applicable to contextual targeting - T00020).\n\n* All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Ads browse system.\n* Brand, price, and review predicates are optional and may only be specified if category is also specified.\n* Review predicates accept numbers between 0 and 5 and are inclusive.\n* When using either of the â€˜betweenâ€™ strings to construct a targeting expression the format of the string is â€˜double-doubleâ€™ where the first double must be smaller than the second double. Prices are not inclusive.",
+        "description": "A predicate to match against in the Targeting Expression (only applicable to contextual targeting - T00020).\n\n* All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Ads browse system.\n* Brand, price, and review predicates are optional and may only be specified if category is also specified.\n* Review predicates accept numbers between 0 and 5 and are inclusive.\n* When using either of the 'between' strings to construct a targeting expression the format of the string is 'double-double' where the first double must be smaller than the second double. Prices are not inclusive.",
         "required": [
           "type"
         ],
@@ -10038,7 +11290,7 @@
       },
       "SDTargetingPredicateNestedV31": {
         "type": "object",
-        "description": "A behavioral event and list of targeting predicates that represents an audience to target (only applicable to audience targeting - T00030).\n\n* For manual ASIN-grain targeting, the value array must contain only, 'exactProduct', 'similarProduct', 'relatedProduct' and 'lookback' TargetingPredicateBase components. The 'lookback' is mandatory and the value should be set to '7', '14', '30', '60', '90', '180' or '365'.\n* For manual Category-grain targeting, the value array must contain a 'lookback' and 'asinCategorySameAs' TargetingPredicateBase component, which can be further refined with optional brand, price, star-rating and shipping eligibility refinements. The 'lookback' is mandatory and the value should be set to '7', '14', '30', '60', '90', '180' or '365'.\n* For manual Category-grain targeting, the value array must contain a 'lookback' and 'asinCategorySameAs' TargetingPredicateBase component, which can be further refined with optional brand, price, star-rating and shipping eligibility refinements.\n* For Amazon Audiences targeting, the TargetingPredicateNested type should be set to 'audience' and the value array should include one TargetingPredicateBase component with type set to 'audienceSameAs'.\n* **Future** For manual Category-grain targeting, adding a 'negative' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.",
+        "description": "A behavioral event and list of targeting predicates that represents an audience to target (only applicable to audience targeting - T00030).\n\n* For manual ASIN-grain targeting, the value array must contain only, 'exactProduct', 'similarProduct', 'relatedProduct' and 'lookback' TargetingPredicateBase components. The 'lookback' is mandatory and the value should be set to '7', '14', '30', '60', '90', '180' or '365'.\n* For manual Category-grain targeting, the value array must contain a 'lookback' and 'asinCategorySameAs' TargetingPredicateBase component, which can be further refined with optional brand, price, star-rating and shipping eligibility refinements. The 'lookback' is mandatory and the value should be set to '7', '14', '30', '60', '90', '180' or '365'.\n* For manual Category-grain targeting, the value array must contain a 'lookback' and 'asinCategorySameAs' TargetingPredicateBase component, which can be further refined with optional brand, price, star-rating and shipping eligibility refinements.\n* For Amazon Audiences targeting, the TargetingPredicateNested type should be set to 'audience' and the value array should include one TargetingPredicateBase component with type set to 'audienceSameAs'.",
         "required": [
           "type",
           "value"
@@ -10062,7 +11314,7 @@
       },
       "SDTargetingPredicateBaseV31": {
         "type": "object",
-        "description": "A predicate to match against inside the TargetingPredicateNested component (only applicable to audience targeting - T00030).\n\n* All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Ads browse system.\n* Brand, price, and review predicates are optional and may only be specified if category is also specified.\n* Review predicates accept numbers between 0 and 5 and are inclusive.\n* When using either of the â€˜betweenâ€™ strings to construct a targeting expression the format of the string is â€˜double-doubleâ€™ where the first double must be smaller than the second double. Prices are not inclusive.\n* The exactProduct, similarProduct, and negative types do not utilize the value field.\n* The only type currently applicable to Amazon Audiences targeting is 'audienceSameAs'.\n* **Future** A 'negative' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.",
+        "description": "A predicate to match against inside the TargetingPredicateNested component (only applicable to audience targeting - T00030).\n\n* All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Ads browse system.\n* Brand, price, and review predicates are optional and may only be specified if category is also specified.\n* Review predicates accept numbers between 0 and 5 and are inclusive.\n* When using either of the 'between' strings to construct a targeting expression the format of the string is 'double-double' where the first double must be smaller than the second double. Prices are not inclusive.\n* The exactProduct, similarProduct, relatedProduct, and negative types do not utilize the value field.\n* The only type currently applicable to Amazon Audiences targeting is 'audienceSameAs'.",
         "required": [
           "type"
         ],
@@ -10079,6 +11331,7 @@
               "asinReviewRatingGreaterThan",
               "asinReviewRatingBetween",
               "similarProduct",
+              "relatedProduct",
               "exactProduct",
               "asinIsPrimeShippingEligible",
               "asinAgeRangeSameAs",
@@ -10198,7 +11451,7 @@
       },
       "SDBidOptimizationV32": {
         "type": "string",
-        "description": "Determines what the recommended bids will be optimized for.\n\n|Name|CostType|Supported Tactics|Description|\n|----|----------|-----------|-----------|\n|clicks|cpc|T00020 T00030|Optimize for page visits|\n|conversions|cpc|T00020 T00030|Optimize for conversion|\n|reach|vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|",
+        "description": "Determines what the recommended bids will be optimized for.\n\n|Name|CostType|Description|\n|----|--------|-----------|\n|reach|vcpm|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|\n|clicks|cpc|Optimize for page visits|\n|conversions|cpc|Optimize for conversion|\n|leads |cpc| [PREVIEW ONLY] Optimize for lead generation.|",
         "enum": [
           "clicks",
           "conversions",
@@ -10223,7 +11476,7 @@
         "properties": {
           "metricName": {
             "type": "string",
-            "description": "The name of the metric.\nSupported rule metrics and corresponding supported comparisonOperators:\n|      MetricName      |ComparisonOperator  |Description|\n|------------------|--------------------|-------------------|\n|COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS     |BETWEEN             |Maximize viewable impressions while cost per 1000 views in `[rangeLower, rangeUpper]`|\n|COST_PER_ORDER    |BETWEEN            |Maximize viewable impressions/page visits/conversion while cost per order in `[rangeLower, rangeUpper]`|\n|COST_PER_CLICK    |BETWEEN            |Maximize page visits while cost per click in `[rangeLower, rangeUpper]`|",
+            "description": "The name of the metric.\nSupported rule metrics and corresponding supported comparisonOperators:\n|      MetricName      |ComparisonOperator  |Description|\n|------------------|--------------------|-------------------|\n|COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS     |              LESS_THAN_OR_EQUAL_TO             |Maximize viewable impressions while cost per 1000 views less than or equal to `threshold`|\n|COST_PER_ORDER    |              LESS_THAN_OR_EQUAL_TO            |Maximize viewable impressions/page visits/conversion while cost per order less than or equal to `threshold`|\n|COST_PER_CLICK    |              LESS_THAN_OR_EQUAL_TO            |Maximize page visits while cost per click less than or equal to `threshold`|",
             "enum": [
               "COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS",
               "COST_PER_ORDER",
@@ -10234,38 +11487,20 @@
             "type": "string",
             "description": "The comparison operator.",
             "enum": [
-              "BETWEEN"
+              "LESS_THAN_OR_EQUAL_TO"
             ]
           },
-          "range": {
-            "type": "object",
-            "description": "The value of the range associated with the metric. The range values can only be set to the supported value pairs listed in the following table:\n|                  MetricName            |Supported Range ([rangeLower, rangeUpper])  |\n|----------------------------------------|------------------------------------------|\n|COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS  |[3, 5],  [5, 7], [7, 9], [9, 11]          |\n|COST_PER_ORDER                          |[5, 15], [15, 25], [25, 35], [35, 50]     |\n|COST_PER_CLICK                          |[0.5, 0.75], [0.75, 1], [1, 1.5], [1.5, 2]|",
-            "properties": {
-              "rangeLower": {
-                "type": "number",
-                "description": "The lower bound of the range. This value must be less than `rangeUpper`.",
-                "format": "double",
-                "minimum": 0,
-                "example": 0.5
-              },
-              "rangeUpper": {
-                "type": "number",
-                "description": "The upper bound of the range. This value must be greater than `rangeLower`.",
-                "format": "double",
-                "minimum": 0,
-                "example": 0.75
-              }
-            },
-            "required": [
-              "rangeLower",
-              "rangeUpper"
-            ]
+          "threshold": {
+            "type": "number",
+            "description": "The value of the threshold associated with the metric. The threshold values has defined minimums depending on the metric names in the following table:\n|                  MetricName            | Minimum of `threshold` Value  |\n|----------------------------------------|-----------------------------------|\n|COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS  | 1                                 |\n|COST_PER_ORDER                          | 3                                 |\n|COST_PER_CLICK                          | 0.5                               |",
+            "format": "double",
+            "example": 1.5
           }
         },
         "required": [
           "metricName",
           "comparisonOperator",
-          "range"
+          "threshold"
         ]
       },
       "BaseOptimizationRule": {
@@ -10332,11 +11567,8 @@
           "ruleName": "Optimization Rule Name",
           "ruleConditions": {
             "metricName": "COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS",
-            "comparisonOperator": "BETWEEN",
-            "range": {
-              "rangeLower": 3,
-              "rangeUpper": 5
-            }
+            "comparisonOperator": "LESS_THAN_OR_EQUAL_TO",
+            "threshold": 1.5
           }
         },
         "required": [
@@ -10520,6 +11752,616 @@
             "description": "A human-readable description of the response."
           }
         }
+      },
+      "CreateSDBudgetRulesRequest": {
+        "type": "object",
+        "properties": {
+          "budgetRulesDetails": {
+            "maxItems": 25,
+            "description": "A list of budget rule details.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDBudgetRuleDetails"
+            }
+          }
+        }
+      },
+      "CreateBudgetRulesResponse": {
+        "type": "object",
+        "properties": {
+          "responses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetRuleResponse"
+            }
+          }
+        }
+      },
+      "BudgetRuleError": {
+        "description": "The Error Response Object.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "An enumerated error code for machine use.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "SDBudgetHistory": {
+        "type": "object",
+        "properties": {
+          "history": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDRuleBasedBudget"
+            }
+          }
+        }
+      },
+      "SDRuleBasedBudget": {
+        "type": "object",
+        "properties": {
+          "executionTime": {
+            "format": "int64",
+            "description": "Epoch time of budget rule execution.",
+            "type": "number"
+          },
+          "appliedRule": {
+            "$ref": "#/components/schemas/SDBudgetRule"
+          },
+          "ruleBasedBudgetValue": {
+            "description": "The budget value.",
+            "type": "number"
+          },
+          "dailyBudgetValue": {
+            "description": "The daily budget value.",
+            "type": "number"
+          },
+          "performanceMetric": {
+            "$ref": "#/components/schemas/PerformanceMetricValue"
+          }
+        }
+      },
+      "GetSDBudgetRuleResponse": {
+        "type": "object",
+        "properties": {
+          "budgetRule": {
+            "$ref": "#/components/schemas/SDBudgetRule"
+          }
+        }
+      },
+      "GetSDBudgetRulesForAdvertiserResponse": {
+        "type": "object",
+        "properties": {
+          "budgetRulesForAdvertiserResponse": {
+            "minItems": 0,
+            "maxItems": 30,
+            "description": "A list of rules created by the advertiser.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDBudgetRule"
+            }
+          },
+          "nextToken": {
+            "description": "To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.",
+            "type": "string"
+          }
+        }
+      },
+      "UpdateSDBudgetRulesRequest": {
+        "description": "Request object for updating budget rule for SD campaign",
+        "type": "object",
+        "properties": {
+          "budgetRulesDetails": {
+            "maxItems": 25,
+            "description": "A list of budget rule details.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDBudgetRule"
+            }
+          }
+        }
+      },
+      "UpdateBudgetRulesResponse": {
+        "type": "object",
+        "properties": {
+          "responses": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetRuleResponse"
+            }
+          }
+        }
+      },
+      "SDBudgetRuleDetails": {
+        "description": "Object representing details of a budget rule for SD campaign",
+        "type": "object",
+        "properties": {
+          "duration": {
+            "$ref": "#/components/schemas/RuleDuration"
+          },
+          "recurrence": {
+            "$ref": "#/components/schemas/Recurrence"
+          },
+          "ruleType": {
+            "$ref": "#/components/schemas/SDRuleType"
+          },
+          "budgetIncreaseBy": {
+            "$ref": "#/components/schemas/budgetIncreaseBy"
+          },
+          "name": {
+            "description": "The budget rule name. Required to be unique within a campaign.",
+            "type": "string",
+            "maxLength": 355
+          },
+          "performanceMeasureCondition": {
+            "$ref": "#/components/schemas/PerformanceMeasureCondition"
+          }
+        }
+      },
+      "BudgetRuleResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "An enumerated success or error code for machine use.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the error, if unsuccessful",
+            "type": "string"
+          },
+          "ruleId": {
+            "description": "The rule identifier.",
+            "type": "string"
+          },
+          "associatedCampaignIds": {
+            "type": "array",
+            "items": {
+              "description": "The campaign identifier for which rule based budget may get updated",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SDBudgetRule": {
+        "type": "object",
+        "required": [
+          "ruleId"
+        ],
+        "properties": {
+          "ruleState": {
+            "$ref": "#/components/schemas/state"
+          },
+          "lastUpdatedDate": {
+            "format": "int64",
+            "description": "Epoch time of budget rule update. Read-only.",
+            "type": "number"
+          },
+          "createdDate": {
+            "format": "int64",
+            "description": "Epoch time of budget rule creation. Read-only.",
+            "type": "number"
+          },
+          "ruleDetails": {
+            "$ref": "#/components/schemas/SDBudgetRuleDetails"
+          },
+          "ruleId": {
+            "description": "The budget rule identifier.",
+            "type": "string"
+          },
+          "ruleStatus": {
+            "description": "The budget rule status. Read-only.",
+            "type": "string"
+          }
+        }
+      },
+      "state": {
+        "description": "The budget rule state.",
+        "type": "string",
+        "enum": [
+          "ACTIVE",
+          "PAUSED"
+        ]
+      },
+      "PerformanceMetricValue": {
+        "description": "An object giving the name of the performance metric and its value when the rule was evaluated",
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "Name of the performance metric",
+            "type": "string"
+          },
+          "value": {
+            "format": "double",
+            "description": "Value of the performance metric",
+            "type": "number"
+          }
+        }
+      },
+      "RuleDuration": {
+        "type": "object",
+        "properties": {
+          "eventTypeRuleDuration": {
+            "$ref": "#/components/schemas/EventTypeRuleDuration"
+          },
+          "dateRangeTypeRuleDuration": {
+            "$ref": "#/components/schemas/DateRangeTypeRuleDuration"
+          }
+        }
+      },
+      "Recurrence": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/RecurrenceType"
+          },
+          "daysOfWeek": {
+            "description": "Object representing days of the week for weekly type rule. It is not required for daily recurrence type",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DayOfWeek"
+            }
+          }
+        }
+      },
+      "SDRuleType": {
+        "description": "The type of budget rule. SCHEDULE: A budget rule based on a start and end date. PERFORMANCE: A budget rule based on advertising performance criteria.",
+        "type": "string",
+        "enum": [
+          "SCHEDULE",
+          "PERFORMANCE"
+        ]
+      },
+      "budgetIncreaseBy": {
+        "type": "object",
+        "required": [
+          "type",
+          "value"
+        ],
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/BudgetChangeType"
+          },
+          "value": {
+            "format": "double",
+            "description": "The budget value.",
+            "type": "number"
+          }
+        }
+      },
+      "PerformanceMeasureCondition": {
+        "type": "object",
+        "required": [
+          "comparisonOperator",
+          "metricName",
+          "threshold"
+        ],
+        "properties": {
+          "metricName": {
+            "$ref": "#/components/schemas/PerformanceMetric"
+          },
+          "comparisonOperator": {
+            "$ref": "#/components/schemas/ComparisonOperator"
+          },
+          "threshold": {
+            "format": "double",
+            "description": "The performance threshold value.",
+            "type": "number"
+          }
+        }
+      },
+      "EventTypeRuleDuration": {
+        "description": "Object representing event type rule duration.",
+        "type": "object",
+        "required": [
+          "eventId"
+        ],
+        "properties": {
+          "eventId": {
+            "description": "The event identifier. This value is available from the budget rules recommendation API.",
+            "type": "string"
+          },
+          "endDate": {
+            "description": "The event end date in YYYYMMDD format. Read-only.",
+            "type": "string"
+          },
+          "eventName": {
+            "description": "The event name. Read-only.",
+            "type": "string"
+          },
+          "startDate": {
+            "description": "The event start date in YYYYMMDD format. Read-only. Note that this field is present only for announced events.",
+            "type": "string"
+          }
+        }
+      },
+      "DateRangeTypeRuleDuration": {
+        "description": "Object representing date range type rule duration.",
+        "type": "object",
+        "required": [
+          "startDate"
+        ],
+        "properties": {
+          "endDate": {
+            "description": "The end date of the budget rule in YYYYMMDD format. The end date is inclusive. Required to be equal or greater than `startDate`.",
+            "type": "string"
+          },
+          "startDate": {
+            "description": "The start date of the budget rule in YYYYMMDD format. The start date is inclusive. Required to be greater than or equal to current date.",
+            "type": "string"
+          }
+        }
+      },
+      "RecurrenceType": {
+        "description": "depicts the type of recurrence",
+        "type": "string",
+        "enum": [
+          "DAILY",
+          "WEEKLY"
+        ]
+      },
+      "DayOfWeek": {
+        "description": "The day of the week.",
+        "type": "string",
+        "enum": [
+          "MONDAY",
+          "TUESDAY",
+          "WEDNESDAY",
+          "THURSDAY",
+          "FRIDAY",
+          "SATURDAY",
+          "SUNDAY"
+        ]
+      },
+      "BudgetChangeType": {
+        "description": "The value by which to update the budget of the budget rule.",
+        "type": "string",
+        "enum": [
+          "PERCENT"
+        ]
+      },
+      "PerformanceMetric": {
+        "description": "The advertising performance metric.",
+        "type": "string",
+        "enum": [
+          "ACOS",
+          "CTR",
+          "CVR",
+          "ROAS"
+        ]
+      },
+      "ComparisonOperator": {
+        "description": "The comparison operator.",
+        "type": "string",
+        "enum": [
+          "GREATER_THAN",
+          "LESS_THAN",
+          "LESS_THAN_OR_EQUAL_TO",
+          "GREATER_THAN_OR_EQUAL_TO"
+        ]
+      },
+      "BudgetUsageCampaignRequest": {
+        "type": "object",
+        "properties": {
+          "campaignIds": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "A list of campaign IDs",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "BudgetUsageCampaignResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "description": "List of budget usage percentages that were successfully pulled",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetUsageCampaign"
+            }
+          },
+          "error": {
+            "description": "List of budget usage percentages that failed to pull",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BudgetUsageCampaignBatchError"
+            }
+          }
+        }
+      },
+      "BudgetUsageError": {
+        "description": "The Error Response Object.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "An enumerated error code for machine use.",
+            "type": "string"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "BudgetUsageCampaign": {
+        "type": "object",
+        "properties": {
+          "budgetUsagePercent": {
+            "description": "Budget usage percentage (spend / available budget) for the given budget policy.",
+            "type": "number"
+          },
+          "campaignId": {
+            "description": "ID of requested resource",
+            "type": "string"
+          },
+          "usageUpdatedTimestamp": {
+            "format": "date-time",
+            "description": "Last evaluation time for budget usage",
+            "type": "string"
+          },
+          "index": {
+            "description": "An index to maintain order of the campaignIds",
+            "type": "number"
+          },
+          "budget": {
+            "description": "Budget amount of resource requested",
+            "type": "number"
+          }
+        }
+      },
+      "BudgetUsageCampaignBatchError": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "An enumerated error code for machine use.",
+            "type": "string"
+          },
+          "campaignId": {
+            "description": "ID of requested resource",
+            "type": "string"
+          },
+          "index": {
+            "description": "An index to maintain order of the campaignIds",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "RuleBasedBudget": {
+        "type": "object",
+        "properties": {
+          "isProcessing": {
+            "type": "boolean"
+          },
+          "applicableRuleName": {
+            "type": "string"
+          },
+          "value": {
+            "format": "double",
+            "type": "number"
+          },
+          "applicableRuleId": {
+            "type": "string"
+          }
+        }
+      },
+      "LocationExpressionId": {
+        "type": "integer",
+        "format": "int64",
+        "description": "The identifier of the location."
+      },
+      "BaseLocation": {
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "enabled"
+            ]
+          }
+        }
+      },
+      "Location": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseLocation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "locationExpressionId": {
+                "$ref": "#/components/schemas/LocationExpressionId"
+              },
+              "adGroupId": {
+                "$ref": "#/components/schemas/AdGroupId"
+              },
+              "expression": {
+                "type": "array",
+                "description": "The Location definition.",
+                "items": {
+                  "$ref": "#/components/schemas/LocationExpression"
+                }
+              },
+              "resolvedExpression": {
+                "type": "array",
+                "description": "The human-readable location definition.",
+                "items": {
+                  "$ref": "#/components/schemas/ResolvedLocationExpression"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "LocationExpression": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/LocationPredicate"
+          },
+          "value": {
+            "type": "string",
+            "description": "The location identifier. Currently, this can correspond to either a 'city', 'state', 'dma', 'postal code', or 'country'. Its value is discoverable using the GET /locations API.",
+            "example": "amzn1.ad-geo.XHvCjcKHXmJ7woVowo7CjmvCjcKWbMKHwp3CsGvCk8KrcmstQ2l0eQ=="
+          }
+        }
+      },
+      "ResolvedLocationExpression": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/LocationPredicate"
+          },
+          "value": {
+            "type": "string",
+            "description": "The human-readable location name.",
+            "example": "New York City, New York, US"
+          }
+        }
+      },
+      "LocationPredicate": {
+        "type": "string",
+        "description": "The location category.",
+        "enum": [
+          "location"
+        ]
+      },
+      "CreateLocation": {
+        "required": [
+          "adGroupId",
+          "expression",
+          "state"
+        ],
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/BaseLocation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "adGroupId": {
+                "$ref": "#/components/schemas/AdGroupId"
+              },
+              "expression": {
+                "type": "array",
+                "description": "The location definition.",
+                "items": {
+                  "$ref": "#/components/schemas/LocationExpression"
+                }
+              }
+            }
+          }
+        ]
       }
     },
     "parameters": {

@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Amazon Ads API for Sponsored Display
- * This API enables programmatic access for campaign creation, management, and reporting for Sponsored Display campaigns. For more information on the functionality, see the [Sponsored Display Support Center](https://advertising.amazon.com/help#GTPPHE6RAWC2C4LZ). For API onboarding information, see the [account setup](https://advertising.amazon.com/API/docs/en-us/setting-up/account-setup) topic.<br/><br/> > This specification is available for download from the **[Advertising API developer portal](https://d3a0d0y2hgofx6.cloudfront.net/openapi/en-us/sponsored-display/3-0/openapi.yaml).**
+ * This API enables programmatic access for campaign creation, management, and reporting for Sponsored Display campaigns. For more information on the functionality, see the [Sponsored Display Support Center](https://advertising.amazon.com/help#GTPPHE6RAWC2C4LZ). For API onboarding information, see the [account setup](https://advertising.amazon.com/API/docs/en-us/guides/onboarding/overview) topic.<br/><br/> > This specification is available for download from the **[Advertising API developer portal](https://d3a0d0y2hgofx6.cloudfront.net/openapi/en-us/sponsored-display/3-0/openapi.yaml).**
  *
  * The version of the OpenAPI document: 3.0
  * 
@@ -47,7 +47,7 @@ export interface AdGroup {
      */
     defaultBid?: number;
     /**
-     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks. |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks |cpc|T00020 T00030|[Default] Optimize for page visits| |conversions |cpc|T00020 T00030|Optimize for conversion| |reach |vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|
+     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks. |Name|CostType|Description| |----|--------|-----------| |reach |vcpm|Optimize for viewable impressions. $1 is the minimum bid for vCPM.| |clicks |cpc|[Default] Optimize for page visits.| |conversions |cpc|Optimize for conversion.|
      * @type {string}
      * @memberof AdGroup
      */
@@ -202,7 +202,7 @@ export interface AdGroupResponseEx {
      */
     servingStatus?: AdGroupResponseExServingStatusEnum;
     /**
-     * Bid optimization type for the Adgroup. Default behavior is to optimize for clicks. |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks [Default]|cpc|T00020 T00030|Optimize for page visits| |conversions|cpc|T00020 T00030|Optimize for conversion| |reach|vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|
+     * Bid optimization type for the Adgroup. Default behavior is to optimize for clicks. Note, reach and clicks are only accepted with productAds that include landingPageURL OFF_AMAZON_LINK. |Name|CostType|Description| |----|--------|-----------| |reach|vcpm|Optimize for viewable impressions. $1 is the minimum bid for vCPM.| |clicks [Default]|cpc|Optimize for page visits.| |conversions|cpc|Optimize for conversion.| |leads |cpc| [PREVIEW ONLY] Optimize for lead generation.|
      * @type {string}
      * @memberof AdGroupResponseEx
      */
@@ -288,7 +288,7 @@ export interface BaseAdGroup {
      */
     defaultBid?: number;
     /**
-     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks. |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks |cpc|T00020 T00030|[Default] Optimize for page visits| |conversions |cpc|T00020 T00030|Optimize for conversion| |reach |vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|
+     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks. |Name|CostType|Description| |----|--------|-----------| |reach |vcpm|Optimize for viewable impressions. $1 is the minimum bid for vCPM.| |clicks |cpc|[Default] Optimize for page visits.| |conversions |cpc|Optimize for conversion.|
      * @type {string}
      * @memberof BaseAdGroup
      */
@@ -357,7 +357,7 @@ export interface BaseCampaign {
      */
     endDate?: string | null;
     /**
-     * Determines how the campaign will bid and charge. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|
+     * Determines how the campaign will bid and charge. |Name|Description| |----|----------| |cpc |[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |The performance of this campaign is measured by the viewed impressions triggered by the ad. |  To view minimum and maximum bids based on the costType, see [Limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {string}
      * @memberof BaseCampaign
      */
@@ -399,6 +399,28 @@ export enum BaseCampaignStateEnum {
     Enabled = 'enabled',
     Paused = 'paused',
     Archived = 'archived'
+}
+
+/**
+ * 
+ * @export
+ * @interface BaseLocation
+ */
+export interface BaseLocation {
+    /**
+     * 
+     * @type {string}
+     * @memberof BaseLocation
+     */
+    state?: BaseLocationStateEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum BaseLocationStateEnum {
+    Enabled = 'enabled'
 }
 
 /**
@@ -497,7 +519,7 @@ export interface BaseTargetingClause {
      */
     state?: BaseTargetingClauseStateEnum;
     /**
-     * The bid will override the adGroup bid if specified. This field is not used for negative targeting clauses. The bid must be less than the maximum allowable bid for the campaign\'s marketplace; for a list of maximum allowable bids, find the [\"Bid constraints by marketplace\" table in our documentation overview](https://advertising.amazon.com/API/docs/en-us/get-started/overview). You cannot manually set a bid when the targeting clause\'s adGroup has an enabled optimization rule.
+     * The bid will override the adGroup bid if specified. This field is not used for negative targeting clauses. The bid must be less than the maximum allowable bid for the campaign\'s marketplace; for a list of maximum allowable bids, find the [\"Bid constraints by marketplace\" table in our documentation overview](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace). You cannot manually set a bid when the targeting clause\'s adGroup has an enabled optimization rule.
      * @type {number}
      * @memberof BaseTargetingClause
      */
@@ -792,6 +814,204 @@ export interface BrandSafetyUpdateResponse {
     requestId?: string;
 }
 /**
+ * The value by which to update the budget of the budget rule.
+ * @export
+ * @enum {string}
+ */
+
+export enum BudgetChangeType {
+    Percent = 'PERCENT'
+}
+
+/**
+ * 
+ * @export
+ * @interface BudgetIncreaseBy
+ */
+export interface BudgetIncreaseBy {
+    /**
+     * 
+     * @type {BudgetChangeType}
+     * @memberof BudgetIncreaseBy
+     */
+    type: BudgetChangeType;
+    /**
+     * The budget value.
+     * @type {number}
+     * @memberof BudgetIncreaseBy
+     */
+    value: number;
+}
+/**
+ * The Error Response Object.
+ * @export
+ * @interface BudgetRuleError
+ */
+export interface BudgetRuleError {
+    /**
+     * An enumerated error code for machine use.
+     * @type {string}
+     * @memberof BudgetRuleError
+     */
+    code?: string;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof BudgetRuleError
+     */
+    details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetRuleResponse
+ */
+export interface BudgetRuleResponse {
+    /**
+     * An enumerated success or error code for machine use.
+     * @type {string}
+     * @memberof BudgetRuleResponse
+     */
+    code?: string;
+    /**
+     * A human-readable description of the error, if unsuccessful
+     * @type {string}
+     * @memberof BudgetRuleResponse
+     */
+    details?: string;
+    /**
+     * The rule identifier.
+     * @type {string}
+     * @memberof BudgetRuleResponse
+     */
+    ruleId?: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof BudgetRuleResponse
+     */
+    associatedCampaignIds?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsageCampaign
+ */
+export interface BudgetUsageCampaign {
+    /**
+     * Budget usage percentage (spend / available budget) for the given budget policy.
+     * @type {number}
+     * @memberof BudgetUsageCampaign
+     */
+    budgetUsagePercent?: number;
+    /**
+     * ID of requested resource
+     * @type {string}
+     * @memberof BudgetUsageCampaign
+     */
+    campaignId?: string;
+    /**
+     * Last evaluation time for budget usage
+     * @type {string}
+     * @memberof BudgetUsageCampaign
+     */
+    usageUpdatedTimestamp?: string;
+    /**
+     * An index to maintain order of the campaignIds
+     * @type {number}
+     * @memberof BudgetUsageCampaign
+     */
+    index?: number;
+    /**
+     * Budget amount of resource requested
+     * @type {number}
+     * @memberof BudgetUsageCampaign
+     */
+    budget?: number;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsageCampaignBatchError
+ */
+export interface BudgetUsageCampaignBatchError {
+    /**
+     * An enumerated error code for machine use.
+     * @type {string}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    code?: string;
+    /**
+     * ID of requested resource
+     * @type {string}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    campaignId?: string;
+    /**
+     * An index to maintain order of the campaignIds
+     * @type {number}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    index?: number;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof BudgetUsageCampaignBatchError
+     */
+    details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsageCampaignRequest
+ */
+export interface BudgetUsageCampaignRequest {
+    /**
+     * A list of campaign IDs
+     * @type {Array<string>}
+     * @memberof BudgetUsageCampaignRequest
+     */
+    campaignIds?: Array<string>;
+}
+/**
+ * 
+ * @export
+ * @interface BudgetUsageCampaignResponse
+ */
+export interface BudgetUsageCampaignResponse {
+    /**
+     * List of budget usage percentages that were successfully pulled
+     * @type {Array<BudgetUsageCampaign>}
+     * @memberof BudgetUsageCampaignResponse
+     */
+    success?: Array<BudgetUsageCampaign>;
+    /**
+     * List of budget usage percentages that failed to pull
+     * @type {Array<BudgetUsageCampaignBatchError>}
+     * @memberof BudgetUsageCampaignResponse
+     */
+    error?: Array<BudgetUsageCampaignBatchError>;
+}
+/**
+ * The Error Response Object.
+ * @export
+ * @interface BudgetUsageError
+ */
+export interface BudgetUsageError {
+    /**
+     * An enumerated error code for machine use.
+     * @type {string}
+     * @memberof BudgetUsageError
+     */
+    code?: string;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof BudgetUsageError
+     */
+    details?: string;
+}
+/**
  * 
  * @export
  * @interface Campaign
@@ -828,7 +1048,7 @@ export interface Campaign {
      */
     endDate?: string | null;
     /**
-     * Determines how the campaign will bid and charge. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|
+     * Determines how the campaign will bid and charge. |Name|Description| |----|----------| |cpc |[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |The performance of this campaign is measured by the viewed impressions triggered by the ad. |  To view minimum and maximum bids based on the costType, see [Limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {string}
      * @memberof Campaign
      */
@@ -863,6 +1083,12 @@ export interface Campaign {
      * @memberof Campaign
      */
     deliveryProfile?: CampaignDeliveryProfileEnum;
+    /**
+     * 
+     * @type {RuleBasedBudget}
+     * @memberof Campaign
+     */
+    ruleBasedBudget?: RuleBasedBudget;
 }
 
 /**
@@ -921,6 +1147,12 @@ export interface CampaignAllOf {
      * @memberof CampaignAllOf
      */
     deliveryProfile?: CampaignAllOfDeliveryProfileEnum;
+    /**
+     * 
+     * @type {RuleBasedBudget}
+     * @memberof CampaignAllOf
+     */
+    ruleBasedBudget?: RuleBasedBudget;
 }
 
 /**
@@ -1023,7 +1255,7 @@ export interface CampaignResponseEx {
      */
     servingStatus?: CampaignResponseExServingStatusEnum;
     /**
-     * Determines how the campaign will bid and charge. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm|T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|
+     * Determines how the campaign will bid and charge. |Name|Description| |----|----------|-----------| |cpc |[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm|The performance of this campaign is measured by the viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|
      * @type {string}
      * @memberof CampaignResponseEx
      */
@@ -1040,6 +1272,12 @@ export interface CampaignResponseEx {
      * @memberof CampaignResponseEx
      */
     lastUpdatedDate?: number;
+    /**
+     * 
+     * @type {RuleBasedBudget}
+     * @memberof CampaignResponseEx
+     */
+    ruleBasedBudget?: RuleBasedBudget;
 }
 
 /**
@@ -1084,6 +1322,19 @@ export enum CampaignResponseExCostTypeEnum {
 }
 
 /**
+ * The comparison operator.
+ * @export
+ * @enum {string}
+ */
+
+export enum ComparisonOperator {
+    GreaterThan = 'GREATER_THAN',
+    LessThan = 'LESS_THAN',
+    LessThanOrEqualTo = 'LESS_THAN_OR_EQUAL_TO',
+    GreaterThanOrEqualTo = 'GREATER_THAN_OR_EQUAL_TO'
+}
+
+/**
  * 
  * @export
  * @interface CreateAdGroup
@@ -1108,7 +1359,7 @@ export interface CreateAdGroup {
      */
     defaultBid?: number;
     /**
-     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks. |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks |cpc|T00020 T00030|[Default] Optimize for page visits| |conversions |cpc|T00020 T00030|Optimize for conversion| |reach |vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|
+     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks. |Name|CostType|Description| |----|--------|-----------| |reach |vcpm|Optimize for viewable impressions. $1 is the minimum bid for vCPM.| |clicks |cpc|[Default] Optimize for page visits.| |conversions |cpc|Optimize for conversion.|
      * @type {string}
      * @memberof CreateAdGroup
      */
@@ -1175,6 +1426,19 @@ export interface CreateAssociatedOptimizationRulesRequest {
 /**
  * 
  * @export
+ * @interface CreateBudgetRulesResponse
+ */
+export interface CreateBudgetRulesResponse {
+    /**
+     * 
+     * @type {Array<BudgetRuleResponse>}
+     * @memberof CreateBudgetRulesResponse
+     */
+    responses?: Array<BudgetRuleResponse>;
+}
+/**
+ * 
+ * @export
  * @interface CreateCampaign
  */
 export interface CreateCampaign {
@@ -1209,7 +1473,7 @@ export interface CreateCampaign {
      */
     endDate?: string | null;
     /**
-     * Determines how the campaign will bid and charge. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|
+     * Determines how the campaign will bid and charge. |Name|Description| |----|----------| |cpc |[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |The performance of this campaign is measured by the viewed impressions triggered by the ad. |  To view minimum and maximum bids based on the costType, see [Limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {string}
      * @memberof CreateCampaign
      */
@@ -1296,6 +1560,59 @@ export interface CreateCreative {
      * @memberof CreateCreative
      */
     properties: CreativeProperties;
+}
+/**
+ * 
+ * @export
+ * @interface CreateLocation
+ */
+export interface CreateLocation {
+    /**
+     * 
+     * @type {string}
+     * @memberof CreateLocation
+     */
+    state: CreateLocationStateEnum;
+    /**
+     * The identifier of the ad group.
+     * @type {number}
+     * @memberof CreateLocation
+     */
+    adGroupId: number;
+    /**
+     * The location definition.
+     * @type {Array<LocationExpression>}
+     * @memberof CreateLocation
+     */
+    expression: Array<LocationExpression>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum CreateLocationStateEnum {
+    Enabled = 'enabled'
+}
+
+/**
+ * 
+ * @export
+ * @interface CreateLocationAllOf
+ */
+export interface CreateLocationAllOf {
+    /**
+     * The identifier of the ad group.
+     * @type {number}
+     * @memberof CreateLocationAllOf
+     */
+    adGroupId?: number;
+    /**
+     * The location definition.
+     * @type {Array<LocationExpression>}
+     * @memberof CreateLocationAllOf
+     */
+    expression?: Array<LocationExpression>;
 }
 /**
  * 
@@ -1442,6 +1759,24 @@ export interface CreateProductAd {
      */
     campaignId: number;
     /**
+     * The URL where customers will land after clicking on its link. Must be provided if a LandingPageType is set. Please note that if a single product ad sets the landing page url, only one product ad can be added to the ad group. This field is not supported when using ASIN or SKU fields. ||Specifications| |------------------|------------------| |LandingPageType| Description| |STORE| Not yet supported. The url should be in the format of https://www.amazon.com/stores/_* (using a correct Amazon url based on the marketplace)| |MOMENT| Not yet supported. The url should be in the format of https://www.amazon.com/moments/promotion/{campaignId} (using a correct Amazon url based on the marketplace)| |OFF_AMAZON_LINK| The url should be in the format of https://www.****.com. Note that this LandingPageType is not supported when using ASIN or SKU fields. A custom creative of headline, logo, image are require for this LandingPageType. |
+     * @type {string}
+     * @memberof CreateProductAd
+     */
+    landingPageURL?: string;
+    /**
+     * 
+     * @type {LandingPageType}
+     * @memberof CreateProductAd
+     */
+    landingPageType?: LandingPageType;
+    /**
+     * The name of the ad. Note that this field is not supported when using ASIN or SKU fields.
+     * @type {string}
+     * @memberof CreateProductAd
+     */
+    adName?: string;
+    /**
      * The ASIN of the product advertised by the product ad.
      * @type {string}
      * @memberof CreateProductAd
@@ -1484,6 +1819,24 @@ export interface CreateProductAdAllOf {
      */
     campaignId?: number;
     /**
+     * The URL where customers will land after clicking on its link. Must be provided if a LandingPageType is set. Please note that if a single product ad sets the landing page url, only one product ad can be added to the ad group. This field is not supported when using ASIN or SKU fields. ||Specifications| |------------------|------------------| |LandingPageType| Description| |STORE| Not yet supported. The url should be in the format of https://www.amazon.com/stores/_* (using a correct Amazon url based on the marketplace)| |MOMENT| Not yet supported. The url should be in the format of https://www.amazon.com/moments/promotion/{campaignId} (using a correct Amazon url based on the marketplace)| |OFF_AMAZON_LINK| The url should be in the format of https://www.****.com. Note that this LandingPageType is not supported when using ASIN or SKU fields. A custom creative of headline, logo, image are require for this LandingPageType. |
+     * @type {string}
+     * @memberof CreateProductAdAllOf
+     */
+    landingPageURL?: string;
+    /**
+     * 
+     * @type {LandingPageType}
+     * @memberof CreateProductAdAllOf
+     */
+    landingPageType?: LandingPageType;
+    /**
+     * The name of the ad. Note that this field is not supported when using ASIN or SKU fields.
+     * @type {string}
+     * @memberof CreateProductAdAllOf
+     */
+    adName?: string;
+    /**
      * The ASIN of the product advertised by the product ad.
      * @type {string}
      * @memberof CreateProductAdAllOf
@@ -1499,6 +1852,19 @@ export interface CreateProductAdAllOf {
 /**
  * 
  * @export
+ * @interface CreateSDBudgetRulesRequest
+ */
+export interface CreateSDBudgetRulesRequest {
+    /**
+     * A list of budget rule details.
+     * @type {Array<SDBudgetRuleDetails>}
+     * @memberof CreateSDBudgetRulesRequest
+     */
+    budgetRulesDetails?: Array<SDBudgetRuleDetails>;
+}
+/**
+ * 
+ * @export
  * @interface CreateTargetingClause
  */
 export interface CreateTargetingClause {
@@ -1509,7 +1875,7 @@ export interface CreateTargetingClause {
      */
     state?: CreateTargetingClauseStateEnum;
     /**
-     * The bid will override the adGroup bid if specified. This field is not used for negative targeting clauses. The bid must be less than the maximum allowable bid for the campaign\'s marketplace; for a list of maximum allowable bids, find the [\"Bid constraints by marketplace\" table in our documentation overview](https://advertising.amazon.com/API/docs/en-us/get-started/overview). You cannot manually set a bid when the targeting clause\'s adGroup has an enabled optimization rule.
+     * The bid will override the adGroup bid if specified. This field is not used for negative targeting clauses. The bid must be less than the maximum allowable bid for the campaign\'s marketplace; for a list of maximum allowable bids, find the [\"Bid constraints by marketplace\" table in our documentation overview](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace). You cannot manually set a bid when the targeting clause\'s adGroup has an enabled optimization rule.
      * @type {number}
      * @memberof CreateTargetingClause
      */
@@ -1527,7 +1893,7 @@ export interface CreateTargetingClause {
      */
     expressionType: CreateTargetingClauseExpressionTypeEnum;
     /**
-     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify either auto ASIN-grain (exact products), manual ASIN-grain (similar products), or manual category-grain targeting. * **Future** To exclude parts of an audience, specify a TargetingPredicateNested component that contains a negative TargetingPredicate type.
+     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify either auto ASIN-grain (exact products), manual ASIN-grain (similar products), or manual category-grain targeting.
      * @type {Array<TargetingPredicate | TargetingPredicateNested>}
      * @memberof CreateTargetingClause
      */
@@ -1571,7 +1937,7 @@ export interface CreateTargetingClauseAllOf {
      */
     expressionType?: CreateTargetingClauseAllOfExpressionTypeEnum;
     /**
-     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify either auto ASIN-grain (exact products), manual ASIN-grain (similar products), or manual category-grain targeting. * **Future** To exclude parts of an audience, specify a TargetingPredicateNested component that contains a negative TargetingPredicate type.
+     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify either auto ASIN-grain (exact products), manual ASIN-grain (similar products), or manual category-grain targeting.
      * @type {Array<TargetingPredicate | TargetingPredicateNested>}
      * @memberof CreateTargetingClauseAllOf
      */
@@ -1916,6 +2282,24 @@ export interface CreativePreviewConfiguration {
      */
     products?: Array<CreativePreviewConfigurationProducts>;
     /**
+     * The URL where customers will land after clicking on its link. Must be provided if a LandingPageType is set. Please note that if a single product ad sets the landing page url, only one product ad can be added to the ad group. This field is not supported when using ASIN or SKU fields. ||Specifications| |------------------|------------------| |LandingPageType| Description| |STORE| Not yet supported. The url should be in the format of https://www.amazon.com/stores/_* (using a correct Amazon url based on the marketplace)| |MOMENT| Not yet supported. The url should be in the format of https://www.amazon.com/moments/promotion/{campaignId} (using a correct Amazon url based on the marketplace)| |OFF_AMAZON_LINK| The url should be in the format of https://www.****.com. Note that this LandingPageType is not supported when using ASIN or SKU fields. A custom creative of headline, logo, image are require for this LandingPageType. |
+     * @type {string}
+     * @memberof CreativePreviewConfiguration
+     */
+    landingPageURL?: string;
+    /**
+     * 
+     * @type {LandingPageType}
+     * @memberof CreativePreviewConfiguration
+     */
+    landingPageType?: LandingPageType;
+    /**
+     * The name of the ad. Note that this field is not supported when using ASIN or SKU fields.
+     * @type {string}
+     * @memberof CreativePreviewConfiguration
+     */
+    adName?: string;
+    /**
      * Preview the creative as if it is on a mobile environment.
      * @type {boolean}
      * @memberof CreativePreviewConfiguration
@@ -1978,6 +2362,12 @@ export interface CreativePreviewRequest {
      * @memberof CreativePreviewRequest
      */
     previewConfiguration: CreativePreviewConfiguration;
+    /**
+     * 
+     * @type {Array<CreativePreviewConfiguration>}
+     * @memberof CreativePreviewRequest
+     */
+    previewConfigurations?: Array<CreativePreviewConfiguration>;
 }
 /**
  * 
@@ -1991,6 +2381,12 @@ export interface CreativePreviewResponse {
      * @memberof CreativePreviewResponse
      */
     previewHtml: string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CreativePreviewResponse
+     */
+    previewHtmls?: Array<string>;
 }
 /**
  * Select customizations on your creative from any combination of headline, logo, and custom image.
@@ -2023,11 +2419,47 @@ export interface CreativeProperties {
      */
     squareCustomImage?: Image;
     /**
+     * An optional collection of 1:1 square images which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+     * @type {Array<Image>}
+     * @memberof CreativeProperties
+     */
+    squareImages?: Array<Image>;
+    /**
+     * An optional collection of 16:9 landscape images which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+     * @type {Array<Image>}
+     * @memberof CreativeProperties
+     */
+    landscapeImages?: Array<Image>;
+    /**
+     * An optional collection of 9:16 portrait images which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+     * @type {Array<Image>}
+     * @memberof CreativeProperties
+     */
+    portraitImages?: Array<Image>;
+    /**
      * 
      * @type {Video}
      * @memberof CreativeProperties
      */
     video?: Video;
+    /**
+     * An optional collection of 1:1 square videos which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+     * @type {Array<Video>}
+     * @memberof CreativeProperties
+     */
+    squareVideos?: Array<Video>;
+    /**
+     * An optional collection of 16:9 landscape videos which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+     * @type {Array<Video>}
+     * @memberof CreativeProperties
+     */
+    landscapeVideos?: Array<Video>;
+    /**
+     * An optional collection of 9:16 portrait videos which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+     * @type {Array<Video>}
+     * @memberof CreativeProperties
+     */
+    portraitVideos?: Array<Video>;
 }
 /**
  * 
@@ -2055,7 +2487,7 @@ export interface CreativeResponse {
     creativeId?: number;
 }
 /**
- * The type of the associated creative. If the field is empty or null, a default value of IMAGE will be used. One ad group only supports one type (VIDEO or IMAGE) of creativeType at a time. |Name|Tactic|Description| |----|------|-----------| |IMAGE |T00020, T00030 |The creative will display static assets (e.g. headline, brandLogo or custom image).| |VIDEO |T00030 |The creative will display video assets. This type of creative must have video assets provided. Audiences (T00030) is currently only available today, contextual (T00020) will be coming soon.|
+ * The type of the associated creative. If the field is empty or null, a default value of IMAGE will be used. One ad group only supports one type (VIDEO or IMAGE) of creativeType at a time. |Name|Description| |----|-----------| |IMAGE |The creative will display static assets (e.g. headline, brandLogo or custom image).| |VIDEO |The creative will display video assets. This type of creative must have a video asset provided. Only supported when using productAds with ASIN or SKU.|
  * @export
  * @enum {string}
  */
@@ -2066,7 +2498,7 @@ export enum CreativeType {
 }
 
 /**
- *  The type of the creative. |Name|Description| |----|-----------| |IMAGE |The creative will display static assets (e.g. headline, brandLogo or custom image).| |VIDEO |The creative will display video assets. This type of creative must have video assets provided.|
+ * The type of the creative. |Name|Description| |----|-----------| |IMAGE |The creative will display static assets (e.g. headline, brandLogo or custom image).| |VIDEO |The creative will display video assets. This type of creative must have video assets provided. Only supported when using productAds with ASIN or SKU.|
  * @export
  * @enum {string}
  */
@@ -2130,6 +2562,90 @@ export interface CustomImageCreativeProperties {
      * @memberof CustomImageCreativeProperties
      */
     squareCustomImage?: Image;
+    /**
+     * An optional collection of 1:1 square images which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+     * @type {Array<Image>}
+     * @memberof CustomImageCreativeProperties
+     */
+    squareImages?: Array<Image>;
+    /**
+     * An optional collection of 16:9 landscape images which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+     * @type {Array<Image>}
+     * @memberof CustomImageCreativeProperties
+     */
+    landscapeImages?: Array<Image>;
+    /**
+     * An optional collection of 9:16 portrait images which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+     * @type {Array<Image>}
+     * @memberof CustomImageCreativeProperties
+     */
+    portraitImages?: Array<Image>;
+}
+/**
+ * Object representing date range type rule duration.
+ * @export
+ * @interface DateRangeTypeRuleDuration
+ */
+export interface DateRangeTypeRuleDuration {
+    /**
+     * The end date of the budget rule in YYYYMMDD format. The end date is inclusive. Required to be equal or greater than `startDate`.
+     * @type {string}
+     * @memberof DateRangeTypeRuleDuration
+     */
+    endDate?: string;
+    /**
+     * The start date of the budget rule in YYYYMMDD format. The start date is inclusive. Required to be greater than or equal to current date.
+     * @type {string}
+     * @memberof DateRangeTypeRuleDuration
+     */
+    startDate: string;
+}
+/**
+ * The day of the week.
+ * @export
+ * @enum {string}
+ */
+
+export enum DayOfWeek {
+    Monday = 'MONDAY',
+    Tuesday = 'TUESDAY',
+    Wednesday = 'WEDNESDAY',
+    Thursday = 'THURSDAY',
+    Friday = 'FRIDAY',
+    Saturday = 'SATURDAY',
+    Sunday = 'SUNDAY'
+}
+
+/**
+ * Object representing event type rule duration.
+ * @export
+ * @interface EventTypeRuleDuration
+ */
+export interface EventTypeRuleDuration {
+    /**
+     * The event identifier. This value is available from the budget rules recommendation API.
+     * @type {string}
+     * @memberof EventTypeRuleDuration
+     */
+    eventId: string;
+    /**
+     * The event end date in YYYYMMDD format. Read-only.
+     * @type {string}
+     * @memberof EventTypeRuleDuration
+     */
+    endDate?: string;
+    /**
+     * The event name. Read-only.
+     * @type {string}
+     * @memberof EventTypeRuleDuration
+     */
+    eventName?: string;
+    /**
+     * The event start date in YYYYMMDD format. Read-only. Note that this field is present only for announced events.
+     * @type {string}
+     * @memberof EventTypeRuleDuration
+     */
+    startDate?: string;
 }
 /**
  * Forecast impressions, clicks, reach, or conversions.
@@ -2199,6 +2715,38 @@ export interface GetOptimizationRuleResponse {
      * @memberof GetOptimizationRuleResponse
      */
     adGroupIds?: Array<number>;
+}
+/**
+ * 
+ * @export
+ * @interface GetSDBudgetRuleResponse
+ */
+export interface GetSDBudgetRuleResponse {
+    /**
+     * 
+     * @type {SDBudgetRule}
+     * @memberof GetSDBudgetRuleResponse
+     */
+    budgetRule?: SDBudgetRule;
+}
+/**
+ * 
+ * @export
+ * @interface GetSDBudgetRulesForAdvertiserResponse
+ */
+export interface GetSDBudgetRulesForAdvertiserResponse {
+    /**
+     * A list of rules created by the advertiser.
+     * @type {Array<SDBudgetRule>}
+     * @memberof GetSDBudgetRulesForAdvertiserResponse
+     */
+    budgetRulesForAdvertiserResponse?: Array<SDBudgetRule>;
+    /**
+     * To retrieve the next page of results, call the same operation and specify this token in the request. If the `nextToken` field is empty, there are no further results.
+     * @type {string}
+     * @memberof GetSDBudgetRulesForAdvertiserResponse
+     */
+    nextToken?: string;
 }
 /**
  * A product an advertisers wants to advertise. Recommendations will be made for specified goal products.
@@ -2283,6 +2831,18 @@ export interface ImageCroppingCoordinates {
     height: number;
 }
 /**
+ * The type of the landingPage used. This field is completely optional and will be set in conjunction with the LandingPageURL to indicate the type of landing page that will be set. This field is not supported when using ASIN or SKU fields.
+ * @export
+ * @enum {string}
+ */
+
+export enum LandingPageType {
+    Store = 'STORE',
+    Moment = 'MOMENT',
+    OffAmazonLink = 'OFF_AMAZON_LINK'
+}
+
+/**
  * Locale string as described in [BCP 47](https://tools.ietf.org/html/bcp47). For example, `en-US`
  * @export
  * @enum {string}
@@ -2310,6 +2870,112 @@ export enum Locale {
     EnJp = 'en-JP',
     EnAe = 'en-AE',
     ArAe = 'ar-AE'
+}
+
+/**
+ * 
+ * @export
+ * @interface Location
+ */
+export interface Location {
+    /**
+     * 
+     * @type {string}
+     * @memberof Location
+     */
+    state?: LocationStateEnum;
+    /**
+     * The identifier of the location.
+     * @type {number}
+     * @memberof Location
+     */
+    locationExpressionId?: number;
+    /**
+     * The identifier of the ad group.
+     * @type {number}
+     * @memberof Location
+     */
+    adGroupId?: number;
+    /**
+     * The Location definition.
+     * @type {Array<LocationExpression>}
+     * @memberof Location
+     */
+    expression?: Array<LocationExpression>;
+    /**
+     * The human-readable location definition.
+     * @type {Array<ResolvedLocationExpression>}
+     * @memberof Location
+     */
+    resolvedExpression?: Array<ResolvedLocationExpression>;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum LocationStateEnum {
+    Enabled = 'enabled'
+}
+
+/**
+ * 
+ * @export
+ * @interface LocationAllOf
+ */
+export interface LocationAllOf {
+    /**
+     * The identifier of the location.
+     * @type {number}
+     * @memberof LocationAllOf
+     */
+    locationExpressionId?: number;
+    /**
+     * The identifier of the ad group.
+     * @type {number}
+     * @memberof LocationAllOf
+     */
+    adGroupId?: number;
+    /**
+     * The Location definition.
+     * @type {Array<LocationExpression>}
+     * @memberof LocationAllOf
+     */
+    expression?: Array<LocationExpression>;
+    /**
+     * The human-readable location definition.
+     * @type {Array<ResolvedLocationExpression>}
+     * @memberof LocationAllOf
+     */
+    resolvedExpression?: Array<ResolvedLocationExpression>;
+}
+/**
+ * 
+ * @export
+ * @interface LocationExpression
+ */
+export interface LocationExpression {
+    /**
+     * 
+     * @type {LocationPredicate}
+     * @memberof LocationExpression
+     */
+    type?: LocationPredicate;
+    /**
+     * The location identifier. Currently, this can correspond to either a \'city\', \'state\', \'dma\', \'postal code\', or \'country\'. Its value is discoverable using the GET /locations API.
+     * @type {string}
+     * @memberof LocationExpression
+     */
+    value?: string;
+}
+/**
+ * The location category.
+ * @export
+ * @enum {string}
+ */
+
+export enum LocationPredicate {
+    Location = 'location'
 }
 
 /**
@@ -2744,6 +3410,63 @@ export interface PatchRequest {
     request: Array<PatchDocument>;
 }
 /**
+ * 
+ * @export
+ * @interface PerformanceMeasureCondition
+ */
+export interface PerformanceMeasureCondition {
+    /**
+     * 
+     * @type {PerformanceMetric}
+     * @memberof PerformanceMeasureCondition
+     */
+    metricName: PerformanceMetric;
+    /**
+     * 
+     * @type {ComparisonOperator}
+     * @memberof PerformanceMeasureCondition
+     */
+    comparisonOperator: ComparisonOperator;
+    /**
+     * The performance threshold value.
+     * @type {number}
+     * @memberof PerformanceMeasureCondition
+     */
+    threshold: number;
+}
+/**
+ * The advertising performance metric.
+ * @export
+ * @enum {string}
+ */
+
+export enum PerformanceMetric {
+    Acos = 'ACOS',
+    Ctr = 'CTR',
+    Cvr = 'CVR',
+    Roas = 'ROAS'
+}
+
+/**
+ * An object giving the name of the performance metric and its value when the rule was evaluated
+ * @export
+ * @interface PerformanceMetricValue
+ */
+export interface PerformanceMetricValue {
+    /**
+     * Name of the performance metric
+     * @type {string}
+     * @memberof PerformanceMetricValue
+     */
+    name?: string;
+    /**
+     * Value of the performance metric
+     * @type {number}
+     * @memberof PerformanceMetricValue
+     */
+    value?: number;
+}
+/**
  * Placement type where the rule should be applied, defaults to `ALL`(including home page, detail page, twitch and offsite).  **Future** More available placemenTypes will be supported.
  * @export
  * @enum {string}
@@ -2803,13 +3526,31 @@ export interface ProductAd {
      */
     campaignId?: number;
     /**
-     * The ASIN of the product advertised by the product ad.
+     * The URL where customers will land after clicking on its link. Must be provided if a LandingPageType is set. Please note that if a single product ad sets the landing page url, only one product ad can be added to the ad group. This field is not supported when using ASIN or SKU fields. ||Specifications| |------------------|------------------| |LandingPageType| Description| |STORE| Not yet supported. The url should be in the format of https://www.amazon.com/stores/_* (using a correct Amazon url based on the marketplace)| |MOMENT| Not yet supported. The url should be in the format of https://www.amazon.com/moments/promotion/{campaignId} (using a correct Amazon url based on the marketplace)| |OFF_AMAZON_LINK| The url should be in the format of https://www.****.com. Note that this LandingPageType is not supported when using ASIN or SKU fields. A custom creative of headline, logo, image are require for this LandingPageType. |
+     * @type {string}
+     * @memberof ProductAd
+     */
+    landingPageURL?: string;
+    /**
+     * 
+     * @type {LandingPageType}
+     * @memberof ProductAd
+     */
+    landingPageType?: LandingPageType;
+    /**
+     * The name of the ad. Note that this field is not supported when using ASIN or SKU fields.
+     * @type {string}
+     * @memberof ProductAd
+     */
+    adName?: string;
+    /**
+     * The Amazon ASIN of the product advertised by the product ad.
      * @type {string}
      * @memberof ProductAd
      */
     asin?: string;
     /**
-     * The SKU of the product advertised by the product ad.
+     * The Amazon SKU of the product advertised by the product ad.
      * @type {string}
      * @memberof ProductAd
      */
@@ -2851,13 +3592,31 @@ export interface ProductAdAllOf {
      */
     campaignId?: number;
     /**
-     * The ASIN of the product advertised by the product ad.
+     * The URL where customers will land after clicking on its link. Must be provided if a LandingPageType is set. Please note that if a single product ad sets the landing page url, only one product ad can be added to the ad group. This field is not supported when using ASIN or SKU fields. ||Specifications| |------------------|------------------| |LandingPageType| Description| |STORE| Not yet supported. The url should be in the format of https://www.amazon.com/stores/_* (using a correct Amazon url based on the marketplace)| |MOMENT| Not yet supported. The url should be in the format of https://www.amazon.com/moments/promotion/{campaignId} (using a correct Amazon url based on the marketplace)| |OFF_AMAZON_LINK| The url should be in the format of https://www.****.com. Note that this LandingPageType is not supported when using ASIN or SKU fields. A custom creative of headline, logo, image are require for this LandingPageType. |
+     * @type {string}
+     * @memberof ProductAdAllOf
+     */
+    landingPageURL?: string;
+    /**
+     * 
+     * @type {LandingPageType}
+     * @memberof ProductAdAllOf
+     */
+    landingPageType?: LandingPageType;
+    /**
+     * The name of the ad. Note that this field is not supported when using ASIN or SKU fields.
+     * @type {string}
+     * @memberof ProductAdAllOf
+     */
+    adName?: string;
+    /**
+     * The Amazon ASIN of the product advertised by the product ad.
      * @type {string}
      * @memberof ProductAdAllOf
      */
     asin?: string;
     /**
-     * The SKU of the product advertised by the product ad.
+     * The Amazon SKU of the product advertised by the product ad.
      * @type {string}
      * @memberof ProductAdAllOf
      */
@@ -2912,6 +3671,24 @@ export interface ProductAdResponseEx {
      * @memberof ProductAdResponseEx
      */
     campaignId?: number;
+    /**
+     * The URL where customers will land after clicking on its link. Must be provided if a LandingPageType is set. Please note that if a single product ad sets the landing page url, only one product ad can be added to the ad group. This field is not supported when using ASIN or SKU fields. ||Specifications| |------------------|------------------| |LandingPageType| Description| |STORE| Not yet supported. The url should be in the format of https://www.amazon.com/stores/_* (using a correct Amazon url based on the marketplace)| |MOMENT| Not yet supported. The url should be in the format of https://www.amazon.com/moments/promotion/{campaignId} (using a correct Amazon url based on the marketplace)| |OFF_AMAZON_LINK| The url should be in the format of https://www.****.com. Note that this LandingPageType is not supported when using ASIN or SKU fields. A custom creative of headline, logo, image are require for this LandingPageType. |
+     * @type {string}
+     * @memberof ProductAdResponseEx
+     */
+    landingPageURL?: string;
+    /**
+     * 
+     * @type {LandingPageType}
+     * @memberof ProductAdResponseEx
+     */
+    landingPageType?: LandingPageType;
+    /**
+     * The name of the ad. Note that this field is not supported when using ASIN or SKU fields.
+     * @type {string}
+     * @memberof ProductAdResponseEx
+     */
+    adName?: string;
     /**
      * The ASIN of the product being advertised.
      * @type {string}
@@ -3022,6 +3799,36 @@ export enum RecommendationType {
 /**
  * 
  * @export
+ * @interface Recurrence
+ */
+export interface Recurrence {
+    /**
+     * 
+     * @type {RecurrenceType}
+     * @memberof Recurrence
+     */
+    type?: RecurrenceType;
+    /**
+     * Object representing days of the week for weekly type rule. It is not required for daily recurrence type
+     * @type {Array<DayOfWeek>}
+     * @memberof Recurrence
+     */
+    daysOfWeek?: Array<DayOfWeek>;
+}
+/**
+ * depicts the type of recurrence
+ * @export
+ * @enum {string}
+ */
+
+export enum RecurrenceType {
+    Daily = 'DAILY',
+    Weekly = 'WEEKLY'
+}
+
+/**
+ * 
+ * @export
  * @interface ReportRequest
  */
 export interface ReportRequest {
@@ -3044,7 +3851,7 @@ export interface ReportRequest {
      */
     segment?: Segment;
     /**
-     * A comma-separated list of the metrics to be included in the report.  Each report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/reporting/v2/report-types).**  **Note**: Campaigns with vCPM costType should use view+click based metrics (viewAttributedConversions14d, viewAttributedDetailPageView14d, viewAttributedSales14d, viewAttributedUnitsOrdered14d, viewImpressions).  **Note**: Detail page view metrics (attributedDetailPageView14d, viewAttributedDetailPageView14d) have an SLA of 3 days.  **Tip**: Use new-to-brand (NTB) metrics to calculate how efficient your campaigns are at driving new shoppers:    1. Percentage of NTB orders = attributedOrdersNewToBrand14d / attributedConversions14d   2. Percentage NTB sales = attributedSalesNewToBrand14d / attributedSales14d   3. Percentage NTB units = attributedUnitsOrderedNewToBrand14d / attributedUnitsOrdered14d   4. NTB order rate = attributedOrdersNewToBrand14 / impressions
+     * A comma-separated list of the metrics to be included in the report.  Each report type supports different metrics. **To understand supported metrics for each report type, see [Report types](/API/docs/en-us/guides/reporting/v2/report-types).**  **Note**: Campaigns with vCPM costType should use view+click based metrics (viewAttributedConversions14d, viewAttributedDetailPageView14d, viewAttributedSales14d, viewAttributedUnitsOrdered14d, viewImpressions).  **Note**: Detail page view metrics (attributedDetailPageView14d, viewAttributedDetailPageView14d) have an SLA of 3 days.  **Tip**: Use new-to-brand (NTB) metrics to calculate how efficient your campaigns are at driving new shoppers:    1. Percentage of NTB orders = attributedOrdersNewToBrand14d / attributedConversions14d   2. Percentage NTB sales = attributedSalesNewToBrand14d / attributedSales14d   3. Percentage NTB units = attributedUnitsOrderedNewToBrand14d / attributedUnitsOrdered14d   4. NTB order rate = attributedOrdersNewToBrand14 / impressions
      * @type {string}
      * @memberof ReportRequest
      */
@@ -3120,13 +3927,63 @@ export enum ReportResponseStatusEnum {
 }
 
 /**
+ * 
+ * @export
+ * @interface ResolvedLocationExpression
+ */
+export interface ResolvedLocationExpression {
+    /**
+     * 
+     * @type {LocationPredicate}
+     * @memberof ResolvedLocationExpression
+     */
+    type?: LocationPredicate;
+    /**
+     * The human-readable location name.
+     * @type {string}
+     * @memberof ResolvedLocationExpression
+     */
+    value?: string;
+}
+/**
+ * 
+ * @export
+ * @interface RuleBasedBudget
+ */
+export interface RuleBasedBudget {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof RuleBasedBudget
+     */
+    isProcessing?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof RuleBasedBudget
+     */
+    applicableRuleName?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof RuleBasedBudget
+     */
+    value?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RuleBasedBudget
+     */
+    applicableRuleId?: string;
+}
+/**
  * A rule condition that defines the advertiser\'s intent for the outcome of the rule. Certain actions are performed by the product to achieve and maintain the rule condition.
  * @export
  * @interface RuleCondition
  */
 export interface RuleCondition {
     /**
-     * The name of the metric. Supported rule metrics and corresponding supported comparisonOperators: |      MetricName      |ComparisonOperator  |Description| |------------------|--------------------|-------------------| |COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS     |BETWEEN             |Maximize viewable impressions while cost per 1000 views in `[rangeLower, rangeUpper]`| |COST_PER_ORDER    |BETWEEN            |Maximize viewable impressions/page visits/conversion while cost per order in `[rangeLower, rangeUpper]`| |COST_PER_CLICK    |BETWEEN            |Maximize page visits while cost per click in `[rangeLower, rangeUpper]`|
+     * The name of the metric. Supported rule metrics and corresponding supported comparisonOperators: |      MetricName      |ComparisonOperator  |Description| |------------------|--------------------|-------------------| |COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS     |              LESS_THAN_OR_EQUAL_TO             |Maximize viewable impressions while cost per 1000 views less than or equal to `threshold`| |COST_PER_ORDER    |              LESS_THAN_OR_EQUAL_TO            |Maximize viewable impressions/page visits/conversion while cost per order less than or equal to `threshold`| |COST_PER_CLICK    |              LESS_THAN_OR_EQUAL_TO            |Maximize page visits while cost per click less than or equal to `threshold`|
      * @type {string}
      * @memberof RuleCondition
      */
@@ -3138,11 +3995,11 @@ export interface RuleCondition {
      */
     comparisonOperator: RuleConditionComparisonOperatorEnum;
     /**
-     * 
-     * @type {RuleConditionRange}
+     * The value of the threshold associated with the metric. The threshold values has defined minimums depending on the metric names in the following table: |                  MetricName            | Minimum of `threshold` Value  | |----------------------------------------|-----------------------------------| |COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS  | 1                                 | |COST_PER_ORDER                          | 3                                 | |COST_PER_CLICK                          | 0.5                               |
+     * @type {number}
      * @memberof RuleCondition
      */
-    range: RuleConditionRange;
+    threshold: number;
 }
 
 /**
@@ -3159,30 +4016,100 @@ export enum RuleConditionMetricNameEnum {
     * @enum {string}
     */
 export enum RuleConditionComparisonOperatorEnum {
-    Between = 'BETWEEN'
+    LessThanOrEqualTo = 'LESS_THAN_OR_EQUAL_TO'
 }
 
 /**
- * The value of the range associated with the metric. The range values can only be set to the supported value pairs listed in the following table: |                  MetricName            |Supported Range ([rangeLower, rangeUpper])  | |----------------------------------------|------------------------------------------| |COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS  |[3, 5],  [5, 7], [7, 9], [9, 11]          | |COST_PER_ORDER                          |[5, 15], [15, 25], [25, 35], [35, 50]     | |COST_PER_CLICK                          |[0.5, 0.75], [0.75, 1], [1, 1.5], [1.5, 2]|
+ * 
  * @export
- * @interface RuleConditionRange
+ * @interface RuleDuration
  */
-export interface RuleConditionRange {
+export interface RuleDuration {
     /**
-     * The lower bound of the range. This value must be less than `rangeUpper`.
-     * @type {number}
-     * @memberof RuleConditionRange
+     * 
+     * @type {EventTypeRuleDuration}
+     * @memberof RuleDuration
      */
-    rangeLower: number;
+    eventTypeRuleDuration?: EventTypeRuleDuration;
     /**
-     * The upper bound of the range. This value must be greater than `rangeLower`.
-     * @type {number}
-     * @memberof RuleConditionRange
+     * 
+     * @type {DateRangeTypeRuleDuration}
+     * @memberof RuleDuration
      */
-    rangeUpper: number;
+    dateRangeTypeRuleDuration?: DateRangeTypeRuleDuration;
 }
 /**
- * Determines what the recommended bids will be optimized for.  |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks|cpc|T00020 T00030|Optimize for page visits| |conversions|cpc|T00020 T00030|Optimize for conversion| |reach|vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|
+ * An audience category determines the goal of the audience such as In-market, Interest, Lifestyle and Life Event
+ * @export
+ * @enum {string}
+ */
+
+export enum SDAudienceCategory {
+    InMarket = 'In-market',
+    Lifestyle = 'Lifestyle',
+    Interest = 'Interest',
+    LifeEvent = 'Life event'
+}
+
+/**
+ * List of recommended standard Amazon audience targets of a specific audience category
+ * @export
+ * @interface SDAudienceCategoryRecommendations
+ */
+export interface SDAudienceCategoryRecommendations {
+    /**
+     * 
+     * @type {SDAudienceCategory}
+     * @memberof SDAudienceCategoryRecommendations
+     */
+    category?: SDAudienceCategory;
+    /**
+     * List of recommended standard Amazon audience targets
+     * @type {Array<SDAudienceRecommendation>}
+     * @memberof SDAudienceCategoryRecommendations
+     */
+    audiences?: Array<SDAudienceRecommendation>;
+}
+/**
+ * A recommended standard Amazon audience to target ads on
+ * @export
+ * @interface SDAudienceRecommendation
+ */
+export interface SDAudienceRecommendation {
+    /**
+     * The audience identifier
+     * @type {string}
+     * @memberof SDAudienceRecommendation
+     */
+    audience?: string;
+    /**
+     * The Amazon audience name
+     * @type {string}
+     * @memberof SDAudienceRecommendation
+     */
+    name?: string;
+    /**
+     * A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation
+     * @type {number}
+     * @memberof SDAudienceRecommendation
+     */
+    rank?: number;
+}
+/**
+ * 
+ * @export
+ * @interface SDAudienceRecommendations
+ */
+export interface SDAudienceRecommendations {
+    /**
+     * List of recommended audience targets, broken down by audience category
+     * @type {Array<SDAudienceCategoryRecommendations>}
+     * @memberof SDAudienceRecommendations
+     */
+    audiences?: Array<SDAudienceCategoryRecommendations>;
+}
+/**
+ * Determines what the recommended bids will be optimized for.  |Name|CostType|Description| |----|--------|-----------| |reach|vcpm|Optimize for viewable impressions. $1 is the minimum bid for vCPM.| |clicks|cpc|Optimize for page visits| |conversions|cpc|Optimize for conversion| |leads |cpc| [PREVIEW ONLY] Optimize for lead generation.|
  * @export
  * @enum {string}
  */
@@ -3219,6 +4146,105 @@ export interface SDBidRecommendationV31 {
     recommended: number;
 }
 /**
+ * 
+ * @export
+ * @interface SDBudgetHistory
+ */
+export interface SDBudgetHistory {
+    /**
+     * 
+     * @type {Array<SDRuleBasedBudget>}
+     * @memberof SDBudgetHistory
+     */
+    history?: Array<SDRuleBasedBudget>;
+}
+/**
+ * 
+ * @export
+ * @interface SDBudgetRule
+ */
+export interface SDBudgetRule {
+    /**
+     * 
+     * @type {State}
+     * @memberof SDBudgetRule
+     */
+    ruleState?: State;
+    /**
+     * Epoch time of budget rule update. Read-only.
+     * @type {number}
+     * @memberof SDBudgetRule
+     */
+    lastUpdatedDate?: number;
+    /**
+     * Epoch time of budget rule creation. Read-only.
+     * @type {number}
+     * @memberof SDBudgetRule
+     */
+    createdDate?: number;
+    /**
+     * 
+     * @type {SDBudgetRuleDetails}
+     * @memberof SDBudgetRule
+     */
+    ruleDetails?: SDBudgetRuleDetails;
+    /**
+     * The budget rule identifier.
+     * @type {string}
+     * @memberof SDBudgetRule
+     */
+    ruleId: string;
+    /**
+     * The budget rule status. Read-only.
+     * @type {string}
+     * @memberof SDBudgetRule
+     */
+    ruleStatus?: string;
+}
+/**
+ * Object representing details of a budget rule for SD campaign
+ * @export
+ * @interface SDBudgetRuleDetails
+ */
+export interface SDBudgetRuleDetails {
+    /**
+     * 
+     * @type {RuleDuration}
+     * @memberof SDBudgetRuleDetails
+     */
+    duration?: RuleDuration;
+    /**
+     * 
+     * @type {Recurrence}
+     * @memberof SDBudgetRuleDetails
+     */
+    recurrence?: Recurrence;
+    /**
+     * 
+     * @type {SDRuleType}
+     * @memberof SDBudgetRuleDetails
+     */
+    ruleType?: SDRuleType;
+    /**
+     * 
+     * @type {BudgetIncreaseBy}
+     * @memberof SDBudgetRuleDetails
+     */
+    budgetIncreaseBy?: BudgetIncreaseBy;
+    /**
+     * The budget rule name. Required to be unique within a campaign.
+     * @type {string}
+     * @memberof SDBudgetRuleDetails
+     */
+    name?: string;
+    /**
+     * 
+     * @type {PerformanceMeasureCondition}
+     * @memberof SDBudgetRuleDetails
+     */
+    performanceMeasureCondition?: PerformanceMeasureCondition;
+}
+/**
  * A recommended category to target ads on
  * @export
  * @interface SDCategoryRecommendation
@@ -3237,7 +4263,7 @@ export interface SDCategoryRecommendation {
      */
     name?: string;
     /**
-     *  The path of the category within the category catalogue
+     * The path of the category within the category catalogue.
      * @type {Array<string>}
      * @memberof SDCategoryRecommendation
      */
@@ -3275,6 +4301,74 @@ export interface SDCategoryRecommendationTargetableAsinCountRange {
     rangeUpper?: number;
 }
 /**
+ * A recommended category to target ads on
+ * @export
+ * @interface SDCategoryRecommendationV33
+ */
+export interface SDCategoryRecommendationV33 {
+    /**
+     * The category identifier
+     * @type {number}
+     * @memberof SDCategoryRecommendationV33
+     */
+    category?: number;
+    /**
+     * The category name
+     * @type {string}
+     * @memberof SDCategoryRecommendationV33
+     */
+    name?: string;
+    /**
+     * The translated category name by requested locale, field will not be provided if locale is not provided or campaign localization service is down.
+     * @type {string}
+     * @memberof SDCategoryRecommendationV33
+     */
+    translatedName?: string;
+    /**
+     * The path of the category within the category catalogue.
+     * @type {Array<string>}
+     * @memberof SDCategoryRecommendationV33
+     */
+    path?: Array<string>;
+    /**
+     * The translated path of the category within the category catalogue by requested locale, field will not be provided if locale is not provided or campaign localization is down.
+     * @type {Array<string>}
+     * @memberof SDCategoryRecommendationV33
+     */
+    translatedPath?: Array<string>;
+    /**
+     * 
+     * @type {SDCategoryRecommendationV33TargetableAsinCountRange}
+     * @memberof SDCategoryRecommendationV33
+     */
+    targetableAsinCountRange?: SDCategoryRecommendationV33TargetableAsinCountRange;
+    /**
+     * A rank to signify which recommendations are weighed more heavily, with a lower rank signifying a stronger recommendation.
+     * @type {number}
+     * @memberof SDCategoryRecommendationV33
+     */
+    rank?: number;
+}
+/**
+ * The range of ASINs available within the category catalogue.
+ * @export
+ * @interface SDCategoryRecommendationV33TargetableAsinCountRange
+ */
+export interface SDCategoryRecommendationV33TargetableAsinCountRange {
+    /**
+     * 
+     * @type {number}
+     * @memberof SDCategoryRecommendationV33TargetableAsinCountRange
+     */
+    rangeLower?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof SDCategoryRecommendationV33TargetableAsinCountRange
+     */
+    rangeUpper?: number;
+}
+/**
  * 
  * @export
  * @interface SDCategoryRecommendations
@@ -3288,7 +4382,20 @@ export interface SDCategoryRecommendations {
     categories?: Array<SDCategoryRecommendation>;
 }
 /**
- * Determines what performance metric the bid recommendations will be optimized for. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc|T00020 T00030|The bid recommendations will be optimized for clicks triggered by the ad.| |vcpm|T00020 T00030|The bid recommendations will be optimized for viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|
+ * 
+ * @export
+ * @interface SDCategoryRecommendationsV33
+ */
+export interface SDCategoryRecommendationsV33 {
+    /**
+     * List of recommended category targets.
+     * @type {Array<SDCategoryRecommendationV33>}
+     * @memberof SDCategoryRecommendationsV33
+     */
+    categories?: Array<SDCategoryRecommendationV33>;
+}
+/**
+ * Determines what performance metric the bid recommendations will be optimized for. |Name|Description| |----|----------|-----------| |cpc|The bid recommendations will be optimized for clicks triggered by the ad.| |vcpm|The bid recommendations will be optimized for viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|
  * @export
  * @enum {string}
  */
@@ -3578,6 +4685,66 @@ export enum SDRecommendationTypeV31 {
 }
 
 /**
+ * Signifies a type of recommendation. PRODUCT and CATEGORY are supported by tactic T00020. CATEGORY and AUDIENCE are supported by tactic T00030.
+ * @export
+ * @enum {string}
+ */
+
+export enum SDRecommendationTypeV32 {
+    Product = 'PRODUCT',
+    Category = 'CATEGORY',
+    Audience = 'AUDIENCE'
+}
+
+/**
+ * 
+ * @export
+ * @interface SDRuleBasedBudget
+ */
+export interface SDRuleBasedBudget {
+    /**
+     * Epoch time of budget rule execution.
+     * @type {number}
+     * @memberof SDRuleBasedBudget
+     */
+    executionTime?: number;
+    /**
+     * 
+     * @type {SDBudgetRule}
+     * @memberof SDRuleBasedBudget
+     */
+    appliedRule?: SDBudgetRule;
+    /**
+     * The budget value.
+     * @type {number}
+     * @memberof SDRuleBasedBudget
+     */
+    ruleBasedBudgetValue?: number;
+    /**
+     * The daily budget value.
+     * @type {number}
+     * @memberof SDRuleBasedBudget
+     */
+    dailyBudgetValue?: number;
+    /**
+     * 
+     * @type {PerformanceMetricValue}
+     * @memberof SDRuleBasedBudget
+     */
+    performanceMetric?: PerformanceMetricValue;
+}
+/**
+ * The type of budget rule. SCHEDULE: A budget rule based on a start and end date. PERFORMANCE: A budget rule based on advertising performance criteria.
+ * @export
+ * @enum {string}
+ */
+
+export enum SDRuleType {
+    Schedule = 'SCHEDULE',
+    Performance = 'PERFORMANCE'
+}
+
+/**
  * The advertising tactic associated with the campaign. The following table lists available tactic names: |Tactic Name|Type|Description|         |-----------|-----|-----------|         |T00020 &nbsp;    |Products&nbsp;| Products: Choose individual products to show your ads in placements related to those products.<br>Categories: Choose individual categories to show your ads in placements related to those categories.
  * @export
  * @enum {string}
@@ -3787,7 +4954,7 @@ export interface SDTargetingClauseV31 {
      */
     expressionType: SDTargetingClauseV31ExpressionTypeEnum;
     /**
-     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * **Future** To exclude parts of an audience, specify a TargetingPredicateNested component that contains a negative TargetingPredicate type.
+     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components.
      * @type {Array<SDTargetExpressionV31>}
      * @memberof SDTargetingClauseV31
      */
@@ -3804,7 +4971,7 @@ export enum SDTargetingClauseV31ExpressionTypeEnum {
 }
 
 /**
- * A predicate to match against inside the TargetingPredicateNested component (only applicable to audience targeting - T00030).  * All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Ads browse system. * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the â€˜betweenâ€™ strings to construct a targeting expression the format of the string is â€˜double-doubleâ€™ where the first double must be smaller than the second double. Prices are not inclusive. * The exactProduct, similarProduct, and negative types do not utilize the value field. * The only type currently applicable to Amazon Audiences targeting is \'audienceSameAs\'. * **Future** A \'negative\' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.
+ * A predicate to match against inside the TargetingPredicateNested component (only applicable to audience targeting - T00030).  * All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Ads browse system. * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the \'between\' strings to construct a targeting expression the format of the string is \'double-double\' where the first double must be smaller than the second double. Prices are not inclusive. * The exactProduct, similarProduct, relatedProduct, and negative types do not utilize the value field. * The only type currently applicable to Amazon Audiences targeting is \'audienceSameAs\'.
  * @export
  * @interface SDTargetingPredicateBaseV31
  */
@@ -3837,6 +5004,7 @@ export enum SDTargetingPredicateBaseV31TypeEnum {
     AsinReviewRatingGreaterThan = 'asinReviewRatingGreaterThan',
     AsinReviewRatingBetween = 'asinReviewRatingBetween',
     SimilarProduct = 'similarProduct',
+    RelatedProduct = 'relatedProduct',
     ExactProduct = 'exactProduct',
     AsinIsPrimeShippingEligible = 'asinIsPrimeShippingEligible',
     AsinAgeRangeSameAs = 'asinAgeRangeSameAs',
@@ -3846,7 +5014,7 @@ export enum SDTargetingPredicateBaseV31TypeEnum {
 }
 
 /**
- * A behavioral event and list of targeting predicates that represents an audience to target (only applicable to audience targeting - T00030).  * For manual ASIN-grain targeting, the value array must contain only, \'exactProduct\', \'similarProduct\', \'relatedProduct\' and \'lookback\' TargetingPredicateBase components. The \'lookback\' is mandatory and the value should be set to \'7\', \'14\', \'30\', \'60\', \'90\', \'180\' or \'365\'. * For manual Category-grain targeting, the value array must contain a \'lookback\' and \'asinCategorySameAs\' TargetingPredicateBase component, which can be further refined with optional brand, price, star-rating and shipping eligibility refinements. The \'lookback\' is mandatory and the value should be set to \'7\', \'14\', \'30\', \'60\', \'90\', \'180\' or \'365\'. * For manual Category-grain targeting, the value array must contain a \'lookback\' and \'asinCategorySameAs\' TargetingPredicateBase component, which can be further refined with optional brand, price, star-rating and shipping eligibility refinements. * For Amazon Audiences targeting, the TargetingPredicateNested type should be set to \'audience\' and the value array should include one TargetingPredicateBase component with type set to \'audienceSameAs\'. * **Future** For manual Category-grain targeting, adding a \'negative\' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.
+ * A behavioral event and list of targeting predicates that represents an audience to target (only applicable to audience targeting - T00030).  * For manual ASIN-grain targeting, the value array must contain only, \'exactProduct\', \'similarProduct\', \'relatedProduct\' and \'lookback\' TargetingPredicateBase components. The \'lookback\' is mandatory and the value should be set to \'7\', \'14\', \'30\', \'60\', \'90\', \'180\' or \'365\'. * For manual Category-grain targeting, the value array must contain a \'lookback\' and \'asinCategorySameAs\' TargetingPredicateBase component, which can be further refined with optional brand, price, star-rating and shipping eligibility refinements. The \'lookback\' is mandatory and the value should be set to \'7\', \'14\', \'30\', \'60\', \'90\', \'180\' or \'365\'. * For manual Category-grain targeting, the value array must contain a \'lookback\' and \'asinCategorySameAs\' TargetingPredicateBase component, which can be further refined with optional brand, price, star-rating and shipping eligibility refinements. * For Amazon Audiences targeting, the TargetingPredicateNested type should be set to \'audience\' and the value array should include one TargetingPredicateBase component with type set to \'audienceSameAs\'.
  * @export
  * @interface SDTargetingPredicateNestedV31
  */
@@ -3876,7 +5044,7 @@ export enum SDTargetingPredicateNestedV31TypeEnum {
 }
 
 /**
- * A predicate to match against in the Targeting Expression (only applicable to contextual targeting - T00020).  * All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Ads browse system. * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the â€˜betweenâ€™ strings to construct a targeting expression the format of the string is â€˜double-doubleâ€™ where the first double must be smaller than the second double. Prices are not inclusive.
+ * A predicate to match against in the Targeting Expression (only applicable to contextual targeting - T00020).  * All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Ads browse system. * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the \'between\' strings to construct a targeting expression the format of the string is \'double-double\' where the first double must be smaller than the second double. Prices are not inclusive.
  * @export
  * @interface SDTargetingPredicateV31
  */
@@ -3952,6 +5120,41 @@ export interface SDTargetingRecommendationsFailure {
      */
     errorMessage?: string;
 }
+/**
+ * List of supported locales.
+ * @export
+ * @enum {string}
+ */
+
+export enum SDTargetingRecommendationsLocale {
+    ArAe = 'ar_AE',
+    DeDe = 'de_DE',
+    EnAe = 'en_AE',
+    EnAu = 'en_AU',
+    EnCa = 'en_CA',
+    EnGb = 'en_GB',
+    EnIn = 'en_IN',
+    EnSg = 'en_SG',
+    EnUs = 'en_US',
+    EsEs = 'es_ES',
+    EsMx = 'es_MX',
+    FrCa = 'fr_CA',
+    FrFr = 'fr_FR',
+    HiIn = 'hi_IN',
+    ItIt = 'it_IT',
+    JaJp = 'ja_JP',
+    KoKr = 'ko_KR',
+    NlNl = 'nl_NL',
+    PlPl = 'pl_PL',
+    PtBr = 'pt_BR',
+    SvSe = 'sv_SE',
+    TaIn = 'ta_IN',
+    ThTh = 'th_TH',
+    TrTr = 'tr_TR',
+    ViVn = 'vi_VN',
+    ZhCn = 'zh_CN'
+}
+
 /**
  * Request for targeting recommendations
  * @export
@@ -4034,6 +5237,37 @@ export interface SDTargetingRecommendationsRequestV32 {
     themes?: SDTargetingRecommendationsThemes;
 }
 /**
+ * Request for targeting recommendations for API version 3.3.
+ * @export
+ * @interface SDTargetingRecommendationsRequestV33
+ */
+export interface SDTargetingRecommendationsRequestV33 {
+    /**
+     * 
+     * @type {SDTacticV31}
+     * @memberof SDTargetingRecommendationsRequestV33
+     */
+    tactic: SDTacticV31;
+    /**
+     * A list of products for which to get targeting recommendations
+     * @type {Array<SDGoalProduct>}
+     * @memberof SDTargetingRecommendationsRequestV33
+     */
+    products: Array<SDGoalProduct>;
+    /**
+     * A filter to indicate which types of recommendations to request.
+     * @type {Array<SDRecommendationTypeV32>}
+     * @memberof SDTargetingRecommendationsRequestV33
+     */
+    typeFilter: Array<SDRecommendationTypeV32>;
+    /**
+     * 
+     * @type {SDTargetingRecommendationsThemes}
+     * @memberof SDTargetingRecommendationsRequestV33
+     */
+    themes?: SDTargetingRecommendationsThemes;
+}
+/**
  * Response to a request for targeting recommendations.
  * @export
  * @interface SDTargetingRecommendationsResponse
@@ -4071,6 +5305,19 @@ export interface SDTargetingRecommendationsResponseV32 {
      * @memberof SDTargetingRecommendationsResponseV32
      */
     recommendations?: SDTargetingRecommendationsV32;
+}
+/**
+ * Response to a request for targeting recommendations.
+ * @export
+ * @interface SDTargetingRecommendationsResponseV33
+ */
+export interface SDTargetingRecommendationsResponseV33 {
+    /**
+     * 
+     * @type {SDTargetingRecommendationsV33}
+     * @memberof SDTargetingRecommendationsResponseV33
+     */
+    recommendations?: SDTargetingRecommendationsV33;
 }
 /**
  * The themes used to refine the recommendations. Currently only contextual targeting themes are supported.
@@ -4126,6 +5373,37 @@ export interface SDTargetingRecommendationsV32 {
      * 
      * @type {object}
      * @memberof SDTargetingRecommendationsV32
+     */
+    themes?: object;
+}
+/**
+ * For v3.3 the service will continue to return the recommendations returned for v3.2, and return audience recommendations if requested.
+ * @export
+ * @interface SDTargetingRecommendationsV33
+ */
+export interface SDTargetingRecommendationsV33 {
+    /**
+     * List of recommended product targets
+     * @type {Array<SDProductRecommendationV32>}
+     * @memberof SDTargetingRecommendationsV33
+     */
+    products?: Array<SDProductRecommendationV32>;
+    /**
+     * List of recommended category targets.
+     * @type {Array<SDCategoryRecommendationV33>}
+     * @memberof SDTargetingRecommendationsV33
+     */
+    categories?: Array<SDCategoryRecommendationV33>;
+    /**
+     * List of recommended audience targets, broken down by audience category
+     * @type {Array<SDAudienceCategoryRecommendations>}
+     * @memberof SDTargetingRecommendationsV33
+     */
+    audiences?: Array<SDAudienceCategoryRecommendations>;
+    /**
+     * 
+     * @type {object}
+     * @memberof SDTargetingRecommendationsV33
      */
     themes?: object;
 }
@@ -4253,7 +5531,18 @@ export enum SnapshotResponseStatusEnum {
 }
 
 /**
- * The advertising tactic associated with the campaign. The following table lists available tactic names: |Tactic Name|Type|Description| |-----------|-----|-----------| |T00020     |Contextual targeting | Choose individual products to show your ads in placements related to those products.<br> Choose individual categories to show your ads in placements related to those categories on and off Amazon. This tactic supports adGroup creativeType IMAGE only.| |T00030     |Audiences targeting | Select individual audiences to show your ads. This tactic supports adGroup creativeType IMAGE and VIDEO.|
+ * The budget rule state.
+ * @export
+ * @enum {string}
+ */
+
+export enum State {
+    Active = 'ACTIVE',
+    Paused = 'PAUSED'
+}
+
+/**
+ * The advertising tactic associated with the campaign. The following table lists available tactic names: |Tactic Name|Type|Description| |-----------|-----|-----------| |T00020     |Contextual targeting | Choose individual products to show your ads in placements related to those products.<br> Choose individual categories to show your ads in placements related to those categories on and off Amazon.| |T00030     |Audiences targeting | Select individual audiences to show your ads.|
  * @export
  * @enum {string}
  */
@@ -4276,7 +5565,7 @@ export enum TacticFilter {
 }
 
 /**
- * The advertising tactic associated with the campaign. The following table lists available tactic names: |Tactic Name|Type|Description| |-----------|-----|-----------| |T00020     |Contextual targeting | Choose individual products to show your ads in placements related to those products.<br> Choose individual categories to show your ads in placements related to those categories on and off Amazon. This tactic supports adGroup creativeType IMAGE only.| |T00030     |Audiences targeting | Select individual audiences to show your ads. This tactic supports adGroup creativeType IMAGE and VIDEO. |
+ * The advertising tactic associated with the campaign. The following table lists available tactic names: |Tactic Name|Type|Description| |-----------|-----|-----------| |T00020     |Contextual targeting | Choose individual products to show your ads in placements related to those products.<br> Choose individual categories to show your ads in placements related to those categories on and off Amazon.| |T00030     |Audiences targeting | Select individual audiences to show your ads.|
  * @export
  * @enum {string}
  */
@@ -4324,7 +5613,7 @@ export interface TargetingClause {
      */
     state?: TargetingClauseStateEnum;
     /**
-     * The bid will override the adGroup bid if specified. This field is not used for negative targeting clauses. The bid must be less than the maximum allowable bid for the campaign\'s marketplace; for a list of maximum allowable bids, find the [\"Bid constraints by marketplace\" table in our documentation overview](https://advertising.amazon.com/API/docs/en-us/get-started/overview). You cannot manually set a bid when the targeting clause\'s adGroup has an enabled optimization rule.
+     * The bid will override the adGroup bid if specified. This field is not used for negative targeting clauses. The bid must be less than the maximum allowable bid for the campaign\'s marketplace; for a list of maximum allowable bids, find the [\"Bid constraints by marketplace\" table in our documentation overview](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace). You cannot manually set a bid when the targeting clause\'s adGroup has an enabled optimization rule.
      * @type {number}
      * @memberof TargetingClause
      */
@@ -4348,13 +5637,13 @@ export interface TargetingClause {
      */
     expressionType?: TargetingClauseExpressionTypeEnum;
     /**
-     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify ASIN-grain (\'exactProduct\'), manual ASIN-grain (\'relatedProducts\' or \'relatedProducts\'), or category-grain targeting. * **Future** To exclude parts of an audience, specify a TargetingPredicateNested component that contains a negative TargetingPredicate type.
+     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify ASIN-grain (\'exactProduct\'), manual ASIN-grain (\'relatedProducts\' or \'relatedProducts\'), or category-grain targeting.
      * @type {Array<TargetingPredicate | TargetingPredicateLegacy | TargetingPredicateNested>}
      * @memberof TargetingClause
      */
     expression?: Array<TargetingPredicate | TargetingPredicateLegacy | TargetingPredicateNested>;
     /**
-     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify ASIN-grain (\'exactProduct\'), manual ASIN-grain (\'relatedProducts\' or \'relatedProducts\'), or category-grain targeting. * **Future** To exclude parts of an audience, specify a TargetingPredicateNested component that contains a negative TargetingPredicate type.
+     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify ASIN-grain (\'exactProduct\'), manual ASIN-grain (\'relatedProducts\' or \'relatedProducts\'), or category-grain targeting.
      * @type {Array<TargetingPredicate | TargetingPredicateLegacy | TargetingPredicateNested>}
      * @memberof TargetingClause
      */
@@ -4404,13 +5693,13 @@ export interface TargetingClauseAllOf {
      */
     expressionType?: TargetingClauseAllOfExpressionTypeEnum;
     /**
-     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify ASIN-grain (\'exactProduct\'), manual ASIN-grain (\'relatedProducts\' or \'relatedProducts\'), or category-grain targeting. * **Future** To exclude parts of an audience, specify a TargetingPredicateNested component that contains a negative TargetingPredicate type.
+     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify ASIN-grain (\'exactProduct\'), manual ASIN-grain (\'relatedProducts\' or \'relatedProducts\'), or category-grain targeting.
      * @type {Array<TargetingPredicate | TargetingPredicateLegacy | TargetingPredicateNested>}
      * @memberof TargetingClauseAllOf
      */
     expression?: Array<TargetingPredicate | TargetingPredicateLegacy | TargetingPredicateNested>;
     /**
-     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify ASIN-grain (\'exactProduct\'), manual ASIN-grain (\'relatedProducts\' or \'relatedProducts\'), or category-grain targeting. * **Future** To exclude parts of an audience, specify a TargetingPredicateNested component that contains a negative TargetingPredicate type.
+     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify ASIN-grain (\'exactProduct\'), manual ASIN-grain (\'relatedProducts\' or \'relatedProducts\'), or category-grain targeting.
      * @type {Array<TargetingPredicate | TargetingPredicateLegacy | TargetingPredicateNested>}
      * @memberof TargetingClauseAllOf
      */
@@ -4463,11 +5752,17 @@ export interface TargetingClauseEx {
      */
     bid?: number;
     /**
-     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify ASIN-grain (\'exactProduct\'), manual ASIN-grain (\'relatedProducts\' or \'relatedProducts\'), or category-grain targeting. * **Future** To exclude parts of an audience, specify a TargetingPredicateNested component that contains a negative TargetingPredicate type.
+     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify ASIN-grain (\'exactProduct\'), manual ASIN-grain (\'relatedProducts\' or \'relatedProducts\'), or category-grain targeting.
      * @type {Array<TargetingPredicate | TargetingPredicateLegacy | TargetingPredicateNested>}
      * @memberof TargetingClauseEx
      */
     expression?: Array<TargetingPredicate | TargetingPredicateLegacy | TargetingPredicateNested>;
+    /**
+     * The targeting expression to match against.  ------- Applicable to contextual targeting (T00020) ------- * A \'TargetingExpression\' in a contextual targeting campaign can only contain \'TargetingPredicate\' components. * Expressions must specify either a category predicate or an ASIN predicate, but never both. * Only one category may be specified per targeting expression. * Only one brand may be specified per targeting expression. * Only one asin may be specified per targeting expression. * To exclude a brand from a targeting expression you must create a negative targeting expression in the same ad group as the positive targeting expression.  ------- Applicable to audience targeting (T00030) ------- * A \'TargetingExpression\' in an audience campaign can only contain \'TargetingPredicateNested\' components. * Expressions must specify ASIN-grain (\'exactProduct\'), manual ASIN-grain (\'relatedProducts\' or \'relatedProducts\'), or category-grain targeting.
+     * @type {Array<TargetingPredicate | TargetingPredicateLegacy | TargetingPredicateNested>}
+     * @memberof TargetingClauseEx
+     */
+    resolvedExpression?: Array<TargetingPredicate | TargetingPredicateLegacy | TargetingPredicateNested>;
     /**
      * The status of the target.
      * @type {string}
@@ -4571,7 +5866,7 @@ export enum TargetingPredicateTypeEnum {
 }
 
 /**
- * A predicate to match against inside the TargetingPredicateNested component (only applicable to audience targeting - T00030).  * All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Ads browse system. * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the \'between\' strings to construct a targeting expression the format of the string is \'double-double\' where the first double must be smaller than the second double. Prices are not inclusive. * The \'exactProduct\', \'similarProduct\', \'relatedProduct\', and \'negative\' types do not utilize the value field. * The only type currently applicable to Amazon Audiences targeting is \'audienceSameAs\'. * A \'relatedProduct\' TargetingPredicateBase will Target an audience that has purchased a related product in the past 7,14,30,60,90,180, or 365 days. * **Future** A \'negative\' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.
+ * A predicate to match against inside the TargetingPredicateNested component (only applicable to audience targeting - T00030).  * All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Ads browse system. * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the \'between\' strings to construct a targeting expression the format of the string is \'double-double\' where the first double must be smaller than the second double. Prices are not inclusive. * The \'exactProduct\', \'similarProduct\', \'relatedProduct\', and \'negative\' types do not utilize the value field. * The only type currently applicable to Amazon Audiences targeting is \'audienceSameAs\'. * A \'relatedProduct\' TargetingPredicateBase will Target an audience that has purchased a related product in the past 7,14,30,60,90,180, or 365 days.
  * @export
  * @interface TargetingPredicateBase
  */
@@ -4669,7 +5964,7 @@ export enum TargetingPredicateLegacyEventTypeEnum {
 }
 
 /**
- * A behavioral event and list of targeting predicates that represents an audience to target (only applicable to audience targeting - T00030).  * For manual ASIN-grain targeting, the value array must contain only, \'exactProduct\', \'similarProduct\', \'relatedProduct\' and \'lookback\' TargetingPredicateBase components. The \'lookback\' is mandatory and the value should be set to \'7\', \'14\', \'30\', \'60\', \'90\', \'180\' or \'365\'. * For manual Category-grain targeting, the value array must contain a \'lookback\' and \'asinCategorySameAs\' TargetingPredicateBase component, which can be further refined with optional brand, price, star-rating and shipping eligibility refinements. The \'lookback\' is mandatory and the value should be set to \'7\', \'14\', \'30\', \'60\', \'90\', \'180\' or \'365\'. * For Amazon Audiences targeting, the TargetingPredicateNested type should be set to \'audience\' and the value array should include one TargetingPredicateBase component with type set to \'audienceSameAs\'. * **Future** For manual Category-grain targeting, adding a \'negative\' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.
+ * A behavioral event and list of targeting predicates that represents an audience to target (only applicable to audience targeting - T00030).  * For manual ASIN-grain targeting, the value array must contain only, \'exactProduct\', \'similarProduct\', \'relatedProduct\' and \'lookback\' TargetingPredicateBase components. The \'lookback\' is mandatory and the value should be set to \'7\', \'14\', \'30\', \'60\', \'90\', \'180\' or \'365\'. * For manual Category-grain targeting, the value array must contain a \'lookback\' and \'asinCategorySameAs\' TargetingPredicateBase component, which can be further refined with optional brand, price, star-rating and shipping eligibility refinements. The \'lookback\' is mandatory and the value should be set to \'7\', \'14\', \'30\', \'60\', \'90\', \'180\' or \'365\'. * For Amazon Audiences targeting, the TargetingPredicateNested type should be set to \'audience\' and the value array should include one TargetingPredicateBase component with type set to \'audienceSameAs\'.
  * @export
  * @interface TargetingPredicateNested
  */
@@ -4737,7 +6032,7 @@ export interface TargetingRecommendationsRequest {
     typeFilter: Array<RecommendationType>;
 }
 /**
- * Response to a request for targeting recommendations
+ * Response to a request for targeting recommendations.
  * @export
  * @interface TargetingRecommendationsResponse
  */
@@ -4774,7 +6069,7 @@ export interface UpdateAdGroup {
      */
     defaultBid?: number;
     /**
-     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks. |Name|CostType|Supported Tactics|Description| |----|----------|-----------|-----------| |clicks |cpc|T00020 T00030|[Default] Optimize for page visits| |conversions |cpc|T00020 T00030|Optimize for conversion| |reach |vcpm|T00020 T00030|Optimize for viewable impressions. $1 is the minimum bid for vCPM.|
+     * Bid Optimization for the Adgroup. Default behavior is to optimize for clicks. |Name|CostType|Description| |----|--------|-----------| |reach |vcpm|Optimize for viewable impressions. $1 is the minimum bid for vCPM.| |clicks |cpc|[Default] Optimize for page visits.| |conversions |cpc|Optimize for conversion.|
      * @type {string}
      * @memberof UpdateAdGroup
      */
@@ -4828,6 +6123,19 @@ export interface UpdateAdGroupAllOf {
 /**
  * 
  * @export
+ * @interface UpdateBudgetRulesResponse
+ */
+export interface UpdateBudgetRulesResponse {
+    /**
+     * 
+     * @type {Array<BudgetRuleResponse>}
+     * @memberof UpdateBudgetRulesResponse
+     */
+    responses?: Array<BudgetRuleResponse>;
+}
+/**
+ * 
+ * @export
  * @interface UpdateCampaign
  */
 export interface UpdateCampaign {
@@ -4862,7 +6170,7 @@ export interface UpdateCampaign {
      */
     endDate?: string | null;
     /**
-     * Determines how the campaign will bid and charge. |Name|Supported Tactics|Description| |----|----------|-----------| |cpc |T00020 T00030|[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |T00020 T00030|The performance of this campaign is measured by the viewed impressions triggered by the ad. $1 is the minimum bid for vCPM.|
+     * Determines how the campaign will bid and charge. |Name|Description| |----|----------| |cpc |[Default] The performance of this campaign is measured by the clicks triggered by the ad.| |vcpm |The performance of this campaign is measured by the viewed impressions triggered by the ad. |  To view minimum and maximum bids based on the costType, see [Limits](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace).
      * @type {string}
      * @memberof UpdateCampaign
      */
@@ -5040,6 +6348,19 @@ export interface UpdateProductAdAllOf {
     adId?: number;
 }
 /**
+ * Request object for updating budget rule for SD campaign
+ * @export
+ * @interface UpdateSDBudgetRulesRequest
+ */
+export interface UpdateSDBudgetRulesRequest {
+    /**
+     * A list of budget rule details.
+     * @type {Array<SDBudgetRule>}
+     * @memberof UpdateSDBudgetRulesRequest
+     */
+    budgetRulesDetails?: Array<SDBudgetRule>;
+}
+/**
  * 
  * @export
  * @interface UpdateTargetingClause
@@ -5052,7 +6373,7 @@ export interface UpdateTargetingClause {
      */
     state?: UpdateTargetingClauseStateEnum;
     /**
-     * The bid will override the adGroup bid if specified. This field is not used for negative targeting clauses. The bid must be less than the maximum allowable bid for the campaign\'s marketplace; for a list of maximum allowable bids, find the [\"Bid constraints by marketplace\" table in our documentation overview](https://advertising.amazon.com/API/docs/en-us/get-started/overview). You cannot manually set a bid when the targeting clause\'s adGroup has an enabled optimization rule.
+     * The bid will override the adGroup bid if specified. This field is not used for negative targeting clauses. The bid must be less than the maximum allowable bid for the campaign\'s marketplace; for a list of maximum allowable bids, find the [\"Bid constraints by marketplace\" table in our documentation overview](https://advertising.amazon.com/API/docs/en-us/concepts/limits#bid-constraints-by-marketplace). You cannot manually set a bid when the targeting clause\'s adGroup has an enabled optimization rule.
      * @type {number}
      * @memberof UpdateTargetingClause
      */
@@ -5119,6 +6440,24 @@ export interface VideoCreativeProperties {
      * @memberof VideoCreativeProperties
      */
     video?: Video;
+    /**
+     * An optional collection of 1:1 square videos which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+     * @type {Array<Video>}
+     * @memberof VideoCreativeProperties
+     */
+    squareVideos?: Array<Video>;
+    /**
+     * An optional collection of 16:9 landscape videos which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+     * @type {Array<Video>}
+     * @memberof VideoCreativeProperties
+     */
+    landscapeVideos?: Array<Video>;
+    /**
+     * An optional collection of 9:16 portrait videos which are displayed on the ad. This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
+     * @type {Array<Video>}
+     * @memberof VideoCreativeProperties
+     */
+    portraitVideos?: Array<Video>;
 }
 
 /**
@@ -5188,7 +6527,7 @@ export const AdGroupsApiAxiosParamCreator = function (configuration?: Configurat
          * @summary Creates one or more ad groups.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {Array<CreateAdGroup>} [createAdGroup] An array of AdGroup objects. For each object, specify required fields and their values. Required fields are &#x60;campaignId&#x60;, &#x60;name&#x60;, &#x60;state&#x60;, and &#x60;defaultBid&#x60;. Maximum length of the array is 100 objects.
+         * @param {Array<CreateAdGroup>} [createAdGroup] An array of AdGroup objects. For each object, specify required fields and their values. Required fields are &#x60;campaignId&#x60;, &#x60;name&#x60;, &#x60;state&#x60;, and &#x60;defaultBid&#x60;. Maximum length of the array is 100 objects. Note - when using landingPageType of OFF_AMAZON_LINK or STORES within productAds, only 1 adGroup is supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5599,7 +6938,7 @@ export const AdGroupsApiFp = function(configuration?: Configuration) {
          * @summary Creates one or more ad groups.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {Array<CreateAdGroup>} [createAdGroup] An array of AdGroup objects. For each object, specify required fields and their values. Required fields are &#x60;campaignId&#x60;, &#x60;name&#x60;, &#x60;state&#x60;, and &#x60;defaultBid&#x60;. Maximum length of the array is 100 objects.
+         * @param {Array<CreateAdGroup>} [createAdGroup] An array of AdGroup objects. For each object, specify required fields and their values. Required fields are &#x60;campaignId&#x60;, &#x60;name&#x60;, &#x60;state&#x60;, and &#x60;defaultBid&#x60;. Maximum length of the array is 100 objects. Note - when using landingPageType of OFF_AMAZON_LINK or STORES within productAds, only 1 adGroup is supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5709,7 +7048,7 @@ export const AdGroupsApiFactory = function (configuration?: Configuration, baseP
          * @summary Creates one or more ad groups.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {Array<CreateAdGroup>} [createAdGroup] An array of AdGroup objects. For each object, specify required fields and their values. Required fields are &#x60;campaignId&#x60;, &#x60;name&#x60;, &#x60;state&#x60;, and &#x60;defaultBid&#x60;. Maximum length of the array is 100 objects.
+         * @param {Array<CreateAdGroup>} [createAdGroup] An array of AdGroup objects. For each object, specify required fields and their values. Required fields are &#x60;campaignId&#x60;, &#x60;name&#x60;, &#x60;state&#x60;, and &#x60;defaultBid&#x60;. Maximum length of the array is 100 objects. Note - when using landingPageType of OFF_AMAZON_LINK or STORES within productAds, only 1 adGroup is supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -5838,7 +7177,7 @@ export interface AdGroupsApiCreateAdGroupsRequest {
     readonly amazonAdvertisingAPIScope: string
 
     /**
-     * An array of AdGroup objects. For each object, specify required fields and their values. Required fields are &#x60;campaignId&#x60;, &#x60;name&#x60;, &#x60;state&#x60;, and &#x60;defaultBid&#x60;. Maximum length of the array is 100 objects.
+     * An array of AdGroup objects. For each object, specify required fields and their values. Required fields are &#x60;campaignId&#x60;, &#x60;name&#x60;, &#x60;state&#x60;, and &#x60;defaultBid&#x60;. Maximum length of the array is 100 objects. Note - when using landingPageType of OFF_AMAZON_LINK or STORES within productAds, only 1 adGroup is supported.
      * @type {Array<CreateAdGroup>}
      * @memberof AdGroupsApiCreateAdGroups
      */
@@ -6155,7 +7494,7 @@ export class AdGroupsApi extends BaseAPI {
 export const BidRecommendationsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.  The recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Contextual targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins   #### Notes: - Bid recommendations for purchases and audiences are **not currently supported**. This note will be removed when these operations are available. - Refinements are currently not supported and if included will not impact the bid recommendation for the target.   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct & exactProduct targets the advertised asins are required
+         * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses. Note - these recommendations are only available when productAds have ASIN or SKU fields.  The recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Contextual targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins |purchases(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has purchased products in the given category |purchases(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased the advertised asins |purchases(relatedProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased related products to the advertised asins |audience(audienceSameAs=12345)|Receive a bid recommendation for the given target audience   #### Notes: - Refinements are currently not supported and if included will not impact the bid recommendation for the target.   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct, exactProduct, and relatedProduct targets the advertised asins are required
          * @summary Returns a set of bid recommendations for targeting clauses
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -6221,7 +7560,7 @@ export const BidRecommendationsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BidRecommendationsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.  The recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Contextual targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins   #### Notes: - Bid recommendations for purchases and audiences are **not currently supported**. This note will be removed when these operations are available. - Refinements are currently not supported and if included will not impact the bid recommendation for the target.   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct & exactProduct targets the advertised asins are required
+         * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses. Note - these recommendations are only available when productAds have ASIN or SKU fields.  The recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Contextual targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins |purchases(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has purchased products in the given category |purchases(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased the advertised asins |purchases(relatedProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased related products to the advertised asins |audience(audienceSameAs=12345)|Receive a bid recommendation for the given target audience   #### Notes: - Refinements are currently not supported and if included will not impact the bid recommendation for the target.   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct, exactProduct, and relatedProduct targets the advertised asins are required
          * @summary Returns a set of bid recommendations for targeting clauses
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -6244,7 +7583,7 @@ export const BidRecommendationsApiFactory = function (configuration?: Configurat
     const localVarFp = BidRecommendationsApiFp(configuration)
     return {
         /**
-         * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.  The recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Contextual targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins   #### Notes: - Bid recommendations for purchases and audiences are **not currently supported**. This note will be removed when these operations are available. - Refinements are currently not supported and if included will not impact the bid recommendation for the target.   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct & exactProduct targets the advertised asins are required
+         * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses. Note - these recommendations are only available when productAds have ASIN or SKU fields.  The recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Contextual targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins |purchases(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has purchased products in the given category |purchases(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased the advertised asins |purchases(relatedProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased related products to the advertised asins |audience(audienceSameAs=12345)|Receive a bid recommendation for the given target audience   #### Notes: - Refinements are currently not supported and if included will not impact the bid recommendation for the target.   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct, exactProduct, and relatedProduct targets the advertised asins are required
          * @summary Returns a set of bid recommendations for targeting clauses
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -6294,7 +7633,7 @@ export interface BidRecommendationsApiGetTargetBidRecommendationsRequest {
  */
 export class BidRecommendationsApi extends BaseAPI {
     /**
-     * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.  The recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Contextual targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins   #### Notes: - Bid recommendations for purchases and audiences are **not currently supported**. This note will be removed when these operations are available. - Refinements are currently not supported and if included will not impact the bid recommendation for the target.   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct & exactProduct targets the advertised asins are required
+     * Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses. Note - these recommendations are only available when productAds have ASIN or SKU fields.  The recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.   Receive bid recommendations using the following: Contextual targeting clause|Description| |-----------|----| |asinSameAs=B0123456789|Receive a bid recommendation for this target product |asinCategorySameAs=12345|Receive a bid recommendation for this target category |similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.   Audience targeting clause|Description| |-----------|----| |views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category |views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins |views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins |purchases(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has purchased products in the given category |purchases(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased the advertised asins |purchases(relatedProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased related products to the advertised asins |audience(audienceSameAs=12345)|Receive a bid recommendation for the given target audience   #### Notes: - Refinements are currently not supported and if included will not impact the bid recommendation for the target.   #### Advertised ASIN Notes: - For asinSameAs targets the advertised asins will not impact the bid recommendation - For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation - For similarProduct, exactProduct, and relatedProduct targets the advertised asins are required
      * @summary Returns a set of bid recommendations for targeting clauses
      * @param {BidRecommendationsApiGetTargetBidRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -7091,6 +8430,891 @@ export class BrandSafetyListApi extends BaseAPI {
 
 
 /**
+ * BudgetRulesApi - axios parameter creator
+ * @export
+ */
+export const BudgetRulesApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Creates one or more budget rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {CreateSDBudgetRulesRequest} createSDBudgetRulesRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createBudgetRulesForSDCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createSDBudgetRulesRequest: CreateSDBudgetRulesRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('createBudgetRulesForSDCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('createBudgetRulesForSDCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'createSDBudgetRulesRequest' is not null or undefined
+            assertParamExists('createBudgetRulesForSDCampaigns', 'createSDBudgetRulesRequest', createSDBudgetRulesRequest)
+            const localVarPath = `/sd/budgetRules`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            // authentication oauth2AuthorizationCode required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createSDBudgetRulesRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Gets a budget rule specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} budgetRuleId The budget rule identifier.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBudgetRuleByRuleIdForSDCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, budgetRuleId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getBudgetRuleByRuleIdForSDCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getBudgetRuleByRuleIdForSDCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'budgetRuleId' is not null or undefined
+            assertParamExists('getBudgetRuleByRuleIdForSDCampaigns', 'budgetRuleId', budgetRuleId)
+            const localVarPath = `/sd/budgetRules/{budgetRuleId}`
+                .replace(`{${"budgetRuleId"}}`, encodeURIComponent(String(budgetRuleId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            // authentication oauth2AuthorizationCode required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * **Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.
+         * @summary Gets the budget history for a campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {number} campaignId The campaign identifier.
+         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
+         * @param {string} startDate The start date of the budget history in YYYYMMDD format.
+         * @param {string} endDate The end date of the budget history in YYYYMMDD format.
+         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRuleBasedBudgetHistoryForSDCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, pageSize: number, startDate: string, endDate: string, nextToken?: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getRuleBasedBudgetHistoryForSDCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getRuleBasedBudgetHistoryForSDCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'campaignId' is not null or undefined
+            assertParamExists('getRuleBasedBudgetHistoryForSDCampaigns', 'campaignId', campaignId)
+            // verify required parameter 'pageSize' is not null or undefined
+            assertParamExists('getRuleBasedBudgetHistoryForSDCampaigns', 'pageSize', pageSize)
+            // verify required parameter 'startDate' is not null or undefined
+            assertParamExists('getRuleBasedBudgetHistoryForSDCampaigns', 'startDate', startDate)
+            // verify required parameter 'endDate' is not null or undefined
+            assertParamExists('getRuleBasedBudgetHistoryForSDCampaigns', 'endDate', endDate)
+            const localVarPath = `/sd/campaigns/{campaignId}/budgetRules/budgetHistory`
+                .replace(`{${"campaignId"}}`, encodeURIComponent(String(campaignId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            // authentication oauth2AuthorizationCode required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
+
+            if (nextToken !== undefined) {
+                localVarQueryParameter['nextToken'] = nextToken;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (startDate !== undefined) {
+                localVarQueryParameter['startDate'] = startDate;
+            }
+
+            if (endDate !== undefined) {
+                localVarQueryParameter['endDate'] = endDate;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all budget rules created by an advertiser
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
+         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSDBudgetRulesForAdvertiser: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, pageSize: number, nextToken?: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getSDBudgetRulesForAdvertiser', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getSDBudgetRulesForAdvertiser', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'pageSize' is not null or undefined
+            assertParamExists('getSDBudgetRulesForAdvertiser', 'pageSize', pageSize)
+            const localVarPath = `/sd/budgetRules`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            // authentication oauth2AuthorizationCode required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
+
+            if (nextToken !== undefined) {
+                localVarQueryParameter['nextToken'] = nextToken;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Update one or more budget rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {UpdateSDBudgetRulesRequest} updateSDBudgetRulesRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateBudgetRulesForSDCampaigns: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, updateSDBudgetRulesRequest: UpdateSDBudgetRulesRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('updateBudgetRulesForSDCampaigns', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('updateBudgetRulesForSDCampaigns', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'updateSDBudgetRulesRequest' is not null or undefined
+            assertParamExists('updateBudgetRulesForSDCampaigns', 'updateSDBudgetRulesRequest', updateSDBudgetRulesRequest)
+            const localVarPath = `/sd/budgetRules`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            // authentication oauth2AuthorizationCode required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateSDBudgetRulesRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BudgetRulesApi - functional programming interface
+ * @export
+ */
+export const BudgetRulesApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BudgetRulesApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Creates one or more budget rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {CreateSDBudgetRulesRequest} createSDBudgetRulesRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createBudgetRulesForSDCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createSDBudgetRulesRequest: CreateSDBudgetRulesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateBudgetRulesResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createBudgetRulesForSDCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, createSDBudgetRulesRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Gets a budget rule specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} budgetRuleId The budget rule identifier.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getBudgetRuleByRuleIdForSDCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, budgetRuleId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSDBudgetRuleResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getBudgetRuleByRuleIdForSDCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetRuleId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * **Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.
+         * @summary Gets the budget history for a campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {number} campaignId The campaign identifier.
+         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
+         * @param {string} startDate The start date of the budget history in YYYYMMDD format.
+         * @param {string} endDate The end date of the budget history in YYYYMMDD format.
+         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getRuleBasedBudgetHistoryForSDCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, pageSize: number, startDate: string, endDate: string, nextToken?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SDBudgetHistory>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getRuleBasedBudgetHistoryForSDCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, pageSize, startDate, endDate, nextToken, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get all budget rules created by an advertiser
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
+         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSDBudgetRulesForAdvertiser(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, pageSize: number, nextToken?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSDBudgetRulesForAdvertiserResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSDBudgetRulesForAdvertiser(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, pageSize, nextToken, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Update one or more budget rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {UpdateSDBudgetRulesRequest} updateSDBudgetRulesRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async updateBudgetRulesForSDCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, updateSDBudgetRulesRequest: UpdateSDBudgetRulesRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpdateBudgetRulesResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateBudgetRulesForSDCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, updateSDBudgetRulesRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BudgetRulesApi - factory interface
+ * @export
+ */
+export const BudgetRulesApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BudgetRulesApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Creates one or more budget rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {CreateSDBudgetRulesRequest} createSDBudgetRulesRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createBudgetRulesForSDCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createSDBudgetRulesRequest: CreateSDBudgetRulesRequest, options?: any): AxiosPromise<CreateBudgetRulesResponse> {
+            return localVarFp.createBudgetRulesForSDCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, createSDBudgetRulesRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Gets a budget rule specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} budgetRuleId The budget rule identifier.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getBudgetRuleByRuleIdForSDCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, budgetRuleId: string, options?: any): AxiosPromise<GetSDBudgetRuleResponse> {
+            return localVarFp.getBudgetRuleByRuleIdForSDCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetRuleId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * **Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.
+         * @summary Gets the budget history for a campaign specified by identifier.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {number} campaignId The campaign identifier.
+         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
+         * @param {string} startDate The start date of the budget history in YYYYMMDD format.
+         * @param {string} endDate The end date of the budget history in YYYYMMDD format.
+         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getRuleBasedBudgetHistoryForSDCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, campaignId: number, pageSize: number, startDate: string, endDate: string, nextToken?: string, options?: any): AxiosPromise<SDBudgetHistory> {
+            return localVarFp.getRuleBasedBudgetHistoryForSDCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, campaignId, pageSize, startDate, endDate, nextToken, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all budget rules created by an advertiser
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {number} pageSize Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
+         * @param {string} [nextToken] To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSDBudgetRulesForAdvertiser(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, pageSize: number, nextToken?: string, options?: any): AxiosPromise<GetSDBudgetRulesForAdvertiserResponse> {
+            return localVarFp.getSDBudgetRulesForAdvertiser(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, pageSize, nextToken, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Update one or more budget rules.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {UpdateSDBudgetRulesRequest} updateSDBudgetRulesRequest 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateBudgetRulesForSDCampaigns(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, updateSDBudgetRulesRequest: UpdateSDBudgetRulesRequest, options?: any): AxiosPromise<UpdateBudgetRulesResponse> {
+            return localVarFp.updateBudgetRulesForSDCampaigns(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, updateSDBudgetRulesRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for createBudgetRulesForSDCampaigns operation in BudgetRulesApi.
+ * @export
+ * @interface BudgetRulesApiCreateBudgetRulesForSDCampaignsRequest
+ */
+export interface BudgetRulesApiCreateBudgetRulesForSDCampaignsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {string}
+     * @memberof BudgetRulesApiCreateBudgetRulesForSDCampaigns
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {string}
+     * @memberof BudgetRulesApiCreateBudgetRulesForSDCampaigns
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * 
+     * @type {CreateSDBudgetRulesRequest}
+     * @memberof BudgetRulesApiCreateBudgetRulesForSDCampaigns
+     */
+    readonly createSDBudgetRulesRequest: CreateSDBudgetRulesRequest
+}
+
+/**
+ * Request parameters for getBudgetRuleByRuleIdForSDCampaigns operation in BudgetRulesApi.
+ * @export
+ * @interface BudgetRulesApiGetBudgetRuleByRuleIdForSDCampaignsRequest
+ */
+export interface BudgetRulesApiGetBudgetRuleByRuleIdForSDCampaignsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {string}
+     * @memberof BudgetRulesApiGetBudgetRuleByRuleIdForSDCampaigns
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {string}
+     * @memberof BudgetRulesApiGetBudgetRuleByRuleIdForSDCampaigns
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The budget rule identifier.
+     * @type {string}
+     * @memberof BudgetRulesApiGetBudgetRuleByRuleIdForSDCampaigns
+     */
+    readonly budgetRuleId: string
+}
+
+/**
+ * Request parameters for getRuleBasedBudgetHistoryForSDCampaigns operation in BudgetRulesApi.
+ * @export
+ * @interface BudgetRulesApiGetRuleBasedBudgetHistoryForSDCampaignsRequest
+ */
+export interface BudgetRulesApiGetRuleBasedBudgetHistoryForSDCampaignsRequest {
+    /**
+     * The identifier of a client associated with a Login with Amazon account. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {string}
+     * @memberof BudgetRulesApiGetRuleBasedBudgetHistoryForSDCampaigns
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {string}
+     * @memberof BudgetRulesApiGetRuleBasedBudgetHistoryForSDCampaigns
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The campaign identifier.
+     * @type {number}
+     * @memberof BudgetRulesApiGetRuleBasedBudgetHistoryForSDCampaigns
+     */
+    readonly campaignId: number
+
+    /**
+     * Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
+     * @type {number}
+     * @memberof BudgetRulesApiGetRuleBasedBudgetHistoryForSDCampaigns
+     */
+    readonly pageSize: number
+
+    /**
+     * The start date of the budget history in YYYYMMDD format.
+     * @type {string}
+     * @memberof BudgetRulesApiGetRuleBasedBudgetHistoryForSDCampaigns
+     */
+    readonly startDate: string
+
+    /**
+     * The end date of the budget history in YYYYMMDD format.
+     * @type {string}
+     * @memberof BudgetRulesApiGetRuleBasedBudgetHistoryForSDCampaigns
+     */
+    readonly endDate: string
+
+    /**
+     * To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
+     * @type {string}
+     * @memberof BudgetRulesApiGetRuleBasedBudgetHistoryForSDCampaigns
+     */
+    readonly nextToken?: string
+}
+
+/**
+ * Request parameters for getSDBudgetRulesForAdvertiser operation in BudgetRulesApi.
+ * @export
+ * @interface BudgetRulesApiGetSDBudgetRulesForAdvertiserRequest
+ */
+export interface BudgetRulesApiGetSDBudgetRulesForAdvertiserRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {string}
+     * @memberof BudgetRulesApiGetSDBudgetRulesForAdvertiser
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {string}
+     * @memberof BudgetRulesApiGetSDBudgetRulesForAdvertiser
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Sets a limit on the number of results returned. Maximum limit of &#x60;pageSize&#x60; is 30.
+     * @type {number}
+     * @memberof BudgetRulesApiGetSDBudgetRulesForAdvertiser
+     */
+    readonly pageSize: number
+
+    /**
+     * To retrieve the next page of results, call the same operation and specify this token in the request. If the &#x60;nextToken&#x60; field is empty, there are no further results.
+     * @type {string}
+     * @memberof BudgetRulesApiGetSDBudgetRulesForAdvertiser
+     */
+    readonly nextToken?: string
+}
+
+/**
+ * Request parameters for updateBudgetRulesForSDCampaigns operation in BudgetRulesApi.
+ * @export
+ * @interface BudgetRulesApiUpdateBudgetRulesForSDCampaignsRequest
+ */
+export interface BudgetRulesApiUpdateBudgetRulesForSDCampaignsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {string}
+     * @memberof BudgetRulesApiUpdateBudgetRulesForSDCampaigns
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {string}
+     * @memberof BudgetRulesApiUpdateBudgetRulesForSDCampaigns
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * 
+     * @type {UpdateSDBudgetRulesRequest}
+     * @memberof BudgetRulesApiUpdateBudgetRulesForSDCampaigns
+     */
+    readonly updateSDBudgetRulesRequest: UpdateSDBudgetRulesRequest
+}
+
+/**
+ * BudgetRulesApi - object-oriented interface
+ * @export
+ * @class BudgetRulesApi
+ * @extends {BaseAPI}
+ */
+export class BudgetRulesApi extends BaseAPI {
+    /**
+     * 
+     * @summary Creates one or more budget rules.
+     * @param {BudgetRulesApiCreateBudgetRulesForSDCampaignsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BudgetRulesApi
+     */
+    public createBudgetRulesForSDCampaigns(requestParameters: BudgetRulesApiCreateBudgetRulesForSDCampaignsRequest, options?: any) {
+        return BudgetRulesApiFp(this.configuration).createBudgetRulesForSDCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.createSDBudgetRulesRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Gets a budget rule specified by identifier.
+     * @param {BudgetRulesApiGetBudgetRuleByRuleIdForSDCampaignsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BudgetRulesApi
+     */
+    public getBudgetRuleByRuleIdForSDCampaigns(requestParameters: BudgetRulesApiGetBudgetRuleByRuleIdForSDCampaignsRequest, options?: any) {
+        return BudgetRulesApiFp(this.configuration).getBudgetRuleByRuleIdForSDCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.budgetRuleId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * **Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.
+     * @summary Gets the budget history for a campaign specified by identifier.
+     * @param {BudgetRulesApiGetRuleBasedBudgetHistoryForSDCampaignsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BudgetRulesApi
+     */
+    public getRuleBasedBudgetHistoryForSDCampaigns(requestParameters: BudgetRulesApiGetRuleBasedBudgetHistoryForSDCampaignsRequest, options?: any) {
+        return BudgetRulesApiFp(this.configuration).getRuleBasedBudgetHistoryForSDCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.campaignId, requestParameters.pageSize, requestParameters.startDate, requestParameters.endDate, requestParameters.nextToken, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all budget rules created by an advertiser
+     * @param {BudgetRulesApiGetSDBudgetRulesForAdvertiserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BudgetRulesApi
+     */
+    public getSDBudgetRulesForAdvertiser(requestParameters: BudgetRulesApiGetSDBudgetRulesForAdvertiserRequest, options?: any) {
+        return BudgetRulesApiFp(this.configuration).getSDBudgetRulesForAdvertiser(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.pageSize, requestParameters.nextToken, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update one or more budget rules.
+     * @param {BudgetRulesApiUpdateBudgetRulesForSDCampaignsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BudgetRulesApi
+     */
+    public updateBudgetRulesForSDCampaigns(requestParameters: BudgetRulesApiUpdateBudgetRulesForSDCampaignsRequest, options?: any) {
+        return BudgetRulesApiFp(this.configuration).updateBudgetRulesForSDCampaigns(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.updateSDBudgetRulesRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * BudgetUsageApi - axios parameter creator
+ * @export
+ */
+export const BudgetUsageApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Budget usage API for SD campaigns
+         * @param {any} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {any} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {BudgetUsageCampaignRequest} [budgetUsageCampaignRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sdCampaignsBudgetUsage: async (amazonAdvertisingAPIClientId: any, amazonAdvertisingAPIScope: any, budgetUsageCampaignRequest?: BudgetUsageCampaignRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('sdCampaignsBudgetUsage', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('sdCampaignsBudgetUsage', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sd/campaigns/budget/usage`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            // authentication oauth2AuthorizationCode required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(JSON.stringify(amazonAdvertisingAPIClientId));
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(JSON.stringify(amazonAdvertisingAPIScope));
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sdcampaignbudgetusage.v1+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(budgetUsageCampaignRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BudgetUsageApi - functional programming interface
+ * @export
+ */
+export const BudgetUsageApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BudgetUsageApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Budget usage API for SD campaigns
+         * @param {any} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {any} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {BudgetUsageCampaignRequest} [budgetUsageCampaignRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async sdCampaignsBudgetUsage(amazonAdvertisingAPIClientId: any, amazonAdvertisingAPIScope: any, budgetUsageCampaignRequest?: BudgetUsageCampaignRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BudgetUsageCampaignResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.sdCampaignsBudgetUsage(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetUsageCampaignRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * BudgetUsageApi - factory interface
+ * @export
+ */
+export const BudgetUsageApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BudgetUsageApiFp(configuration)
+    return {
+        /**
+         * **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * @summary Budget usage API for SD campaigns
+         * @param {any} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {any} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+         * @param {BudgetUsageCampaignRequest} [budgetUsageCampaignRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        sdCampaignsBudgetUsage(amazonAdvertisingAPIClientId: any, amazonAdvertisingAPIScope: any, budgetUsageCampaignRequest?: BudgetUsageCampaignRequest, options?: any): AxiosPromise<BudgetUsageCampaignResponse> {
+            return localVarFp.sdCampaignsBudgetUsage(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, budgetUsageCampaignRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for sdCampaignsBudgetUsage operation in BudgetUsageApi.
+ * @export
+ * @interface BudgetUsageApiSdCampaignsBudgetUsageRequest
+ */
+export interface BudgetUsageApiSdCampaignsBudgetUsageRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {any}
+     * @memberof BudgetUsageApiSdCampaignsBudgetUsage
+     */
+    readonly amazonAdvertisingAPIClientId: any
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header. This is a required header for advertisers and integrators using the Advertising API.
+     * @type {any}
+     * @memberof BudgetUsageApiSdCampaignsBudgetUsage
+     */
+    readonly amazonAdvertisingAPIScope: any
+
+    /**
+     * 
+     * @type {BudgetUsageCampaignRequest}
+     * @memberof BudgetUsageApiSdCampaignsBudgetUsage
+     */
+    readonly budgetUsageCampaignRequest?: BudgetUsageCampaignRequest
+}
+
+/**
+ * BudgetUsageApi - object-oriented interface
+ * @export
+ * @class BudgetUsageApi
+ * @extends {BaseAPI}
+ */
+export class BudgetUsageApi extends BaseAPI {
+    /**
+     * **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+     * @summary Budget usage API for SD campaigns
+     * @param {BudgetUsageApiSdCampaignsBudgetUsageRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof BudgetUsageApi
+     */
+    public sdCampaignsBudgetUsage(requestParameters: BudgetUsageApiSdCampaignsBudgetUsageRequest, options?: any) {
+        return BudgetUsageApiFp(this.configuration).sdCampaignsBudgetUsage(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.budgetUsageCampaignRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
  * CampaignsApi - axios parameter creator
  * @export
  */
@@ -7157,7 +9381,7 @@ export const CampaignsApiAxiosParamCreator = function (configuration?: Configura
          * @summary Creates one or more campaigns.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {Array<CreateCampaign>} [createCampaign] An array of Campaign objects. For each object, specify required fields and their values. Required fields are &#x60;name&#x60;, &#x60;tactic&#x60;, &#x60;state&#x60;, &#x60;budget&#x60;, and &#x60;startDate&#x60;. Maximum length of the array is 100 objects.
+         * @param {Array<CreateCampaign>} [createCampaign] An array of Campaign objects. For each object, specify required fields and their values. Required fields are &#x60;name&#x60;, &#x60;tactic&#x60;, &#x60;state&#x60;, and &#x60;startDate&#x60;. Maximum length of the array is 100 objects. If you don\&#39;t specify a &#x60;budget&#x60;, it will be set as the [default budget for your region](https://advertising.amazon.com/API/docs/en-us/concepts/limits#default-budgets).   If you are using Optimization rules, the following campaign budget must be at least:   - 5x the value of any COST_PER_ORDER threshold.   - 10x the value of any COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS threshold.   - 20x the value of any COST_PER_CLICK threshold. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7568,7 +9792,7 @@ export const CampaignsApiFp = function(configuration?: Configuration) {
          * @summary Creates one or more campaigns.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {Array<CreateCampaign>} [createCampaign] An array of Campaign objects. For each object, specify required fields and their values. Required fields are &#x60;name&#x60;, &#x60;tactic&#x60;, &#x60;state&#x60;, &#x60;budget&#x60;, and &#x60;startDate&#x60;. Maximum length of the array is 100 objects.
+         * @param {Array<CreateCampaign>} [createCampaign] An array of Campaign objects. For each object, specify required fields and their values. Required fields are &#x60;name&#x60;, &#x60;tactic&#x60;, &#x60;state&#x60;, and &#x60;startDate&#x60;. Maximum length of the array is 100 objects. If you don\&#39;t specify a &#x60;budget&#x60;, it will be set as the [default budget for your region](https://advertising.amazon.com/API/docs/en-us/concepts/limits#default-budgets).   If you are using Optimization rules, the following campaign budget must be at least:   - 5x the value of any COST_PER_ORDER threshold.   - 10x the value of any COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS threshold.   - 20x the value of any COST_PER_CLICK threshold. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7678,7 +9902,7 @@ export const CampaignsApiFactory = function (configuration?: Configuration, base
          * @summary Creates one or more campaigns.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {Array<CreateCampaign>} [createCampaign] An array of Campaign objects. For each object, specify required fields and their values. Required fields are &#x60;name&#x60;, &#x60;tactic&#x60;, &#x60;state&#x60;, &#x60;budget&#x60;, and &#x60;startDate&#x60;. Maximum length of the array is 100 objects.
+         * @param {Array<CreateCampaign>} [createCampaign] An array of Campaign objects. For each object, specify required fields and their values. Required fields are &#x60;name&#x60;, &#x60;tactic&#x60;, &#x60;state&#x60;, and &#x60;startDate&#x60;. Maximum length of the array is 100 objects. If you don\&#39;t specify a &#x60;budget&#x60;, it will be set as the [default budget for your region](https://advertising.amazon.com/API/docs/en-us/concepts/limits#default-budgets).   If you are using Optimization rules, the following campaign budget must be at least:   - 5x the value of any COST_PER_ORDER threshold.   - 10x the value of any COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS threshold.   - 20x the value of any COST_PER_CLICK threshold. 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -7807,7 +10031,7 @@ export interface CampaignsApiCreateCampaignsRequest {
     readonly amazonAdvertisingAPIScope: string
 
     /**
-     * An array of Campaign objects. For each object, specify required fields and their values. Required fields are &#x60;name&#x60;, &#x60;tactic&#x60;, &#x60;state&#x60;, &#x60;budget&#x60;, and &#x60;startDate&#x60;. Maximum length of the array is 100 objects.
+     * An array of Campaign objects. For each object, specify required fields and their values. Required fields are &#x60;name&#x60;, &#x60;tactic&#x60;, &#x60;state&#x60;, and &#x60;startDate&#x60;. Maximum length of the array is 100 objects. If you don\&#39;t specify a &#x60;budget&#x60;, it will be set as the [default budget for your region](https://advertising.amazon.com/API/docs/en-us/concepts/limits#default-budgets).   If you are using Optimization rules, the following campaign budget must be at least:   - 5x the value of any COST_PER_ORDER threshold.   - 10x the value of any COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS threshold.   - 20x the value of any COST_PER_CLICK threshold. 
      * @type {Array<CreateCampaign>}
      * @memberof CampaignsApiCreateCampaigns
      */
@@ -8128,7 +10352,7 @@ export const CreativesApiAxiosParamCreator = function (configuration?: Configura
          * @summary A POST request of one or more creatives.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {Array<CreateCreative>} [createCreative] An array of Creative objects to create. Maximum length of the array is 100 objects.
+         * @param {Array<CreateCreative>} [createCreative] An array of Creative objects to create. Maximum length of the array is 100 objects. Note - when using productAds with landingPageURL of OFF_AMAZON_LINK, STORE, or MOMENT, the following properties are required all together; 1) headline, 2) brandLogo, and 3) rectCustomImage, squareCustomImage.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8457,7 +10681,7 @@ export const CreativesApiFp = function(configuration?: Configuration) {
          * @summary A POST request of one or more creatives.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {Array<CreateCreative>} [createCreative] An array of Creative objects to create. Maximum length of the array is 100 objects.
+         * @param {Array<CreateCreative>} [createCreative] An array of Creative objects to create. Maximum length of the array is 100 objects. Note - when using productAds with landingPageURL of OFF_AMAZON_LINK, STORE, or MOMENT, the following properties are required all together; 1) headline, 2) brandLogo, and 3) rectCustomImage, squareCustomImage.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8539,7 +10763,7 @@ export const CreativesApiFactory = function (configuration?: Configuration, base
          * @summary A POST request of one or more creatives.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {Array<CreateCreative>} [createCreative] An array of Creative objects to create. Maximum length of the array is 100 objects.
+         * @param {Array<CreateCreative>} [createCreative] An array of Creative objects to create. Maximum length of the array is 100 objects. Note - when using productAds with landingPageURL of OFF_AMAZON_LINK, STORE, or MOMENT, the following properties are required all together; 1) headline, 2) brandLogo, and 3) rectCustomImage, squareCustomImage.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -8625,7 +10849,7 @@ export interface CreativesApiCreateCreativesRequest {
     readonly amazonAdvertisingAPIScope: string
 
     /**
-     * An array of Creative objects to create. Maximum length of the array is 100 objects.
+     * An array of Creative objects to create. Maximum length of the array is 100 objects. Note - when using productAds with landingPageURL of OFF_AMAZON_LINK, STORE, or MOMENT, the following properties are required all together; 1) headline, 2) brandLogo, and 3) rectCustomImage, squareCustomImage.
      * @type {Array<CreateCreative>}
      * @memberof CreativesApiCreateCreatives
      */
@@ -9017,6 +11241,381 @@ export class ForecastsApi extends BaseAPI {
      */
     public createSDForecast(requestParameters: ForecastsApiCreateSDForecastRequest, options?: any) {
         return ForecastsApiFp(this.configuration).createSDForecast(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.sDForecastRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * LocationsApi - axios parameter creator
+ * @export
+ */
+export const LocationsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * This resource is not available when productAds have ASIN or SKU fields and only available for advertisers that do not sell products on Amazon.   See [Developer Guide](https://advertising.amazon.com/API/docs/en-us/guides/sponsored-display/non-amazon-sellers/get-started)  Locations optimize Ad Groups for delivery to users that have an association with those locations. For example, an Ad Group might contain the following:  - A Targeting Clause representing an audience of users that viewed a shoe  - A Location representing Seattle, Washington, USA. - A Location representing New York, New York, USA. In this case, delivery of the Targeting Clause will be optimized for New York and Seattle.   You can discover predefined Locations to use in your Ad Groups by calling the GET /locations API. The table below lists  several example Locations. | Location | Description | |---------------------------|-------------| | location=amzn1.ad-geo.XHvCjcKHXsKUwos= | Optimize the AdGroup for the specified location (either a \'city\', \'state\', \'dma\', \'postal code\', or \'country\').|  If Locations are to be used, they must be created before Targeting Clauses within an Ad Group. Creating a Location after a   Targeting Clause is only permitted if other Locations already exist in the Ad Group. In that case, additional  Locations increase the Targeting Clause\'s potential reach.
+         * @summary Creates one or more locations associated with an ad group.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<CreateLocation>} [createLocation] A list of up to 20 Locations for creation.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createLocations: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createLocation?: Array<CreateLocation>, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('createLocations', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('createLocations', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sd/locations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            // authentication oauth2AuthorizationCode required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createLocation, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * LocationsApi - functional programming interface
+ * @export
+ */
+export const LocationsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = LocationsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * This resource is not available when productAds have ASIN or SKU fields and only available for advertisers that do not sell products on Amazon.   See [Developer Guide](https://advertising.amazon.com/API/docs/en-us/guides/sponsored-display/non-amazon-sellers/get-started)  Locations optimize Ad Groups for delivery to users that have an association with those locations. For example, an Ad Group might contain the following:  - A Targeting Clause representing an audience of users that viewed a shoe  - A Location representing Seattle, Washington, USA. - A Location representing New York, New York, USA. In this case, delivery of the Targeting Clause will be optimized for New York and Seattle.   You can discover predefined Locations to use in your Ad Groups by calling the GET /locations API. The table below lists  several example Locations. | Location | Description | |---------------------------|-------------| | location=amzn1.ad-geo.XHvCjcKHXsKUwos= | Optimize the AdGroup for the specified location (either a \'city\', \'state\', \'dma\', \'postal code\', or \'country\').|  If Locations are to be used, they must be created before Targeting Clauses within an Ad Group. Creating a Location after a   Targeting Clause is only permitted if other Locations already exist in the Ad Group. In that case, additional  Locations increase the Targeting Clause\'s potential reach.
+         * @summary Creates one or more locations associated with an ad group.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<CreateLocation>} [createLocation] A list of up to 20 Locations for creation.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createLocations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createLocation?: Array<CreateLocation>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Location>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createLocations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, createLocation, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * LocationsApi - factory interface
+ * @export
+ */
+export const LocationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = LocationsApiFp(configuration)
+    return {
+        /**
+         * This resource is not available when productAds have ASIN or SKU fields and only available for advertisers that do not sell products on Amazon.   See [Developer Guide](https://advertising.amazon.com/API/docs/en-us/guides/sponsored-display/non-amazon-sellers/get-started)  Locations optimize Ad Groups for delivery to users that have an association with those locations. For example, an Ad Group might contain the following:  - A Targeting Clause representing an audience of users that viewed a shoe  - A Location representing Seattle, Washington, USA. - A Location representing New York, New York, USA. In this case, delivery of the Targeting Clause will be optimized for New York and Seattle.   You can discover predefined Locations to use in your Ad Groups by calling the GET /locations API. The table below lists  several example Locations. | Location | Description | |---------------------------|-------------| | location=amzn1.ad-geo.XHvCjcKHXsKUwos= | Optimize the AdGroup for the specified location (either a \'city\', \'state\', \'dma\', \'postal code\', or \'country\').|  If Locations are to be used, they must be created before Targeting Clauses within an Ad Group. Creating a Location after a   Targeting Clause is only permitted if other Locations already exist in the Ad Group. In that case, additional  Locations increase the Targeting Clause\'s potential reach.
+         * @summary Creates one or more locations associated with an ad group.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {Array<CreateLocation>} [createLocation] A list of up to 20 Locations for creation.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createLocations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createLocation?: Array<CreateLocation>, options?: any): AxiosPromise<Array<Location>> {
+            return localVarFp.createLocations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, createLocation, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for createLocations operation in LocationsApi.
+ * @export
+ * @interface LocationsApiCreateLocationsRequest
+ */
+export interface LocationsApiCreateLocationsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof LocationsApiCreateLocations
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof LocationsApiCreateLocations
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * A list of up to 20 Locations for creation.
+     * @type {Array<CreateLocation>}
+     * @memberof LocationsApiCreateLocations
+     */
+    readonly createLocation?: Array<CreateLocation>
+}
+
+/**
+ * LocationsApi - object-oriented interface
+ * @export
+ * @class LocationsApi
+ * @extends {BaseAPI}
+ */
+export class LocationsApi extends BaseAPI {
+    /**
+     * This resource is not available when productAds have ASIN or SKU fields and only available for advertisers that do not sell products on Amazon.   See [Developer Guide](https://advertising.amazon.com/API/docs/en-us/guides/sponsored-display/non-amazon-sellers/get-started)  Locations optimize Ad Groups for delivery to users that have an association with those locations. For example, an Ad Group might contain the following:  - A Targeting Clause representing an audience of users that viewed a shoe  - A Location representing Seattle, Washington, USA. - A Location representing New York, New York, USA. In this case, delivery of the Targeting Clause will be optimized for New York and Seattle.   You can discover predefined Locations to use in your Ad Groups by calling the GET /locations API. The table below lists  several example Locations. | Location | Description | |---------------------------|-------------| | location=amzn1.ad-geo.XHvCjcKHXsKUwos= | Optimize the AdGroup for the specified location (either a \'city\', \'state\', \'dma\', \'postal code\', or \'country\').|  If Locations are to be used, they must be created before Targeting Clauses within an Ad Group. Creating a Location after a   Targeting Clause is only permitted if other Locations already exist in the Ad Group. In that case, additional  Locations increase the Targeting Clause\'s potential reach.
+     * @summary Creates one or more locations associated with an ad group.
+     * @param {LocationsApiCreateLocationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocationsApi
+     */
+    public createLocations(requestParameters: LocationsApiCreateLocationsRequest, options?: any) {
+        return LocationsApiFp(this.configuration).createLocations(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.createLocation, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * LocationsBetaApi - axios parameter creator
+ * @export
+ */
+export const LocationsBetaApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Gets a list of Sponsored Display Location objects. This resource is not available when productAds have ASIN or SKU fields and only available for advertisers that do not sell products on Amazon. See [Developer Guide](https://advertising.amazon.com/API/docs/en-us/guides/sponsored-display/non-amazon-sellers/get-started)
+         * @summary Gets a list of locations associated with ad groups.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Optional. 0-indexed record offset for the result set. Defaults to 0.
+         * @param {number} [count] Optional. Number of records to include in the paged response. Defaults to max page size.
+         * @param {'enabled'} [stateFilter] Optional. Restricts results to those with state within the specified comma-separated list. Must be one of: &#x60;enabled&#x60;.
+         * @param {string} [adGroupIdFilter] Optional list of comma separated adGroupIds. Restricts results to locations with the specified &#x60;adGroupId&#x60;.
+         * @param {string} [campaignIdFilter] Optional list of comma separated campaignIds. Restricts results to locations with the specified &#x60;campaignId&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listLocations: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, stateFilter?: 'enabled', adGroupIdFilter?: string, campaignIdFilter?: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('listLocations', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('listLocations', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/sd/locations`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            // authentication oauth2AuthorizationCode required
+            // oauth required
+            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
+
+            if (startIndex !== undefined) {
+                localVarQueryParameter['startIndex'] = startIndex;
+            }
+
+            if (count !== undefined) {
+                localVarQueryParameter['count'] = count;
+            }
+
+            if (stateFilter !== undefined) {
+                localVarQueryParameter['stateFilter'] = stateFilter;
+            }
+
+            if (adGroupIdFilter !== undefined) {
+                localVarQueryParameter['adGroupIdFilter'] = adGroupIdFilter;
+            }
+
+            if (campaignIdFilter !== undefined) {
+                localVarQueryParameter['campaignIdFilter'] = campaignIdFilter;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * LocationsBetaApi - functional programming interface
+ * @export
+ */
+export const LocationsBetaApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = LocationsBetaApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Gets a list of Sponsored Display Location objects. This resource is not available when productAds have ASIN or SKU fields and only available for advertisers that do not sell products on Amazon. See [Developer Guide](https://advertising.amazon.com/API/docs/en-us/guides/sponsored-display/non-amazon-sellers/get-started)
+         * @summary Gets a list of locations associated with ad groups.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Optional. 0-indexed record offset for the result set. Defaults to 0.
+         * @param {number} [count] Optional. Number of records to include in the paged response. Defaults to max page size.
+         * @param {'enabled'} [stateFilter] Optional. Restricts results to those with state within the specified comma-separated list. Must be one of: &#x60;enabled&#x60;.
+         * @param {string} [adGroupIdFilter] Optional list of comma separated adGroupIds. Restricts results to locations with the specified &#x60;adGroupId&#x60;.
+         * @param {string} [campaignIdFilter] Optional list of comma separated campaignIds. Restricts results to locations with the specified &#x60;campaignId&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listLocations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, stateFilter?: 'enabled', adGroupIdFilter?: string, campaignIdFilter?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Location>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listLocations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, stateFilter, adGroupIdFilter, campaignIdFilter, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * LocationsBetaApi - factory interface
+ * @export
+ */
+export const LocationsBetaApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = LocationsBetaApiFp(configuration)
+    return {
+        /**
+         * Gets a list of Sponsored Display Location objects. This resource is not available when productAds have ASIN or SKU fields and only available for advertisers that do not sell products on Amazon. See [Developer Guide](https://advertising.amazon.com/API/docs/en-us/guides/sponsored-display/non-amazon-sellers/get-started)
+         * @summary Gets a list of locations associated with ad groups.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+         * @param {number} [startIndex] Optional. 0-indexed record offset for the result set. Defaults to 0.
+         * @param {number} [count] Optional. Number of records to include in the paged response. Defaults to max page size.
+         * @param {'enabled'} [stateFilter] Optional. Restricts results to those with state within the specified comma-separated list. Must be one of: &#x60;enabled&#x60;.
+         * @param {string} [adGroupIdFilter] Optional list of comma separated adGroupIds. Restricts results to locations with the specified &#x60;adGroupId&#x60;.
+         * @param {string} [campaignIdFilter] Optional list of comma separated campaignIds. Restricts results to locations with the specified &#x60;campaignId&#x60;.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listLocations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, stateFilter?: 'enabled', adGroupIdFilter?: string, campaignIdFilter?: string, options?: any): AxiosPromise<Array<Location>> {
+            return localVarFp.listLocations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, stateFilter, adGroupIdFilter, campaignIdFilter, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for listLocations operation in LocationsBetaApi.
+ * @export
+ * @interface LocationsBetaApiListLocationsRequest
+ */
+export interface LocationsBetaApiListLocationsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof LocationsBetaApiListLocations
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
+     * @type {string}
+     * @memberof LocationsBetaApiListLocations
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Optional. 0-indexed record offset for the result set. Defaults to 0.
+     * @type {number}
+     * @memberof LocationsBetaApiListLocations
+     */
+    readonly startIndex?: number
+
+    /**
+     * Optional. Number of records to include in the paged response. Defaults to max page size.
+     * @type {number}
+     * @memberof LocationsBetaApiListLocations
+     */
+    readonly count?: number
+
+    /**
+     * Optional. Restricts results to those with state within the specified comma-separated list. Must be one of: &#x60;enabled&#x60;.
+     * @type {'enabled'}
+     * @memberof LocationsBetaApiListLocations
+     */
+    readonly stateFilter?: 'enabled'
+
+    /**
+     * Optional list of comma separated adGroupIds. Restricts results to locations with the specified &#x60;adGroupId&#x60;.
+     * @type {string}
+     * @memberof LocationsBetaApiListLocations
+     */
+    readonly adGroupIdFilter?: string
+
+    /**
+     * Optional list of comma separated campaignIds. Restricts results to locations with the specified &#x60;campaignId&#x60;.
+     * @type {string}
+     * @memberof LocationsBetaApiListLocations
+     */
+    readonly campaignIdFilter?: string
+}
+
+/**
+ * LocationsBetaApi - object-oriented interface
+ * @export
+ * @class LocationsBetaApi
+ * @extends {BaseAPI}
+ */
+export class LocationsBetaApi extends BaseAPI {
+    /**
+     * Gets a list of Sponsored Display Location objects. This resource is not available when productAds have ASIN or SKU fields and only available for advertisers that do not sell products on Amazon. See [Developer Guide](https://advertising.amazon.com/API/docs/en-us/guides/sponsored-display/non-amazon-sellers/get-started)
+     * @summary Gets a list of locations associated with ad groups.
+     * @param {LocationsBetaApiListLocationsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocationsBetaApi
+     */
+    public listLocations(requestParameters: LocationsBetaApiListLocationsRequest, options?: any) {
+        return LocationsBetaApiFp(this.configuration).listLocations(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.startIndex, requestParameters.count, requestParameters.stateFilter, requestParameters.adGroupIdFilter, requestParameters.campaignIdFilter, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -10041,8 +12640,8 @@ export class NegativeTargetingApi extends BaseAPI {
 export const OptimizationRulesPreviewOnlyApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
-         * @summary Associate one or more optimization rules to an ad group specified by identifier. Only one optimization rule can be associated per adGroup. This note will be removed when multiple rules are supported per adGroup.
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.  * When an optimization rule is associated to an ad group, manual bids for individual targets will be overridden. * Only one optimization rule can be associated per adGroup. This note will be removed when multiple rules are supported per adGroup.
+         * @summary Associate one or more optimization rules to an ad group specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of the ad group.
@@ -10101,8 +12700,8 @@ export const OptimizationRulesPreviewOnlyApiAxiosParamCreator = function (config
             };
         },
         /**
-         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
-         * @summary Creates one or more optimization rules.
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.   * When an optimization rule is associated to an ad group, manual bids for individual targets will be overridden. * Optimization rules can only be associated to ad groups that have productAds with ASIN or SKU. * If you are using optimization rules, the following campaign budget must be at least:   - 5x the value of any COST_PER_ORDER threshold.   - 10x the value of any COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS threshold.   - 20x the value of any COST_PER_CLICK threshold.
+         * @summary Creates one or more optimization rules, also known as outcome optimizations.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateOptimizationRule>} [createOptimizationRule] An array of OptimizationRule objects. For each object, specify required fields and their values. Required fields are &#x60;state&#x60; and &#x60;ruleConditions&#x60;.
@@ -10150,66 +12749,6 @@ export const OptimizationRulesPreviewOnlyApiAxiosParamCreator = function (config
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(createOptimizationRule, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
-         * @summary Disassociate optimization rule from an ad group.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {string} optimizationRuleId The identifier of the optimization rule.
-         * @param {number} adGroupId The identifier of the ad group.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        disassociateOptimizationRule: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, optimizationRuleId: string, adGroupId: number, options: any = {}): Promise<RequestArgs> => {
-            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
-            assertParamExists('disassociateOptimizationRule', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('disassociateOptimizationRule', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            // verify required parameter 'optimizationRuleId' is not null or undefined
-            assertParamExists('disassociateOptimizationRule', 'optimizationRuleId', optimizationRuleId)
-            // verify required parameter 'adGroupId' is not null or undefined
-            assertParamExists('disassociateOptimizationRule', 'adGroupId', adGroupId)
-            const localVarPath = `/sd/adGroups/{adGroupId}/optimizationRules/{optimizationRuleId}`
-                .replace(`{${"optimizationRuleId"}}`, encodeURIComponent(String(optimizationRuleId)))
-                .replace(`{${"adGroupId"}}`, encodeURIComponent(String(adGroupId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication bearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-            // authentication oauth2AuthorizationCode required
-            // oauth required
-            await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
-
-            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
-            }
-
-            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
-                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -10477,8 +13016,8 @@ export const OptimizationRulesPreviewOnlyApiFp = function(configuration?: Config
     const localVarAxiosParamCreator = OptimizationRulesPreviewOnlyApiAxiosParamCreator(configuration)
     return {
         /**
-         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
-         * @summary Associate one or more optimization rules to an ad group specified by identifier. Only one optimization rule can be associated per adGroup. This note will be removed when multiple rules are supported per adGroup.
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.  * When an optimization rule is associated to an ad group, manual bids for individual targets will be overridden. * Only one optimization rule can be associated per adGroup. This note will be removed when multiple rules are supported per adGroup.
+         * @summary Associate one or more optimization rules to an ad group specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of the ad group.
@@ -10491,8 +13030,8 @@ export const OptimizationRulesPreviewOnlyApiFp = function(configuration?: Config
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
-         * @summary Creates one or more optimization rules.
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.   * When an optimization rule is associated to an ad group, manual bids for individual targets will be overridden. * Optimization rules can only be associated to ad groups that have productAds with ASIN or SKU. * If you are using optimization rules, the following campaign budget must be at least:   - 5x the value of any COST_PER_ORDER threshold.   - 10x the value of any COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS threshold.   - 20x the value of any COST_PER_CLICK threshold.
+         * @summary Creates one or more optimization rules, also known as outcome optimizations.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateOptimizationRule>} [createOptimizationRule] An array of OptimizationRule objects. For each object, specify required fields and their values. Required fields are &#x60;state&#x60; and &#x60;ruleConditions&#x60;.
@@ -10501,20 +13040,6 @@ export const OptimizationRulesPreviewOnlyApiFp = function(configuration?: Config
          */
         async createOptimizationRules(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createOptimizationRule?: Array<CreateOptimizationRule>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OptimizationRuleResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createOptimizationRules(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, createOptimizationRule, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
-         * @summary Disassociate optimization rule from an ad group.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {string} optimizationRuleId The identifier of the optimization rule.
-         * @param {number} adGroupId The identifier of the ad group.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async disassociateOptimizationRule(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, optimizationRuleId: string, adGroupId: number, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OptimizationRuleResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.disassociateOptimizationRule(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, optimizationRuleId, adGroupId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -10531,7 +13056,7 @@ export const OptimizationRulesPreviewOnlyApiFp = function(configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listOptimizationRules(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, stateFilter?: string, name?: string, optimizationRuleIdFilter?: string, adGroupIdFilter?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GetOptimizationRuleResponse>>> {
+        async listOptimizationRules(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, stateFilter?: string, name?: string, optimizationRuleIdFilter?: string, adGroupIdFilter?: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<OptimizationRule>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listOptimizationRules(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, stateFilter, name, optimizationRuleIdFilter, adGroupIdFilter, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -10585,8 +13110,8 @@ export const OptimizationRulesPreviewOnlyApiFactory = function (configuration?: 
     const localVarFp = OptimizationRulesPreviewOnlyApiFp(configuration)
     return {
         /**
-         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
-         * @summary Associate one or more optimization rules to an ad group specified by identifier. Only one optimization rule can be associated per adGroup. This note will be removed when multiple rules are supported per adGroup.
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.  * When an optimization rule is associated to an ad group, manual bids for individual targets will be overridden. * Only one optimization rule can be associated per adGroup. This note will be removed when multiple rules are supported per adGroup.
+         * @summary Associate one or more optimization rules to an ad group specified by identifier.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {number} adGroupId The identifier of the ad group.
@@ -10598,8 +13123,8 @@ export const OptimizationRulesPreviewOnlyApiFactory = function (configuration?: 
             return localVarFp.associateOptimizationRulesWithAdGroup(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, adGroupId, createAssociatedOptimizationRulesRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
-         * @summary Creates one or more optimization rules.
+         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.   * When an optimization rule is associated to an ad group, manual bids for individual targets will be overridden. * Optimization rules can only be associated to ad groups that have productAds with ASIN or SKU. * If you are using optimization rules, the following campaign budget must be at least:   - 5x the value of any COST_PER_ORDER threshold.   - 10x the value of any COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS threshold.   - 20x the value of any COST_PER_CLICK threshold.
+         * @summary Creates one or more optimization rules, also known as outcome optimizations.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
          * @param {Array<CreateOptimizationRule>} [createOptimizationRule] An array of OptimizationRule objects. For each object, specify required fields and their values. Required fields are &#x60;state&#x60; and &#x60;ruleConditions&#x60;.
@@ -10608,19 +13133,6 @@ export const OptimizationRulesPreviewOnlyApiFactory = function (configuration?: 
          */
         createOptimizationRules(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, createOptimizationRule?: Array<CreateOptimizationRule>, options?: any): AxiosPromise<Array<OptimizationRuleResponse>> {
             return localVarFp.createOptimizationRules(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, createOptimizationRule, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
-         * @summary Disassociate optimization rule from an ad group.
-         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {string} optimizationRuleId The identifier of the optimization rule.
-         * @param {number} adGroupId The identifier of the ad group.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        disassociateOptimizationRule(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, optimizationRuleId: string, adGroupId: number, options?: any): AxiosPromise<OptimizationRuleResponse> {
-            return localVarFp.disassociateOptimizationRule(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, optimizationRuleId, adGroupId, options).then((request) => request(axios, basePath));
         },
         /**
          * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available. Gets an array of OptimizationRule objects for a requested set of Sponsored Display optimization rules.
@@ -10636,7 +13148,7 @@ export const OptimizationRulesPreviewOnlyApiFactory = function (configuration?: 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOptimizationRules(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, stateFilter?: string, name?: string, optimizationRuleIdFilter?: string, adGroupIdFilter?: string, options?: any): AxiosPromise<Array<GetOptimizationRuleResponse>> {
+        listOptimizationRules(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, startIndex?: number, count?: number, stateFilter?: string, name?: string, optimizationRuleIdFilter?: string, adGroupIdFilter?: string, options?: any): AxiosPromise<Array<OptimizationRule>> {
             return localVarFp.listOptimizationRules(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, startIndex, count, stateFilter, name, optimizationRuleIdFilter, adGroupIdFilter, options).then((request) => request(axios, basePath));
         },
         /**
@@ -10739,41 +13251,6 @@ export interface OptimizationRulesPreviewOnlyApiCreateOptimizationRulesRequest {
      * @memberof OptimizationRulesPreviewOnlyApiCreateOptimizationRules
      */
     readonly createOptimizationRule?: Array<CreateOptimizationRule>
-}
-
-/**
- * Request parameters for disassociateOptimizationRule operation in OptimizationRulesPreviewOnlyApi.
- * @export
- * @interface OptimizationRulesPreviewOnlyApiDisassociateOptimizationRuleRequest
- */
-export interface OptimizationRulesPreviewOnlyApiDisassociateOptimizationRuleRequest {
-    /**
-     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-     * @type {string}
-     * @memberof OptimizationRulesPreviewOnlyApiDisassociateOptimizationRule
-     */
-    readonly amazonAdvertisingAPIClientId: string
-
-    /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-     * @type {string}
-     * @memberof OptimizationRulesPreviewOnlyApiDisassociateOptimizationRule
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
-     * The identifier of the optimization rule.
-     * @type {string}
-     * @memberof OptimizationRulesPreviewOnlyApiDisassociateOptimizationRule
-     */
-    readonly optimizationRuleId: string
-
-    /**
-     * The identifier of the ad group.
-     * @type {number}
-     * @memberof OptimizationRulesPreviewOnlyApiDisassociateOptimizationRule
-     */
-    readonly adGroupId: number
 }
 
 /**
@@ -10931,8 +13408,8 @@ export interface OptimizationRulesPreviewOnlyApiUpdateOptimizationRulesRequest {
  */
 export class OptimizationRulesPreviewOnlyApi extends BaseAPI {
     /**
-     * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
-     * @summary Associate one or more optimization rules to an ad group specified by identifier. Only one optimization rule can be associated per adGroup. This note will be removed when multiple rules are supported per adGroup.
+     * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.  * When an optimization rule is associated to an ad group, manual bids for individual targets will be overridden. * Only one optimization rule can be associated per adGroup. This note will be removed when multiple rules are supported per adGroup.
+     * @summary Associate one or more optimization rules to an ad group specified by identifier.
      * @param {OptimizationRulesPreviewOnlyApiAssociateOptimizationRulesWithAdGroupRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -10943,8 +13420,8 @@ export class OptimizationRulesPreviewOnlyApi extends BaseAPI {
     }
 
     /**
-     * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
-     * @summary Creates one or more optimization rules.
+     * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.   * When an optimization rule is associated to an ad group, manual bids for individual targets will be overridden. * Optimization rules can only be associated to ad groups that have productAds with ASIN or SKU. * If you are using optimization rules, the following campaign budget must be at least:   - 5x the value of any COST_PER_ORDER threshold.   - 10x the value of any COST_PER_THOUSAND_VIEWABLE_IMPRESSIONS threshold.   - 20x the value of any COST_PER_CLICK threshold.
+     * @summary Creates one or more optimization rules, also known as outcome optimizations.
      * @param {OptimizationRulesPreviewOnlyApiCreateOptimizationRulesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -10952,18 +13429,6 @@ export class OptimizationRulesPreviewOnlyApi extends BaseAPI {
      */
     public createOptimizationRules(requestParameters: OptimizationRulesPreviewOnlyApiCreateOptimizationRulesRequest, options?: any) {
         return OptimizationRulesPreviewOnlyApiFp(this.configuration).createOptimizationRules(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.createOptimizationRule, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * This operation is a PREVIEW ONLY. This note will be removed once this functionality becomes available.
-     * @summary Disassociate optimization rule from an ad group.
-     * @param {OptimizationRulesPreviewOnlyApiDisassociateOptimizationRuleRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OptimizationRulesPreviewOnlyApi
-     */
-    public disassociateOptimizationRule(requestParameters: OptimizationRulesPreviewOnlyApiDisassociateOptimizationRuleRequest, options?: any) {
-        return OptimizationRulesPreviewOnlyApiFp(this.configuration).disassociateOptimizationRule(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.optimizationRuleId, requestParameters.adGroupId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -12050,7 +14515,7 @@ export class ProductAdsApi extends BaseAPI {
 export const ReportsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**
          * @summary Downloads a previously requested report identified by reportId.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12106,7 +14571,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * Uses the `reportId` value from the response of a report previously requested via `POST` method of the `/sd/{recordType}/report` operation.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**
+         * Uses the `reportId` value from the response of a report previously requested via `POST` method of the `/sd/{recordType}/report` operation.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**
          * @summary Gets the status of a report previously requested.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12162,7 +14627,7 @@ export const ReportsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
-         * **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**  The Sponsored Display API supports creation of reports for campaigns, ad groups, product ads, targets, and asins. Create a ReportRequest object specifying the fields corresponding to performance data metrics to include in the report.
+         * **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**  The Sponsored Display API supports creation of reports for campaigns, ad groups, product ads, targets, and asins. Create a ReportRequest object specifying the fields corresponding to performance data metrics to include in the report.
          * @summary Creates a report request.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12232,7 +14697,7 @@ export const ReportsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ReportsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**
          * @summary Downloads a previously requested report identified by reportId.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12245,7 +14710,7 @@ export const ReportsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Uses the `reportId` value from the response of a report previously requested via `POST` method of the `/sd/{recordType}/report` operation.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**
+         * Uses the `reportId` value from the response of a report previously requested via `POST` method of the `/sd/{recordType}/report` operation.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**
          * @summary Gets the status of a report previously requested.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12258,7 +14723,7 @@ export const ReportsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**  The Sponsored Display API supports creation of reports for campaigns, ad groups, product ads, targets, and asins. Create a ReportRequest object specifying the fields corresponding to performance data metrics to include in the report.
+         * **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**  The Sponsored Display API supports creation of reports for campaigns, ad groups, product ads, targets, and asins. Create a ReportRequest object specifying the fields corresponding to performance data metrics to include in the report.
          * @summary Creates a report request.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12282,7 +14747,7 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = ReportsApiFp(configuration)
     return {
         /**
-         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**
+         * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**
          * @summary Downloads a previously requested report identified by reportId.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12294,7 +14759,7 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.downloadReport(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Uses the `reportId` value from the response of a report previously requested via `POST` method of the `/sd/{recordType}/report` operation.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**
+         * Uses the `reportId` value from the response of a report previously requested via `POST` method of the `/sd/{recordType}/report` operation.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**
          * @summary Gets the status of a report previously requested.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12306,7 +14771,7 @@ export const ReportsApiFactory = function (configuration?: Configuration, basePa
             return localVarFp.getReportStatus(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, reportId, options).then((request) => request(axios, basePath));
         },
         /**
-         * **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**  The Sponsored Display API supports creation of reports for campaigns, ad groups, product ads, targets, and asins. Create a ReportRequest object specifying the fields corresponding to performance data metrics to include in the report.
+         * **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**  The Sponsored Display API supports creation of reports for campaigns, ad groups, product ads, targets, and asins. Create a ReportRequest object specifying the fields corresponding to performance data metrics to include in the report.
          * @summary Creates a report request.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12420,7 +14885,7 @@ export interface ReportsApiRequestReportRequest {
  */
 export class ReportsApi extends BaseAPI {
     /**
-     * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**
+     * Gets a `307 Temporary Redirect` response that includes a `location` header with the value set to an AWS S3 path where the report is located. The path expires after 30 seconds. If the path expires before the report is downloaded, a new report request must be created.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**
      * @summary Downloads a previously requested report identified by reportId.
      * @param {ReportsApiDownloadReportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12432,7 +14897,7 @@ export class ReportsApi extends BaseAPI {
     }
 
     /**
-     * Uses the `reportId` value from the response of a report previously requested via `POST` method of the `/sd/{recordType}/report` operation.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**
+     * Uses the `reportId` value from the response of a report previously requested via `POST` method of the `/sd/{recordType}/report` operation.  **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**
      * @summary Gets the status of a report previously requested.
      * @param {ReportsApiGetReportStatusRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12444,7 +14909,7 @@ export class ReportsApi extends BaseAPI {
     }
 
     /**
-     * **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/reporting/v2/sponsored-ads-reports).**  The Sponsored Display API supports creation of reports for campaigns, ad groups, product ads, targets, and asins. Create a ReportRequest object specifying the fields corresponding to performance data metrics to include in the report.
+     * **To understand the call flow for asynchronous reports, see [Getting started with sponsored ads reports](/API/docs/en-us/guides/reporting/v2/sponsored-ads-reports).**  The Sponsored Display API supports creation of reports for campaigns, ad groups, product ads, targets, and asins. Create a ReportRequest object specifying the fields corresponding to performance data metrics to include in the report.
      * @summary Creates a report request.
      * @param {ReportsApiRequestReportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12464,7 +14929,7 @@ export class ReportsApi extends BaseAPI {
 export const SnapshotsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads-reports).**
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/get-started).**
          * @summary Request a file-based snapshot of all entities of the specified type in the account satisfying the filtering criteria
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12524,7 +14989,7 @@ export const SnapshotsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/overview).**
          * @summary Download previously requested snapshot
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12580,7 +15045,7 @@ export const SnapshotsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/tutorials/sponsored-ads-snapshots).**
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/get-started).**
          * @summary Retrieve status, metadata, and location of previously requested snapshot
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12646,7 +15111,7 @@ export const SnapshotsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SnapshotsApiAxiosParamCreator(configuration)
     return {
         /**
-         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads-reports).**
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/get-started).**
          * @summary Request a file-based snapshot of all entities of the specified type in the account satisfying the filtering criteria
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12660,7 +15125,7 @@ export const SnapshotsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/overview).**
          * @summary Download previously requested snapshot
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12673,7 +15138,7 @@ export const SnapshotsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/tutorials/sponsored-ads-snapshots).**
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/get-started).**
          * @summary Retrieve status, metadata, and location of previously requested snapshot
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12696,7 +15161,7 @@ export const SnapshotsApiFactory = function (configuration?: Configuration, base
     const localVarFp = SnapshotsApiFp(configuration)
     return {
         /**
-         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads-reports).**
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/get-started).**
          * @summary Request a file-based snapshot of all entities of the specified type in the account satisfying the filtering criteria
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12709,7 +15174,7 @@ export const SnapshotsApiFactory = function (configuration?: Configuration, base
             return localVarFp.createSnapshot(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, recordType, snapshotRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/overview).**
          * @summary Download previously requested snapshot
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12721,7 +15186,7 @@ export const SnapshotsApiFactory = function (configuration?: Configuration, base
             return localVarFp.downloadSnapshot(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, snapshotId, options).then((request) => request(axios, basePath));
         },
         /**
-         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/tutorials/sponsored-ads-snapshots).**
+         * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/get-started).**
          * @summary Retrieve status, metadata, and location of previously requested snapshot
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -12834,7 +15299,7 @@ export interface SnapshotsApiGetSnapshotRequest {
  */
 export class SnapshotsApi extends BaseAPI {
     /**
-     * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads-reports).**
+     * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/get-started).**
      * @summary Request a file-based snapshot of all entities of the specified type in the account satisfying the filtering criteria
      * @param {SnapshotsApiCreateSnapshotRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12846,7 +15311,7 @@ export class SnapshotsApi extends BaseAPI {
     }
 
     /**
-     * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/concepts/snapshots/sponsored-ads).**
+     * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/overview).**
      * @summary Download previously requested snapshot
      * @param {SnapshotsApiDownloadSnapshotRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12858,7 +15323,7 @@ export class SnapshotsApi extends BaseAPI {
     }
 
     /**
-     * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/tutorials/sponsored-ads-snapshots).**
+     * **To understand the call flow for asynchronous snapshots, see [Getting started with sponsored ads snapshots](/API/docs/en-us/guides/snapshots/get-started).**
      * @summary Retrieve status, metadata, and location of previously requested snapshot
      * @param {SnapshotsApiGetSnapshotRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12934,7 +15399,7 @@ export const TargetingApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Successfully created targeting clauses are assigned a unique `targetId` value.  Create new targeting clauses for campaigns with tactic \'T00020\' using the following: | Contextual targeting clause | Description | |------------------|-------------| | similarProduct | Dynamic segment to target products that are similar to the advertised asin. We recommend using \'similarProduct\' targeting for all adGroups. | | asinSameAs=B0123456789 | Target this product. | | asinCategorySameAs=12345 | Target products in the category. | | asinCategorySameAs=12345 asinBrandSameAs=45678 | Target products in the category and brand. |  **Refinements:** - asinBrandSameAs - asinPriceBetween - asinPriceGreaterThan - asinPriceLessThan - asinReviewRatingLessThan - asinReviewRatingGreaterThan - asinReviewRatingBetween - asinIsPrimeShippingEligible - asinAgeRangeSameAs - asinGenreSameAs  **Refinement Notes:** * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the \'between\' strings to construct a targeting expression the format of the string is \'double-double\' where the first double must be smaller than the second double. Prices are not inclusive. * \'similarProduct\' has no expression value or refinements.  Create new targeting clauses for campaigns with tactic \'T00030\' using the following: | Audience targeting clause | Description | |------------------|-------------| | views(exactProduct lookback=30) | Target an audience that has viewed the advertised asins in the past 7,14,30,60, or 90 days. | | views(similarProduct lookback=60) | Target an audience that has viewed similar products to the advertised asins in the past 7,14,30,60, or 90 days. | | views(asinCategorySameAs=12345 lookback=90) | Target an audience that has viewed products in the given category in the past 7,14,30,60, or 90 days. | | views(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=60) | Target an audience that has viewed products in the given category, brand, and price range in the past 7,14,30,60, or 90 days. | | purchases(relatedProduct lookback=180) | Target an audience that has purchased a related product in the past 7,14,30,60,90,180 or 365 days| | purchases(exactProduct lookback=365) | Target an audience that has purchased the advertised asins in the past 7,14,30,60,90,180 or 365 days| | purchases(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=90) | Target an audience that has purchased products in the given category, brand, and price range in the past 7,14,30,60,90,180 or 365 days |  Note: 1. There is a limit of 20 targeting clauses per request for T00030. 2. There is a limit of 100 targeting clauses per request for T00020. 3. If you receive the error of \"Cannot create targeting clause: audience size is too small\", please expand or broaden your targeting clause to increase the audience size.
+         * Successfully created targeting clauses are assigned a unique `targetId` value.  Create new targeting clauses for campaigns with tactic \'T00020\' using the following: | Contextual targeting clause | Description | |------------------|-------------| | similarProduct | Dynamic segment to target products that are similar to the advertised asin. We recommend using \'similarProduct\' targeting for all adGroups. | | asinSameAs=B0123456789 | Target this product. | | asinCategorySameAs=12345 | Target products in the category. | | asinCategorySameAs=12345 asinBrandSameAs=45678 | Target products in the category and brand. |  **Refinements:** - asinBrandSameAs - asinPriceBetween - asinPriceGreaterThan - asinPriceLessThan - asinReviewRatingLessThan - asinReviewRatingGreaterThan - asinReviewRatingBetween - asinIsPrimeShippingEligible - asinAgeRangeSameAs - asinGenreSameAs  **Refinement Notes:** * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the \'between\' strings to construct a targeting expression the format of the string is \'double-double\' where the first double must be smaller than the second double. Prices are not inclusive. * \'similarProduct\' has no expression value or refinements.  Create new targeting clauses for campaigns with tactic \'T00030\' using the following: | Audience targeting clause | Description | |------------------|-------------| | views(exactProduct lookback=30) | Target an audience that has viewed the advertised asins in the past 7,14,30,60, or 90 days. Note: This target should only be used for productAds with SKU or ASIN. | | views(similarProduct lookback=60) | Target an audience that has viewed similar products to the advertised asins in the past 7,14,30,60, or 90 days. Note: This target should only be used for productAds with SKU or ASIN.| | views(asinCategorySameAs=12345 lookback=90) | Target an audience that has viewed products in the given category in the past 7,14,30,60, or 90 days. | | views(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=60) | Target an audience that has viewed products in the given category, brand, and price range in the past 7,14,30,60, or 90 days. | | purchases(relatedProduct lookback=180) | Target an audience that has purchased a related product in the past 7,14,30,60,90,180 or 365 days. Note: This target should only be used for productAds with SKU or ASIN.| | purchases(exactProduct lookback=365) | Target an audience that has purchased the advertised asins in the past 7,14,30,60,90,180 or 365 days. Note: This target should only be used for productAds with SKU or ASIN.| | purchases(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=90) | Target an audience that has purchased products in the given category, brand, and price range in the past 7,14,30,60,90,180 or 365 days |  Note: 1. There is a limit of 20 targeting clauses per request for T00030. 2. There is a limit of 100 targeting clauses per request for T00020. 3. If you receive the error of \"Cannot create targeting clause: audience size is too small\", please expand or broaden your targeting clause to increase the audience size.
          * @summary Creates one or more targeting clauses.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -13340,7 +15805,7 @@ export const TargetingApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Successfully created targeting clauses are assigned a unique `targetId` value.  Create new targeting clauses for campaigns with tactic \'T00020\' using the following: | Contextual targeting clause | Description | |------------------|-------------| | similarProduct | Dynamic segment to target products that are similar to the advertised asin. We recommend using \'similarProduct\' targeting for all adGroups. | | asinSameAs=B0123456789 | Target this product. | | asinCategorySameAs=12345 | Target products in the category. | | asinCategorySameAs=12345 asinBrandSameAs=45678 | Target products in the category and brand. |  **Refinements:** - asinBrandSameAs - asinPriceBetween - asinPriceGreaterThan - asinPriceLessThan - asinReviewRatingLessThan - asinReviewRatingGreaterThan - asinReviewRatingBetween - asinIsPrimeShippingEligible - asinAgeRangeSameAs - asinGenreSameAs  **Refinement Notes:** * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the \'between\' strings to construct a targeting expression the format of the string is \'double-double\' where the first double must be smaller than the second double. Prices are not inclusive. * \'similarProduct\' has no expression value or refinements.  Create new targeting clauses for campaigns with tactic \'T00030\' using the following: | Audience targeting clause | Description | |------------------|-------------| | views(exactProduct lookback=30) | Target an audience that has viewed the advertised asins in the past 7,14,30,60, or 90 days. | | views(similarProduct lookback=60) | Target an audience that has viewed similar products to the advertised asins in the past 7,14,30,60, or 90 days. | | views(asinCategorySameAs=12345 lookback=90) | Target an audience that has viewed products in the given category in the past 7,14,30,60, or 90 days. | | views(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=60) | Target an audience that has viewed products in the given category, brand, and price range in the past 7,14,30,60, or 90 days. | | purchases(relatedProduct lookback=180) | Target an audience that has purchased a related product in the past 7,14,30,60,90,180 or 365 days| | purchases(exactProduct lookback=365) | Target an audience that has purchased the advertised asins in the past 7,14,30,60,90,180 or 365 days| | purchases(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=90) | Target an audience that has purchased products in the given category, brand, and price range in the past 7,14,30,60,90,180 or 365 days |  Note: 1. There is a limit of 20 targeting clauses per request for T00030. 2. There is a limit of 100 targeting clauses per request for T00020. 3. If you receive the error of \"Cannot create targeting clause: audience size is too small\", please expand or broaden your targeting clause to increase the audience size.
+         * Successfully created targeting clauses are assigned a unique `targetId` value.  Create new targeting clauses for campaigns with tactic \'T00020\' using the following: | Contextual targeting clause | Description | |------------------|-------------| | similarProduct | Dynamic segment to target products that are similar to the advertised asin. We recommend using \'similarProduct\' targeting for all adGroups. | | asinSameAs=B0123456789 | Target this product. | | asinCategorySameAs=12345 | Target products in the category. | | asinCategorySameAs=12345 asinBrandSameAs=45678 | Target products in the category and brand. |  **Refinements:** - asinBrandSameAs - asinPriceBetween - asinPriceGreaterThan - asinPriceLessThan - asinReviewRatingLessThan - asinReviewRatingGreaterThan - asinReviewRatingBetween - asinIsPrimeShippingEligible - asinAgeRangeSameAs - asinGenreSameAs  **Refinement Notes:** * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the \'between\' strings to construct a targeting expression the format of the string is \'double-double\' where the first double must be smaller than the second double. Prices are not inclusive. * \'similarProduct\' has no expression value or refinements.  Create new targeting clauses for campaigns with tactic \'T00030\' using the following: | Audience targeting clause | Description | |------------------|-------------| | views(exactProduct lookback=30) | Target an audience that has viewed the advertised asins in the past 7,14,30,60, or 90 days. Note: This target should only be used for productAds with SKU or ASIN. | | views(similarProduct lookback=60) | Target an audience that has viewed similar products to the advertised asins in the past 7,14,30,60, or 90 days. Note: This target should only be used for productAds with SKU or ASIN.| | views(asinCategorySameAs=12345 lookback=90) | Target an audience that has viewed products in the given category in the past 7,14,30,60, or 90 days. | | views(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=60) | Target an audience that has viewed products in the given category, brand, and price range in the past 7,14,30,60, or 90 days. | | purchases(relatedProduct lookback=180) | Target an audience that has purchased a related product in the past 7,14,30,60,90,180 or 365 days. Note: This target should only be used for productAds with SKU or ASIN.| | purchases(exactProduct lookback=365) | Target an audience that has purchased the advertised asins in the past 7,14,30,60,90,180 or 365 days. Note: This target should only be used for productAds with SKU or ASIN.| | purchases(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=90) | Target an audience that has purchased products in the given category, brand, and price range in the past 7,14,30,60,90,180 or 365 days |  Note: 1. There is a limit of 20 targeting clauses per request for T00030. 2. There is a limit of 100 targeting clauses per request for T00020. 3. If you receive the error of \"Cannot create targeting clause: audience size is too small\", please expand or broaden your targeting clause to increase the audience size.
          * @summary Creates one or more targeting clauses.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -13449,7 +15914,7 @@ export const TargetingApiFactory = function (configuration?: Configuration, base
             return localVarFp.archiveTargetingClause(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, targetId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Successfully created targeting clauses are assigned a unique `targetId` value.  Create new targeting clauses for campaigns with tactic \'T00020\' using the following: | Contextual targeting clause | Description | |------------------|-------------| | similarProduct | Dynamic segment to target products that are similar to the advertised asin. We recommend using \'similarProduct\' targeting for all adGroups. | | asinSameAs=B0123456789 | Target this product. | | asinCategorySameAs=12345 | Target products in the category. | | asinCategorySameAs=12345 asinBrandSameAs=45678 | Target products in the category and brand. |  **Refinements:** - asinBrandSameAs - asinPriceBetween - asinPriceGreaterThan - asinPriceLessThan - asinReviewRatingLessThan - asinReviewRatingGreaterThan - asinReviewRatingBetween - asinIsPrimeShippingEligible - asinAgeRangeSameAs - asinGenreSameAs  **Refinement Notes:** * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the \'between\' strings to construct a targeting expression the format of the string is \'double-double\' where the first double must be smaller than the second double. Prices are not inclusive. * \'similarProduct\' has no expression value or refinements.  Create new targeting clauses for campaigns with tactic \'T00030\' using the following: | Audience targeting clause | Description | |------------------|-------------| | views(exactProduct lookback=30) | Target an audience that has viewed the advertised asins in the past 7,14,30,60, or 90 days. | | views(similarProduct lookback=60) | Target an audience that has viewed similar products to the advertised asins in the past 7,14,30,60, or 90 days. | | views(asinCategorySameAs=12345 lookback=90) | Target an audience that has viewed products in the given category in the past 7,14,30,60, or 90 days. | | views(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=60) | Target an audience that has viewed products in the given category, brand, and price range in the past 7,14,30,60, or 90 days. | | purchases(relatedProduct lookback=180) | Target an audience that has purchased a related product in the past 7,14,30,60,90,180 or 365 days| | purchases(exactProduct lookback=365) | Target an audience that has purchased the advertised asins in the past 7,14,30,60,90,180 or 365 days| | purchases(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=90) | Target an audience that has purchased products in the given category, brand, and price range in the past 7,14,30,60,90,180 or 365 days |  Note: 1. There is a limit of 20 targeting clauses per request for T00030. 2. There is a limit of 100 targeting clauses per request for T00020. 3. If you receive the error of \"Cannot create targeting clause: audience size is too small\", please expand or broaden your targeting clause to increase the audience size.
+         * Successfully created targeting clauses are assigned a unique `targetId` value.  Create new targeting clauses for campaigns with tactic \'T00020\' using the following: | Contextual targeting clause | Description | |------------------|-------------| | similarProduct | Dynamic segment to target products that are similar to the advertised asin. We recommend using \'similarProduct\' targeting for all adGroups. | | asinSameAs=B0123456789 | Target this product. | | asinCategorySameAs=12345 | Target products in the category. | | asinCategorySameAs=12345 asinBrandSameAs=45678 | Target products in the category and brand. |  **Refinements:** - asinBrandSameAs - asinPriceBetween - asinPriceGreaterThan - asinPriceLessThan - asinReviewRatingLessThan - asinReviewRatingGreaterThan - asinReviewRatingBetween - asinIsPrimeShippingEligible - asinAgeRangeSameAs - asinGenreSameAs  **Refinement Notes:** * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the \'between\' strings to construct a targeting expression the format of the string is \'double-double\' where the first double must be smaller than the second double. Prices are not inclusive. * \'similarProduct\' has no expression value or refinements.  Create new targeting clauses for campaigns with tactic \'T00030\' using the following: | Audience targeting clause | Description | |------------------|-------------| | views(exactProduct lookback=30) | Target an audience that has viewed the advertised asins in the past 7,14,30,60, or 90 days. Note: This target should only be used for productAds with SKU or ASIN. | | views(similarProduct lookback=60) | Target an audience that has viewed similar products to the advertised asins in the past 7,14,30,60, or 90 days. Note: This target should only be used for productAds with SKU or ASIN.| | views(asinCategorySameAs=12345 lookback=90) | Target an audience that has viewed products in the given category in the past 7,14,30,60, or 90 days. | | views(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=60) | Target an audience that has viewed products in the given category, brand, and price range in the past 7,14,30,60, or 90 days. | | purchases(relatedProduct lookback=180) | Target an audience that has purchased a related product in the past 7,14,30,60,90,180 or 365 days. Note: This target should only be used for productAds with SKU or ASIN.| | purchases(exactProduct lookback=365) | Target an audience that has purchased the advertised asins in the past 7,14,30,60,90,180 or 365 days. Note: This target should only be used for productAds with SKU or ASIN.| | purchases(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=90) | Target an audience that has purchased products in the given category, brand, and price range in the past 7,14,30,60,90,180 or 365 days |  Note: 1. There is a limit of 20 targeting clauses per request for T00030. 2. There is a limit of 100 targeting clauses per request for T00020. 3. If you receive the error of \"Cannot create targeting clause: audience size is too small\", please expand or broaden your targeting clause to increase the audience size.
          * @summary Creates one or more targeting clauses.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
@@ -13811,7 +16276,7 @@ export class TargetingApi extends BaseAPI {
     }
 
     /**
-     * Successfully created targeting clauses are assigned a unique `targetId` value.  Create new targeting clauses for campaigns with tactic \'T00020\' using the following: | Contextual targeting clause | Description | |------------------|-------------| | similarProduct | Dynamic segment to target products that are similar to the advertised asin. We recommend using \'similarProduct\' targeting for all adGroups. | | asinSameAs=B0123456789 | Target this product. | | asinCategorySameAs=12345 | Target products in the category. | | asinCategorySameAs=12345 asinBrandSameAs=45678 | Target products in the category and brand. |  **Refinements:** - asinBrandSameAs - asinPriceBetween - asinPriceGreaterThan - asinPriceLessThan - asinReviewRatingLessThan - asinReviewRatingGreaterThan - asinReviewRatingBetween - asinIsPrimeShippingEligible - asinAgeRangeSameAs - asinGenreSameAs  **Refinement Notes:** * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the \'between\' strings to construct a targeting expression the format of the string is \'double-double\' where the first double must be smaller than the second double. Prices are not inclusive. * \'similarProduct\' has no expression value or refinements.  Create new targeting clauses for campaigns with tactic \'T00030\' using the following: | Audience targeting clause | Description | |------------------|-------------| | views(exactProduct lookback=30) | Target an audience that has viewed the advertised asins in the past 7,14,30,60, or 90 days. | | views(similarProduct lookback=60) | Target an audience that has viewed similar products to the advertised asins in the past 7,14,30,60, or 90 days. | | views(asinCategorySameAs=12345 lookback=90) | Target an audience that has viewed products in the given category in the past 7,14,30,60, or 90 days. | | views(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=60) | Target an audience that has viewed products in the given category, brand, and price range in the past 7,14,30,60, or 90 days. | | purchases(relatedProduct lookback=180) | Target an audience that has purchased a related product in the past 7,14,30,60,90,180 or 365 days| | purchases(exactProduct lookback=365) | Target an audience that has purchased the advertised asins in the past 7,14,30,60,90,180 or 365 days| | purchases(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=90) | Target an audience that has purchased products in the given category, brand, and price range in the past 7,14,30,60,90,180 or 365 days |  Note: 1. There is a limit of 20 targeting clauses per request for T00030. 2. There is a limit of 100 targeting clauses per request for T00020. 3. If you receive the error of \"Cannot create targeting clause: audience size is too small\", please expand or broaden your targeting clause to increase the audience size.
+     * Successfully created targeting clauses are assigned a unique `targetId` value.  Create new targeting clauses for campaigns with tactic \'T00020\' using the following: | Contextual targeting clause | Description | |------------------|-------------| | similarProduct | Dynamic segment to target products that are similar to the advertised asin. We recommend using \'similarProduct\' targeting for all adGroups. | | asinSameAs=B0123456789 | Target this product. | | asinCategorySameAs=12345 | Target products in the category. | | asinCategorySameAs=12345 asinBrandSameAs=45678 | Target products in the category and brand. |  **Refinements:** - asinBrandSameAs - asinPriceBetween - asinPriceGreaterThan - asinPriceLessThan - asinReviewRatingLessThan - asinReviewRatingGreaterThan - asinReviewRatingBetween - asinIsPrimeShippingEligible - asinAgeRangeSameAs - asinGenreSameAs  **Refinement Notes:** * Brand, price, and review predicates are optional and may only be specified if category is also specified. * Review predicates accept numbers between 0 and 5 and are inclusive. * When using either of the \'between\' strings to construct a targeting expression the format of the string is \'double-double\' where the first double must be smaller than the second double. Prices are not inclusive. * \'similarProduct\' has no expression value or refinements.  Create new targeting clauses for campaigns with tactic \'T00030\' using the following: | Audience targeting clause | Description | |------------------|-------------| | views(exactProduct lookback=30) | Target an audience that has viewed the advertised asins in the past 7,14,30,60, or 90 days. Note: This target should only be used for productAds with SKU or ASIN. | | views(similarProduct lookback=60) | Target an audience that has viewed similar products to the advertised asins in the past 7,14,30,60, or 90 days. Note: This target should only be used for productAds with SKU or ASIN.| | views(asinCategorySameAs=12345 lookback=90) | Target an audience that has viewed products in the given category in the past 7,14,30,60, or 90 days. | | views(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=60) | Target an audience that has viewed products in the given category, brand, and price range in the past 7,14,30,60, or 90 days. | | purchases(relatedProduct lookback=180) | Target an audience that has purchased a related product in the past 7,14,30,60,90,180 or 365 days. Note: This target should only be used for productAds with SKU or ASIN.| | purchases(exactProduct lookback=365) | Target an audience that has purchased the advertised asins in the past 7,14,30,60,90,180 or 365 days. Note: This target should only be used for productAds with SKU or ASIN.| | purchases(asinCategorySameAs=12345 asinBrandSameAs=45678 asinPriceBetween=50-100 lookback=90) | Target an audience that has purchased products in the given category, brand, and price range in the past 7,14,30,60,90,180 or 365 days |  Note: 1. There is a limit of 20 targeting clauses per request for T00030. 2. There is a limit of 100 targeting clauses per request for T00020. 3. If you receive the error of \"Cannot create targeting clause: audience size is too small\", please expand or broaden your targeting clause to increase the audience size.
      * @summary Creates one or more targeting clauses.
      * @param {TargetingApiCreateTargetingClausesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -13891,15 +16356,16 @@ export class TargetingApi extends BaseAPI {
 export const TargetingRecommendationsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * This API provides product and category recommendations to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service.  For API v3.0, the API returns up to 100 recommendations for contextual targeting.  For API v3.1, the API returns up to 100 recommendations for both product and category targeting.  For API v3.2, the API introduces contextual targeting themes in the request and returns product recommendations based on different targeting themes.  The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Contextual Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|
+         * This API provides product, category and standard audience recommendations to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service. Note -  recommendations are only available for productAds with SKU or ASIN.  For API v3.0, the API returns up to 100 recommendations for contextual targeting.  For API v3.1, the API returns up to 100 recommendations for both product and category targeting.  For API v3.2, the API introduces contextual targeting themes in the request and returns product recommendations based on different targeting themes.  For API v3.3, the API introduces standard audience recommendations and translated category recommendations based on locale.  The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Contextual Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|
          * @summary Returns a set of recommended products and categories to target
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {SDTargetingRecommendationsRequestV32} [sDTargetingRecommendationsRequestV32] 
+         * @param {SDTargetingRecommendationsLocale} [locale] The requested locale from query parameter to return translated category recommendations.
+         * @param {SDTargetingRecommendationsRequestV33} [sDTargetingRecommendationsRequestV33] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTargetRecommendations: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDTargetingRecommendationsRequestV32?: SDTargetingRecommendationsRequestV32, options: any = {}): Promise<RequestArgs> => {
+        getTargetRecommendations: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, locale?: SDTargetingRecommendationsLocale, sDTargetingRecommendationsRequestV33?: SDTargetingRecommendationsRequestV33, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('getTargetRecommendations', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
@@ -13924,6 +16390,10 @@ export const TargetingRecommendationsApiAxiosParamCreator = function (configurat
             // oauth required
             await setOAuthToObject(localVarHeaderParameter, "oauth2AuthorizationCode", ["cpc_advertising:campaign_management"], configuration)
 
+            if (locale !== undefined) {
+                localVarQueryParameter['locale'] = locale;
+            }
+
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
                 localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
             }
@@ -13934,12 +16404,12 @@ export const TargetingRecommendationsApiAxiosParamCreator = function (configurat
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/vnd.sdtargetingrecommendations.v3.2+json';
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.sdtargetingrecommendations.v3.3+json';
 
             setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(sDTargetingRecommendationsRequestV32, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(sDTargetingRecommendationsRequestV33, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -13957,16 +16427,17 @@ export const TargetingRecommendationsApiFp = function(configuration?: Configurat
     const localVarAxiosParamCreator = TargetingRecommendationsApiAxiosParamCreator(configuration)
     return {
         /**
-         * This API provides product and category recommendations to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service.  For API v3.0, the API returns up to 100 recommendations for contextual targeting.  For API v3.1, the API returns up to 100 recommendations for both product and category targeting.  For API v3.2, the API introduces contextual targeting themes in the request and returns product recommendations based on different targeting themes.  The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Contextual Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|
+         * This API provides product, category and standard audience recommendations to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service. Note -  recommendations are only available for productAds with SKU or ASIN.  For API v3.0, the API returns up to 100 recommendations for contextual targeting.  For API v3.1, the API returns up to 100 recommendations for both product and category targeting.  For API v3.2, the API introduces contextual targeting themes in the request and returns product recommendations based on different targeting themes.  For API v3.3, the API introduces standard audience recommendations and translated category recommendations based on locale.  The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Contextual Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|
          * @summary Returns a set of recommended products and categories to target
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {SDTargetingRecommendationsRequestV32} [sDTargetingRecommendationsRequestV32] 
+         * @param {SDTargetingRecommendationsLocale} [locale] The requested locale from query parameter to return translated category recommendations.
+         * @param {SDTargetingRecommendationsRequestV33} [sDTargetingRecommendationsRequestV33] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getTargetRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDTargetingRecommendationsRequestV32?: SDTargetingRecommendationsRequestV32, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SDTargetingRecommendationsResponseV32>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getTargetRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sDTargetingRecommendationsRequestV32, options);
+        async getTargetRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, locale?: SDTargetingRecommendationsLocale, sDTargetingRecommendationsRequestV33?: SDTargetingRecommendationsRequestV33, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SDTargetingRecommendationsResponseV33>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getTargetRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, locale, sDTargetingRecommendationsRequestV33, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -13980,16 +16451,17 @@ export const TargetingRecommendationsApiFactory = function (configuration?: Conf
     const localVarFp = TargetingRecommendationsApiFp(configuration)
     return {
         /**
-         * This API provides product and category recommendations to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service.  For API v3.0, the API returns up to 100 recommendations for contextual targeting.  For API v3.1, the API returns up to 100 recommendations for both product and category targeting.  For API v3.2, the API introduces contextual targeting themes in the request and returns product recommendations based on different targeting themes.  The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Contextual Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|
+         * This API provides product, category and standard audience recommendations to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service. Note -  recommendations are only available for productAds with SKU or ASIN.  For API v3.0, the API returns up to 100 recommendations for contextual targeting.  For API v3.1, the API returns up to 100 recommendations for both product and category targeting.  For API v3.2, the API introduces contextual targeting themes in the request and returns product recommendations based on different targeting themes.  For API v3.3, the API introduces standard audience recommendations and translated category recommendations based on locale.  The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Contextual Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|
          * @summary Returns a set of recommended products and categories to target
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header.
-         * @param {SDTargetingRecommendationsRequestV32} [sDTargetingRecommendationsRequestV32] 
+         * @param {SDTargetingRecommendationsLocale} [locale] The requested locale from query parameter to return translated category recommendations.
+         * @param {SDTargetingRecommendationsRequestV33} [sDTargetingRecommendationsRequestV33] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTargetRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, sDTargetingRecommendationsRequestV32?: SDTargetingRecommendationsRequestV32, options?: any): AxiosPromise<SDTargetingRecommendationsResponseV32> {
-            return localVarFp.getTargetRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, sDTargetingRecommendationsRequestV32, options).then((request) => request(axios, basePath));
+        getTargetRecommendations(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, locale?: SDTargetingRecommendationsLocale, sDTargetingRecommendationsRequestV33?: SDTargetingRecommendationsRequestV33, options?: any): AxiosPromise<SDTargetingRecommendationsResponseV33> {
+            return localVarFp.getTargetRecommendations(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, locale, sDTargetingRecommendationsRequestV33, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -14015,11 +16487,18 @@ export interface TargetingRecommendationsApiGetTargetRecommendationsRequest {
     readonly amazonAdvertisingAPIScope: string
 
     /**
-     * 
-     * @type {SDTargetingRecommendationsRequestV32}
+     * The requested locale from query parameter to return translated category recommendations.
+     * @type {SDTargetingRecommendationsLocale}
      * @memberof TargetingRecommendationsApiGetTargetRecommendations
      */
-    readonly sDTargetingRecommendationsRequestV32?: SDTargetingRecommendationsRequestV32
+    readonly locale?: SDTargetingRecommendationsLocale
+
+    /**
+     * 
+     * @type {SDTargetingRecommendationsRequestV33}
+     * @memberof TargetingRecommendationsApiGetTargetRecommendations
+     */
+    readonly sDTargetingRecommendationsRequestV33?: SDTargetingRecommendationsRequestV33
 }
 
 /**
@@ -14030,7 +16509,7 @@ export interface TargetingRecommendationsApiGetTargetRecommendationsRequest {
  */
 export class TargetingRecommendationsApi extends BaseAPI {
     /**
-     * This API provides product and category recommendations to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service.  For API v3.0, the API returns up to 100 recommendations for contextual targeting.  For API v3.1, the API returns up to 100 recommendations for both product and category targeting.  For API v3.2, the API introduces contextual targeting themes in the request and returns product recommendations based on different targeting themes.  The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Contextual Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|
+     * This API provides product, category and standard audience recommendations to target based on the list of input ASINs. Allow 1 week for our systems to process data for any new ASINs listed on Amazon before using this service. Note -  recommendations are only available for productAds with SKU or ASIN.  For API v3.0, the API returns up to 100 recommendations for contextual targeting.  For API v3.1, the API returns up to 100 recommendations for both product and category targeting.  For API v3.2, the API introduces contextual targeting themes in the request and returns product recommendations based on different targeting themes.  For API v3.3, the API introduces standard audience recommendations and translated category recommendations based on locale.  The currently available tactic identifiers are:  |Tactic Name|Type|Description| |-----------|----|-----------| |T00020&nbsp;|Contextual Targeting|Products: Choose individual products to show your ads in placements related to those products.| |T00030&nbsp;|Audience Targeting|Audiences: Select individual audiences to show your ads.|
      * @summary Returns a set of recommended products and categories to target
      * @param {TargetingRecommendationsApiGetTargetRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -14038,7 +16517,7 @@ export class TargetingRecommendationsApi extends BaseAPI {
      * @memberof TargetingRecommendationsApi
      */
     public getTargetRecommendations(requestParameters: TargetingRecommendationsApiGetTargetRecommendationsRequest, options?: any) {
-        return TargetingRecommendationsApiFp(this.configuration).getTargetRecommendations(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.sDTargetingRecommendationsRequestV32, options).then((request) => request(this.axios, this.basePath));
+        return TargetingRecommendationsApiFp(this.configuration).getTargetRecommendations(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.locale, requestParameters.sDTargetingRecommendationsRequestV33, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

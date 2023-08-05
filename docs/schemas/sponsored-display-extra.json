@@ -8,7 +8,7 @@
     "/sd/campaigns/{campaignId}/budgetRules/budgetHistory": {
       "get": {
         "summary": "Gets the budget history for a campaign specified by identifier.",
-        "description": "The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.",
+        "description": "**Deprecation notice: This endpoint will be deprecated on August 31, 2023.** The budget history is returned for the time period specified in the required startDate and endDate parameters. The maximum time period is 90 days.",
         "operationId": "getRuleBasedBudgetHistoryForSDCampaigns",
         "responses": {
           "200": {
@@ -568,6 +568,105 @@
             "description": "The ID of the request previously submitted.",
             "required": true
           }
+        ]
+      }
+    },
+    "/sd/campaigns/budgetRecommendations": {
+      "post": {
+        "summary": "Returns recommended daily budget and estimated missed opportunities for campaigns",
+        "requestBody": {
+          "content": {
+            "application/vnd.sdbudgetrecommendations.v3+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SDBudgetRecommendationsRequest"
+              }
+            }
+          }
+        },
+        "operationId": "getSDBudgetRecommendations",
+        "description": "Given a list of campaigns as input, this API provides the following metrics:\n<br> <b>1. Recommended daily budget - </b> Estimated budget needed to keep the campaign in budget for the full 24-hour period. Consider this budget to minimize your campaign's chances of running out of budget. \n<br> <b>2. Percent time in budget </b> - The share of time the campaign was in budget during the past 7 days.\n<br> <b>3. Estimated missed impressions, clicks and sales </b> - These are the estimated additional impressions, clicks and sales the campaign might have generated had it adopted the recommended budget. These are estimates based on campaign's historical performance - and not a guarantee of actual impressions, clicks and sales. Consider using these metrics to further inform your budget allocation decisions.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "responses": {
+          "207": {
+            "description": "Multi-status.",
+            "content": {
+              "application/vnd.sdbudgetrecommendations.v3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDBudgetRecommendationsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Generic bad request error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Request failed because user is not authenticated or is not allowed to invoke the operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Request failed because user does not have access to a specified resource.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDErrorResponse"
+                }
+              }
+            }
+          },
+          "415": {
+            "description": "Unsupported Media Type.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDErrorResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests - Request was rate-limited. Retry later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Something went wrong on the server. Retry later and report an error if unresolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/SDClientHeader"
+          },
+          {
+            "$ref": "#/components/parameters/SDProfileHeader"
+          }
+        ],
+        "tags": [
+          "Budget Recommendations"
         ]
       }
     },
@@ -1806,6 +1905,11 @@
               "schema": {
                 "$ref": "#/components/schemas/SDTargetingRecommendationsRequestV31"
               }
+            },
+            "application/vnd.sdtargetingrecommendations.v3.4+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SDTargetingRecommendationsRequestV34"
+              }
             }
           }
         },
@@ -1833,6 +1937,11 @@
               "application/vnd.sdtargetingrecommendations.v3.1+json": {
                 "schema": {
                   "$ref": "#/components/schemas/SDTargetingRecommendationsResponseV31"
+                }
+              },
+              "application/vnd.sdtargetingrecommendations.v3.4+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDTargetingRecommendationsResponseV34"
                 }
               }
             }
@@ -1919,6 +2028,11 @@
         "summary": "Returns a set of bid recommendations for targeting clauses",
         "requestBody": {
           "content": {
+            "application/vnd.sdtargetingrecommendations.v3.3+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SDTargetingBidRecommendationsRequestV33"
+              }
+            },
             "application/vnd.sdtargetingrecommendations.v3.2+json": {
               "schema": {
                 "$ref": "#/components/schemas/SDTargetingBidRecommendationsRequestV32"
@@ -1932,11 +2046,16 @@
           }
         },
         "operationId": "getTargetBidRecommendations",
-        "description": "Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.\n\nThe recommended bids are derrived from the last 7 days of winning auction bids for the related targeting clause.\n\n\nReceive bid recommendations using the following:\nProduct targeting clause|Description|\n|-----------|----|\n|asinSameAs=B0123456789|Receive a bid recommendation for this target product\n|asinCategorySameAs=12345|Receive a bid recommendation for this target category\n|similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.\n\n\nAudience targeting clause|Description|\n|-----------|----|\n|views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category\n|views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins\n|views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins\n\n\n#### Refinement Notes:\n- Refinements are currently not supported and if included will not impact the bid recommendation for the target\n\n\n#### Advertised ASIN Notes:\n- For asinSameAs targets the advertised asins will not impact the bid recommendation\n- For asinCategrySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation\n- For similarProduct & exactProduct targets the advertised asins are required\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "description": "Provides a list of bid recommendations based on the list of input advertised ASINs and targeting clauses in the same format as the targeting API. For each targeting clause in the request a corresponding bid recommendation will be returned in the response. Currently the API will accept up to 100 targeting clauses.\n\nThe recommended bids are derived from the last 7 days of winning auction bids for the related targeting clause.\n\n\nReceive bid recommendations using the following:\nProduct targeting clause|Description|\n|-----------|----|\n|asinSameAs=B0123456789|Receive a bid recommendation for this target product\n|asinCategorySameAs=12345|Receive a bid recommendation for this target category\n|similarProduct|Receive a bid recommendation for targets that are similar to the advertised asins.\n\n\nAudience targeting clause|Description|\n|-----------|----|\n|views(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has viewed products in the given category\n|views(similarProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed similar products to the advertised asins\n|views(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has viewed the advertised asins\n|purchases(asinCategorySameAs=12345 lookback=30)|Receive a bid recommendation for a target audience that has purchased products in the given category\n|purchases(exactProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased the advertised asins\n|purchases(relatedProduct lookback=30)|Receive a bid recommendation for a target audience that has purchased related products to the advertised asins\n|audience(audienceSameAs=12345)|Receive a bid recommendation for the given target audience\n\n\n#### Refinement Notes:\n- Refinements are currently not supported and if included will not impact the bid recommendation for the target\n\n\n#### Advertised ASIN Notes:\n- For asinSameAs targets the advertised asins will not impact the bid recommendation\n- For asinCategorySameAs targets the advertised asins are optional, but including them will provide a more refined bid recommendation\n- For similarProduct, exactProduct, and relatedProduct targets the advertised asins are required\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
         "responses": {
           "207": {
             "description": "multi-status",
             "content": {
+              "application/vnd.sdtargetingrecommendations.v3.3+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SDTargetingBidRecommendationsResponseV32"
+                }
+              },
               "application/vnd.sdtargetingrecommendations.v3.2+json": {
                 "schema": {
                   "$ref": "#/components/schemas/SDTargetingBidRecommendationsResponseV32"
@@ -2445,7 +2564,7 @@
         "type": "object",
         "properties": {
           "code": {
-            "description": "HTTP status code 200 indicating a successful response for product recomendations.",
+            "description": "HTTP status code 200 indicating a successful response for product recommendations.",
             "type": "string",
             "example": "200"
           },
@@ -2496,6 +2615,55 @@
             "items": {
               "$ref": "#/components/schemas/BudgetRuleResponse"
             }
+          }
+        }
+      },
+      "SDTargetingRecommendationsFailureV34": {
+        "description": "A targeting recommendation failure record.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "HTTP status code indicating a failure response for targeting recomendations.",
+            "type": "string",
+            "example": "400"
+          },
+          "expression": {
+            "minItems": 1,
+            "maxItems": 1,
+            "description": "A list of expressions that failed to be applied in the product targeting theme.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDProductTargetingThemeExpression"
+            }
+          },
+          "name": {
+            "description": "The theme name specified in the request. If the themes field is not provided in the request,\nthe value of this field will be set to default.",
+            "type": "string"
+          },
+          "errorMessage": {
+            "description": "A human friendly error message indicating the failure reasons.",
+            "type": "string"
+          }
+        }
+      },
+      "SDBudgetRecommendationsRequest": {
+        "description": "Request for budget recommendations.",
+        "required": [
+          "campaignIds"
+        ],
+        "properties": {
+          "campaignIds": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "A list of campaign ids for which to get budget recommendations and missed opportunities.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "5292131569371",
+              "5292131569372"
+            ]
           }
         }
       },
@@ -2936,6 +3104,84 @@
           }
         }
       },
+      "SDProductTargetingRecommendationsSuccessV34": {
+        "description": "Recommendation results for product targeting.",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "HTTP status code 200 indicating a successful response for product recommendations.",
+            "type": "string",
+            "example": "200"
+          },
+          "expression": {
+            "minItems": 1,
+            "maxItems": 1,
+            "description": "A list of expressions defining the product targeting theme. The list will define an AND operator on different expressions.\nFor example, asinPriceGreaterThan and asinReviewRatingLessThan can be used to request product recommendations\nwhich are both with greater price and less review rating compared to the goal products.\nNote: currently the service only support one item in the array.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDProductTargetingThemeExpression"
+            }
+          },
+          "name": {
+            "description": "The theme name specified in the request.",
+            "type": "string"
+          },
+          "recommendations": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "A list of recommended products.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDProductRecommendationV32"
+            }
+          }
+        }
+      },
+      "SDTargetingBidRecommendationsRequestV33": {
+        "description": "Request for targeting bid recommendations.",
+        "required": [
+          "targetingClauses",
+          "bidOptimization",
+          "costType"
+        ],
+        "properties": {
+          "bidOptimization": {
+            "$ref": "#/components/schemas/SDBidOptimizationV32"
+          },
+          "creativeType": {
+            "$ref": "#/components/schemas/SDCreativeType"
+          },
+          "costType": {
+            "$ref": "#/components/schemas/SDCostTypeV31"
+          },
+          "targetingClauses": {
+            "minItems": 1,
+            "maxItems": 100,
+            "description": "A list of targeting clauses to receive bid recommendations for.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "targetingClause"
+              ],
+              "properties": {
+                "targetingClause": {
+                  "$ref": "#/components/schemas/SDTargetingClauseV31"
+                }
+              }
+            }
+          },
+          "products": {
+            "minItems": 0,
+            "maxItems": 10000,
+            "description": "A list of products to tailor bid recommendations for category and audience based targeting clauses.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDGoalProduct"
+            }
+          }
+        }
+      },
       "SDTargetingRecommendationsRequest": {
         "description": "Request for targeting recommendations",
         "required": [
@@ -3222,6 +3468,67 @@
           }
         }
       },
+      "SDSevenDaysMissedOpportunities": {
+        "properties": {
+          "estimatedMissedSalesLower": {
+            "description": "Lower bound of the estimated missed sales. This will be in local currency.",
+            "type": "number",
+            "example": "200.75"
+          },
+          "estimatedMissedSalesUpper": {
+            "description": "Upper bound of the estimated missed sales. This will be in local currency.",
+            "type": "number",
+            "example": "400.75"
+          },
+          "endDate": {
+            "format": "date",
+            "description": "End date of the missed opportunities date range (YYYY-MM-DD).",
+            "type": "string",
+            "example": "2023-05-07"
+          },
+          "estimatedMissedImpressionsLower": {
+            "description": "Lower bound of the estimated missed impressions.",
+            "type": "integer",
+            "example": "50"
+          },
+          "estimatedMissedClicksLower": {
+            "description": "Lower bound of the estimated missed clicks.",
+            "type": "integer",
+            "example": "30"
+          },
+          "estimatedMissedClicksUpper": {
+            "description": "Upper bound of the estimated missed clicks.",
+            "type": "integer",
+            "example": "50"
+          },
+          "estimatedMissedImpressionsUpper": {
+            "description": "Upper bound of the estimated missed impressions.",
+            "type": "integer",
+            "example": "70"
+          },
+          "startDate": {
+            "format": "date",
+            "description": "Start date of the missed opportunities date range (YYYY-MM-DD).",
+            "type": "string",
+            "example": "2023-05-01"
+          },
+          "percentTimeInBudget": {
+            "description": "Percentage of time the campaign is active with a budget.",
+            "type": "number",
+            "example": "60.5"
+          },
+          "estimatedMissedViewableImpressionsLower": {
+            "description": "Lower bound of the estimated missed viewable impressions for vCPM campaigns.",
+            "type": "integer",
+            "example": "70"
+          },
+          "estimatedMissedViewableImpressionsUpper": {
+            "description": "Upper bound of the estimated missed viewable impressions for vCPM campaigns.",
+            "type": "integer",
+            "example": "90"
+          }
+        }
+      },
       "SDBrandSafetyListRequestStatusResponse": {
         "description": "List of all requests' status.",
         "type": "object",
@@ -3411,6 +3718,34 @@
           "details": {
             "description": "A human-readable description of the error response.",
             "type": "string"
+          }
+        }
+      },
+      "SDBudgetRecommendation": {
+        "required": [
+          "index",
+          "campaignId",
+          "suggestedBudget",
+          "sevenDaysMissedOpportunities"
+        ],
+        "properties": {
+          "campaignId": {
+            "description": "Campaign id.",
+            "type": "string",
+            "example": "5292131569371"
+          },
+          "suggestedBudget": {
+            "description": "Recommended budget for the campaign. This will be in local currency.",
+            "type": "number",
+            "example": "350.12"
+          },
+          "index": {
+            "description": "Correlate the recommendation to the campaign index in the request. Zero-based.",
+            "type": "integer",
+            "example": "0"
+          },
+          "sevenDaysMissedOpportunities": {
+            "$ref": "#/components/schemas/SDSevenDaysMissedOpportunities"
           }
         }
       },
@@ -3809,7 +4144,7 @@
         }
       },
       "SDTargetingPredicateBaseV31": {
-        "description": "A predicate to match against inside the TargetingPredicateNested component (only applicable to Audience targeting - T00030).\n\n* All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Advertising browse system.\n* Brand, price, and review predicates are optional and may only be specified if category is also specified.\n* Review predicates accept numbers between 0 and 5 and are inclusive.\n* When using either of the â€˜betweenâ€™ strings to construct a targeting expression the format of the string is â€˜double-doubleâ€™ where the first double must be smaller than the second double. Prices are not inclusive.\n* The exactProduct, similarProduct, and negative types do not utilize the value field.\n* The only type currently applicable to Amazon Audiences targeting is 'audienceSameAs'.\n* **Future** A 'negative' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.",
+        "description": "A predicate to match against inside the TargetingPredicateNested component (only applicable to Audience targeting - T00030).\n\n* All IDs passed for category and brand-targeting predicates must be valid IDs in the Amazon Advertising browse system.\n* Brand, price, and review predicates are optional and may only be specified if category is also specified.\n* Review predicates accept numbers between 0 and 5 and are inclusive.\n* When using either of the â€˜betweenâ€™ strings to construct a targeting expression the format of the string is â€˜double-doubleâ€™ where the first double must be smaller than the second double. Prices are not inclusive.\n* The exactProduct, similarProduct, relatedProduct, and negative types do not utilize the value field.\n* The only type currently applicable to Amazon Audiences targeting is 'audienceSameAs'.\n* **Future** A 'negative' TargetingPredicateBase will exclude that TargetingPredicateNested from the overall audience.",
         "type": "object",
         "required": [
           "type"
@@ -3894,6 +4229,32 @@
           }
         }
       },
+      "SDBudgetRecommendationsResponse": {
+        "required": [
+          "budgetRecommendationsSuccessResults",
+          "budgetRecommendationsErrorResults"
+        ],
+        "properties": {
+          "budgetRecommendationsSuccessResults": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "List of successful budget recommendation for campaigns.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDBudgetRecommendation"
+            }
+          },
+          "budgetRecommendationsErrorResults": {
+            "minItems": 0,
+            "maxItems": 100,
+            "description": "List of errors that occurred when generating budget recommendation.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDBudgetRecommendationError"
+            }
+          }
+        }
+      },
       "SDProductTargetingThemeExpression": {
         "description": "The expression used to define the product targeting theme.",
         "type": "object",
@@ -3906,9 +4267,9 @@
             "type": "string",
             "enum": [
               "asinPriceGreaterThan",
+              "asinBrandSameAs",
               "asinReviewRatingLessThan",
-              "asinGlanceViewsGreaterThan",
-              "asinBrandSameAs"
+              "asinGlanceViewsGreaterThan"
             ]
           }
         }
@@ -3946,6 +4307,14 @@
           "limit": {
             "description": "The maximum number of deny list domains returned from GET request.",
             "type": "integer"
+          }
+        }
+      },
+      "SDTargetingRecommendationsResponseV34": {
+        "description": "Response to a request for targeting recommendations",
+        "properties": {
+          "recommendations": {
+            "$ref": "#/components/schemas/SDTargetingRecommendationsV34"
           }
         }
       },
@@ -4200,6 +4569,14 @@
           "$ref": "#/components/schemas/SDGoalProduct"
         }
       },
+      "SDThemeRecommendationsV34": {
+        "type": "object",
+        "properties": {
+          "products": {
+            "$ref": "#/components/schemas/SDProductThemeRecommendationsV34"
+          }
+        }
+      },
       "SDTacticV31": {
         "description": "The advertising tactic associated with the campaign. The following table lists available tactic names:\n|Tactic Name|Type|Description|\n|-----------|-----|-----------|\n|T00001&nbsp;|&nbsp;|This tactic name is only applicable for the `requestReport` operation and does not apply to any other campaign management operations. Reach shoppers who showed interest in categories related to your promoted products, or target specific products or product categories on Amazon. This tactic is for use by only vendors. This tactic is used to retrieve metrics for Sponsored Display campaigns that use interest, product or category audiences, including Sponsored Display campaigns that were previously Product Display Ads campaigns.|\n|T00010&nbsp;|Views&nbsp;|**Note that this advertising tactic is not currently supported. This note will be removed when this advertising tactic is available.** This is the same tactic as 'remarketing'. Shoppers who viewed the detail pages of your advertised products or similar products.|\n|remarketing&nbsp;|Views&nbsp;|This is the same tactic as 'T00010'. Shoppers who viewed the detail pages of your advertised products or similar products.|\n|T00020&nbsp;|Products&nbsp;|Products: Choose individual products to show your ads in placements related to those products.<br>Categories: Choose individual categories to show your ads in placements related to those categories.|\n|T00030&nbsp;|Audiences&nbsp;|Select individual audiences to show your ads.|",
         "type": "string",
@@ -4211,6 +4588,36 @@
           "T00030"
         ],
         "example": "T00030"
+      },
+      "SDBudgetRecommendationError": {
+        "required": [
+          "index",
+          "campaignId",
+          "code",
+          "details"
+        ],
+        "properties": {
+          "code": {
+            "description": "The HTTP status code of the response.",
+            "type": "string",
+            "example": "404"
+          },
+          "campaignId": {
+            "description": "Campaign id.",
+            "type": "string",
+            "example": "5292131569372"
+          },
+          "index": {
+            "description": "Correlate the recommendation to the campaign index in the request. Zero-based.",
+            "type": "integer",
+            "example": "1"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string",
+            "example": "Budget recommendation is not found."
+          }
+        }
       },
       "CreativeRecommendationsRequest": {
         "description": "Request structure of creative recommendations API.",
@@ -4329,6 +4736,15 @@
           }
         }
       },
+      "SDCreativeType": {
+        "nullable": true,
+        "description": "The type of the associated creative. If the field is empty or null, a default value of IMAGE will be used. Only supports one type (VIDEO or IMAGE) at a time.",
+        "type": "string",
+        "enum": [
+          "IMAGE",
+          "VIDEO"
+        ]
+      },
       "HeadlineSuggestionRequest": {
         "description": "Request structure of headline suggestion API.",
         "type": "object",
@@ -4443,6 +4859,8 @@
         "description": "The advertising performance metric.",
         "type": "string",
         "enum": [
+          "IS",
+          "NTB",
           "ROAS"
         ]
       },
@@ -4643,6 +5061,22 @@
           "vi_VN",
           "zh_CN"
         ]
+      },
+      "SDProductThemeRecommendationsV34": {
+        "minItems": 1,
+        "maxItems": 5,
+        "description": "A list of product targeting theme recommendations.",
+        "type": "array",
+        "items": {
+          "oneOf": [
+            {
+              "$ref": "#/components/schemas/SDProductTargetingRecommendationsSuccessV34"
+            },
+            {
+              "$ref": "#/components/schemas/SDTargetingRecommendationsFailureV34"
+            }
+          ]
+        }
       },
       "BudgetRuleResponse": {
         "type": "object",
@@ -4851,8 +5285,8 @@
           "$ref": "#/components/schemas/SDRecommendationTypeV32"
         },
         "example": [
-          "CATEGORY",
-          "AUDIENCE"
+          "PRODUCT",
+          "CATEGORY"
         ]
       },
       "VideoComponentResponse": {
@@ -5546,6 +5980,28 @@
           }
         }
       },
+      "SDTargetingRecommendationsRequestV34": {
+        "description": "Request for targeting recommendations",
+        "required": [
+          "tactic",
+          "products",
+          "typeFilter"
+        ],
+        "properties": {
+          "themes": {
+            "$ref": "#/components/schemas/SDTargetingRecommendationsThemes"
+          },
+          "typeFilter": {
+            "$ref": "#/components/schemas/SDTargetingRecommendationsTypeFilterV32"
+          },
+          "tactic": {
+            "$ref": "#/components/schemas/SDTacticV31"
+          },
+          "products": {
+            "$ref": "#/components/schemas/SDTargetingRecommendationsProducts"
+          }
+        }
+      },
       "SnapshotRequest": {
         "type": "object",
         "properties": {
@@ -5842,6 +6298,42 @@
           }
         ],
         "description": "A collection of targeting recommendations. Results will be sorted with strongest recommendations in the beginning."
+      },
+      "SDTargetingRecommendationsV34": {
+        "description": "A collection of targeting recommendations. Results will be sorted with strongest recommendations in the beginning.",
+        "type": "object",
+        "properties": {
+          "themes": {
+            "$ref": "#/components/schemas/SDThemeRecommendationsV34"
+          },
+          "audiences": {
+            "minItems": 0,
+            "maxItems": 10,
+            "description": "List of recommended audience targets, broken down by audience category",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDAudienceCategoryRecommendations"
+            }
+          },
+          "categories": {
+            "minItems": 0,
+            "maxItems": 1000,
+            "description": "List of recommended category targets",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDCategoryRecommendationV33"
+            }
+          },
+          "products": {
+            "minItems": 0,
+            "maxItems": 1000,
+            "description": "List of recommended product targets",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SDProductRecommendationV32"
+            }
+          }
+        }
       },
       "SDTargetingRecommendationsV33": {
         "allOf": [

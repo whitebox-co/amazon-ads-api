@@ -1105,13 +1105,13 @@ export interface TargetingExpressionLocalizationRequest {
      */
     targetDetailsList: Array<LocalizationTargetingTargetDetails>;
     /**
-     * The locale to which the caller wishes to translate the localized targeting expressions to. For example, if the caller is resolving targeted expressions from British English (en_GB) to Simplified Chinese (zh_CN), the locale is zh_CN. If no locale is provided, the response will not have any resolved targeting expressions for the localized targeting expressions.
+     * The locale to which the caller wishes to retrieve the human readable string (e.g. category name instead of category id) of the localized targeting expressions. For example, if the caller wishes to retrieve the category name in Simplified Chinese (zh_CN) of a targeting expression containing a category id that has been localized, the targetResolvedTargetingExpressionLocale should be set to zh_CN. If no targetResolvedTargetingExpressionLocale is provided, the response will not have any resolved targeting expressions for the localized targeting expressions.
      * @type {string}
      * @memberof TargetingExpressionLocalizationRequest
      */
     targetResolvedTargetingExpressionLocale?: string;
     /**
-     * The locales to which the caller wishes to translate the source targeting expressions to. For example, if the caller is resolving targeted expressions from British English (en_GB) to Simplified Chinese (zh_CN), the locale is zh_CN. If no locales are provided, the response will not have any resolved targeting expressions for the source targeting expressions.
+     * The locales to which the caller wishes to retrieve the human readable string (e.g. category name instead of category id) of the source targeting expressions. For example, if the caller wishes to retrieve the category name in Simplified Chinese (zh_CN) and US English (en_US) of the input targeting expression containing a category id, sourceResolvedTargetingExpressionLocales should be set to [\"zh_CN\", \"en_US\"]. If no sourceResolvedTargetingExpressionLocales is provided, the response will not have any resolved targeting expressions for the source targeting expressions. This field can be used to retrieve translations of various targeting expressions. Currently supports the translations of Categories, Genre refinement, and Age Range refinement.
      * @type {Array<string>}
      * @memberof TargetingExpressionLocalizationRequest
      */

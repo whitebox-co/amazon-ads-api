@@ -298,6 +298,12 @@ export interface BaseStudyV1 {
      */
     vendorProductId?: string;
     /**
+     * 
+     * @type {StudySubmissionTypeV1}
+     * @memberof BaseStudyV1
+     */
+    submissionType?: StudySubmissionTypeV1;
+    /**
      * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
      * @type {string}
      * @memberof BaseStudyV1
@@ -1626,6 +1632,12 @@ export interface DSPBrandLiftStudyV1 {
      */
     vendorProductId?: string;
     /**
+     * 
+     * @type {StudySubmissionTypeV1}
+     * @memberof DSPBrandLiftStudyV1
+     */
+    submissionType?: StudySubmissionTypeV1;
+    /**
      * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
      * @type {string}
      * @memberof DSPBrandLiftStudyV1
@@ -2414,6 +2426,12 @@ export interface DSPOmnichannelMetricsStudyV1M2 {
      */
     vendorProductId?: string;
     /**
+     * 
+     * @type {StudySubmissionTypeV1}
+     * @memberof DSPOmnichannelMetricsStudyV1M2
+     */
+    submissionType?: StudySubmissionTypeV1;
+    /**
      * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
      * @type {string}
      * @memberof DSPOmnichannelMetricsStudyV1M2
@@ -2931,6 +2949,230 @@ export enum FundingTypeV1M3 {
 }
 
 /**
+ * The request object for fetching measurement studies.
+ * @export
+ * @interface GetMeasurementStudies
+ */
+export interface GetMeasurementStudies {
+    /**
+     * Study canonical identifier to filter with.
+     * @type {Array<string>}
+     * @memberof GetMeasurementStudies
+     */
+    studyIds?: Array<string>;
+    /**
+     * The advertiser canonical identifier. Either one of studyIds or advertiserId should be provided.
+     * @type {string}
+     * @memberof GetMeasurementStudies
+     */
+    advertiserId?: string;
+}
+/**
+ * The request object for audience research study.
+ * @export
+ * @interface GetMeasurementStudiesAudienceResearch
+ */
+export interface GetMeasurementStudiesAudienceResearch {
+    /**
+     * Study canonical identifier to filter with.
+     * @type {Array<string>}
+     * @memberof GetMeasurementStudiesAudienceResearch
+     */
+    studyIds?: Array<string>;
+    /**
+     * The advertiser canonical identifier. Used for querying audience research studies for a DSP advertiser Account.
+     * @type {string}
+     * @memberof GetMeasurementStudiesAudienceResearch
+     */
+    advertiserId?: string;
+}
+/**
+ * The request object for fetching audience research study results of a specific study.
+ * @export
+ * @interface GetMeasurementStudiesAudienceResearchResult
+ */
+export interface GetMeasurementStudiesAudienceResearchResult {
+    /**
+     * The canonical identifier that represents a unique study.
+     * @type {string}
+     * @memberof GetMeasurementStudiesAudienceResearchResult
+     */
+    studyId?: string;
+}
+/**
+ * The request object for fetching brand lift studies.
+ * @export
+ * @interface GetMeasurementStudiesBrandLift
+ */
+export interface GetMeasurementStudiesBrandLift {
+    /**
+     * Study canonical identifier to filter with.
+     * @type {Array<string>}
+     * @memberof GetMeasurementStudiesBrandLift
+     */
+    studyIds?: Array<string>;
+    /**
+     * The advertiser canonical identifier. Used for querying brand lift studies for a DSP advertiser Account.
+     * @type {string}
+     * @memberof GetMeasurementStudiesBrandLift
+     */
+    advertiserId?: string;
+}
+/**
+ * The request object for fetching brand lift results of a specific study.
+ * @export
+ * @interface GetMeasurementStudiesBrandLiftResult
+ */
+export interface GetMeasurementStudiesBrandLiftResult {
+    /**
+     * The canonical identifier that represents a unique study.
+     * @type {string}
+     * @memberof GetMeasurementStudiesBrandLiftResult
+     */
+    studyId?: string;
+}
+/**
+ * The request object for fetching creative testing studies.
+ * @export
+ * @interface GetMeasurementStudiesCreativeTesting
+ */
+export interface GetMeasurementStudiesCreativeTesting {
+    /**
+     * Study canonical identifier to filter with.
+     * @type {Array<string>}
+     * @memberof GetMeasurementStudiesCreativeTesting
+     */
+    studyIds?: Array<string>;
+    /**
+     * The advertiser canonical identifier. Used for querying creative testing studies for a DSP advertiser Account.
+     * @type {string}
+     * @memberof GetMeasurementStudiesCreativeTesting
+     */
+    advertiserId?: string;
+}
+/**
+ * The request object for fetching creative testing results of a specific study.
+ * @export
+ * @interface GetMeasurementStudiesCreativeTestingResult
+ */
+export interface GetMeasurementStudiesCreativeTestingResult {
+    /**
+     * The canonical identifier that represents a unique study.
+     * @type {string}
+     * @memberof GetMeasurementStudiesCreativeTestingResult
+     */
+    studyId?: string;
+}
+/**
+ * The request object for fetching omnichannel metrics study.
+ * @export
+ * @interface GetMeasurementStudiesOmnichannelMetrics
+ */
+export interface GetMeasurementStudiesOmnichannelMetrics {
+    /**
+     * Study canonical identifier to filter with.
+     * @type {Array<string>}
+     * @memberof GetMeasurementStudiesOmnichannelMetrics
+     */
+    studyIds?: Array<string>;
+    /**
+     * The advertiser canonical identifier. Used for querying omnichannel studies for a DSP advertiser Account.
+     * @type {string}
+     * @memberof GetMeasurementStudiesOmnichannelMetrics
+     */
+    advertiserId?: string;
+}
+/**
+ * The request object for fetching omnichannel metrics results of a specific study.
+ * @export
+ * @interface GetMeasurementStudiesOmnichannelMetricsResult
+ */
+export interface GetMeasurementStudiesOmnichannelMetricsResult {
+    /**
+     * The canonical identifier that represents a unique study.
+     * @type {string}
+     * @memberof GetMeasurementStudiesOmnichannelMetricsResult
+     */
+    studyId?: string;
+}
+/**
+ * The request object for fetching reach and frequency studies.
+ * @export
+ * @interface GetMeasurementStudiesReachAndFrequency
+ */
+export interface GetMeasurementStudiesReachAndFrequency {
+    /**
+     * Study canonical identifier to filter with.
+     * @type {Array<string>}
+     * @memberof GetMeasurementStudiesReachAndFrequency
+     */
+    studyIds?: Array<string>;
+    /**
+     * The advertiser canonical identifier. Used for querying reach and frequency studies for a DSP advertiser Account.
+     * @type {string}
+     * @memberof GetMeasurementStudiesReachAndFrequency
+     */
+    advertiserId?: string;
+}
+/**
+ * The request object for fetching reach and frequency results of a specific study.
+ * @export
+ * @interface GetMeasurementStudiesReachAndFrequencyResult
+ */
+export interface GetMeasurementStudiesReachAndFrequencyResult {
+    /**
+     * The canonical identifier that represents a unique study.
+     * @type {string}
+     * @memberof GetMeasurementStudiesReachAndFrequencyResult
+     */
+    studyId?: string;
+}
+/**
+ * The request object for fetching measurement studies based on surveys.
+ * @export
+ * @interface GetMeasurementStudiesSurvey
+ */
+export interface GetMeasurementStudiesSurvey {
+    /**
+     * A study canonical identifier. Either one of surveyIds or studyId should be provided.
+     * @type {string}
+     * @memberof GetMeasurementStudiesSurvey
+     */
+    studyId?: string;
+    /**
+     * Survey canonical identifier to filter with. Either one of surveyIds or studyId should be provided.
+     * @type {Array<string>}
+     * @memberof GetMeasurementStudiesSurvey
+     */
+    surveyIds?: Array<string>;
+}
+/**
+ * The request object for fetching survey question templates of a specific vendor product.
+ * @export
+ * @interface GetMeasurementStudiesSurveyQuestionTemplate
+ */
+export interface GetMeasurementStudiesSurveyQuestionTemplate {
+    /**
+     * Vendor product canonical identifier to filter with.
+     * @type {string}
+     * @memberof GetMeasurementStudiesSurveyQuestionTemplate
+     */
+    vendorProductId?: string;
+}
+/**
+ * The request object for fetching vendor product policies of specific vendor products.
+ * @export
+ * @interface GetMeasurementStudiesVendorProductPolicy
+ */
+export interface GetMeasurementStudiesVendorProductPolicy {
+    /**
+     * Vendor product canonical identifier to filter with.
+     * @type {Array<string>}
+     * @memberof GetMeasurementStudiesVendorProductPolicy
+     */
+    vendorProductIds?: Array<string>;
+}
+/**
  * The grid question response object. Only applicable for SINGLE_SELECT_GRID type question.
  * @export
  * @interface GridQuestionResponsesV1M1
@@ -2949,6 +3191,732 @@ export interface GridQuestionResponsesV1M1 {
      */
     rows?: Array<SurveyQuestionPlaceholderFieldValueV1>;
 }
+/**
+ * The response object to get fee for a Audience Research study.
+ * @export
+ * @interface MeasurementAudienceResearchFee
+ */
+export interface MeasurementAudienceResearchFee {
+    /**
+     * The fee for the Study. Check currencyCode field for the currency in which this field is expressed.
+     * @type {number}
+     * @memberof MeasurementAudienceResearchFee
+     */
+    fee?: number;
+    /**
+     * 
+     * @type {MeasurementStudiesCurrencyCode}
+     * @memberof MeasurementAudienceResearchFee
+     */
+    currencyCode?: MeasurementStudiesCurrencyCode;
+}
+/**
+ * The request object to get fee for a Audience Research study.
+ * @export
+ * @interface MeasurementAudienceResearchFeeRequest
+ */
+export interface MeasurementAudienceResearchFeeRequest {
+    /**
+     * vendor product canonical identifier.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchFeeRequest
+     */
+    vendorProductId?: string;
+    /**
+     * A list of templated survey questions.
+     * @type {Array<MeasurementStudiesTemplatedSurveyShortQuestion>}
+     * @memberof MeasurementAudienceResearchFeeRequest
+     */
+    templatedShortQuestions?: Array<MeasurementStudiesTemplatedSurveyShortQuestion>;
+    /**
+     * The associated DSP advertiser identifier. Mandatory field for DSP clients.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchFeeRequest
+     */
+    advertiserId?: string;
+}
+/**
+ * AUDIENCE_RESEARCH study object.
+ * @export
+ * @interface MeasurementAudienceResearchStudy
+ */
+export interface MeasurementAudienceResearchStudy {
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<MeasurementStudyStatusReason>}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    statusReasons?: Array<MeasurementStudyStatusReason>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudiesResourceLink}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    link?: MeasurementStudiesResourceLink;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    vendorProductId?: string;
+    /**
+     * 
+     * @type {MeasurementStudySubmissionType}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    submissionType?: MeasurementStudySubmissionType;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    lastUpdatedDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudyResultStatus}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    studyResultStatus?: MeasurementStudyResultStatus;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    comment?: string;
+    /**
+     * The study canonical identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    studyId?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudyStatus}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    status?: MeasurementStudyStatus;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    createDate?: string;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    advertiserId?: string;
+    /**
+     * The study brand name.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    brandName?: string;
+    /**
+     * 
+     * @type {MeasurementStudiesAudienceTargetingGroup}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    audienceTargetingGroup?: MeasurementStudiesAudienceTargetingGroup;
+    /**
+     * A list of peer names for the study brand.
+     * @type {Array<string>}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    peerNames?: Array<string>;
+    /**
+     * The study product category.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudy
+     */
+    productCategory?: string;
+}
+/**
+ * The audience research study eligibility data.
+ * @export
+ * @interface MeasurementAudienceResearchStudyEligibilityData
+ */
+export interface MeasurementAudienceResearchStudyEligibilityData {
+    /**
+     * 
+     * @type {MeasurementStudiesAudienceTargetingGroup}
+     * @memberof MeasurementAudienceResearchStudyEligibilityData
+     */
+    audienceTargetingGroup?: MeasurementStudiesAudienceTargetingGroup;
+}
+/**
+ * The request object of Audience Research study eligibility check.
+ * @export
+ * @interface MeasurementAudienceResearchStudyEligibilityRequest
+ */
+export interface MeasurementAudienceResearchStudyEligibilityRequest {
+    /**
+     * FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<MeasurementStudiesFundingType>}
+     * @memberof MeasurementAudienceResearchStudyEligibilityRequest
+     */
+    fundingTypeFilters?: Array<MeasurementStudiesFundingType>;
+    /**
+     * VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<string>}
+     * @memberof MeasurementAudienceResearchStudyEligibilityRequest
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<MeasurementStudiesVendorType>}
+     * @memberof MeasurementAudienceResearchStudyEligibilityRequest
+     */
+    vendorTypeFilters?: Array<MeasurementStudiesVendorType>;
+    /**
+     * 
+     * @type {MeasurementStudiesAudienceTargetingGroup}
+     * @memberof MeasurementAudienceResearchStudyEligibilityRequest
+     */
+    audienceTargetingGroup?: MeasurementStudiesAudienceTargetingGroup;
+}
+/**
+ * The basic model for all AUDIENCE_RESEARCH objective studies.
+ * @export
+ * @interface MeasurementAudienceResearchStudyMetadata
+ */
+export interface MeasurementAudienceResearchStudyMetadata {
+    /**
+     * The study brand name.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudyMetadata
+     */
+    brandName?: string;
+    /**
+     * 
+     * @type {MeasurementStudiesAudienceTargetingGroup}
+     * @memberof MeasurementAudienceResearchStudyMetadata
+     */
+    audienceTargetingGroup?: MeasurementStudiesAudienceTargetingGroup;
+    /**
+     * A list of peer names for the study brand.
+     * @type {Array<string>}
+     * @memberof MeasurementAudienceResearchStudyMetadata
+     */
+    peerNames?: Array<string>;
+    /**
+     * The study product category.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudyMetadata
+     */
+    productCategory?: string;
+}
+/**
+ * The response object for downloading study results.
+ * @export
+ * @interface MeasurementAudienceResearchStudyResult
+ */
+export interface MeasurementAudienceResearchStudyResult {
+    /**
+     * A pre-signed S3 URL which links to the curated study results file. The URL expires after 60 seconds. If the URL expires before the curated results file is downloaded, a new download request must be created.
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudyResult
+     */
+    fileDownloadUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementAudienceResearchStudyResult
+     */
+    fileType?: MeasurementAudienceResearchStudyResultFileTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum MeasurementAudienceResearchStudyResultFileTypeEnum {
+    Csv = 'CSV'
+}
+
+/**
+ * The base study object.
+ * @export
+ * @interface MeasurementBaseStudy
+ */
+export interface MeasurementBaseStudy {
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<MeasurementStudyStatusReason>}
+     * @memberof MeasurementBaseStudy
+     */
+    statusReasons?: Array<MeasurementStudyStatusReason>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof MeasurementBaseStudy
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof MeasurementBaseStudy
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudiesResourceLink}
+     * @memberof MeasurementBaseStudy
+     */
+    link?: MeasurementStudiesResourceLink;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof MeasurementBaseStudy
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof MeasurementBaseStudy
+     */
+    vendorProductId?: string;
+    /**
+     * 
+     * @type {MeasurementStudySubmissionType}
+     * @memberof MeasurementBaseStudy
+     */
+    submissionType?: MeasurementStudySubmissionType;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementBaseStudy
+     */
+    lastUpdatedDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudyResultStatus}
+     * @memberof MeasurementBaseStudy
+     */
+    studyResultStatus?: MeasurementStudyResultStatus;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementBaseStudy
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof MeasurementBaseStudy
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof MeasurementBaseStudy
+     */
+    comment?: string;
+    /**
+     * The study canonical identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementBaseStudy
+     */
+    studyId?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof MeasurementBaseStudy
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudyStatus}
+     * @memberof MeasurementBaseStudy
+     */
+    status?: MeasurementStudyStatus;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementBaseStudy
+     */
+    createDate?: string;
+}
+/**
+ * BRAND_LIFT study object.
+ * @export
+ * @interface MeasurementBrandLiftStudy
+ */
+export interface MeasurementBrandLiftStudy {
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<MeasurementStudyStatusReason>}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    statusReasons?: Array<MeasurementStudyStatusReason>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudiesResourceLink}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    link?: MeasurementStudiesResourceLink;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    vendorProductId?: string;
+    /**
+     * 
+     * @type {MeasurementStudySubmissionType}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    submissionType?: MeasurementStudySubmissionType;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    lastUpdatedDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudyResultStatus}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    studyResultStatus?: MeasurementStudyResultStatus;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    comment?: string;
+    /**
+     * The study canonical identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    studyId?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudyStatus}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    status?: MeasurementStudyStatus;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    createDate?: string;
+    /**
+     * The brand entity Id to be measured by the study.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    brandEntityId?: string;
+    /**
+     * The study brand name.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    brandName?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the study.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of peer names for the study brand.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    peerNames?: Array<string>;
+    /**
+     * The verb that will be used in the applicable survey questions to construct the question text.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    verb?: string;
+    /**
+     * 
+     * @type {MeasurementStudiesBenchmarkCategory}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    benchmarkCategory?: MeasurementStudiesBenchmarkCategory;
+    /**
+     * A list of canonical DSP order identifiers that are associated with the study. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    orderIds?: Array<string>;
+    /**
+     * A list of canonical Sponsored Ads campaign identifiers that are associated with the study.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    campaignIds?: Array<string>;
+    /**
+     * The study product category.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    productCategory?: string;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudy
+     */
+    advertiserId?: string;
+}
+/**
+ * The campaign study eligibility data.
+ * @export
+ * @interface MeasurementBrandLiftStudyEligibilityData
+ */
+export interface MeasurementBrandLiftStudyEligibilityData {
+    /**
+     * Optional current study identifier, if provided orders are expected to be added into this study and the orders already associated with this study will be excluded from certain eligibility check.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudyEligibilityData
+     */
+    currentStudyId?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the eligibility check.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudyEligibilityData
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of canonical DSP order identifiers. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudyEligibilityData
+     */
+    orderIds?: Array<string>;
+    /**
+     * A list of canonical Sponsored Ads campaign identifiers that are associated with the study.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudyEligibilityData
+     */
+    campaignIds?: Array<string>;
+}
+/**
+ * The request object of brand lift eligibility check.
+ * @export
+ * @interface MeasurementBrandLiftStudyEligibilityRequest
+ */
+export interface MeasurementBrandLiftStudyEligibilityRequest {
+    /**
+     * FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<MeasurementStudiesFundingType>}
+     * @memberof MeasurementBrandLiftStudyEligibilityRequest
+     */
+    fundingTypeFilters?: Array<MeasurementStudiesFundingType>;
+    /**
+     * VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudyEligibilityRequest
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<MeasurementStudiesVendorType>}
+     * @memberof MeasurementBrandLiftStudyEligibilityRequest
+     */
+    vendorTypeFilters?: Array<MeasurementStudiesVendorType>;
+    /**
+     * Optional current study identifier, if provided orders are expected to be added into this study and the orders already associated with this study will be excluded from certain eligibility check.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudyEligibilityRequest
+     */
+    currentStudyId?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the eligibility check.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudyEligibilityRequest
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of canonical DSP order identifiers. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudyEligibilityRequest
+     */
+    orderIds?: Array<string>;
+    /**
+     * A list of canonical Sponsored Ads campaign identifiers that are associated with the study.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudyEligibilityRequest
+     */
+    campaignIds?: Array<string>;
+}
+/**
+ * The basic model for all BRAND_LIFT studies.
+ * @export
+ * @interface MeasurementBrandLiftStudyMetadata
+ */
+export interface MeasurementBrandLiftStudyMetadata {
+    /**
+     * The brand entity Id to be measured by the study.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudyMetadata
+     */
+    brandEntityId?: string;
+    /**
+     * The study brand name.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudyMetadata
+     */
+    brandName?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the study.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudyMetadata
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of peer names for the study brand.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudyMetadata
+     */
+    peerNames?: Array<string>;
+    /**
+     * The verb that will be used in the applicable survey questions to construct the question text.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudyMetadata
+     */
+    verb?: string;
+    /**
+     * 
+     * @type {MeasurementStudiesBenchmarkCategory}
+     * @memberof MeasurementBrandLiftStudyMetadata
+     */
+    benchmarkCategory?: MeasurementStudiesBenchmarkCategory;
+    /**
+     * A list of canonical DSP order identifiers that are associated with the study. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudyMetadata
+     */
+    orderIds?: Array<string>;
+    /**
+     * A list of canonical Sponsored Ads campaign identifiers that are associated with the study.
+     * @type {Array<string>}
+     * @memberof MeasurementBrandLiftStudyMetadata
+     */
+    campaignIds?: Array<string>;
+    /**
+     * The study product category.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudyMetadata
+     */
+    productCategory?: string;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudyMetadata
+     */
+    advertiserId?: string;
+}
+/**
+ * The response object for downloading study results.
+ * @export
+ * @interface MeasurementBrandLiftStudyResult
+ */
+export interface MeasurementBrandLiftStudyResult {
+    /**
+     * A pre-signed S3 URL which links to the curated study results file. The URL expires after 60 seconds. If the URL expires before the curated results file is downloaded, a new download request must be created.
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudyResult
+     */
+    fileDownloadUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementBrandLiftStudyResult
+     */
+    fileType?: MeasurementBrandLiftStudyResultFileTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum MeasurementBrandLiftStudyResultFileTypeEnum {
+    Csv = 'CSV',
+    Pdf = 'PDF',
+    Powerpoint = 'POWERPOINT',
+    Jpeg = 'JPEG',
+    Png = 'PNG',
+    Other = 'OTHER'
+}
+
 /**
  * The measurement country.
  * @export
@@ -2969,6 +3937,308 @@ export enum MeasurementCountryV1 {
     Au = 'AU',
     Nl = 'NL',
     Br = 'BR'
+}
+
+/**
+ * The response object to get fee for a Creative Testing study.
+ * @export
+ * @interface MeasurementCreativeTestingFee
+ */
+export interface MeasurementCreativeTestingFee {
+    /**
+     * The fee for the Study. Check currencyCode field for the currency in which this field is expressed.
+     * @type {number}
+     * @memberof MeasurementCreativeTestingFee
+     */
+    fee?: number;
+    /**
+     * 
+     * @type {MeasurementStudiesCurrencyCode}
+     * @memberof MeasurementCreativeTestingFee
+     */
+    currencyCode?: MeasurementStudiesCurrencyCode;
+}
+/**
+ * The request object to get fee for a Creative Testing study.
+ * @export
+ * @interface MeasurementCreativeTestingFeeRequest
+ */
+export interface MeasurementCreativeTestingFeeRequest {
+    /**
+     * vendor product canonical identifier.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingFeeRequest
+     */
+    vendorProductId?: string;
+    /**
+     * A list of templated survey questions.
+     * @type {Array<MeasurementStudiesTemplatedSurveyShortQuestion>}
+     * @memberof MeasurementCreativeTestingFeeRequest
+     */
+    templatedQuestions?: Array<MeasurementStudiesTemplatedSurveyShortQuestion>;
+    /**
+     * A list of assets to be used for the creative testing study as part of either the survey question or the response.
+     * @type {Array<MeasurementStudiesAsset>}
+     * @memberof MeasurementCreativeTestingFeeRequest
+     */
+    assets?: Array<MeasurementStudiesAsset>;
+    /**
+     * The associated DSP advertiser identifier. Mandatory field for DSP clients.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingFeeRequest
+     */
+    advertiserId?: string;
+}
+/**
+ * CREATIVE_TESTING study object.
+ * @export
+ * @interface MeasurementCreativeTestingStudy
+ */
+export interface MeasurementCreativeTestingStudy {
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<MeasurementStudyStatusReason>}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    statusReasons?: Array<MeasurementStudyStatusReason>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudiesResourceLink}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    link?: MeasurementStudiesResourceLink;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    vendorProductId?: string;
+    /**
+     * 
+     * @type {MeasurementStudySubmissionType}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    submissionType?: MeasurementStudySubmissionType;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    lastUpdatedDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudyResultStatus}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    studyResultStatus?: MeasurementStudyResultStatus;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    comment?: string;
+    /**
+     * The study canonical identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    studyId?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudyStatus}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    status?: MeasurementStudyStatus;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    createDate?: string;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    advertiserId?: string;
+    /**
+     * The study brand name.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    brandName?: string;
+    /**
+     * A list of assets to be used for the creative testing study as part of either the survey question or the response. In case of API responses, number of assets returned would be limited to 10 even if a creative testing study has more than 10 assets associated with it.
+     * @type {Array<MeasurementStudiesAsset>}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    assets?: Array<MeasurementStudiesAsset>;
+    /**
+     * 
+     * @type {MeasurementStudiesAudienceTargetingGroup}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    audienceTargetingGroup?: MeasurementStudiesAudienceTargetingGroup;
+    /**
+     * Optional study product category.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudy
+     */
+    productCategory?: string;
+}
+/**
+ * The creative testing study eligibility data.
+ * @export
+ * @interface MeasurementCreativeTestingStudyEligibilityData
+ */
+export interface MeasurementCreativeTestingStudyEligibilityData {
+    /**
+     * 
+     * @type {MeasurementStudiesAudienceTargetingGroup}
+     * @memberof MeasurementCreativeTestingStudyEligibilityData
+     */
+    audienceTargetingGroup?: MeasurementStudiesAudienceTargetingGroup;
+}
+/**
+ * The request object of Creative Testing study eligibility check.
+ * @export
+ * @interface MeasurementCreativeTestingStudyEligibilityRequest
+ */
+export interface MeasurementCreativeTestingStudyEligibilityRequest {
+    /**
+     * FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<MeasurementStudiesFundingType>}
+     * @memberof MeasurementCreativeTestingStudyEligibilityRequest
+     */
+    fundingTypeFilters?: Array<MeasurementStudiesFundingType>;
+    /**
+     * VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<string>}
+     * @memberof MeasurementCreativeTestingStudyEligibilityRequest
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<MeasurementStudiesVendorType>}
+     * @memberof MeasurementCreativeTestingStudyEligibilityRequest
+     */
+    vendorTypeFilters?: Array<MeasurementStudiesVendorType>;
+    /**
+     * 
+     * @type {MeasurementStudiesAudienceTargetingGroup}
+     * @memberof MeasurementCreativeTestingStudyEligibilityRequest
+     */
+    audienceTargetingGroup?: MeasurementStudiesAudienceTargetingGroup;
+}
+/**
+ * The basic model for all CREATIVE_TESTING objective studies.
+ * @export
+ * @interface MeasurementCreativeTestingStudyMetadata
+ */
+export interface MeasurementCreativeTestingStudyMetadata {
+    /**
+     * The study brand name.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudyMetadata
+     */
+    brandName?: string;
+    /**
+     * A list of assets to be used for the creative testing study as part of either the survey question or the response. In case of API responses, number of assets returned would be limited to 10 even if a creative testing study has more than 10 assets associated with it.
+     * @type {Array<MeasurementStudiesAsset>}
+     * @memberof MeasurementCreativeTestingStudyMetadata
+     */
+    assets?: Array<MeasurementStudiesAsset>;
+    /**
+     * 
+     * @type {MeasurementStudiesAudienceTargetingGroup}
+     * @memberof MeasurementCreativeTestingStudyMetadata
+     */
+    audienceTargetingGroup?: MeasurementStudiesAudienceTargetingGroup;
+    /**
+     * Optional study product category.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudyMetadata
+     */
+    productCategory?: string;
+}
+/**
+ * The response object for downloading study results.
+ * @export
+ * @interface MeasurementCreativeTestingStudyResult
+ */
+export interface MeasurementCreativeTestingStudyResult {
+    /**
+     * A pre-signed S3 URL which links to the curated study results file. The URL expires after 60 seconds. If the URL expires before the curated results file is downloaded, a new download request must be created.
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudyResult
+     */
+    fileDownloadUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementCreativeTestingStudyResult
+     */
+    fileType?: MeasurementCreativeTestingStudyResultFileTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum MeasurementCreativeTestingStudyResultFileTypeEnum {
+    Csv = 'CSV'
+}
+
+/**
+ * The measurement budget optimization goal type goal. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementGoal {
+    EngagementWithMyAd = 'ENGAGEMENT_WITH_MY_AD',
+    ConsiderationsOnAmazon = 'CONSIDERATIONS_ON_AMAZON',
+    ConversionsOffAmazon = 'CONVERSIONS_OFF_AMAZON',
+    PurchasesOnAmazon = 'PURCHASES_ON_AMAZON',
+    MobileAppInstalls = 'MOBILE_APP_INSTALLS',
+    Awareness = 'AWARENESS',
+    Other = 'OTHER'
 }
 
 /**
@@ -3027,6 +4297,2340 @@ export interface MeasurementMarketplaceV1 {
      */
     minimumBudget?: number;
 }
+/**
+ * The response object to get fee for an Omnichannel Metrics study.
+ * @export
+ * @interface MeasurementOmnichannelMetricsFee
+ */
+export interface MeasurementOmnichannelMetricsFee {
+    /**
+     * The fee rate for the Study in percent. This will be expressed as a value between 0.0000 and 1.0000 and  rounded to 4 decimal places.
+     * @type {number}
+     * @memberof MeasurementOmnichannelMetricsFee
+     */
+    fee?: number;
+}
+/**
+ * The request object to get fee for an Omnichannel Metrics study.
+ * @export
+ * @interface MeasurementOmnichannelMetricsFeeRequest
+ */
+export interface MeasurementOmnichannelMetricsFeeRequest {
+    /**
+     * The canonical identifier that represents a unique study
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsFeeRequest
+     */
+    studyId?: string;
+    /**
+     * The associated DSP advertiser identifier. Mandatory field for DSP clients.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsFeeRequest
+     */
+    advertiserId?: string;
+}
+/**
+ * The response object for downloading study results.
+ * @export
+ * @interface MeasurementOmnichannelMetricsResult
+ */
+export interface MeasurementOmnichannelMetricsResult {
+    /**
+     * A pre-signed S3 URL which links to the curated study results file. The URL expires after 60 seconds. If the URL expires before the curated results file is downloaded, a new download request must be created.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsResult
+     */
+    fileDownloadUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsResult
+     */
+    fileType?: MeasurementOmnichannelMetricsResultFileTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum MeasurementOmnichannelMetricsResultFileTypeEnum {
+    Excel = 'EXCEL'
+}
+
+/**
+ * OMNICHANNEL_METRICS study object.
+ * @export
+ * @interface MeasurementOmnichannelMetricsStudy
+ */
+export interface MeasurementOmnichannelMetricsStudy {
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<MeasurementStudyStatusReason>}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    statusReasons?: Array<MeasurementStudyStatusReason>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudiesResourceLink}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    link?: MeasurementStudiesResourceLink;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    vendorProductId?: string;
+    /**
+     * 
+     * @type {MeasurementStudySubmissionType}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    submissionType?: MeasurementStudySubmissionType;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    lastUpdatedDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudyResultStatus}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    studyResultStatus?: MeasurementStudyResultStatus;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    comment?: string;
+    /**
+     * The study canonical identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    studyId?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudyStatus}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    status?: MeasurementStudyStatus;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    createDate?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the study.
+     * @type {Array<string>}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of DSP canonical order identifiers that are associated with the study. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    orderIds?: Array<string>;
+    /**
+     * A list of canonical Sponsored Ads campaign identifiers that are associated with the study.
+     * @type {Array<string>}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    campaignIds?: Array<string>;
+    /**
+     * A list of canonical brand ids to be tracked for off-Amazon conversions.
+     * @type {Array<string>}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    brandIds?: Array<string>;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsStudy
+     */
+    advertiserId?: string;
+}
+/**
+ * The request object of omnichannel metrics eligibility check.
+ * @export
+ * @interface MeasurementOmnichannelMetricsStudyEligibilityRequest
+ */
+export interface MeasurementOmnichannelMetricsStudyEligibilityRequest {
+    /**
+     * FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<MeasurementStudiesFundingType>}
+     * @memberof MeasurementOmnichannelMetricsStudyEligibilityRequest
+     */
+    fundingTypeFilters?: Array<MeasurementStudiesFundingType>;
+    /**
+     * VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<string>}
+     * @memberof MeasurementOmnichannelMetricsStudyEligibilityRequest
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<MeasurementStudiesVendorType>}
+     * @memberof MeasurementOmnichannelMetricsStudyEligibilityRequest
+     */
+    vendorTypeFilters?: Array<MeasurementStudiesVendorType>;
+    /**
+     * Optional current study identifier. If provided orders are expected to be added into this study and the orders already associated with this study will be excluded from certain eligibility checks.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsStudyEligibilityRequest
+     */
+    currentStudyId?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the eligibility check.
+     * @type {Array<string>}
+     * @memberof MeasurementOmnichannelMetricsStudyEligibilityRequest
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of DSP canonical order identifiers. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof MeasurementOmnichannelMetricsStudyEligibilityRequest
+     */
+    orderIds?: Array<string>;
+    /**
+     * A list of canonical Sponsored Ads campaign identifiers that are associated with the study.
+     * @type {Array<string>}
+     * @memberof MeasurementOmnichannelMetricsStudyEligibilityRequest
+     */
+    campaignIds?: Array<string>;
+    /**
+     * A list of canonical brand identifiers.
+     * @type {Array<string>}
+     * @memberof MeasurementOmnichannelMetricsStudyEligibilityRequest
+     */
+    brandIds?: Array<string>;
+}
+/**
+ * The basic model for all OMNICHANNEL_METRICS objective studies.
+ * @export
+ * @interface MeasurementOmnichannelMetricsStudyMetadata
+ */
+export interface MeasurementOmnichannelMetricsStudyMetadata {
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the study.
+     * @type {Array<string>}
+     * @memberof MeasurementOmnichannelMetricsStudyMetadata
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of DSP canonical order identifiers that are associated with the study. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof MeasurementOmnichannelMetricsStudyMetadata
+     */
+    orderIds?: Array<string>;
+    /**
+     * A list of canonical Sponsored Ads campaign identifiers that are associated with the study.
+     * @type {Array<string>}
+     * @memberof MeasurementOmnichannelMetricsStudyMetadata
+     */
+    campaignIds?: Array<string>;
+    /**
+     * A list of canonical brand ids to be tracked for off-Amazon conversions.
+     * @type {Array<string>}
+     * @memberof MeasurementOmnichannelMetricsStudyMetadata
+     */
+    brandIds?: Array<string>;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementOmnichannelMetricsStudyMetadata
+     */
+    advertiserId?: string;
+}
+/**
+ * The campaign study eligibility data.
+ * @export
+ * @interface MeasurementReachAndFrequencyEligibilityData
+ */
+export interface MeasurementReachAndFrequencyEligibilityData {
+    /**
+     * Optional current study identifier, if provided orders are expected to be added into this study and the orders already associated with this study will be excluded from certain eligibility check.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyEligibilityData
+     */
+    currentStudyId?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the eligibility check.
+     * @type {Array<string>}
+     * @memberof MeasurementReachAndFrequencyEligibilityData
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of canonical DSP order identifiers. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof MeasurementReachAndFrequencyEligibilityData
+     */
+    orderIds?: Array<string>;
+}
+/**
+ * The request object of reach and frequency eligibility check.
+ * @export
+ * @interface MeasurementReachAndFrequencyEligibilityRequest
+ */
+export interface MeasurementReachAndFrequencyEligibilityRequest {
+    /**
+     * FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<MeasurementStudiesFundingType>}
+     * @memberof MeasurementReachAndFrequencyEligibilityRequest
+     */
+    fundingTypeFilters?: Array<MeasurementStudiesFundingType>;
+    /**
+     * VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<string>}
+     * @memberof MeasurementReachAndFrequencyEligibilityRequest
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<MeasurementStudiesVendorType>}
+     * @memberof MeasurementReachAndFrequencyEligibilityRequest
+     */
+    vendorTypeFilters?: Array<MeasurementStudiesVendorType>;
+    /**
+     * Optional current study identifier, if provided orders are expected to be added into this study and the orders already associated with this study will be excluded from certain eligibility check.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyEligibilityRequest
+     */
+    currentStudyId?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the eligibility check.
+     * @type {Array<string>}
+     * @memberof MeasurementReachAndFrequencyEligibilityRequest
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of canonical DSP order identifiers. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof MeasurementReachAndFrequencyEligibilityRequest
+     */
+    orderIds?: Array<string>;
+}
+/**
+ * The basic model for all REACH_AND_FREQUENCY studies.
+ * @export
+ * @interface MeasurementReachAndFrequencyMetadata
+ */
+export interface MeasurementReachAndFrequencyMetadata {
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the study.
+     * @type {Array<string>}
+     * @memberof MeasurementReachAndFrequencyMetadata
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of canonical DSP order identifiers that are associated with the study. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof MeasurementReachAndFrequencyMetadata
+     */
+    orderIds?: Array<string>;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyMetadata
+     */
+    advertiserId?: string;
+}
+/**
+ * REACH_AND_FREQUENCY study object.
+ * @export
+ * @interface MeasurementReachAndFrequencyStudy
+ */
+export interface MeasurementReachAndFrequencyStudy {
+    /**
+     * List of reasons for study status. For example, when study is marked Rejected or Ineligible, this field would be available.
+     * @type {Array<MeasurementStudyStatusReason>}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    statusReasons?: Array<MeasurementStudyStatusReason>;
+    /**
+     * The study survey canonical identifier.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    surveyId?: string;
+    /**
+     * The study end date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the latest endDate of the associated orders.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    endDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudiesResourceLink}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    link?: MeasurementStudiesResourceLink;
+    /**
+     * Optional field. For some vendors, advertisers are required to provide this vendor assigned reference identifier for EXTERNAL_BILLING studies.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    externalReferenceId?: string;
+    /**
+     * Associated vendor product canonical identifier.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    vendorProductId?: string;
+    /**
+     * 
+     * @type {MeasurementStudySubmissionType}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    submissionType?: MeasurementStudySubmissionType;
+    /**
+     * The study last updated date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    lastUpdatedDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudyResultStatus}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    studyResultStatus?: MeasurementStudyResultStatus;
+    /**
+     * The study review date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    reviewDate?: string;
+    /**
+     * The study name.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    name?: string;
+    /**
+     * The approver\'s comment on why the study is approved/rejected.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    comment?: string;
+    /**
+     * The study canonical identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    studyId?: string;
+    /**
+     * The study start date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC. By default this will be the earliest startDate of the associated orders.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    startDate?: string;
+    /**
+     * 
+     * @type {MeasurementStudyStatus}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    status?: MeasurementStudyStatus;
+    /**
+     * The study creation date in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    createDate?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the study.
+     * @type {Array<string>}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of canonical DSP order identifiers that are associated with the study. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    orderIds?: Array<string>;
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyStudy
+     */
+    advertiserId?: string;
+}
+/**
+ * The response object for downloading study results.
+ * @export
+ * @interface MeasurementReachAndFrequencyStudyResult
+ */
+export interface MeasurementReachAndFrequencyStudyResult {
+    /**
+     * A pre-signed S3 URL which links to the curated study results file. The URL expires after 60 seconds. If the URL expires before the curated results file is downloaded, a new download request must be created.
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyStudyResult
+     */
+    fileDownloadUrl?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementReachAndFrequencyStudyResult
+     */
+    fileType?: MeasurementReachAndFrequencyStudyResultFileTypeEnum;
+}
+
+/**
+    * @export
+    * @enum {string}
+    */
+export enum MeasurementReachAndFrequencyStudyResultFileTypeEnum {
+    Pdf = 'PDF',
+    Powerpoint = 'POWERPOINT',
+    Jpeg = 'JPEG',
+    Png = 'PNG',
+    Other = 'OTHER'
+}
+
+/**
+ * Supported ad types.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesAdType {
+    Dsp = 'DSP',
+    Sb = 'SB',
+    Sp = 'SP',
+    Sd = 'SD'
+}
+
+/**
+ * The Amazon Creative Asset Library asset identifier. Refer https://advertising.amazon.com/API/docs/en-us/creative-asset-library
+ * @export
+ * @interface MeasurementStudiesAsset
+ */
+export interface MeasurementStudiesAsset {
+    /**
+     * The assetId.
+     * @type {string}
+     * @memberof MeasurementStudiesAsset
+     */
+    assetId?: string;
+    /**
+     * The version of the asset.
+     * @type {string}
+     * @memberof MeasurementStudiesAsset
+     */
+    version?: string;
+    /**
+     * 
+     * @type {MeasurementStudiesAssetType}
+     * @memberof MeasurementStudiesAsset
+     */
+    assetType?: MeasurementStudiesAssetType;
+}
+/**
+ * The type of the Asset.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesAssetType {
+    Image = 'IMAGE',
+    Video = 'VIDEO'
+}
+
+/**
+ * The model for holding Audience selection within a group. The expression within an audience group will be evaluated using the IntraGroupOperator. The InterGroupOperator will be applied on the output of one audience group with another audience group.
+ * @export
+ * @interface MeasurementStudiesAudienceGroup
+ */
+export interface MeasurementStudiesAudienceGroup {
+    /**
+     * 
+     * @type {MeasurementStudiesAudienceSelectionOperator}
+     * @memberof MeasurementStudiesAudienceGroup
+     */
+    interGroupOperator?: MeasurementStudiesAudienceSelectionOperator;
+    /**
+     * 
+     * @type {MeasurementStudiesAudienceSelectionOperator}
+     * @memberof MeasurementStudiesAudienceGroup
+     */
+    intraGroupOperator?: MeasurementStudiesAudienceSelectionOperator;
+    /**
+     * List of audience segments in this group.
+     * @type {Array<MeasurementStudiesAudienceSegment>}
+     * @memberof MeasurementStudiesAudienceGroup
+     */
+    audienceSegments?: Array<MeasurementStudiesAudienceSegment>;
+}
+/**
+ * The model for holding an Audience Segment.
+ * @export
+ * @interface MeasurementStudiesAudienceSegment
+ */
+export interface MeasurementStudiesAudienceSegment {
+    /**
+     * ID for the audience segment. This ID can be fetched from these APIs- https://advertising.amazon.com/API/docs/en-us/audiences/#/Discovery
+     * @type {string}
+     * @memberof MeasurementStudiesAudienceSegment
+     */
+    segmentId?: string;
+}
+/**
+ * The operator used in Audience Segment Selection to determine which operation needs to be applied across selected segments. AND operator takes priority over OR operator.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesAudienceSelectionOperator {
+    Or = 'OR',
+    And = 'AND'
+}
+
+/**
+ * The model for holding Audience targeting group. The includedAudienceGroups and excludedAudienceGroups are always joined with AND operator.
+ * @export
+ * @interface MeasurementStudiesAudienceTargetingGroup
+ */
+export interface MeasurementStudiesAudienceTargetingGroup {
+    /**
+     * List of audience groups to be included in the targeted audience.
+     * @type {Array<MeasurementStudiesAudienceGroup>}
+     * @memberof MeasurementStudiesAudienceTargetingGroup
+     */
+    includedAudienceGroups?: Array<MeasurementStudiesAudienceGroup>;
+    /**
+     * List of audience groups to be excluded from the targeted audience.
+     * @type {Array<MeasurementStudiesAudienceGroup>}
+     * @memberof MeasurementStudiesAudienceTargetingGroup
+     */
+    excludedAudienceGroups?: Array<MeasurementStudiesAudienceGroup>;
+}
+/**
+ * The request object of measurement eligibility check.
+ * @export
+ * @interface MeasurementStudiesBaseEligibilityRequest
+ */
+export interface MeasurementStudiesBaseEligibilityRequest {
+    /**
+     * FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<MeasurementStudiesFundingType>}
+     * @memberof MeasurementStudiesBaseEligibilityRequest
+     */
+    fundingTypeFilters?: Array<MeasurementStudiesFundingType>;
+    /**
+     * VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<string>}
+     * @memberof MeasurementStudiesBaseEligibilityRequest
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<MeasurementStudiesVendorType>}
+     * @memberof MeasurementStudiesBaseEligibilityRequest
+     */
+    vendorTypeFilters?: Array<MeasurementStudiesVendorType>;
+}
+/**
+ * The study benchmark product category. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesBenchmarkCategory {
+    Appliances = 'APPLIANCES',
+    AppsAndGames = 'APPS_AND_GAMES',
+    ArtsCraftsAndSewing = 'ARTS_CRAFTS_AND_SEWING',
+    Automotive = 'AUTOMOTIVE',
+    Baby = 'BABY',
+    BeautyAndPersonalCare = 'BEAUTY_AND_PERSONAL_CARE',
+    Books = 'BOOKS',
+    CellPhonesAndAccessories = 'CELL_PHONES_AND_ACCESSORIES',
+    ClothingShoesAndJewelry = 'CLOTHING_SHOES_AND_JEWELRY',
+    ComputersAndAccessories = 'COMPUTERS_AND_ACCESSORIES',
+    DigitalMusic = 'DIGITAL_MUSIC',
+    Electronics = 'ELECTRONICS',
+    Education = 'EDUCATION',
+    FinancialAndInsurance = 'FINANCIAL_AND_INSURANCE',
+    Food = 'FOOD',
+    Beverages = 'BEVERAGES',
+    HealthAndHousehold = 'HEALTH_AND_HOUSEHOLD',
+    HomeAndKitchen = 'HOME_AND_KITCHEN',
+    KitchenAndDining = 'KITCHEN_AND_DINING',
+    MoviesAndTv = 'MOVIES_AND_TV',
+    OfficeProducts = 'OFFICE_PRODUCTS',
+    PatioLawnAndGarden = 'PATIO_LAWN_AND_GARDEN',
+    PetSupplies = 'PET_SUPPLIES',
+    Restaurants = 'RESTAURANTS',
+    Software = 'SOFTWARE',
+    SportsAndOutdoors = 'SPORTS_AND_OUTDOORS',
+    TelecommunicationsServices = 'TELECOMMUNICATIONS_SERVICES',
+    ToolsAndHomeImprovement = 'TOOLS_AND_HOME_IMPROVEMENT',
+    ToysAndGames = 'TOYS_AND_GAMES',
+    VideoGames = 'VIDEO_GAMES',
+    Hospitality = 'HOSPITALITY',
+    Other = 'OTHER'
+}
+
+/**
+ * The basic model for all CAMPAIGN_PLANNING objective studies.
+ * @export
+ * @interface MeasurementStudiesCampaignPlanningMetadata
+ */
+export interface MeasurementStudiesCampaignPlanningMetadata {
+    /**
+     * The associated advertiser identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementStudiesCampaignPlanningMetadata
+     */
+    advertiserId?: string;
+}
+/**
+ * Cancel study response.
+ * @export
+ * @interface MeasurementStudiesCancelStudyResponse
+ */
+export interface MeasurementStudiesCancelStudyResponse {
+    /**
+     * An enumerated success or error code for machine use.
+     * @type {string}
+     * @memberof MeasurementStudiesCancelStudyResponse
+     */
+    code?: string;
+    /**
+     * The study canonical identifier.
+     * @type {string}
+     * @memberof MeasurementStudiesCancelStudyResponse
+     */
+    studyId?: string;
+    /**
+     * A human-readable message of the code.
+     * @type {string}
+     * @memberof MeasurementStudiesCancelStudyResponse
+     */
+    message?: string;
+    /**
+     * 
+     * @type {Array<MeasurementStudiesSubError>}
+     * @memberof MeasurementStudiesCancelStudyResponse
+     */
+    errors?: Array<MeasurementStudiesSubError>;
+}
+/**
+ * The measurement country. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesCountry {
+    Us = 'US',
+    Uk = 'UK',
+    De = 'DE',
+    Fr = 'FR',
+    Jp = 'JP',
+    Ca = 'CA',
+    It = 'IT',
+    Es = 'ES',
+    Eg = 'EG',
+    Br = 'BR',
+    Au = 'AU',
+    Ae = 'AE',
+    Sa = 'SA',
+    Ru = 'RU',
+    Mx = 'MX',
+    Nl = 'NL',
+    Sg = 'SG',
+    Se = 'SE',
+    Tr = 'TR',
+    Pl = 'PL',
+    In = 'IN',
+    Other = 'OTHER'
+}
+
+/**
+ * Currency Code. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesCurrencyCode {
+    Usd = 'USD',
+    Cad = 'CAD',
+    Mxn = 'MXN',
+    Brl = 'BRL',
+    Gbp = 'GBP',
+    Eur = 'EUR',
+    Aed = 'AED',
+    Sar = 'SAR',
+    Inr = 'INR',
+    Jpy = 'JPY',
+    Aud = 'AUD',
+    Sgd = 'SGD',
+    Try = 'TRY',
+    Sek = 'SEK',
+    Egp = 'EGP',
+    Pln = 'PLN',
+    Other = 'OTHER'
+}
+
+/**
+ * The templated measurement survey question.
+ * @export
+ * @interface MeasurementStudiesCustomSurveyQuestion
+ */
+export interface MeasurementStudiesCustomSurveyQuestion {
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof MeasurementStudiesCustomSurveyQuestion
+     */
+    responses?: Array<string>;
+    /**
+     * 
+     * @type {MeasurementStudiesSurveyQuestionType}
+     * @memberof MeasurementStudiesCustomSurveyQuestion
+     */
+    type?: MeasurementStudiesSurveyQuestionType;
+    /**
+     * The survey question text.
+     * @type {string}
+     * @memberof MeasurementStudiesCustomSurveyQuestion
+     */
+    questionText?: string;
+}
+/**
+ * Fields that will be checked as part of eligibility API call. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesEligibilityField {
+    Locale = 'LOCALE',
+    Budget = 'BUDGET',
+    Goal = 'GOAL',
+    StartTime = 'START_TIME',
+    EndTime = 'END_TIME',
+    FlightLength = 'FLIGHT_LENGTH',
+    LeadTime = 'LEAD_TIME',
+    Impressions = 'IMPRESSIONS',
+    Order = 'ORDER',
+    BuyerCount = 'BUYER_COUNT',
+    Other = 'OTHER'
+}
+
+/**
+ * The list of eligibility issues.
+ * @export
+ * @interface MeasurementStudiesEligibilityIssue
+ */
+export interface MeasurementStudiesEligibilityIssue {
+    /**
+     * 
+     * @type {MeasurementStudiesEligibilityIssueSeverity}
+     * @memberof MeasurementStudiesEligibilityIssue
+     */
+    severity?: MeasurementStudiesEligibilityIssueSeverity;
+    /**
+     * An enumerated issue code for machine use.
+     * @type {string}
+     * @memberof MeasurementStudiesEligibilityIssue
+     */
+    code?: string;
+    /**
+     * 
+     * @type {MeasurementStudiesEligibilityField}
+     * @memberof MeasurementStudiesEligibilityIssue
+     */
+    field?: MeasurementStudiesEligibilityField;
+    /**
+     * A human-readable description of the issue with suggestions on how to resolve the issue.
+     * @type {string}
+     * @memberof MeasurementStudiesEligibilityIssue
+     */
+    message?: string;
+}
+/**
+ * Supported values are WARNING, ERROR. ERROR severity issues need to be resolved while WARNING severity issues can be ignored. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesEligibilityIssueSeverity {
+    Warning = 'WARNING',
+    Error = 'ERROR',
+    Other = 'OTHER'
+}
+
+/**
+ * The eligibility metadata.
+ * @export
+ * @interface MeasurementStudiesEligibilityMetadata
+ */
+export interface MeasurementStudiesEligibilityMetadata {
+    /**
+     * The latest end date of the associated orders in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementStudiesEligibilityMetadata
+     */
+    endDate?: string;
+    /**
+     * The total estimated impressions.
+     * @type {number}
+     * @memberof MeasurementStudiesEligibilityMetadata
+     */
+    impressions?: number;
+    /**
+     * The flight length of the associated orders. Expressed in days.
+     * @type {number}
+     * @memberof MeasurementStudiesEligibilityMetadata
+     */
+    flightLength?: number;
+    /**
+     * The earliest start date of associated orders in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementStudiesEligibilityMetadata
+     */
+    startDate?: string;
+    /**
+     * The total budget. Expressed in dollars.
+     * @type {number}
+     * @memberof MeasurementStudiesEligibilityMetadata
+     */
+    budget?: number;
+}
+/**
+ * The eligibility check response object.
+ * @export
+ * @interface MeasurementStudiesEligibilityResponse
+ */
+export interface MeasurementStudiesEligibilityResponse {
+    /**
+     * 
+     * @type {MeasurementStudiesEligibilityMetadata}
+     * @memberof MeasurementStudiesEligibilityResponse
+     */
+    metadata?: MeasurementStudiesEligibilityMetadata;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementStudiesEligibilityResponse
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<MeasurementStudiesVendorProductEligibility>}
+     * @memberof MeasurementStudiesEligibilityResponse
+     */
+    vendorProductEligibilities?: Array<MeasurementStudiesVendorProductEligibility>;
+}
+/**
+ * Supported values are ELIGIBLE, INELIGIBLE and ELIGIBLE_WITH_WARNING. INELIGIBLE status indicates the study can not be created.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesEligibilityStatus {
+    Eligible = 'ELIGIBLE',
+    Ineligible = 'INELIGIBLE',
+    EligibleWithWarning = 'ELIGIBLE_WITH_WARNING'
+}
+
+/**
+ * The error response object.
+ * @export
+ * @interface MeasurementStudiesError
+ */
+export interface MeasurementStudiesError {
+    /**
+     * Request Id that uniquely identifies your request.
+     * @type {string}
+     * @memberof MeasurementStudiesError
+     */
+    requestId?: string;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof MeasurementStudiesError
+     */
+    message?: string;
+    /**
+     * 
+     * @type {Array<MeasurementStudiesSubError>}
+     * @memberof MeasurementStudiesError
+     */
+    errors?: Array<MeasurementStudiesSubError>;
+}
+/**
+ * The measurement funding type. For COMPLIMENTARY studies the cost will be covered by Amazon. Check vendor product policy for pricing info. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesFundingType {
+    Complimentary = 'COMPLIMENTARY',
+    ThirdPartyPayment = 'THIRD_PARTY_PAYMENT',
+    Cpm = 'CPM',
+    FlatRate = 'FLAT_RATE',
+    Other = 'OTHER'
+}
+
+/**
+ * The grid question response object. Only applicable for SINGLE_SELECT_GRID type question.
+ * @export
+ * @interface MeasurementStudiesGridQuestionResponses
+ */
+export interface MeasurementStudiesGridQuestionResponses {
+    /**
+     * 
+     * @type {Array<MeasurementStudiesSurveyQuestionPlaceholderFieldValue>}
+     * @memberof MeasurementStudiesGridQuestionResponses
+     */
+    columns?: Array<MeasurementStudiesSurveyQuestionPlaceholderFieldValue>;
+    /**
+     * 
+     * @type {Array<MeasurementStudiesSurveyQuestionPlaceholderFieldValue>}
+     * @memberof MeasurementStudiesGridQuestionResponses
+     */
+    rows?: Array<MeasurementStudiesSurveyQuestionPlaceholderFieldValue>;
+}
+/**
+ * The measurement locale. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesLocale {
+    EnUs = 'EN_US',
+    Other = 'OTHER'
+}
+
+/**
+ * The marketplace with corresponding rules.
+ * @export
+ * @interface MeasurementStudiesMarketplace
+ */
+export interface MeasurementStudiesMarketplace {
+    /**
+     * 
+     * @type {MeasurementStudiesCountry}
+     * @memberof MeasurementStudiesMarketplace
+     */
+    country?: MeasurementStudiesCountry;
+    /**
+     * 
+     * @type {Array<MeasurementStudiesLocale>}
+     * @memberof MeasurementStudiesMarketplace
+     */
+    supportedLocales?: Array<MeasurementStudiesLocale>;
+    /**
+     * The minimum impressions.
+     * @type {number}
+     * @memberof MeasurementStudiesMarketplace
+     */
+    minimumImpressions?: number;
+    /**
+     * The time span in days to calculate budget. Null represents total impressions for the campaigns.
+     * @type {number}
+     * @memberof MeasurementStudiesMarketplace
+     */
+    budgetTimeSpan?: number;
+    /**
+     * The minimum budget. Expressed in marketplace currency.
+     * @type {number}
+     * @memberof MeasurementStudiesMarketplace
+     */
+    minimumBudget?: number;
+    /**
+     * The time span in days to calculate impressions. Null represents total impressions for the campaigns.
+     * @type {number}
+     * @memberof MeasurementStudiesMarketplace
+     */
+    impressionTimeSpan?: number;
+}
+/**
+ * 
+ * @export
+ * @interface MeasurementStudiesOmnichannelMetricsBrand
+ */
+export interface MeasurementStudiesOmnichannelMetricsBrand {
+    /**
+     * The brand canonical Id
+     * @type {string}
+     * @memberof MeasurementStudiesOmnichannelMetricsBrand
+     */
+    brandId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementStudiesOmnichannelMetricsBrand
+     */
+    company?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementStudiesOmnichannelMetricsBrand
+     */
+    category?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementStudiesOmnichannelMetricsBrand
+     */
+    subcategory?: string;
+    /**
+     * The brand name.
+     * @type {string}
+     * @memberof MeasurementStudiesOmnichannelMetricsBrand
+     */
+    brand?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementStudiesOmnichannelMetricsBrand
+     */
+    majorBrand?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementStudiesOmnichannelMetricsBrand
+     */
+    manufacturer?: string;
+}
+/**
+ * The request object to fetch brands to be used in the OMNICHANNEL_METRICS vendor product.
+ * @export
+ * @interface MeasurementStudiesOmnichannelMetricsBrandSearchRequest
+ */
+export interface MeasurementStudiesOmnichannelMetricsBrandSearchRequest {
+    /**
+     * List of brandIds in the omnichannel metrics brand catalog. Either one of brandIdFilter or brandNameSearch should be provided.
+     * @type {Array<string>}
+     * @memberof MeasurementStudiesOmnichannelMetricsBrandSearchRequest
+     */
+    brandIdFilter?: Array<string>;
+    /**
+     * Text to search for eligible brands in the omnichannel metrics brand catalog. Either one of brandIdFilter or brandNameSearch should be provided.
+     * @type {string}
+     * @memberof MeasurementStudiesOmnichannelMetricsBrandSearchRequest
+     */
+    brandNameSearch?: string;
+}
+/**
+ * The campaign study eligibility data.
+ * @export
+ * @interface MeasurementStudiesOmnichannelMetricsEligibilityData
+ */
+export interface MeasurementStudiesOmnichannelMetricsEligibilityData {
+    /**
+     * Optional current study identifier. If provided orders are expected to be added into this study and the orders already associated with this study will be excluded from certain eligibility checks.
+     * @type {string}
+     * @memberof MeasurementStudiesOmnichannelMetricsEligibilityData
+     */
+    currentStudyId?: string;
+    /**
+     * A list of canonical lineItem identifiers that are excluded from the eligibility check.
+     * @type {Array<string>}
+     * @memberof MeasurementStudiesOmnichannelMetricsEligibilityData
+     */
+    excludedLineItemIds?: Array<string>;
+    /**
+     * A list of DSP canonical order identifiers. By default all lineItems in those orders will be included.
+     * @type {Array<string>}
+     * @memberof MeasurementStudiesOmnichannelMetricsEligibilityData
+     */
+    orderIds?: Array<string>;
+    /**
+     * A list of canonical Sponsored Ads campaign identifiers that are associated with the study.
+     * @type {Array<string>}
+     * @memberof MeasurementStudiesOmnichannelMetricsEligibilityData
+     */
+    campaignIds?: Array<string>;
+    /**
+     * A list of canonical brand identifiers.
+     * @type {Array<string>}
+     * @memberof MeasurementStudiesOmnichannelMetricsEligibilityData
+     */
+    brandIds?: Array<string>;
+}
+/**
+ * A list of measurement vendor products.
+ * @export
+ * @interface MeasurementStudiesPaginatedVendorProducts
+ */
+export interface MeasurementStudiesPaginatedVendorProducts {
+    /**
+     * The total number of vendor products.
+     * @type {number}
+     * @memberof MeasurementStudiesPaginatedVendorProducts
+     */
+    totalResults?: number;
+    /**
+     * 
+     * @type {Array<MeasurementStudiesVendorProduct>}
+     * @memberof MeasurementStudiesPaginatedVendorProducts
+     */
+    vendorProducts?: Array<MeasurementStudiesVendorProduct>;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementStudiesPaginatedVendorProducts
+     */
+    nextToken?: string;
+}
+/**
+ * The placeholder value type. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesPlaceholderValueType {
+    String = 'STRING',
+    Integer = 'INTEGER',
+    Other = 'OTHER'
+}
+
+/**
+ * The link that can be used to access corresponding resources in advertising portal.
+ * @export
+ * @interface MeasurementStudiesResourceLink
+ */
+export interface MeasurementStudiesResourceLink {
+    /**
+     * The resource name.
+     * @type {string}
+     * @memberof MeasurementStudiesResourceLink
+     */
+    name?: string;
+    /**
+     * The resource url.
+     * @type {string}
+     * @memberof MeasurementStudiesResourceLink
+     */
+    url?: string;
+}
+/**
+ * The sub error object.
+ * @export
+ * @interface MeasurementStudiesSubError
+ */
+export interface MeasurementStudiesSubError {
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementStudiesSubError
+     */
+    fieldName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementStudiesSubError
+     */
+    errorType: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MeasurementStudiesSubError
+     */
+    message: string;
+}
+/**
+ * The measurement survey.
+ * @export
+ * @interface MeasurementStudiesSurvey
+ */
+export interface MeasurementStudiesSurvey {
+    /**
+     * The vendor product canonical identifier.
+     * @type {string}
+     * @memberof MeasurementStudiesSurvey
+     */
+    vendorProductId?: string;
+    /**
+     * The survey canonical identifier. Immutable field.
+     * @type {string}
+     * @memberof MeasurementStudiesSurvey
+     */
+    surveyId?: string;
+    /**
+     * A list of custom survey questions.
+     * @type {Array<MeasurementStudiesCustomSurveyQuestion>}
+     * @memberof MeasurementStudiesSurvey
+     */
+    customQuestions?: Array<MeasurementStudiesCustomSurveyQuestion>;
+    /**
+     * A list of templated survey short questions.
+     * @type {Array<MeasurementStudiesTemplatedSurveyShortQuestion>}
+     * @memberof MeasurementStudiesSurvey
+     */
+    templatedShortQuestions?: Array<MeasurementStudiesTemplatedSurveyShortQuestion>;
+    /**
+     * The associated study identifier. Survey needs to be created prior to the study creation.
+     * @type {string}
+     * @memberof MeasurementStudiesSurvey
+     */
+    studyId?: string;
+    /**
+     * 
+     * @type {MeasurementStudiesSurveyStatus}
+     * @memberof MeasurementStudiesSurvey
+     */
+    status?: MeasurementStudiesSurveyStatus;
+}
+/**
+ * The survey question category. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesSurveyQuestionCategory {
+    BrandKpi = 'BRAND_KPI',
+    Weighting = 'WEIGHTING',
+    Custom = 'CUSTOM',
+    Other = 'OTHER'
+}
+
+/**
+ * The requirement for specific survey question category.
+ * @export
+ * @interface MeasurementStudiesSurveyQuestionCategoryRequirement
+ */
+export interface MeasurementStudiesSurveyQuestionCategoryRequirement {
+    /**
+     * The minimum number of questions required for the question category.
+     * @type {number}
+     * @memberof MeasurementStudiesSurveyQuestionCategoryRequirement
+     */
+    minimumQuestions?: number;
+    /**
+     * The maximum number of questions required for the question category.
+     * @type {number}
+     * @memberof MeasurementStudiesSurveyQuestionCategoryRequirement
+     */
+    maximumQuestions?: number;
+    /**
+     * 
+     * @type {MeasurementStudiesSurveyQuestionCategory}
+     * @memberof MeasurementStudiesSurveyQuestionCategoryRequirement
+     */
+    category?: MeasurementStudiesSurveyQuestionCategory;
+}
+/**
+ * The grid question response object. Only applicable for SINGLE_SELECT_GRID type question.
+ * @export
+ * @interface MeasurementStudiesSurveyQuestionGridQuestionResponse
+ */
+export interface MeasurementStudiesSurveyQuestionGridQuestionResponse {
+    /**
+     * 
+     * @type {MeasurementStudiesSurveyQuestionPlaceholderCandidate}
+     * @memberof MeasurementStudiesSurveyQuestionGridQuestionResponse
+     */
+    columns?: MeasurementStudiesSurveyQuestionPlaceholderCandidate;
+    /**
+     * 
+     * @type {MeasurementStudiesSurveyQuestionPlaceholderCandidate}
+     * @memberof MeasurementStudiesSurveyQuestionGridQuestionResponse
+     */
+    rows?: MeasurementStudiesSurveyQuestionPlaceholderCandidate;
+}
+/**
+ * The survey objective. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesSurveyQuestionObjectiveType {
+    Awareness = 'AWARENESS',
+    Preference = 'PREFERENCE',
+    Favorability = 'FAVORABILITY',
+    AdRecall = 'AD_RECALL',
+    Intent = 'INTENT',
+    Attitudes = 'ATTITUDES',
+    UnaidedAwareness = 'UNAIDED_AWARENESS',
+    Consideration = 'CONSIDERATION',
+    Age = 'AGE',
+    Gender = 'GENDER',
+    HouseholdIncome = 'HOUSEHOLD_INCOME',
+    HouseholdSize = 'HOUSEHOLD_SIZE',
+    ChildrenInHousehold = 'CHILDREN_IN_HOUSEHOLD',
+    Education = 'EDUCATION',
+    Ethnicity = 'ETHNICITY',
+    TimeOnline = 'TIME_ONLINE',
+    TvMediaConsumption = 'TV_MEDIA_CONSUMPTION',
+    InMarketStatus = 'IN_MARKET_STATUS',
+    PurchaseFrequency = 'PURCHASE_FREQUENCY',
+    PurchaseHistory = 'PURCHASE_HISTORY',
+    PurchaseLocation = 'PURCHASE_LOCATION',
+    Behaviors = 'BEHAVIORS',
+    Familiarity = 'FAMILIARITY',
+    Association = 'ASSOCIATION',
+    Other = 'OTHER'
+}
+
+/**
+ * The object specifying a placeholder in Survey question.
+ * @export
+ * @interface MeasurementStudiesSurveyQuestionPlaceholder
+ */
+export interface MeasurementStudiesSurveyQuestionPlaceholder {
+    /**
+     * The survey question placeholder field name.
+     * @type {string}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholder
+     */
+    fieldName?: string;
+    /**
+     * The survey question placeholder field values.
+     * @type {Array<MeasurementStudiesSurveyQuestionPlaceholderFieldValue>}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholder
+     */
+    fieldValues?: Array<MeasurementStudiesSurveyQuestionPlaceholderFieldValue>;
+}
+/**
+ * Allowed value range for placeholder.
+ * @export
+ * @interface MeasurementStudiesSurveyQuestionPlaceholderAllowedRange
+ */
+export interface MeasurementStudiesSurveyQuestionPlaceholderAllowedRange {
+    /**
+     * The minimum allowed value.
+     * @type {number}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderAllowedRange
+     */
+    minimumValue?: number;
+    /**
+     * The field value that this range depends on. Will be empty if this range is the default range.
+     * @type {string}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderAllowedRange
+     */
+    parentValue?: string;
+    /**
+     * The maximum allowed value.
+     * @type {number}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderAllowedRange
+     */
+    maximumValue?: number;
+    /**
+     * The field name that this range depends on. Will be empty if this range is the default range.
+     * @type {string}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderAllowedRange
+     */
+    parentField?: string;
+}
+/**
+ * Allowed value for placeholder.
+ * @export
+ * @interface MeasurementStudiesSurveyQuestionPlaceholderAllowedValue
+ */
+export interface MeasurementStudiesSurveyQuestionPlaceholderAllowedValue {
+    /**
+     * The field value that this value list depend on. Will be empty if this is the default list.
+     * @type {string}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderAllowedValue
+     */
+    parentValue?: string;
+    /**
+     * Allowed value string..
+     * @type {string}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderAllowedValue
+     */
+    value?: string;
+    /**
+     * The field name that this value list depends on. Will be empty if this is the default list.
+     * @type {string}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderAllowedValue
+     */
+    parentField?: string;
+}
+/**
+ * The placeholder candidate in Survey question.
+ * @export
+ * @interface MeasurementStudiesSurveyQuestionPlaceholderCandidate
+ */
+export interface MeasurementStudiesSurveyQuestionPlaceholderCandidate {
+    /**
+     * Allowed values for placeholder. Will be empty if placeholder is free text field.
+     * @type {Array<MeasurementStudiesSurveyQuestionPlaceholderAllowedValue>}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderCandidate
+     */
+    allowedValues?: Array<MeasurementStudiesSurveyQuestionPlaceholderAllowedValue>;
+    /**
+     * The maximum allowed character length for each individual placeholder value.
+     * @type {number}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderCandidate
+     */
+    maximumValueLength?: number;
+    /**
+     * The survey question placeholder field name.
+     * @type {string}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderCandidate
+     */
+    fieldName?: string;
+    /**
+     * Allowed value ranges for placeholder. Only applicable if the valueType is INTEGER.
+     * @type {Array<MeasurementStudiesSurveyQuestionPlaceholderAllowedRange>}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderCandidate
+     */
+    allowedValueRanges?: Array<MeasurementStudiesSurveyQuestionPlaceholderAllowedRange>;
+    /**
+     * 
+     * @type {MeasurementStudiesPlaceholderValueType}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderCandidate
+     */
+    valueType?: MeasurementStudiesPlaceholderValueType;
+    /**
+     * Where the placeholder values will be inferred from.
+     * @type {Array<MeasurementStudiesSurveyQuestionPlaceholderInferredField>}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderCandidate
+     */
+    inferredFields?: Array<MeasurementStudiesSurveyQuestionPlaceholderInferredField>;
+    /**
+     * Default values that will be appended to the values list regardless.
+     * @type {Array<string>}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderCandidate
+     */
+    defaultValues?: Array<string>;
+    /**
+     * The minimum allowed character length for each individual placeholder value.
+     * @type {number}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderCandidate
+     */
+    minimumValueLength?: number;
+    /**
+     * Whether custom value is allowed for the placeholder.
+     * @type {boolean}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderCandidate
+     */
+    allowCustomValue?: boolean;
+    /**
+     * 
+     * @type {MeasurementStudiesSurveyQuestionPlaceholderCandidateType}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderCandidate
+     */
+    placeholderCandidateType?: MeasurementStudiesSurveyQuestionPlaceholderCandidateType;
+}
+/**
+ * The placeholder type for survey question template. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesSurveyQuestionPlaceholderCandidateType {
+    Channel = 'CHANNEL',
+    QuestionText = 'QUESTION_TEXT',
+    PlacementType = 'PLACEMENT_TYPE',
+    Response = 'RESPONSE',
+    Action = 'ACTION',
+    Time = 'TIME',
+    DummyPlaceholder1 = 'DUMMY_PLACEHOLDER_1',
+    DummyPlaceholder2 = 'DUMMY_PLACEHOLDER_2',
+    BrandOrProductCategory = 'BRAND_OR_PRODUCT_CATEGORY',
+    BrandOrProductName = 'BRAND_OR_PRODUCT_NAME',
+    Characteristic = 'CHARACTERISTIC',
+    Verb = 'VERB',
+    Category = 'CATEGORY',
+    Period = 'PERIOD',
+    CustomStatement = 'CUSTOM_STATEMENT',
+    Other = 'OTHER'
+}
+
+/**
+ * 
+ * @export
+ * @interface MeasurementStudiesSurveyQuestionPlaceholderFieldValue
+ */
+export interface MeasurementStudiesSurveyQuestionPlaceholderFieldValue {
+    /**
+     * The survey question placeholder field value.
+     * @type {string}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderFieldValue
+     */
+    value?: string;
+    /**
+     * This is only required if the corresponding field is \'response\', this will help to define if the response value will be counted as a positive one in the study report.
+     * @type {boolean}
+     * @memberof MeasurementStudiesSurveyQuestionPlaceholderFieldValue
+     */
+    isQualifying?: boolean;
+}
+/**
+ * The inferred field for survey question placeholder candidate. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesSurveyQuestionPlaceholderInferredField {
+    StudyBrandName = 'STUDY_BRAND_NAME',
+    StudyBrandNameUnqualified = 'STUDY_BRAND_NAME_UNQUALIFIED',
+    StudyPeerName = 'STUDY_PEER_NAME',
+    StudyProductCategory = 'STUDY_PRODUCT_CATEGORY',
+    StudyVerb = 'STUDY_VERB',
+    Other = 'OTHER'
+}
+
+/**
+ * The survey question sub-category. Only applicable to certain categories. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesSurveyQuestionSubCategory {
+    Demographic = 'DEMOGRAPHIC',
+    Behavior = 'BEHAVIOR',
+    PurchaseHistory = 'PURCHASE_HISTORY',
+    Other = 'OTHER'
+}
+
+/**
+ * The survey question type. SINGLE_SELECT question will allow customers to choose only one response, MULTI_SELECT question will allow customers to choose multiple responses, RATING will allow customers to choose a rating on a scale (e.g. 1 to 5), FREE_TEXT will allow customers to provide a free formed question text, SINGLE_ASSET_SELECT will allow customers to choose an asset as the response. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesSurveyQuestionType {
+    SingleSelect = 'SINGLE_SELECT',
+    MultiSelect = 'MULTI_SELECT',
+    Rating = 'RATING',
+    FreeText = 'FREE_TEXT',
+    SingleAssetSelect = 'SINGLE_ASSET_SELECT',
+    SingleSelectGrid = 'SINGLE_SELECT_GRID',
+    Other = 'OTHER'
+}
+
+/**
+ * Template for short survey question for a vendor product. A short question supports 10 responses per question. For Grid based questions, maximum rows and columns can be 10 each.
+ * @export
+ * @interface MeasurementStudiesSurveyShortQuestionTemplate
+ */
+export interface MeasurementStudiesSurveyShortQuestionTemplate {
+    /**
+     * The minimum number of qualifying responses required for the question. This will be available if the qualifying responses are not pre-defined/inferred.
+     * @type {number}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    minimumQualifyingResponses?: number;
+    /**
+     * The maximum number of qualifying responses allowed for the question. This will be available if the qualifying responses are not pre-defined/inferred.
+     * @type {number}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    maximumQualifyingResponses?: number;
+    /**
+     * 
+     * @type {MeasurementStudiesSurveyQuestionSubCategory}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    subCategory?: MeasurementStudiesSurveyQuestionSubCategory;
+    /**
+     * The pre-defined qualifying survey question responses with placeholders, this will help to define which responses will be counted as positive ones in the study report.
+     * @type {Array<string>}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    qualifyingResponses?: Array<string>;
+    /**
+     * The pre-defined survey question responses with placeholders.
+     * @type {Array<string>}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    questionResponses?: Array<string>;
+    /**
+     * 
+     * @type {MeasurementStudiesLocale}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    locale?: MeasurementStudiesLocale;
+    /**
+     * 
+     * @type {MeasurementStudiesSurveyQuestionType}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    type?: MeasurementStudiesSurveyQuestionType;
+    /**
+     * The priority of the question. If present this will determine the ordering of questions in a survey. The check will be enforced when a survey is created/updated. Lower number indicates higher priority.
+     * @type {number}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    priority?: number;
+    /**
+     * 
+     * @type {MeasurementStudiesSurveyQuestionObjectiveType}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    objectiveType?: MeasurementStudiesSurveyQuestionObjectiveType;
+    /**
+     * The survey question text with placeholders.
+     * @type {string}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    questionText?: string;
+    /**
+     * The associated vendor product id.
+     * @type {string}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    vendorProductId?: string;
+    /**
+     * 
+     * @type {Array<MeasurementStudiesSurveyQuestionPlaceholderCandidate>}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    placeholderCandidates?: Array<MeasurementStudiesSurveyQuestionPlaceholderCandidate>;
+    /**
+     * 
+     * @type {MeasurementStudiesSurveyQuestionGridQuestionResponse}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    gridQuestionResponse?: MeasurementStudiesSurveyQuestionGridQuestionResponse;
+    /**
+     * The minimum number of responses required for the question. This will be available if the question responses are not pre-defined/inferred.
+     * @type {number}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    minimumQuestionResponses?: number;
+    /**
+     * 
+     * @type {MeasurementStudiesSurveyQuestionCategory}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    category?: MeasurementStudiesSurveyQuestionCategory;
+    /**
+     * The maximum number of responses allowed for the question. This will be available if the question responses are not pre-defined/inferred.
+     * @type {number}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    maximumQuestionResponses?: number;
+    /**
+     * The survey question template canonical Id.
+     * @type {string}
+     * @memberof MeasurementStudiesSurveyShortQuestionTemplate
+     */
+    surveyQuestionTemplateId?: string;
+}
+/**
+ * The survey status. Only required if the survey is in DRAFT. Created survey will be in AVAILABLE status by default and will only be in IN_USE status if it\'s associated with a study.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesSurveyStatus {
+    InUse = 'IN_USE',
+    Available = 'AVAILABLE',
+    Draft = 'DRAFT'
+}
+
+/**
+ * The templated measurement survey question.
+ * @export
+ * @interface MeasurementStudiesTemplatedSurveyShortQuestion
+ */
+export interface MeasurementStudiesTemplatedSurveyShortQuestion {
+    /**
+     * 
+     * @type {MeasurementStudiesGridQuestionResponses}
+     * @memberof MeasurementStudiesTemplatedSurveyShortQuestion
+     */
+    gridQuestionResponse?: MeasurementStudiesGridQuestionResponses;
+    /**
+     * List of question placeholders
+     * @type {Array<MeasurementStudiesSurveyQuestionPlaceholder>}
+     * @memberof MeasurementStudiesTemplatedSurveyShortQuestion
+     */
+    placeholders?: Array<MeasurementStudiesSurveyQuestionPlaceholder>;
+    /**
+     * The survey question template canonical identifier.
+     * @type {string}
+     * @memberof MeasurementStudiesTemplatedSurveyShortQuestion
+     */
+    surveyQuestionTemplateId?: string;
+}
+/**
+ * The measurement vendor product.
+ * @export
+ * @interface MeasurementStudiesVendorProduct
+ */
+export interface MeasurementStudiesVendorProduct {
+    /**
+     * 
+     * @type {MeasurementStudiesVendorType}
+     * @memberof MeasurementStudiesVendorProduct
+     */
+    vendorType?: MeasurementStudiesVendorType;
+    /**
+     * The vendor product identifier.
+     * @type {string}
+     * @memberof MeasurementStudiesVendorProduct
+     */
+    vendorProductId?: string;
+    /**
+     * 
+     * @type {Array<MeasurementStudiesAdType>}
+     * @memberof MeasurementStudiesVendorProduct
+     */
+    adType?: Array<MeasurementStudiesAdType>;
+    /**
+     * 
+     * @type {MeasurementStudiesFundingType}
+     * @memberof MeasurementStudiesVendorProduct
+     */
+    fundingType?: MeasurementStudiesFundingType;
+    /**
+     * The vendor product display name.
+     * @type {string}
+     * @memberof MeasurementStudiesVendorProduct
+     */
+    displayName?: string;
+    /**
+     * 
+     * @type {MeasurementStudyType}
+     * @memberof MeasurementStudiesVendorProduct
+     */
+    studyType?: MeasurementStudyType;
+    /**
+     * 
+     * @type {MeasurementStudyObjective}
+     * @memberof MeasurementStudiesVendorProduct
+     */
+    objective?: MeasurementStudyObjective;
+}
+/**
+ * The measurement eligibility details for a certain vendor product.
+ * @export
+ * @interface MeasurementStudiesVendorProductEligibility
+ */
+export interface MeasurementStudiesVendorProductEligibility {
+    /**
+     * vendor product canonical identifier.
+     * @type {string}
+     * @memberof MeasurementStudiesVendorProductEligibility
+     */
+    vendorProductId?: string;
+    /**
+     * A list of issues will be provided containing the fields causing the issue if the status is INELIGIBLE or ELIGIBLE_WITH_WARNING.
+     * @type {Array<MeasurementStudiesEligibilityIssue>}
+     * @memberof MeasurementStudiesVendorProductEligibility
+     */
+    issues?: Array<MeasurementStudiesEligibilityIssue>;
+    /**
+     * 
+     * @type {MeasurementStudiesEligibilityStatus}
+     * @memberof MeasurementStudiesVendorProductEligibility
+     */
+    status?: MeasurementStudiesEligibilityStatus;
+}
+/**
+ * The policy rules will be enforced at vendor product level.
+ * @export
+ * @interface MeasurementStudiesVendorProductPolicy
+ */
+export interface MeasurementStudiesVendorProductPolicy {
+    /**
+     * The maximum number of order allowed for the product.
+     * @type {number}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    maximumOrders?: number;
+    /**
+     * 
+     * @type {Array<MeasurementGoal>}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    supportedGoals?: Array<MeasurementGoal>;
+    /**
+     * Days required for measurement configuration. It is recommended that the startDate of the campaign has sufficient padding to accommodate this lead time, but measurement can begin after the campaign start date in some cases.
+     * @type {number}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    leadTime?: number;
+    /**
+     * The required question objectives that need to be included as part of the survey.
+     * @type {Array<MeasurementStudiesSurveyQuestionObjectiveType>}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    requiredQuestionObjectives?: Array<MeasurementStudiesSurveyQuestionObjectiveType>;
+    /**
+     * Whether or not the benchMark category is required for measurement setup.
+     * @type {boolean}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    benchMarkCategoryRequired?: boolean;
+    /**
+     * List of top 100 supported verbs that can be used in survey questions.
+     * @type {Array<string>}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    supportedVerbs?: Array<string>;
+    /**
+     * The maximum number of survey questions required for the product.
+     * @type {number}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    maximumSurveyQuestions?: number;
+    /**
+     * The maximum number of orders required for the product.
+     * @type {number}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    minimumOrders?: number;
+    /**
+     * vendor product canonical identifier.
+     * @type {string}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    vendorProductId?: string;
+    /**
+     * Whether or not a verb is required for measurement setup. It will be used in applicable survey questions to construct the question text.
+     * @type {boolean}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    verbRequired?: boolean;
+    /**
+     * Whether custom survey questions are allowed.
+     * @type {boolean}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    customQuestionAllowed?: boolean;
+    /**
+     * The maximum required length/duration of the study in days.
+     * @type {number}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    maximumStudyLength?: number;
+    /**
+     * The maximum number of peer names required for the product.
+     * @type {number}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    maximumPeerNames?: number;
+    /**
+     * The requirements for survey question categories.
+     * @type {Array<MeasurementStudiesSurveyQuestionCategoryRequirement>}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    requiredQuestionCategories?: Array<MeasurementStudiesSurveyQuestionCategoryRequirement>;
+    /**
+     * 
+     * @type {Array<MeasurementStudiesMarketplace>}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    supportedMarketplaces?: Array<MeasurementStudiesMarketplace>;
+    /**
+     * The minimum required length/duration of the study in days.
+     * @type {number}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    minimumStudyLength?: number;
+    /**
+     * Whether or not the vendor requires an additional sign off process to fully qualify for study.
+     * @type {boolean}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    vendorApprovalRequired?: boolean;
+    /**
+     * The minimum number of peer names required for the product.
+     * @type {number}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    minimumPeerNames?: number;
+    /**
+     * Whether or not the vendor assigned external reference identifier is required for measurement setup.
+     * @type {boolean}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    externalReferenceIdRequired?: boolean;
+    /**
+     * The minimum number of survey questions required for the product.
+     * @type {number}
+     * @memberof MeasurementStudiesVendorProductPolicy
+     */
+    minimumSurveyQuestions?: number;
+}
+/**
+ * The vendor product recommendation object with elgibility status.
+ * @export
+ * @interface MeasurementStudiesVendorProductRecommendation
+ */
+export interface MeasurementStudiesVendorProductRecommendation {
+    /**
+     * Vendor product canonical identifier.
+     * @type {string}
+     * @memberof MeasurementStudiesVendorProductRecommendation
+     */
+    vendorProductId?: string;
+    /**
+     * The lower the number, the more recommended the vendor product is.
+     * @type {number}
+     * @memberof MeasurementStudiesVendorProductRecommendation
+     */
+    rank?: number;
+    /**
+     * A list of issues will be provided containing the fields causing the issue if the status is INELIGIBLE or ELIGIBLE_WITH_WARNING.
+     * @type {Array<MeasurementStudiesEligibilityIssue>}
+     * @memberof MeasurementStudiesVendorProductRecommendation
+     */
+    issues?: Array<MeasurementStudiesEligibilityIssue>;
+    /**
+     * 
+     * @type {MeasurementStudiesEligibilityStatus}
+     * @memberof MeasurementStudiesVendorProductRecommendation
+     */
+    status?: MeasurementStudiesEligibilityStatus;
+}
+/**
+ * The recommendations metadata.
+ * @export
+ * @interface MeasurementStudiesVendorProductRecommendationsMetadata
+ */
+export interface MeasurementStudiesVendorProductRecommendationsMetadata {
+    /**
+     * 
+     * @type {Array<MeasurementStudiesVendorProductRecommendationsOrderMetadata>}
+     * @memberof MeasurementStudiesVendorProductRecommendationsMetadata
+     */
+    orderMetadata?: Array<MeasurementStudiesVendorProductRecommendationsOrderMetadata>;
+    /**
+     * 
+     * @type {MeasurementStudiesLocale}
+     * @memberof MeasurementStudiesVendorProductRecommendationsMetadata
+     */
+    locale?: MeasurementStudiesLocale;
+    /**
+     * StudyType identifier filters to be applied when fecthing recommendations. If not supplied we will check for all available vendor products.
+     * @type {Array<MeasurementStudyType>}
+     * @memberof MeasurementStudiesVendorProductRecommendationsMetadata
+     */
+    studyTypeFilters?: Array<MeasurementStudyType>;
+    /**
+     * The advertiserId.
+     * @type {string}
+     * @memberof MeasurementStudiesVendorProductRecommendationsMetadata
+     */
+    advertiserId?: string;
+}
+/**
+ * Metadata around a hypothetical order.
+ * @export
+ * @interface MeasurementStudiesVendorProductRecommendationsOrderMetadata
+ */
+export interface MeasurementStudiesVendorProductRecommendationsOrderMetadata {
+    /**
+     * 
+     * @type {MeasurementGoal}
+     * @memberof MeasurementStudiesVendorProductRecommendationsOrderMetadata
+     */
+    goal?: MeasurementGoal;
+    /**
+     * The estimated end date of the order in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementStudiesVendorProductRecommendationsOrderMetadata
+     */
+    endDate?: string;
+    /**
+     * The total estimated impressions of the order.
+     * @type {number}
+     * @memberof MeasurementStudiesVendorProductRecommendationsOrderMetadata
+     */
+    impressions?: number;
+    /**
+     * The estimated start date of the order in ISO format (YYYY-MM-DDThh:mm:ssTZD). Timezone is UTC.
+     * @type {string}
+     * @memberof MeasurementStudiesVendorProductRecommendationsOrderMetadata
+     */
+    startDate?: string;
+    /**
+     * The total estimated budget of the order.
+     * @type {number}
+     * @memberof MeasurementStudiesVendorProductRecommendationsOrderMetadata
+     */
+    budget?: number;
+}
+/**
+ * The request object to get recommendations.
+ * @export
+ * @interface MeasurementStudiesVendorProductRecommendationsRequest
+ */
+export interface MeasurementStudiesVendorProductRecommendationsRequest {
+    /**
+     * FundingType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<MeasurementStudiesFundingType>}
+     * @memberof MeasurementStudiesVendorProductRecommendationsRequest
+     */
+    fundingTypeFilters?: Array<MeasurementStudiesFundingType>;
+    /**
+     * VendorProduct identifier filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<string>}
+     * @memberof MeasurementStudiesVendorProductRecommendationsRequest
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * VendorType filters to be applied when checking eligibility status. If not supplied we will check against all available vendor products.
+     * @type {Array<MeasurementStudiesVendorType>}
+     * @memberof MeasurementStudiesVendorProductRecommendationsRequest
+     */
+    vendorTypeFilters?: Array<MeasurementStudiesVendorType>;
+    /**
+     * 
+     * @type {Array<MeasurementStudiesVendorProductRecommendationsOrderMetadata>}
+     * @memberof MeasurementStudiesVendorProductRecommendationsRequest
+     */
+    orderMetadata?: Array<MeasurementStudiesVendorProductRecommendationsOrderMetadata>;
+    /**
+     * 
+     * @type {MeasurementStudiesLocale}
+     * @memberof MeasurementStudiesVendorProductRecommendationsRequest
+     */
+    locale?: MeasurementStudiesLocale;
+    /**
+     * StudyType identifier filters to be applied when fecthing recommendations. If not supplied we will check for all available vendor products.
+     * @type {Array<MeasurementStudyType>}
+     * @memberof MeasurementStudiesVendorProductRecommendationsRequest
+     */
+    studyTypeFilters?: Array<MeasurementStudyType>;
+    /**
+     * The advertiserId.
+     * @type {string}
+     * @memberof MeasurementStudiesVendorProductRecommendationsRequest
+     */
+    advertiserId?: string;
+}
+/**
+ * The request object to fetch measurement vendor products.
+ * @export
+ * @interface MeasurementStudiesVendorProductRequest
+ */
+export interface MeasurementStudiesVendorProductRequest {
+    /**
+     * FundingType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.
+     * @type {Array<MeasurementStudiesFundingType>}
+     * @memberof MeasurementStudiesVendorProductRequest
+     */
+    fundingTypeFilters?: Array<MeasurementStudiesFundingType>;
+    /**
+     * StudyObjective filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.
+     * @type {Array<MeasurementStudyObjective>}
+     * @memberof MeasurementStudiesVendorProductRequest
+     */
+    objectiveTypeFilters?: Array<MeasurementStudyObjective>;
+    /**
+     * VendorProduct identifier filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.
+     * @type {Array<string>}
+     * @memberof MeasurementStudiesVendorProductRequest
+     */
+    vendorProductIdFilters?: Array<string>;
+    /**
+     * AdType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.
+     * @type {Array<MeasurementStudiesAdType>}
+     * @memberof MeasurementStudiesVendorProductRequest
+     */
+    adTypeFilters?: Array<MeasurementStudiesAdType>;
+    /**
+     * VendorType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.
+     * @type {Array<MeasurementStudiesVendorType>}
+     * @memberof MeasurementStudiesVendorProductRequest
+     */
+    vendorTypeFilters?: Array<MeasurementStudiesVendorType>;
+    /**
+     * StudyType filters to be applied when fetching measurement vendor products. If not supplied we will include all available vendor products.
+     * @type {Array<MeasurementStudyType>}
+     * @memberof MeasurementStudiesVendorProductRequest
+     */
+    studyTypeFilters?: Array<MeasurementStudyType>;
+}
+/**
+ * The measurement vendor name, each study type will have different supported vendors. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudiesVendorType {
+    Amazon = 'AMAZON',
+    Kantar = 'KANTAR',
+    Upwave = 'UPWAVE',
+    Nielsen = 'NIELSEN',
+    Macromill = 'MACROMILL',
+    Dynata = 'DYNATA',
+    Lucid = 'LUCID',
+    OmnichannelMetrics = 'OMNICHANNEL_METRICS',
+    Ispot = 'ISPOT',
+    Videoamp = 'VIDEOAMP',
+    Other = 'OTHER'
+}
+
+/**
+ * Measurement category based on the purpose of the measurement. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudyObjective {
+    CampaignMeasurement = 'CAMPAIGN_MEASUREMENT',
+    CampaignPlanning = 'CAMPAIGN_PLANNING',
+    Other = 'OTHER'
+}
+
+/**
+ * The status of the result of the study. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudyResultStatus {
+    Available = 'AVAILABLE',
+    Other = 'OTHER'
+}
+
+/**
+ * The study status. Only required if study is in DRAFT as part of study creation/update. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudyStatus {
+    Running = 'RUNNING',
+    Pending = 'PENDING',
+    Approved = 'APPROVED',
+    Rejected = 'REJECTED',
+    Ended = 'ENDED',
+    Cancelled = 'CANCELLED',
+    Draft = 'DRAFT',
+    Infeasible = 'INFEASIBLE',
+    Other = 'OTHER'
+}
+
+/**
+ * Measurement study status reason.
+ * @export
+ * @interface MeasurementStudyStatusReason
+ */
+export interface MeasurementStudyStatusReason {
+    /**
+     * 
+     * @type {MeasurementStudyStatusReasonType}
+     * @memberof MeasurementStudyStatusReason
+     */
+    measurementStudyStatusReasonType?: MeasurementStudyStatusReasonType;
+    /**
+     * Human readable description of status reason.
+     * @type {string}
+     * @memberof MeasurementStudyStatusReason
+     */
+    statusReasonDescription?: string;
+}
+/**
+ * Measurement study reason type. Consider upgrading API version if enum OTHER is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudyStatusReasonType {
+    RemoveExtraSpacesBetweenBeforeOrAfterWords = 'REMOVE_EXTRA_SPACES_BETWEEN_BEFORE_OR_AFTER_WORDS',
+    RemoveSpacesBetweenLetters = 'REMOVE_SPACES_BETWEEN_LETTERS',
+    RemoveAllcapitalizedWordsExceptForAcronyms = 'REMOVE_ALLCAPITALIZED_WORDS_EXCEPT_FOR_ACRONYMS',
+    CapitalizeTheFirstLetterOfProperNounsLikeCountryNames = 'CAPITALIZE_THE_FIRST_LETTER_OF_PROPER_NOUNS_LIKE_COUNTRY_NAMES',
+    CapitalizeTheFirstLetterOfAllCustomAttributes = 'CAPITALIZE_THE_FIRST_LETTER_OF_ALL_CUSTOM_ATTRIBUTES',
+    ResolveInappropriatelyCapitalizedWords = 'RESOLVE_INAPPROPRIATELY_CAPITALIZED_WORDS',
+    ResolveImproperlyCapitalizedBrandOrProductCategory = 'RESOLVE_IMPROPERLY_CAPITALIZED_BRAND_OR_PRODUCT_CATEGORY',
+    ResolveImproperlyCapitalizedCustomInputs = 'RESOLVE_IMPROPERLY_CAPITALIZED_CUSTOM_INPUTS',
+    ResolveImproperlyPluralizedCustomInputs = 'RESOLVE_IMPROPERLY_PLURALIZED_CUSTOM_INPUTS',
+    RemoveEllipses = 'REMOVE_ELLIPSES',
+    RemoveHyphensSeparatingSingleWords = 'REMOVE_HYPHENS_SEPARATING_SINGLE_WORDS',
+    RemoveExtraHyphens = 'REMOVE_EXTRA_HYPHENS',
+    RemovePunctationCombinations = 'REMOVE_PUNCTATION_COMBINATIONS',
+    RemoveExtraPunctuation = 'REMOVE_EXTRA_PUNCTUATION',
+    RemovePunctuationAtTheEndOfWords = 'REMOVE_PUNCTUATION_AT_THE_END_OF_WORDS',
+    ResolveUnclearBrandOrProductCategory = 'RESOLVE_UNCLEAR_BRAND_OR_PRODUCT_CATEGORY',
+    ResolveUnclearPeers = 'RESOLVE_UNCLEAR_PEERS',
+    ResolveUnclearBrandOrProductName = 'RESOLVE_UNCLEAR_BRAND_OR_PRODUCT_NAME',
+    ResolveUnclearCustomInputs = 'RESOLVE_UNCLEAR_CUSTOM_INPUTS',
+    RemoveTypos = 'REMOVE_TYPOS',
+    ResolveSubjectVerbDisagreement = 'RESOLVE_SUBJECT_VERB_DISAGREEMENT',
+    MakeBrandOrProductCategoryPlural = 'MAKE_BRAND_OR_PRODUCT_CATEGORY_PLURAL',
+    ResolveIncorrectPossessiveNouns = 'RESOLVE_INCORRECT_POSSESSIVE_NOUNS',
+    CapitalizeTheFirstLetterOfProperNouns = 'CAPITALIZE_THE_FIRST_LETTER_OF_PROPER_NOUNS',
+    RemoveRedundantAnswerChoices = 'REMOVE_REDUNDANT_ANSWER_CHOICES',
+    ResolveIncorrectTenses = 'RESOLVE_INCORRECT_TENSES',
+    RemoveDuplicateInputs = 'REMOVE_DUPLICATE_INPUTS',
+    RemoveSpecialCharactersAndSymbols = 'REMOVE_SPECIAL_CHARACTERS_AND_SYMBOLS',
+    RemoveNonenglishWords = 'REMOVE_NONENGLISH_WORDS',
+    RemoveUnclearOrObfuscatedOffensiveLanguage = 'REMOVE_UNCLEAR_OR_OBFUSCATED_OFFENSIVE_LANGUAGE',
+    RemoveDerogatoryLanguage = 'REMOVE_DEROGATORY_LANGUAGE',
+    RemoveOffensiveAcronymsAndAbbreviations = 'REMOVE_OFFENSIVE_ACRONYMS_AND_ABBREVIATIONS',
+    RemoveOffensiveWordsOrTermsDisguisedAsNonoffensiveTerms = 'REMOVE_OFFENSIVE_WORDS_OR_TERMS_DISGUISED_AS_NONOFFENSIVE_TERMS',
+    RemoveTermsPresentedInAWayInWhichTheirTrueMeaningIsClearlyOffensive = 'REMOVE_TERMS_PRESENTED_IN_A_WAY_IN_WHICH_THEIR_TRUE_MEANING_IS_CLEARLY_OFFENSIVE',
+    RemoveVulgarAndProfaneWords = 'REMOVE_VULGAR_AND_PROFANE_WORDS',
+    RemoveIrrelevantWords = 'REMOVE_IRRELEVANT_WORDS',
+    ResolveNegativeQuestionsAndAnswersAboutPeers = 'RESOLVE_NEGATIVE_QUESTIONS_AND_ANSWERS_ABOUT_PEERS',
+    SurveysWithPoliticalContentAreNotAllowed = 'SURVEYS_WITH_POLITICAL_CONTENT_ARE_NOT_ALLOWED',
+    OnlyOneActiveStudyIsAllowedPerBrandOrProduct = 'ONLY_ONE_ACTIVE_STUDY_IS_ALLOWED_PER_BRAND_OR_PRODUCT',
+    AddOrdersToIncreaseImpressions = 'ADD_ORDERS_TO_INCREASE_IMPRESSIONS',
+    InfeasibleNotEnoughImpressions = 'INFEASIBLE_NOT_ENOUGH_IMPRESSIONS',
+    Other = 'OTHER'
+}
+
+/**
+ * The submission type for the creation and updating of studies. Currently, this submission type is supported for brand lift and reach and frequency studies only.  This is an optional parameter in each of the request objects and its default value is `SUBMISSION` if not provided. A value of `SUBMISSION` indicates that a study should be submitted for approval. A value of `DRAFT` indicates that a study should be saved but not submitted.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudySubmissionType {
+    Draft = 'DRAFT',
+    Submission = 'SUBMISSION'
+}
+
+/**
+ * The study type. Consider upgrading API version if enum `OTHER` is received.
+ * @export
+ * @enum {string}
+ */
+
+export enum MeasurementStudyType {
+    BrandLift = 'BRAND_LIFT',
+    OmnichannelMetrics = 'OMNICHANNEL_METRICS',
+    AudienceResearch = 'AUDIENCE_RESEARCH',
+    CreativeTesting = 'CREATIVE_TESTING',
+    ReachAndFrequency = 'REACH_AND_FREQUENCY',
+    Other = 'OTHER'
+}
+
 /**
  * The request object to fetch brands to be used in the OMNICHANNEL_METRICS vendor product.
  * @export
@@ -3246,6 +6850,239 @@ export interface PaginatedDSPOmnichannelMetricsStudiesV1M3 {
      * @memberof PaginatedDSPOmnichannelMetricsStudiesV1M3
      */
     measurements?: Array<DSPOmnichannelMetricsStudyV1M3>;
+}
+/**
+ * A list of audience research studies.
+ * @export
+ * @interface PaginatedMeasurementAudienceResearchStudies
+ */
+export interface PaginatedMeasurementAudienceResearchStudies {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedMeasurementAudienceResearchStudies
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<MeasurementAudienceResearchStudy>}
+     * @memberof PaginatedMeasurementAudienceResearchStudies
+     */
+    measurements?: Array<MeasurementAudienceResearchStudy>;
+}
+/**
+ * A list of studies.
+ * @export
+ * @interface PaginatedMeasurementBaseStudies
+ */
+export interface PaginatedMeasurementBaseStudies {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedMeasurementBaseStudies
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<MeasurementBaseStudy>}
+     * @memberof PaginatedMeasurementBaseStudies
+     */
+    measurements?: Array<MeasurementBaseStudy>;
+}
+/**
+ * A list of Brand Lift studies.
+ * @export
+ * @interface PaginatedMeasurementBrandLiftStudies
+ */
+export interface PaginatedMeasurementBrandLiftStudies {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedMeasurementBrandLiftStudies
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<MeasurementBrandLiftStudy>}
+     * @memberof PaginatedMeasurementBrandLiftStudies
+     */
+    measurements?: Array<MeasurementBrandLiftStudy>;
+}
+/**
+ * A list of creative testing studies.
+ * @export
+ * @interface PaginatedMeasurementCreativeTestingStudies
+ */
+export interface PaginatedMeasurementCreativeTestingStudies {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedMeasurementCreativeTestingStudies
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<MeasurementCreativeTestingStudy>}
+     * @memberof PaginatedMeasurementCreativeTestingStudies
+     */
+    measurements?: Array<MeasurementCreativeTestingStudy>;
+}
+/**
+ * A list of studies.
+ * @export
+ * @interface PaginatedMeasurementOmnichannelMetricsStudies
+ */
+export interface PaginatedMeasurementOmnichannelMetricsStudies {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedMeasurementOmnichannelMetricsStudies
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<MeasurementOmnichannelMetricsStudy>}
+     * @memberof PaginatedMeasurementOmnichannelMetricsStudies
+     */
+    measurements?: Array<MeasurementOmnichannelMetricsStudy>;
+}
+/**
+ * A list of Reach and Frequency studies.
+ * @export
+ * @interface PaginatedMeasurementReachAndFrequencyStudies
+ */
+export interface PaginatedMeasurementReachAndFrequencyStudies {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedMeasurementReachAndFrequencyStudies
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<MeasurementReachAndFrequencyStudy>}
+     * @memberof PaginatedMeasurementReachAndFrequencyStudies
+     */
+    measurements?: Array<MeasurementReachAndFrequencyStudy>;
+}
+/**
+ * 
+ * @export
+ * @interface PaginatedMeasurementStudiesOmnichannelMetricsBrands
+ */
+export interface PaginatedMeasurementStudiesOmnichannelMetricsBrands {
+    /**
+     * The total number of matched brands.
+     * @type {number}
+     * @memberof PaginatedMeasurementStudiesOmnichannelMetricsBrands
+     */
+    totalResults?: number;
+    /**
+     * 
+     * @type {Array<MeasurementStudiesOmnichannelMetricsBrand>}
+     * @memberof PaginatedMeasurementStudiesOmnichannelMetricsBrands
+     */
+    brands?: Array<MeasurementStudiesOmnichannelMetricsBrand>;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedMeasurementStudiesOmnichannelMetricsBrands
+     */
+    nextToken?: string;
+}
+/**
+ * 
+ * @export
+ * @interface PaginatedMeasurementStudiesSurveyQuestionTemplates
+ */
+export interface PaginatedMeasurementStudiesSurveyQuestionTemplates {
+    /**
+     * 
+     * @type {Array<MeasurementStudiesSurveyShortQuestionTemplate>}
+     * @memberof PaginatedMeasurementStudiesSurveyQuestionTemplates
+     */
+    surveyQuestionTemplates?: Array<MeasurementStudiesSurveyShortQuestionTemplate>;
+    /**
+     * The total number of templates.
+     * @type {number}
+     * @memberof PaginatedMeasurementStudiesSurveyQuestionTemplates
+     */
+    totalResults?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedMeasurementStudiesSurveyQuestionTemplates
+     */
+    nextToken?: string;
+}
+/**
+ * A list of study surveys.
+ * @export
+ * @interface PaginatedMeasurementStudiesSurveys
+ */
+export interface PaginatedMeasurementStudiesSurveys {
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedMeasurementStudiesSurveys
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<MeasurementStudiesSurvey>}
+     * @memberof PaginatedMeasurementStudiesSurveys
+     */
+    surveys?: Array<MeasurementStudiesSurvey>;
+}
+/**
+ * A list of measurement vendor products policies.
+ * @export
+ * @interface PaginatedMeasurementStudiesVendorProductPolicies
+ */
+export interface PaginatedMeasurementStudiesVendorProductPolicies {
+    /**
+     * The total number of vendor products.
+     * @type {number}
+     * @memberof PaginatedMeasurementStudiesVendorProductPolicies
+     */
+    totalResults?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedMeasurementStudiesVendorProductPolicies
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<MeasurementStudiesVendorProductPolicy>}
+     * @memberof PaginatedMeasurementStudiesVendorProductPolicies
+     */
+    policies?: Array<MeasurementStudiesVendorProductPolicy>;
+}
+/**
+ * The vendor product recommendations response object.
+ * @export
+ * @interface PaginatedMeasurementStudiesVendorProductRecommendationsResponse
+ */
+export interface PaginatedMeasurementStudiesVendorProductRecommendationsResponse {
+    /**
+     * 
+     * @type {MeasurementStudiesEligibilityMetadata}
+     * @memberof PaginatedMeasurementStudiesVendorProductRecommendationsResponse
+     */
+    metadata?: MeasurementStudiesEligibilityMetadata;
+    /**
+     * 
+     * @type {string}
+     * @memberof PaginatedMeasurementStudiesVendorProductRecommendationsResponse
+     */
+    nextToken?: string;
+    /**
+     * 
+     * @type {Array<MeasurementStudiesVendorProductRecommendation>}
+     * @memberof PaginatedMeasurementStudiesVendorProductRecommendationsResponse
+     */
+    recommendations?: Array<MeasurementStudiesVendorProductRecommendation>;
 }
 /**
  * 
@@ -5749,11 +9586,11 @@ export const MeasurementApiAxiosParamCreator = function (configuration?: Configu
          * @summary Cancel existing studies. Once a study is cancelled it can not be resumed again.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
-         * @param {Array<string>} [studyIdFilters] Study canonical identifiers to cancel.
+         * @param {Array<string>} [studyIds] Study canonical identifiers to cancel.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelMeasurementStudies: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIdFilters?: Array<string>, options: any = {}): Promise<RequestArgs> => {
+        cancelMeasurementStudies: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('cancelMeasurementStudies', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
             // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
@@ -5770,8 +9607,8 @@ export const MeasurementApiAxiosParamCreator = function (configuration?: Configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (studyIdFilters) {
-                localVarQueryParameter['studyIdFilters'] = studyIdFilters.join(COLLECTION_FORMATS.csv);
+            if (studyIds) {
+                localVarQueryParameter['studyIds'] = studyIds.join(COLLECTION_FORMATS.csv);
             }
 
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
@@ -6317,6 +10154,61 @@ export const MeasurementApiAxiosParamCreator = function (configuration?: Configu
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(surveyV1M1, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get the download link and file type of the 3P vendor\'s study results in an easy to read and understand format which breaks down the effectiveness of an ad campaign. Returns a `200` response that includes an AWS S3 pre-signed URL where the curated study results file is located and the file type (format). The `OTHER` file type is returned when a new file type is added and is not supported in the current version of this API.For full support of the new file type, migrate to the latest version of this API when it is made available. The URL expires after 60 seconds. If the URL expires before the curated results file is downloaded, a new download request must be created.  **Requires one of these permissions**: []
+         * @summary Get the 3P vendor\'s curated result file.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} accept The version(s) of the requested resource. Available version(s) - &#x60;application/vnd.measurementresult.v1+json&#x60;.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCuratedStudyResult: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getCuratedStudyResult', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getCuratedStudyResult', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            // verify required parameter 'accept' is not null or undefined
+            assertParamExists('getCuratedStudyResult', 'accept', accept)
+            // verify required parameter 'studyId' is not null or undefined
+            assertParamExists('getCuratedStudyResult', 'studyId', studyId)
+            const localVarPath = `/measurement/studies/{studyId}/curatedResult/download`
+                .replace(`{${"studyId"}}`, encodeURIComponent(String(studyId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+            if (accept !== undefined && accept !== null) {
+                localVarHeaderParameter['Accept'] = String(accept);
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -7429,12 +11321,12 @@ export const MeasurementApiFp = function(configuration?: Configuration) {
          * @summary Cancel existing studies. Once a study is cancelled it can not be resumed again.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
-         * @param {Array<string>} [studyIdFilters] Study canonical identifiers to cancel.
+         * @param {Array<string>} [studyIds] Study canonical identifiers to cancel.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cancelMeasurementStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIdFilters?: Array<string>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyResponsesV1>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelMeasurementStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyIdFilters, options);
+        async cancelMeasurementStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StudyResponsesV1>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelMeasurementStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyIds, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -7575,6 +11467,20 @@ export const MeasurementApiFp = function(configuration?: Configuration) {
          */
         async createSurveys(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, surveyV1M1?: Array<SurveyV1M1>, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SurveyResponsesV1>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createSurveys(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, surveyV1M1, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Get the download link and file type of the 3P vendor\'s study results in an easy to read and understand format which breaks down the effectiveness of an ad campaign. Returns a `200` response that includes an AWS S3 pre-signed URL where the curated study results file is located and the file type (format). The `OTHER` file type is returned when a new file type is added and is not supported in the current version of this API.For full support of the new file type, migrate to the latest version of this API when it is made available. The URL expires after 60 seconds. If the URL expires before the curated results file is downloaded, a new download request must be created.  **Requires one of these permissions**: []
+         * @summary Get the 3P vendor\'s curated result file.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} accept The version(s) of the requested resource. Available version(s) - &#x60;application/vnd.measurementresult.v1+json&#x60;.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCuratedStudyResult(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CuratedStudyResultV1>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCuratedStudyResult(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, accept, studyId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -7872,12 +11778,12 @@ export const MeasurementApiFactory = function (configuration?: Configuration, ba
          * @summary Cancel existing studies. Once a study is cancelled it can not be resumed again.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
          * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
-         * @param {Array<string>} [studyIdFilters] Study canonical identifiers to cancel.
+         * @param {Array<string>} [studyIds] Study canonical identifiers to cancel.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelMeasurementStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIdFilters?: Array<string>, options?: any): AxiosPromise<StudyResponsesV1> {
-            return localVarFp.cancelMeasurementStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyIdFilters, options).then((request) => request(axios, basePath));
+        cancelMeasurementStudies(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, studyIds?: Array<string>, options?: any): AxiosPromise<StudyResponsesV1> {
+            return localVarFp.cancelMeasurementStudies(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, studyIds, options).then((request) => request(axios, basePath));
         },
         /**
          * Checks the DSP AUDIENCE_RESEARCH study type eligibility status against vendor products.  **Requires one of these permissions**: []
@@ -8008,6 +11914,19 @@ export const MeasurementApiFactory = function (configuration?: Configuration, ba
          */
         createSurveys(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, surveyV1M1?: Array<SurveyV1M1>, options?: any): AxiosPromise<SurveyResponsesV1> {
             return localVarFp.createSurveys(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, surveyV1M1, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Get the download link and file type of the 3P vendor\'s study results in an easy to read and understand format which breaks down the effectiveness of an ad campaign. Returns a `200` response that includes an AWS S3 pre-signed URL where the curated study results file is located and the file type (format). The `OTHER` file type is returned when a new file type is added and is not supported in the current version of this API.For full support of the new file type, migrate to the latest version of this API when it is made available. The URL expires after 60 seconds. If the URL expires before the curated results file is downloaded, a new download request must be created.  **Requires one of these permissions**: []
+         * @summary Get the 3P vendor\'s curated result file.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} accept The version(s) of the requested resource. Available version(s) - &#x60;application/vnd.measurementresult.v1+json&#x60;.
+         * @param {string} studyId The canonical identifier that represents a unique study.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCuratedStudyResult(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, accept: string, studyId: string, options?: any): AxiosPromise<CuratedStudyResultV1> {
+            return localVarFp.getCuratedStudyResult(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, accept, studyId, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets one or more DSP AUDIENCE_RESEARCH studies with requested study identifiers or an advertiser identifier.  **Requires one of these permissions**: []
@@ -8298,7 +12217,7 @@ export interface MeasurementApiCancelMeasurementStudiesRequest {
      * @type {Array<string>}
      * @memberof MeasurementApiCancelMeasurementStudies
      */
-    readonly studyIdFilters?: Array<string>
+    readonly studyIds?: Array<string>
 }
 
 /**
@@ -8649,6 +12568,41 @@ export interface MeasurementApiCreateSurveysRequest {
      * @memberof MeasurementApiCreateSurveys
      */
     readonly surveyV1M1?: Array<SurveyV1M1>
+}
+
+/**
+ * Request parameters for getCuratedStudyResult operation in MeasurementApi.
+ * @export
+ * @interface MeasurementApiGetCuratedStudyResultRequest
+ */
+export interface MeasurementApiGetCuratedStudyResultRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof MeasurementApiGetCuratedStudyResult
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof MeasurementApiGetCuratedStudyResult
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * The version(s) of the requested resource. Available version(s) - &#x60;application/vnd.measurementresult.v1+json&#x60;.
+     * @type {string}
+     * @memberof MeasurementApiGetCuratedStudyResult
+     */
+    readonly accept: string
+
+    /**
+     * The canonical identifier that represents a unique study.
+     * @type {string}
+     * @memberof MeasurementApiGetCuratedStudyResult
+     */
+    readonly studyId: string
 }
 
 /**
@@ -9430,7 +13384,7 @@ export class MeasurementApi extends BaseAPI {
      * @memberof MeasurementApi
      */
     public cancelMeasurementStudies(requestParameters: MeasurementApiCancelMeasurementStudiesRequest, options?: any) {
-        return MeasurementApiFp(this.configuration).cancelMeasurementStudies(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.studyIdFilters, options).then((request) => request(this.axios, this.basePath));
+        return MeasurementApiFp(this.configuration).cancelMeasurementStudies(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.studyIds, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9551,6 +13505,18 @@ export class MeasurementApi extends BaseAPI {
      */
     public createSurveys(requestParameters: MeasurementApiCreateSurveysRequest, options?: any) {
         return MeasurementApiFp(this.configuration).createSurveys(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.surveyV1M1, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get the download link and file type of the 3P vendor\'s study results in an easy to read and understand format which breaks down the effectiveness of an ad campaign. Returns a `200` response that includes an AWS S3 pre-signed URL where the curated study results file is located and the file type (format). The `OTHER` file type is returned when a new file type is added and is not supported in the current version of this API.For full support of the new file type, migrate to the latest version of this API when it is made available. The URL expires after 60 seconds. If the URL expires before the curated results file is downloaded, a new download request must be created.  **Requires one of these permissions**: []
+     * @summary Get the 3P vendor\'s curated result file.
+     * @param {MeasurementApiGetCuratedStudyResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeasurementApi
+     */
+    public getCuratedStudyResult(requestParameters: MeasurementApiGetCuratedStudyResultRequest, options?: any) {
+        return MeasurementApiFp(this.configuration).getCuratedStudyResult(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.accept, requestParameters.studyId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -9779,6 +13745,185 @@ export class MeasurementApi extends BaseAPI {
      */
     public vendorProductSurveyQuestionTemplates(requestParameters: MeasurementApiVendorProductSurveyQuestionTemplatesRequest, options?: any) {
         return MeasurementApiFp(this.configuration).vendorProductSurveyQuestionTemplates(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.vendorProductIds, requestParameters.surveyQuestionTemplateIds, requestParameters.nextToken, requestParameters.maxResults, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+/**
+ * OmnichannelMetricsStudyApi - axios parameter creator
+ * @export
+ */
+export const OmnichannelMetricsStudyApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Search for brands to be used in the OMNICHANNEL_METRICS vendor product.  **Requires one of these permissions**: []  **Requires one of these permissions**: []
+         * @summary Search for brands to be used in the OMNICHANNEL_METRICS vendor product.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of brands in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {MeasurementStudiesOmnichannelMetricsBrandSearchRequest} [measurementStudiesOmnichannelMetricsBrandSearchRequest] Fetch measurement vendor products request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMeasurementStudiesOmnichannelMetricsBrands: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, measurementStudiesOmnichannelMetricsBrandSearchRequest?: MeasurementStudiesOmnichannelMetricsBrandSearchRequest, options: any = {}): Promise<RequestArgs> => {
+            // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
+            assertParamExists('getMeasurementStudiesOmnichannelMetricsBrands', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
+            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
+            assertParamExists('getMeasurementStudiesOmnichannelMetricsBrands', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
+            const localVarPath = `/measurementStudies/omnichannelMetrics/brands/list`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (nextToken !== undefined) {
+                localVarQueryParameter['nextToken'] = nextToken;
+            }
+
+            if (maxResults !== undefined) {
+                localVarQueryParameter['maxResults'] = maxResults;
+            }
+
+            if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
+            }
+
+            if (amazonAdvertisingAPIScope !== undefined && amazonAdvertisingAPIScope !== null) {
+                localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/vnd.measurementstudiesomnichannelmetricsbrands.v1+json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(measurementStudiesOmnichannelMetricsBrandSearchRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * OmnichannelMetricsStudyApi - functional programming interface
+ * @export
+ */
+export const OmnichannelMetricsStudyApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = OmnichannelMetricsStudyApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * Search for brands to be used in the OMNICHANNEL_METRICS vendor product.  **Requires one of these permissions**: []  **Requires one of these permissions**: []
+         * @summary Search for brands to be used in the OMNICHANNEL_METRICS vendor product.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of brands in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {MeasurementStudiesOmnichannelMetricsBrandSearchRequest} [measurementStudiesOmnichannelMetricsBrandSearchRequest] Fetch measurement vendor products request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getMeasurementStudiesOmnichannelMetricsBrands(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, measurementStudiesOmnichannelMetricsBrandSearchRequest?: MeasurementStudiesOmnichannelMetricsBrandSearchRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedMeasurementStudiesOmnichannelMetricsBrands>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getMeasurementStudiesOmnichannelMetricsBrands(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, measurementStudiesOmnichannelMetricsBrandSearchRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    }
+};
+
+/**
+ * OmnichannelMetricsStudyApi - factory interface
+ * @export
+ */
+export const OmnichannelMetricsStudyApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = OmnichannelMetricsStudyApiFp(configuration)
+    return {
+        /**
+         * Search for brands to be used in the OMNICHANNEL_METRICS vendor product.  **Requires one of these permissions**: []  **Requires one of these permissions**: []
+         * @summary Search for brands to be used in the OMNICHANNEL_METRICS vendor product.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [nextToken] Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+         * @param {number} [maxResults] Sets the maximum number of brands in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+         * @param {MeasurementStudiesOmnichannelMetricsBrandSearchRequest} [measurementStudiesOmnichannelMetricsBrandSearchRequest] Fetch measurement vendor products request object.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getMeasurementStudiesOmnichannelMetricsBrands(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, nextToken?: string, maxResults?: number, measurementStudiesOmnichannelMetricsBrandSearchRequest?: MeasurementStudiesOmnichannelMetricsBrandSearchRequest, options?: any): AxiosPromise<PaginatedMeasurementStudiesOmnichannelMetricsBrands> {
+            return localVarFp.getMeasurementStudiesOmnichannelMetricsBrands(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, nextToken, maxResults, measurementStudiesOmnichannelMetricsBrandSearchRequest, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * Request parameters for getMeasurementStudiesOmnichannelMetricsBrands operation in OmnichannelMetricsStudyApi.
+ * @export
+ * @interface OmnichannelMetricsStudyApiGetMeasurementStudiesOmnichannelMetricsBrandsRequest
+ */
+export interface OmnichannelMetricsStudyApiGetMeasurementStudiesOmnichannelMetricsBrandsRequest {
+    /**
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+     * @type {string}
+     * @memberof OmnichannelMetricsStudyApiGetMeasurementStudiesOmnichannelMetricsBrands
+     */
+    readonly amazonAdvertisingAPIClientId: string
+
+    /**
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+     * @type {string}
+     * @memberof OmnichannelMetricsStudyApiGetMeasurementStudiesOmnichannelMetricsBrands
+     */
+    readonly amazonAdvertisingAPIScope: string
+
+    /**
+     * Token from a previous request. Use in conjunction with the &#x60;maxResults&#x60; parameter to control pagination of the returned array.
+     * @type {string}
+     * @memberof OmnichannelMetricsStudyApiGetMeasurementStudiesOmnichannelMetricsBrands
+     */
+    readonly nextToken?: string
+
+    /**
+     * Sets the maximum number of brands in the returned array. Use in conjunction with the &#x60;nextToken&#x60; parameter to control pagination. The range for maxResults is [1,100] with default as 10. For example, supplying maxResults&#x3D;20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned.
+     * @type {number}
+     * @memberof OmnichannelMetricsStudyApiGetMeasurementStudiesOmnichannelMetricsBrands
+     */
+    readonly maxResults?: number
+
+    /**
+     * Fetch measurement vendor products request object.
+     * @type {MeasurementStudiesOmnichannelMetricsBrandSearchRequest}
+     * @memberof OmnichannelMetricsStudyApiGetMeasurementStudiesOmnichannelMetricsBrands
+     */
+    readonly measurementStudiesOmnichannelMetricsBrandSearchRequest?: MeasurementStudiesOmnichannelMetricsBrandSearchRequest
+}
+
+/**
+ * OmnichannelMetricsStudyApi - object-oriented interface
+ * @export
+ * @class OmnichannelMetricsStudyApi
+ * @extends {BaseAPI}
+ */
+export class OmnichannelMetricsStudyApi extends BaseAPI {
+    /**
+     * Search for brands to be used in the OMNICHANNEL_METRICS vendor product.  **Requires one of these permissions**: []  **Requires one of these permissions**: []
+     * @summary Search for brands to be used in the OMNICHANNEL_METRICS vendor product.
+     * @param {OmnichannelMetricsStudyApiGetMeasurementStudiesOmnichannelMetricsBrandsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OmnichannelMetricsStudyApi
+     */
+    public getMeasurementStudiesOmnichannelMetricsBrands(requestParameters: OmnichannelMetricsStudyApiGetMeasurementStudiesOmnichannelMetricsBrandsRequest, options?: any) {
+        return OmnichannelMetricsStudyApiFp(this.configuration).getMeasurementStudiesOmnichannelMetricsBrands(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.nextToken, requestParameters.maxResults, requestParameters.measurementStudiesOmnichannelMetricsBrandSearchRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

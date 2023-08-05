@@ -135,10 +135,24 @@
               "schema": {
                 "$ref": "#/components/schemas/ProgramEligibilityRequestContent"
               }
+            },
+            "application/vnd.programeligibility.v2+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProgramEligibilityV2RequestContent"
+              },
+              "examples": {
+                "ProgramEligibilityV2_example1": {
+                  "summary": "Valid Request",
+                  "value": {
+                    "skipChecks": [],
+                    "maxResults": "1"
+                  }
+                }
+              }
             }
           }
         },
-        "description": "Checks the advertiser's eligibility to ad programs.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "description": "Checks the advertiser's eligibility to ad programs.",
         "operationId": "ProgramEligibility",
         "responses": {
           "200": {
@@ -147,6 +161,57 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProgramEligibilityResponseContent"
+                }
+              },
+              "application/vnd.programeligibility.v2+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProgramEligibilityV2ResponseContent"
+                },
+                "examples": {
+                  "ProgramEligibilityV2_example1": {
+                    "summary": "Valid Request",
+                    "value": {
+                      "nextToken": "token",
+                      "eligibilityStatusMaps": [
+                        {
+                          "marketplaceId": "ATVPDKIKX0DER",
+                          "eligibilityStatusMap": {
+                            "SD": {
+                              "reasons": [
+                                {
+                                  "code": "NO_BRAND_RELATIONS",
+                                  "level": "INELIGIBLE_WITH_RESOLUTION",
+                                  "description": "Advertiser has no known relations to a brand."
+                                }
+                              ],
+                              "eligible": "false"
+                            },
+                            "SPOT": {
+                              "reasons": [
+                                {
+                                  "code": "NO_BRAND_RELATIONS",
+                                  "level": "INELIGIBLE_WITH_RESOLUTION",
+                                  "description": "Advertiser has no known relations to a brand."
+                                }
+                              ],
+                              "eligible": "false"
+                            },
+                            "SB": {
+                              "reasons": [
+                                {
+                                  "code": "NO_BRAND_RELATIONS",
+                                  "level": "INELIGIBLE_WITH_RESOLUTION",
+                                  "description": "Advertiser has no known relations to a brand."
+                                }
+                              ],
+                              "eligible": "false"
+                            }
+                          },
+                          "entityId": "ENTITY123"
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             }
@@ -214,6 +279,17 @@
           {
             "schema": {
               "pattern": "\\S*",
+              "description": "The header used to pass global account associated with the advertiser account\nUse `GET` method on the Global Ads Account resource to list the global ads account associated with the access token passed in the HTTP Authorization header and choose AdvertisingAccountIdentifier id from the response to pass it as input.\nUse for v2 global calls",
+              "type": "string",
+              "maxLength": 120
+            },
+            "in": "header",
+            "name": "Amazon-Ads-Account-ID",
+            "description": "The header used to pass global account associated with the advertiser account\nUse `GET` method on the Global Ads Account resource to list the global ads account associated with the access token passed in the HTTP Authorization header and choose AdvertisingAccountIdentifier id from the response to pass it as input.\nUse for v2 global calls"
+          },
+          {
+            "schema": {
+              "pattern": "\\S*",
               "description": "The identifier of a client associated with a \"Login with Amazon\" account.",
               "type": "string",
               "maxLength": 120
@@ -232,64 +308,16 @@
             },
             "in": "header",
             "name": "Amazon-Advertising-API-Scope",
-            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id `profileId` from the response to pass it as input.",
-            "required": true
+            "description": "The identifier of a profile associated with the advertiser account. Use `GET` method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id `profileId` from the response to pass it as input."
           },
           {
             "schema": {
-              "pattern": "\\S*",
-              "description": "Advertiser ID populated from the federated gateway authorizer context",
-              "type": "string",
-              "maxLength": 120
+              "description": "The content type of the request.",
+              "type": "string"
             },
             "in": "header",
-            "name": "advertiserId",
-            "description": "Advertiser ID populated from the federated gateway authorizer context",
-            "required": true
-          },
-          {
-            "schema": {
-              "pattern": "\\S*",
-              "description": "Entity ID populated from the federated gateway authorizer context",
-              "type": "string",
-              "maxLength": 120
-            },
-            "in": "header",
-            "name": "entityId",
-            "description": "Entity ID populated from the federated gateway authorizer context"
-          },
-          {
-            "schema": {
-              "pattern": "\\S*",
-              "description": "Entity type (seller, vendor, author, etc) populated from the federated gateway authorizer context. Note, must be a Seller Central Entity.",
-              "type": "string",
-              "maxLength": 120
-            },
-            "in": "header",
-            "name": "entityType",
-            "description": "Entity type (seller, vendor, author, etc) populated from the federated gateway authorizer context. Note, must be a Seller Central Entity."
-          },
-          {
-            "schema": {
-              "pattern": "\\S*",
-              "description": "Marketplace ID populated from the federated gateway authorizer context",
-              "type": "string",
-              "maxLength": 120
-            },
-            "in": "header",
-            "name": "marketplaceId",
-            "description": "Marketplace ID populated from the federated gateway authorizer context"
-          },
-          {
-            "schema": {
-              "pattern": "\\S*",
-              "description": "Obfuscated Marketplace ID populated from the federated gateway authorizer context, this is included in case marketplace ID is not included",
-              "type": "string",
-              "maxLength": 120
-            },
-            "in": "header",
-            "name": "obfuscatedMarketplaceId",
-            "description": "Obfuscated Marketplace ID populated from the federated gateway authorizer context, this is included in case marketplace ID is not included"
+            "name": "Content-Type",
+            "description": "The content type of the request."
           }
         ],
         "tags": [
@@ -315,6 +343,14 @@
           }
         }
       },
+      "Action": {
+        "description": "The action to be performed on the resource.",
+        "type": "string",
+        "enum": [
+          "postalCodeTarget",
+          "advertiseAsinLess"
+        ]
+      },
       "EligibilityStatusDetail": {
         "description": "Describes a single program's eligibility status",
         "type": "object",
@@ -332,19 +368,6 @@
           "eligible": {
             "description": "Boolean value where if true, advertiser is eligible to access the given program.",
             "type": "boolean"
-          }
-        }
-      },
-      "ProductEligibilityResponse": {
-        "description": "A product advertising eligibility response object.",
-        "type": "object",
-        "properties": {
-          "productResponseList": {
-            "description": "A list of product advertising eligibility responses.",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ProductResponse"
-            }
           }
         }
       },
@@ -430,32 +453,53 @@
           }
         }
       },
-      "ReasonCode": {
+      "Feature": {
+        "type": "object",
+        "properties": {
+          "marketplaceId": {
+            "description": "The marketplace to check the feature access in (Can be obfuscated or not)\nEspecially useful for global requests",
+            "type": "string"
+          },
+          "resource": {
+            "$ref": "#/components/schemas/Resource"
+          },
+          "action": {
+            "$ref": "#/components/schemas/Action"
+          }
+        },
+        "required": [
+          "action",
+          "marketplaceId",
+          "resource"
+        ]
+      },
+      "FeatureAcceptLanguage": {
         "type": "string",
         "enum": [
-          "BILLING_ACCOUNT_NOT_FOUND",
-          "PAYMENT_PROFILE_NOT_FOUND",
-          "PAYMENT_METHOD_NOT_FOUND",
-          "PAYMENT_METHOD_NOT_VALID",
-          "EXPIRED_PAYMENT_METHOD",
-          "VETTING_FAILURE",
-          "ACCOUNT_SUSPENDED",
-          "TAX_INFO_NOT_COMPLETE",
-          "PREPAY_BALANCE_TOO_LOW",
-          "RO_BALANCE_TOO_LOW",
-          "NO_BRAND_RELATIONS",
-          "NOT_BRAND_REPRESENTATIVE",
-          "NO_TACTIC_ENABLED",
-          "DIRECT_TO_CONSUMER_OWNER_TAG_ID_NOT_FOUND",
-          "DIRECT_TO_CONSUMER_SUBSCRIPTION_NOT_FOUND",
-          "ADVERTISING_ACCOUNT_NOT_FOUND",
-          "NOT_LAUNCHED_IN_MARKETPLACE",
-          "UNKNOWN",
-          "BLOCKED"
+          "en_US",
+          "ar_AE",
+          "zh_CN",
+          "nl_NL",
+          "en_AU",
+          "en_CA",
+          "en_IN",
+          "en_GB",
+          "fr_CA",
+          "fr_FR",
+          "de_DE",
+          "it_IT",
+          "ja_JP",
+          "ko_KR",
+          "pl_PL",
+          "pt_BR",
+          "es_ES",
+          "es_US",
+          "es_MX",
+          "tr_TR"
         ]
       },
       "ProgramEligibilityRequestContent": {
-        "description": "A request to evaluate account level eligibility for Amazon ad programs (Sponsored Products, Sponsored Brands, Sponsored Display, Stores, etc).",
+        "description": "A request to evaluate account level eligibility for Amazon ad programs (Sponsored Products, Sponsored Brands, Sponsored Display, Stores, DirectToConsumer, Amazon Attribution, etc).",
         "type": "object",
         "properties": {
           "skipChecks": {
@@ -463,48 +507,28 @@
           }
         }
       },
-      "BadRequestExceptionResponseContent": {
+      "ProgramEligibilityV2RequestContent": {
+        "description": "A request to evaluate account level eligibility for Amazon ad programs (Sponsored Products, Sponsored Brands, Sponsored Display, Stores, DirectToConsumer, Amazon Attribution, etc).",
         "type": "object",
         "properties": {
-          "code": {
-            "description": "Programmatic status code.",
-            "type": "number"
+          "skipChecks": {
+            "minItems": 0,
+            "maxItems": 20,
+            "uniqueItems": true,
+            "description": "Specify what check, if at all, we want to skip.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CheckV2"
+            }
           },
-          "details": {
-            "description": "A human-readable description of the response.",
-            "type": "string"
-          }
-        }
-      },
-      "IneligibleLevel": {
-        "type": "string",
-        "enum": [
-          "INELIGIBLE_WITH_RESOLUTION",
-          "INELIGIBLE"
-        ]
-      },
-      "NotFoundExceptionResponseContent": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "description": "Programmatic status code.",
-            "type": "number"
+          "maxResults": {
+            "description": "Max results for pagination",
+            "maximum": 100,
+            "type": "number",
+            "minimum": 1
           },
-          "details": {
-            "description": "A human-readable description of the response.",
-            "type": "string"
-          }
-        }
-      },
-      "RateExceededExceptionResponseContent": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "description": "Programmatic status code.",
-            "type": "number"
-          },
-          "details": {
-            "description": "A human-readable description of the response.",
+          "nextToken": {
+            "description": "The pagination token that is required to go to the next page",
             "type": "string"
           }
         }
@@ -555,6 +579,18 @@
           }
         }
       },
+      "FeatureReasonItem": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "$ref": "#/components/schemas/ReasonCode"
+          },
+          "description": {
+            "description": "Message explaining what the status means. Example: Payment preference not found for associated billing account. Please add a new payment method",
+            "type": "string"
+          }
+        }
+      },
       "ProductDetails": {
         "description": "An Amazon product identifier, seller product identifer, or both.",
         "type": "object",
@@ -596,6 +632,290 @@
           "es-MX",
           "tr-TR"
         ]
+      },
+      "AdProgram": {
+        "description": "This defines the AdPrograms supported",
+        "type": "string",
+        "enum": [
+          "SB",
+          "SD",
+          "MAAS",
+          "DTC",
+          "SPOT"
+        ]
+      },
+      "EligibilityStatusMap": {
+        "description": "This is a map that will be key'd on the ad program (SB/SD/DTC/MAAS/SPOT); the value will be an eligibility object.",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/EligibilityStatusDetail"
+        },
+        "type": "object"
+      },
+      "EligibilityStatusDetailV2": {
+        "description": "Describes a single program's eligibility status",
+        "type": "object",
+        "properties": {
+          "reasons": {
+            "minItems": 1,
+            "maxItems": 99,
+            "uniqueItems": true,
+            "description": "String identifier for the status.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReasonItem"
+            }
+          },
+          "eligible": {
+            "description": "Boolean value where if true, advertiser is eligible to access the given program.",
+            "type": "boolean"
+          },
+          "adProgram": {
+            "$ref": "#/components/schemas/AdProgram"
+          }
+        }
+      },
+      "CheckName": {
+        "description": "The name of all the checks that we would want to skip",
+        "type": "string",
+        "enum": [
+          "skipAllBillingChecks"
+        ]
+      },
+      "ProductEligibilityResponse": {
+        "description": "A product advertising eligibility response object.",
+        "type": "object",
+        "properties": {
+          "productResponseList": {
+            "description": "A list of product advertising eligibility responses.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductResponse"
+            }
+          }
+        }
+      },
+      "FeatureEligibilityError": {
+        "type": "object",
+        "properties": {
+          "errorMessage": {
+            "description": "The human readable message for the error encountered",
+            "type": "string"
+          },
+          "errorCode": {
+            "description": "The error code ffor the error encountered",
+            "type": "string"
+          },
+          "errorId": {
+            "description": "The integer code for the error encountered",
+            "type": "number"
+          },
+          "itemRequestId": {
+            "description": "The id of the item that is Marketplace + Resource + Action",
+            "type": "string"
+          },
+          "httpStatusCode": {
+            "description": "The http status code of the item",
+            "type": "number"
+          }
+        }
+      },
+      "Resource": {
+        "description": "The advertising resource of which you wish to check feature access for. Example: Sponsored Display Campaign.",
+        "type": "string",
+        "enum": [
+          "sd:campaigns",
+          "sd:campaigns:audiences"
+        ]
+      },
+      "FeatureEligibilityItem": {
+        "type": "object",
+        "properties": {
+          "marketplaceId": {
+            "description": "The marketplace to check the feature access in, will be obfuscated or not depending on the input",
+            "type": "string"
+          },
+          "reasons": {
+            "minItems": 0,
+            "maxItems": 20,
+            "uniqueItems": true,
+            "description": "String identifier for the status.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeatureReasonItem"
+            }
+          },
+          "resource": {
+            "$ref": "#/components/schemas/Resource"
+          },
+          "action": {
+            "$ref": "#/components/schemas/Action"
+          },
+          "isEligible": {
+            "description": "Boolean value where if true, advertiser is eligible to access the given feature.",
+            "type": "boolean"
+          },
+          "itemRequestId": {
+            "description": "The id of the item that is Marketplace + Resource + Action",
+            "type": "string"
+          },
+          "httpStatusCode": {
+            "description": "the http status code of the item",
+            "type": "number"
+          }
+        }
+      },
+      "ReasonCode": {
+        "type": "string",
+        "enum": [
+          "BILLING_ACCOUNT_NOT_FOUND",
+          "PAYMENT_PROFILE_NOT_FOUND",
+          "PAYMENT_METHOD_NOT_FOUND",
+          "PAYMENT_METHOD_NOT_VALID",
+          "EXPIRED_PAYMENT_METHOD",
+          "VETTING_FAILURE",
+          "ACCOUNT_SUSPENDED",
+          "TAX_INFO_NOT_COMPLETE",
+          "PREPAY_BALANCE_TOO_LOW",
+          "RO_BALANCE_TOO_LOW",
+          "NO_BRAND_RELATIONS",
+          "NOT_BRAND_REPRESENTATIVE",
+          "NO_TACTIC_ENABLED",
+          "DIRECT_TO_CONSUMER_OWNER_TAG_ID_NOT_FOUND",
+          "DIRECT_TO_CONSUMER_SUBSCRIPTION_NOT_FOUND",
+          "SUBSCRIPTION_NOT_FOUND",
+          "ADVERTISING_ACCOUNT_NOT_FOUND",
+          "NOT_LAUNCHED_IN_MARKETPLACE",
+          "UNKNOWN",
+          "BLOCKED"
+        ]
+      },
+      "FeatureEligibilityRequestContent": {
+        "description": "A request to evaluate feature eligibility",
+        "type": "object",
+        "properties": {
+          "features": {
+            "minItems": 1,
+            "maxItems": 30,
+            "uniqueItems": true,
+            "description": "The List of features and marketplaces of which you wish the feature to be evalulated in",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Feature"
+            }
+          }
+        },
+        "required": [
+          "features"
+        ]
+      },
+      "ProgramEligibilityV2ResponseContent": {
+        "description": "An object of program eligibility responses for an advertiser.",
+        "type": "object",
+        "properties": {
+          "eligibilityStatusLists": {
+            "minItems": 0,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MarketplaceEntitiesEligibilityStatusList"
+            }
+          },
+          "nextToken": {
+            "description": "token value allowing to navigate to the next response page",
+            "type": "string"
+          }
+        }
+      },
+      "BadRequestExceptionResponseContent": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Programmatic status code.",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "IneligibleLevel": {
+        "type": "string",
+        "enum": [
+          "INELIGIBLE_WITH_RESOLUTION",
+          "INELIGIBLE"
+        ]
+      },
+      "NotFoundExceptionResponseContent": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Programmatic status code.",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "RateExceededExceptionResponseContent": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Programmatic status code.",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "ExcessiveBatchSizeExceptionResponseContent": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Programmatic status code.",
+            "type": "number"
+          },
+          "details": {
+            "description": "A human-readable description of the response.",
+            "type": "string"
+          }
+        }
+      },
+      "MarketplaceEntitiesEligibilityStatusList": {
+        "type": "object",
+        "properties": {
+          "marketplaceId": {
+            "type": "string"
+          },
+          "entityId": {
+            "type": "string"
+          },
+          "eligibilityStatusList": {
+            "minItems": 0,
+            "maxItems": 50,
+            "description": "This is a map that will be key'd on the ad program (SB/SD/DTC/MAAS/SPOT); the value will be an eligibility object.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EligibilityStatusDetailV2"
+            }
+          }
+        }
+      },
+      "CheckV2": {
+        "description": "Defines which check we would want to skip",
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/CheckName"
+          },
+          "skip": {
+            "type": "boolean"
+          }
+        }
       },
       "InternalServerErrorExceptionResponseContent": {
         "type": "object",
@@ -639,12 +959,27 @@
           }
         }
       },
-      "EligibilityStatusMap": {
-        "description": "This is a map that will be key'd on the ad program (SB/SD); the value will be an eligibility object.",
-        "additionalProperties": {
-          "$ref": "#/components/schemas/EligibilityStatusDetail"
-        },
-        "type": "object"
+      "FeatureEligibilityResponseContent": {
+        "description": "A list of feature eligibility responses for an advertiser, split by success and error",
+        "type": "object",
+        "properties": {
+          "success": {
+            "minItems": 0,
+            "maxItems": 30,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeatureEligibilityItem"
+            }
+          },
+          "error": {
+            "minItems": 0,
+            "maxItems": 30,
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FeatureEligibilityError"
+            }
+          }
+        }
       }
     },
     "requestBodies": {},

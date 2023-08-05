@@ -19,7 +19,7 @@
           "required": true
         },
         "operationId": "bulkGetBillingStatus",
-        "description": "Gets the current billing status associated for each advertising account.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\"]",
+        "description": "Gets the current billing status associated for each advertising account.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"adv_billing_view\",\"adv_billing_edit\"]",
         "responses": {
           "200": {
             "description": "Successful",
@@ -269,7 +269,7 @@
           "required": true
         },
         "operationId": "bulkGetBillingNotifications",
-        "description": "Gets an array of all currently valid billing notifications associated for each advertising account.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\"]",
+        "description": "Gets an array of all currently valid billing notifications associated for each advertising account.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"adv_billing_view\",\"adv_billing_edit\"]",
         "responses": {
           "200": {
             "description": "Successful Request",
@@ -421,7 +421,7 @@
         "properties": {
           "advertiserMarketplaces": {
             "minItems": 1,
-            "maxItems": 100,
+            "maxItems": 30,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/advertiserMarketplace"
@@ -437,12 +437,9 @@
         "type": "object",
         "required": [
           "amountDue",
-          "dueDate",
           "fromDate",
           "id",
           "invoiceDate",
-          "paymentMethod",
-          "purchaseOrderNumber",
           "remainingAmountDue",
           "status",
           "toDate"
@@ -546,14 +543,16 @@
             }
           },
           "feeType": {
-            "description": "* `PLATFORM_FEE`: Billable fee set at the Rodeo Entity level by internal users which reflects the cost of using the Amazon DSP\n  * Supply Cost * Platform Fee %\n* `AGENCY_FEE`: Non-billable fee set at the Rodeo Order level by external users which reflects the fee that the agency is charging the end customer\n  * Total Cost * Agency Fee %\n* `AUDIENCE_FEE`: Billable fee automatically calculated at the Rodeo Line Item level when external users choose Amazon 1P data segments for campaign targeting\n  * Impressions with Audience Fees * Audience Fee (CPM)/1000\n* `3P_[AUTO_]NON_ABSORBED_FEE`: Billable fee automatically calculated at the Rodeo Line Item level when external users choose Automotive data segments and/or DMP data segments for campaign targeting\n  * Impressions * Billable 3p Fee / 1000\n* `REGULATORY_ADVERTISING_FEE`: Fees derive from ads serving in specific countries and/or for ads purchased from advertisers in specific countries during the period in which you are billed.\n",
+            "description": "* `PLATFORM_FEE`: Billable fee set at the Rodeo Entity level by internal users which reflects the cost of using the Amazon DSP\n  * Supply Cost * Platform Fee %\n* `AGENCY_FEE`: Non-billable fee set at the Rodeo Order level by external users which reflects the fee that the agency is charging the end customer\n  * Total Cost * Agency Fee %\n* `AUDIENCE_FEE`: Billable fee automatically calculated at the Rodeo Line Item level when external users choose Amazon 1P data segments for campaign targeting\n  * Impressions with Audience Fees * Audience Fee (CPM)/1000\n* `3P_[AUTO_]NON_ABSORBED_FEE`: Billable fee automatically calculated at the Rodeo Line Item level when external users choose Automotive data segments and/or DMP data segments for campaign targeting\n  * Impressions * Billable 3p Fee / 1000\n* `REGULATORY_ADVERTISING_FEE`: Fees derive from ads serving in specific countries and/or for ads purchased from advertisers in specific countries during the period in which you are billed.\n* `OMNICHANNEL_METRICS_FEE`: Billable fee set at DSP order level by internal users, which reflects the cost of using Omnichannel metrics measurement\n  * Supply Cost * Omnichannel Metrics Fee %\n* `3P_PREBID_FEE`: Billable fee automatically calculated when external users choose third party prebid targeting products for supply quality filtering.\n  * Impressions with 3P Prebid Fees * 3P Prebid Fee (CPM)/1000 %\n",
             "type": "string",
             "enum": [
               "AUDIENCE_FEE",
               "3P_AUTO_NON_ABSORBED_FEE",
               "3P_NON_ABSORBED_FEE",
               "PLATFORM_FEE",
-              "REGULATORY_ADVERTISING_FEE"
+              "OMNICHANNEL_METRICS_FEE",
+              "REGULATORY_ADVERTISING_FEE",
+              "3P_PREBID_FEE"
             ]
           }
         }
@@ -568,7 +567,7 @@
         "properties": {
           "advertiserMarketplaces": {
             "minItems": 1,
-            "maxItems": 100,
+            "maxItems": 30,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/advertiserMarketplace"
@@ -616,14 +615,6 @@
           }
         }
       },
-      "invoiceLines": {
-        "description": "Line items for this invoice. For Sponsored Ads, this will be a per-campaign breakdown of charges. For DSP, this will be the line items for the campaign getting invoiced.",
-        "title": "Invoice Lines",
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/invoiceLine"
-        }
-      },
       "paymentDetail": {
         "title": "Payment Detail",
         "type": "object",
@@ -651,6 +642,14 @@
               "SUCCESSFUL"
             ]
           }
+        }
+      },
+      "invoiceLines": {
+        "description": "Line items for this invoice. For Sponsored Ads, this will be a per-campaign breakdown of charges. For DSP, this will be the line items for the campaign getting invoiced.",
+        "title": "Invoice Lines",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/invoiceLine"
         }
       },
       "portfolio": {
@@ -732,6 +731,8 @@
         "title": "Billing Notification Names",
         "enum": [
           "ACCOUNT_ERROR",
+          "BAD_DEBT_SUSPENSION",
+          "BILLING_ADDRESS_REGISTRATION_NOT_FOUND",
           "CNPJ_VERIFICATION_IN_PROGRESS",
           "CREDIT_CARD_CHARGE_DISPUTE_CAUSED_SUSPENSION",
           "CREDIT_CARD_EXPIRED",
@@ -755,7 +756,9 @@
           "PAY_BY_INVOICE_OVERDUE_PAYMENT",
           "PAY_BY_INVOICE_UPCOMING_PAYMENT",
           "PENDING_PAYMENT_REGISTRATION",
+          "DIRECT_DEBIT_PAYMENT_PENDING",
           "PENDING_VALID_CNPJ_REGISTRATION",
+          "POLICY_VIOLATIONS",
           "STORED_VALUE_AUTO_RELOAD_PAYMENT_FAILURE",
           "SELLER_ACCOUNT_INSUFFICIENT_AVAILABLE_BALANCE_CAUSED_SUSPENSION",
           "SELLER_ACCOUNT_INSUFFICIENT_GROSS_BALANCE_CAUSED_SUSPENSION",
@@ -816,6 +819,16 @@
             "type": "integer"
           }
         }
+      },
+      "advertiserTypes": {
+        "type": "string",
+        "title": "Advertiser Types",
+        "enum": [
+          "VENDOR",
+          "SELLER",
+          "DSP_ADVERTISING_ACCOUNT",
+          "AGENCY"
+        ]
       },
       "bulkGetBillingStatusError": {
         "type": "object",
@@ -887,15 +900,24 @@
         "title": "Locale",
         "enum": [
           "ar_AE",
+          "bn_IN",
           "cs_CZ",
           "de_DE",
+          "en_AE",
           "en_AU",
           "en_CA",
           "en_GB",
           "en_IN",
+          "en_NG",
           "en_SG",
+          "en_US",
+          "en_ZA",
+          "es_CL",
+          "es_CO",
           "es_ES",
           "es_MX",
+          "es_US",
+          "fr_BE",
           "fr_CA",
           "fr_FR",
           "he_IL",
@@ -903,11 +925,16 @@
           "it_IT",
           "ja_JP",
           "ko_KR",
+          "ml_IN",
+          "mr_IN",
+          "nl_BE",
           "nl_NL",
           "pl_PL",
           "pt_BR",
+          "pt_PT",
           "sv_SE",
           "ta_IN",
+          "te_IN",
           "tr_TR",
           "zh_CN",
           "zh_TW"
@@ -1008,7 +1035,7 @@
             "type": "integer"
           },
           "errorCode": {
-            "$ref": "bulkGetBillingNotificationsErrorCodes"
+            "$ref": "#/components/schemas/bulkGetBillingNotificationsErrorCodes"
           },
           "description": {
             "type": "string"
@@ -1073,7 +1100,7 @@
         "properties": {
           "success": {
             "minItems": 0,
-            "maxItems": 100,
+            "maxItems": 30,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/bulkGetBillingStatusSuccess"
@@ -1081,7 +1108,7 @@
           },
           "error": {
             "minItems": 0,
-            "maxItems": 100,
+            "maxItems": 30,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/bulkGetBillingStatusError"
@@ -1249,27 +1276,6 @@
           "INTERNAL_ERROR"
         ]
       },
-      "governmentInvoiceInformation": {
-        "description": "Government invoice data is provided in marketplaces (such as Italy or India) that require a government-assigned invoice ID. This object contains this identifier, along with the type of transaction from a government standpoint (which will always be a debit in the case of an invoice).\n",
-        "title": "Government Invoice Information",
-        "type": "object",
-        "properties": {
-          "transactionType": {
-            "type": "string",
-            "enum": [
-              "DEBIT",
-              "CREDIT"
-            ]
-          },
-          "countryCode": {
-            "$ref": "#/components/schemas/countryCode"
-          },
-          "governmentInvoiceId": {
-            "description": "Government generated ID",
-            "type": "string"
-          }
-        }
-      },
       "address": {
         "title": "Address",
         "type": "object",
@@ -1321,6 +1327,35 @@
           }
         }
       },
+      "governmentInvoiceInformation": {
+        "description": "Government invoice data is provided in marketplaces (such as Italy or India) that require a government-assigned invoice ID. This object contains this identifier, along with the type of transaction (which will always be a debit in the case of an invoice) and presigned url link to download e-invoice document with expiry time of 45 sec.\n",
+        "title": "Government Invoice Information",
+        "type": "object",
+        "properties": {
+          "transactionType": {
+            "type": "string",
+            "enum": [
+              "DEBIT",
+              "CREDIT"
+            ]
+          },
+          "countryCode": {
+            "$ref": "#/components/schemas/countryCode"
+          },
+          "governmentDocumentS3Link": {
+            "description": "PreSigned URL to grant time-limited download access for govt invoice pdf",
+            "type": "string"
+          },
+          "governmentXmlDocumentS3Link": {
+            "description": "PreSigned URL to grant time-limited download access for govt invoice XML",
+            "type": "string"
+          },
+          "governmentInvoiceId": {
+            "description": "Government generated ID",
+            "type": "string"
+          }
+        }
+      },
       "advertiserMarketplace": {
         "type": "object",
         "title": "Advertiser Marketplace",
@@ -1331,6 +1366,9 @@
         "properties": {
           "marketplaceId": {
             "type": "string"
+          },
+          "advertiserType": {
+            "$ref": "#/components/schemas/advertiserTypes"
           },
           "advertiserId": {
             "type": "string"
@@ -1371,7 +1409,7 @@
         "properties": {
           "success": {
             "minItems": 0,
-            "maxItems": 100,
+            "maxItems": 30,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/bulkGetBillingNotificationsSuccess"
@@ -1379,7 +1417,7 @@
           },
           "error": {
             "minItems": 0,
-            "maxItems": 100,
+            "maxItems": 30,
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/bulkGetBillingNotificationsError"
@@ -1402,14 +1440,6 @@
           "message": {
             "type": "string"
           }
-        }
-      },
-      "thirdPartyContactInformation": {
-        "description": "Additional contacts. This field is used in cases such as Loi Sapin in France where both advertiser and agency addresses need to be provided.\n",
-        "title": "Third Party Contact Info",
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/contactInfo"
         }
       },
       "invoice": {
@@ -1461,6 +1491,14 @@
           "portfolios": {
             "$ref": "#/components/schemas/portfolios"
           }
+        }
+      },
+      "thirdPartyContactInformation": {
+        "description": "Additional contacts. This field is used in cases such as Loi Sapin in France where both advertiser and agency addresses need to be provided.\n",
+        "title": "Third Party Contact Info",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/contactInfo"
         }
       },
       "billingStatusCode": {

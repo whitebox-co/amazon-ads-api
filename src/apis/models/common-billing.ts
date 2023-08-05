@@ -149,11 +149,30 @@ export interface AdvertiserMarketplace {
     marketplaceId: string;
     /**
      * 
+     * @type {AdvertiserTypes}
+     * @memberof AdvertiserMarketplace
+     */
+    advertiserType?: AdvertiserTypes;
+    /**
+     * 
      * @type {string}
      * @memberof AdvertiserMarketplace
      */
     advertiserId: string;
 }
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum AdvertiserTypes {
+    Vendor = 'VENDOR',
+    Seller = 'SELLER',
+    DspAdvertisingAccount = 'DSP_ADVERTISING_ACCOUNT',
+    Agency = 'AGENCY'
+}
+
 /**
  * 
  * @export
@@ -211,6 +230,8 @@ export interface BillingNotification {
 
 export enum BillingNotificationNames {
     AccountError = 'ACCOUNT_ERROR',
+    BadDebtSuspension = 'BAD_DEBT_SUSPENSION',
+    BillingAddressRegistrationNotFound = 'BILLING_ADDRESS_REGISTRATION_NOT_FOUND',
     CnpjVerificationInProgress = 'CNPJ_VERIFICATION_IN_PROGRESS',
     CreditCardChargeDisputeCausedSuspension = 'CREDIT_CARD_CHARGE_DISPUTE_CAUSED_SUSPENSION',
     CreditCardExpired = 'CREDIT_CARD_EXPIRED',
@@ -234,7 +255,9 @@ export enum BillingNotificationNames {
     PayByInvoiceOverduePayment = 'PAY_BY_INVOICE_OVERDUE_PAYMENT',
     PayByInvoiceUpcomingPayment = 'PAY_BY_INVOICE_UPCOMING_PAYMENT',
     PendingPaymentRegistration = 'PENDING_PAYMENT_REGISTRATION',
+    DirectDebitPaymentPending = 'DIRECT_DEBIT_PAYMENT_PENDING',
     PendingValidCnpjRegistration = 'PENDING_VALID_CNPJ_REGISTRATION',
+    PolicyViolations = 'POLICY_VIOLATIONS',
     StoredValueAutoReloadPaymentFailure = 'STORED_VALUE_AUTO_RELOAD_PAYMENT_FAILURE',
     SellerAccountInsufficientAvailableBalanceCausedSuspension = 'SELLER_ACCOUNT_INSUFFICIENT_AVAILABLE_BALANCE_CAUSED_SUSPENSION',
     SellerAccountInsufficientGrossBalanceCausedSuspension = 'SELLER_ACCOUNT_INSUFFICIENT_GROSS_BALANCE_CAUSED_SUSPENSION',
@@ -644,7 +667,7 @@ export interface Fee {
      */
     feeIdentifiers?: FeeIdentifiers;
     /**
-     * * `PLATFORM_FEE`: Billable fee set at the Rodeo Entity level by internal users which reflects the cost of using the Amazon DSP   * Supply Cost * Platform Fee % * `AGENCY_FEE`: Non-billable fee set at the Rodeo Order level by external users which reflects the fee that the agency is charging the end customer   * Total Cost * Agency Fee % * `AUDIENCE_FEE`: Billable fee automatically calculated at the Rodeo Line Item level when external users choose Amazon 1P data segments for campaign targeting   * Impressions with Audience Fees * Audience Fee (CPM)/1000 * `3P_[AUTO_]NON_ABSORBED_FEE`: Billable fee automatically calculated at the Rodeo Line Item level when external users choose Automotive data segments and/or DMP data segments for campaign targeting   * Impressions * Billable 3p Fee / 1000 * `REGULATORY_ADVERTISING_FEE`: Fees derive from ads serving in specific countries and/or for ads purchased from advertisers in specific countries during the period in which you are billed. 
+     * * `PLATFORM_FEE`: Billable fee set at the Rodeo Entity level by internal users which reflects the cost of using the Amazon DSP   * Supply Cost * Platform Fee % * `AGENCY_FEE`: Non-billable fee set at the Rodeo Order level by external users which reflects the fee that the agency is charging the end customer   * Total Cost * Agency Fee % * `AUDIENCE_FEE`: Billable fee automatically calculated at the Rodeo Line Item level when external users choose Amazon 1P data segments for campaign targeting   * Impressions with Audience Fees * Audience Fee (CPM)/1000 * `3P_[AUTO_]NON_ABSORBED_FEE`: Billable fee automatically calculated at the Rodeo Line Item level when external users choose Automotive data segments and/or DMP data segments for campaign targeting   * Impressions * Billable 3p Fee / 1000 * `REGULATORY_ADVERTISING_FEE`: Fees derive from ads serving in specific countries and/or for ads purchased from advertisers in specific countries during the period in which you are billed. * `OMNICHANNEL_METRICS_FEE`: Billable fee set at DSP order level by internal users, which reflects the cost of using Omnichannel metrics measurement   * Supply Cost * Omnichannel Metrics Fee % * `3P_PREBID_FEE`: Billable fee automatically calculated when external users choose third party prebid targeting products for supply quality filtering.   * Impressions with 3P Prebid Fees * 3P Prebid Fee (CPM)/1000 % 
      * @type {string}
      * @memberof Fee
      */
@@ -660,7 +683,9 @@ export enum FeeFeeTypeEnum {
     _3PAutoNonAbsorbedFee = '3P_AUTO_NON_ABSORBED_FEE',
     _3PNonAbsorbedFee = '3P_NON_ABSORBED_FEE',
     PlatformFee = 'PLATFORM_FEE',
-    RegulatoryAdvertisingFee = 'REGULATORY_ADVERTISING_FEE'
+    OmnichannelMetricsFee = 'OMNICHANNEL_METRICS_FEE',
+    RegulatoryAdvertisingFee = 'REGULATORY_ADVERTISING_FEE',
+    _3PPrebidFee = '3P_PREBID_FEE'
 }
 
 /**
@@ -677,7 +702,7 @@ export interface FeeIdentifiers {
     countryCode?: string;
 }
 /**
- * Government invoice data is provided in marketplaces (such as Italy or India) that require a government-assigned invoice ID. This object contains this identifier, along with the type of transaction from a government standpoint (which will always be a debit in the case of an invoice). 
+ * Government invoice data is provided in marketplaces (such as Italy or India) that require a government-assigned invoice ID. This object contains this identifier, along with the type of transaction (which will always be a debit in the case of an invoice) and presigned url link to download e-invoice document with expiry time of 45 sec. 
  * @export
  * @interface GovernmentInvoiceInformation
  */
@@ -694,6 +719,18 @@ export interface GovernmentInvoiceInformation {
      * @memberof GovernmentInvoiceInformation
      */
     countryCode?: string;
+    /**
+     * PreSigned URL to grant time-limited download access for govt invoice pdf
+     * @type {string}
+     * @memberof GovernmentInvoiceInformation
+     */
+    governmentDocumentS3Link?: string;
+    /**
+     * PreSigned URL to grant time-limited download access for govt invoice XML
+     * @type {string}
+     * @memberof GovernmentInvoiceInformation
+     */
+    governmentXmlDocumentS3Link?: string;
     /**
      * Government generated ID
      * @type {string}
@@ -1004,7 +1041,7 @@ export interface InvoiceSummary {
      * @type {string}
      * @memberof InvoiceSummary
      */
-    dueDate: string;
+    dueDate?: string;
     /**
      * Date in YYYYMMDD format
      * @type {string}
@@ -1040,7 +1077,7 @@ export interface InvoiceSummary {
      * @type {string}
      * @memberof InvoiceSummary
      */
-    purchaseOrderNumber: string;
+    purchaseOrderNumber?: string;
     /**
      * 
      * @type {string}
@@ -1052,7 +1089,7 @@ export interface InvoiceSummary {
      * @type {PaymentMethod}
      * @memberof InvoiceSummary
      */
-    paymentMethod: PaymentMethod;
+    paymentMethod?: PaymentMethod;
     /**
      * 
      * @type {string}
@@ -1103,15 +1140,24 @@ export interface IssuerTaxRegistrationInfo {
 
 export enum Locale {
     ArAe = 'ar_AE',
+    BnIn = 'bn_IN',
     CsCz = 'cs_CZ',
     DeDe = 'de_DE',
+    EnAe = 'en_AE',
     EnAu = 'en_AU',
     EnCa = 'en_CA',
     EnGb = 'en_GB',
     EnIn = 'en_IN',
+    EnNg = 'en_NG',
     EnSg = 'en_SG',
+    EnUs = 'en_US',
+    EnZa = 'en_ZA',
+    EsCl = 'es_CL',
+    EsCo = 'es_CO',
     EsEs = 'es_ES',
     EsMx = 'es_MX',
+    EsUs = 'es_US',
+    FrBe = 'fr_BE',
     FrCa = 'fr_CA',
     FrFr = 'fr_FR',
     HeIl = 'he_IL',
@@ -1119,11 +1165,16 @@ export enum Locale {
     ItIt = 'it_IT',
     JaJp = 'ja_JP',
     KoKr = 'ko_KR',
+    MlIn = 'ml_IN',
+    MrIn = 'mr_IN',
+    NlBe = 'nl_BE',
     NlNl = 'nl_NL',
     PlPl = 'pl_PL',
     PtBr = 'pt_BR',
+    PtPt = 'pt_PT',
     SvSe = 'sv_SE',
     TaIn = 'ta_IN',
+    TeIn = 'te_IN',
     TrTr = 'tr_TR',
     ZhCn = 'zh_CN',
     ZhTw = 'zh_TW'
@@ -1438,7 +1489,7 @@ export interface ThirdPartyTaxRegistrationInfo {
 export const BillingNotificationsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Gets an array of all currently valid billing notifications associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
+         * Gets an array of all currently valid billing notifications associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"adv_billing_view\",\"adv_billing_edit\"]
          * @summary Get the billing notifications for a list advertising accounts.
          * @param {BulkGetBillingNotificationsRequestBody} bulkGetBillingNotificationsRequestBody 
          * @param {*} [options] Override http request option.
@@ -1484,7 +1535,7 @@ export const BillingNotificationsApiFp = function(configuration?: Configuration)
     const localVarAxiosParamCreator = BillingNotificationsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Gets an array of all currently valid billing notifications associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
+         * Gets an array of all currently valid billing notifications associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"adv_billing_view\",\"adv_billing_edit\"]
          * @summary Get the billing notifications for a list advertising accounts.
          * @param {BulkGetBillingNotificationsRequestBody} bulkGetBillingNotificationsRequestBody 
          * @param {*} [options] Override http request option.
@@ -1505,7 +1556,7 @@ export const BillingNotificationsApiFactory = function (configuration?: Configur
     const localVarFp = BillingNotificationsApiFp(configuration)
     return {
         /**
-         * Gets an array of all currently valid billing notifications associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
+         * Gets an array of all currently valid billing notifications associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"adv_billing_view\",\"adv_billing_edit\"]
          * @summary Get the billing notifications for a list advertising accounts.
          * @param {BulkGetBillingNotificationsRequestBody} bulkGetBillingNotificationsRequestBody 
          * @param {*} [options] Override http request option.
@@ -1539,7 +1590,7 @@ export interface BillingNotificationsApiBulkGetBillingNotificationsRequest {
  */
 export class BillingNotificationsApi extends BaseAPI {
     /**
-     * Gets an array of all currently valid billing notifications associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
+     * Gets an array of all currently valid billing notifications associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"adv_billing_view\",\"adv_billing_edit\"]
      * @summary Get the billing notifications for a list advertising accounts.
      * @param {BillingNotificationsApiBulkGetBillingNotificationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1559,7 +1610,7 @@ export class BillingNotificationsApi extends BaseAPI {
 export const BillingStatusApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Gets the current billing status associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
+         * Gets the current billing status associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"adv_billing_view\",\"adv_billing_edit\"]
          * @summary Get the billing status for a list of advertising accounts.
          * @param {BulkGetBillingStatusesRequestBody} bulkGetBillingStatusesRequestBody 
          * @param {*} [options] Override http request option.
@@ -1605,7 +1656,7 @@ export const BillingStatusApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = BillingStatusApiAxiosParamCreator(configuration)
     return {
         /**
-         * Gets the current billing status associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
+         * Gets the current billing status associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"adv_billing_view\",\"adv_billing_edit\"]
          * @summary Get the billing status for a list of advertising accounts.
          * @param {BulkGetBillingStatusesRequestBody} bulkGetBillingStatusesRequestBody 
          * @param {*} [options] Override http request option.
@@ -1626,7 +1677,7 @@ export const BillingStatusApiFactory = function (configuration?: Configuration, 
     const localVarFp = BillingStatusApiFp(configuration)
     return {
         /**
-         * Gets the current billing status associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
+         * Gets the current billing status associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"adv_billing_view\",\"adv_billing_edit\"]
          * @summary Get the billing status for a list of advertising accounts.
          * @param {BulkGetBillingStatusesRequestBody} bulkGetBillingStatusesRequestBody 
          * @param {*} [options] Override http request option.
@@ -1660,7 +1711,7 @@ export interface BillingStatusApiBulkGetBillingStatusRequest {
  */
 export class BillingStatusApi extends BaseAPI {
     /**
-     * Gets the current billing status associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\"]
+     * Gets the current billing status associated for each advertising account.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"adv_billing_view\",\"adv_billing_edit\"]
      * @summary Get the billing status for a list of advertising accounts.
      * @param {BillingStatusApiBulkGetBillingStatusRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

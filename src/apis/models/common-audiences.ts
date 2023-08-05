@@ -154,7 +154,7 @@ export interface AudienceErrorV1 {
  */
 export interface AudienceFilterV1 {
     /**
-     * Field to filter by. Supported enums are \'audienceName\', \'category\', \'categoryPath\' and \'audienceId\'. The \'category\' enum returns all audiences under a high-level category, whereas the \'categoryPath\' enum expects a path of nodes in the taxonomy tree and returns audiences attached directly to the node at the specified path.
+     * Field to filter by. Supported enums are \'audienceName\', \'category\', \'categoryPath\', \'audienceId\' and \'status\'. The \'audienceName\' is a broad match filter but not an exact match. The \'category\' enum returns all audiences under a high-level category, whereas the \'categoryPath\' enum expects a path of nodes in the taxonomy tree and returns audiences attached directly to the node at the specified path.
      * @type {string}
      * @memberof AudienceFilterV1
      */
@@ -277,6 +277,12 @@ export interface DSPAudienceFieldsV1 {
      * @memberof DSPAudienceFieldsV1
      */
     fees?: Array<DSPAudienceFieldsV1Fees>;
+    /**
+     * The Data Management Platform provider identifier. Only applicable to Third party audience segments.
+     * @type {string}
+     * @memberof DSPAudienceFieldsV1
+     */
+    providerId?: string;
 }
 /**
  * 
@@ -321,7 +327,19 @@ export interface DSPAudienceFieldsV1Fees {
     * @enum {string}
     */
 export enum DSPAudienceFieldsV1FeesCurrencyEnum {
-    Usd = 'USD'
+    Usd = 'USD',
+    Cad = 'CAD',
+    Gbp = 'GBP',
+    Eur = 'EUR',
+    Jpy = 'JPY',
+    Inr = 'INR',
+    Mxn = 'MXN',
+    Aud = 'AUD',
+    Aed = 'AED',
+    Ksa = 'KSA',
+    Brl = 'BRL',
+    Sek = 'SEK',
+    Try = 'TRY'
 }
 
 /**

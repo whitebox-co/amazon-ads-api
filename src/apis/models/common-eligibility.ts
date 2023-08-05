@@ -52,6 +52,31 @@ export enum AcceptLanguage {
 }
 
 /**
+ * The action to be performed on the resource.
+ * @export
+ * @enum {string}
+ */
+
+export enum Action {
+    PostalCodeTarget = 'postalCodeTarget',
+    AdvertiseAsinLess = 'advertiseAsinLess'
+}
+
+/**
+ * This defines the AdPrograms supported
+ * @export
+ * @enum {string}
+ */
+
+export enum AdProgram {
+    Sb = 'SB',
+    Sd = 'SD',
+    Maas = 'MAAS',
+    Dtc = 'DTC',
+    Spot = 'SPOT'
+}
+
+/**
  * 
  * @export
  * @interface BadRequestExceptionResponseContent
@@ -77,6 +102,35 @@ export interface BadRequestExceptionResponseContent {
  */
 export type Check = SkipAllBillingChecks;
 
+/**
+ * The name of all the checks that we would want to skip
+ * @export
+ * @enum {string}
+ */
+
+export enum CheckName {
+    SkipAllBillingChecks = 'skipAllBillingChecks'
+}
+
+/**
+ * Defines which check we would want to skip
+ * @export
+ * @interface CheckV2
+ */
+export interface CheckV2 {
+    /**
+     * 
+     * @type {CheckName}
+     * @memberof CheckV2
+     */
+    name?: CheckName;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof CheckV2
+     */
+    skip?: boolean;
+}
 /**
  * The advertising eligibility status of a product.
  * @export
@@ -156,6 +210,241 @@ export interface EligibilityStatusDetail {
     eligible?: boolean;
 }
 /**
+ * Describes a single program\'s eligibility status
+ * @export
+ * @interface EligibilityStatusDetailV2
+ */
+export interface EligibilityStatusDetailV2 {
+    /**
+     * String identifier for the status.
+     * @type {Array<ReasonItem>}
+     * @memberof EligibilityStatusDetailV2
+     */
+    reasons?: Array<ReasonItem>;
+    /**
+     * Boolean value where if true, advertiser is eligible to access the given program.
+     * @type {boolean}
+     * @memberof EligibilityStatusDetailV2
+     */
+    eligible?: boolean;
+    /**
+     * 
+     * @type {AdProgram}
+     * @memberof EligibilityStatusDetailV2
+     */
+    adProgram?: AdProgram;
+}
+/**
+ * 
+ * @export
+ * @interface ExcessiveBatchSizeExceptionResponseContent
+ */
+export interface ExcessiveBatchSizeExceptionResponseContent {
+    /**
+     * Programmatic status code.
+     * @type {number}
+     * @memberof ExcessiveBatchSizeExceptionResponseContent
+     */
+    code?: number;
+    /**
+     * A human-readable description of the response.
+     * @type {string}
+     * @memberof ExcessiveBatchSizeExceptionResponseContent
+     */
+    details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface Feature
+ */
+export interface Feature {
+    /**
+     * The marketplace to check the feature access in (Can be obfuscated or not) Especially useful for global requests
+     * @type {string}
+     * @memberof Feature
+     */
+    marketplaceId: string;
+    /**
+     * 
+     * @type {Resource}
+     * @memberof Feature
+     */
+    resource: Resource;
+    /**
+     * 
+     * @type {Action}
+     * @memberof Feature
+     */
+    action: Action;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export enum FeatureAcceptLanguage {
+    EnUs = 'en_US',
+    ArAe = 'ar_AE',
+    ZhCn = 'zh_CN',
+    NlNl = 'nl_NL',
+    EnAu = 'en_AU',
+    EnCa = 'en_CA',
+    EnIn = 'en_IN',
+    EnGb = 'en_GB',
+    FrCa = 'fr_CA',
+    FrFr = 'fr_FR',
+    DeDe = 'de_DE',
+    ItIt = 'it_IT',
+    JaJp = 'ja_JP',
+    KoKr = 'ko_KR',
+    PlPl = 'pl_PL',
+    PtBr = 'pt_BR',
+    EsEs = 'es_ES',
+    EsUs = 'es_US',
+    EsMx = 'es_MX',
+    TrTr = 'tr_TR'
+}
+
+/**
+ * 
+ * @export
+ * @interface FeatureEligibilityError
+ */
+export interface FeatureEligibilityError {
+    /**
+     * The human readable message for the error encountered
+     * @type {string}
+     * @memberof FeatureEligibilityError
+     */
+    errorMessage?: string;
+    /**
+     * The error code ffor the error encountered
+     * @type {string}
+     * @memberof FeatureEligibilityError
+     */
+    errorCode?: string;
+    /**
+     * The integer code for the error encountered
+     * @type {number}
+     * @memberof FeatureEligibilityError
+     */
+    errorId?: number;
+    /**
+     * The id of the item that is Marketplace + Resource + Action
+     * @type {string}
+     * @memberof FeatureEligibilityError
+     */
+    itemRequestId?: string;
+    /**
+     * The http status code of the item
+     * @type {number}
+     * @memberof FeatureEligibilityError
+     */
+    httpStatusCode?: number;
+}
+/**
+ * 
+ * @export
+ * @interface FeatureEligibilityItem
+ */
+export interface FeatureEligibilityItem {
+    /**
+     * The marketplace to check the feature access in, will be obfuscated or not depending on the input
+     * @type {string}
+     * @memberof FeatureEligibilityItem
+     */
+    marketplaceId?: string;
+    /**
+     * String identifier for the status.
+     * @type {Array<FeatureReasonItem>}
+     * @memberof FeatureEligibilityItem
+     */
+    reasons?: Array<FeatureReasonItem>;
+    /**
+     * 
+     * @type {Resource}
+     * @memberof FeatureEligibilityItem
+     */
+    resource?: Resource;
+    /**
+     * 
+     * @type {Action}
+     * @memberof FeatureEligibilityItem
+     */
+    action?: Action;
+    /**
+     * Boolean value where if true, advertiser is eligible to access the given feature.
+     * @type {boolean}
+     * @memberof FeatureEligibilityItem
+     */
+    isEligible?: boolean;
+    /**
+     * The id of the item that is Marketplace + Resource + Action
+     * @type {string}
+     * @memberof FeatureEligibilityItem
+     */
+    itemRequestId?: string;
+    /**
+     * the http status code of the item
+     * @type {number}
+     * @memberof FeatureEligibilityItem
+     */
+    httpStatusCode?: number;
+}
+/**
+ * A request to evaluate feature eligibility
+ * @export
+ * @interface FeatureEligibilityRequestContent
+ */
+export interface FeatureEligibilityRequestContent {
+    /**
+     * The List of features and marketplaces of which you wish the feature to be evalulated in
+     * @type {Array<Feature>}
+     * @memberof FeatureEligibilityRequestContent
+     */
+    features: Array<Feature>;
+}
+/**
+ * A list of feature eligibility responses for an advertiser, split by success and error
+ * @export
+ * @interface FeatureEligibilityResponseContent
+ */
+export interface FeatureEligibilityResponseContent {
+    /**
+     * 
+     * @type {Array<FeatureEligibilityItem>}
+     * @memberof FeatureEligibilityResponseContent
+     */
+    success?: Array<FeatureEligibilityItem>;
+    /**
+     * 
+     * @type {Array<FeatureEligibilityError>}
+     * @memberof FeatureEligibilityResponseContent
+     */
+    error?: Array<FeatureEligibilityError>;
+}
+/**
+ * 
+ * @export
+ * @interface FeatureReasonItem
+ */
+export interface FeatureReasonItem {
+    /**
+     * 
+     * @type {ReasonCode}
+     * @memberof FeatureReasonItem
+     */
+    code?: ReasonCode;
+    /**
+     * Message explaining what the status means. Example: Payment preference not found for associated billing account. Please add a new payment method
+     * @type {string}
+     * @memberof FeatureReasonItem
+     */
+    description?: string;
+}
+/**
  * 
  * @export
  * @enum {string}
@@ -184,6 +473,31 @@ export interface InternalServerErrorExceptionResponseContent {
      * @memberof InternalServerErrorExceptionResponseContent
      */
     details?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MarketplaceEntitiesEligibilityStatusList
+ */
+export interface MarketplaceEntitiesEligibilityStatusList {
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceEntitiesEligibilityStatusList
+     */
+    marketplaceId?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof MarketplaceEntitiesEligibilityStatusList
+     */
+    entityId?: string;
+    /**
+     * This is a map that will be key\'d on the ad program (SB/SD/DTC/MAAS/SPOT); the value will be an eligibility object.
+     * @type {Array<EligibilityStatusDetailV2>}
+     * @memberof MarketplaceEntitiesEligibilityStatusList
+     */
+    eligibilityStatusList?: Array<EligibilityStatusDetailV2>;
 }
 /**
  * 
@@ -328,7 +642,7 @@ export enum ProductResponseOverallStatusEnum {
 }
 
 /**
- * A request to evaluate account level eligibility for Amazon ad programs (Sponsored Products, Sponsored Brands, Sponsored Display, Stores, etc).
+ * A request to evaluate account level eligibility for Amazon ad programs (Sponsored Products, Sponsored Brands, Sponsored Display, Stores, DirectToConsumer, Amazon Attribution, etc).
  * @export
  * @interface ProgramEligibilityRequestContent
  */
@@ -347,11 +661,55 @@ export interface ProgramEligibilityRequestContent {
  */
 export interface ProgramEligibilityResponseContent {
     /**
-     * This is a map that will be key\'d on the ad program (SB/SD); the value will be an eligibility object.
+     * This is a map that will be key\'d on the ad program (SB/SD/DTC/MAAS/SPOT); the value will be an eligibility object.
      * @type {{ [key: string]: EligibilityStatusDetail; }}
      * @memberof ProgramEligibilityResponseContent
      */
     eligibilityStatusMap?: { [key: string]: EligibilityStatusDetail; };
+}
+/**
+ * A request to evaluate account level eligibility for Amazon ad programs (Sponsored Products, Sponsored Brands, Sponsored Display, Stores, DirectToConsumer, Amazon Attribution, etc).
+ * @export
+ * @interface ProgramEligibilityV2RequestContent
+ */
+export interface ProgramEligibilityV2RequestContent {
+    /**
+     * Specify what check, if at all, we want to skip.
+     * @type {Array<CheckV2>}
+     * @memberof ProgramEligibilityV2RequestContent
+     */
+    skipChecks?: Array<CheckV2>;
+    /**
+     * Max results for pagination
+     * @type {number}
+     * @memberof ProgramEligibilityV2RequestContent
+     */
+    maxResults?: number;
+    /**
+     * The pagination token that is required to go to the next page
+     * @type {string}
+     * @memberof ProgramEligibilityV2RequestContent
+     */
+    nextToken?: string;
+}
+/**
+ * An object of program eligibility responses for an advertiser.
+ * @export
+ * @interface ProgramEligibilityV2ResponseContent
+ */
+export interface ProgramEligibilityV2ResponseContent {
+    /**
+     * 
+     * @type {Array<MarketplaceEntitiesEligibilityStatusList>}
+     * @memberof ProgramEligibilityV2ResponseContent
+     */
+    eligibilityStatusLists?: Array<MarketplaceEntitiesEligibilityStatusList>;
+    /**
+     * token value allowing to navigate to the next response page
+     * @type {string}
+     * @memberof ProgramEligibilityV2ResponseContent
+     */
+    nextToken?: string;
 }
 /**
  * 
@@ -394,6 +752,7 @@ export enum ReasonCode {
     NoTacticEnabled = 'NO_TACTIC_ENABLED',
     DirectToConsumerOwnerTagIdNotFound = 'DIRECT_TO_CONSUMER_OWNER_TAG_ID_NOT_FOUND',
     DirectToConsumerSubscriptionNotFound = 'DIRECT_TO_CONSUMER_SUBSCRIPTION_NOT_FOUND',
+    SubscriptionNotFound = 'SUBSCRIPTION_NOT_FOUND',
     AdvertisingAccountNotFound = 'ADVERTISING_ACCOUNT_NOT_FOUND',
     NotLaunchedInMarketplace = 'NOT_LAUNCHED_IN_MARKETPLACE',
     Unknown = 'UNKNOWN',
@@ -425,6 +784,17 @@ export interface ReasonItem {
      */
     description?: string;
 }
+/**
+ * The advertising resource of which you wish to check feature access for. Example: Sponsored Display Campaign.
+ * @export
+ * @enum {string}
+ */
+
+export enum Resource {
+    Campaigns = 'sd:campaigns',
+    Campaignsaudiences = 'sd:campaigns:audiences'
+}
+
 /**
  * 
  * @export
@@ -618,26 +988,19 @@ export class ProductEligibilityApi extends BaseAPI {
 export const ProgramEligibilityApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Checks the advertiser\'s eligibility to ad programs.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * Checks the advertiser\'s eligibility to ad programs.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
-         * @param {string} advertiserId Advertiser ID populated from the federated gateway authorizer context
          * @param {AcceptLanguage} [acceptLanguage] Specify the language in which the response is returned.
-         * @param {string} [entityId] Entity ID populated from the federated gateway authorizer context
-         * @param {string} [entityType] Entity type (seller, vendor, author, etc) populated from the federated gateway authorizer context. Note, must be a Seller Central Entity.
-         * @param {string} [marketplaceId] Marketplace ID populated from the federated gateway authorizer context
-         * @param {string} [obfuscatedMarketplaceId] Obfuscated Marketplace ID populated from the federated gateway authorizer context, this is included in case marketplace ID is not included
+         * @param {string} [amazonAdsAccountID] The header used to pass global account associated with the advertiser account Use &#x60;GET&#x60; method on the Global Ads Account resource to list the global ads account associated with the access token passed in the HTTP Authorization header and choose AdvertisingAccountIdentifier id from the response to pass it as input. Use for v2 global calls
+         * @param {string} [amazonAdvertisingAPIScope] The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [contentType] The content type of the request.
          * @param {ProgramEligibilityRequestContent} [programEligibilityRequestContent] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        programEligibility: async (amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, advertiserId: string, acceptLanguage?: AcceptLanguage, entityId?: string, entityType?: string, marketplaceId?: string, obfuscatedMarketplaceId?: string, programEligibilityRequestContent?: ProgramEligibilityRequestContent, options: any = {}): Promise<RequestArgs> => {
+        programEligibility: async (amazonAdvertisingAPIClientId: string, acceptLanguage?: AcceptLanguage, amazonAdsAccountID?: string, amazonAdvertisingAPIScope?: string, contentType?: string, programEligibilityRequestContent?: ProgramEligibilityRequestContent, options: any = {}): Promise<RequestArgs> => {
             // verify required parameter 'amazonAdvertisingAPIClientId' is not null or undefined
             assertParamExists('programEligibility', 'amazonAdvertisingAPIClientId', amazonAdvertisingAPIClientId)
-            // verify required parameter 'amazonAdvertisingAPIScope' is not null or undefined
-            assertParamExists('programEligibility', 'amazonAdvertisingAPIScope', amazonAdvertisingAPIScope)
-            // verify required parameter 'advertiserId' is not null or undefined
-            assertParamExists('programEligibility', 'advertiserId', advertiserId)
             const localVarPath = `/eligibility/programs`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -654,6 +1017,10 @@ export const ProgramEligibilityApiAxiosParamCreator = function (configuration?: 
                 localVarHeaderParameter['Accept-Language'] = String(JSON.stringify(acceptLanguage));
             }
 
+            if (amazonAdsAccountID !== undefined && amazonAdsAccountID !== null) {
+                localVarHeaderParameter['Amazon-Ads-Account-ID'] = String(amazonAdsAccountID);
+            }
+
             if (amazonAdvertisingAPIClientId !== undefined && amazonAdvertisingAPIClientId !== null) {
                 localVarHeaderParameter['Amazon-Advertising-API-ClientId'] = String(amazonAdvertisingAPIClientId);
             }
@@ -662,24 +1029,8 @@ export const ProgramEligibilityApiAxiosParamCreator = function (configuration?: 
                 localVarHeaderParameter['Amazon-Advertising-API-Scope'] = String(amazonAdvertisingAPIScope);
             }
 
-            if (advertiserId !== undefined && advertiserId !== null) {
-                localVarHeaderParameter['advertiserId'] = String(advertiserId);
-            }
-
-            if (entityId !== undefined && entityId !== null) {
-                localVarHeaderParameter['entityId'] = String(entityId);
-            }
-
-            if (entityType !== undefined && entityType !== null) {
-                localVarHeaderParameter['entityType'] = String(entityType);
-            }
-
-            if (marketplaceId !== undefined && marketplaceId !== null) {
-                localVarHeaderParameter['marketplaceId'] = String(marketplaceId);
-            }
-
-            if (obfuscatedMarketplaceId !== undefined && obfuscatedMarketplaceId !== null) {
-                localVarHeaderParameter['obfuscatedMarketplaceId'] = String(obfuscatedMarketplaceId);
+            if (contentType !== undefined && contentType !== null) {
+                localVarHeaderParameter['Content-Type'] = String(contentType);
             }
 
 
@@ -707,21 +1058,18 @@ export const ProgramEligibilityApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProgramEligibilityApiAxiosParamCreator(configuration)
     return {
         /**
-         * Checks the advertiser\'s eligibility to ad programs.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * Checks the advertiser\'s eligibility to ad programs.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
-         * @param {string} advertiserId Advertiser ID populated from the federated gateway authorizer context
          * @param {AcceptLanguage} [acceptLanguage] Specify the language in which the response is returned.
-         * @param {string} [entityId] Entity ID populated from the federated gateway authorizer context
-         * @param {string} [entityType] Entity type (seller, vendor, author, etc) populated from the federated gateway authorizer context. Note, must be a Seller Central Entity.
-         * @param {string} [marketplaceId] Marketplace ID populated from the federated gateway authorizer context
-         * @param {string} [obfuscatedMarketplaceId] Obfuscated Marketplace ID populated from the federated gateway authorizer context, this is included in case marketplace ID is not included
+         * @param {string} [amazonAdsAccountID] The header used to pass global account associated with the advertiser account Use &#x60;GET&#x60; method on the Global Ads Account resource to list the global ads account associated with the access token passed in the HTTP Authorization header and choose AdvertisingAccountIdentifier id from the response to pass it as input. Use for v2 global calls
+         * @param {string} [amazonAdvertisingAPIScope] The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [contentType] The content type of the request.
          * @param {ProgramEligibilityRequestContent} [programEligibilityRequestContent] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async programEligibility(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, advertiserId: string, acceptLanguage?: AcceptLanguage, entityId?: string, entityType?: string, marketplaceId?: string, obfuscatedMarketplaceId?: string, programEligibilityRequestContent?: ProgramEligibilityRequestContent, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProgramEligibilityResponseContent>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.programEligibility(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, advertiserId, acceptLanguage, entityId, entityType, marketplaceId, obfuscatedMarketplaceId, programEligibilityRequestContent, options);
+        async programEligibility(amazonAdvertisingAPIClientId: string, acceptLanguage?: AcceptLanguage, amazonAdsAccountID?: string, amazonAdvertisingAPIScope?: string, contentType?: string, programEligibilityRequestContent?: ProgramEligibilityRequestContent, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProgramEligibilityResponseContent>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.programEligibility(amazonAdvertisingAPIClientId, acceptLanguage, amazonAdsAccountID, amazonAdvertisingAPIScope, contentType, programEligibilityRequestContent, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -735,21 +1083,18 @@ export const ProgramEligibilityApiFactory = function (configuration?: Configurat
     const localVarFp = ProgramEligibilityApiFp(configuration)
     return {
         /**
-         * Checks the advertiser\'s eligibility to ad programs.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+         * Checks the advertiser\'s eligibility to ad programs.
          * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
-         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
-         * @param {string} advertiserId Advertiser ID populated from the federated gateway authorizer context
          * @param {AcceptLanguage} [acceptLanguage] Specify the language in which the response is returned.
-         * @param {string} [entityId] Entity ID populated from the federated gateway authorizer context
-         * @param {string} [entityType] Entity type (seller, vendor, author, etc) populated from the federated gateway authorizer context. Note, must be a Seller Central Entity.
-         * @param {string} [marketplaceId] Marketplace ID populated from the federated gateway authorizer context
-         * @param {string} [obfuscatedMarketplaceId] Obfuscated Marketplace ID populated from the federated gateway authorizer context, this is included in case marketplace ID is not included
+         * @param {string} [amazonAdsAccountID] The header used to pass global account associated with the advertiser account Use &#x60;GET&#x60; method on the Global Ads Account resource to list the global ads account associated with the access token passed in the HTTP Authorization header and choose AdvertisingAccountIdentifier id from the response to pass it as input. Use for v2 global calls
+         * @param {string} [amazonAdvertisingAPIScope] The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
+         * @param {string} [contentType] The content type of the request.
          * @param {ProgramEligibilityRequestContent} [programEligibilityRequestContent] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        programEligibility(amazonAdvertisingAPIClientId: string, amazonAdvertisingAPIScope: string, advertiserId: string, acceptLanguage?: AcceptLanguage, entityId?: string, entityType?: string, marketplaceId?: string, obfuscatedMarketplaceId?: string, programEligibilityRequestContent?: ProgramEligibilityRequestContent, options?: any): AxiosPromise<ProgramEligibilityResponseContent> {
-            return localVarFp.programEligibility(amazonAdvertisingAPIClientId, amazonAdvertisingAPIScope, advertiserId, acceptLanguage, entityId, entityType, marketplaceId, obfuscatedMarketplaceId, programEligibilityRequestContent, options).then((request) => request(axios, basePath));
+        programEligibility(amazonAdvertisingAPIClientId: string, acceptLanguage?: AcceptLanguage, amazonAdsAccountID?: string, amazonAdvertisingAPIScope?: string, contentType?: string, programEligibilityRequestContent?: ProgramEligibilityRequestContent, options?: any): AxiosPromise<ProgramEligibilityResponseContent> {
+            return localVarFp.programEligibility(amazonAdvertisingAPIClientId, acceptLanguage, amazonAdsAccountID, amazonAdvertisingAPIScope, contentType, programEligibilityRequestContent, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -768,20 +1113,6 @@ export interface ProgramEligibilityApiProgramEligibilityRequest {
     readonly amazonAdvertisingAPIClientId: string
 
     /**
-     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
-     * @type {string}
-     * @memberof ProgramEligibilityApiProgramEligibility
-     */
-    readonly amazonAdvertisingAPIScope: string
-
-    /**
-     * Advertiser ID populated from the federated gateway authorizer context
-     * @type {string}
-     * @memberof ProgramEligibilityApiProgramEligibility
-     */
-    readonly advertiserId: string
-
-    /**
      * Specify the language in which the response is returned.
      * @type {AcceptLanguage}
      * @memberof ProgramEligibilityApiProgramEligibility
@@ -789,32 +1120,25 @@ export interface ProgramEligibilityApiProgramEligibilityRequest {
     readonly acceptLanguage?: AcceptLanguage
 
     /**
-     * Entity ID populated from the federated gateway authorizer context
+     * The header used to pass global account associated with the advertiser account Use &#x60;GET&#x60; method on the Global Ads Account resource to list the global ads account associated with the access token passed in the HTTP Authorization header and choose AdvertisingAccountIdentifier id from the response to pass it as input. Use for v2 global calls
      * @type {string}
      * @memberof ProgramEligibilityApiProgramEligibility
      */
-    readonly entityId?: string
+    readonly amazonAdsAccountID?: string
 
     /**
-     * Entity type (seller, vendor, author, etc) populated from the federated gateway authorizer context. Note, must be a Seller Central Entity.
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
      * @type {string}
      * @memberof ProgramEligibilityApiProgramEligibility
      */
-    readonly entityType?: string
+    readonly amazonAdvertisingAPIScope?: string
 
     /**
-     * Marketplace ID populated from the federated gateway authorizer context
+     * The content type of the request.
      * @type {string}
      * @memberof ProgramEligibilityApiProgramEligibility
      */
-    readonly marketplaceId?: string
-
-    /**
-     * Obfuscated Marketplace ID populated from the federated gateway authorizer context, this is included in case marketplace ID is not included
-     * @type {string}
-     * @memberof ProgramEligibilityApiProgramEligibility
-     */
-    readonly obfuscatedMarketplaceId?: string
+    readonly contentType?: string
 
     /**
      * 
@@ -832,14 +1156,14 @@ export interface ProgramEligibilityApiProgramEligibilityRequest {
  */
 export class ProgramEligibilityApi extends BaseAPI {
     /**
-     * Checks the advertiser\'s eligibility to ad programs.  **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
+     * Checks the advertiser\'s eligibility to ad programs.
      * @param {ProgramEligibilityApiProgramEligibilityRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProgramEligibilityApi
      */
     public programEligibility(requestParameters: ProgramEligibilityApiProgramEligibilityRequest, options?: any) {
-        return ProgramEligibilityApiFp(this.configuration).programEligibility(requestParameters.amazonAdvertisingAPIClientId, requestParameters.amazonAdvertisingAPIScope, requestParameters.advertiserId, requestParameters.acceptLanguage, requestParameters.entityId, requestParameters.entityType, requestParameters.marketplaceId, requestParameters.obfuscatedMarketplaceId, requestParameters.programEligibilityRequestContent, options).then((request) => request(this.axios, this.basePath));
+        return ProgramEligibilityApiFp(this.configuration).programEligibility(requestParameters.amazonAdvertisingAPIClientId, requestParameters.acceptLanguage, requestParameters.amazonAdsAccountID, requestParameters.amazonAdvertisingAPIScope, requestParameters.contentType, requestParameters.programEligibilityRequestContent, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

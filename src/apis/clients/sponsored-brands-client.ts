@@ -8,7 +8,7 @@
  * Do not edit the class manually.
  */
 
-import { AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,ReportsApi,StoresApi,TargetingRecommendationsApi } from '../models/sponsored-brands';
+import { AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,ReportsApi,StoresApi,TargetingRecommendationsApi,ThemeTargetingApi } from '../models/sponsored-brands';
 import { DEFAULT_API_BASE_PATH, APIConfigurationParameters } from '../../constants';
 import { getAxiosInstance, applyMixins, AdsConfiguration } from '../../helpers';
 
@@ -21,6 +21,6 @@ export class SponsoredBrandsClient extends AdGroupsApi {
 }
 
 
-    export interface SponsoredBrandsClient extends AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,ReportsApi,StoresApi,TargetingRecommendationsApi {}
-    applyMixins(SponsoredBrandsClient, [AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,ReportsApi,StoresApi,TargetingRecommendationsApi])
+    export interface SponsoredBrandsClient extends AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,ReportsApi,StoresApi,TargetingRecommendationsApi,ThemeTargetingApi {}
+    applyMixins(SponsoredBrandsClient, [AdGroupsApi,BidRecommendationsApi,BrandsApi,CampaignsApi,DraftsApi,KeywordsApi,LandingPageAsinsApi,MediaApi,ModerationApi,NegativeKeywordsApi,NegativeProductTargetingApi,ProductTargetingApi,ReportsApi,StoresApi,TargetingRecommendationsApi,ThemeTargetingApi])
     

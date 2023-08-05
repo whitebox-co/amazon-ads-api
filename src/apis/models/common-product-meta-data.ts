@@ -92,7 +92,7 @@ export interface Deal {
  */
 export interface LegacyEligibility {
     /**
-     * List of ineligibile status identifier
+     * List of ineligible status identifier
      * @type {Array<string>}
      * @memberof LegacyEligibility
      */
@@ -247,7 +247,7 @@ export interface ProductInfoModel {
      */
     tvPreviewMetadata?: TvPreviewMetadata;
     /**
-     * List of ineligibile status identifier
+     * List of ineligible status identifier
      * @type {Array<string>}
      * @memberof ProductInfoModel
      */
@@ -393,7 +393,7 @@ export interface ProductMetadataModel {
      */
     priceToPay?: PriceToPay;
     /**
-     * List of ineligibile status identifier
+     * List of ineligible status identifier
      * @type {Array<string>}
      * @memberof ProductMetadataModel
      */
@@ -490,7 +490,7 @@ export interface ProductMetadataRequest {
      */
     asins?: Array<string>;
     /**
-     * Whether item details such as name, image, and price is required
+     * Whether item details such as name, image, and price is required.
      * @type {boolean}
      * @memberof ProductMetadataRequest
      */
@@ -508,7 +508,7 @@ export interface ProductMetadataRequest {
      */
     adType?: ProductMetadataRequestAdTypeEnum;
     /**
-     * Specific skus to search for in the advertiser\'s inventory. Currently only support SP program type for sellers. Cannot use together with asins or searchStr input types
+     * Specific SKUs to search for in the advertiser\'s inventory. Currently only support SP program type for sellers. Cannot use together with asins or searchStr input types.
      * @type {Array<string>}
      * @memberof ProductMetadataRequest
      */
@@ -520,13 +520,13 @@ export interface ProductMetadataRequest {
      */
     checkEligibility?: boolean;
     /**
-     * Specific string in the item title to search for in the advertiser\'s inventory. Case insensitive. Cannot use together with asins or skus input types
+     * Specific string in the item title to search for in the advertiser\'s inventory. Case insensitive. Cannot use together with asins or skus input types.
      * @type {string}
      * @memberof ProductMetadataRequest
      */
     searchStr?: string;
     /**
-     * Index of the page to be returned; For author, this value will be ignored, should use cursorToken instead.
+     * Index of the page to be returned; For author, this value will be ignored, should use cursorToken instead. For seller, results are capped at 10k(pageIndex * pageSize). For vendor, results are capped at 50k.
      * @type {number}
      * @memberof ProductMetadataRequest
      */
@@ -538,7 +538,7 @@ export interface ProductMetadataRequest {
      */
     sortOrder?: ProductMetadataRequestSortOrderEnum;
     /**
-     * Number of items to be returned on this page index
+     * Number of items to be returned on this page index.
      * @type {number}
      * @memberof ProductMetadataRequest
      */
@@ -699,8 +699,8 @@ export const ProductSelectorApiAxiosParamCreator = function (configuration?: Con
         /**
          *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Returns product metadata for the advertiser
-         * @param {string} amazonAdvertisingAPIClientId The client identifier of the customer making the request.
-         * @param {string} amazonAdvertisingAPIScope The profile or entity identifier associated with the advertiser account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {ProductMetadataRequest} productMetadataRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -759,8 +759,8 @@ export const ProductSelectorApiFp = function(configuration?: Configuration) {
         /**
          *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Returns product metadata for the advertiser
-         * @param {string} amazonAdvertisingAPIClientId The client identifier of the customer making the request.
-         * @param {string} amazonAdvertisingAPIScope The profile or entity identifier associated with the advertiser account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {ProductMetadataRequest} productMetadataRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -782,8 +782,8 @@ export const ProductSelectorApiFactory = function (configuration?: Configuration
         /**
          *   **Requires one of these permissions**: [\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]
          * @summary Returns product metadata for the advertiser
-         * @param {string} amazonAdvertisingAPIClientId The client identifier of the customer making the request.
-         * @param {string} amazonAdvertisingAPIScope The profile or entity identifier associated with the advertiser account.
+         * @param {string} amazonAdvertisingAPIClientId The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
+         * @param {string} amazonAdvertisingAPIScope The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
          * @param {ProductMetadataRequest} productMetadataRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -801,14 +801,14 @@ export const ProductSelectorApiFactory = function (configuration?: Configuration
  */
 export interface ProductSelectorApiProductMetadataRequest {
     /**
-     * The client identifier of the customer making the request.
+     * The identifier of a client associated with a \&quot;Login with Amazon\&quot; account.
      * @type {string}
      * @memberof ProductSelectorApiProductMetadata
      */
     readonly amazonAdvertisingAPIClientId: string
 
     /**
-     * The profile or entity identifier associated with the advertiser account.
+     * The identifier of a profile associated with the advertiser account. Use &#x60;GET&#x60; method on Profiles resource to list profiles associated with the access token passed in the HTTP Authorization header and choose profile id &#x60;profileId&#x60; from the response to pass it as input.
      * @type {string}
      * @memberof ProductSelectorApiProductMetadata
      */

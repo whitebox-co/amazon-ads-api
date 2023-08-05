@@ -8,6 +8,10 @@
     "/audiences/list": {
       "post": {
         "summary": "Gets audience segments based on filters",
+        "description": "Returns a list of audience segments for an advertiser. The result set can be filtered by providing an array of Filter objects. Each item in the resulting set will match all specified filters.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "tags": [
+          "Discovery"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -18,7 +22,6 @@
           },
           "required": false
         },
-        "description": "Returns a list of audience segments for an advertiser. The result set can be filtered by providing an array of Filter objects. Each item in the resulting set will match all specified filters.\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
         "operationId": "listAudiences",
         "responses": {
           "200": {
@@ -127,15 +130,16 @@
             "name": "maxResults",
             "description": "Sets the maximum number of audiences in the returned array. Use in conjunction with the `nextToken` parameter to control pagination. For example, supplying maxResults=20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned."
           }
-        ],
-        "tags": [
-          "Discovery"
         ]
       }
     },
     "/audiences/taxonomy/list": {
       "post": {
         "summary": "Browse the taxonomy of audience categories",
+        "description": "Returns a list of audience categories for a given category path\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
+        "tags": [
+          "Discovery"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -146,7 +150,6 @@
           },
           "required": true
         },
-        "description": "Returns a list of audience categories for a given category path\n\n**Requires one of these permissions**:\n[\"advertiser_campaign_edit\",\"advertiser_campaign_view\"]",
         "operationId": "fetchTaxonomy",
         "responses": {
           "200": {
@@ -246,9 +249,6 @@
             "name": "maxResults",
             "description": "Sets the maximum number of categories in the returned array. Use in conjunction with the `nextToken` parameter to control pagination. For example, supplying maxResults=20 with a previously returned token will fetch up to the next 20 items. In some cases, fewer items may be returned."
           }
-        ],
-        "tags": [
-          "Discovery"
         ]
       }
     }
@@ -291,6 +291,21 @@
           }
         }
       },
+      "AudienceFilterV1": {
+        "type": "object",
+        "properties": {
+          "field": {
+            "description": "Field to filter by. Supported enums are 'audienceName', 'category', 'categoryPath', 'audienceId' and 'status'. The 'audienceName' is a broad match filter but not an exact match. The 'category' enum returns all audiences under a high-level category, whereas the 'categoryPath' enum expects a path of nodes in the taxonomy tree and returns audiences attached directly to the node at the specified path.",
+            "type": "string"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "FetchTaxonomyRequestBodyV1": {
         "description": "The response data will have the categories that are under the given path, and main categories will be returned if no path is specified. The response data also depends on the adType specified here since ad programs may support targeting audiences in certain categories.",
         "type": "object",
@@ -303,21 +318,6 @@
             ]
           },
           "categoryPath": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "AudienceFilterV1": {
-        "type": "object",
-        "properties": {
-          "field": {
-            "description": "Field to filter by. Supported enums are 'audienceName', 'category', 'categoryPath' and 'audienceId'. The 'category' enum returns all audiences under a high-level category, whereas the 'categoryPath' enum expects a path of nodes in the taxonomy tree and returns audiences attached directly to the node at the specified path.",
-            "type": "string"
-          },
-          "values": {
             "type": "array",
             "items": {
               "type": "string"
@@ -346,7 +346,19 @@
                   "description": "Base currency, such as US Dollar.",
                   "type": "string",
                   "enum": [
-                    "USD"
+                    "USD",
+                    "CAD",
+                    "GBP",
+                    "EUR",
+                    "JPY",
+                    "INR",
+                    "MXN",
+                    "AUD",
+                    "AED",
+                    "KSA",
+                    "BRL",
+                    "SEK",
+                    "TRY"
                   ]
                 },
                 "feeCalculationType": {
@@ -359,6 +371,10 @@
                 }
               }
             }
+          },
+          "providerId": {
+            "description": "The Data Management Platform provider identifier. Only applicable to Third party audience segments.",
+            "type": "string"
           }
         }
       },
@@ -465,16 +481,6 @@
           }
         }
       },
-      "AudienceV1": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/AudienceCommonFieldsV1"
-          },
-          {
-            "type": "object"
-          }
-        ]
-      },
       "AudienceErrorV1": {
         "description": "The error response object.",
         "type": "object",
@@ -494,6 +500,16 @@
             }
           }
         }
+      },
+      "AudienceV1": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/AudienceCommonFieldsV1"
+          },
+          {
+            "type": "object"
+          }
+        ]
       },
       "AudienceSubErrorV1": {
         "description": "The sub error object.",
